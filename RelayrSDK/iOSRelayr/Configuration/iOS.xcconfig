@@ -1,0 +1,7 @@
+#include "Common/Configuration/Common.xcconfig"
+
+TARGET_NAME = iOSRelayr
+INFOPLIST_FILE = $(TARGET_NAME)/Configuration/Info.plist
+
+ARCHS = $(ARCHS_STANDARD)
+TARGETED_DEVICE_FAMILY = 1,2
