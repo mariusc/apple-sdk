@@ -46,7 +46,7 @@
  *  @param peripheral CBPeripheral for which updates should be received.
  */
 - (void)addListener:(id <RLABluetoothDelegate>)listener
-      forPeripheral:(CBPeripheral *)peripheral;
+      forPeripheral:(CBPeripheral*)peripheral;
 
 /*!
  *  @method removeListener:
@@ -66,6 +66,6 @@
  *  @param peripheral CBPeripheral for which updates should be silenced.
  */
 - (void)removeListener:(id <RLABluetoothDelegate>)listener
-         forPeripheral:(CBPeripheral *)peripheral;
+         forPeripheral:(CBPeripheral*)peripheral;
 
 @end

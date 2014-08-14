@@ -33,7 +33,7 @@
 @implementation RLABluetoothService
 {
     CBCentralManager* _centralManager;
-//    RLABluetoothManager* _serviceListener;
+    RLABluetoothManager* _bleManager;
 }
 
 #pragma mark - Public API
@@ -42,9 +42,9 @@
 {
     self = [super init];
     if (self) {
-//        _serviceListener = [[RLABluetoothManager alloc] init];
-//        _centralManager = [[CBCentralManager alloc] initWithDelegate:_serviceListener queue:nil];
-//        _serviceListener.centralManager = _centralManager;
+        _bleManager = [[RLABluetoothManager alloc] init];
+        _centralManager = [[CBCentralManager alloc] initWithDelegate:_bleManager queue:nil];
+        _bleManager.centralManager = _centralManager;
     }
     return self;
 }
@@ -53,11 +53,11 @@
 {
     RLAErrorAssertTrueAndReturn(completion, RLAErrorCodeMissingArgument);
     
-//    __autoreleasing NSError* error;
-//    if ( ![self isBluetoothAvailable:&error] ) { return completion(nil, error); }
-//    
+    __autoreleasing NSError* error;
+    if ( ![self isBluetoothAvailable:&error] ) { return completion(nil, error); }
+//
 //    // Setup request
-//    self.peripheralRequest = [[RLABluetoothPeripheralsDiscoveryRequest alloc] initWithListenerManager:_serviceListener permittedDeviceClasses:classes timeout:timeout];
+//    self.peripheralRequest = [[RLABluetoothPeripheralsDiscoveryRequest alloc] initWithListenerManager:_bleManager permittedDeviceClasses:classes timeout:timeout];
 //    
 //    // Execute request
 //    __weak typeof(self) weakSelf = self;
@@ -73,14 +73,16 @@
 
 #pragma mark - Private helpers
 
-//- (BOOL)isBluetoothAvailable:(__autoreleasing NSError**)error
-//{
-//    if ( _centralManager.state == CBCentralManagerStatePoweredOn ) return YES;
-//    
-//    if (error != NULL) { *error = [RLAError errorWithCode:RLAErrorCodeUnknownConnectionError localizedDescription:@"Could not connect to devices via Bluetooth" failureReason:@"Bluetooth connectity is not available"]; }
-//    return NO;
-//}
-//
+- (BOOL)isBluetoothAvailable:(__autoreleasing NSError**)error
+{
+    if ( _centralManager.state == CBCentralManagerStatePoweredOn ) return YES;
+    
+    if (error != NULL) {
+        *error = [RLAError errorWithCode:RLAErrorCodeUnknownConnectionError localizedDescription:@"Could not connect to devices via Bluetooth" failureReason:@"Bluetooth connectity is not available"];
+    }
+    return NO;
+}
+
 //- (RLABluetoothAdapterController*)bleAdapterCntrll
 //{
 //    if (!_bleAdapterCntrll) {
@@ -95,7 +97,7 @@
 //    NSMutableArray *mArray = [NSMutableArray array];
 //    for (CBPeripheral *peripheral in peripherals) {
 //        // Init device
-//        RLALocalDevice *device = [[RLALocalDevice alloc] initWithPeripheral:peripheral andListenerManager:_serviceListener];
+//        RLALocalDevice *device = [[RLALocalDevice alloc] initWithPeripheral:peripheral andListenerManager:_bleManager];
 //        
 //        // Assign sensors to device
 //        if (device) {
