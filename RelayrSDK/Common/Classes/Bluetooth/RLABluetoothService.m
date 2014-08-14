@@ -1,10 +1,11 @@
-#import "RLABluetoothService.h"                         // Header
 @import CoreBluetooth;                                  // Apple
+#import "RLABluetoothService.h"                         // Header
+#import "RLABluetoothManager.h"                         // Relayr.framework
+
 //#import "RLASensorPrivateAPI.h"                         // Relayr.framework (protocol)
 //#import "RLADevicePrivateAPI.h"                         // Relayr.framework (protocol)
 //#import "RLALocalDevicePrivateAPI.h"                    // Relayr.framework (protocol)
 //#import "RLASensorDelegate.h"                           // Relayr.framework (protocol)
-//#import "RLABluetoothServiceListenerManager.h"          // Relayr.framework
 //#import "RLAPeripheralnfo.h"                            // Relayr.framework
 //#import "RLAMappingInfo.h"                              // Relayr.framework
 //#import "RLALocalDevice.h"                              // Relayr.framework
@@ -32,7 +33,7 @@
 @implementation RLABluetoothService
 {
     CBCentralManager* _centralManager;
-//    RLABluetoothServiceListenerManager* _serviceListener;
+//    RLABluetoothManager* _serviceListener;
 }
 
 #pragma mark - Public API
@@ -41,7 +42,7 @@
 {
     self = [super init];
     if (self) {
-//        _serviceListener = [[RLABluetoothServiceListenerManager alloc] init];
+//        _serviceListener = [[RLABluetoothManager alloc] init];
 //        _centralManager = [[CBCentralManager alloc] initWithDelegate:_serviceListener queue:nil];
 //        _serviceListener.centralManager = _centralManager;
     }
@@ -69,30 +70,6 @@
 //        completion(devices, error);
 //    }];
 }
-
-#pragma mark Onboarding
-
-//- (void)peripheralWithWunderbarCredentials:(RLAWunderbarCredentials *)credentials wifiSSID:(NSString *)ssid wifiPassword:(NSString *)password andCompletionHandler:(void(^)(NSError*))completion
-//{
-//    RLAErrorAssertTrueAndReturn(ssid, RLAErrorCodeMissingArgument);
-//    RLAErrorAssertTrueAndReturn(password, RLAErrorCodeMissingArgument);
-//    RLAErrorAssertTrueAndReturn(completion, RLAErrorCodeMissingArgument);
-//    
-//    __autoreleasing NSError* error;
-//    if ( ![self isBluetoothAvailable:&error] ) { return completion(error); }
-//    
-//    // The central manager may not habe any connections to peripherals otherwise the peripheral manager used for this request is not usable
-//    [_centralManager stopScan];
-//    for (CBPeripheral *peripheral in [_serviceListener connectedPeripherals]) {
-//        [_centralManager cancelPeripheralConnection:peripheral];
-//    }
-//    
-//    // Setup request
-//    self.registrationRequest = [[RLAWunderbarRegistrationPeripheralRequest alloc] initWithCredentials:credentials wifiSSID:ssid wifiPassword:password];
-//    
-//    // Execute request
-//    [self.registrationRequest executeWithCompletionHandler:^(NSError *error){ completion(error); }];
-//}
 
 #pragma mark - Private helpers
 

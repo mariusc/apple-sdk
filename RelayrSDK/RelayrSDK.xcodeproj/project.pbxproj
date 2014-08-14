@@ -33,6 +33,9 @@
 		621A6AFD199CEC000004F9FD /* RLABluetoothService.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6AFA199CEC000004F9FD /* RLABluetoothService.h */; };
 		621A6AFE199CEC000004F9FD /* RLABluetoothService.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6AFB199CEC000004F9FD /* RLABluetoothService.m */; };
 		621A6AFF199CEC000004F9FD /* RLABluetoothService.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6AFB199CEC000004F9FD /* RLABluetoothService.m */; };
+		621A6B06199CF2CF0004F9FD /* RLABluetoothManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6B04199CF2CF0004F9FD /* RLABluetoothManager.h */; };
+		621A6B07199CF2CF0004F9FD /* RLABluetoothManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6B05199CF2CF0004F9FD /* RLABluetoothManager.m */; };
+		621A6B09199CF66B0004F9FD /* RLABluetoothDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6B08199CF66B0004F9FD /* RLABluetoothDelegate.h */; };
 		6252F0DF199C24E2002ECE4D /* Relayr.h in Headers */ = {isa = PBXBuildFile; fileRef = 6252F0D5199C24AD002ECE4D /* Relayr.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6252F10B199C2C3B002ECE4D /* Relayr.h in Headers */ = {isa = PBXBuildFile; fileRef = 6252F100199C2BFC002ECE4D /* Relayr.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6252F10C199C2C7F002ECE4D /* OSXRelayrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6252F107199C2C0C002ECE4D /* OSXRelayrTests.m */; };
@@ -57,6 +60,11 @@
 		621A6AF8199CEB860004F9FD /* RLALocalUser_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RLALocalUser_Private.h; sourceTree = "<group>"; };
 		621A6AFA199CEC000004F9FD /* RLABluetoothService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothService.h; sourceTree = "<group>"; };
 		621A6AFB199CEC000004F9FD /* RLABluetoothService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothService.m; sourceTree = "<group>"; };
+		621A6B01199CF0360004F9FD /* RLABluetoothService+Onboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RLABluetoothService+Onboard.h"; sourceTree = "<group>"; };
+		621A6B02199CF0360004F9FD /* RLABluetoothService+Onboard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "RLABluetoothService+Onboard.m"; sourceTree = "<group>"; };
+		621A6B04199CF2CF0004F9FD /* RLABluetoothManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothManager.h; sourceTree = "<group>"; };
+		621A6B05199CF2CF0004F9FD /* RLABluetoothManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothManager.m; sourceTree = "<group>"; };
+		621A6B08199CF66B0004F9FD /* RLABluetoothDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothDelegate.h; sourceTree = "<group>"; };
 		6252F0B3199C2465002ECE4D /* Relayr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Relayr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6252F0BE199C2465002ECE4D /* iOSRelayrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSRelayrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6252F0D1199C2492002ECE4D /* Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Common.xcconfig; sourceTree = "<group>"; };
@@ -221,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				621A6AF3199CEA870004F9FD /* User */,
+				621A6B00199CF0170004F9FD /* Bluetooth */,
 				621A6AF6199CEA870004F9FD /* Utilities */,
 			);
 			path = Classes;
@@ -255,9 +264,29 @@
 			children = (
 				621A6AFA199CEC000004F9FD /* RLABluetoothService.h */,
 				621A6AFB199CEC000004F9FD /* RLABluetoothService.m */,
+				621A6B03199CF2CF0004F9FD /* Manager */,
 			);
 			name = Bluetooth;
 			path = Classes/Bluetooth;
+			sourceTree = "<group>";
+		};
+		621A6B00199CF0170004F9FD /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				621A6B01199CF0360004F9FD /* RLABluetoothService+Onboard.h */,
+				621A6B02199CF0360004F9FD /* RLABluetoothService+Onboard.m */,
+			);
+			path = Bluetooth;
+			sourceTree = "<group>";
+		};
+		621A6B03199CF2CF0004F9FD /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				621A6B04199CF2CF0004F9FD /* RLABluetoothManager.h */,
+				621A6B05199CF2CF0004F9FD /* RLABluetoothManager.m */,
+				621A6B08199CF66B0004F9FD /* RLABluetoothDelegate.h */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		6252F0A6199C243D002ECE4D = {
@@ -508,9 +537,11 @@
 				6252F0DF199C24E2002ECE4D /* Relayr.h in Headers */,
 				621A6AD7199CCD170004F9FD /* RLALog.h in Headers */,
 				621A6AEB199CE91A0004F9FD /* RLALocalUser.h in Headers */,
+				621A6B06199CF2CF0004F9FD /* RLABluetoothManager.h in Headers */,
 				621A6AE0199CE1AA0004F9FD /* Common.pch in Headers */,
 				621A6AFC199CEC000004F9FD /* RLABluetoothService.h in Headers */,
 				621A6AD3199CCD170004F9FD /* RLAError.h in Headers */,
+				621A6B09199CF66B0004F9FD /* RLABluetoothDelegate.h in Headers */,
 				621A6ADD199CD1C30004F9FD /* RLAUser.h in Headers */,
 				621A6AE3199CE23E0004F9FD /* iOS.pch in Headers */,
 				621A6AB5199CC6200004F9FD /* RLAMacros.h in Headers */,
@@ -689,6 +720,7 @@
 				621A6AED199CE91A0004F9FD /* RLALocalUser.m in Sources */,
 				621A6AD5199CCD170004F9FD /* RLAError.m in Sources */,
 				621A6AFE199CEC000004F9FD /* RLABluetoothService.m in Sources */,
+				621A6B07199CF2CF0004F9FD /* RLABluetoothManager.m in Sources */,
 				621A6AD9199CCD170004F9FD /* RLALog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
