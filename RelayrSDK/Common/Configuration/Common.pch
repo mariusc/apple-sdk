@@ -1,0 +1,15 @@
+//
+//  Common.pch
+//  RelayrSDK
+//
+//  Created by Marcos Sánchez-Dehesa on 14/08/14.
+//
+//
+
+#ifndef RelayrSDK_Common_pch
+#define RelayrSDK_Common_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif
