@@ -1,6 +1,6 @@
-#import "RLABluetoothListenersGroup.h"
+#import "RLABluetoothDelegatesGroup.h"
 
-@implementation RLABluetoothListenersGroup
+@implementation RLABluetoothDelegatesGroup
 {
     NSPointerArray* _listeners;
 }
@@ -19,7 +19,8 @@
     RLAErrorAssertTrueAndReturnNil(listener, RLAErrorCodeMissingArgument);
     
     self = [super init];
-    if (self) {
+    if (self)
+    {
         _peripheral = peripheral;
         _listeners = [NSPointerArray weakObjectsPointerArray];
         [_listeners addPointer:(void*)listener];
@@ -40,8 +41,10 @@
     BOOL isInArray = NO;
     NSArray* listeners = [_listeners allObjects];
     
-    for (NSObject* obj in listeners) {
-        if (obj == listener) {
+    for (NSObject* obj in listeners)
+    {
+        if (obj == listener)
+        {
             isInArray = YES;
             break;
         }
@@ -55,9 +58,10 @@
     RLAErrorAssertTrueAndReturn(listener, RLAErrorCodeMissingArgument);
     
     NSInteger foundIndex = NSNotFound;
-    NSInteger const count = [_listeners count];
+    NSInteger const count = _listeners.count;
     
-    for (NSInteger index = 0; index < count; ++index) {
+    for (NSInteger index=0; index<count; ++index)
+    {
         NSObject* pointer = [_listeners pointerAtIndex:index];
         if (pointer == listener) { foundIndex = index; }
     }

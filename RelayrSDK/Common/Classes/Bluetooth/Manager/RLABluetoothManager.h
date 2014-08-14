@@ -1,6 +1,6 @@
-@import Foundation;                         // Apple
-@import CoreBluetooth;                      // Apple
-#import "RLABluetoothDelegate.h"             // Relayr.framework
+@import Foundation;                 // Apple
+@import CoreBluetooth;              // Apple
+#import "RLABluetoothDelegate.h"    // Relayr.framework
 
 /*!
  *  @class RLABluetoothManager
@@ -21,7 +21,7 @@
 /*!
  *  @method connectedPeripherals
  *
- *  @abstract An NSArray of currently connected peripheral objects.
+ *  @abstract An <code>NSArray</code> of currently connected <code>CBPeripheral</code> objects.
  *
  *	@return It returns an <code>NSArray</code> of connected peripherals.
  */

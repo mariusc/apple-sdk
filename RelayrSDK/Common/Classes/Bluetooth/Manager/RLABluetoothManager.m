@@ -1,22 +1,22 @@
 #import "RLABluetoothManager.h"                 // Header
-#import "RLABluetoothListenersGroup.h"          // Relayr.framework
+#import "RLABluetoothDelegatesGroup.h"          // Relayr.framework
 
-#import "RLACBUUID.h"                           // Relayr.framework (utility)
-//#import "RLAPeripheralnfo.h"                    // Relayr.framework (domain object)
-//#import "RLAMappingInfo.h"                      // Relayr.framework (domain object)
+#import "RLABluetoothAdapterController.h"                 // Relayr.framework
+#import "RLAPeripheralnfo.h"                    // Relayr.framework
+#import "RLAMappingInfo.h"                      // Relayr.framework
+#import "RLACBUUID.h"                           // Relayr.framework
 //#import "RLAColorSensor.h"                      // Relayr.framework (sensor)
 //#import "RLAProximitySensor.h"                  // Relayr.framework (sensor)
 //#import "RLAWunderbarColorSensorBluetoothAdapter.h"     // Relayr.framework (adapter)
 //#import "RLAWunderbarProximitySensorBluetoothAdapter.h" // Relayr.framework (adapter)
-//#import "RLABluetoothAdapterController.h"       // Relayr.framework (controller)
 
 @implementation RLABluetoothManager
 {
-    NSMutableArray* _genericListeners;      // Array of RLABluetoothListener (receive all Bluetooth delegate calls)
-    NSMutableArray* _peripheralListeners;   // Array of RLABluetoothListener (only receive Bluetooth calls from a certain CBPeripheral)
-    NSMutableSet* _detectedPeripherals;
-    NSMutableSet* _connectedPeripherals;
-//    RLABluetoothAdapterController* _bleAdapterController;
+    NSMutableArray* _genericListeners;      // Array of RLABluetoothDelegate objects (receive all Bluetooth delegate calls)
+    NSMutableArray* _peripheralListeners;   // Array of RLABluetoothDelegatesGroup (only receive Bluetooth calls from a certain CBPeripheral)
+    NSMutableSet* _detectedPeripherals;     // Array of detected CBPeripheral objects
+    NSMutableSet* _connectedPeripherals;    // Array of connected CBPeripheral objects
+    RLABluetoothAdapterController* _bleAdapter;
 }
 
 #pragma mark - Public API
@@ -24,12 +24,13 @@
 - (instancetype)init
 {
     self = [super init];
-    if (self) {
+    if (self)
+    {
         _genericListeners = [NSMutableArray array];
         _peripheralListeners = [NSMutableArray array];
         _detectedPeripherals = [NSMutableSet set];
         _connectedPeripherals = [NSMutableSet set];
-//        _bleAdapterController = [[RLABluetoothAdapterController alloc] init];
+        _bleAdapter = [[RLABluetoothAdapterController alloc] init];
     }
     return self;
 }
@@ -43,7 +44,7 @@
 {
     RLAErrorAssertTrueAndReturn(listener, RLAErrorCodeMissingArgument);
     
-    [_genericListeners addObject:listener];
+    if ( ![_genericListeners containsObject:listener] ) { [_genericListeners addObject:listener]; }
 }
 
 - (void)addListener:(id <RLABluetoothDelegate>)listener forPeripheral:(CBPeripheral*)peripheral
@@ -51,13 +52,13 @@
     RLAErrorAssertTrueAndReturn(listener, RLAErrorCodeMissingArgument);
     RLAErrorAssertTrueAndReturn(peripheral, RLAErrorCodeMissingArgument);
     
-    RLABluetoothListenersGroup* group = [self listenersGroupForPeripheral:peripheral];
-    if (!group) {
-        group = [[RLABluetoothListenersGroup alloc] initWithPeripheral:peripheral listener:listener];
+    RLABluetoothDelegatesGroup* group = [self listenersGroupForPeripheral:peripheral];
+    if (!group)
+    {
+        group = [[RLABluetoothDelegatesGroup alloc] initWithPeripheral:peripheral listener:listener];
         [_peripheralListeners addObject:group];
-    } else {
-        [group addListener:listener];
     }
+    else { [group addListener:listener]; }
 }
 
 - (void)removeListener:(id <RLABluetoothDelegate>)listener
@@ -72,10 +73,11 @@
     RLAErrorAssertTrueAndReturn(listener, RLAErrorCodeMissingArgument);
     RLAErrorAssertTrueAndReturn(peripheral, RLAErrorCodeMissingArgument);
     
-    RLABluetoothListenersGroup*info = [self listenersGroupForPeripheral:peripheral];
-    if (info) {
-        [info removeListener:listener];
-        if ( ![info listeners].count ) [_peripheralListeners removeObject:info];
+    RLABluetoothDelegatesGroup* group = [self listenersGroupForPeripheral:peripheral];
+    if (group)
+    {
+        [group removeListener:listener];
+        if (group.listeners.count > 0) [_peripheralListeners removeObject:group];
     }
 }
 
@@ -83,12 +85,14 @@
 
 - (void)centralManagerDidUpdateState:(CBCentralManager*)central
 {
-    [RLALog debug:@"centralManagerDidUpdateState: %@", @(central.state)];
+    CBCentralManagerState const state = central.state;
+    [RLALog debug:@"centralManagerDidUpdateState: %@", @(state)];
     
     // Callback gerneric listeners
     SEL const sel = @selector(manager:didUpdateState:);
-    for (id <RLABluetoothDelegate> listener in _genericListeners) {
-        if ([listener respondsToSelector:sel]) { [listener manager:self didUpdateState:central.state]; }
+    for (id <RLABluetoothDelegate> listener in _genericListeners)
+    {
+        if ([listener respondsToSelector:sel]) { [listener manager:self didUpdateState:state]; }
     }
 }
 
@@ -101,16 +105,21 @@
     
     // Callback for listeners associated to that CBPeripheral
     SEL const sel = @selector(manager:didDiscoverPeripheral:);
-    for (RLABluetoothListenersGroup* group in _peripheralListeners) {
-        if (group.peripheral == peripheral) {
-            for (NSObject <RLABluetoothDelegate>* listener in group.listeners) {
-                if ([listener respondsToSelector:sel]) { [listener manager:self didDiscoverPeripheral:peripheral]; }
-            }
+    for (RLABluetoothDelegatesGroup* group in _peripheralListeners)
+    {
+        if (group.peripheral != peripheral) { continue; };
+        
+        for (NSObject <RLABluetoothDelegate>* listener in group.listeners)
+        {
+            if ([listener respondsToSelector:sel]) { [listener manager:self didDiscoverPeripheral:peripheral]; }
         }
+        
+        break;
     }
     
     // Callback for generic listeners
-    for (NSObject <RLABluetoothDelegate>* listener in _genericListeners) {
+    for (NSObject <RLABluetoothDelegate>* listener in _genericListeners)
+    {
         if ([listener respondsToSelector:sel]) { [listener manager:self didDiscoverPeripheral:peripheral]; }
     }
 }
@@ -127,16 +136,21 @@
     
     // Callback for listeners associated to that CBPeripheral
     SEL sel = @selector(manager:didConnectPeripheral:);
-    for (RLABluetoothListenersGroup*info in _peripheralListeners) {
-        if (info.peripheral == peripheral) {
-            for (NSObject <RLABluetoothDelegate>*listener in [info listeners]) {
-                if ([listener respondsToSelector:sel]) { [listener manager:self didConnectPeripheral:peripheral]; }
-            }
+    for (RLABluetoothDelegatesGroup* group in _peripheralListeners)
+    {
+        if (group.peripheral != peripheral) { continue; };
+        
+        for (NSObject <RLABluetoothDelegate>* listener in [group listeners])
+        {
+            if ([listener respondsToSelector:sel]) { [listener manager:self didConnectPeripheral:peripheral]; }
         }
+        
+        break;
     }
     
     // Callback for generic listeners
-    for (NSObject <RLABluetoothDelegate>*listener in _genericListeners) {
+    for (NSObject <RLABluetoothDelegate>* listener in _genericListeners)
+    {
         if ([listener respondsToSelector:sel]) { [listener manager:self didConnectPeripheral:peripheral]; }
     }
 }
@@ -154,22 +168,25 @@
     
     // Callback for listeners associated to that CBPeripheral
     SEL sel = @selector(manager:didDisconnectPeripheral:);
-    for (RLABluetoothListenersGroup*info in _peripheralListeners) {
-        if ([info peripheral] == peripheral) {
-            for (NSObject <RLABluetoothDelegate>*listener in [info listeners]) {
-                if ([listener respondsToSelector:sel]) { [listener manager:self didDisconnectPeripheral:peripheral]; }
-            }
+    for (RLABluetoothDelegatesGroup* group in _peripheralListeners)
+    {
+        if (group.peripheral != peripheral) { continue; };
+        
+        for (NSObject <RLABluetoothDelegate>* listener in group.listeners)
+        {
+            if ([listener respondsToSelector:sel]) { [listener manager:self didDisconnectPeripheral:peripheral]; }
         }
     }
     
     // Callback for generic listeners
-    for (NSObject <RLABluetoothDelegate>*listener in _genericListeners) {
+    for (NSObject <RLABluetoothDelegate>* listener in _genericListeners) {
         if ([listener respondsToSelector:sel]) { [listener manager:self didDisconnectPeripheral:peripheral]; }
     }
 }
 
-#pragma mark - <CBPeripheralDelegate>
+#pragma mark CBPeripheralDelegate
 
+// TODO: This service doesn't seem to propage the services discovered
 - (void)peripheral:(CBPeripheral*)peripheral didDiscoverServices:(NSError*)error
 {
     // Discover characteristics for services
@@ -182,70 +199,70 @@
 {
     // Callback for listeners associated to that CBPeripheral
     SEL const sel = @selector(manager:peripheral:didDiscoverCharacteristicsForService:error:);
-    for (RLABluetoothListenersGroup*info in _peripheralListeners) {
-        if (info.peripheral == peripheral) {
-            for (NSObject <RLABluetoothDelegate>*listener in [info listeners]) {
-                if ([listener respondsToSelector:sel]) {
-                    [listener manager:self peripheral:peripheral didDiscoverCharacteristicsForService:service error:error];
-                }
-            }
+    for (RLABluetoothDelegatesGroup* group in _peripheralListeners)
+    {
+        if (group.peripheral != peripheral) { continue; }
+        
+        for (NSObject <RLABluetoothDelegate>*listener in group.listeners)
+        {
+            if ([listener respondsToSelector:sel]) { [listener manager:self peripheral:peripheral didDiscoverCharacteristicsForService:service error:error]; }
         }
+        
+        break;
     }
     
     // Callback for gerneric listeners
-    for (NSObject <RLABluetoothDelegate>*listener in _genericListeners) {
-        if ([listener respondsToSelector:sel]) {
-            [listener manager:self peripheral:peripheral didDiscoverCharacteristicsForService:service error:error];
-        }
+    for (NSObject <RLABluetoothDelegate>* listener in _genericListeners)
+    {
+        if ([listener respondsToSelector:sel]) { [listener manager:self peripheral:peripheral didDiscoverCharacteristicsForService:service error:error]; }
     }
 }
 
+// TODO: Uncoment code
 - (void)peripheral:(CBPeripheral*)peripheral didUpdateValueForCharacteristic:(CBCharacteristic*)characteristic error:(NSError*)error
 {
-//    [RLALog debug:@"didUpdateValueForCharacteristic: %@ value: %@ error: %@", peripheral.name, characteristic.value, error];
-//    
-//    // Cancel if data is invalid
-//    if (!characteristic.value.length) return;
-//    
-//    // Find matching mappings for peripheral
-//    RLAPeripheralnfo* info = [_bleAdapterController infoForPeripheralWithName:peripheral.name bleIdentifier:[peripheral.identifier UUIDString] serviceUUID:[[[characteristic service] UUID] UUIDString] characteristicUUID:[characteristic.UUID UUIDString]];
-//    NSArray*mappings = [info mappings];
-//    
-//    // No mappings available, callback listeners with data
-//    if (!mappings) {
-//        
-//        // Callback appropriate listener with sensor data
-//        SEL const sel = @selector(manager:peripheral:didUpdateData:forCharacteristic:error:);
-//        for (RLABluetoothListenersGroup* group in _peripheralListeners) {
-//            if (group.peripheral == peripheral) {
-//                for (NSObject <RLABluetoothDelegate>*listener in group.listeners) {
-//                    if ([listener respondsToSelector:sel]) {
-//                        [listener manager:self peripheral:peripheral didUpdateData:characteristic.value forCharacteristic:characteristic error:error];
-//                    }
-//                }
-//            }
-//        }
-//        
-//        // Callback for gerneric listeners
-//        for (NSObject <RLABluetoothDelegate>* listener in _genericListeners) {
-//            if ([listener respondsToSelector:sel]) {
-//                [listener manager:self peripheral:peripheral didUpdateData:characteristic.value forCharacteristic:characteristic error:error];
-//            }
-//        }
-//        
-//        // Cancel any further processing
-//        return;
-//    }
-//    
-//    // Kick off conversion for each mapping
-//    for (RLAMappingInfo* info in mappings) {
-//        
-//        // Cancel if the mapping does not provide an adapter class\
-//        // Only adapter classes make sense here since they need to
-//        // transform incoming values
-//        if (![info adapterClass]) return;
-//        
-//        // Convert sensor data
+    [RLALog debug:@"didUpdateValueForCharacteristic: %@ value: %@ error: %@", peripheral.name, characteristic.value, error];
+
+    // Cancel if data is invalid
+    if (!characteristic.value.length) return;
+
+    // Find matching mappings for peripheral
+    RLAPeripheralnfo* info = [_bleAdapter infoForPeripheralWithName:peripheral.name bleIdentifier:peripheral.identifier.UUIDString serviceUUID:characteristic.service.UUID.UUIDString characteristicUUID:characteristic.UUID.UUIDString];
+    NSArray* mappings = info.mappings;
+
+    // No mappings available, callback listeners with data
+    if (!mappings)
+    {
+        // Callback appropriate listener with sensor data
+        SEL const sel = @selector(manager:peripheral:didUpdateData:forCharacteristic:error:);
+        for (RLABluetoothDelegatesGroup* group in _peripheralListeners)
+        {
+            if (group.peripheral != peripheral) { continue; }
+            
+            for (NSObject <RLABluetoothDelegate>* listener in group.listeners)
+            {
+                if ([listener respondsToSelector:sel]) { [listener manager:self peripheral:peripheral didUpdateData:characteristic.value forCharacteristic:characteristic error:error]; }
+            }
+            break;
+        }
+
+        // Callback for gerneric listeners
+        for (NSObject <RLABluetoothDelegate>* listener in _genericListeners)
+        {
+            if ([listener respondsToSelector:sel]) { [listener manager:self peripheral:peripheral didUpdateData:characteristic.value forCharacteristic:characteristic error:error]; }
+        }
+
+        // Cancel any further processing
+        return;
+    }
+
+    // Kick off conversion for each mapping
+    for (RLAMappingInfo* info in mappings)
+    {
+        // Cancel if the mapping does not provide an adapter class. Only adapter classes make sense here since they need to transform incoming values
+        if (!info.adapterClass) { return; };
+
+        // Convert sensor data
 //        RLABluetoothServiceAdapter* adapter = [[[info adapterClass] alloc] initWithData:characteristic.value];
 //        RLAErrorAssertTrueAndReturn(adapter, RLAErrorCodeMissingExpectedValue);
 //        NSDictionary* dict = [adapter dictionary];
@@ -253,7 +270,7 @@
 //        
 //        // Callback appropriate listener with sensor data
 //        SEL sel = @selector(manager:peripheral:didUpdateValue:withSensorClass:forCharacteristic:error:);
-//        for (RLABluetoothListenersGroup* group in _peripheralListeners) {
+//        for (RLABluetoothDelegatesGroup* group in _peripheralListeners) {
 //            if (group.peripheral == peripheral) {
 //                for (NSObject <RLABluetoothDelegate>*listener in group.listeners) {
 //                    if ([listener respondsToSelector:sel]) {
@@ -269,7 +286,7 @@
 //                [listener manager:self peripheral:peripheral didUpdateValue:dict withSensorClass:[info sensorClass] forCharacteristic:characteristic error:error];
 //            }
 //        }
-//    }
+    }
 }
 
 - (void)peripheral:(CBPeripheral*)peripheral didWriteValueForCharacteristic:(CBCharacteristic*)characteristic error:(NSError*)error
@@ -278,22 +295,21 @@
     
     // Callback appropriate listener with sensor data
     SEL sel = @selector(manager:peripheral:didWriteValueForCharacteristic:error:);
-    for (RLABluetoothListenersGroup*info in _peripheralListeners) {
-        if (info.peripheral == peripheral) {
-            for (NSObject <RLABluetoothDelegate>*listener in info.listeners) {
-                if ([listener respondsToSelector:sel]) { [listener manager:self peripheral:peripheral didWriteValueForCharacteristic:characteristic error:error];
-                }
-            }
+    for (RLABluetoothDelegatesGroup* group in _peripheralListeners)
+    {
+        if (group.peripheral != peripheral) { continue; }
+        
+        for (NSObject <RLABluetoothDelegate>*listener in group.listeners)
+        {
+            if ([listener respondsToSelector:sel]) { [listener manager:self peripheral:peripheral didWriteValueForCharacteristic:characteristic error:error]; }
         }
+        break;
     }
     
     // Callback gerneric listeners
-    for (NSObject <RLABluetoothDelegate>*listener in _genericListeners) {
-        if ([listener respondsToSelector:sel]) {
-            if ([listener respondsToSelector:sel]) {
-                [listener manager:self peripheral:peripheral didWriteValueForCharacteristic:characteristic error:error];
-            }
-        }
+    for (NSObject <RLABluetoothDelegate>* listener in _genericListeners)
+    {
+        if ([listener respondsToSelector:sel]) { [listener manager:self peripheral:peripheral didWriteValueForCharacteristic:characteristic error:error]; }
     }
 }
 
@@ -303,35 +319,31 @@
     
     // Callback appropriate listener with sensor data
     SEL const sel = @selector(manager:peripheral:didUpdateNotificationStateForCharacteristic:error:);
-    for (RLABluetoothListenersGroup*info in _peripheralListeners) {
-        if (info.peripheral == peripheral) {
-            for (NSObject <RLABluetoothDelegate>*listener in [info listeners]) {
-                if ([listener respondsToSelector:sel]) {
-                    [listener manager:self peripheral:peripheral didUpdateNotificationStateForCharacteristic:characteristic error:error];
-                }
-            }
+    for (RLABluetoothDelegatesGroup* group in _peripheralListeners)
+    {
+        if (group.peripheral != peripheral) { continue; }
+        
+        for (NSObject <RLABluetoothDelegate>* listener in group.listeners)
+        {
+            if ([listener respondsToSelector:sel]) { [listener manager:self peripheral:peripheral didUpdateNotificationStateForCharacteristic:characteristic error:error]; }
         }
+        break;
     }
     
     // Callback for gerneric listeners
-    for (NSObject <RLABluetoothDelegate>*listener in _genericListeners) {
-        if ([listener respondsToSelector:sel]) {
-            if ([listener respondsToSelector:sel]) {
-                [listener manager:self peripheral:peripheral didUpdateNotificationStateForCharacteristic:characteristic error:error];
-            }
-        }
+    for (NSObject <RLABluetoothDelegate>*listener in _genericListeners)
+    {
+        if ([listener respondsToSelector:sel]) { [listener manager:self peripheral:peripheral didUpdateNotificationStateForCharacteristic:characteristic error:error]; }
     }
 }
 
 #pragma mark - Private helpers
 
-- (RLABluetoothListenersGroup*)listenersGroupForPeripheral:(CBPeripheral *)peripheral
+- (RLABluetoothDelegatesGroup*)listenersGroupForPeripheral:(CBPeripheral *)peripheral
 {
-    for (RLABluetoothListenersGroup* listenersGroup in _peripheralListeners) {
-        if (listenersGroup) {
-            CBPeripheral *listenedPeripheral = [listenersGroup peripheral];
-            if (listenedPeripheral == peripheral) return listenersGroup;
-        }
+    for (RLABluetoothDelegatesGroup* listenersGroup in _peripheralListeners)
+    {
+        if (listenersGroup.peripheral == peripheral) { return listenersGroup; }
     }
     return nil;
 }

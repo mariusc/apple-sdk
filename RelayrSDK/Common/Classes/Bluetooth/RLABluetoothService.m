@@ -1,6 +1,7 @@
 @import CoreBluetooth;                                  // Apple
 #import "RLABluetoothService.h"                         // Header
 #import "RLABluetoothManager.h"                         // Relayr.framework
+#import "RLABluetoothAdapterController.h"               // Relayr.framework
 
 //#import "RLASensorPrivateAPI.h"                         // Relayr.framework (protocol)
 //#import "RLADevicePrivateAPI.h"                         // Relayr.framework (protocol)
@@ -13,7 +14,6 @@
 //#import "RLAWunderbarRegistrationPeripheralRequest.h"   // Relayr.framework (peripheral role)
 //#import "RLAColorSensor.h"                              // Relayr.framework (sensor)
 //#import "RLAOutput.h"                                   // Relayr.framework (output)
-//#import "RLABluetoothAdapterController.h"               // Relayr.framework
 
 //@interface RLADevice () <RLASensorDelegate>
 //@end
@@ -25,7 +25,6 @@
 //@end
 
 @interface RLABluetoothService ()
-//@property (strong, nonatomic) RLABluetoothAdapterController* bleAdapterCntrll;
 //@property (strong, nonatomic) RLABluetoothPeripheralsDiscoveryRequest* peripheralRequest;       // Retainer
 //@property (strong, nonatomic) RLAWunderbarRegistrationPeripheralRequest* registrationRequest;   // Retainer
 @end    // The sole purpose of the retainers is to prevent premature deallocation of the requests
@@ -34,6 +33,7 @@
 {
     CBCentralManager* _centralManager;
     RLABluetoothManager* _bleManager;
+    RLABluetoothAdapterController* _bleAdapterController;
 }
 
 #pragma mark - Public API
@@ -45,18 +45,20 @@
         _bleManager = [[RLABluetoothManager alloc] init];
         _centralManager = [[CBCentralManager alloc] initWithDelegate:_bleManager queue:nil];
         _bleManager.centralManager = _centralManager;
+        _bleAdapterController = [[RLABluetoothAdapterController alloc] init];
     }
     return self;
 }
 
+// TODO: Uncomment code
 - (void)devicesWithSensorsAndOutputsOfClasses:(NSArray *)classes timeout:(NSTimeInterval)timeout completion:(void(^)(NSArray*, NSError*))completion
 {
     RLAErrorAssertTrueAndReturn(completion, RLAErrorCodeMissingArgument);
     
     __autoreleasing NSError* error;
     if ( ![self isBluetoothAvailable:&error] ) { return completion(nil, error); }
-//
-//    // Setup request
+
+    // Setup request
 //    self.peripheralRequest = [[RLABluetoothPeripheralsDiscoveryRequest alloc] initWithListenerManager:_bleManager permittedDeviceClasses:classes timeout:timeout];
 //    
 //    // Execute request
@@ -77,26 +79,20 @@
 {
     if ( _centralManager.state == CBCentralManagerStatePoweredOn ) return YES;
     
-    if (error != NULL) {
+    if (error != NULL)
+    {
         *error = [RLAError errorWithCode:RLAErrorCodeUnknownConnectionError localizedDescription:@"Could not connect to devices via Bluetooth" failureReason:@"Bluetooth connectity is not available"];
     }
     return NO;
 }
 
-//- (RLABluetoothAdapterController*)bleAdapterCntrll
-//{
-//    if (!_bleAdapterCntrll) {
-//        _bleAdapterCntrll = self.bleAdapterCntrll = [[RLABluetoothAdapterController alloc] init];
-//    }
-//    return _bleAdapterCntrll;
-//}
-//
-//- (NSArray*)serializePeripherals:(NSArray *)peripherals
-//{
-//    // Setup device objects with all connected peripherals
-//    NSMutableArray *mArray = [NSMutableArray array];
-//    for (CBPeripheral *peripheral in peripherals) {
-//        // Init device
+// TODO: Uncomment code
+- (NSArray*)serializePeripherals:(NSArray *)peripherals
+{
+    // Setup device objects with all connected peripherals
+    NSMutableArray* devices = [NSMutableArray array];
+    for (CBPeripheral* peripheral in peripherals) {
+        // Init device
 //        RLALocalDevice *device = [[RLALocalDevice alloc] initWithPeripheral:peripheral andListenerManager:_bleManager];
 //        
 //        // Assign sensors to device
@@ -128,11 +124,11 @@
 //            if ([mOutputs count]) [device setOutputs:[mOutputs copy]];
 //            
 //            // Store device
-//            [mArray addObject:device];
+//            [devices addObject:device];
 //        }
-//    }
-//    
-//    return [mArray copy];
-//}
+    }
+
+    return [devices copy];
+}
 
 @end

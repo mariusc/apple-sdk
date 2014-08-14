@@ -89,11 +89,11 @@ forCharacteristic:(CBCharacteristic*)characteristic
  *  @param error The <code>NSError</code> which will be thrown if the call was unsuccessful.
  */
 - (void)manager:(RLABluetoothManager*)manager
-peripheral:(CBPeripheral*)peripheral
-didUpdateValue:(NSDictionary*)value
+     peripheral:(CBPeripheral*)peripheral
+ didUpdateValue:(NSDictionary*)value
 withSensorClass:(Class)class
 forCharacteristic:(CBCharacteristic*)characteristic
-error:(NSError*)error;
+          error:(NSError*)error;
 
 @optional
 /*!
@@ -107,9 +107,9 @@ error:(NSError*)error;
  *  @param error The <code>NSError</code> which will be thrown if the call was unsuccessful.
  */
 - (void)manager:(RLABluetoothManager*)manager
-peripheral:(CBPeripheral*)peripheral
+     peripheral:(CBPeripheral*)peripheral
 didDiscoverCharacteristicsForService:(CBService*)service
-error:(NSError*)error;
+          error:(NSError*)error;
 
 @optional
 /*!
@@ -123,9 +123,9 @@ error:(NSError*)error;
  *  @param error The <code>NSError</code> which will be thrown if the call was unsuccessful.
  */
 - (void)manager:(RLABluetoothManager*)manager
-peripheral:(CBPeripheral*)peripheral
+     peripheral:(CBPeripheral*)peripheral
 didUpdateNotificationStateForCharacteristic:(CBCharacteristic*)characteristic
-error:(NSError*)error;
+          error:(NSError*)error;
 
 @optional
 /*!
@@ -139,8 +139,8 @@ error:(NSError*)error;
  *  @param error The <code>NSError</code> which will be thrown if the call was unsuccessful.
  */
 - (void)manager:(RLABluetoothManager*)manager
-peripheral:(CBPeripheral*)peripheral
+     peripheral:(CBPeripheral*)peripheral
 didWriteValueForCharacteristic:(CBCharacteristic*)characteristic
-error:(NSError*)error;
+          error:(NSError*)error;
 
 @end

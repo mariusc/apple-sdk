@@ -7,7 +7,7 @@
  *
  *  @abstract It groups many RLABluetoothDelegate objects that want to listen for a specific CBPeripheral.
  */
-@interface RLABluetoothListenersGroup : NSObject
+@interface RLABluetoothDelegatesGroup : NSObject
 
 /*!
  *  @method initWithPeripheral:listener:
