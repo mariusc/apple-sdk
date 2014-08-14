@@ -7,6 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		621A6AA8199CC4720004F9FD /* Common.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 621A6AA7199CC4720004F9FD /* Common.xcconfig */; };
+		621A6AA9199CC4720004F9FD /* Common.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 621A6AA7199CC4720004F9FD /* Common.xcconfig */; };
+		621A6AB5199CC6200004F9FD /* RLAMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6AB4199CC6200004F9FD /* RLAMacros.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		621A6AB6199CC6200004F9FD /* RLAMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6AB4199CC6200004F9FD /* RLAMacros.h */; };
+		621A6AD3199CCD170004F9FD /* RLAError.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6ACE199CCD170004F9FD /* RLAError.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		621A6AD4199CCD170004F9FD /* RLAError.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6ACE199CCD170004F9FD /* RLAError.h */; };
+		621A6AD5199CCD170004F9FD /* RLAError.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6ACF199CCD170004F9FD /* RLAError.m */; };
+		621A6AD6199CCD170004F9FD /* RLAError.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6ACF199CCD170004F9FD /* RLAError.m */; };
+		621A6AD7199CCD170004F9FD /* RLALog.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6AD1199CCD170004F9FD /* RLALog.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		621A6AD8199CCD170004F9FD /* RLALog.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6AD1199CCD170004F9FD /* RLALog.h */; };
+		621A6AD9199CCD170004F9FD /* RLALog.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6AD2199CCD170004F9FD /* RLALog.m */; };
+		621A6ADA199CCD170004F9FD /* RLALog.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6AD2199CCD170004F9FD /* RLALog.m */; };
+		621A6ADD199CD1C30004F9FD /* RLAUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6ADC199CD1C30004F9FD /* RLAUser.h */; };
+		621A6ADE199CD1C30004F9FD /* RLAUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6ADC199CD1C30004F9FD /* RLAUser.h */; };
+		621A6AE0199CE1AA0004F9FD /* Common.pch in Headers */ = {isa = PBXBuildFile; fileRef = 621A6ADF199CE1AA0004F9FD /* Common.pch */; };
+		621A6AE1199CE1AA0004F9FD /* Common.pch in Headers */ = {isa = PBXBuildFile; fileRef = 621A6ADF199CE1AA0004F9FD /* Common.pch */; };
+		621A6AE3199CE23E0004F9FD /* iOS.pch in Headers */ = {isa = PBXBuildFile; fileRef = 621A6AE2199CE23E0004F9FD /* iOS.pch */; };
+		621A6AE5199CE28B0004F9FD /* OSX.pch in Headers */ = {isa = PBXBuildFile; fileRef = 621A6AE4199CE28B0004F9FD /* OSX.pch */; };
 		6252F0DF199C24E2002ECE4D /* Relayr.h in Headers */ = {isa = PBXBuildFile; fileRef = 6252F0D5199C24AD002ECE4D /* Relayr.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6252F10B199C2C3B002ECE4D /* Relayr.h in Headers */ = {isa = PBXBuildFile; fileRef = 6252F100199C2BFC002ECE4D /* Relayr.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6252F10C199C2C7F002ECE4D /* OSXRelayrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6252F107199C2C0C002ECE4D /* OSXRelayrTests.m */; };
@@ -14,6 +32,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		621A6AA7199CC4720004F9FD /* Common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Common.xcconfig; sourceTree = "<group>"; };
+		621A6AB4199CC6200004F9FD /* RLAMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAMacros.h; sourceTree = "<group>"; };
+		621A6ACE199CCD170004F9FD /* RLAError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAError.h; sourceTree = "<group>"; };
+		621A6ACF199CCD170004F9FD /* RLAError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAError.m; sourceTree = "<group>"; };
+		621A6AD1199CCD170004F9FD /* RLALog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLALog.h; sourceTree = "<group>"; };
+		621A6AD2199CCD170004F9FD /* RLALog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLALog.m; sourceTree = "<group>"; };
+		621A6ADC199CD1C30004F9FD /* RLAUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAUser.h; sourceTree = "<group>"; };
+		621A6ADF199CE1AA0004F9FD /* Common.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.pch; sourceTree = "<group>"; };
+		621A6AE2199CE23E0004F9FD /* iOS.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOS.pch; sourceTree = "<group>"; };
+		621A6AE4199CE28B0004F9FD /* OSX.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSX.pch; sourceTree = "<group>"; };
 		6252F0B3199C2465002ECE4D /* Relayr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Relayr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6252F0BE199C2465002ECE4D /* iOSRelayrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSRelayrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6252F0D1199C2492002ECE4D /* Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Common.xcconfig; sourceTree = "<group>"; };
@@ -63,10 +91,95 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		621A6AA1199CC4720004F9FD /* CommonTests */ = {
+			isa = PBXGroup;
+			children = (
+				621A6AA2199CC4720004F9FD /* Assets */,
+				621A6AA4199CC4720004F9FD /* Classes */,
+				621A6AA6199CC4720004F9FD /* Configuration */,
+			);
+			path = CommonTests;
+			sourceTree = "<group>";
+		};
+		621A6AA2199CC4720004F9FD /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				621A6AA3199CC4720004F9FD /* Storyboards */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		621A6AA3199CC4720004F9FD /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		621A6AA4199CC4720004F9FD /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				621A6AA5199CC4720004F9FD /* User */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		621A6AA5199CC4720004F9FD /* User */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		621A6AA6199CC4720004F9FD /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				621A6AA7199CC4720004F9FD /* Common.xcconfig */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		621A6AB7199CC6D00004F9FD /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				621A6ACD199CCD170004F9FD /* Errors */,
+				621A6AD0199CCD170004F9FD /* Logs */,
+			);
+			name = Utilities;
+			path = Classes/Utilities;
+			sourceTree = "<group>";
+		};
+		621A6ACD199CCD170004F9FD /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				621A6ACE199CCD170004F9FD /* RLAError.h */,
+				621A6ACF199CCD170004F9FD /* RLAError.m */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		621A6AD0199CCD170004F9FD /* Logs */ = {
+			isa = PBXGroup;
+			children = (
+				621A6AD1199CCD170004F9FD /* RLALog.h */,
+				621A6AD2199CCD170004F9FD /* RLALog.m */,
+			);
+			path = Logs;
+			sourceTree = "<group>";
+		};
+		621A6ADB199CD1B90004F9FD /* User */ = {
+			isa = PBXGroup;
+			children = (
+				621A6ADC199CD1C30004F9FD /* RLAUser.h */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		6252F0A6199C243D002ECE4D = {
 			isa = PBXGroup;
 			children = (
 				6252F0CC199C2492002ECE4D /* Common */,
+				621A6AA1199CC4720004F9FD /* CommonTests */,
 				6252F0B5199C2465002ECE4D /* iOSRelayr */,
 				6252F0BF199C2465002ECE4D /* iOSRelayrTests */,
 				6252F0E6199C2AFB002ECE4D /* OSXRelayr */,
@@ -111,6 +224,7 @@
 			children = (
 				6252F0CD199C2492002ECE4D /* Assets */,
 				6252F0CF199C2492002ECE4D /* Classes */,
+				621A6AB7199CC6D00004F9FD /* Utilities */,
 				6252F0D0199C2492002ECE4D /* Configuration */,
 			);
 			path = Common;
@@ -134,6 +248,7 @@
 		6252F0CF199C2492002ECE4D /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				621A6ADB199CD1B90004F9FD /* User */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -142,6 +257,8 @@
 			isa = PBXGroup;
 			children = (
 				6252F0D1199C2492002ECE4D /* Common.xcconfig */,
+				621A6ADF199CE1AA0004F9FD /* Common.pch */,
+				621A6AB4199CC6200004F9FD /* RLAMacros.h */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -172,8 +289,9 @@
 		6252F0D6199C24AD002ECE4D /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				6252F0D7199C24AD002ECE4D /* Info.plist */,
 				6252F0D8199C24AD002ECE4D /* iOS.xcconfig */,
+				6252F0D7199C24AD002ECE4D /* Info.plist */,
+				621A6AE2199CE23E0004F9FD /* iOS.pch */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -255,8 +373,9 @@
 		6252F101199C2BFC002ECE4D /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				6252F102199C2BFC002ECE4D /* Info.plist */,
 				6252F103199C2BFC002ECE4D /* OSX.xcconfig */,
+				6252F102199C2BFC002ECE4D /* Info.plist */,
+				621A6AE4199CE28B0004F9FD /* OSX.pch */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -300,6 +419,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				6252F0DF199C24E2002ECE4D /* Relayr.h in Headers */,
+				621A6AD7199CCD170004F9FD /* RLALog.h in Headers */,
+				621A6AE0199CE1AA0004F9FD /* Common.pch in Headers */,
+				621A6AD3199CCD170004F9FD /* RLAError.h in Headers */,
+				621A6ADD199CD1C30004F9FD /* RLAUser.h in Headers */,
+				621A6AE3199CE23E0004F9FD /* iOS.pch in Headers */,
+				621A6AB5199CC6200004F9FD /* RLAMacros.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,7 +432,13 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				621A6AE5199CE28B0004F9FD /* OSX.pch in Headers */,
 				6252F10B199C2C3B002ECE4D /* Relayr.h in Headers */,
+				621A6AD8199CCD170004F9FD /* RLALog.h in Headers */,
+				621A6AE1199CE1AA0004F9FD /* Common.pch in Headers */,
+				621A6AD4199CCD170004F9FD /* RLAError.h in Headers */,
+				621A6ADE199CD1C30004F9FD /* RLAUser.h in Headers */,
+				621A6AB6199CC6200004F9FD /* RLAMacros.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,6 +569,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				621A6AA8199CC4720004F9FD /* Common.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,6 +584,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				621A6AA9199CC4720004F9FD /* Common.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,6 +595,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				621A6AD5199CCD170004F9FD /* RLAError.m in Sources */,
+				621A6AD9199CCD170004F9FD /* RLALog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,6 +612,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				621A6AD6199CCD170004F9FD /* RLAError.m in Sources */,
+				621A6ADA199CCD170004F9FD /* RLALog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,7 +669,9 @@
 				DEFINES_MODULE = YES;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREFIX_HEADER = iOSRelayr/Configuration/iOS.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -579,6 +718,8 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = c11;
+				GCC_PREFIX_HEADER = iOSRelayr/Configuration/iOS.pch;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -621,6 +762,8 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = c11;
+				GCC_PREFIX_HEADER = iOSRelayr/Configuration/iOS.pch;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -791,7 +934,7 @@
 				DEFINES_MODULE = YES;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -841,7 +984,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -883,7 +1026,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;

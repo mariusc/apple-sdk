@@ -1,6 +1,7 @@
-// Framework classes
-#import "RLAError.h"
-#import "RLALog.h"
+#pragma once
+
+#import "RLAError.h"    // Relayr.framework
+#import "RLALog.h"      // Relayr.framework
 
 // Error objects
 

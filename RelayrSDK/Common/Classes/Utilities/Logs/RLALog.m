@@ -3,68 +3,69 @@
 
 @implementation RLALog
 
-# pragma mark - Logging (Debug)
+#pragma mark - Public API
 
-+ (void)debug:(NSString *)format, ...
++ (void)debug:(NSString*)format, ...
 {
-  #ifdef DEBUG
-  
+#ifdef DEBUG
+    
+    va_list args;
+    va_start(args, format);
+    NSString* msg = [[NSString alloc] initWithFormat:format arguments:args];
+    va_end(args);
+    
+    [[self class] logWithPrefix:nil logCallStack:NO message:msg];
+#endif
+}
+
++ (void)error:(NSString*)format, ...
+{
     va_list args;
     va_start(args, format);
     NSString *msg = [[NSString alloc] initWithFormat:format arguments:args];
     va_end(args);
-  
-    [[self class] RLA_logWithPrefix:nil
-                       logCallStack:NO
-                            message:msg];
-  #endif
+    
+    [[self class] logWithPrefix:@"Error" logCallStack:YES message:msg];
 }
 
-# pragma mark - Logging (Error)
+#pragma mark - Private methods
 
-+ (void)error:(NSString *)format, ...
++ (void)logWithPrefix:(NSString*)prefix logCallStack:(BOOL)logCallStack message:(NSString*)msg
 {
-  va_list args;
-  va_start(args, format);
-  NSString *msg = [[NSString alloc] initWithFormat:format arguments:args];
-  va_end(args);
-  
-  [[self class] RLA_logWithPrefix:@"Error"
-                     logCallStack:YES
-                          message:msg];
+    const char *arch = [[[self class] arch] cStringUsingEncoding:NSUTF8StringEncoding];
+    printf("Relayr.framework(%s): ", arch);
+    
+    if (prefix) {
+        printf("%s: ", [prefix cStringUsingEncoding:NSUTF8StringEncoding]);
+    }
+    
+    if (msg) {
+        printf("%s\n", [msg cStringUsingEncoding:NSUTF8StringEncoding]);
+    }
+    
+    if (logCallStack) {
+        printf("%s\n", [[self class] callStackSymbols]);
+    }
 }
 
-# pragma mark - Private helpers
-
-+ (void)RLA_logWithPrefix:(NSString *)prefix
-             logCallStack:(BOOL)logCallStack
-                  message:(NSString *)msg
++ (char const*)callStackSymbols
 {
-  const char *arch = [[[self class] RLA_arch] cStringUsingEncoding:NSUTF8StringEncoding];
-  printf("Relayr.framework(%s): ", arch);
-  if (prefix) printf("%s: ", [prefix cStringUsingEncoding:NSUTF8StringEncoding]);
-  if (msg) printf("%s\n", [msg cStringUsingEncoding:NSUTF8StringEncoding]);
-  if (logCallStack) printf("%s\n", [[self class] RLA_callStackSymbols]);
+    NSArray* symbols = [NSThread callStackSymbols];
+    NSString* str = [symbols description];
+    char const* cStr = [str cStringUsingEncoding:NSUTF8StringEncoding];
+    return cStr;
 }
 
-+ (const char *)RLA_callStackSymbols
++ (NSString*)arch
 {
-  NSArray *symbols = [NSThread callStackSymbols];
-  NSString *str = [symbols description];
-  const char *cStr = [str cStringUsingEncoding:NSUTF8StringEncoding];
-  return cStr;
-}
-
-+ (NSString *)RLA_arch
-{
-  NSString *arch;
-  #if __LP64__
+    NSString *arch;
+#if __LP64__
     arch = @"64";
-  #else
+#else
     arch = @"32";
-  #endif
-  
-  return arch;
+#endif
+    
+    return arch;
 }
 
 @end

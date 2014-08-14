@@ -1,15 +1,5 @@
-//
-//  Common.pch
-//  RelayrSDK
-//
-//  Created by Marcos Sánchez-Dehesa on 14/08/14.
-//
-//
+#pragma once
 
-#ifndef RelayrSDK_Common_pch
-#define RelayrSDK_Common_pch
-
-// Include any system framework and library headers here that should be included in all compilation units.
-// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
-
-#endif
+#import "RLAError.h"    // Relayr.framework
+#import "RLALog.h"      // Relayr.framework
+#import "RLAMacros.h"   // Relayr.framework
