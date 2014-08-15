@@ -1,10 +1,11 @@
 #import "RLABluetoothManager.h"                 // Header
 #import "RLABluetoothDelegatesGroup.h"          // Relayr.framework
 
-#import "RLABluetoothAdapterController.h"                 // Relayr.framework
+#import "RLABluetoothAdapterController.h"       // Relayr.framework
+#import "RLABluetoothAdapter.h"                 // Relayr.framework
 #import "RLAPeripheralnfo.h"                    // Relayr.framework
 #import "RLAMappingInfo.h"                      // Relayr.framework
-#import "RLACBUUID.h"                           // Relayr.framework
+#import "RLACBUUID.h"
 //#import "RLAColorSensor.h"                      // Relayr.framework (sensor)
 //#import "RLAProximitySensor.h"                  // Relayr.framework (sensor)
 //#import "RLAWunderbarColorSensorBluetoothAdapter.h"     // Relayr.framework (adapter)
@@ -186,13 +187,13 @@
 
 #pragma mark CBPeripheralDelegate
 
-// TODO: This service doesn't seem to propage the services discovered
+#warning This service doesn't seem to propagate the services it discovers
 - (void)peripheral:(CBPeripheral*)peripheral didDiscoverServices:(NSError*)error
 {
     // Discover characteristics for services
-    NSArray*services = peripheral.services;
+    NSArray* services = peripheral.services;
     
-    for (CBService*service in services) { [peripheral discoverCharacteristics:nil forService:service]; }
+    for (CBService* service in services) { [peripheral discoverCharacteristics:nil forService:service]; }
 }
 
 - (void)peripheral:(CBPeripheral*)peripheral didDiscoverCharacteristicsForService:(CBService*)service error:(NSError*)error
@@ -218,7 +219,6 @@
     }
 }
 
-// TODO: Uncoment code
 - (void)peripheral:(CBPeripheral*)peripheral didUpdateValueForCharacteristic:(CBCharacteristic*)characteristic error:(NSError*)error
 {
     [RLALog debug:@"didUpdateValueForCharacteristic: %@ value: %@ error: %@", peripheral.name, characteristic.value, error];
@@ -263,29 +263,36 @@
         if (!info.adapterClass) { return; };
 
         // Convert sensor data
-//        RLABluetoothServiceAdapter* adapter = [[[info adapterClass] alloc] initWithData:characteristic.value];
-//        RLAErrorAssertTrueAndReturn(adapter, RLAErrorCodeMissingExpectedValue);
-//        NSDictionary* dict = [adapter dictionary];
-//        RLAErrorAssertTrueAndReturn(dict, RLAErrorCodeMissingExpectedValue);
-//        
-//        // Callback appropriate listener with sensor data
-//        SEL sel = @selector(manager:peripheral:didUpdateValue:withSensorClass:forCharacteristic:error:);
-//        for (RLABluetoothDelegatesGroup* group in _peripheralListeners) {
-//            if (group.peripheral == peripheral) {
-//                for (NSObject <RLABluetoothDelegate>*listener in group.listeners) {
-//                    if ([listener respondsToSelector:sel]) {
-//                        [listener manager:self peripheral:peripheral didUpdateValue:dict withSensorClass:[info sensorClass] forCharacteristic:characteristic error:error];
-//                    }
-//                }
-//            }
-//        }
-//        
-//        // Callback gerneric listeners
-//        for (NSObject <RLABluetoothDelegate>*listener in _genericListeners) {
-//            if ([listener respondsToSelector:sel]) {
-//                [listener manager:self peripheral:peripheral didUpdateValue:dict withSensorClass:[info sensorClass] forCharacteristic:characteristic error:error];
-//            }
-//        }
+        RLABluetoothAdapter* adapter = [[[info adapterClass] alloc] initWithData:characteristic.value];
+        RLAErrorAssertTrueAndReturn(adapter, RLAErrorCodeMissingExpectedValue);
+        NSDictionary* dict = [adapter dictionary];
+        RLAErrorAssertTrueAndReturn(dict, RLAErrorCodeMissingExpectedValue);
+
+        // Callback appropriate listener with sensor data
+        SEL sel = @selector(manager:peripheral:didUpdateValue:withSensorClass:forCharacteristic:error:);
+        for (RLABluetoothDelegatesGroup* group in _peripheralListeners)
+        {
+            if (group.peripheral != peripheral) { continue; }
+            
+            for (NSObject <RLABluetoothDelegate>* listener in group.listeners)
+            {
+                if ([listener respondsToSelector:sel])
+                {
+                    [listener manager:self peripheral:peripheral didUpdateValue:dict withSensorClass:[info sensorClass] forCharacteristic:characteristic error:error];
+                }
+            }
+            
+            break;
+        }
+
+        // Callback gerneric listeners
+        for (NSObject <RLABluetoothDelegate>* listener in _genericListeners)
+        {
+            if ([listener respondsToSelector:sel])
+            {
+                [listener manager:self peripheral:peripheral didUpdateValue:dict withSensorClass:[info sensorClass] forCharacteristic:characteristic error:error];
+            }
+        }
     }
 }
 
