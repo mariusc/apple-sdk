@@ -1,4 +1,4 @@
-#import "RLAError.h"        // Header
+#import "RLAError.h" // Header
 
 @implementation RLAError
 

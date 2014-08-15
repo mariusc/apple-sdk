@@ -1,9 +1,9 @@
-@import Foundation;     // Apple
+@import Foundation; // Apple
 
 /*!
  *  @class RLAError
  *
- *  @abstract Utility class providing convenience methods for initializing errors as well as framework internal error codes.
+ *  @abstract Utility class which provides convenience methods for initializing errors as well as internal framework error codes.
  */
 @interface RLAError : NSObject
 
@@ -18,7 +18,7 @@
  *  @constant RLAErrorCodeAPIMisuse API misuse.
  *  @constant RLAErrorCodeMissingArgument Method missing an argument.
  *  @constant RLAErrorCodeMissingExpectedValue Missing an expected value.
- *  @constant RLAErrorCodeConnectionChannelPoweredOff Bluetooth or Wifi antenna is powered off.
+ *  @constant RLAErrorCodeConnectionChannelPoweredOff The Bluetooth or Wifi antenna is powered off.
  *  @constant RLAErrorCodeConnectionError General connection error.
  *  @constant RLAErrorCodeUnknownConnectionError Unknown connection error.
  *  @constant RLAErrorCodeSerializationFailed Binary serialisation error.
@@ -42,8 +42,8 @@ typedef NS_ENUM(NSInteger, RLAErrorCode) {
  *  @abstract Convenience method for initializing framework specific errors.
  *
  *  @param code The predefined RLAErrorCode for the error.
- *  @param info The userInfo dictionary for the error. userInfo may be nil.
- *	@return An NSError object for domain with the specified error code and the dictionary of arbitrary data userInfo.
+ *  @param info A dictionary of information for the error. This parameter may be nil.
+ *	@return An NSError object for the error domain with the specified error code and a dictionary of error user information.
  *
  *  @seealso RLAErrorCode
  */
@@ -57,8 +57,8 @@ typedef NS_ENUM(NSInteger, RLAErrorCode) {
  *
  *  @param code The predefined RLAErrorCode for the error.
  *  @param localizedDescription Localised string with the description of the error.
- *  @param failureReason String specifying the reason for the failure.
- *	@return An NSError object for domain with the specified error code and the dictionary of arbitrary data userInfo.
+ *  @param failureReason A string specifying the reason for the failure.
+ *	@return An NSError object for the error domain with the specified error code and a dictionary of error user information.
  *
  *  @seealso RLAErrorCode
  */

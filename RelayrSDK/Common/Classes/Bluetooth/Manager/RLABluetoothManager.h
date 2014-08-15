@@ -1,18 +1,18 @@
-@import Foundation;                 // Apple
-@import CoreBluetooth;              // Apple
-#import "RLABluetoothDelegate.h"    // Relayr.framework
+@import Foundation;              // Apple
+@import CoreBluetooth;           // Apple
+#import "RLABluetoothDelegate.h" // Relayr.framework
 
 /*!
  *  @class RLABluetoothManager
  *
- *  @abstract It provides clustered callbacks for relevant events to registered devices.
+ *  @abstract This class provides clustered callbacks for relevant events to registered devices.
  */
 @interface RLABluetoothManager : NSObject <CBCentralManagerDelegate,CBPeripheralDelegate>
 
 /*!
- *  @method bluetoothCentralManager
+ *  @property bluetoothCentralManager
  *
- *  @abstract The CBCentralManager that is used to monitor bluetooth state updates
+ *  @abstract The CBCentralManager that is used to monitor bluetooth state updates.
  *
  *	@return The Core Bluetooth Central Manager.
  */

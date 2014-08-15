@@ -1,5 +1,4 @@
-// Header
-#import "RLACBUUID.h"
+#import "RLACBUUID.h" // Header
 
 @implementation RLACBUUID
 

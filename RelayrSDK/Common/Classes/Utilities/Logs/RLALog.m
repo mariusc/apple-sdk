@@ -1,5 +1,4 @@
-// Header
-#import "RLALog.h"
+#import "RLALog.h" // Header
 
 @implementation RLALog
 

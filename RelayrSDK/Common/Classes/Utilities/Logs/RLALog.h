@@ -1,18 +1,18 @@
-@import Foundation;     // Apple
+@import Foundation; // Apple
 
 /*!
  *  @class RLALog
  *
- *  @abstract It logs any message in a relayr friendly format.
+ *  @abstract The logging class for relayr.framework.
  */
 @interface RLALog : NSObject
 
 /*!
  *  @method debug:...
  *
- *  @abstract It logs a message when the build settings are set to DEBUG
+ *  @abstract Called to log a message (when the build settings are set to DEBUG).
  *
- *  @param format <code>NSString</code> containing the message format specifiers.
+ *  @param format A String containing the message format specifiers.
  *  @param ... Variadic argument containing all values in the <code>format</code> string.
  */
 + (void)debug:(NSString *)format, ...;
@@ -20,9 +20,9 @@
 /*!
  *  @method error:...
  *
- *  @abstract It logs an error message in a relayr friendly format.
+ *  @abstract Called to log an error.
  *
- *  @param format <code>NSString</code> containing the message format specifiers.
+ *  @param format A String containing the message format specifiers.
  *  @param ... Variadic argument containing all values in the <code>format</code> string.
  */
 + (void)error:(NSString *)format, ...;
