@@ -5,7 +5,7 @@
 /*!
  *  @protocol RLABluetoothDelegate
  *
- *  @abstract Provides means to forward delegate callbacks of these delegates in a unified way:
+ *  @abstract Provides a means to forward bluetooth delegate callbacks in a unified way.
  */
 @protocol RLABluetoothDelegate <NSObject>
 
@@ -70,10 +70,10 @@ didDisconnectPeripheral:(CBPeripheral*)peripheral;
  *  @param error The <code>NSError</code> which will be thrown if the call was unsuccessful.
  */
 - (void)manager:(RLABluetoothManager*)manager
-     peripheral:(CBPeripheral*)peripheral
-  didUpdateData:(NSData*)data
+peripheral:(CBPeripheral*)peripheral
+didUpdateData:(NSData*)data
 forCharacteristic:(CBCharacteristic*)characteristic
-          error:(NSError*)error;
+error:(NSError*)error;
 
 @optional
 /*!
