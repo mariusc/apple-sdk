@@ -58,10 +58,10 @@
 		625204A2199E08D900A27C85 /* RLAWunderbarHumiditySensorBluetoothAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 62520494199E08D900A27C85 /* RLAWunderbarHumiditySensorBluetoothAdapter.m */; };
 		625204A3199E08D900A27C85 /* RLAWunderbarNoiseSensorBluetoothAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 62520495199E08D900A27C85 /* RLAWunderbarNoiseSensorBluetoothAdapter.h */; };
 		625204A4199E08D900A27C85 /* RLAWunderbarNoiseSensorBluetoothAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 62520496199E08D900A27C85 /* RLAWunderbarNoiseSensorBluetoothAdapter.m */; };
-		625204A5199E08D900A27C85 /* RLAWunderbarProximitySensorBluetoothAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 62520497199E08D900A27C85 /* RLAWunderbarProximitySensorBluetoothAdapter.h */; };
-		625204A6199E08D900A27C85 /* RLAWunderbarProximitySensorBluetoothAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 62520498199E08D900A27C85 /* RLAWunderbarProximitySensorBluetoothAdapter.m */; };
-		625204A7199E08D900A27C85 /* RLAWunderbarTemperatureSensorBluetoothAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 62520499199E08D900A27C85 /* RLAWunderbarTemperatureSensorBluetoothAdapter.h */; };
-		625204A8199E08D900A27C85 /* RLAWunderbarTemperatureSensorBluetoothAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6252049A199E08D900A27C85 /* RLAWunderbarTemperatureSensorBluetoothAdapter.m */; };
+		625204A5199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.h in Headers */ = {isa = PBXBuildFile; fileRef = 62520497199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.h */; };
+		625204A6199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.m in Sources */ = {isa = PBXBuildFile; fileRef = 62520498199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.m */; };
+		625204A7199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.h in Headers */ = {isa = PBXBuildFile; fileRef = 62520499199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.h */; };
+		625204A8199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.m in Sources */ = {isa = PBXBuildFile; fileRef = 6252049A199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.m */; };
 		6252F0DF199C24E2002ECE4D /* Relayr.h in Headers */ = {isa = PBXBuildFile; fileRef = 6252F0D5199C24AD002ECE4D /* Relayr.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6252F10B199C2C3B002ECE4D /* Relayr.h in Headers */ = {isa = PBXBuildFile; fileRef = 6252F100199C2BFC002ECE4D /* Relayr.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6252F10C199C2C7F002ECE4D /* OSXRelayrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6252F107199C2C0C002ECE4D /* OSXRelayrTests.m */; };
@@ -113,10 +113,10 @@
 		62520494199E08D900A27C85 /* RLAWunderbarHumiditySensorBluetoothAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWunderbarHumiditySensorBluetoothAdapter.m; sourceTree = "<group>"; };
 		62520495199E08D900A27C85 /* RLAWunderbarNoiseSensorBluetoothAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWunderbarNoiseSensorBluetoothAdapter.h; sourceTree = "<group>"; };
 		62520496199E08D900A27C85 /* RLAWunderbarNoiseSensorBluetoothAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWunderbarNoiseSensorBluetoothAdapter.m; sourceTree = "<group>"; };
-		62520497199E08D900A27C85 /* RLAWunderbarProximitySensorBluetoothAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWunderbarProximitySensorBluetoothAdapter.h; sourceTree = "<group>"; };
-		62520498199E08D900A27C85 /* RLAWunderbarProximitySensorBluetoothAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWunderbarProximitySensorBluetoothAdapter.m; sourceTree = "<group>"; };
-		62520499199E08D900A27C85 /* RLAWunderbarTemperatureSensorBluetoothAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWunderbarTemperatureSensorBluetoothAdapter.h; sourceTree = "<group>"; };
-		6252049A199E08D900A27C85 /* RLAWunderbarTemperatureSensorBluetoothAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWunderbarTemperatureSensorBluetoothAdapter.m; sourceTree = "<group>"; };
+		62520497199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothAdapterSensorProximity.h; sourceTree = "<group>"; };
+		62520498199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothAdapterSensorProximity.m; sourceTree = "<group>"; };
+		62520499199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothAdapterSensorTemperature.h; sourceTree = "<group>"; };
+		6252049A199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothAdapterSensorTemperature.m; sourceTree = "<group>"; };
 		6252F0B3199C2465002ECE4D /* Relayr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Relayr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6252F0BE199C2465002ECE4D /* iOSRelayrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSRelayrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6252F0D1199C2492002ECE4D /* Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Common.xcconfig; sourceTree = "<group>"; };
@@ -381,10 +381,10 @@
 				62520494199E08D900A27C85 /* RLAWunderbarHumiditySensorBluetoothAdapter.m */,
 				62520495199E08D900A27C85 /* RLAWunderbarNoiseSensorBluetoothAdapter.h */,
 				62520496199E08D900A27C85 /* RLAWunderbarNoiseSensorBluetoothAdapter.m */,
-				62520497199E08D900A27C85 /* RLAWunderbarProximitySensorBluetoothAdapter.h */,
-				62520498199E08D900A27C85 /* RLAWunderbarProximitySensorBluetoothAdapter.m */,
-				62520499199E08D900A27C85 /* RLAWunderbarTemperatureSensorBluetoothAdapter.h */,
-				6252049A199E08D900A27C85 /* RLAWunderbarTemperatureSensorBluetoothAdapter.m */,
+				62520497199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.h */,
+				62520498199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.m */,
+				62520499199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.h */,
+				6252049A199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.m */,
 			);
 			path = Sensors;
 			sourceTree = "<group>";
@@ -647,13 +647,13 @@
 				6252049B199E08D900A27C85 /* RLABluetoothAdapterSensorAccelerometer.h in Headers */,
 				625204A3199E08D900A27C85 /* RLAWunderbarNoiseSensorBluetoothAdapter.h in Headers */,
 				621A6AE0199CE1AA0004F9FD /* Common.pch in Headers */,
-				625204A7199E08D900A27C85 /* RLAWunderbarTemperatureSensorBluetoothAdapter.h in Headers */,
+				625204A7199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.h in Headers */,
 				621A6AFC199CEC000004F9FD /* RLABluetoothService.h in Headers */,
 				621A6AD3199CCD170004F9FD /* RLAError.h in Headers */,
 				6252049D199E08D900A27C85 /* RLABluetoothAdapterSensorColor.h in Headers */,
 				621A6B09199CF66B0004F9FD /* RLABluetoothDelegate.h in Headers */,
 				621A6ADD199CD1C30004F9FD /* RLAUser.h in Headers */,
-				625204A5199E08D900A27C85 /* RLAWunderbarProximitySensorBluetoothAdapter.h in Headers */,
+				625204A5199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.h in Headers */,
 				6252048B199E02C900A27C85 /* RLABluetoothAdapter.h in Headers */,
 				621A6AE3199CE23E0004F9FD /* iOS.pch in Headers */,
 				621A6AB5199CC6200004F9FD /* RLAMacros.h in Headers */,
@@ -838,7 +838,7 @@
 				621A6AD5199CCD170004F9FD /* RLAError.m in Sources */,
 				621A6AFE199CEC000004F9FD /* RLABluetoothService.m in Sources */,
 				6252049C199E08D900A27C85 /* RLABluetoothAdapterSensorAccelerometer.m in Sources */,
-				625204A6199E08D900A27C85 /* RLAWunderbarProximitySensorBluetoothAdapter.m in Sources */,
+				625204A6199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.m in Sources */,
 				625204A0199E08D900A27C85 /* RLAWunderbarGyroscopeSensorBluetoothAdapter.m in Sources */,
 				621A6B17199D2CBD0004F9FD /* RLAPeripheralnfo.m in Sources */,
 				621A6B12199D0F1A0004F9FD /* RLACBUUID.m in Sources */,
@@ -846,7 +846,7 @@
 				625204A4199E08D900A27C85 /* RLAWunderbarNoiseSensorBluetoothAdapter.m in Sources */,
 				6252048C199E02C900A27C85 /* RLABluetoothAdapter.m in Sources */,
 				621A6B0D199CFE310004F9FD /* RLABluetoothDelegatesGroup.m in Sources */,
-				625204A8199E08D900A27C85 /* RLAWunderbarTemperatureSensorBluetoothAdapter.m in Sources */,
+				625204A8199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.m in Sources */,
 				621A6AD9199CCD170004F9FD /* RLALog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
