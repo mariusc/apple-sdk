@@ -189,8 +189,7 @@
 				621A6ACD199CCD170004F9FD /* Errors */,
 				621A6AD0199CCD170004F9FD /* Logs */,
 			);
-			name = Utilities;
-			path = Classes/Utilities;
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		621A6ACD199CCD170004F9FD /* Errors */ = {
@@ -288,8 +287,7 @@
 				621A6B03199CF2CF0004F9FD /* Manager */,
 				621A6B13199D2CBD0004F9FD /* Adapters */,
 			);
-			name = Bluetooth;
-			path = Classes/Bluetooth;
+			path = Bluetooth;
 			sourceTree = "<group>";
 		};
 		621A6B00199CF0170004F9FD /* Bluetooth */ = {
@@ -385,8 +383,6 @@
 			children = (
 				6252F0CD199C2492002ECE4D /* Assets */,
 				6252F0CF199C2492002ECE4D /* Classes */,
-				621A6AF9199CEC000004F9FD /* Bluetooth */,
-				621A6AB7199CC6D00004F9FD /* Utilities */,
 				6252F0D0199C2492002ECE4D /* Configuration */,
 			);
 			path = Common;
@@ -410,6 +406,8 @@
 		6252F0CF199C2492002ECE4D /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				621A6AB7199CC6D00004F9FD /* Utilities */,
+				621A6AF9199CEC000004F9FD /* Bluetooth */,
 				621A6ADB199CD1B90004F9FD /* User */,
 			);
 			path = Classes;
