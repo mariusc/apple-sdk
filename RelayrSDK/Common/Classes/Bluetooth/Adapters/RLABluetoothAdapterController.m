@@ -8,13 +8,13 @@
 //#import "RLATemperatureSensor.h"            // Relayr.framework (sensor)
 //#import "RLAHumiditySensor.h"               // Relayr.framework (sensor)
 //#import "RLANoiseSensor.h"                  // Relayr.framework (sensor)
-//#import "RLAWunderbarColorSensorBluetoothAdapter.h"         // Relayr.framework (adapter)
-//#import "RLAWunderbarProximitySensorBluetoothAdapter.h"     // Relayr.framework (adapter)
-//#import "RLAWunderbarGyroscopeSensorBluetoothAdapter.h"     // Relayr.framework (adapter)
-//#import "RLAWunderbarAccelerometerSensorBluetoothAdapter.h" // Relayr.framework (adapter)
-//#import "RLAWunderbarTemperatureSensorBluetoothAdapter.h"   // Relayr.framework (adapter)
-//#import "RLAWunderbarHumiditySensorBluetoothAdapter.h"      // Relayr.framework (adapter)
-//#import "RLAWunderbarNoiseSensorBluetoothAdapter.h"         // Relayr.framework (adapter)
+#import "RLABluetoothAdapterSensorAccelerometer.h"
+#import "RLABluetoothAdapterSensorColor.h"
+#import "RLABluetoothAdapterSensorGyroscope.h"
+#import "RLABluetoothAdapterSensorHumidity.h"
+#import "RLABluetoothAdapterSensorNoise.h"
+#import "RLABluetoothAdapterSensorProximity.h"
+#import "RLABluetoothAdapterSensorTemperature.h"
 //#import "RLAWunderbarGroveOutput.h"         // Relayr.framework (output)
 //#import "RLAWunderbarInfraredOutput.h"      // Relayr.framework (output)
 
@@ -81,31 +81,34 @@
     // Standard wunderbar services and characteristics
     NSArray* services = @[@"2000", @"2002"];
     NSArray* characteristics = @[@"2016"];
-    NSArray* peripherals;
     // The bleIdentifiers are used to filter devices with specific udids for testing reasons when many devices are beeing advertised Sensors
-//    NSArray* peripherals = @[
+    NSArray* peripherals = @[
 //         @{@"name"          : @"WunderbarLIGHT",
 //           @"bleIdentifier" : @"",
 //           @"relayrModelID" : @"a7ec1b21-8582-4304-b1cf-15a1fc66d1e8",
-//           @"mappings"      : @[ [[RLAMappingInfo alloc] initWithSensorClass:[RLAColorSensor class] adapterClass:[RLAWunderbarColorSensorBluetoothAdapter class] serviceUUIDs:services characteristicUUIDs:characteristics],
-//                                 [[RLAMappingInfo alloc] initWithSensorClass:[RLAProximitySensor class] adapterClass:[RLAWunderbarProximitySensorBluetoothAdapter class] serviceUUIDs:services characteristicUUIDs:characteristics] ]
+//           @"mappings"      : @[
+//                [[RLAMappingInfo alloc] initWithSensorClass:[RLAColorSensor class] adapterClass:[RLABluetoothAdapterSensorColor class] serviceUUIDs:services characteristicUUIDs:characteristics],
+//                [[RLAMappingInfo alloc] initWithSensorClass:[RLAProximitySensor class] adapterClass:[RLABluetoothAdapterSensorProximity class] serviceUUIDs:services characteristicUUIDs:characteristics] ]
 //         },
 //         @{@"name"          : @"WunderbarGYRO",
 //           @"bleIdentifier" : @"",
 //           @"relayrModelID" : @"173c44b5-334e-493f-8eb8-82c8cc65d29f",
-//           @"mappings"      : @[ [[RLAMappingInfo alloc] initWithSensorClass:[RLAGyroscopeSensor class] adapterClass:[RLAWunderbarGyroscopeSensorBluetoothAdapter class] serviceUUIDs:services characteristicUUIDs:characteristics],
-//                                 [[RLAMappingInfo alloc] initWithSensorClass:[RLAAccelerometerSensor class] adapterClass:[RLAWunderbarAccelerometerSensorBluetoothAdapter class] serviceUUIDs:services characteristicUUIDs:characteristics] ]
+//           @"mappings"      : @[
+//                [[RLAMappingInfo alloc] initWithSensorClass:[RLAGyroscopeSensor class] adapterClass:[RLABluetoothAdapterSensorGyroscope class] serviceUUIDs:services characteristicUUIDs:characteristics],
+//                [[RLAMappingInfo alloc] initWithSensorClass:[RLAAccelerometerSensor class] adapterClass:[RLABluetoothAdapterSensorAccelerometer class] serviceUUIDs:services characteristicUUIDs:characteristics] ]
 //         },
 //         @{@"name"          : @"WunderbarHTU",
 //           @"bleIdentifier" : @"",
 //           @"relayrModelID" : @"ecf6cf94-cb07-43ac-a85e-dccf26b48c86",
-//           @"mappings"      : @[ [[RLAMappingInfo alloc] initWithSensorClass:[RLATemperatureSensor class] adapterClass:[RLAWunderbarTemperatureSensorBluetoothAdapter class] serviceUUIDs:services characteristicUUIDs:characteristics],
-//                                 [[RLAMappingInfo alloc] initWithSensorClass:[RLAHumiditySensor class] adapterClass:[RLAWunderbarHumiditySensorBluetoothAdapter class] serviceUUIDs:services characteristicUUIDs:characteristics] ]
+//           @"mappings"      : @[
+//                [[RLAMappingInfo alloc] initWithSensorClass:[RLATemperatureSensor class] adapterClass:[RLABluetoothAdapterSensorTemperature class] serviceUUIDs:services characteristicUUIDs:characteristics],
+//                [[RLAMappingInfo alloc] initWithSensorClass:[RLAHumiditySensor class] adapterClass:[RLABluetoothAdapterSensorHumidity class] serviceUUIDs:services characteristicUUIDs:characteristics] ]
 //         },
 //         @{@"name"          : @"WunderbarMIC",
 //           @"bleIdentifier" : @"",
 //           @"relayrModelID" : @"4f38b6c6-a8e9-4f93-91cd-2ac4064b7b5a",
-//           @"mappings"      : @[ [[RLAMappingInfo alloc] initWithSensorClass:[RLANoiseSensor class] adapterClass:[RLAWunderbarNoiseSensorBluetoothAdapter class] serviceUUIDs:services characteristicUUIDs:characteristics] ]
+//           @"mappings"      : @[
+//                [[RLAMappingInfo alloc] initWithSensorClass:[RLANoiseSensor class] adapterClass:[RLABluetoothAdapterSensorNoise class] serviceUUIDs:services characteristicUUIDs:characteristics] ]
 //         },
 //         // Outputs
 //         @{@"name"          : @"WunderbarBRIDG",
@@ -118,7 +121,7 @@
 //           @"relayrModelID" : @"bab45b9c-1c44-4e71-8e98-a321c658df47",
 //           @"mappings"      : @[ [[RLAMappingInfo alloc] initWithOutputClass:[RLAWunderbarInfraredOutput class]] ],
 //         }
-//    ];
+    ];
     
     NSMutableArray* tmp = [NSMutableArray array];
     for (NSDictionary* dict in peripherals)

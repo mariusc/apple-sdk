@@ -8,8 +8,6 @@
 #import "RLACBUUID.h"
 //#import "RLAColorSensor.h"                      // Relayr.framework (sensor)
 //#import "RLAProximitySensor.h"                  // Relayr.framework (sensor)
-//#import "RLAWunderbarColorSensorBluetoothAdapter.h"     // Relayr.framework (adapter)
-//#import "RLAWunderbarProximitySensorBluetoothAdapter.h" // Relayr.framework (adapter)
 
 @implementation RLABluetoothManager
 {
