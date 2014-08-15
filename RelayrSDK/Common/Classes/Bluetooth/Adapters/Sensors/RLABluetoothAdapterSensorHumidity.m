@@ -1,4 +1,4 @@
-#import "RLABluetoothAdapterSensorHumidity.h"   // Header
+#import "RLABluetoothAdapterSensorHumidity.h" // Header
 
 @implementation RLABluetoothAdapterSensorHumidity
 

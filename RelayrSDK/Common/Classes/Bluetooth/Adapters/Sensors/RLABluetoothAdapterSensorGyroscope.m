@@ -1,4 +1,4 @@
-#import "RLABluetoothAdapterSensorGyroscope.h"     // Header
+#import "RLABluetoothAdapterSensorGyroscope.h" // Header
 
 @implementation RLABluetoothAdapterSensorGyroscope
 

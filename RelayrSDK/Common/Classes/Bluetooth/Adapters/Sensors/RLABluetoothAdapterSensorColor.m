@@ -1,10 +1,10 @@
-#import "RLABluetoothAdapterSensorColor.h"     // Header
+#import "RLABluetoothAdapterSensorColor.h" // Header
 
 @implementation RLABluetoothAdapterSensorColor
 
 #pragma mark - Public API
 
-#warning Color computing code must be changed.
+#warning The method of calculating the RGB values is not particularly accuarate.
 - (NSDictionary*)dictionary
 {
     // Fetch super dict

@@ -1,4 +1,4 @@
-#import "RLABluetoothAdapterSensorNoise.h"     // Header
+#import "RLABluetoothAdapterSensorNoise.h" // Header
 
 @implementation RLABluetoothAdapterSensorNoise
 

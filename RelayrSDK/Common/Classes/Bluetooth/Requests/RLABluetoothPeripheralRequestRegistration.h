@@ -1,24 +1,24 @@
-@import Foundation;     // Apple
-@class RLAWunderbarCredentials;
+@import Foundation;             // Apple
+@class RLAWunderbarCredentials; // Relayr.framework
 
 /*!
  *  @class RLABluetoothPeripheralRequestRegistration
  *
- *  @abstract It provides means to setup a new wunderbar registration request.
+ *  @abstract Provide means to setup a new wunderbar registration request.
  */
 @interface RLABluetoothPeripheralRequestRegistration : NSObject
 
 /**
  * @param credentials Wunderbar credentials as returned by the relayr server
- * @param ssid WIFI ssid (need by the wunderbar master module)
- * @param password WIFI password (need by the wunderbar master module)
+ * @param ssid WiFi SSID (needed by the Wunderbar master module)
+ * @param password WiFi password (needed by the Wunderbar master module)
  * @return Newly initialized object or nil if an object could not be created
  */
 
 /*!
  *  @method initWithCredentials:wifiSSID:wifiPassword:
  *
- *  @abstract ...
+ *  @abstract Called to initialise the peripheral with the data required for the values of the characteristics advertised in the service.
  *
  * @param credentials Wunderbar credentials as returned by the relayr server
  * @param ssid WIFI ssid (need by the wunderbar master module)

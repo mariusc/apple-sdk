@@ -1,4 +1,4 @@
-#import "RLABluetoothAdapterSensorAccelerometer.h"     // Header
+#import "RLABluetoothAdapterSensorAccelerometer.h" // Header
 
 @implementation RLABluetoothAdapterSensorAccelerometer
 
@@ -14,8 +14,8 @@
     RLAErrorAssertTrueAndReturnNil( (data.length == 18), RLAErrorCodeMissingExpectedValue);
     
     uint8_t const* buf = data.bytes;
-    uint16_t x = (buf[6] << 8) | buf[7];
-    uint16_t y = (buf[8] << 8) | buf[9];
+    uint16_t x =  (buf[6] << 8) | buf[7];
+    uint16_t y =  (buf[8] << 8) | buf[9];
     uint16_t z = (buf[10] << 8) | buf[11];
     
     if (x > 32768) x = -(x - 32769);

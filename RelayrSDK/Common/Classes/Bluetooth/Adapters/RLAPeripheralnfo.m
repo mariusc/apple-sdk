@@ -1,4 +1,4 @@
-#import "RLAPeripheralnfo.h"    // Headers
+#import "RLAPeripheralnfo.h" // Headers
 
 @implementation RLAPeripheralnfo
 
@@ -18,7 +18,8 @@
     RLAErrorAssertTrueAndReturnNil(mappings, RLAErrorCodeMissingArgument);
     
     self = [super init];
-    if (self) {
+    if (self)
+    {
         _name = name;
         _bleIdentifier = bleIdentifier;
         _relayrModelID = relayrModelID;

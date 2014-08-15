@@ -1,10 +1,10 @@
-@import Foundation;     // Apple
-@import CoreBluetooth;  // Apple
+@import Foundation;    // Apple
+@import CoreBluetooth; // Apple
 
 /*!
  *  @class RLABluetoothPeripheralRequest
  *
- *  @abstract It provides means to execute bluetooth requests of the users phone
+ *  @abstract Provides means to execute bluetooth requests of the users phone.
  */
 @interface RLABluetoothPeripheralRequest : NSObject <CBPeripheralManagerDelegate>
 

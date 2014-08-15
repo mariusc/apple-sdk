@@ -1,4 +1,4 @@
-#import "RLABluetoothAdapter.h"     // Base class
+#import "RLABluetoothAdapter.h" // Base class
 
 /*!
  *  @class RLABluetoothAdapterSensorAccelerometer

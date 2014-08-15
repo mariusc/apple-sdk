@@ -1,6 +1,6 @@
-@import Foundation;             // Apple
-@import CoreBluetooth;          // Apple
-@class RLABluetoothManager;     // Relayr.framework
+@import Foundation;         // Apple
+@import CoreBluetooth;      // Apple
+@class RLABluetoothManager; // Relayr.framework
 
 /*!
  *  @protocol RLABluetoothDelegate

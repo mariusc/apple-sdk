@@ -1,10 +1,10 @@
-@import Foundation; // Apple
-@class RLAPeripheralnfo;
+@import Foundation;      // Apple
+@class RLAPeripheralnfo; // Relayr.framework
 
 /*!
  *  @class RLABluetoothAdapterController
  *
- *  @abstract It controls the conversion of data from recognized bluetooth devices into <code>RLASensorValue</code> subclasses.
+ *  @abstract A class to control the conversion of data from recognized bluetooth devices into <code>RLASensorValue</code> subclasses.
  */
 @interface RLABluetoothAdapterController : NSObject
 

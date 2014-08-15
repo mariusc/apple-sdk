@@ -1,8 +1,8 @@
 #import "RLABluetoothCentralRequestDiscoverPeripherals.h" // Header
-#import "RLABluetoothManager.h"                     // Relayr.framework
-#import "RLAPeripheralnfo.h"                        // Relayr.framework (Domain object)
-#import "RLAMappingInfo.h"                          // Relayr.framework (Domain object)
-#import "RLABluetoothAdapterController.h"           // Relayr.framework (Controller)
+#import "RLABluetoothManager.h"                           // Relayr.framework
+#import "RLAPeripheralnfo.h"                              // Relayr.framework (Domain object)
+#import "RLAMappingInfo.h"                                // Relayr.framework (Domain object)
+#import "RLABluetoothAdapterController.h"                 // Relayr.framework (Controller)
 
 @interface RLABluetoothCentralRequestDiscoverPeripherals () <RLABluetoothDelegate>
 @end
@@ -98,6 +98,7 @@
         if (storedPeripheral)
         {
             // Replace the old peripheral with the new one if its closer
+#warning RSSI is *extreamly* unreliable unless averaged over time
             BOOL const newPeripheralIsCloser = (peripheral.RSSI.integerValue > storedPeripheral.RSSI.integerValue);
             if (newPeripheralIsCloser)
             {
@@ -165,7 +166,8 @@
         {
             for (RLAMappingInfo* info in mappings)
             {
-                for (Class class in _deviceClasses) {
+                for (Class class in _deviceClasses)
+                {
                     if ((info.sensorClass == class) || (info.outputClass == class)){ [classes addObject:class]; }
                 }
             }

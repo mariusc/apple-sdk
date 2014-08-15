@@ -1,4 +1,4 @@
-#import "RLABluetoothPeripheralRequest.h"   // Header
+#import "RLABluetoothPeripheralRequest.h" // Header
 
 @implementation RLABluetoothPeripheralRequest
 {

@@ -1,4 +1,4 @@
-@import Foundation;     // Apple
+@import Foundation; // Apple
 
 @interface RLABluetoothAdapter : NSObject
 
@@ -17,13 +17,13 @@
  *
  *  @abstract Dictionary representiation of the sensor data
  */
-@property (readonly,nonatomic) NSDictionary* dictionary;
+@property (readonly, nonatomic) NSDictionary* dictionary;
 
 /*!
  *  @property data
  *
  *  @abstract <code>NSData</code> as provided during initilization
  */
-@property (readonly,nonatomic) NSData* data;
+@property (readonly, nonatomic) NSData* data;
 
 @end

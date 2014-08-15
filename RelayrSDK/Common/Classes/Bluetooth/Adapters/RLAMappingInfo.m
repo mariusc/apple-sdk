@@ -1,4 +1,4 @@
-#import "RLAMappingInfo.h"  // Header
+#import "RLAMappingInfo.h" // Header
 
 @implementation RLAMappingInfo
 
@@ -12,7 +12,8 @@
     RLAErrorAssertTrueAndReturnNil(characteristicUUIDs, RLAErrorCodeMissingArgument);
     
     self = [super init];
-    if (self) {
+    if (self)
+    {
         _sensorClass = sensorClass;
         _adapterClass = adapterClass;
         _serviceUUIDs = serviceUUIDs;
@@ -26,7 +27,8 @@
     RLAErrorAssertTrueAndReturnNil(outputClass, RLAErrorCodeMissingArgument);
     
     self = [super init];
-    if (self) {
+    if (self)
+    {
         _outputClass = outputClass;
     }
     return self;

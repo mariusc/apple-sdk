@@ -1,22 +1,22 @@
-@import Foundation;                 // Apple
-@import CoreBluetooth;              // Apple
-#import "RLABluetoothDelegate.h"    // Relayr.framework
+@import Foundation;              // Apple
+@import CoreBluetooth;           // Apple
+#import "RLABluetoothDelegate.h" // Relayr.framework
 
 /*!
  *  @class RLABluetoothListener
  *
- *  @abstract It groups many RLABluetoothDelegate objects that want to listen for a specific CBPeripheral.
+ *  @abstract Aggregate many RLABluetoothDelegate objects that want to listen for a specific CBPeripheral.
  */
 @interface RLABluetoothDelegatesGroup : NSObject
 
 /*!
  *  @method initWithPeripheral:listener:
  *
- *  @abstract Initialises a channel info object with all required dependencies.
- *  @discussion If any of the arguments are not correctly set, the initiliaser will return <code>nil</code>.
+ *  @abstract Called to initialise a channel info object with all required dependencies.
+ *  @discussion If any of the arguments are not set correctly the initiliaser will return <code>nil</code>.
  *
- *  @param peripheral CBPeripheral object for which updates should be received.
- *  @param listener Object that should receive the update callbacks.
+ *  @param peripheral A <code>CBPeripheral</code> object for which updates should be received.
+ *  @param listener The object that should receive the update callbacks.
  *	@return Initialized <code>RLABluetoothListener</code> object containing a <code>CBPeripheral</code> and a listener.
  *
  *  @see CBPeripheral
@@ -28,7 +28,7 @@
 /*!
  *  @property peripheral
  *
- *  @abstract CBPeripheral object for which listeners are registers.
+ *  @abstract <code>CBPeripheral</code> object for which listeners are interested.
  */
 @property (strong, nonatomic) CBPeripheral* peripheral;
 

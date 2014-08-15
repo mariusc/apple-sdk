@@ -1,4 +1,4 @@
-@import Foundation;     // Apple
+@import Foundation; // Apple
 
 /*!
  *  @class RLAMappingInfo

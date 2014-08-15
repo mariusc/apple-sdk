@@ -1,20 +1,18 @@
-#import "RLABluetoothManager.h"                 // Header
-#import "RLABluetoothDelegatesGroup.h"          // Relayr.framework
+#import "RLABluetoothManager.h"           // Header
+#import "RLABluetoothDelegatesGroup.h"    // Relayr.framework
 
-#import "RLABluetoothAdapterController.h"       // Relayr.framework
-#import "RLABluetoothAdapter.h"                 // Relayr.framework
-#import "RLAPeripheralnfo.h"                    // Relayr.framework
-#import "RLAMappingInfo.h"                      // Relayr.framework
+#import "RLABluetoothAdapterController.h" // Relayr.framework
+#import "RLABluetoothAdapter.h"           // Relayr.framework
+#import "RLAPeripheralnfo.h"              // Relayr.framework
+#import "RLAMappingInfo.h"                // Relayr.framework
 #import "RLACBUUID.h"
-//#import "RLAColorSensor.h"                      // Relayr.framework (sensor)
-//#import "RLAProximitySensor.h"                  // Relayr.framework (sensor)
 
 @implementation RLABluetoothManager
 {
-    NSMutableArray* _genericListeners;      // Array of RLABluetoothDelegate objects (receive all Bluetooth delegate calls)
-    NSMutableArray* _peripheralListeners;   // Array of RLABluetoothDelegatesGroup (only receive Bluetooth calls from a certain CBPeripheral)
-    NSMutableSet* _detectedPeripherals;     // Array of detected CBPeripheral objects
-    NSMutableSet* _connectedPeripherals;    // Array of connected CBPeripheral objects
+    NSMutableArray* _genericListeners;    // Array of RLABluetoothDelegate objects (receive all Bluetooth delegate calls)
+    NSMutableArray* _peripheralListeners; // Array of RLABluetoothDelegatesGroup (only receive Bluetooth calls from a certain CBPeripheral)
+    NSMutableSet* _detectedPeripherals;   // Array of detected CBPeripheral objects
+    NSMutableSet* _connectedPeripherals;  // Array of connected CBPeripheral objects
     RLABluetoothAdapterController* _bleAdapter;
 }
 
@@ -279,7 +277,6 @@
                     [listener manager:self peripheral:peripheral didUpdateValue:dict withSensorClass:[info sensorClass] forCharacteristic:characteristic error:error];
                 }
             }
-            
             break;
         }
 

@@ -1,5 +1,5 @@
-#import "RLABluetoothCentralRequest.h"     // Header
-#import "RLABluetoothManager.h"     // Relayr.framework (protocol)
+#import "RLABluetoothCentralRequest.h" // Header
+#import "RLABluetoothManager.h"        // Relayr.framework (protocol)
 
 @interface RLABluetoothCentralRequest() <RLABluetoothDelegate>
 @end

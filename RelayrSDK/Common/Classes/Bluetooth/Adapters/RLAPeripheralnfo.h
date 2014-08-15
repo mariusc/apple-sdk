@@ -1,9 +1,9 @@
-@import Foundation;             // Apple
+@import Foundation; // Apple
 
 /*!
  *  @class RLAPeripheralnfo
  *
- *  @abstract It provides the means to store information about Bluetooth peripherals.
+ *  @abstract Provides a means to store information about Bluetooth peripherals.
  *
  *  @see CBPeripheral
  */

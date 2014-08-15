@@ -1,4 +1,4 @@
-#import "RLABluetoothAdapter.h"  // Header
+#import "RLABluetoothAdapter.h" // Header
 
 @implementation RLABluetoothAdapter
 
@@ -15,7 +15,8 @@
     RLAErrorAssertTrueAndReturnNil(data, RLAErrorCodeMissingArgument);
     
     self = [super init];
-    if (self) {
+    if (self)
+    {
         _data = data;
     }
     return self;
