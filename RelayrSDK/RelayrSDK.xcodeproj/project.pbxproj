@@ -77,6 +77,7 @@
 		625204D1199E4A4300A27C85 /* RLADevice_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 625204D0199E4A4300A27C85 /* RLADevice_Setup.h */; };
 		625204D4199E4F5B00A27C85 /* RLADeviceLocal.h in Headers */ = {isa = PBXBuildFile; fileRef = 625204D2199E4F5B00A27C85 /* RLADeviceLocal.h */; };
 		625204D5199E4F5B00A27C85 /* RLADeviceLocal.m in Sources */ = {isa = PBXBuildFile; fileRef = 625204D3199E4F5B00A27C85 /* RLADeviceLocal.m */; };
+		625204D7199E50BC00A27C85 /* RLADeviceLocal_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 625204D6199E50BC00A27C85 /* RLADeviceLocal_Setup.h */; };
 		6252F0DF199C24E2002ECE4D /* Relayr.h in Headers */ = {isa = PBXBuildFile; fileRef = 6252F0D5199C24AD002ECE4D /* Relayr.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6252F10B199C2C3B002ECE4D /* Relayr.h in Headers */ = {isa = PBXBuildFile; fileRef = 6252F100199C2BFC002ECE4D /* Relayr.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6252F10C199C2C7F002ECE4D /* OSXRelayrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6252F107199C2C0C002ECE4D /* OSXRelayrTests.m */; };
@@ -147,6 +148,7 @@
 		625204D0199E4A4300A27C85 /* RLADevice_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLADevice_Setup.h; sourceTree = "<group>"; };
 		625204D2199E4F5B00A27C85 /* RLADeviceLocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLADeviceLocal.h; sourceTree = "<group>"; };
 		625204D3199E4F5B00A27C85 /* RLADeviceLocal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLADeviceLocal.m; sourceTree = "<group>"; };
+		625204D6199E50BC00A27C85 /* RLADeviceLocal_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLADeviceLocal_Setup.h; sourceTree = "<group>"; };
 		6252F0B3199C2465002ECE4D /* Relayr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Relayr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6252F0BE199C2465002ECE4D /* iOSRelayrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSRelayrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6252F0D1199C2492002ECE4D /* Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Common.xcconfig; sourceTree = "<group>"; };
@@ -453,6 +455,7 @@
 				625204D0199E4A4300A27C85 /* RLADevice_Setup.h */,
 				625204D2199E4F5B00A27C85 /* RLADeviceLocal.h */,
 				625204D3199E4F5B00A27C85 /* RLADeviceLocal.m */,
+				625204D6199E50BC00A27C85 /* RLADeviceLocal_Setup.h */,
 			);
 			path = Device;
 			sourceTree = "<group>";
@@ -714,6 +717,7 @@
 				621A6AD7199CCD170004F9FD /* RLALog.h in Headers */,
 				621A6AEB199CE91A0004F9FD /* RLAUserLocal.h in Headers */,
 				621A6B0C199CFE310004F9FD /* RLABluetoothDelegatesGroup.h in Headers */,
+				625204D7199E50BC00A27C85 /* RLADeviceLocal_Setup.h in Headers */,
 				625204D1199E4A4300A27C85 /* RLADevice_Setup.h in Headers */,
 				621A6B06199CF2CF0004F9FD /* RLABluetoothManager.h in Headers */,
 				6252049B199E08D900A27C85 /* RLABluetoothAdapterSensorAccelerometer.h in Headers */,
