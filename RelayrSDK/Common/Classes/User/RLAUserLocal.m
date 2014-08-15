@@ -1,4 +1,4 @@
-#import "RLALocalUser.h"                // Header
+#import "RLAUserLocal.h"                // Header
 #import "RLABluetoothService.h"         // Relayr.framework (service)
 
 //#import "RLATemperatureSensor.h"        // Relayr.framework (sensor)
@@ -11,7 +11,7 @@
 //#import "RLAWunderbarGroveOutput.h"     // Relayr.framework (output)
 //#import "RLAWunderbarInfraredOutput.h"  // Relayr.framework (output)
 
-@implementation RLALocalUser
+@implementation RLAUserLocal
 {
     RLABluetoothService* _bleService;
 }
@@ -23,9 +23,9 @@
 + (instancetype)user
 {
     static dispatch_once_t pred;
-    static RLALocalUser* sharedInstance = nil;
+    static RLAUserLocal* sharedInstance = nil;
     dispatch_once(&pred, ^{
-        sharedInstance = [[RLALocalUser alloc] initPrivately];
+        sharedInstance = [[RLAUserLocal alloc] initPrivately];
     });
     return sharedInstance;
 }

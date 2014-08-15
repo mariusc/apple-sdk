@@ -3,12 +3,12 @@
 //#import "RLAUserDevicesAPI.h"   // Relayr.framework (protocol)
 
 /*!
- *  @class RLALocalUser
+ *  @class RLAUserLocal
  *
  *  @abstract Relayr user who is purely local and cannot connect to the Relayr cloud.
  *  @discussion This user will connect to devices/sensors through local networks (BLE, etc.)
  */
-@interface RLALocalUser : NSObject <RLAUser> //<RLAUserDevicesAPI>
+@interface RLAUserLocal : NSObject <RLAUser> //<RLAUserDevicesAPI>
 
 /*!
  *  @method user
