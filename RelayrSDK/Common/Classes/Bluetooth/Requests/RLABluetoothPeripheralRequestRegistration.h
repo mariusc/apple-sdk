@@ -1,12 +1,13 @@
-@import Foundation;             // Apple
-@class RLAWunderbarCredentials; // Relayr.framework
+@import Foundation;                         // Apple
+#import "RLABluetoothPeripheralRequest.h"   // Relayr.framework
+@class RLAWunderbarCredentials;             // Relayr.framework
 
 /*!
  *  @class RLABluetoothPeripheralRequestRegistration
  *
  *  @abstract Provide means to setup a new wunderbar registration request.
  */
-@interface RLABluetoothPeripheralRequestRegistration : NSObject
+@interface RLABluetoothPeripheralRequestRegistration : RLABluetoothPeripheralRequest
 
 /**
  * @param credentials Wunderbar credentials as returned by the relayr server
