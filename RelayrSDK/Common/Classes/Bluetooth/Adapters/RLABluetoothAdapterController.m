@@ -35,7 +35,7 @@
     return self;
 }
 
-- (RLAPeripheralnfo *)infoForPeripheralWithName:(NSString *)name bleIdentifier:(NSString *)identifier serviceUUID:(NSString *)serviceUUID characteristicUUID:(NSString *)characteristicUUID
+- (RLAPeripheralnfo*)infoForPeripheralWithName:(NSString *)name bleIdentifier:(NSString*)identifier serviceUUID:(NSString*)serviceUUID characteristicUUID:(NSString*)characteristicUUID
 {
     // Iterate over accepted peripherals
     for (RLAPeripheralnfo* info in _acceptedPeripherals) {
@@ -64,7 +64,8 @@
     return nil;
 }
 
-- (RLAPeripheralnfo *)infoForPeripheralWithModelIdentifier:(NSString* )identifier
+#warning Ghost method
+- (RLAPeripheralnfo*)infoForPeripheralWithModelIdentifier:(NSString*)identifier
 {
     for (RLAPeripheralnfo *info in [self setupAcceptedPeripherals])
     {

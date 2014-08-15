@@ -1,12 +1,12 @@
-#import "RLABluetoothRequest.h"                 // Header
-#import "RLABluetoothServiceListenerManager.h"  // Relayr.framework (protocol)
+#import "RLABluetoothCentralRequest.h"     // Header
+#import "RLABluetoothManager.h"     // Relayr.framework (protocol)
 
-@interface RLABluetoothRequest() <RLABluetoothListenerDelegate>
+@interface RLABluetoothCentralRequest() <RLABluetoothDelegate>
 @end
 
-@implementation RLABluetoothRequest
+@implementation RLABluetoothCentralRequest
 {
-    RLABluetoothServiceListenerManager* _listenerManager;
+    RLABluetoothManager* _listenerManager;
     void (^_completionHandler)(NSArray*, NSError*);
 }
 
@@ -18,7 +18,7 @@
     return nil;
 }
 
-- (instancetype)initWithListenerManager:(RLABluetoothServiceListenerManager*)manager
+- (instancetype)initWithListenerManager:(RLABluetoothManager*)manager
 {
     RLAErrorAssertTrueAndReturnNil(manager, RLAErrorCodeMissingArgument);
     
@@ -27,7 +27,7 @@
     return self;
 }
 
-- (RLABluetoothServiceListenerManager*)manager
+- (RLABluetoothManager*)manager
 {
     return _listenerManager;
 }

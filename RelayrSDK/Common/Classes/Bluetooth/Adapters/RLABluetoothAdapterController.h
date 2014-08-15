@@ -11,6 +11,8 @@
 /*!
  *  @method infoForPeripheralWithName:bleIdentifier:serviceUUID:characteristicUUID:
  *
+ *  @abstract ...
+ *
  *  @param name <code>NSString</code> representing the peripheral name.
  *  @param identifier <code>NSString</code> representing the peripheral identifier.
  *  @param serviceUUID <code>NSString</code> representing a service that must be advertised by the peripheral.

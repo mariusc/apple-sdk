@@ -62,6 +62,16 @@
 		625204B2199E0F9500A27C85 /* RLABluetoothAdapterSensorHumidity.m in Sources */ = {isa = PBXBuildFile; fileRef = 625204AC199E0F9500A27C85 /* RLABluetoothAdapterSensorHumidity.m */; };
 		625204B3199E0F9500A27C85 /* RLABluetoothAdapterSensorNoise.h in Headers */ = {isa = PBXBuildFile; fileRef = 625204AD199E0F9500A27C85 /* RLABluetoothAdapterSensorNoise.h */; };
 		625204B4199E0F9500A27C85 /* RLABluetoothAdapterSensorNoise.m in Sources */ = {isa = PBXBuildFile; fileRef = 625204AE199E0F9500A27C85 /* RLABluetoothAdapterSensorNoise.m */; };
+		625204BA199E141900A27C85 /* RLABluetoothCentralRequestDiscoverPeripherals.h in Headers */ = {isa = PBXBuildFile; fileRef = 625204B6199E141900A27C85 /* RLABluetoothCentralRequestDiscoverPeripherals.h */; };
+		625204BB199E141900A27C85 /* RLABluetoothCentralRequestDiscoverPeripherals.m in Sources */ = {isa = PBXBuildFile; fileRef = 625204B7199E141900A27C85 /* RLABluetoothCentralRequestDiscoverPeripherals.m */; };
+		625204BC199E141900A27C85 /* RLABluetoothCentralRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 625204B8199E141900A27C85 /* RLABluetoothCentralRequest.h */; };
+		625204BD199E141900A27C85 /* RLABluetoothCentralRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 625204B9199E141900A27C85 /* RLABluetoothCentralRequest.m */; };
+		625204C0199E2A9900A27C85 /* RLABluetoothPeripheralRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 625204BE199E2A9800A27C85 /* RLABluetoothPeripheralRequest.h */; };
+		625204C1199E2A9900A27C85 /* RLABluetoothPeripheralRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 625204BF199E2A9900A27C85 /* RLABluetoothPeripheralRequest.m */; };
+		625204C4199E33D100A27C85 /* RLABluetoothPeripheralRequestRegistration.h in Headers */ = {isa = PBXBuildFile; fileRef = 625204C2199E33D100A27C85 /* RLABluetoothPeripheralRequestRegistration.h */; };
+		625204C5199E33D100A27C85 /* RLABluetoothPeripheralRequestRegistration.m in Sources */ = {isa = PBXBuildFile; fileRef = 625204C3199E33D100A27C85 /* RLABluetoothPeripheralRequestRegistration.m */; };
+		625204C9199E41A000A27C85 /* RLAData.h in Headers */ = {isa = PBXBuildFile; fileRef = 625204C7199E41A000A27C85 /* RLAData.h */; };
+		625204CA199E41A000A27C85 /* RLAData.m in Sources */ = {isa = PBXBuildFile; fileRef = 625204C8199E41A000A27C85 /* RLAData.m */; };
 		6252F0DF199C24E2002ECE4D /* Relayr.h in Headers */ = {isa = PBXBuildFile; fileRef = 6252F0D5199C24AD002ECE4D /* Relayr.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6252F10B199C2C3B002ECE4D /* Relayr.h in Headers */ = {isa = PBXBuildFile; fileRef = 6252F100199C2BFC002ECE4D /* Relayr.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6252F10C199C2C7F002ECE4D /* OSXRelayrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6252F107199C2C0C002ECE4D /* OSXRelayrTests.m */; };
@@ -117,6 +127,16 @@
 		625204AC199E0F9500A27C85 /* RLABluetoothAdapterSensorHumidity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothAdapterSensorHumidity.m; sourceTree = "<group>"; };
 		625204AD199E0F9500A27C85 /* RLABluetoothAdapterSensorNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothAdapterSensorNoise.h; sourceTree = "<group>"; };
 		625204AE199E0F9500A27C85 /* RLABluetoothAdapterSensorNoise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothAdapterSensorNoise.m; sourceTree = "<group>"; };
+		625204B6199E141900A27C85 /* RLABluetoothCentralRequestDiscoverPeripherals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothCentralRequestDiscoverPeripherals.h; sourceTree = "<group>"; };
+		625204B7199E141900A27C85 /* RLABluetoothCentralRequestDiscoverPeripherals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothCentralRequestDiscoverPeripherals.m; sourceTree = "<group>"; };
+		625204B8199E141900A27C85 /* RLABluetoothCentralRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothCentralRequest.h; sourceTree = "<group>"; };
+		625204B9199E141900A27C85 /* RLABluetoothCentralRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothCentralRequest.m; sourceTree = "<group>"; };
+		625204BE199E2A9800A27C85 /* RLABluetoothPeripheralRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothPeripheralRequest.h; sourceTree = "<group>"; };
+		625204BF199E2A9900A27C85 /* RLABluetoothPeripheralRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothPeripheralRequest.m; sourceTree = "<group>"; };
+		625204C2199E33D100A27C85 /* RLABluetoothPeripheralRequestRegistration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothPeripheralRequestRegistration.h; sourceTree = "<group>"; };
+		625204C3199E33D100A27C85 /* RLABluetoothPeripheralRequestRegistration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothPeripheralRequestRegistration.m; sourceTree = "<group>"; };
+		625204C7199E41A000A27C85 /* RLAData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAData.h; sourceTree = "<group>"; };
+		625204C8199E41A000A27C85 /* RLAData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAData.m; sourceTree = "<group>"; };
 		6252F0B3199C2465002ECE4D /* Relayr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Relayr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6252F0BE199C2465002ECE4D /* iOSRelayrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSRelayrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6252F0D1199C2492002ECE4D /* Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Common.xcconfig; sourceTree = "<group>"; };
@@ -218,6 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				621A6B0E199D0F1A0004F9FD /* Bluetooth */,
+				625204C6199E41A000A27C85 /* Data */,
 				621A6ACD199CCD170004F9FD /* Errors */,
 				621A6AD0199CCD170004F9FD /* Logs */,
 			);
@@ -318,6 +339,7 @@
 				621A6AFB199CEC000004F9FD /* RLABluetoothService.m */,
 				621A6B03199CF2CF0004F9FD /* Manager */,
 				621A6B13199D2CBD0004F9FD /* Adapters */,
+				625204B5199E141900A27C85 /* Requests */,
 			);
 			path = Bluetooth;
 			sourceTree = "<group>";
@@ -387,6 +409,30 @@
 				6252049A199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.m */,
 			);
 			path = Sensors;
+			sourceTree = "<group>";
+		};
+		625204B5199E141900A27C85 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				625204B8199E141900A27C85 /* RLABluetoothCentralRequest.h */,
+				625204B9199E141900A27C85 /* RLABluetoothCentralRequest.m */,
+				625204B6199E141900A27C85 /* RLABluetoothCentralRequestDiscoverPeripherals.h */,
+				625204B7199E141900A27C85 /* RLABluetoothCentralRequestDiscoverPeripherals.m */,
+				625204BE199E2A9800A27C85 /* RLABluetoothPeripheralRequest.h */,
+				625204BF199E2A9900A27C85 /* RLABluetoothPeripheralRequest.m */,
+				625204C2199E33D100A27C85 /* RLABluetoothPeripheralRequestRegistration.h */,
+				625204C3199E33D100A27C85 /* RLABluetoothPeripheralRequestRegistration.m */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
+		625204C6199E41A000A27C85 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				625204C7199E41A000A27C85 /* RLAData.h */,
+				625204C8199E41A000A27C85 /* RLAData.m */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		6252F0A6199C243D002ECE4D = {
@@ -637,6 +683,7 @@
 				621A6B16199D2CBD0004F9FD /* RLAPeripheralnfo.h in Headers */,
 				621A6B1E199D33CA0004F9FD /* RLABluetoothAdapterController.h in Headers */,
 				621A6B11199D0F1A0004F9FD /* RLACBUUID.h in Headers */,
+				625204BA199E141900A27C85 /* RLABluetoothCentralRequestDiscoverPeripherals.h in Headers */,
 				625204B1199E0F9500A27C85 /* RLABluetoothAdapterSensorHumidity.h in Headers */,
 				6252F0DF199C24E2002ECE4D /* Relayr.h in Headers */,
 				621A6AD7199CCD170004F9FD /* RLALog.h in Headers */,
@@ -644,6 +691,7 @@
 				621A6B0C199CFE310004F9FD /* RLABluetoothDelegatesGroup.h in Headers */,
 				621A6B06199CF2CF0004F9FD /* RLABluetoothManager.h in Headers */,
 				6252049B199E08D900A27C85 /* RLABluetoothAdapterSensorAccelerometer.h in Headers */,
+				625204BC199E141900A27C85 /* RLABluetoothCentralRequest.h in Headers */,
 				621A6AE0199CE1AA0004F9FD /* Common.pch in Headers */,
 				625204A7199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.h in Headers */,
 				625204AF199E0F9500A27C85 /* RLABluetoothAdapterSensorGyroscope.h in Headers */,
@@ -651,8 +699,11 @@
 				621A6AD3199CCD170004F9FD /* RLAError.h in Headers */,
 				6252049D199E08D900A27C85 /* RLABluetoothAdapterSensorColor.h in Headers */,
 				625204B3199E0F9500A27C85 /* RLABluetoothAdapterSensorNoise.h in Headers */,
+				625204C0199E2A9900A27C85 /* RLABluetoothPeripheralRequest.h in Headers */,
 				621A6B09199CF66B0004F9FD /* RLABluetoothDelegate.h in Headers */,
 				621A6ADD199CD1C30004F9FD /* RLAUser.h in Headers */,
+				625204C9199E41A000A27C85 /* RLAData.h in Headers */,
+				625204C4199E33D100A27C85 /* RLABluetoothPeripheralRequestRegistration.h in Headers */,
 				625204A5199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.h in Headers */,
 				6252048B199E02C900A27C85 /* RLABluetoothAdapter.h in Headers */,
 				621A6AE3199CE23E0004F9FD /* iOS.pch in Headers */,
@@ -832,9 +883,14 @@
 			files = (
 				6252049E199E08D900A27C85 /* RLABluetoothAdapterSensorColor.m in Sources */,
 				621A6B1F199D33CA0004F9FD /* RLABluetoothAdapterController.m in Sources */,
+				625204CA199E41A000A27C85 /* RLAData.m in Sources */,
+				625204BD199E141900A27C85 /* RLABluetoothCentralRequest.m in Sources */,
 				625204B4199E0F9500A27C85 /* RLABluetoothAdapterSensorNoise.m in Sources */,
 				621A6B1B199D2FCA0004F9FD /* RLAMappingInfo.m in Sources */,
+				625204C5199E33D100A27C85 /* RLABluetoothPeripheralRequestRegistration.m in Sources */,
+				625204BB199E141900A27C85 /* RLABluetoothCentralRequestDiscoverPeripherals.m in Sources */,
 				621A6AED199CE91A0004F9FD /* RLALocalUser.m in Sources */,
+				625204C1199E2A9900A27C85 /* RLABluetoothPeripheralRequest.m in Sources */,
 				621A6AD5199CCD170004F9FD /* RLAError.m in Sources */,
 				621A6AFE199CEC000004F9FD /* RLABluetoothService.m in Sources */,
 				625204B2199E0F9500A27C85 /* RLABluetoothAdapterSensorHumidity.m in Sources */,
