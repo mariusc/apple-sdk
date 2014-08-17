@@ -1,4 +1,4 @@
-#import "RLABluetoothService.h"
+#import "RLABluetoothService.h"     // Base class
 @class RLACredentialsWunderbar;     // Relayr.framework
 
 @interface RLABluetoothService (Onboard)

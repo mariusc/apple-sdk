@@ -1,5 +1,5 @@
-#import "RLALocalUser.h"                // Relayr.framework (header)
-#import "RLABluetoothService.h"         // Relayr.framework (service)
+#import "RLALocalUser.h"        // Base class
+@class RLABluetoothService;     // Relayr.framework
 
 @interface RLALocalUser ()
 

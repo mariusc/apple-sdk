@@ -1,6 +1,6 @@
-#import "RLALocalUser.h"
+#import "RLALocalUser.h"            // Base class
 @class RLACredentialsWunderbar;     // Relayr.framework
-@class RLABluetoothService;         // Relayr.framework (service)
+@class RLABluetoothService;         // Relayr.framework
 
 /*!
  *  @class RLALocalUser
