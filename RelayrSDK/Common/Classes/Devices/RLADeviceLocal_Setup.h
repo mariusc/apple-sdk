@@ -1,4 +1,6 @@
-#import "RLADeviceLocal.h"      // Base class
+#import "RLADeviceLocal.h"          // Base class
+#import "RLASensorDelegate.h"       // Relayr.framework
+#import "RLABluetoothDelegate.h"    // Relayr.framework
 @class CBPeripheral;
 @class RLABluetoothManager;
 
@@ -9,7 +11,7 @@
  *
  *  @see RLADeviceLocal
  */
-@interface RLADeviceLocal ()
+@interface RLADeviceLocal () <RLASensorDelegate,RLABluetoothDelegate>
 
 /*!
  *  @enum RLADeviceLocalState
@@ -69,7 +71,7 @@ typedef NS_ENUM(NSUInteger, RLADeviceLocalPairing) {
  *      - RLALocalDeviceStateOnboarding: Device can receive value for configuration.
  *      - RLALocalDeviceStateBroadcasting: Device is broadcasting values to eiher the master module or any connected client. Allowed connection types depend on the state of RLALocalDevicePairing.
  */
-@property (readonly,nonatomic) RLADeviceLocalState relayrState;
+@property (readwrite,nonatomic) RLADeviceLocalState relayrState;
 
 /*!
  *  @property relayrPairing
@@ -80,7 +82,7 @@ typedef NS_ENUM(NSUInteger, RLADeviceLocalPairing) {
  *      - RLALocalDevicePairingAllowed: Every client may connect.
  *      - RLALocalDevicePairingForbidden: Only the master module may connect.
  */
-@property (readonly,nonatomic) RLADeviceLocalPairing relayrPairing;
+@property (readwrite,nonatomic) RLADeviceLocalPairing relayrPairing;
 
 /*!
  *  @method setRelayrPairing:completion:

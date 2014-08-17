@@ -16,13 +16,13 @@
 #pragma mark NSCopying
 
 #warning WTF
-- (instancetype)copyWithZone:(NSZone*)zone
-{
+//- (instancetype)copyWithZone:(NSZone*)zone
+//{
 //    typeof(self) copy = [[self.class alloc] init];
 //    [copy setSensorValue:[self.value copy]];
 //    return copy;
-    return nil;
-}
+//    return nil;
+//}
 
 #pragma mark NSKeyValueObserving
 

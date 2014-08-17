@@ -8,24 +8,6 @@
  */
 @interface RLADevice : NSObject
 
-#pragma mark Identification
-
-/*!
- *  @property uid
- *
- *  @abstract ID assigned to the device by relayr during registration of the device.
- *  @discussion It returns a <code>NSString</code> explicitlely identifying the device.
- */
-@property (readonly,nonatomic) NSString* uid;
-
-/*!
- *  @property modelID
- *
- *  @abstract ID identifiying a device class with specific capabilities.
- *  @discussion It returns a <code>NSString</code> representation of the model identifier.
- */
-@property (readonly,nonatomic) NSString* modelID;
-
 #pragma mark Info
 
 /*!
@@ -44,6 +26,24 @@
  */
 @property (readonly,nonatomic) NSString* manufacturer;
 
+#pragma mark Identification
+
+/*!
+ *  @property uid
+ *
+ *  @abstract ID assigned to the device by relayr during registration of the device.
+ *  @discussion It returns a <code>NSString</code> explicitlely identifying the device.
+ */
+@property (readonly,nonatomic) NSString* uid;
+
+/*!
+ *  @property modelID
+ *
+ *  @abstract ID identifiying a device class with specific capabilities.
+ *  @discussion It returns a <code>NSString</code> representation of the model identifier.
+ */
+@property (readonly,nonatomic) NSString* modelID;
+
 #pragma mark Sensors
 
 /*!
@@ -53,12 +53,6 @@
  */
 @property (readonly,nonatomic) NSArray* sensors;
 
-/**
- * Returns one sensor matching the specified class
- * @param class RLASensor subclass
- * @return Found RLASensor subclass or nil if none was found
- */
-
 /*!
  *  @method sensorOfClass:
  *
@@ -67,13 +61,7 @@
  *  @param class RLASensor subclass.
  *  @return Found RLASensor subclass or nil if none was found.
  */
-- (RLASensor *)sensorOfClass:(Class)class;
-
-/**
- * Returns sensors matching the specified class
- * @param class RLASensor subclass
- * @return Array of RLASensor subclasses or nil if none was found
- */
+- (RLASensor*)sensorOfClass:(Class)class;
 
 /*!
  *  @method sensorsOfClass:
@@ -82,7 +70,7 @@
  *  @param class RLASensor subclass
  *  @return Array of RLASensor subclasses or nil if none was found
  */
-- (NSArray *)sensorsOfClass:(Class)class;
+- (NSArray*)sensorsOfClass:(Class)class;
 
 #pragma mark Monitoring
 
@@ -117,14 +105,11 @@
 #pragma mark Error handling
 
 /*!
- *  @method setErrorHandler:
+ *  @property errorHandler
  *
- *  @abstract ...
- *
- *  @param handler When an error occures the handler is beeing called with it
- * otherwise the error object equals <code>nil</code>.
+ *  @abstract When an error occurres the handler is being called with it, otherwise, the error object equals <code>nil</code>.
  */
-- (void)setErrorHandler:(void(^)(NSError*))handler;
+@property (strong,nonatomic) void (^errorHandler)(NSError*);
 
 #pragma mark Outputs
 

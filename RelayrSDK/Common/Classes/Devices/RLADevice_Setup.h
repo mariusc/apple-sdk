@@ -1,6 +1,7 @@
 #import "RLADevice.h"
+#import "RLASensorDelegate.h"   // Relayr.framework
 
-@interface RLADevice ()
+@interface RLADevice () <RLASensorDelegate>
 
 #pragma mark Identification
 
