@@ -2,7 +2,7 @@
 
 @implementation RLABluetoothService (Onboard)
 
-//- (void)peripheralWithWunderbarCredentials:(RLAWunderbarCredentials *)credentials wifiSSID:(NSString *)ssid wifiPassword:(NSString *)password andCompletionHandler:(void(^)(NSError*))completion
+//- (void)peripheralWithWunderbarCredentials:(RLACredentialsWunderbar *)credentials wifiSSID:(NSString *)ssid wifiPassword:(NSString *)password andCompletionHandler:(void(^)(NSError*))completion
 //{
 //    RLAErrorAssertTrueAndReturn(ssid, RLAErrorCodeMissingArgument);
 //    RLAErrorAssertTrueAndReturn(password, RLAErrorCodeMissingArgument);

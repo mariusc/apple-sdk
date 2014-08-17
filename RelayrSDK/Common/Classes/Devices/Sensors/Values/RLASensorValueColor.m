@@ -10,6 +10,7 @@
     return nil;
 }
 
+#warning Improve this calibration. See Danial M.
 - (UIColor *)color
 {
     NSDictionary* dict = self.dictionary;
@@ -22,7 +23,6 @@
     float blue  = (float)b;
     
     // See TCS3771 datasheet, TAOS110A − MARCH 2011, pp 7.
-    // TODO: Improve this calibration. See Danial M.
     
     // Relative correction
     red *= 0.6;

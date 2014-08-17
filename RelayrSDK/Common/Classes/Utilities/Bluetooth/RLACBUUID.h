@@ -1,10 +1,6 @@
 @import Foundation;    // Apple
 @import CoreBluetooth; // Apple
 
-/**
- * This class solely exists for iOS 7.0 compatibility reasons: there is a method available for converting CBUUIDs into NSString objects from iOS 7.1 and onwards but the Relayr.framework needs to support iOS 7.0 on. This method provides the missing functionality.
- */
-
 /*!
  *  @class RLACBUUID
  *

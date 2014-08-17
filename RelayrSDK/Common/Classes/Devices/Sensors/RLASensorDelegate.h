@@ -4,7 +4,6 @@
 /*!
  *  @protocol It provides the means to monitor how many observers are attached to a sensor.
  */
-
 @protocol RLASensorDelegate <NSObject>
 
 @required

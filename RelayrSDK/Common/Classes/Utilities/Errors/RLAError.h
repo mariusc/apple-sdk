@@ -1,15 +1,6 @@
 @import Foundation; // Apple
 
 /*!
- *  @class RLAError
- *
- *  @abstract Utility class which provides convenience methods for initializing errors as well as internal framework error codes.
- */
-@interface RLAError : NSObject
-
-#pragma mark Constants
-
-/*!
  *  @enum RLAErrorCode
  *
  *  @abstract Enumeration of all the error codes inside the relayr error domain.
@@ -24,15 +15,22 @@
  *  @constant RLAErrorCodeSerializationFailed Binary serialisation error.
  */
 typedef NS_ENUM(NSInteger, RLAErrorCode) {
-  RLAErrorCodeUnknown                       = 0,
-  RLAErrorCodeAPIMisuse                     = 11983297,
-  RLAErrorCodeMissingArgument               = 27631290,
-  RLAErrorCodeMissingExpectedValue          = 12074001,
-  RLAErrorCodeConnectionChannelPoweredOff   = 6060606,
-  RLAErrorCodeConnectionError               = 17666669,
-  RLAErrorCodeUnknownConnectionError        = 16579464,
-  RLAErrorCodeSerializationFailed           = 40443032
+    RLAErrorCodeUnknown                       = 0,
+    RLAErrorCodeAPIMisuse                     = 11983297,
+    RLAErrorCodeMissingArgument               = 27631290,
+    RLAErrorCodeMissingExpectedValue          = 12074001,
+    RLAErrorCodeConnectionChannelPoweredOff   = 6060606,
+    RLAErrorCodeConnectionError               = 17666669,
+    RLAErrorCodeUnknownConnectionError        = 16579464,
+    RLAErrorCodeSerializationFailed           = 40443032
 };
+
+/*!
+ *  @class RLAError
+ *
+ *  @abstract Utility class which provides convenience methods for initializing errors as well as internal framework error codes.
+ */
+@interface RLAError : NSObject
 
 #pragma mark Class methods
 

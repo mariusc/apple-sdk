@@ -1,5 +1,4 @@
-// Apple
-@import Foundation;
+@import Foundation;     // Apple
 
 /*!
  *  @class RLAData

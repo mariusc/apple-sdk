@@ -4,7 +4,7 @@
 
 #pragma mark - Public API
 
-+ (NSString *)UUIDStringWithCBUUID:(CBUUID *)uuid
++ (NSString*)UUIDStringWithCBUUID:(CBUUID*)uuid
 {
     RLAErrorAssertTrueAndReturnNil(uuid, RLAErrorCodeMissingArgument);
     

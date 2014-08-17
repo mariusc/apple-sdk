@@ -1,5 +1,5 @@
 #import "RLALocalUser.h"
-@class RLAWunderbarCredentials;     // Relayr.framework
+@class RLACredentialsWunderbar;     // Relayr.framework
 @class RLABluetoothService;         // Relayr.framework (service)
 
 /*!
@@ -22,7 +22,7 @@
  *  @param password <code>NSString</code> with the password of the previously given WIFI SSID.
  *  @param completion Block given the asychronous result of the operation. In case of error check @selector(localizedDescription) or @selector(localizedErrorReason) for a detailed error description
  */
-- (void)peripheralWithWunderbarCredentials:(RLAWunderbarCredentials*)credentials
+- (void)peripheralWithWunderbarCredentials:(RLACredentialsWunderbar*)credentials
                                   wifiSSID:(NSString*)ssid
                               wifiPassword:(NSString*)password
                       andCompletionHandler:(void(^)(NSError*))completion;

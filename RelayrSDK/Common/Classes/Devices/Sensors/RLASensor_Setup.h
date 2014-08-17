@@ -11,13 +11,15 @@
  */
 @interface RLASensor ()
 
-/**
- * These values are fetched via relayr API for remote devices
- * and hardcoded for local devices
- * @param meaning NSString representation of the sensor meaning
- * @param unit NSString representation of the sensor unit
+/*!
+ *  @method initWithMeaning:andUnit:
+ *
+ *  @abstract These values are fetched via relayr API for remote devices and hardcoded for local devices.
+ *
+ *  @param meaning <code>NSString</code> representing the sensor meaning.
+ *  @param unit <code>NSString</code> representing the sensor unit.
+ *	@return ...
  */
-
 - (instancetype)initWithMeaning:(NSString*)meaning
                         andUnit:(NSString*)unit;
 

@@ -3,7 +3,7 @@
 
 @implementation RLALocalUser (Onboard)
 
-- (void)peripheralWithWunderbarCredentials:(RLAWunderbarCredentials*)credentials wifiSSID:(NSString*)ssid wifiPassword:(NSString*)password andCompletionHandler:(void(^)(NSError*))completion
+- (void)peripheralWithWunderbarCredentials:(RLACredentialsWunderbar*)credentials wifiSSID:(NSString*)ssid wifiPassword:(NSString*)password andCompletionHandler:(void(^)(NSError*))completion
 {
     RLAErrorAssertTrueAndReturn(credentials, RLAErrorCodeMissingArgument);
     RLAErrorAssertTrueAndReturn(ssid, RLAErrorCodeMissingArgument);

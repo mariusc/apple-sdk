@@ -1,8 +1,11 @@
 @import CoreBluetooth;                                  // Apple
 #import "RLABluetoothPeripheralRequestRegistration.h"   // Header
+#import "RLACredentialsWunderbar.h"                     // Relayr.framework
+#import "RLADevice.h"
+#import "RLADevice_Setup.h"
+
 #import "RLACBUUID.h"                                   // Relayr.framework
-#import "RLAData.h"                                     // Relayr.framework (Utility)
-//#import "RLAWunderbarCredentials.h"                     // Relayr.framework (Domain object)
+#import "RLAData.h"                                     // Relayr.framework
 
 NSString* const serviceName                         = @"WunderbarApp";
 NSString* const serviceUUID                         = @"2000";
@@ -16,7 +19,7 @@ NSString* const characteristicWUnderbarURLUUID      = @"2016";
 
 @implementation RLABluetoothPeripheralRequestRegistration
 {
-    RLAWunderbarCredentials* _credentials;
+    RLACredentialsWunderbar* _credentials;
     NSString* _wifiSSID;
     NSString* _wifiPassword;
     NSMutableSet* _readCharacteristicsUUIDs;
@@ -24,7 +27,7 @@ NSString* const characteristicWUnderbarURLUUID      = @"2016";
 
 #pragma mark - Public API
 
-- (instancetype)initWithCredentials:(RLAWunderbarCredentials *)credentials wifiSSID:(NSString *)ssid wifiPassword:(NSString *)password
+- (instancetype)initWithCredentials:(RLACredentialsWunderbar *)credentials wifiSSID:(NSString *)ssid wifiPassword:(NSString *)password
 {
     RLAErrorAssertTrueAndReturnNil(credentials, RLAErrorCodeMissingArgument);
     RLAErrorAssertTrueAndReturnNil(ssid, RLAErrorCodeMissingArgument);
@@ -48,38 +51,37 @@ NSString* const characteristicWUnderbarURLUUID      = @"2016";
     return serviceName;
 }
 
-// TODO: Uncoment code
 - (NSArray*)services
 {
     // Characteristic values
     NSDictionary* dict = @{
-//      // Passkey for Humidity, Gyroscope, and light sensors (size: 19 bytes including update mask).
-//      // It contains the passkeys for the HTU, GYRO, and LIGHT sensors, in ASCII format, and an update mask. The update mask is a bit mask of three update flags: one for each passkey. The lowest three bits of the value determine which passkey should be updated.
-//      characteristicHtuGyroLightUUID : [self dataWithString:_credentials.htu.secret andString:_credentials.gyro.secret andString:_credentials.light.secret andFlag:0x07], // Update all three sensors
-//      
-//      // Passkey for Microphone, bridge, and IR sensor (size: 19 bytes including update mask).
-//      // It contains the passkeys for the MICROPHONE, BRIDGE, and IR sensors, in ASCII format, and an update mask. Like the HTU_GYRO_LIGHT passkey the update mask is a bit mask of three update flags.
-//      characteristicMicBridgeIRUUID : [self dataWithString:_credentials.microphone.secret andString:_credentials.bridge.secret andString:_credentials.ir.secret andFlag:0x07], // Update all three sensors
-//      
-//      // SSID of WiFi network (size: 20 bytes including update flag).
-//      // It contains the Wifi SSID in ASCII format and an update flag. The value must be 20 characters long and finish with the update flag, therefore it is padded with zeros until it is the appropriate length.
-//      characteristicWifiSSIDUUID : [self dataWithString:_wifiSSID andFlag:0x01 paddedToLength:20],
-//      
-//      // Password of WiFi network (size: 20 bytes including update flag).
-//      // Description: Contains the Wifi password in ASCII format and an update flag. The value must be 20 bytes long and finish with the update flag, therefore it is also padded like the SSID.
-//      characteristicWifiPasswordUUID : [self dataWithString:_wifiPassword andFlag:0x01 paddedToLength:20],
-//      
-//      // Wunderbar ID (size: 17 bytes including update flag).
-//      // Description: Contains the (short) UUID of the WunderBar and an update flag.
-//      characteristicWunderbarIDUUID : [self dataWithLongUUID:_credentials.uid andFlag:0x01],
-//      
-//      // Wunderbar secret (size: 13 bytes including the update flag).
-//      // Description: Contains the secret to conncet a particular Wunderbar to MQTT.
-//      characteristicWunderbarSecretUUID : [self dataWithString:_credentials.secret andFlag:0x01 paddedToLength:13],
-//      
-//      // Wunderbar URL (size: 20 bytes, terminating character and update_flag included).
-//      // Description: Contains the url of the MQTT server.
-//      characteristicWUnderbarURLUUID : [self dataWithString:@"mqtt.relayr.io" andFlag:0x01 paddedToLength:20]
+      // Passkey for Humidity, Gyroscope, and light sensors (size: 19 bytes including update mask).
+      // It contains the passkeys for the HTU, GYRO, and LIGHT sensors, in ASCII format, and an update mask. The update mask is a bit mask of three update flags: one for each passkey. The lowest three bits of the value determine which passkey should be updated.
+      characteristicHtuGyroLightUUID : [self dataWithString:_credentials.htu.secret andString:_credentials.gyro.secret andString:_credentials.light.secret andFlag:0x07], // Update all three sensors
+      
+      // Passkey for Microphone, bridge, and IR sensor (size: 19 bytes including update mask).
+      // It contains the passkeys for the MICROPHONE, BRIDGE, and IR sensors, in ASCII format, and an update mask. Like the HTU_GYRO_LIGHT passkey the update mask is a bit mask of three update flags.
+      characteristicMicBridgeIRUUID : [self dataWithString:_credentials.microphone.secret andString:_credentials.bridge.secret andString:_credentials.ir.secret andFlag:0x07], // Update all three sensors
+      
+      // SSID of WiFi network (size: 20 bytes including update flag).
+      // It contains the Wifi SSID in ASCII format and an update flag. The value must be 20 characters long and finish with the update flag, therefore it is padded with zeros until it is the appropriate length.
+      characteristicWifiSSIDUUID : [self dataWithString:_wifiSSID andFlag:0x01 paddedToLength:20],
+      
+      // Password of WiFi network (size: 20 bytes including update flag).
+      // Description: Contains the Wifi password in ASCII format and an update flag. The value must be 20 bytes long and finish with the update flag, therefore it is also padded like the SSID.
+      characteristicWifiPasswordUUID : [self dataWithString:_wifiPassword andFlag:0x01 paddedToLength:20],
+      
+      // Wunderbar ID (size: 17 bytes including update flag).
+      // Description: Contains the (short) UUID of the WunderBar and an update flag.
+      characteristicWunderbarIDUUID : [self dataWithLongUUID:_credentials.uid andFlag:0x01],
+      
+      // Wunderbar secret (size: 13 bytes including the update flag).
+      // Description: Contains the secret to conncet a particular Wunderbar to MQTT.
+      characteristicWunderbarSecretUUID : [self dataWithString:_credentials.secret andFlag:0x01 paddedToLength:13],
+      
+      // Wunderbar URL (size: 20 bytes, terminating character and update_flag included).
+      // Description: Contains the url of the MQTT server.
+      characteristicWUnderbarURLUUID : [self dataWithString:@"mqtt.relayr.io" andFlag:0x01 paddedToLength:20]
     };
     
     // Setup characteristics
@@ -113,6 +115,7 @@ NSString* const characteristicWUnderbarURLUUID      = @"2016";
     [super peripheralManager:peripheral didReceiveReadRequest:request];
     
     // Request is finished when all characteristics have been read.
+    
     // Count characteristics
     NSUInteger count = 0;
     NSArray* services = self.services;
@@ -122,9 +125,7 @@ NSString* const characteristicWUnderbarURLUUID      = @"2016";
     }
     
     // Store characteristic UUID
-    
-    NSString* uuid = [RLACBUUID UUIDStringWithCBUUID:request.characteristic.UUID];
-    [_readCharacteristicsUUIDs addObject:uuid];
+    [_readCharacteristicsUUIDs addObject:[RLACBUUID UUIDStringWithCBUUID:request.characteristic.UUID]];
     
     // Invoke completion handler if finished
     if (_readCharacteristicsUUIDs.count == count)

@@ -1,15 +1,14 @@
 #import "RLAUserLocal.h"                // Header
-#import "RLABluetoothService.h"         // Relayr.framework (service)
-
-//#import "RLATemperatureSensor.h"        // Relayr.framework (sensor)
-//#import "RLAHumiditySensor.h"           // Relayr.framework (sensor)
-//#import "RLAColorSensor.h"              // Relayr.framework (sensor)
-//#import "RLAProximitySensor.h"          // Relayr.framework (sensor)
-//#import "RLAGyroscopeSensor.h"          // Relayr.framework (sensor)
-//#import "RLAAccelerometerSensor.h"      // Relayr.framework (sensor)
-//#import "RLANoiseSensor.h"              // Relayr.framework (sensor)
-//#import "RLAWunderbarGroveOutput.h"     // Relayr.framework (output)
-//#import "RLAWunderbarInfraredOutput.h"  // Relayr.framework (output)
+#import "RLABluetoothService.h"         // Relayr.framework
+#import "RLASensorAccelerometer.h"      // Relayr.framework (sensor)
+#import "RLASensorColor.h"              // Relayr.framework (sensor)
+#import "RLASensorGyroscope.h"          // Relayr.framework (sensor)
+#import "RLASensorHumidity.h"           // Relayr.framework (sensor)
+#import "RLASensorNoise.h"              // Relayr.framework (sensor)
+#import "RLASensorProximity.h"          // Relayr.framework (sensor)
+#import "RLASensorTemperature.h"        // Relayr.framework (sensor)
+#import "RLAOutputGrove.h"              // Relayr.framework (output)
+#import "RLAOutputInfrared.h"           // Relayr.framework (output)
 
 @implementation RLAUserLocal
 {
@@ -17,8 +16,6 @@
 }
 
 #pragma mark - Public API
-
-#pragma mark Class methods
 
 + (instancetype)user
 {
@@ -30,12 +27,42 @@
     return sharedInstance;
 }
 
-#pragma mark Initialisers
-
+// Only the implementation should initialise a local object
 - (instancetype)init
 {
     [self doesNotRecognizeSelector:_cmd];
-    return nil; // Only the implementation should initialise a local object
+    return nil;
+}
+
+#pragma mark RLAUserDevicesAPI
+
+- (void)devicesWithCompletionHandler:(void(^)(NSArray* devices, NSError* error))completion
+{
+    if (!completion) { return; }
+    
+    // Scan only for Wunderbar sensors
+    NSArray *classes = @[
+                [RLASensorAccelerometer class],
+                [RLASensorColor class],
+                [RLASensorGyroscope class],
+                [RLASensorHumidity class],
+                [RLASensorNoise class],
+                [RLASensorProximity class],
+                [RLASensorTemperature class],
+                [RLAOutputGrove class],
+                [RLAOutputInfrared class]
+    ];
+    
+    [_bleService devicesWithSensorsAndOutputsOfClasses:classes timeout:1 completion:^(NSArray* devices, NSError* error) {
+        (devices.count) ? completion(devices, nil) : completion(nil, error);
+    }];
+}
+
+- (void)devicesWithSensorsAndOutputsOfClasses:(NSArray*)classes completion:(void (^)(NSArray*, NSError*))completion
+{
+    if (!completion) { return; }
+    if (!classes) { completion(nil, [RLAError errorWithCode:RLAErrorCodeMissingArgument info:nil]); }
+    [_bleService devicesWithSensorsAndOutputsOfClasses:classes timeout:10 completion:completion];
 }
 
 #pragma mark - Private methods
@@ -53,41 +80,6 @@
 - (RLABluetoothService*)bleService
 {
     return _bleService;
-}
-
-#pragma mark - <RLAUserDevicesAPI>
-
-// TODO: Fill up method
-- (void)devicesWithCompletionHandler:(void(^)(NSArray* devices, NSError* error))completion
-{
-    if (!completion) { return; }
-//  
-//    // Scan only for Wunderbar sensors
-//    NSArray *classes = @[[RLATemperatureSensor class],
-//                         [RLAHumiditySensor class],
-//                         [RLAProximitySensor class],
-//                         [RLAColorSensor class],
-//                         [RLAGyroscopeSensor class],
-//                         [RLAAccelerometerSensor class],
-//                         [RLANoiseSensor class],
-//                         [RLAWunderbarGroveOutput class],
-//                         [RLAWunderbarInfraredOutput class]];
-//  
-//    [_bleService devicesWithSensorsAndOutputsOfClasses:classes timeout:1 completion:^(NSArray* devices, NSError* error) {
-//        // Ignore error and return found devices
-//        if ([devices count]) {
-//            completion(devices, nil);
-//        } else {
-//            completion(nil, error);
-//        }
-//    }];
-}
-
-- (void)devicesWithSensorsAndOutputsOfClasses:(NSArray*)classes completion:(void (^)(NSArray*, NSError*))completion
-{
-    if (!completion) { return; }
-    if (!classes) { completion(nil, [RLAError errorWithCode:RLAErrorCodeMissingArgument info:nil]); }
-    [_bleService devicesWithSensorsAndOutputsOfClasses:classes timeout:10 completion:completion];
 }
 
 @end

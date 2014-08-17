@@ -20,12 +20,12 @@
 #pragma mark NSCopying
 
 #warning WTF
-- (instancetype)copyWithZone:(NSZone *)zone
-{
+//- (instancetype)copyWithZone:(NSZone *)zone
+//{
 //    typeof(self) copy = [[[self class] alloc] initWithDictionary:self.RLA_dictionary];
 //    return copy;
-    return nil;
-}
+//    return nil;
+//}
 
 #pragma mark NSObject
 

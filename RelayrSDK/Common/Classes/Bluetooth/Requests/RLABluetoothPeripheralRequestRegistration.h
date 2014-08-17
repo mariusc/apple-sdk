@@ -1,6 +1,6 @@
 @import Foundation;                         // Apple
 #import "RLABluetoothPeripheralRequest.h"   // Relayr.framework
-@class RLAWunderbarCredentials;             // Relayr.framework
+@class RLACredentialsWunderbar;             // Relayr.framework
 
 /*!
  *  @class RLABluetoothPeripheralRequestRegistration
@@ -26,8 +26,8 @@
  * @param password WIFI password (need by the wunderbar master module)
  * @return Newly initialized object or nil if an object could not be created
  */
-- (instancetype)initWithCredentials:(RLAWunderbarCredentials *)credentials
-                           wifiSSID:(NSString *)ssid
-                       wifiPassword:(NSString *)password;
+- (instancetype)initWithCredentials:(RLACredentialsWunderbar*)credentials
+                           wifiSSID:(NSString*)ssid
+                       wifiPassword:(NSString*)password;
 
 @end

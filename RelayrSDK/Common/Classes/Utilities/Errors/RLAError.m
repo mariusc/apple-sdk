@@ -1,14 +1,10 @@
 #import "RLAError.h" // Header
 
-@implementation RLAError
-
-#pragma mark - Constants
-
 static NSString* const kRLAErrorDomain = @"io.relayr";
 
-#pragma mark - Public API
+@implementation RLAError
 
-#pragma mark Class methods
+#pragma mark - Public API
 
 + (NSError*)errorWithCode:(RLAErrorCode)code info:(NSDictionary*)info
 {

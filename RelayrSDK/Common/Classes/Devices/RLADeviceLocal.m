@@ -119,53 +119,6 @@
     }
 }
 
-#pragma mark - Extensions
-
-#pragma mark RLADeviceLocal_Setup
-
-- (instancetype)initWithPeripheral:(CBPeripheral *)peripheral andListenerManager:(RLABluetoothManager *)manager
-{
-    RLAErrorAssertTrueAndReturnNil(peripheral, RLAErrorCodeMissingArgument);
-    RLAErrorAssertTrueAndReturnNil(manager, RLAErrorCodeMissingArgument);
-
-    self = [super init];
-    if (self)
-    {
-        _peripheral = peripheral;
-        self.name = _peripheral.name;
-        self.manufacturer = @"undefined";
-        self.uid = [_peripheral.identifier UUIDString];
-
-        // Register for service notifications
-        _manager = manager;
-        [_manager addListener:self forPeripheral:peripheral];
-
-        // Setup storage arrays
-        _storedCharacteristics = [NSMutableSet set];
-        _readHandlers = [NSMutableArray array];
-        
-        // Scan peripheral
-        _peripheral.delegate = _manager;
-    }
-    return self;
-}
-
-- (void)setRelayrPairing:(RLADeviceLocalPairing)pairing completion:(void(^)(NSError*))completion
-{
-    RLAErrorAssertTrueAndReturn( pairing!=RLADeviceLocalPairingUnknown, RLAErrorCodeAPIMisuse );
-    
-    // Setup flag
-    uint8_t const d[1] = { (pairing==RLADeviceLocalPairingAny) ? 0 : 1 };
-    NSData* flag = [NSData dataWithBytes:(void const*)d length:sizeof(unsigned char)];
-    
-    // Write data
-    [self setData:flag forServiceWithUUID:@"2001" forCharacteristicWithUUID:@"2019" completion: ^(CBPeripheral *p, CBCharacteristic *c, NSError *error) {
-        completion(error);
-    }];
-}
-
-#pragma mark - Protocols
-
 #pragma mark RLABluetoothListenerDelegate
 
 - (void)manager:(RLABluetoothManager*)manager didConnectPeripheral:(CBPeripheral *)peripheral
@@ -233,7 +186,7 @@
     for (RLAHandlerInfo* info in _readHandlers)
     {
         if ( ![info.serviceUUID isEqualToString:[characteristic.service.UUID UUIDString]] ||
-             ![info.characteristicUUID isEqualToString:[characteristic.UUID UUIDString]] ) { continue; }
+            ![info.characteristicUUID isEqualToString:[characteristic.UUID UUIDString]] ) { continue; }
         
         info.handler(data, error);
         [_readHandlers removeObject:info];
@@ -268,7 +221,7 @@
 - (void)manager:(RLABluetoothManager*)manager peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error;
 {
     RLAErrorAssertTrueAndReturn(_writeHandler, RLAErrorCodeMissingExpectedValue);
-
+    
     [self updateRelayrStateAndPairing]; // Update device state
     
     void (^writeHandler)(CBPeripheral* ,CBCharacteristic*, NSError*) = _writeHandler;
@@ -334,6 +287,51 @@
         NSError *error = [RLAError errorWithCode:RLAErrorCodeMissingExpectedValue localizedDescription:@"Writing data to output failed" failureReason:failureReason];
         if (self.errorHandler) { self.errorHandler(error); }
     }
+}
+
+#pragma mark - Extensions
+
+#pragma mark RLADeviceLocal_Setup
+
+- (instancetype)initWithPeripheral:(CBPeripheral *)peripheral andListenerManager:(RLABluetoothManager *)manager
+{
+    RLAErrorAssertTrueAndReturnNil(peripheral, RLAErrorCodeMissingArgument);
+    RLAErrorAssertTrueAndReturnNil(manager, RLAErrorCodeMissingArgument);
+
+    self = [super init];
+    if (self)
+    {
+        _peripheral = peripheral;
+        self.name = _peripheral.name;
+        self.manufacturer = @"undefined";
+        self.uid = [_peripheral.identifier UUIDString];
+
+        // Register for service notifications
+        _manager = manager;
+        [_manager addListener:self forPeripheral:peripheral];
+
+        // Setup storage arrays
+        _storedCharacteristics = [NSMutableSet set];
+        _readHandlers = [NSMutableArray array];
+        
+        // Scan peripheral
+        _peripheral.delegate = _manager;
+    }
+    return self;
+}
+
+- (void)setRelayrPairing:(RLADeviceLocalPairing)pairing completion:(void(^)(NSError*))completion
+{
+    RLAErrorAssertTrueAndReturn( pairing!=RLADeviceLocalPairingUnknown, RLAErrorCodeAPIMisuse );
+    
+    // Setup flag
+    uint8_t const d[1] = { (pairing==RLADeviceLocalPairingAny) ? 0 : 1 };
+    NSData* flag = [NSData dataWithBytes:(void const*)d length:sizeof(unsigned char)];
+    
+    // Write data
+    [self setData:flag forServiceWithUUID:@"2001" forCharacteristicWithUUID:@"2019" completion: ^(CBPeripheral *p, CBCharacteristic *c, NSError *error) {
+        completion(error);
+    }];
 }
 
 #pragma mark - Private methods

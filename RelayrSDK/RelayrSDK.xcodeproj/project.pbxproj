@@ -126,6 +126,14 @@
 		62E04C1F19A09676001FEDCD /* RLAOutputInfrared.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C1D19A09676001FEDCD /* RLAOutputInfrared.m */; };
 		62E04C2319A10167001FEDCD /* RLAHandlerInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C2119A10167001FEDCD /* RLAHandlerInfo.h */; };
 		62E04C2419A10167001FEDCD /* RLAHandlerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C2219A10167001FEDCD /* RLAHandlerInfo.m */; };
+		62E04C2919A140A0001FEDCD /* RLAWebService.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C2719A140A0001FEDCD /* RLAWebService.h */; };
+		62E04C2A19A140A0001FEDCD /* RLAWebService.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C2819A140A0001FEDCD /* RLAWebService.m */; };
+		62E04C2F19A1508E001FEDCD /* RLACredentialsWunderbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C2D19A1508E001FEDCD /* RLACredentialsWunderbar.h */; };
+		62E04C3019A1508E001FEDCD /* RLACredentialsWunderbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C2E19A1508E001FEDCD /* RLACredentialsWunderbar.m */; };
+		62E04C3319A15520001FEDCD /* RLANetworkInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C3119A15520001FEDCD /* RLANetworkInfo.h */; };
+		62E04C3419A15520001FEDCD /* RLANetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C3219A15520001FEDCD /* RLANetworkInfo.m */; };
+		62E04C3819A158DF001FEDCD /* RLAKeyChain.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C3619A158DF001FEDCD /* RLAKeyChain.h */; };
+		62E04C3919A158DF001FEDCD /* RLAKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C3719A158DF001FEDCD /* RLAKeyChain.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -255,6 +263,14 @@
 		62E04C1D19A09676001FEDCD /* RLAOutputInfrared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAOutputInfrared.m; sourceTree = "<group>"; };
 		62E04C2119A10167001FEDCD /* RLAHandlerInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAHandlerInfo.h; sourceTree = "<group>"; };
 		62E04C2219A10167001FEDCD /* RLAHandlerInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAHandlerInfo.m; sourceTree = "<group>"; };
+		62E04C2719A140A0001FEDCD /* RLAWebService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebService.h; sourceTree = "<group>"; };
+		62E04C2819A140A0001FEDCD /* RLAWebService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebService.m; sourceTree = "<group>"; };
+		62E04C2D19A1508E001FEDCD /* RLACredentialsWunderbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLACredentialsWunderbar.h; sourceTree = "<group>"; };
+		62E04C2E19A1508E001FEDCD /* RLACredentialsWunderbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLACredentialsWunderbar.m; sourceTree = "<group>"; };
+		62E04C3119A15520001FEDCD /* RLANetworkInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLANetworkInfo.h; sourceTree = "<group>"; };
+		62E04C3219A15520001FEDCD /* RLANetworkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLANetworkInfo.m; sourceTree = "<group>"; };
+		62E04C3619A158DF001FEDCD /* RLAKeyChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAKeyChain.h; sourceTree = "<group>"; };
+		62E04C3719A158DF001FEDCD /* RLAKeyChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAKeyChain.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -344,6 +360,8 @@
 				625204C6199E41A000A27C85 /* Data */,
 				621A6ACD199CCD170004F9FD /* Errors */,
 				621A6AD0199CCD170004F9FD /* Logs */,
+				62E04C3519A158CB001FEDCD /* Security */,
+				62E04C2C19A15046001FEDCD /* Web */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -695,6 +713,7 @@
 			isa = PBXGroup;
 			children = (
 				621A6AF9199CEC000004F9FD /* Bluetooth */,
+				62E04C2519A1406B001FEDCD /* Web */,
 				625204D8199E5AB600A27C85 /* Devices */,
 				625204E1199E5AB600A27C85 /* Users */,
 				621A6AB7199CC6D00004F9FD /* Utilities */,
@@ -869,6 +888,51 @@
 			path = Misc;
 			sourceTree = "<group>";
 		};
+		62E04C2519A1406B001FEDCD /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				62E04C2B19A15024001FEDCD /* Credentials */,
+				62E04C2619A1406B001FEDCD /* Requests */,
+				62E04C2719A140A0001FEDCD /* RLAWebService.h */,
+				62E04C2819A140A0001FEDCD /* RLAWebService.m */,
+			);
+			path = Web;
+			sourceTree = "<group>";
+		};
+		62E04C2619A1406B001FEDCD /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
+		62E04C2B19A15024001FEDCD /* Credentials */ = {
+			isa = PBXGroup;
+			children = (
+				62E04C2D19A1508E001FEDCD /* RLACredentialsWunderbar.h */,
+				62E04C2E19A1508E001FEDCD /* RLACredentialsWunderbar.m */,
+			);
+			path = Credentials;
+			sourceTree = "<group>";
+		};
+		62E04C2C19A15046001FEDCD /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				62E04C3119A15520001FEDCD /* RLANetworkInfo.h */,
+				62E04C3219A15520001FEDCD /* RLANetworkInfo.m */,
+			);
+			path = Web;
+			sourceTree = "<group>";
+		};
+		62E04C3519A158CB001FEDCD /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				62E04C3619A158DF001FEDCD /* RLAKeyChain.h */,
+				62E04C3719A158DF001FEDCD /* RLAKeyChain.m */,
+			);
+			path = Security;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -882,6 +946,7 @@
 				625204EC199E5AB600A27C85 /* RLAUserLocal.h in Headers */,
 				621A6B16199D2CBD0004F9FD /* RLAPeripheralnfo.h in Headers */,
 				6252050B199E6ABD00A27C85 /* RLASensorProximity.h in Headers */,
+				62E04C3819A158DF001FEDCD /* RLAKeyChain.h in Headers */,
 				621A6B1E199D33CA0004F9FD /* RLABluetoothAdapterController.h in Headers */,
 				62E04C0A19A08F2E001FEDCD /* RLASensorValueNoise.h in Headers */,
 				621A6B11199D0F1A0004F9FD /* RLACBUUID.h in Headers */,
@@ -906,6 +971,7 @@
 				621A6AFC199CEC000004F9FD /* RLABluetoothService.h in Headers */,
 				621A6AD3199CCD170004F9FD /* RLAError.h in Headers */,
 				6252049D199E08D900A27C85 /* RLABluetoothAdapterSensorColor.h in Headers */,
+				62E04C2F19A1508E001FEDCD /* RLACredentialsWunderbar.h in Headers */,
 				62E04C1619A093C7001FEDCD /* RLAOutput.h in Headers */,
 				625204B3199E0F9500A27C85 /* RLABluetoothAdapterSensorNoise.h in Headers */,
 				625204F9199E61FC00A27C85 /* RLASensorValue.h in Headers */,
@@ -922,6 +988,7 @@
 				625204C4199E33D100A27C85 /* RLABluetoothPeripheralRequestRegistration.h in Headers */,
 				62E04C0E19A09022001FEDCD /* RLASensorHumidity.h in Headers */,
 				625204A5199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.h in Headers */,
+				62E04C3319A15520001FEDCD /* RLANetworkInfo.h in Headers */,
 				625204E7199E5AB600A27C85 /* RLADevice_Setup.h in Headers */,
 				6252048B199E02C900A27C85 /* RLABluetoothAdapter.h in Headers */,
 				621A6AE3199CE23E0004F9FD /* iOS.pch in Headers */,
@@ -929,6 +996,7 @@
 				625204EB199E5AB600A27C85 /* RLAUser.h in Headers */,
 				62E04C1A19A09616001FEDCD /* RLAOutputGrove.h in Headers */,
 				625204F6199E612E00A27C85 /* RLASensorDelegate.h in Headers */,
+				62E04C2919A140A0001FEDCD /* RLAWebService.h in Headers */,
 				625204EA199E5AB600A27C85 /* RLADeviceLocal_Setup.h in Headers */,
 				62520513199E6C2100A27C85 /* RLASensorLuminosity.h in Headers */,
 				62520507199E696500A27C85 /* RLASensorColor.h in Headers */,
@@ -1125,7 +1193,9 @@
 				625204BB199E141900A27C85 /* RLABluetoothCentralRequestDiscoverPeripherals.m in Sources */,
 				625204C1199E2A9900A27C85 /* RLABluetoothPeripheralRequest.m in Sources */,
 				62E04BFF19A005E7001FEDCD /* RLASensorValueTemperature.m in Sources */,
+				62E04C3919A158DF001FEDCD /* RLAKeyChain.m in Sources */,
 				621A6AD5199CCD170004F9FD /* RLAError.m in Sources */,
+				62E04C3019A1508E001FEDCD /* RLACredentialsWunderbar.m in Sources */,
 				62E04BF719A00488001FEDCD /* RLASensorValueAccelerometer.m in Sources */,
 				62520500199E649B00A27C85 /* RLASensorValueProximity.m in Sources */,
 				621A6AFE199CEC000004F9FD /* RLABluetoothService.m in Sources */,
@@ -1144,12 +1214,14 @@
 				621A6B07199CF2CF0004F9FD /* RLABluetoothManager.m in Sources */,
 				6252048C199E02C900A27C85 /* RLABluetoothAdapter.m in Sources */,
 				62E04C2419A10167001FEDCD /* RLAHandlerInfo.m in Sources */,
+				62E04C2A19A140A0001FEDCD /* RLAWebService.m in Sources */,
 				625204FA199E61FC00A27C85 /* RLASensorValue.m in Sources */,
 				621A6B0D199CFE310004F9FD /* RLABluetoothDelegatesGroup.m in Sources */,
 				62E04C1319A0924D001FEDCD /* RLASensorNoise.m in Sources */,
 				625204A8199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.m in Sources */,
 				62E04BFB19A00559001FEDCD /* RLASensorAccelerometer.m in Sources */,
 				62E04C0719A08D9A001FEDCD /* RLASensorValueHumidity.m in Sources */,
+				62E04C3419A15520001FEDCD /* RLANetworkInfo.m in Sources */,
 				621A6AD9199CCD170004F9FD /* RLALog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
