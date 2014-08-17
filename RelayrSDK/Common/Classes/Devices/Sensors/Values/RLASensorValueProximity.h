@@ -1,4 +1,4 @@
-#import "RLASensorValue.h"  // Relayr.framework
+#import "RLASensorValue.h"  // Base class
 
 /*!
  *  @class RLASensorValueProximity

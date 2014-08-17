@@ -1,8 +1,8 @@
-#import "RLASensorProximity.h"      // Header
+#import "RLASensorHumidity.h"       // Header
 #import "RLASensor_Setup.h"         // Extension
-#import "RLASensorValueProximity.h" // Relayr.framework
+#import "RLASensorValueHumidity.h"  // Relayr.framework
 
-@implementation RLASensorProximity
+@implementation RLASensorHumidity
 
 #pragma mark - Public API
 
@@ -18,7 +18,7 @@
 
 - (Class)sensorValueClass
 {
-    return [RLASensorValueProximity class];
+    return [RLASensorValueHumidity class];
 }
 
 @end

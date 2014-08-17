@@ -1,10 +1,10 @@
 #import "RLASensor.h"   // Base class
 
 /*!
- *  @class RLASensorProximity
+ *  @class RLASensorGyroscope
  *
  *  @abstract ...
  */
-@interface RLASensorProximity : RLASensor
+@interface RLASensorGyroscope : RLASensor
 
 @end

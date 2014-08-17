@@ -1,5 +1,5 @@
 @import UIKit;              // Apple
-#import "RLASensorValue.h"  // Relayr.framework
+#import "RLASensorValue.h"  // Base class
 
 /*!
  *  @class RLASensorValueColor

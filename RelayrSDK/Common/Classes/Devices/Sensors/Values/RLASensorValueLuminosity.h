@@ -1,4 +1,4 @@
-#import "RLASensorValue.h"
+#import "RLASensorValue.h"  // Base class
 
 /*!
  *  @class RLASensorValueLuminosity

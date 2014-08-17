@@ -1,8 +1,8 @@
-#import "RLASensorLuminosity.h"         // Header
+#import "RLASensorAccelerometer.h"      // Header
 #import "RLASensor_Setup.h"             // Extension
-#import "RLASensorValueLuminosity.h"    // Relayr.framework
+#import "RLASensorValueAccelerometer.h" // Relayr.framework
 
-@implementation RLASensorLuminosity
+@implementation RLASensorAccelerometer
 
 #pragma mark - Public API
 
@@ -18,7 +18,7 @@
 
 - (Class)sensorValueClass
 {
-    return [RLASensorValueLuminosity class];
+    return [RLASensorValueAccelerometer class];
 }
 
 @end

@@ -1,5 +1,5 @@
-#import "RLASensorValue.h"
-#import "RLASensorValue_Setup.h"
+#import "RLASensorValue.h"          // Header
+#import "RLASensorValue_Setup.h"    // Extension
 
 @implementation RLASensorValue
 
@@ -17,18 +17,6 @@
     return [NSDate dateWithTimeIntervalSince1970:timestamp.doubleValue];
 }
 
-#pragma mark RLASensorValue_Setup
-
-- (instancetype)initWithDictionary:(NSDictionary *)values
-{
-    self = [super init];
-    if (self)
-    {
-        _dictionary = values;
-    }
-    return self;
-}
-
 #pragma mark NSCopying
 
 #warning WTF
@@ -44,6 +32,20 @@
 - (NSString*)description
 {
     return [self.dictionary description];
+}
+
+#pragma mark - Extensions
+
+#pragma mark RLASensorValue_Setup
+
+- (instancetype)initWithDictionary:(NSDictionary *)values
+{
+    self = [super init];
+    if (self)
+    {
+        _dictionary = values;
+    }
+    return self;
 }
 
 @end

@@ -1,8 +1,8 @@
-#import "RLASensorProximity.h"      // Header
+#import "RLASensorGyroscope.h"      // Header
 #import "RLASensor_Setup.h"         // Extension
-#import "RLASensorValueProximity.h" // Relayr.framework
+#import "RLASensorValueGyroscope.h" // Relayr.framework
 
-@implementation RLASensorProximity
+@implementation RLASensorGyroscope
 
 #pragma mark - Public API
 
@@ -18,7 +18,7 @@
 
 - (Class)sensorValueClass
 {
-    return [RLASensorValueProximity class];
+    return [RLASensorValueGyroscope class];
 }
 
 @end

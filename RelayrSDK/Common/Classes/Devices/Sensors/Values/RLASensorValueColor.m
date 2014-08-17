@@ -1,15 +1,21 @@
-#import "RLASensorValueColor.h"
+#import "RLASensorValueColor.h"   // Header
 
 @implementation RLASensorValueColor
 
 #pragma mark - Public API
 
+- (instancetype)init
+{
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
+}
+
 - (UIColor *)color
 {
     NSDictionary* dict = self.dictionary;
-    CGFloat const r = [[dict[@"clr"] valueForKey:@"r"] floatValue];
-    CGFloat const g = [[dict[@"clr"] valueForKey:@"g"] floatValue];
-    CGFloat const b = [[dict[@"clr"] valueForKey:@"b"] floatValue];
+    CGFloat r = [[[dict valueForKey:@"clr"] valueForKey:@"r"] floatValue];
+    CGFloat g = [[[dict valueForKey:@"clr"] valueForKey:@"g"] floatValue];
+    CGFloat b = [[[dict valueForKey:@"clr"] valueForKey:@"b"] floatValue];
     
     float red   = (float)r;
     float green = (float)g;

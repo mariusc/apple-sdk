@@ -1,8 +1,8 @@
-#import "RLASensorColor.h"      // Header
+#import "RLASensorNoise.h"      // Header
 #import "RLASensor_Setup.h"     // Extension
-#import "RLASensorValueColor.h" // Relayr.framework
+#import "RLASensorValueNoise.h" // Relayr.framework
 
-@implementation RLASensorColor
+@implementation RLASensorNoise
 
 #pragma mark - Public API
 
@@ -18,7 +18,7 @@
 
 - (Class)sensorValueClass
 {
-    return [RLASensorValueColor class];
+    return [RLASensorValueNoise class];
 }
 
 @end
