@@ -7,4 +7,30 @@ FOUNDATION_EXPORT double iOSRelayrVersionNumber;
 FOUNDATION_EXPORT const unsigned char iOSRelayrVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <Relayr/PublicHeader.h>
-
+#import <Relayr/RLAUser.h>
+#import <Relayr/RLAUserLocal.h>
+#import <Relayr/RLDevice.h>
+#import <Relayr/RLADeviceLocal.h>
+#import <Relayr/RLASensor.h>
+#import <Relayr/RLASensorAccelerometer.h>
+#import <Relayr/RLASensorColor.h>
+#import <Relayr/RLASensorDelegate.h>
+#import <Relayr/RLASensorGyroscope.h>
+#import <Relayr/RLASensorHumidity.h>
+#import <Relayr/RLASensorLuminosity.h>
+#import <Relayr/RLASensorNoise.h>
+#import <Relayr/RLASensorProximity.h>
+#import <Relayr/RLASensorTemperature.h>
+#import <Relayr/RLASensorValue.h>
+#import <Relayr/RLASensorValueAccelerometer.h>
+#import <Relayr/RLASensorValueColor.h>
+#import <Relayr/RLASensorValueGyroscope.h>
+#import <Relayr/RLASensorValueHumidity.h>
+#import <Relayr/RLASensorValueLuminosity.h>
+#import <Relayr/RLASensorValueNoise.h>
+#import <Relayr/RLASensorValueProximity.h>
+#import <Relayr/RLASensorValueTemperature.h>
+#import <Relayr/RLAOutput.h>
+#import <Relayr/RLAOutputGrove.h>
+#import <Relayr/RLAOutputInfrared.h>
+#import <Relayr/RLAHandlerInfo.h>
