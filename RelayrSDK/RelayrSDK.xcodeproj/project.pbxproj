@@ -79,7 +79,7 @@
 		62E04C3419A15520001FEDCD /* RLANetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C3219A15520001FEDCD /* RLANetworkInfo.m */; };
 		62E04C3819A158DF001FEDCD /* RLAKeyChain.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C3619A158DF001FEDCD /* RLAKeyChain.h */; };
 		62E04C3919A158DF001FEDCD /* RLAKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C3719A158DF001FEDCD /* RLAKeyChain.m */; };
-		62E04C7919A15CD6001FEDCD /* RLAHandlerInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C3D19A15CD6001FEDCD /* RLAHandlerInfo.h */; };
+		62E04C7919A15CD6001FEDCD /* RLAHandlerInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C3D19A15CD6001FEDCD /* RLAHandlerInfo.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		62E04C7A19A15CD6001FEDCD /* RLAHandlerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C3E19A15CD6001FEDCD /* RLAHandlerInfo.m */; };
 		62E04C7B19A15CD6001FEDCD /* RLAOutput.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C4019A15CD6001FEDCD /* RLAOutput.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		62E04C7C19A15CD6001FEDCD /* RLAOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C4119A15CD6001FEDCD /* RLAOutput.m */; };
@@ -971,11 +971,13 @@
 				62E04CA819A15CD6001FEDCD /* RLASensorValueNoise.h in Headers */,
 				62E04CAA19A15CD6001FEDCD /* RLASensorValueProximity.h in Headers */,
 				62E04CAC19A15CD6001FEDCD /* RLASensorValueTemperature.h in Headers */,
-				62E04C8619A15CD6001FEDCD /* RLADeviceLocal_Setup.h in Headers */,
 				62E04C7B19A15CD6001FEDCD /* RLAOutput.h in Headers */,
 				62E04C7D19A15CD6001FEDCD /* RLAOutputGrove.h in Headers */,
 				62E04C7F19A15CD6001FEDCD /* RLAOutputInfrared.h in Headers */,
 				62E04C7919A15CD6001FEDCD /* RLAHandlerInfo.h in Headers */,
+				621A6AE0199CE1AA0004F9FD /* Common.pch in Headers */,
+				621A6AE3199CE23E0004F9FD /* iOS.pch in Headers */,
+				62E04C8619A15CD6001FEDCD /* RLADeviceLocal_Setup.h in Headers */,
 				621A6B16199D2CBD0004F9FD /* RLAPeripheralnfo.h in Headers */,
 				621A6AD7199CCD170004F9FD /* RLALog.h in Headers */,
 				621A6AD3199CCD170004F9FD /* RLAError.h in Headers */,
@@ -992,7 +994,6 @@
 				6252049B199E08D900A27C85 /* RLABluetoothAdapterSensorAccelerometer.h in Headers */,
 				625204BC199E141900A27C85 /* RLABluetoothCentralRequest.h in Headers */,
 				62E04C9D19A15CD6001FEDCD /* RLASensorValue_Setup.h in Headers */,
-				621A6AE0199CE1AA0004F9FD /* Common.pch in Headers */,
 				625204A7199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.h in Headers */,
 				625204AF199E0F9500A27C85 /* RLABluetoothAdapterSensorGyroscope.h in Headers */,
 				621A6AFC199CEC000004F9FD /* RLABluetoothService.h in Headers */,
@@ -1007,7 +1008,6 @@
 				625204A5199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.h in Headers */,
 				62E04C3319A15520001FEDCD /* RLANetworkInfo.h in Headers */,
 				6252048B199E02C900A27C85 /* RLABluetoothAdapter.h in Headers */,
-				621A6AE3199CE23E0004F9FD /* iOS.pch in Headers */,
 				62E04C2919A140A0001FEDCD /* RLAWebService.h in Headers */,
 				621A6B1A199D2FCA0004F9FD /* RLAMappingInfo.h in Headers */,
 			);
