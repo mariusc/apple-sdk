@@ -9,7 +9,7 @@ FOUNDATION_EXPORT const unsigned char iOSRelayrVersionString[];
 // In this header, you should import all the public headers of your framework using statements like #import <Relayr/PublicHeader.h>
 #import <Relayr/RLAUser.h>
 #import <Relayr/RLAUserLocal.h>
-#import <Relayr/RLDevice.h>
+#import <Relayr/RLADevice.h>
 #import <Relayr/RLADeviceLocal.h>
 #import <Relayr/RLASensor.h>
 #import <Relayr/RLASensorAccelerometer.h>

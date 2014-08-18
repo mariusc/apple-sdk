@@ -1,4 +1,6 @@
 @import Foundation;         // Apple
+@class CBPeripheral;        // Apple
+@class CBCharacteristic;    // Apple
 #import "RLADevice.h"       // Base class
 
 @interface RLADeviceLocal : RLADevice

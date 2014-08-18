@@ -977,11 +977,14 @@
 				62E04C7919A15CD6001FEDCD /* RLAHandlerInfo.h in Headers */,
 				621A6AE0199CE1AA0004F9FD /* Common.pch in Headers */,
 				621A6AE3199CE23E0004F9FD /* iOS.pch in Headers */,
+				621A6AB5199CC6200004F9FD /* RLAMacros.h in Headers */,
+				621A6AFC199CEC000004F9FD /* RLABluetoothService.h in Headers */,
+				621A6B06199CF2CF0004F9FD /* RLABluetoothManager.h in Headers */,
+				621A6B09199CF66B0004F9FD /* RLABluetoothDelegate.h in Headers */,
 				62E04C8619A15CD6001FEDCD /* RLADeviceLocal_Setup.h in Headers */,
 				621A6B16199D2CBD0004F9FD /* RLAPeripheralnfo.h in Headers */,
 				621A6AD7199CCD170004F9FD /* RLALog.h in Headers */,
 				621A6AD3199CCD170004F9FD /* RLAError.h in Headers */,
-				621A6AB5199CC6200004F9FD /* RLAMacros.h in Headers */,
 				62E04C3819A158DF001FEDCD /* RLAKeyChain.h in Headers */,
 				621A6B1E199D33CA0004F9FD /* RLABluetoothAdapterController.h in Headers */,
 				621A6B11199D0F1A0004F9FD /* RLACBUUID.h in Headers */,
@@ -990,19 +993,16 @@
 				625204B1199E0F9500A27C85 /* RLABluetoothAdapterSensorHumidity.h in Headers */,
 				6252F0DF199C24E2002ECE4D /* Relayr.h in Headers */,
 				621A6B0C199CFE310004F9FD /* RLABluetoothDelegatesGroup.h in Headers */,
-				621A6B06199CF2CF0004F9FD /* RLABluetoothManager.h in Headers */,
 				6252049B199E08D900A27C85 /* RLABluetoothAdapterSensorAccelerometer.h in Headers */,
 				625204BC199E141900A27C85 /* RLABluetoothCentralRequest.h in Headers */,
 				62E04C9D19A15CD6001FEDCD /* RLASensorValue_Setup.h in Headers */,
 				625204A7199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.h in Headers */,
 				625204AF199E0F9500A27C85 /* RLABluetoothAdapterSensorGyroscope.h in Headers */,
-				621A6AFC199CEC000004F9FD /* RLABluetoothService.h in Headers */,
 				62E04C8919A15CD6001FEDCD /* RLASensor_Setup.h in Headers */,
 				6252049D199E08D900A27C85 /* RLABluetoothAdapterSensorColor.h in Headers */,
 				62E04C2F19A1508E001FEDCD /* RLACredentialsWunderbar.h in Headers */,
 				625204B3199E0F9500A27C85 /* RLABluetoothAdapterSensorNoise.h in Headers */,
 				625204C0199E2A9900A27C85 /* RLABluetoothPeripheralRequest.h in Headers */,
-				621A6B09199CF66B0004F9FD /* RLABluetoothDelegate.h in Headers */,
 				625204C9199E41A000A27C85 /* RLAData.h in Headers */,
 				625204C4199E33D100A27C85 /* RLABluetoothPeripheralRequestRegistration.h in Headers */,
 				625204A5199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.h in Headers */,
@@ -1318,7 +1318,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1362,7 +1362,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -1406,7 +1406,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
