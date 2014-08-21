@@ -5,6 +5,6 @@
       location = "group:RelayrSDK/RelayrSDK.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:BluetoothApp/BluetoothApp.xcodeproj">
+      location = "group:FrameworkTest/FrameworkTest.xcodeproj">
    </FileRef>
 </Workspace>

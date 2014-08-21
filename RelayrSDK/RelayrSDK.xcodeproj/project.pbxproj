@@ -9,131 +9,28 @@
 /* Begin PBXBuildFile section */
 		621A6AA8199CC4720004F9FD /* Common.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 621A6AA7199CC4720004F9FD /* Common.xcconfig */; };
 		621A6AA9199CC4720004F9FD /* Common.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 621A6AA7199CC4720004F9FD /* Common.xcconfig */; };
-		621A6AB5199CC6200004F9FD /* RLAMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6AB4199CC6200004F9FD /* RLAMacros.h */; };
-		621A6AB6199CC6200004F9FD /* RLAMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6AB4199CC6200004F9FD /* RLAMacros.h */; };
-		621A6AD3199CCD170004F9FD /* RLAError.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6ACE199CCD170004F9FD /* RLAError.h */; };
-		621A6AD4199CCD170004F9FD /* RLAError.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6ACE199CCD170004F9FD /* RLAError.h */; };
-		621A6AD5199CCD170004F9FD /* RLAError.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6ACF199CCD170004F9FD /* RLAError.m */; };
-		621A6AD6199CCD170004F9FD /* RLAError.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6ACF199CCD170004F9FD /* RLAError.m */; };
-		621A6AD7199CCD170004F9FD /* RLALog.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6AD1199CCD170004F9FD /* RLALog.h */; };
-		621A6AD8199CCD170004F9FD /* RLALog.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6AD1199CCD170004F9FD /* RLALog.h */; };
-		621A6AD9199CCD170004F9FD /* RLALog.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6AD2199CCD170004F9FD /* RLALog.m */; };
-		621A6ADA199CCD170004F9FD /* RLALog.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6AD2199CCD170004F9FD /* RLALog.m */; };
-		621A6AE0199CE1AA0004F9FD /* Common.pch in Headers */ = {isa = PBXBuildFile; fileRef = 621A6ADF199CE1AA0004F9FD /* Common.pch */; };
-		621A6AE1199CE1AA0004F9FD /* Common.pch in Headers */ = {isa = PBXBuildFile; fileRef = 621A6ADF199CE1AA0004F9FD /* Common.pch */; };
-		621A6AE3199CE23E0004F9FD /* iOS.pch in Headers */ = {isa = PBXBuildFile; fileRef = 621A6AE2199CE23E0004F9FD /* iOS.pch */; };
-		621A6AE5199CE28B0004F9FD /* OSX.pch in Headers */ = {isa = PBXBuildFile; fileRef = 621A6AE4199CE28B0004F9FD /* OSX.pch */; };
-		621A6AFC199CEC000004F9FD /* RLABluetoothService.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6AFA199CEC000004F9FD /* RLABluetoothService.h */; };
-		621A6AFD199CEC000004F9FD /* RLABluetoothService.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6AFA199CEC000004F9FD /* RLABluetoothService.h */; };
-		621A6AFE199CEC000004F9FD /* RLABluetoothService.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6AFB199CEC000004F9FD /* RLABluetoothService.m */; };
-		621A6AFF199CEC000004F9FD /* RLABluetoothService.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6AFB199CEC000004F9FD /* RLABluetoothService.m */; };
-		621A6B06199CF2CF0004F9FD /* RLABluetoothManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6B04199CF2CF0004F9FD /* RLABluetoothManager.h */; };
-		621A6B07199CF2CF0004F9FD /* RLABluetoothManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6B05199CF2CF0004F9FD /* RLABluetoothManager.m */; };
-		621A6B09199CF66B0004F9FD /* RLABluetoothDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6B08199CF66B0004F9FD /* RLABluetoothDelegate.h */; };
-		621A6B0C199CFE310004F9FD /* RLABluetoothDelegatesGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6B0A199CFE310004F9FD /* RLABluetoothDelegatesGroup.h */; };
-		621A6B0D199CFE310004F9FD /* RLABluetoothDelegatesGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6B0B199CFE310004F9FD /* RLABluetoothDelegatesGroup.m */; };
-		621A6B11199D0F1A0004F9FD /* RLACBUUID.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6B0F199D0F1A0004F9FD /* RLACBUUID.h */; };
-		621A6B12199D0F1A0004F9FD /* RLACBUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6B10199D0F1A0004F9FD /* RLACBUUID.m */; };
-		621A6B16199D2CBD0004F9FD /* RLAPeripheralnfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6B14199D2CBD0004F9FD /* RLAPeripheralnfo.h */; };
-		621A6B17199D2CBD0004F9FD /* RLAPeripheralnfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6B15199D2CBD0004F9FD /* RLAPeripheralnfo.m */; };
-		621A6B1A199D2FCA0004F9FD /* RLAMappingInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6B18199D2FCA0004F9FD /* RLAMappingInfo.h */; };
-		621A6B1B199D2FCA0004F9FD /* RLAMappingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6B19199D2FCA0004F9FD /* RLAMappingInfo.m */; };
-		621A6B1E199D33CA0004F9FD /* RLABluetoothAdapterController.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6B1C199D33CA0004F9FD /* RLABluetoothAdapterController.h */; };
-		621A6B1F199D33CA0004F9FD /* RLABluetoothAdapterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6B1D199D33CA0004F9FD /* RLABluetoothAdapterController.m */; };
-		6252048B199E02C900A27C85 /* RLABluetoothAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 62520489199E02C900A27C85 /* RLABluetoothAdapter.h */; };
-		6252048C199E02C900A27C85 /* RLABluetoothAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6252048A199E02C900A27C85 /* RLABluetoothAdapter.m */; };
-		6252049B199E08D900A27C85 /* RLABluetoothAdapterSensorAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6252048D199E08D900A27C85 /* RLABluetoothAdapterSensorAccelerometer.h */; };
-		6252049C199E08D900A27C85 /* RLABluetoothAdapterSensorAccelerometer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6252048E199E08D900A27C85 /* RLABluetoothAdapterSensorAccelerometer.m */; };
-		6252049D199E08D900A27C85 /* RLABluetoothAdapterSensorColor.h in Headers */ = {isa = PBXBuildFile; fileRef = 6252048F199E08D900A27C85 /* RLABluetoothAdapterSensorColor.h */; };
-		6252049E199E08D900A27C85 /* RLABluetoothAdapterSensorColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 62520490199E08D900A27C85 /* RLABluetoothAdapterSensorColor.m */; };
-		625204A5199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.h in Headers */ = {isa = PBXBuildFile; fileRef = 62520497199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.h */; };
-		625204A6199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.m in Sources */ = {isa = PBXBuildFile; fileRef = 62520498199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.m */; };
-		625204A7199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.h in Headers */ = {isa = PBXBuildFile; fileRef = 62520499199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.h */; };
-		625204A8199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.m in Sources */ = {isa = PBXBuildFile; fileRef = 6252049A199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.m */; };
-		625204AF199E0F9500A27C85 /* RLABluetoothAdapterSensorGyroscope.h in Headers */ = {isa = PBXBuildFile; fileRef = 625204A9199E0F9500A27C85 /* RLABluetoothAdapterSensorGyroscope.h */; };
-		625204B0199E0F9500A27C85 /* RLABluetoothAdapterSensorGyroscope.m in Sources */ = {isa = PBXBuildFile; fileRef = 625204AA199E0F9500A27C85 /* RLABluetoothAdapterSensorGyroscope.m */; };
-		625204B1199E0F9500A27C85 /* RLABluetoothAdapterSensorHumidity.h in Headers */ = {isa = PBXBuildFile; fileRef = 625204AB199E0F9500A27C85 /* RLABluetoothAdapterSensorHumidity.h */; };
-		625204B2199E0F9500A27C85 /* RLABluetoothAdapterSensorHumidity.m in Sources */ = {isa = PBXBuildFile; fileRef = 625204AC199E0F9500A27C85 /* RLABluetoothAdapterSensorHumidity.m */; };
-		625204B3199E0F9500A27C85 /* RLABluetoothAdapterSensorNoise.h in Headers */ = {isa = PBXBuildFile; fileRef = 625204AD199E0F9500A27C85 /* RLABluetoothAdapterSensorNoise.h */; };
-		625204B4199E0F9500A27C85 /* RLABluetoothAdapterSensorNoise.m in Sources */ = {isa = PBXBuildFile; fileRef = 625204AE199E0F9500A27C85 /* RLABluetoothAdapterSensorNoise.m */; };
-		625204BA199E141900A27C85 /* RLABluetoothCentralRequestDiscoverPeripherals.h in Headers */ = {isa = PBXBuildFile; fileRef = 625204B6199E141900A27C85 /* RLABluetoothCentralRequestDiscoverPeripherals.h */; };
-		625204BB199E141900A27C85 /* RLABluetoothCentralRequestDiscoverPeripherals.m in Sources */ = {isa = PBXBuildFile; fileRef = 625204B7199E141900A27C85 /* RLABluetoothCentralRequestDiscoverPeripherals.m */; };
-		625204BC199E141900A27C85 /* RLABluetoothCentralRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 625204B8199E141900A27C85 /* RLABluetoothCentralRequest.h */; };
-		625204BD199E141900A27C85 /* RLABluetoothCentralRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 625204B9199E141900A27C85 /* RLABluetoothCentralRequest.m */; };
-		625204C0199E2A9900A27C85 /* RLABluetoothPeripheralRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 625204BE199E2A9800A27C85 /* RLABluetoothPeripheralRequest.h */; };
-		625204C1199E2A9900A27C85 /* RLABluetoothPeripheralRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 625204BF199E2A9900A27C85 /* RLABluetoothPeripheralRequest.m */; };
-		625204C4199E33D100A27C85 /* RLABluetoothPeripheralRequestRegistration.h in Headers */ = {isa = PBXBuildFile; fileRef = 625204C2199E33D100A27C85 /* RLABluetoothPeripheralRequestRegistration.h */; };
-		625204C5199E33D100A27C85 /* RLABluetoothPeripheralRequestRegistration.m in Sources */ = {isa = PBXBuildFile; fileRef = 625204C3199E33D100A27C85 /* RLABluetoothPeripheralRequestRegistration.m */; };
-		625204C9199E41A000A27C85 /* RLAData.h in Headers */ = {isa = PBXBuildFile; fileRef = 625204C7199E41A000A27C85 /* RLAData.h */; };
-		625204CA199E41A000A27C85 /* RLAData.m in Sources */ = {isa = PBXBuildFile; fileRef = 625204C8199E41A000A27C85 /* RLAData.m */; };
+		621F3E5119A4FBAF004E3156 /* RLALog.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6AD2199CCD170004F9FD /* RLALog.m */; };
 		6252F0DF199C24E2002ECE4D /* Relayr.h in Headers */ = {isa = PBXBuildFile; fileRef = 6252F0D5199C24AD002ECE4D /* Relayr.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6252F10B199C2C3B002ECE4D /* Relayr.h in Headers */ = {isa = PBXBuildFile; fileRef = 6252F100199C2BFC002ECE4D /* Relayr.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6252F10C199C2C7F002ECE4D /* OSXRelayrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6252F107199C2C0C002ECE4D /* OSXRelayrTests.m */; };
-		626F307919A214D80083CA32 /* RLASensor.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C4D19A15CD6001FEDCD /* RLASensor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		626F613F19A4FFAF006EB510 /* RLAError.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6ACE199CCD170004F9FD /* RLAError.h */; };
+		626F614019A4FFAF006EB510 /* RLALog.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6AD1199CCD170004F9FD /* RLALog.h */; };
+		626F614219A506E4006EB510 /* RLAKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C3719A158DF001FEDCD /* RLAKeyChain.m */; };
+		626F614319A506E8006EB510 /* RLAKeyChain.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C3619A158DF001FEDCD /* RLAKeyChain.h */; };
+		627467E119A4F482005F1437 /* RLAError.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6ACF199CCD170004F9FD /* RLAError.m */; };
 		62925939199CB3EF0079D5A7 /* iOSRelayrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6252F0DC199C24C4002ECE4D /* iOSRelayrTests.m */; };
-		62E04C2919A140A0001FEDCD /* RLAWebService.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C2719A140A0001FEDCD /* RLAWebService.h */; };
-		62E04C2A19A140A0001FEDCD /* RLAWebService.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C2819A140A0001FEDCD /* RLAWebService.m */; };
-		62E04C2F19A1508E001FEDCD /* RLACredentialsWunderbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C2D19A1508E001FEDCD /* RLACredentialsWunderbar.h */; };
-		62E04C3019A1508E001FEDCD /* RLACredentialsWunderbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C2E19A1508E001FEDCD /* RLACredentialsWunderbar.m */; };
-		62E04C3319A15520001FEDCD /* RLANetworkInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C3119A15520001FEDCD /* RLANetworkInfo.h */; };
-		62E04C3419A15520001FEDCD /* RLANetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C3219A15520001FEDCD /* RLANetworkInfo.m */; };
-		62E04C3819A158DF001FEDCD /* RLAKeyChain.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C3619A158DF001FEDCD /* RLAKeyChain.h */; };
-		62E04C3919A158DF001FEDCD /* RLAKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C3719A158DF001FEDCD /* RLAKeyChain.m */; };
-		62E04C7919A15CD6001FEDCD /* RLAHandlerInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C3D19A15CD6001FEDCD /* RLAHandlerInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04C7A19A15CD6001FEDCD /* RLAHandlerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C3E19A15CD6001FEDCD /* RLAHandlerInfo.m */; };
-		62E04C7B19A15CD6001FEDCD /* RLAOutput.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C4019A15CD6001FEDCD /* RLAOutput.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04C7C19A15CD6001FEDCD /* RLAOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C4119A15CD6001FEDCD /* RLAOutput.m */; };
-		62E04C7D19A15CD6001FEDCD /* RLAOutputGrove.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C4219A15CD6001FEDCD /* RLAOutputGrove.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04C7E19A15CD6001FEDCD /* RLAOutputGrove.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C4319A15CD6001FEDCD /* RLAOutputGrove.m */; };
-		62E04C7F19A15CD6001FEDCD /* RLAOutputInfrared.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C4419A15CD6001FEDCD /* RLAOutputInfrared.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04C8019A15CD6001FEDCD /* RLAOutputInfrared.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C4519A15CD6001FEDCD /* RLAOutputInfrared.m */; };
-		62E04C8119A15CD6001FEDCD /* RLADevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C4619A15CD6001FEDCD /* RLADevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04C8219A15CD6001FEDCD /* RLADevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C4719A15CD6001FEDCD /* RLADevice.m */; };
-		62E04C8319A15CD6001FEDCD /* RLADevice_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C4819A15CD6001FEDCD /* RLADevice_Setup.h */; };
-		62E04C8419A15CD6001FEDCD /* RLADeviceLocal.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C4919A15CD6001FEDCD /* RLADeviceLocal.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04C8519A15CD6001FEDCD /* RLADeviceLocal.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C4A19A15CD6001FEDCD /* RLADeviceLocal.m */; };
-		62E04C8619A15CD6001FEDCD /* RLADeviceLocal_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C4B19A15CD6001FEDCD /* RLADeviceLocal_Setup.h */; };
-		62E04C8819A15CD6001FEDCD /* RLASensor.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C4E19A15CD6001FEDCD /* RLASensor.m */; };
-		62E04C8919A15CD6001FEDCD /* RLASensor_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C4F19A15CD6001FEDCD /* RLASensor_Setup.h */; };
-		62E04C8A19A15CD6001FEDCD /* RLASensorAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C5019A15CD6001FEDCD /* RLASensorAccelerometer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04C8B19A15CD6001FEDCD /* RLASensorAccelerometer.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C5119A15CD6001FEDCD /* RLASensorAccelerometer.m */; };
-		62E04C8C19A15CD6001FEDCD /* RLASensorColor.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C5219A15CD6001FEDCD /* RLASensorColor.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04C8D19A15CD6001FEDCD /* RLASensorColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C5319A15CD6001FEDCD /* RLASensorColor.m */; };
-		62E04C8E19A15CD6001FEDCD /* RLASensorDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C5419A15CD6001FEDCD /* RLASensorDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04C8F19A15CD6001FEDCD /* RLASensorGyroscope.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C5519A15CD6001FEDCD /* RLASensorGyroscope.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04C9019A15CD6001FEDCD /* RLASensorGyroscope.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C5619A15CD6001FEDCD /* RLASensorGyroscope.m */; };
-		62E04C9119A15CD6001FEDCD /* RLASensorHumidity.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C5719A15CD6001FEDCD /* RLASensorHumidity.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04C9219A15CD6001FEDCD /* RLASensorHumidity.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C5819A15CD6001FEDCD /* RLASensorHumidity.m */; };
-		62E04C9319A15CD6001FEDCD /* RLASensorLuminosity.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C5919A15CD6001FEDCD /* RLASensorLuminosity.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04C9419A15CD6001FEDCD /* RLASensorLuminosity.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C5A19A15CD6001FEDCD /* RLASensorLuminosity.m */; };
-		62E04C9519A15CD6001FEDCD /* RLASensorNoise.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C5B19A15CD6001FEDCD /* RLASensorNoise.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04C9619A15CD6001FEDCD /* RLASensorNoise.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C5C19A15CD6001FEDCD /* RLASensorNoise.m */; };
-		62E04C9719A15CD6001FEDCD /* RLASensorProximity.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C5D19A15CD6001FEDCD /* RLASensorProximity.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04C9819A15CD6001FEDCD /* RLASensorProximity.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C5E19A15CD6001FEDCD /* RLASensorProximity.m */; };
-		62E04C9919A15CD6001FEDCD /* RLASensorTemperature.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C5F19A15CD6001FEDCD /* RLASensorTemperature.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04C9A19A15CD6001FEDCD /* RLASensorTemperature.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C6019A15CD6001FEDCD /* RLASensorTemperature.m */; };
-		62E04C9B19A15CD6001FEDCD /* RLASensorValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C6219A15CD6001FEDCD /* RLASensorValue.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04C9C19A15CD6001FEDCD /* RLASensorValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C6319A15CD6001FEDCD /* RLASensorValue.m */; };
-		62E04C9D19A15CD6001FEDCD /* RLASensorValue_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C6419A15CD6001FEDCD /* RLASensorValue_Setup.h */; };
-		62E04C9E19A15CD6001FEDCD /* RLASensorValueAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C6519A15CD6001FEDCD /* RLASensorValueAccelerometer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04C9F19A15CD6001FEDCD /* RLASensorValueAccelerometer.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C6619A15CD6001FEDCD /* RLASensorValueAccelerometer.m */; };
-		62E04CA019A15CD6001FEDCD /* RLASensorValueColor.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C6719A15CD6001FEDCD /* RLASensorValueColor.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04CA119A15CD6001FEDCD /* RLASensorValueColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C6819A15CD6001FEDCD /* RLASensorValueColor.m */; };
-		62E04CA219A15CD6001FEDCD /* RLASensorValueGyroscope.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C6919A15CD6001FEDCD /* RLASensorValueGyroscope.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04CA319A15CD6001FEDCD /* RLASensorValueGyroscope.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C6A19A15CD6001FEDCD /* RLASensorValueGyroscope.m */; };
-		62E04CA419A15CD6001FEDCD /* RLASensorValueHumidity.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C6B19A15CD6001FEDCD /* RLASensorValueHumidity.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04CA519A15CD6001FEDCD /* RLASensorValueHumidity.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C6C19A15CD6001FEDCD /* RLASensorValueHumidity.m */; };
-		62E04CA619A15CD6001FEDCD /* RLASensorValueLuminosity.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C6D19A15CD6001FEDCD /* RLASensorValueLuminosity.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04CA719A15CD6001FEDCD /* RLASensorValueLuminosity.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C6E19A15CD6001FEDCD /* RLASensorValueLuminosity.m */; };
-		62E04CA819A15CD6001FEDCD /* RLASensorValueNoise.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C6F19A15CD6001FEDCD /* RLASensorValueNoise.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04CA919A15CD6001FEDCD /* RLASensorValueNoise.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C7019A15CD6001FEDCD /* RLASensorValueNoise.m */; };
-		62E04CAA19A15CD6001FEDCD /* RLASensorValueProximity.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C7119A15CD6001FEDCD /* RLASensorValueProximity.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04CAB19A15CD6001FEDCD /* RLASensorValueProximity.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C7219A15CD6001FEDCD /* RLASensorValueProximity.m */; };
-		62E04CAC19A15CD6001FEDCD /* RLASensorValueTemperature.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C7319A15CD6001FEDCD /* RLASensorValueTemperature.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04CAD19A15CD6001FEDCD /* RLASensorValueTemperature.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C7419A15CD6001FEDCD /* RLASensorValueTemperature.m */; };
-		62E04CAE19A15CD6001FEDCD /* RLAUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C7619A15CD6001FEDCD /* RLAUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04CAF19A15CD6001FEDCD /* RLAUserLocal.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C7719A15CD6001FEDCD /* RLAUserLocal.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62E04CB019A15CD6001FEDCD /* RLAUserLocal.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C7819A15CD6001FEDCD /* RLAUserLocal.m */; };
+		62D1718419A6039F009BBED1 /* RLANetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C3219A15520001FEDCD /* RLANetworkInfo.m */; };
+		62D1718519A603A3009BBED1 /* RLANetworkInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C3119A15520001FEDCD /* RLANetworkInfo.h */; };
+		62D1718819A62D63009BBED1 /* RelayrCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D1718619A62D63009BBED1 /* RelayrCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		62D1718919A62D63009BBED1 /* RelayrCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D1718719A62D63009BBED1 /* RelayrCloud.m */; };
+		62D1718C19A62E8D009BBED1 /* RelayrApp.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D1718A19A62E8D009BBED1 /* RelayrApp.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		62D1718D19A62E8D009BBED1 /* RelayrApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D1718B19A62E8D009BBED1 /* RelayrApp.m */; };
+		62D1719719A65C98009BBED1 /* RelayrUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D1719519A65C98009BBED1 /* RelayrUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		62D1719819A65C98009BBED1 /* RelayrUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D1719619A65C98009BBED1 /* RelayrUser.m */; };
+		62D1719B19A65CCC009BBED1 /* RelayrDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D1719919A65CCC009BBED1 /* RelayrDevice.h */; };
+		62D1719C19A65CCC009BBED1 /* RelayrDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D1719A19A65CCC009BBED1 /* RelayrDevice.m */; };
+		62D1719F19A65D3B009BBED1 /* RelayrTransmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D1719D19A65D3B009BBED1 /* RelayrTransmitter.h */; };
+		62D171A019A65D3B009BBED1 /* RelayrTransmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D1719E19A65D3B009BBED1 /* RelayrTransmitter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -143,55 +40,12 @@
 		621A6ACF199CCD170004F9FD /* RLAError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAError.m; sourceTree = "<group>"; };
 		621A6AD1199CCD170004F9FD /* RLALog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLALog.h; sourceTree = "<group>"; };
 		621A6AD2199CCD170004F9FD /* RLALog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLALog.m; sourceTree = "<group>"; };
-		621A6ADF199CE1AA0004F9FD /* Common.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.pch; sourceTree = "<group>"; };
-		621A6AE2199CE23E0004F9FD /* iOS.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOS.pch; sourceTree = "<group>"; };
 		621A6AE4199CE28B0004F9FD /* OSX.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSX.pch; sourceTree = "<group>"; };
 		621A6AF4199CEA870004F9FD /* RLALocalUser+Onboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RLALocalUser+Onboard.h"; sourceTree = "<group>"; };
 		621A6AF5199CEA870004F9FD /* RLALocalUser+Onboard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "RLALocalUser+Onboard.m"; sourceTree = "<group>"; };
 		621A6AF8199CEB860004F9FD /* RLALocalUser_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RLALocalUser_Private.h; sourceTree = "<group>"; };
-		621A6AFA199CEC000004F9FD /* RLABluetoothService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothService.h; sourceTree = "<group>"; };
-		621A6AFB199CEC000004F9FD /* RLABluetoothService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothService.m; sourceTree = "<group>"; };
 		621A6B01199CF0360004F9FD /* RLABluetoothService+Onboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RLABluetoothService+Onboard.h"; sourceTree = "<group>"; };
 		621A6B02199CF0360004F9FD /* RLABluetoothService+Onboard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "RLABluetoothService+Onboard.m"; sourceTree = "<group>"; };
-		621A6B04199CF2CF0004F9FD /* RLABluetoothManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothManager.h; sourceTree = "<group>"; };
-		621A6B05199CF2CF0004F9FD /* RLABluetoothManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothManager.m; sourceTree = "<group>"; };
-		621A6B08199CF66B0004F9FD /* RLABluetoothDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothDelegate.h; sourceTree = "<group>"; };
-		621A6B0A199CFE310004F9FD /* RLABluetoothDelegatesGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothDelegatesGroup.h; sourceTree = "<group>"; };
-		621A6B0B199CFE310004F9FD /* RLABluetoothDelegatesGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothDelegatesGroup.m; sourceTree = "<group>"; };
-		621A6B0F199D0F1A0004F9FD /* RLACBUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLACBUUID.h; sourceTree = "<group>"; };
-		621A6B10199D0F1A0004F9FD /* RLACBUUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLACBUUID.m; sourceTree = "<group>"; };
-		621A6B14199D2CBD0004F9FD /* RLAPeripheralnfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAPeripheralnfo.h; sourceTree = "<group>"; };
-		621A6B15199D2CBD0004F9FD /* RLAPeripheralnfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAPeripheralnfo.m; sourceTree = "<group>"; };
-		621A6B18199D2FCA0004F9FD /* RLAMappingInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAMappingInfo.h; sourceTree = "<group>"; };
-		621A6B19199D2FCA0004F9FD /* RLAMappingInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAMappingInfo.m; sourceTree = "<group>"; };
-		621A6B1C199D33CA0004F9FD /* RLABluetoothAdapterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothAdapterController.h; sourceTree = "<group>"; };
-		621A6B1D199D33CA0004F9FD /* RLABluetoothAdapterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothAdapterController.m; sourceTree = "<group>"; };
-		62520489199E02C900A27C85 /* RLABluetoothAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothAdapter.h; sourceTree = "<group>"; };
-		6252048A199E02C900A27C85 /* RLABluetoothAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothAdapter.m; sourceTree = "<group>"; };
-		6252048D199E08D900A27C85 /* RLABluetoothAdapterSensorAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothAdapterSensorAccelerometer.h; sourceTree = "<group>"; };
-		6252048E199E08D900A27C85 /* RLABluetoothAdapterSensorAccelerometer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothAdapterSensorAccelerometer.m; sourceTree = "<group>"; };
-		6252048F199E08D900A27C85 /* RLABluetoothAdapterSensorColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothAdapterSensorColor.h; sourceTree = "<group>"; };
-		62520490199E08D900A27C85 /* RLABluetoothAdapterSensorColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothAdapterSensorColor.m; sourceTree = "<group>"; };
-		62520497199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothAdapterSensorProximity.h; sourceTree = "<group>"; };
-		62520498199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothAdapterSensorProximity.m; sourceTree = "<group>"; };
-		62520499199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothAdapterSensorTemperature.h; sourceTree = "<group>"; };
-		6252049A199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothAdapterSensorTemperature.m; sourceTree = "<group>"; };
-		625204A9199E0F9500A27C85 /* RLABluetoothAdapterSensorGyroscope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothAdapterSensorGyroscope.h; sourceTree = "<group>"; };
-		625204AA199E0F9500A27C85 /* RLABluetoothAdapterSensorGyroscope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothAdapterSensorGyroscope.m; sourceTree = "<group>"; };
-		625204AB199E0F9500A27C85 /* RLABluetoothAdapterSensorHumidity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothAdapterSensorHumidity.h; sourceTree = "<group>"; };
-		625204AC199E0F9500A27C85 /* RLABluetoothAdapterSensorHumidity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothAdapterSensorHumidity.m; sourceTree = "<group>"; };
-		625204AD199E0F9500A27C85 /* RLABluetoothAdapterSensorNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothAdapterSensorNoise.h; sourceTree = "<group>"; };
-		625204AE199E0F9500A27C85 /* RLABluetoothAdapterSensorNoise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothAdapterSensorNoise.m; sourceTree = "<group>"; };
-		625204B6199E141900A27C85 /* RLABluetoothCentralRequestDiscoverPeripherals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothCentralRequestDiscoverPeripherals.h; sourceTree = "<group>"; };
-		625204B7199E141900A27C85 /* RLABluetoothCentralRequestDiscoverPeripherals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothCentralRequestDiscoverPeripherals.m; sourceTree = "<group>"; };
-		625204B8199E141900A27C85 /* RLABluetoothCentralRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothCentralRequest.h; sourceTree = "<group>"; };
-		625204B9199E141900A27C85 /* RLABluetoothCentralRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothCentralRequest.m; sourceTree = "<group>"; };
-		625204BE199E2A9800A27C85 /* RLABluetoothPeripheralRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothPeripheralRequest.h; sourceTree = "<group>"; };
-		625204BF199E2A9900A27C85 /* RLABluetoothPeripheralRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothPeripheralRequest.m; sourceTree = "<group>"; };
-		625204C2199E33D100A27C85 /* RLABluetoothPeripheralRequestRegistration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothPeripheralRequestRegistration.h; sourceTree = "<group>"; };
-		625204C3199E33D100A27C85 /* RLABluetoothPeripheralRequestRegistration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABluetoothPeripheralRequestRegistration.m; sourceTree = "<group>"; };
-		625204C7199E41A000A27C85 /* RLAData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAData.h; sourceTree = "<group>"; };
-		625204C8199E41A000A27C85 /* RLAData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAData.m; sourceTree = "<group>"; };
 		6252F0B3199C2465002ECE4D /* Relayr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Relayr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6252F0BE199C2465002ECE4D /* iOSRelayrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSRelayrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6252F0D1199C2492002ECE4D /* Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Common.xcconfig; sourceTree = "<group>"; };
@@ -207,70 +61,20 @@
 		6252F103199C2BFC002ECE4D /* OSX.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = OSX.xcconfig; sourceTree = "<group>"; };
 		6252F107199C2C0C002ECE4D /* OSXRelayrTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSXRelayrTests.m; sourceTree = "<group>"; };
 		6252F10A199C2C0C002ECE4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		62E04C2719A140A0001FEDCD /* RLAWebService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebService.h; sourceTree = "<group>"; };
-		62E04C2819A140A0001FEDCD /* RLAWebService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebService.m; sourceTree = "<group>"; };
-		62E04C2D19A1508E001FEDCD /* RLACredentialsWunderbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLACredentialsWunderbar.h; sourceTree = "<group>"; };
-		62E04C2E19A1508E001FEDCD /* RLACredentialsWunderbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLACredentialsWunderbar.m; sourceTree = "<group>"; };
+		62D1718619A62D63009BBED1 /* RelayrCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrCloud.h; sourceTree = "<group>"; };
+		62D1718719A62D63009BBED1 /* RelayrCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrCloud.m; sourceTree = "<group>"; };
+		62D1718A19A62E8D009BBED1 /* RelayrApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrApp.h; sourceTree = "<group>"; };
+		62D1718B19A62E8D009BBED1 /* RelayrApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrApp.m; sourceTree = "<group>"; };
+		62D1719519A65C98009BBED1 /* RelayrUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrUser.h; sourceTree = "<group>"; };
+		62D1719619A65C98009BBED1 /* RelayrUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrUser.m; sourceTree = "<group>"; };
+		62D1719919A65CCC009BBED1 /* RelayrDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrDevice.h; sourceTree = "<group>"; };
+		62D1719A19A65CCC009BBED1 /* RelayrDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrDevice.m; sourceTree = "<group>"; };
+		62D1719D19A65D3B009BBED1 /* RelayrTransmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrTransmitter.h; sourceTree = "<group>"; };
+		62D1719E19A65D3B009BBED1 /* RelayrTransmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrTransmitter.m; sourceTree = "<group>"; };
 		62E04C3119A15520001FEDCD /* RLANetworkInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLANetworkInfo.h; sourceTree = "<group>"; };
 		62E04C3219A15520001FEDCD /* RLANetworkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLANetworkInfo.m; sourceTree = "<group>"; };
 		62E04C3619A158DF001FEDCD /* RLAKeyChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAKeyChain.h; sourceTree = "<group>"; };
 		62E04C3719A158DF001FEDCD /* RLAKeyChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAKeyChain.m; sourceTree = "<group>"; };
-		62E04C3D19A15CD6001FEDCD /* RLAHandlerInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAHandlerInfo.h; sourceTree = "<group>"; };
-		62E04C3E19A15CD6001FEDCD /* RLAHandlerInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAHandlerInfo.m; sourceTree = "<group>"; };
-		62E04C4019A15CD6001FEDCD /* RLAOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAOutput.h; sourceTree = "<group>"; };
-		62E04C4119A15CD6001FEDCD /* RLAOutput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAOutput.m; sourceTree = "<group>"; };
-		62E04C4219A15CD6001FEDCD /* RLAOutputGrove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAOutputGrove.h; sourceTree = "<group>"; };
-		62E04C4319A15CD6001FEDCD /* RLAOutputGrove.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAOutputGrove.m; sourceTree = "<group>"; };
-		62E04C4419A15CD6001FEDCD /* RLAOutputInfrared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAOutputInfrared.h; sourceTree = "<group>"; };
-		62E04C4519A15CD6001FEDCD /* RLAOutputInfrared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAOutputInfrared.m; sourceTree = "<group>"; };
-		62E04C4619A15CD6001FEDCD /* RLADevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLADevice.h; sourceTree = "<group>"; };
-		62E04C4719A15CD6001FEDCD /* RLADevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLADevice.m; sourceTree = "<group>"; };
-		62E04C4819A15CD6001FEDCD /* RLADevice_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLADevice_Setup.h; sourceTree = "<group>"; };
-		62E04C4919A15CD6001FEDCD /* RLADeviceLocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLADeviceLocal.h; sourceTree = "<group>"; };
-		62E04C4A19A15CD6001FEDCD /* RLADeviceLocal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLADeviceLocal.m; sourceTree = "<group>"; };
-		62E04C4B19A15CD6001FEDCD /* RLADeviceLocal_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLADeviceLocal_Setup.h; sourceTree = "<group>"; };
-		62E04C4D19A15CD6001FEDCD /* RLASensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLASensor.h; sourceTree = "<group>"; };
-		62E04C4E19A15CD6001FEDCD /* RLASensor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLASensor.m; sourceTree = "<group>"; };
-		62E04C4F19A15CD6001FEDCD /* RLASensor_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLASensor_Setup.h; sourceTree = "<group>"; };
-		62E04C5019A15CD6001FEDCD /* RLASensorAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLASensorAccelerometer.h; sourceTree = "<group>"; };
-		62E04C5119A15CD6001FEDCD /* RLASensorAccelerometer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLASensorAccelerometer.m; sourceTree = "<group>"; };
-		62E04C5219A15CD6001FEDCD /* RLASensorColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLASensorColor.h; sourceTree = "<group>"; };
-		62E04C5319A15CD6001FEDCD /* RLASensorColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLASensorColor.m; sourceTree = "<group>"; };
-		62E04C5419A15CD6001FEDCD /* RLASensorDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLASensorDelegate.h; sourceTree = "<group>"; };
-		62E04C5519A15CD6001FEDCD /* RLASensorGyroscope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLASensorGyroscope.h; sourceTree = "<group>"; };
-		62E04C5619A15CD6001FEDCD /* RLASensorGyroscope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLASensorGyroscope.m; sourceTree = "<group>"; };
-		62E04C5719A15CD6001FEDCD /* RLASensorHumidity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLASensorHumidity.h; sourceTree = "<group>"; };
-		62E04C5819A15CD6001FEDCD /* RLASensorHumidity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLASensorHumidity.m; sourceTree = "<group>"; };
-		62E04C5919A15CD6001FEDCD /* RLASensorLuminosity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLASensorLuminosity.h; sourceTree = "<group>"; };
-		62E04C5A19A15CD6001FEDCD /* RLASensorLuminosity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLASensorLuminosity.m; sourceTree = "<group>"; };
-		62E04C5B19A15CD6001FEDCD /* RLASensorNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLASensorNoise.h; sourceTree = "<group>"; };
-		62E04C5C19A15CD6001FEDCD /* RLASensorNoise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLASensorNoise.m; sourceTree = "<group>"; };
-		62E04C5D19A15CD6001FEDCD /* RLASensorProximity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLASensorProximity.h; sourceTree = "<group>"; };
-		62E04C5E19A15CD6001FEDCD /* RLASensorProximity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLASensorProximity.m; sourceTree = "<group>"; };
-		62E04C5F19A15CD6001FEDCD /* RLASensorTemperature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLASensorTemperature.h; sourceTree = "<group>"; };
-		62E04C6019A15CD6001FEDCD /* RLASensorTemperature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLASensorTemperature.m; sourceTree = "<group>"; };
-		62E04C6219A15CD6001FEDCD /* RLASensorValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLASensorValue.h; sourceTree = "<group>"; };
-		62E04C6319A15CD6001FEDCD /* RLASensorValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLASensorValue.m; sourceTree = "<group>"; };
-		62E04C6419A15CD6001FEDCD /* RLASensorValue_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLASensorValue_Setup.h; sourceTree = "<group>"; };
-		62E04C6519A15CD6001FEDCD /* RLASensorValueAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLASensorValueAccelerometer.h; sourceTree = "<group>"; };
-		62E04C6619A15CD6001FEDCD /* RLASensorValueAccelerometer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLASensorValueAccelerometer.m; sourceTree = "<group>"; };
-		62E04C6719A15CD6001FEDCD /* RLASensorValueColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLASensorValueColor.h; sourceTree = "<group>"; };
-		62E04C6819A15CD6001FEDCD /* RLASensorValueColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLASensorValueColor.m; sourceTree = "<group>"; };
-		62E04C6919A15CD6001FEDCD /* RLASensorValueGyroscope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLASensorValueGyroscope.h; sourceTree = "<group>"; };
-		62E04C6A19A15CD6001FEDCD /* RLASensorValueGyroscope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLASensorValueGyroscope.m; sourceTree = "<group>"; };
-		62E04C6B19A15CD6001FEDCD /* RLASensorValueHumidity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLASensorValueHumidity.h; sourceTree = "<group>"; };
-		62E04C6C19A15CD6001FEDCD /* RLASensorValueHumidity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLASensorValueHumidity.m; sourceTree = "<group>"; };
-		62E04C6D19A15CD6001FEDCD /* RLASensorValueLuminosity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLASensorValueLuminosity.h; sourceTree = "<group>"; };
-		62E04C6E19A15CD6001FEDCD /* RLASensorValueLuminosity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLASensorValueLuminosity.m; sourceTree = "<group>"; };
-		62E04C6F19A15CD6001FEDCD /* RLASensorValueNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLASensorValueNoise.h; sourceTree = "<group>"; };
-		62E04C7019A15CD6001FEDCD /* RLASensorValueNoise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLASensorValueNoise.m; sourceTree = "<group>"; };
-		62E04C7119A15CD6001FEDCD /* RLASensorValueProximity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLASensorValueProximity.h; sourceTree = "<group>"; };
-		62E04C7219A15CD6001FEDCD /* RLASensorValueProximity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLASensorValueProximity.m; sourceTree = "<group>"; };
-		62E04C7319A15CD6001FEDCD /* RLASensorValueTemperature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLASensorValueTemperature.h; sourceTree = "<group>"; };
-		62E04C7419A15CD6001FEDCD /* RLASensorValueTemperature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLASensorValueTemperature.m; sourceTree = "<group>"; };
-		62E04C7619A15CD6001FEDCD /* RLAUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAUser.h; sourceTree = "<group>"; };
-		62E04C7719A15CD6001FEDCD /* RLAUserLocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAUserLocal.h; sourceTree = "<group>"; };
-		62E04C7819A15CD6001FEDCD /* RLAUserLocal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAUserLocal.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -356,8 +160,6 @@
 		621A6AB7199CC6D00004F9FD /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				621A6B0E199D0F1A0004F9FD /* Bluetooth */,
-				625204C6199E41A000A27C85 /* Data */,
 				621A6ACD199CCD170004F9FD /* Errors */,
 				621A6AD0199CCD170004F9FD /* Logs */,
 				62E04C3519A158CB001FEDCD /* Security */,
@@ -443,18 +245,6 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
-		621A6AF9199CEC000004F9FD /* Bluetooth */ = {
-			isa = PBXGroup;
-			children = (
-				621A6AFA199CEC000004F9FD /* RLABluetoothService.h */,
-				621A6AFB199CEC000004F9FD /* RLABluetoothService.m */,
-				621A6B03199CF2CF0004F9FD /* Manager */,
-				621A6B13199D2CBD0004F9FD /* Adapters */,
-				625204B5199E141900A27C85 /* Requests */,
-			);
-			path = Bluetooth;
-			sourceTree = "<group>";
-		};
 		621A6B00199CF0170004F9FD /* Bluetooth */ = {
 			isa = PBXGroup;
 			children = (
@@ -462,88 +252,6 @@
 				621A6B02199CF0360004F9FD /* RLABluetoothService+Onboard.m */,
 			);
 			path = Bluetooth;
-			sourceTree = "<group>";
-		};
-		621A6B03199CF2CF0004F9FD /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				621A6B04199CF2CF0004F9FD /* RLABluetoothManager.h */,
-				621A6B05199CF2CF0004F9FD /* RLABluetoothManager.m */,
-				621A6B08199CF66B0004F9FD /* RLABluetoothDelegate.h */,
-				621A6B0A199CFE310004F9FD /* RLABluetoothDelegatesGroup.h */,
-				621A6B0B199CFE310004F9FD /* RLABluetoothDelegatesGroup.m */,
-			);
-			path = Manager;
-			sourceTree = "<group>";
-		};
-		621A6B0E199D0F1A0004F9FD /* Bluetooth */ = {
-			isa = PBXGroup;
-			children = (
-				621A6B0F199D0F1A0004F9FD /* RLACBUUID.h */,
-				621A6B10199D0F1A0004F9FD /* RLACBUUID.m */,
-			);
-			path = Bluetooth;
-			sourceTree = "<group>";
-		};
-		621A6B13199D2CBD0004F9FD /* Adapters */ = {
-			isa = PBXGroup;
-			children = (
-				621A6B1C199D33CA0004F9FD /* RLABluetoothAdapterController.h */,
-				621A6B1D199D33CA0004F9FD /* RLABluetoothAdapterController.m */,
-				621A6B14199D2CBD0004F9FD /* RLAPeripheralnfo.h */,
-				621A6B15199D2CBD0004F9FD /* RLAPeripheralnfo.m */,
-				621A6B18199D2FCA0004F9FD /* RLAMappingInfo.h */,
-				621A6B19199D2FCA0004F9FD /* RLAMappingInfo.m */,
-				62520488199E02C900A27C85 /* Sensors */,
-			);
-			path = Adapters;
-			sourceTree = "<group>";
-		};
-		62520488199E02C900A27C85 /* Sensors */ = {
-			isa = PBXGroup;
-			children = (
-				62520489199E02C900A27C85 /* RLABluetoothAdapter.h */,
-				6252048A199E02C900A27C85 /* RLABluetoothAdapter.m */,
-				6252048D199E08D900A27C85 /* RLABluetoothAdapterSensorAccelerometer.h */,
-				6252048E199E08D900A27C85 /* RLABluetoothAdapterSensorAccelerometer.m */,
-				6252048F199E08D900A27C85 /* RLABluetoothAdapterSensorColor.h */,
-				62520490199E08D900A27C85 /* RLABluetoothAdapterSensorColor.m */,
-				625204A9199E0F9500A27C85 /* RLABluetoothAdapterSensorGyroscope.h */,
-				625204AA199E0F9500A27C85 /* RLABluetoothAdapterSensorGyroscope.m */,
-				625204AB199E0F9500A27C85 /* RLABluetoothAdapterSensorHumidity.h */,
-				625204AC199E0F9500A27C85 /* RLABluetoothAdapterSensorHumidity.m */,
-				625204AD199E0F9500A27C85 /* RLABluetoothAdapterSensorNoise.h */,
-				625204AE199E0F9500A27C85 /* RLABluetoothAdapterSensorNoise.m */,
-				62520497199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.h */,
-				62520498199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.m */,
-				62520499199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.h */,
-				6252049A199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.m */,
-			);
-			path = Sensors;
-			sourceTree = "<group>";
-		};
-		625204B5199E141900A27C85 /* Requests */ = {
-			isa = PBXGroup;
-			children = (
-				625204B8199E141900A27C85 /* RLABluetoothCentralRequest.h */,
-				625204B9199E141900A27C85 /* RLABluetoothCentralRequest.m */,
-				625204B6199E141900A27C85 /* RLABluetoothCentralRequestDiscoverPeripherals.h */,
-				625204B7199E141900A27C85 /* RLABluetoothCentralRequestDiscoverPeripherals.m */,
-				625204BE199E2A9800A27C85 /* RLABluetoothPeripheralRequest.h */,
-				625204BF199E2A9900A27C85 /* RLABluetoothPeripheralRequest.m */,
-				625204C2199E33D100A27C85 /* RLABluetoothPeripheralRequestRegistration.h */,
-				625204C3199E33D100A27C85 /* RLABluetoothPeripheralRequestRegistration.m */,
-			);
-			path = Requests;
-			sourceTree = "<group>";
-		};
-		625204C6199E41A000A27C85 /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				625204C7199E41A000A27C85 /* RLAData.h */,
-				625204C8199E41A000A27C85 /* RLAData.m */,
-			);
-			path = Data;
 			sourceTree = "<group>";
 		};
 		6252F0A6199C243D002ECE4D = {
@@ -620,8 +328,6 @@
 			isa = PBXGroup;
 			children = (
 				62E04C3A19A15CD6001FEDCD /* Public */,
-				621A6AF9199CEC000004F9FD /* Bluetooth */,
-				62E04C2519A1406B001FEDCD /* Web */,
 				621A6AB7199CC6D00004F9FD /* Utilities */,
 			);
 			path = Classes;
@@ -631,7 +337,6 @@
 			isa = PBXGroup;
 			children = (
 				6252F0D1199C2492002ECE4D /* Common.xcconfig */,
-				621A6ADF199CE1AA0004F9FD /* Common.pch */,
 				621A6AB4199CC6200004F9FD /* RLAMacros.h */,
 			);
 			path = Configuration;
@@ -665,7 +370,6 @@
 			children = (
 				6252F0D8199C24AD002ECE4D /* iOS.xcconfig */,
 				6252F0D7199C24AD002ECE4D /* Info.plist */,
-				621A6AE2199CE23E0004F9FD /* iOS.pch */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -785,31 +489,15 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
-		62E04C2519A1406B001FEDCD /* Web */ = {
+		62D1719419A65C98009BBED1 /* IoTs */ = {
 			isa = PBXGroup;
 			children = (
-				62E04C2B19A15024001FEDCD /* Credentials */,
-				62E04C2619A1406B001FEDCD /* Requests */,
-				62E04C2719A140A0001FEDCD /* RLAWebService.h */,
-				62E04C2819A140A0001FEDCD /* RLAWebService.m */,
+				62D1719D19A65D3B009BBED1 /* RelayrTransmitter.h */,
+				62D1719E19A65D3B009BBED1 /* RelayrTransmitter.m */,
+				62D1719919A65CCC009BBED1 /* RelayrDevice.h */,
+				62D1719A19A65CCC009BBED1 /* RelayrDevice.m */,
 			);
-			path = Web;
-			sourceTree = "<group>";
-		};
-		62E04C2619A1406B001FEDCD /* Requests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Requests;
-			sourceTree = "<group>";
-		};
-		62E04C2B19A15024001FEDCD /* Credentials */ = {
-			isa = PBXGroup;
-			children = (
-				62E04C2D19A1508E001FEDCD /* RLACredentialsWunderbar.h */,
-				62E04C2E19A1508E001FEDCD /* RLACredentialsWunderbar.m */,
-			);
-			path = Credentials;
+			path = IoTs;
 			sourceTree = "<group>";
 		};
 		62E04C2C19A15046001FEDCD /* Web */ = {
@@ -833,112 +521,15 @@
 		62E04C3A19A15CD6001FEDCD /* Public */ = {
 			isa = PBXGroup;
 			children = (
-				62E04C7519A15CD6001FEDCD /* Users */,
-				62E04C3B19A15CD6001FEDCD /* Devices */,
+				62D1718619A62D63009BBED1 /* RelayrCloud.h */,
+				62D1718719A62D63009BBED1 /* RelayrCloud.m */,
+				62D1718A19A62E8D009BBED1 /* RelayrApp.h */,
+				62D1718B19A62E8D009BBED1 /* RelayrApp.m */,
+				62D1719519A65C98009BBED1 /* RelayrUser.h */,
+				62D1719619A65C98009BBED1 /* RelayrUser.m */,
+				62D1719419A65C98009BBED1 /* IoTs */,
 			);
 			path = Public;
-			sourceTree = "<group>";
-		};
-		62E04C3B19A15CD6001FEDCD /* Devices */ = {
-			isa = PBXGroup;
-			children = (
-				62E04C3C19A15CD6001FEDCD /* Misc */,
-				62E04C3F19A15CD6001FEDCD /* Outputs */,
-				62E04C4619A15CD6001FEDCD /* RLADevice.h */,
-				62E04C4719A15CD6001FEDCD /* RLADevice.m */,
-				62E04C4819A15CD6001FEDCD /* RLADevice_Setup.h */,
-				62E04C4919A15CD6001FEDCD /* RLADeviceLocal.h */,
-				62E04C4A19A15CD6001FEDCD /* RLADeviceLocal.m */,
-				62E04C4B19A15CD6001FEDCD /* RLADeviceLocal_Setup.h */,
-				62E04C4C19A15CD6001FEDCD /* Sensors */,
-			);
-			path = Devices;
-			sourceTree = "<group>";
-		};
-		62E04C3C19A15CD6001FEDCD /* Misc */ = {
-			isa = PBXGroup;
-			children = (
-				62E04C3D19A15CD6001FEDCD /* RLAHandlerInfo.h */,
-				62E04C3E19A15CD6001FEDCD /* RLAHandlerInfo.m */,
-			);
-			path = Misc;
-			sourceTree = "<group>";
-		};
-		62E04C3F19A15CD6001FEDCD /* Outputs */ = {
-			isa = PBXGroup;
-			children = (
-				62E04C4019A15CD6001FEDCD /* RLAOutput.h */,
-				62E04C4119A15CD6001FEDCD /* RLAOutput.m */,
-				62E04C4219A15CD6001FEDCD /* RLAOutputGrove.h */,
-				62E04C4319A15CD6001FEDCD /* RLAOutputGrove.m */,
-				62E04C4419A15CD6001FEDCD /* RLAOutputInfrared.h */,
-				62E04C4519A15CD6001FEDCD /* RLAOutputInfrared.m */,
-			);
-			path = Outputs;
-			sourceTree = "<group>";
-		};
-		62E04C4C19A15CD6001FEDCD /* Sensors */ = {
-			isa = PBXGroup;
-			children = (
-				62E04C4D19A15CD6001FEDCD /* RLASensor.h */,
-				62E04C4E19A15CD6001FEDCD /* RLASensor.m */,
-				62E04C4F19A15CD6001FEDCD /* RLASensor_Setup.h */,
-				62E04C5419A15CD6001FEDCD /* RLASensorDelegate.h */,
-				62E04C5019A15CD6001FEDCD /* RLASensorAccelerometer.h */,
-				62E04C5119A15CD6001FEDCD /* RLASensorAccelerometer.m */,
-				62E04C5219A15CD6001FEDCD /* RLASensorColor.h */,
-				62E04C5319A15CD6001FEDCD /* RLASensorColor.m */,
-				62E04C5519A15CD6001FEDCD /* RLASensorGyroscope.h */,
-				62E04C5619A15CD6001FEDCD /* RLASensorGyroscope.m */,
-				62E04C5719A15CD6001FEDCD /* RLASensorHumidity.h */,
-				62E04C5819A15CD6001FEDCD /* RLASensorHumidity.m */,
-				62E04C5919A15CD6001FEDCD /* RLASensorLuminosity.h */,
-				62E04C5A19A15CD6001FEDCD /* RLASensorLuminosity.m */,
-				62E04C5B19A15CD6001FEDCD /* RLASensorNoise.h */,
-				62E04C5C19A15CD6001FEDCD /* RLASensorNoise.m */,
-				62E04C5D19A15CD6001FEDCD /* RLASensorProximity.h */,
-				62E04C5E19A15CD6001FEDCD /* RLASensorProximity.m */,
-				62E04C5F19A15CD6001FEDCD /* RLASensorTemperature.h */,
-				62E04C6019A15CD6001FEDCD /* RLASensorTemperature.m */,
-				62E04C6119A15CD6001FEDCD /* Values */,
-			);
-			path = Sensors;
-			sourceTree = "<group>";
-		};
-		62E04C6119A15CD6001FEDCD /* Values */ = {
-			isa = PBXGroup;
-			children = (
-				62E04C6219A15CD6001FEDCD /* RLASensorValue.h */,
-				62E04C6319A15CD6001FEDCD /* RLASensorValue.m */,
-				62E04C6419A15CD6001FEDCD /* RLASensorValue_Setup.h */,
-				62E04C6519A15CD6001FEDCD /* RLASensorValueAccelerometer.h */,
-				62E04C6619A15CD6001FEDCD /* RLASensorValueAccelerometer.m */,
-				62E04C6719A15CD6001FEDCD /* RLASensorValueColor.h */,
-				62E04C6819A15CD6001FEDCD /* RLASensorValueColor.m */,
-				62E04C6919A15CD6001FEDCD /* RLASensorValueGyroscope.h */,
-				62E04C6A19A15CD6001FEDCD /* RLASensorValueGyroscope.m */,
-				62E04C6B19A15CD6001FEDCD /* RLASensorValueHumidity.h */,
-				62E04C6C19A15CD6001FEDCD /* RLASensorValueHumidity.m */,
-				62E04C6D19A15CD6001FEDCD /* RLASensorValueLuminosity.h */,
-				62E04C6E19A15CD6001FEDCD /* RLASensorValueLuminosity.m */,
-				62E04C6F19A15CD6001FEDCD /* RLASensorValueNoise.h */,
-				62E04C7019A15CD6001FEDCD /* RLASensorValueNoise.m */,
-				62E04C7119A15CD6001FEDCD /* RLASensorValueProximity.h */,
-				62E04C7219A15CD6001FEDCD /* RLASensorValueProximity.m */,
-				62E04C7319A15CD6001FEDCD /* RLASensorValueTemperature.h */,
-				62E04C7419A15CD6001FEDCD /* RLASensorValueTemperature.m */,
-			);
-			path = Values;
-			sourceTree = "<group>";
-		};
-		62E04C7519A15CD6001FEDCD /* Users */ = {
-			isa = PBXGroup;
-			children = (
-				62E04C7619A15CD6001FEDCD /* RLAUser.h */,
-				62E04C7719A15CD6001FEDCD /* RLAUserLocal.h */,
-				62E04C7819A15CD6001FEDCD /* RLAUserLocal.m */,
-			);
-			path = Users;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -949,67 +540,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				6252F0DF199C24E2002ECE4D /* Relayr.h in Headers */,
-				62E04CAE19A15CD6001FEDCD /* RLAUser.h in Headers */,
-				62E04CAF19A15CD6001FEDCD /* RLAUserLocal.h in Headers */,
-				62E04C8119A15CD6001FEDCD /* RLADevice.h in Headers */,
-				62E04C8419A15CD6001FEDCD /* RLADeviceLocal.h in Headers */,
-				626F307919A214D80083CA32 /* RLASensor.h in Headers */,
-				62E04C8A19A15CD6001FEDCD /* RLASensorAccelerometer.h in Headers */,
-				62E04C8C19A15CD6001FEDCD /* RLASensorColor.h in Headers */,
-				62E04C8E19A15CD6001FEDCD /* RLASensorDelegate.h in Headers */,
-				62E04C8F19A15CD6001FEDCD /* RLASensorGyroscope.h in Headers */,
-				62E04C9119A15CD6001FEDCD /* RLASensorHumidity.h in Headers */,
-				62E04C9319A15CD6001FEDCD /* RLASensorLuminosity.h in Headers */,
-				62E04C9519A15CD6001FEDCD /* RLASensorNoise.h in Headers */,
-				62E04C9719A15CD6001FEDCD /* RLASensorProximity.h in Headers */,
-				62E04C9919A15CD6001FEDCD /* RLASensorTemperature.h in Headers */,
-				62E04C9B19A15CD6001FEDCD /* RLASensorValue.h in Headers */,
-				62E04C9E19A15CD6001FEDCD /* RLASensorValueAccelerometer.h in Headers */,
-				62E04CA019A15CD6001FEDCD /* RLASensorValueColor.h in Headers */,
-				62E04CA219A15CD6001FEDCD /* RLASensorValueGyroscope.h in Headers */,
-				62E04CA419A15CD6001FEDCD /* RLASensorValueHumidity.h in Headers */,
-				62E04CA619A15CD6001FEDCD /* RLASensorValueLuminosity.h in Headers */,
-				62E04CA819A15CD6001FEDCD /* RLASensorValueNoise.h in Headers */,
-				62E04CAA19A15CD6001FEDCD /* RLASensorValueProximity.h in Headers */,
-				62E04CAC19A15CD6001FEDCD /* RLASensorValueTemperature.h in Headers */,
-				62E04C7B19A15CD6001FEDCD /* RLAOutput.h in Headers */,
-				62E04C7D19A15CD6001FEDCD /* RLAOutputGrove.h in Headers */,
-				62E04C7F19A15CD6001FEDCD /* RLAOutputInfrared.h in Headers */,
-				62E04C7919A15CD6001FEDCD /* RLAHandlerInfo.h in Headers */,
-				621A6AE0199CE1AA0004F9FD /* Common.pch in Headers */,
-				621A6AE3199CE23E0004F9FD /* iOS.pch in Headers */,
-				621A6AB5199CC6200004F9FD /* RLAMacros.h in Headers */,
-				621A6AFC199CEC000004F9FD /* RLABluetoothService.h in Headers */,
-				621A6B06199CF2CF0004F9FD /* RLABluetoothManager.h in Headers */,
-				621A6B09199CF66B0004F9FD /* RLABluetoothDelegate.h in Headers */,
-				62E04C8619A15CD6001FEDCD /* RLADeviceLocal_Setup.h in Headers */,
-				621A6B16199D2CBD0004F9FD /* RLAPeripheralnfo.h in Headers */,
-				621A6AD7199CCD170004F9FD /* RLALog.h in Headers */,
-				621A6AD3199CCD170004F9FD /* RLAError.h in Headers */,
-				62E04C3819A158DF001FEDCD /* RLAKeyChain.h in Headers */,
-				621A6B1E199D33CA0004F9FD /* RLABluetoothAdapterController.h in Headers */,
-				621A6B11199D0F1A0004F9FD /* RLACBUUID.h in Headers */,
-				625204BA199E141900A27C85 /* RLABluetoothCentralRequestDiscoverPeripherals.h in Headers */,
-				62E04C8319A15CD6001FEDCD /* RLADevice_Setup.h in Headers */,
-				625204B1199E0F9500A27C85 /* RLABluetoothAdapterSensorHumidity.h in Headers */,
-				621A6B0C199CFE310004F9FD /* RLABluetoothDelegatesGroup.h in Headers */,
-				6252049B199E08D900A27C85 /* RLABluetoothAdapterSensorAccelerometer.h in Headers */,
-				625204BC199E141900A27C85 /* RLABluetoothCentralRequest.h in Headers */,
-				62E04C9D19A15CD6001FEDCD /* RLASensorValue_Setup.h in Headers */,
-				625204A7199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.h in Headers */,
-				625204AF199E0F9500A27C85 /* RLABluetoothAdapterSensorGyroscope.h in Headers */,
-				62E04C8919A15CD6001FEDCD /* RLASensor_Setup.h in Headers */,
-				6252049D199E08D900A27C85 /* RLABluetoothAdapterSensorColor.h in Headers */,
-				62E04C2F19A1508E001FEDCD /* RLACredentialsWunderbar.h in Headers */,
-				625204B3199E0F9500A27C85 /* RLABluetoothAdapterSensorNoise.h in Headers */,
-				625204C0199E2A9900A27C85 /* RLABluetoothPeripheralRequest.h in Headers */,
-				625204C9199E41A000A27C85 /* RLAData.h in Headers */,
-				625204C4199E33D100A27C85 /* RLABluetoothPeripheralRequestRegistration.h in Headers */,
-				625204A5199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.h in Headers */,
-				62E04C3319A15520001FEDCD /* RLANetworkInfo.h in Headers */,
-				6252048B199E02C900A27C85 /* RLABluetoothAdapter.h in Headers */,
-				62E04C2919A140A0001FEDCD /* RLAWebService.h in Headers */,
-				621A6B1A199D2FCA0004F9FD /* RLAMappingInfo.h in Headers */,
+				62D1718819A62D63009BBED1 /* RelayrCloud.h in Headers */,
+				62D1718C19A62E8D009BBED1 /* RelayrApp.h in Headers */,
+				62D1719719A65C98009BBED1 /* RelayrUser.h in Headers */,
+				626F613F19A4FFAF006EB510 /* RLAError.h in Headers */,
+				62D1719B19A65CCC009BBED1 /* RelayrDevice.h in Headers */,
+				626F614019A4FFAF006EB510 /* RLALog.h in Headers */,
+				62D1719F19A65D3B009BBED1 /* RelayrTransmitter.h in Headers */,
+				626F614319A506E8006EB510 /* RLAKeyChain.h in Headers */,
+				62D1718519A603A3009BBED1 /* RLANetworkInfo.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1017,13 +556,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				621A6AE5199CE28B0004F9FD /* OSX.pch in Headers */,
 				6252F10B199C2C3B002ECE4D /* Relayr.h in Headers */,
-				621A6AD8199CCD170004F9FD /* RLALog.h in Headers */,
-				621A6AFD199CEC000004F9FD /* RLABluetoothService.h in Headers */,
-				621A6AE1199CE1AA0004F9FD /* Common.pch in Headers */,
-				621A6AD4199CCD170004F9FD /* RLAError.h in Headers */,
-				621A6AB6199CC6200004F9FD /* RLAMacros.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1110,6 +643,7 @@
 				TargetAttributes = {
 					6252F0B2199C2465002ECE4D = {
 						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = V4LZL56CA7;
 					};
 					6252F0BD199C2465002ECE4D = {
 						CreatedOnToolsVersion = 6.0;
@@ -1180,57 +714,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62E04C7A19A15CD6001FEDCD /* RLAHandlerInfo.m in Sources */,
-				62E04C8019A15CD6001FEDCD /* RLAOutputInfrared.m in Sources */,
-				62E04CA519A15CD6001FEDCD /* RLASensorValueHumidity.m in Sources */,
-				6252049E199E08D900A27C85 /* RLABluetoothAdapterSensorColor.m in Sources */,
-				62E04C9619A15CD6001FEDCD /* RLASensorNoise.m in Sources */,
-				62E04C9019A15CD6001FEDCD /* RLASensorGyroscope.m in Sources */,
-				62E04C9C19A15CD6001FEDCD /* RLASensorValue.m in Sources */,
-				621A6B1F199D33CA0004F9FD /* RLABluetoothAdapterController.m in Sources */,
-				625204CA199E41A000A27C85 /* RLAData.m in Sources */,
-				62E04C8B19A15CD6001FEDCD /* RLASensorAccelerometer.m in Sources */,
-				62E04C8519A15CD6001FEDCD /* RLADeviceLocal.m in Sources */,
-				62E04CB019A15CD6001FEDCD /* RLAUserLocal.m in Sources */,
-				625204BD199E141900A27C85 /* RLABluetoothCentralRequest.m in Sources */,
-				625204B4199E0F9500A27C85 /* RLABluetoothAdapterSensorNoise.m in Sources */,
-				62E04C7C19A15CD6001FEDCD /* RLAOutput.m in Sources */,
-				62E04CAD19A15CD6001FEDCD /* RLASensorValueTemperature.m in Sources */,
-				621A6B1B199D2FCA0004F9FD /* RLAMappingInfo.m in Sources */,
-				62E04C9419A15CD6001FEDCD /* RLASensorLuminosity.m in Sources */,
-				625204C5199E33D100A27C85 /* RLABluetoothPeripheralRequestRegistration.m in Sources */,
-				625204BB199E141900A27C85 /* RLABluetoothCentralRequestDiscoverPeripherals.m in Sources */,
-				62E04C9A19A15CD6001FEDCD /* RLASensorTemperature.m in Sources */,
-				625204C1199E2A9900A27C85 /* RLABluetoothPeripheralRequest.m in Sources */,
-				62E04C3919A158DF001FEDCD /* RLAKeyChain.m in Sources */,
-				621A6AD5199CCD170004F9FD /* RLAError.m in Sources */,
-				62E04C3019A1508E001FEDCD /* RLACredentialsWunderbar.m in Sources */,
-				621A6AFE199CEC000004F9FD /* RLABluetoothService.m in Sources */,
-				62E04C9819A15CD6001FEDCD /* RLASensorProximity.m in Sources */,
-				625204B2199E0F9500A27C85 /* RLABluetoothAdapterSensorHumidity.m in Sources */,
-				6252049C199E08D900A27C85 /* RLABluetoothAdapterSensorAccelerometer.m in Sources */,
-				625204A6199E08D900A27C85 /* RLABluetoothAdapterSensorProximity.m in Sources */,
-				62E04CA719A15CD6001FEDCD /* RLASensorValueLuminosity.m in Sources */,
-				621A6B17199D2CBD0004F9FD /* RLAPeripheralnfo.m in Sources */,
-				62E04C7E19A15CD6001FEDCD /* RLAOutputGrove.m in Sources */,
-				62E04CA119A15CD6001FEDCD /* RLASensorValueColor.m in Sources */,
-				62E04C8819A15CD6001FEDCD /* RLASensor.m in Sources */,
-				62E04C9F19A15CD6001FEDCD /* RLASensorValueAccelerometer.m in Sources */,
-				621A6B12199D0F1A0004F9FD /* RLACBUUID.m in Sources */,
-				625204B0199E0F9500A27C85 /* RLABluetoothAdapterSensorGyroscope.m in Sources */,
-				62E04CA919A15CD6001FEDCD /* RLASensorValueNoise.m in Sources */,
-				62E04C8D19A15CD6001FEDCD /* RLASensorColor.m in Sources */,
-				62E04CA319A15CD6001FEDCD /* RLASensorValueGyroscope.m in Sources */,
-				621A6B07199CF2CF0004F9FD /* RLABluetoothManager.m in Sources */,
-				6252048C199E02C900A27C85 /* RLABluetoothAdapter.m in Sources */,
-				62E04C2A19A140A0001FEDCD /* RLAWebService.m in Sources */,
-				621A6B0D199CFE310004F9FD /* RLABluetoothDelegatesGroup.m in Sources */,
-				625204A8199E08D900A27C85 /* RLABluetoothAdapterSensorTemperature.m in Sources */,
-				62E04C9219A15CD6001FEDCD /* RLASensorHumidity.m in Sources */,
-				62E04C8219A15CD6001FEDCD /* RLADevice.m in Sources */,
-				62E04CAB19A15CD6001FEDCD /* RLASensorValueProximity.m in Sources */,
-				62E04C3419A15520001FEDCD /* RLANetworkInfo.m in Sources */,
-				621A6AD9199CCD170004F9FD /* RLALog.m in Sources */,
+				62D1719C19A65CCC009BBED1 /* RelayrDevice.m in Sources */,
+				62D1718919A62D63009BBED1 /* RelayrCloud.m in Sources */,
+				62D1718D19A62E8D009BBED1 /* RelayrApp.m in Sources */,
+				62D1719819A65C98009BBED1 /* RelayrUser.m in Sources */,
+				627467E119A4F482005F1437 /* RLAError.m in Sources */,
+				621F3E5119A4FBAF004E3156 /* RLALog.m in Sources */,
+				626F614219A506E4006EB510 /* RLAKeyChain.m in Sources */,
+				62D171A019A65D3B009BBED1 /* RelayrTransmitter.m in Sources */,
+				62D1718419A6039F009BBED1 /* RLANetworkInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1246,9 +738,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				621A6AD6199CCD170004F9FD /* RLAError.m in Sources */,
-				621A6AFF199CEC000004F9FD /* RLABluetoothService.m in Sources */,
-				621A6ADA199CCD170004F9FD /* RLALog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1299,6 +788,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEFINES_MODULE = YES;
@@ -1306,7 +796,6 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREFIX_HEADER = iOSRelayr/Configuration/iOS.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1318,7 +807,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1347,6 +836,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEFINES_MODULE = YES;
@@ -1354,7 +844,6 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = c11;
-				GCC_PREFIX_HEADER = iOSRelayr/Configuration/iOS.pch;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1362,7 +851,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -1391,6 +880,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEFINES_MODULE = YES;
@@ -1398,7 +888,6 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = c11;
-				GCC_PREFIX_HEADER = iOSRelayr/Configuration/iOS.pch;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1406,7 +895,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;

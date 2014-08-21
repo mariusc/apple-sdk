@@ -1,5 +1,5 @@
 #import "RLAUserLocal.h"                // Header
-#import "RLABluetoothService.h"         // Relayr.framework
+#import "RLABluetoothService.h"         // Relayr.framework (service)
 #import "RLASensorAccelerometer.h"      // Relayr.framework (sensor)
 #import "RLASensorColor.h"              // Relayr.framework (sensor)
 #import "RLASensorGyroscope.h"          // Relayr.framework (sensor)
@@ -41,16 +41,16 @@
     if (!completion) { return; }
     
     // Scan only for Wunderbar sensors
-    NSArray *classes = @[
-                [RLASensorAccelerometer class],
-                [RLASensorColor class],
-                [RLASensorGyroscope class],
-                [RLASensorHumidity class],
-                [RLASensorNoise class],
-                [RLASensorProximity class],
-                [RLASensorTemperature class],
-                [RLAOutputGrove class],
-                [RLAOutputInfrared class]
+    NSArray* classes = @[
+            [RLASensorAccelerometer class],
+            [RLASensorColor class],
+            [RLASensorGyroscope class],
+            [RLASensorHumidity class],
+            [RLASensorNoise class],
+            [RLASensorProximity class],
+            [RLASensorTemperature class],
+            [RLAOutputGrove class],
+            [RLAOutputInfrared class]
     ];
     
     [_bleService devicesWithSensorsAndOutputsOfClasses:classes timeout:1 completion:^(NSArray* devices, NSError* error) {

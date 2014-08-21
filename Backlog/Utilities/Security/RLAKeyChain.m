@@ -2,7 +2,7 @@
 #import "RLAError.h"        // Relayr.framework
 #import "RLALog.h"          // Relayr.framework
 
-NSString* const kRLAKeyChainUsers = @"Relayr.userTokens";
+NSString* const kRLAKeyChainUserTokens = @"Relayr.userTokens";
 
 @implementation RLAKeyChain
 
