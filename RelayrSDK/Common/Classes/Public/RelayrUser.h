@@ -15,6 +15,11 @@
  */
 @property (readonly,nonatomic) NSString* token;
 
+/*!
+ *  @property uid
+ *
+ *  @abstract Relyar idenfier for the <code>RelayrUser</code>'s instance.
+ */
 @property (readonly,nonatomic) NSString* uid;
 
 @property (readonly,nonatomic) NSString* name;

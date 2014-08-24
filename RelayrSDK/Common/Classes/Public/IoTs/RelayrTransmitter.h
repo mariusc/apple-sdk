@@ -8,6 +8,11 @@
  */
 @interface RelayrTransmitter : NSObject <NSCoding>
 
+/*!
+ *  @property uid
+ *
+ *  @abstract Relyar idenfier for the <code>RelayrTransmitter</code>'s instance.
+ */
 @property (readonly,nonatomic) NSString* uid;
 
 @property (readonly,nonatomic) NSString* secret;

@@ -7,6 +7,11 @@
  */
 @interface RelayrDevice : NSObject <NSCoding>
 
+/*!
+ *  @property uid
+ *
+ *  @abstract Relyar idenfier for the <code>RelayrDevice</code>'s instance.
+ */
 @property (readonly,nonatomic) NSString* uid;
 
 @property (readonly,nonatomic) NSString* secret;

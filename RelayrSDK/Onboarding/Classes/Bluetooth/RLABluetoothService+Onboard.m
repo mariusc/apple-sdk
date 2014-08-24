@@ -5,9 +5,9 @@
 
 - (void)peripheralWithWunderbarCredentials:(RLACredentialsWunderbar*)credentials wifiSSID:(NSString*)ssid wifiPassword:(NSString*)password andCompletionHandler:(void(^)(NSError*))completion
 {
-    RLAErrorAssertTrueAndReturn(ssid, RLAErrorCodeMissingArgument);
-    RLAErrorAssertTrueAndReturn(password, RLAErrorCodeMissingArgument);
-    RLAErrorAssertTrueAndReturn(completion, RLAErrorCodeMissingArgument);
+    RLAErrorAssertTrueAndReturn(ssid, kRLAErrorCodeMissingArgument);
+    RLAErrorAssertTrueAndReturn(password, kRLAErrorCodeMissingArgument);
+    RLAErrorAssertTrueAndReturn(completion, kRLAErrorCodeMissingArgument);
 
     __autoreleasing NSError* error;
     if ( ![self isBluetoothAvailable:&error] ) { return completion(error); }

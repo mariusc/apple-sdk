@@ -4,6 +4,7 @@ static NSString* const kCodingID = @"uid";
 static NSString* const kCodingSecret = @"sec";
 static NSString* const kCodingName = @"nam";
 static NSString* const kCodingOwner = @"own";
+static NSString* const kCodingDevices = @"dev";
 
 @implementation RelayrTransmitter
 
@@ -26,6 +27,7 @@ static NSString* const kCodingOwner = @"own";
         _secret = [decoder decodeObjectForKey:kCodingSecret];
         _name = [decoder decodeObjectForKey:kCodingName];
         _owner = [decoder decodeObjectForKey:kCodingOwner];
+        _devices = [decoder decodeObjectForKey:kCodingDevices];
     }
     return self;
 }
@@ -36,6 +38,7 @@ static NSString* const kCodingOwner = @"own";
     [coder encodeObject:_secret forKey:kCodingSecret];
     [coder encodeObject:_name forKey:kCodingName];
     [coder encodeObject:_owner forKey:kCodingOwner];
+    [coder encodeObject:_devices forKey:kCodingDevices];
 }
 
 @end

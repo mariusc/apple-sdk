@@ -57,7 +57,7 @@
 }
 
 // TODO: Fill up
-- (void)signInUserStoringCredentialsIniCloud:(BOOL)sendCredentialsToiCloud completion:(void (^)(RelayrUser*, NSError*))completion
+- (void)signUserStoringCredentialsIniCloud:(BOOL)sendCredentialsToiCloud completion:(void (^)(RelayrUser*, NSError*))completion
 {
     
     

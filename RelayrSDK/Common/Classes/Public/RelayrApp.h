@@ -23,7 +23,10 @@
  *
  *  @see RelayrCloud
  */
-- (instancetype)initWithID:(NSString*)appID OAuthClientID:(NSString*)clientID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI;
+- (instancetype)initWithID:(NSString*)appID
+             OAuthClientID:(NSString*)clientID
+         OAuthClientSecret:(NSString*)clientSecret
+               redirectURI:(NSString*)redirectURI;
 
 /*!
  *  @property uid
@@ -109,16 +112,19 @@
 @property (readonly,nonatomic) NSArray* loggedUsers;
 
 /*!
- *  @method signInUserStoringCredentialsIniCloud:completion
+ *  @method signUserStoringCredentialsIniCloud:completion
  *
- *  @abstract It signs a Relayr user for the current Relayr Application and returns (in the completion block) the object representing the user.
+ *  @abstract It signs a Relayr User for the current Relayr Application and returns (in the completion block) the object representing the user.
  *  @discussion The user will be confronted by a modal webview asking for his/her Relayr's credentials. If the sign in process is successful, a fully formed <code>RelayrUser</code> object will be returned in the <code>completion</code> block.
+        You should first query for loggedUsers. This method is only supposed to be used when you want the credentials of a Relayr User that you don't have or when you want to register a new user to the Relayr Cloud.
+        If at the completion of asking for user credentials, the user was already logged in the array <code>loggedUsers</code>, you would received the <code>RelayrUser</code> in that array; not a newly instance.
  *
  *  @param completion Asynchronous block returning the status of the sign in process.
  *
  *  @see RelayrUser
  */
-- (void)signInUserStoringCredentialsIniCloud:(BOOL)sendCredentialsToiCloud completion:(void (^)(RelayrUser* user, NSError* error))completion;
+- (void)signUserStoringCredentialsIniCloud:(BOOL)sendCredentialsToiCloud
+                                completion:(void (^)(RelayrUser* user, NSError* error))completion;
 
 /*!
  *  @method signOutUser:

@@ -10,7 +10,7 @@
 /*!
  *  @method networksSSIDs
  *
- *  @abstract It returns an array with all the names of the nearby wifi networks.
+ *  @abstract It returns an array with all the names of the detected networks.
  *
  *	@return <code>NSArray</code> containing <code>NSString</code>s with the names of all detected wifi networks.
  */

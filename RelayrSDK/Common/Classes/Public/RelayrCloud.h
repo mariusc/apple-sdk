@@ -28,6 +28,7 @@
  *
  *  @see RelayrApplication
  */
-+ (void)isApplicationID:(NSString*)appID valid:(void (^)(NSError* error, BOOL exists))completion;
++ (void)isApplicationID:(NSString*)appID
+                  valid:(void (^)(NSError* error, BOOL exists))completion;
 
 @end

@@ -14,37 +14,41 @@ FOUNDATION_EXPORT NSString* const kRLAErrorDomain;
  */
 FOUNDATION_EXPORT NSString* const kRLAErrorStringFile;
 
-#define RLAErrorUserInfoLocal   @{ \
-    @"file"     : [NSString stringWithCString:__FILE__ encoding:NSUTF8StringEncoding],          \
-    @"function" : [NSString stringWithFormat:@"%i", __LINE__],                                  \
-    @"line"     : [NSString stringWithCString:__PRETTY_FUNCTION__ encoding:NSUTF8StringEncoding]  }
+#pragma mark Error codes
 
 /*!
  *  @enum RLAErrorCode
  *
  *  @abstract Enumeration of all the error codes inside the relayr error domain.
  *
- *  @constant RLAErrorCodeUnknown Error Unknown.
- *  @constant RLAErrorCodeMissingArgument Method missing an argument.
- *  @constant RLAErrorCodeMissingExpectedValue Missing an expected value.
+ *  @constant kRLAErrorCodeUnknown Error Unknown.
+ *  @constant kRLAErrorCodeMissingArgument Method missing an argument.
+ *  @constant kRLAErrorCodeMissingExpectedValue Missing an expected value.
+ *  @constant kRLAErrorCodeWebrequestFailure The HTTP web request failed.
  */
 typedef NS_ENUM(NSInteger, RLAErrorCode) {
-    RLAErrorCodeUnknown                 = 1,
-    RLAErrorCodeMissingArgument         = 2,
-    RLAErrorCodeMissingExpectedValue    = 3
+    kRLAErrorCodeUnknown                = 1,
+    kRLAErrorCodeMissingArgument        = 2,
+    kRLAErrorCodeMissingExpectedValue   = 3,
+    kRLAErrorCodeWebrequestFailure      = 4
 };
 
-// Error messages
-#define RLAErrorMessageMissingArgument      \
-    NSLocalizedStringFromTable(@"Error missing argument", kRLAErrorStringFile, @"This error happens when a method is expecting an argument which is not there.")
-#define RLAErrorMessageMissingExpectedValue \
-    NSLocalizedStringFromTable(@"The value is not the expected (probably nil)", kRLAErrorStringFile, @"This error happens when a value is received and it wasn't the expected.")
+#define RLAErrorUserInfoLocal   @{                                                                      \
+        @"file"     : [NSString stringWithCString:__FILE__ encoding:NSUTF8StringEncoding],              \
+        @"function" : [NSString stringWithFormat:@"%i", __LINE__],                                      \
+        @"line"     : [NSString stringWithCString:__PRETTY_FUNCTION__ encoding:NSUTF8StringEncoding]    }
 
-// Error objects
-#define RLAErrorMissingArgument             \
-    [RLAError errorWithCode:RLAErrorCodeMissingArgument localizedDescription:RLAErrorMessageMissingArgument userInfo:RLAErrorUserInfoLocal]
-#define RLAErrorMissingExpectedValue        \
-    [RLAError errorWithCode:RLAErrorCodeMissingExpectedValue localizedDescription:RLAErrorMessageMissingExpectedValue userInfo:RLAErrorUserInfoLocal]
+#pragma mark Error messages
+
+#define RLAErrorMessageMissingArgument      NSLocalizedStringFromTable(@"Error missing argument", kRLAErrorStringFile, @"This error happens when a method is expecting an argument which is not there.")
+#define RLAErrorMessageMissingExpectedValue NSLocalizedStringFromTable(@"The value is not the expected (probably nil)", kRLAErrorStringFile, @"This error happens when a value is received and it wasn't the expected.")
+#define RLAErrorMessageWebrequestFailure    NSLocalizedStringFromTable(@"The web request could not be satisfied", kRLAErrorStringFile, @"This error happens when a web request could not be routed or the answer was not the expected.")
+
+#pragma mark Error objects
+
+#define RLAErrorMissingArgument         [RLAError errorWithCode:kRLAErrorCodeMissingArgument localizedDescription:RLAErrorMessageMissingArgument userInfo:RLAErrorUserInfoLocal]
+#define RLAErrorMissingExpectedValue    [RLAError errorWithCode:kRLAErrorCodeMissingExpectedValue localizedDescription:RLAErrorMessageMissingExpectedValue userInfo:RLAErrorUserInfoLocal]
+#define RLAErrorWebrequestFailure       [RLAError errorWithCode:kRLAErrorCodeWebrequestFailure localizedDescription:RLAErrorMessageWebrequestFailure userInfo:RLAErrorUserInfoLocal]
 
 /*!
  *  @class RLAError
@@ -52,8 +56,6 @@ typedef NS_ENUM(NSInteger, RLAErrorCode) {
  *  @abstract Utility class which provides convenience methods for initializing errors as well as internal framework error codes.
  */
 @interface RLAError : NSObject
-
-#pragma mark Class methods
 
 /*!
  *  @method errorWithCode:localizedDescription:info:

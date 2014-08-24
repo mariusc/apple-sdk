@@ -7,4 +7,8 @@ FOUNDATION_EXPORT double OSXRelayrVersionNumber;
 FOUNDATION_EXPORT const unsigned char OSXRelayrVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <Relayr/PublicHeader.h>
-
+#import <Relayr/RelayrCloud.h>
+#import <Relayr/RelayrApp.h>
+#import <Relayr/RelayrUser.h>
+#import <Relayr/RelayrTransmitter.h>
+#import <Relayr/RelayrDevice.h>

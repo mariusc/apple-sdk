@@ -5,10 +5,10 @@
 
 - (void)peripheralWithWunderbarCredentials:(RLACredentialsWunderbar*)credentials wifiSSID:(NSString*)ssid wifiPassword:(NSString*)password andCompletionHandler:(void(^)(NSError*))completion
 {
-    RLAErrorAssertTrueAndReturn(credentials, RLAErrorCodeMissingArgument);
-    RLAErrorAssertTrueAndReturn(ssid, RLAErrorCodeMissingArgument);
-    RLAErrorAssertTrueAndReturn(password, RLAErrorCodeMissingArgument);
-    RLAErrorAssertTrueAndReturn(completion, RLAErrorCodeMissingArgument);
+    RLAErrorAssertTrueAndReturn(credentials, kRLAErrorCodeMissingArgument);
+    RLAErrorAssertTrueAndReturn(ssid, kRLAErrorCodeMissingArgument);
+    RLAErrorAssertTrueAndReturn(password, kRLAErrorCodeMissingArgument);
+    RLAErrorAssertTrueAndReturn(completion, kRLAErrorCodeMissingArgument);
     
     [self.bleService peripheralWithWunderbarCredentials:credentials wifiSSID:ssid wifiPassword:password andCompletionHandler:completion];
 }
