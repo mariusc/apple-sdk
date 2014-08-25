@@ -66,12 +66,12 @@
 @property (readonly,nonatomic) NSString* name;
 
 /*!
- *  @property description
+ *  @property appDescription
  *
  *  @abstract Relayr Application description.
  *  @discussion This value must be first retrieved asynchronously from the Relayr Cloud. If you don't query the server, this property is <code>nil</code>.
  */
-@property (readonly,nonatomic) NSString* description;
+@property (readonly,nonatomic) NSString* appDescription;
 
 /*!
  *  @property publisherID
@@ -124,7 +124,7 @@
  *  @see RelayrUser
  */
 - (void)signUserStoringCredentialsIniCloud:(BOOL)sendCredentialsToiCloud
-                                completion:(void (^)(RelayrUser* user, NSError* error))completion;
+                                completion:(void (^)(NSError* error, RelayrUser* user))completion;
 
 /*!
  *  @method signOutUser:

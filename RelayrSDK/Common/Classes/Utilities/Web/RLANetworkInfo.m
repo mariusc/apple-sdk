@@ -1,5 +1,6 @@
 #import "RLANetworkInfo.h"                  // Header
 @import SystemConfiguration.CaptiveNetwork; // Apple
+#import "CPlatforms.h"                      // Relayr.framework (Utilities)
 
 @implementation RLANetworkInfo
 
@@ -15,11 +16,11 @@
 
 + (NSString*)currentNetworkSSID
 {
+#if defined(OS_APPLE_IOS) || defined (OS_APPLE_IOS_SIMULATOR)
     // Keys are the BSD- names of the network
     NSArray* networks = [RLANetworkInfo networksSSIDs];
     NSString* result;
     
-#if TARGET_OS_IPHONE
     // Find the current network
     for (NSString* netName in networks)
     {
@@ -29,11 +30,14 @@
         result = netInfo[(__bridge NSString* const)kCNNetworkInfoKeySSID];
         break;
     }
-#elif TARGET_OS_MAC
-    #warning "Implement a function to discover current Wifi connection
-#endif
     
     return result;
+    
+#elif defined(OS_APPLE_OSX)
+    #warning "Implement a function to discover current Wifi connection
+    
+    return nil;
+#endif
 }
 
 

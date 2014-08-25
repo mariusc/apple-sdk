@@ -12,15 +12,30 @@ FOUNDATION_EXPORT NSString* const kRLAWebRequestModePOST;
 @interface RLAWebRequest : NSObject
 
 /*!
+ *  @method initWithHostURL:
+ *
+ *  @abstract Convenience method that only sets the <code>hostURL</code>.
+ *  @discussion Any of the arguments can be <code>nil</code>.
+ *
+ *  @param hostURL Host URL path of the HTTP request.
+ *	@return Initialised web HTTP request in a friendly Relayr way.
+ *
+ *  @see initWithHostURL:timeout:token:
+ */
+- (instancetype)initWithHostURL:(NSURL*)hostURL;
+
+/*!
  *  @method initWithHostURL:timeout:token:
  *
  *  @abstract Convenience method that sets the <code>hostURL</code>, <code>timeout</code>, and <code>token</code> in one go.
- *  @discussion Any of the arguments can be <code>nil</code>.
+ *  @discussion Any of the arguments can be <code>nil</code>. Alternatively, you can use the normal <code>init</code> method.
  *
  *  @param hostURL Host URL path of the HTTP request.
  *  @param tiemout Number of seconds that the request will be waiting for an answer.
  *  @param token Oauth token for a secure HTTP request.
  *	@return Initialized web HTTP request in a friendly Relayr way.
+ *
+ *  @see initWithHostURL:
  */
 - (instancetype)initWithHostURL:(NSURL*)hostURL timeout:(NSNumber*)timeout oauthToken:(NSString*)token;
 

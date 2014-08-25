@@ -16,6 +16,11 @@ static NSString* const kDefaultHTTPHeaderValueContentJSON   = @"application/json
 
 #pragma mark - Public API
 
+- (instancetype)initWithHostURL:(NSURL*)hostURL
+{
+    return [self initWithHostURL:hostURL timeout:nil oauthToken:nil];
+}
+
 - (instancetype)initWithHostURL:(NSURL*)hostURL timeout:(NSNumber*)timeout oauthToken:(NSString*)token
 {
     self = [self init];

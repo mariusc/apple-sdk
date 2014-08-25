@@ -1,4 +1,6 @@
-#import "RelayrUser.h"      // Header
+#import "RelayrUser.h"          // Header
+#import "RelayrUser_Setup.h"    // Private extension
+#import "RLAWebService.h"       // Relayr.framework (Web)
 
 static NSString* const kCodingToken = @"tok";
 static NSString* const kCodingID = @"uid";
@@ -20,7 +22,7 @@ static NSString* const kCodingPublishers = @"pub";
     return nil;
 }
 
-- (instancetype)initWithToken:(NSString*)token
+-(instancetype)initWithToken:(NSString*)token
 {
     if (!token.length) { return nil; }
     
@@ -28,15 +30,26 @@ static NSString* const kCodingPublishers = @"pub";
     if (self)
     {
         _token = token;
+        _webService = [[RLAWebService alloc] initWithUser:self];
     }
     return self;
 }
 
 - (void)queryCloudForUserInfo:(void (^)(NSError* error, NSString* previousName, NSString* previousEmail))completion
 {
+    __weak RelayrUser* weakSelf = self;
     
+    [_webService requestUserInfo:^(NSError *error, NSString *name, NSString *email) {
+        if (error) { if (completion) { completion(error, nil, nil); } }
+        
+        __strong RelayrUser* strongSelf = weakSelf;
+        NSString* pName = strongSelf.name;      strongSelf.name = name;
+        NSString* pEmail = strongSelf.email;    strongSelf.email = email;
+        if (completion) { completion(nil, pName, pEmail); }
+    }];
 }
 
+// TODO: Fill up
 - (void)queryCloudForIoTs:(void (^)(NSError* error, BOOL isThereChanges))completion
 {
     

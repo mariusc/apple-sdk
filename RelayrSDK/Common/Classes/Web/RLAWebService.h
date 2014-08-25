@@ -1,4 +1,5 @@
-@import Foundation;
+@import Foundation;     // Apple
+@class RelayrUser;      // Relayr.framework (Public)
 
 /*!
  *  @class RLAWebService
@@ -11,20 +12,115 @@
 @interface RLAWebService : NSObject
 
 /*!
- *  @method requestOAuthTemporalCodeForAppID:OAuthClientID:OAuthClientSecret:redirectURI:completion:
+ *  @method requestOAuthCodeWithOAuthClientID:redirectURI:completion:
  *
- *  @abstract It requests the temporal access OAuth code needed to ask for a 100 year token
- 
- *  @discussion <#Description with maybe some <code>Code</code> and links to other methods {@link method:name:}#>
+ *  @abstract It requests the temporal access OAuth code needed to ask for a 100 year OAuth access token.
  *
- *  @param <#name#> <#Description#>
+ *  @param clientID <code>NSString</code> representing the Oauth client ID. You receive this when creating an app in the Relayr developer platform.
+ *  @param redirectURI <code>NSString</code> representing the redirect URI you chosed when creating an app in the Relayr developer platform.
+ *  @param completion Block with the answer to the OAuth code request. If it failed, an error object will be initialized and the
  *
- *  @see <#Method:to:see:#>
+ *  @see requestOAuthTokenWithOAuthCode:OAuthClientSecret:OAuthClientSecret:redirectURI:completion:
  */
-+ (void)requestOAuthTemporalCodeForAppID:(NSString*)appID
-                           OAuthClientID:(NSString*)clientID
-                       OAuthClientSecret:(NSString*)clientSecret
-                             redirectURI:(NSString*)uri
-                              completion:(void (^)(NSError* error, NSString* tmpToken))completion;
++ (void)requestOAuthCodeWithOAuthClientID:(NSString*)clientID
+                              redirectURI:(NSString*)redirectURI
+                               completion:(void (^)(NSError* error, NSString* tmpCode))completion;
+
+/*!
+ *  @method requestOAuthTokenWithOAuthCode:OAuthClientID:OAuthClientSecret:redirectURI:completion:
+ *
+ *  @abstract It request a valid OAuth token from OAuth code, clientID, clientSecret, and redirectURI.
+ *
+ *  @param code Temporal OAuth code (usually valid for 5 minutes) that it is required for your
+ *  @param clientID <code>NSString</code> representing the Oauth client ID. You receive this when creating an app in the Relayr developer platform.
+ *  @param clientSecret <code>NSString</code> representing the Oauth client secret. You receive this when creating an app in the Relayr developer platform.
+ *  @param redirectURI <code>NSString</code> representing the redirect URI you chosed when creating an app in the Relayr developer platform.
+ *  @param completion Block with the answer to the OAuth code request. If it failed, an error object will be initialized and the
+ *
+ *  @see requestOAuthCodeWithOAuthClientID:redirectURI:completion:
+ */
++ (void)requestOAuthTokenWithOAuthCode:(NSString*)code
+                         OAuthClientID:(NSString*)clientID
+                     OAuthClientSecret:(NSString*)clientSecret
+                           redirectURI:(NSString*)redirectURI
+                            completion:(void (^)(NSError* error, NSString* token))completion;
+
+/*!
+ *  @method initWithUser:
+ *
+ *  @abstract It is initialised with a <code>RelayrUser</code> token.
+ *  @discussion If <code>userToken</code> is <code>nil</code> or the token is not valid, this initialiser returns <code>nil</code>.
+ *
+ *  @param userToken <code>RelayrUser</code> OAuth token.
+ *	@return Fully initialised <code>RLAWebService</code>.
+ */
+- (instancetype)initWithUser:(__weak RelayrUser*)user;
+
+/*!
+ *  @property hostURL
+ *
+ *  @abstract The base URL that will be used in every webService instance call.
+ *  @discussion It cannot be <code>nil</code>. If <code>nil</code> is passed, the default Relayr host is used.
+ */
+@property (strong,nonatomic) NSURL* hostURL;
+
+/*!
+ *  @method requestUserInfoWithCompletion:
+ *
+ *  @abstract It queries the Relayr Cloud for data about the user Information.
+ *
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrUser
+ */
+- (void)requestUserInfo:(void (^)(NSError* error, NSString* name, NSString* email))completion;
+
+/*!
+ *  @method requestUserPublishers:
+ *
+ *  @abstract It queries the Relayr Cloud for all the publishers that a Relayr user owns.
+ *  @discussion A publisher is a Relayr user who is able to publish apps in the Relayr cloud.
+ *
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrUser
+ */
+- (void)requestUserPublishers:(void (^)(NSError* error, NSArray* publishers))completion;
+
+/*!
+ *  @method requestUserDevices:
+ *
+ *  @abstract It queries the Relayr Cloud for all the devices own by a Realyr user.
+ *  @discussion Devices and transmitters are different concepts.
+ *
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrUser
+ */
+- (void)requestUserDevices:(void (^)(NSError* error, NSArray* devices))completion;
+
+/*!
+ *  @method requestUserTransmitters:
+ *
+ *  @abstract It queries the Relayr Cloud for all the transmitters own by a Relayr user.
+ *  @discussion Devices and transmitters are different concepts.
+ *
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrUser
+ */
+- (void)requestUserTransmitters:(void (^)(NSError* error, NSArray* transmitter))completion;
+
+/*!
+ *  @method resquestUserBookmarkedDevices:
+ *
+ *  @abstract It queries the Relayr Cloud for all the bookmarked devices of a specific Relayr user.
+ *  @discussion A bookmarked device is a normally own device that the user finds him/herself reading/sending data often.
+ *
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrUser
+ */
+- (void)resquestUserBookmarkedDevices:(void (^)(NSError* error, NSArray* bookDevices))completion;
 
 @end

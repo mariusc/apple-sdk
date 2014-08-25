@@ -30,7 +30,8 @@ typedef NS_ENUM(NSInteger, RLAErrorCode) {
     kRLAErrorCodeUnknown                = 1,
     kRLAErrorCodeMissingArgument        = 2,
     kRLAErrorCodeMissingExpectedValue   = 3,
-    kRLAErrorCodeWebrequestFailure      = 4
+    kRLAErrorCodeWebrequestFailure      = 4,
+    kRLAErrorCodeSigningFailure         = 5,
 };
 
 #define RLAErrorUserInfoLocal   @{                                                                      \
@@ -43,12 +44,14 @@ typedef NS_ENUM(NSInteger, RLAErrorCode) {
 #define RLAErrorMessageMissingArgument      NSLocalizedStringFromTable(@"Error missing argument", kRLAErrorStringFile, @"This error happens when a method is expecting an argument which is not there.")
 #define RLAErrorMessageMissingExpectedValue NSLocalizedStringFromTable(@"The value is not the expected (probably nil)", kRLAErrorStringFile, @"This error happens when a value is received and it wasn't the expected.")
 #define RLAErrorMessageWebrequestFailure    NSLocalizedStringFromTable(@"The web request could not be satisfied", kRLAErrorStringFile, @"This error happens when a web request could not be routed or the answer was not the expected.")
+#define RLAErrorMessageSigningFailure       NSLocalizedStringFromTable(@"The OAuth user signing process failed.", kRLAErrorStringFile, @"This error happens when an OAuth signing process failed.")
 
 #pragma mark Error objects
 
 #define RLAErrorMissingArgument         [RLAError errorWithCode:kRLAErrorCodeMissingArgument localizedDescription:RLAErrorMessageMissingArgument userInfo:RLAErrorUserInfoLocal]
 #define RLAErrorMissingExpectedValue    [RLAError errorWithCode:kRLAErrorCodeMissingExpectedValue localizedDescription:RLAErrorMessageMissingExpectedValue userInfo:RLAErrorUserInfoLocal]
 #define RLAErrorWebrequestFailure       [RLAError errorWithCode:kRLAErrorCodeWebrequestFailure localizedDescription:RLAErrorMessageWebrequestFailure userInfo:RLAErrorUserInfoLocal]
+#define RLAErrorSigningFailure          [RLAError errorWithCode:kRLAErrorCodeSigningFailure localizedDescription:RLAErrorMessageSigningFailure userInfo:RLAErrorUserInfoLocal]
 
 /*!
  *  @class RLAError
