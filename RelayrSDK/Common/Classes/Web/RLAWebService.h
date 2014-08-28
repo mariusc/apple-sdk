@@ -57,6 +57,14 @@
 - (instancetype)initWithUser:(__weak RelayrUser*)user;
 
 /*!
+ *  @property user
+ *
+ *  @abstract <code>RelayrUser</code> who is associated with this <code>RLAWebService</code> instance.
+ *  @discussion This object will be set at initialisation and never touched again.
+ */
+@property (weak,readonly,nonatomic) RelayrUser* user;
+
+/*!
  *  @property hostURL
  *
  *  @abstract The base URL that will be used in every webService instance call.

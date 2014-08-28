@@ -31,14 +31,6 @@
 @property (readonly,nonatomic) RLAWebService* webService;
 
 /*!
- *  @property token
- *
- *  @abstract The representation of a Relayr User and its Relayr Application.
- *  @discussion It doesn't change along the lifetime of the <code>RelayrUser</code>
- */
-@property (readwrite,nonatomic) NSString* token;
-
-/*!
  *  @property uid
  *
  *  @abstract Relyar idenfier for the <code>RelayrUser</code>'s instance.
