@@ -26,7 +26,7 @@
 // TODO: Fill up
 + (void)isApplicationID:(NSString *)appID valid:(void (^)(NSError* error, BOOL exists))completion
 {
-    if (!completion) { return [RLALog debug:RLAErrorMessageMissingArgument]; }
+    if (!completion) { return [RLALog debug:dRLAErrorMessageMissingArgument]; }
     
     
     

@@ -54,7 +54,7 @@ static NSString* const kDefaultHTTPHeaderValueContentJSON   = @"application/json
     if (_httpHeaders.count)
     {
         [_httpHeaders enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-            [request setValue:key forHTTPHeaderField:obj];
+            [request setValue:obj forHTTPHeaderField:key];
         }];
     }
     
@@ -66,18 +66,18 @@ static NSString* const kDefaultHTTPHeaderValueContentJSON   = @"application/json
         if ( [_body isKindOfClass:[NSString class]] && ((NSString*)_body).length )
         {
             bodyData = [((NSString*)_body) dataUsingEncoding:NSUTF8StringEncoding];
-            [request setValue:kDefaultHTTPHeaderFieldContentType forHTTPHeaderField:kDefaultHTTPHeaderValueContentUTF8];
+            [request setValue:kDefaultHTTPHeaderValueContentUTF8 forHTTPHeaderField:kDefaultHTTPHeaderFieldContentType];
         }
         else if ( [_body isKindOfClass:[NSDictionary class]] && ((NSDictionary*)_body).count )
         {
             bodyData = [NSJSONSerialization dataWithJSONObject:_body options:kNilOptions error:&error];
-            [request setValue:kDefaultHTTPHeaderFieldContentType forHTTPHeaderField:kDefaultHTTPHeaderValueContentJSON];
+            [request setValue:kDefaultHTTPHeaderValueContentJSON forHTTPHeaderField:kDefaultHTTPHeaderFieldContentType];
         }
         
         if (!bodyData)
         {
             [request setValue:kDefaultHTTPHeaderFieldContentType forHTTPHeaderField:nil];
-            [RLALog debug:((error) ? error.localizedDescription : RLAErrorMessageMissingExpectedValue)];
+            [RLALog debug:((error) ? error.localizedDescription : dRLAErrorMessageMissingExpectedValue)];
             return NO;
         }
         
@@ -85,14 +85,13 @@ static NSString* const kDefaultHTTPHeaderValueContentJSON   = @"application/json
     }
     
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse* response, NSData* data, NSError* connectionError) {
-        
         if (!completion) { return; }
         if (connectionError) { return completion(connectionError, nil); }
         
         if ( ((NSHTTPURLResponse*)response).statusCode != statusCode )
         {
             NSString* serverString = (data) ? [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] : nil;
-            NSError* error = [RLAError errorWithCode:kRLAErrorCodeWebrequestFailure localizedDescription:((serverString) ? serverString : RLAErrorMessageWebrequestFailure) userInfo:RLAErrorUserInfoLocal];
+            NSError* error = [RLAError errorWithCode:kRLAErrorCodeWebrequestFailure localizedDescription:((serverString) ? serverString : dRLAErrorMessageWebrequestFailure) userInfo:RLAErrorUserInfoLocal];
             
             return completion(error, nil);
         }

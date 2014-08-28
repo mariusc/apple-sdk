@@ -12,7 +12,7 @@ NSString* const kRLAKeyChainUsers = @"Relayr.userTokens";
 {
     if (!key)
     {
-        [RLALog debug:RLAErrorMessageMissingArgument];
+        [RLALog debug:dRLAErrorMessageMissingArgument];
         return nil;
     }
     
@@ -40,7 +40,7 @@ NSString* const kRLAKeyChainUsers = @"Relayr.userTokens";
 + (void)setObject:(NSObject <NSCoding>*)object forKey:(NSString*)key
 {
     // Check arguments
-    if (!key || !object) { return [RLALog debug:RLAErrorMessageMissingArgument]; }
+    if (!key || !object) { return [RLALog debug:dRLAErrorMessageMissingArgument]; }
     
     // Delete any previously stored value
     NSDictionary* queryDict = [RLAKeyChain keychainQueryWithKey:key];
@@ -48,7 +48,7 @@ NSString* const kRLAKeyChainUsers = @"Relayr.userTokens";
     
     // Append data which should be stored to query dictionary
     NSData* data = [NSKeyedArchiver archivedDataWithRootObject:object];
-    if (!data) { return [RLALog debug:RLAErrorMessageMissingExpectedValue]; }
+    if (!data) { return [RLALog debug:dRLAErrorMessageMissingExpectedValue]; }
     
     NSMutableDictionary* mutableQuery = queryDict.mutableCopy;
     mutableQuery[(__bridge id)kSecValueData] = data;
@@ -58,7 +58,7 @@ NSString* const kRLAKeyChainUsers = @"Relayr.userTokens";
 + (void)removeObjectForKey:(NSString *)key
 {
     // Check arguments
-    if (!key) { return [RLALog debug:RLAErrorMessageMissingArgument]; }
+    if (!key) { return [RLALog debug:dRLAErrorMessageMissingArgument]; }
     
     // Delete stored value
     SecItemDelete((__bridge CFDictionaryRef)[RLAKeyChain keychainQueryWithKey:key]);

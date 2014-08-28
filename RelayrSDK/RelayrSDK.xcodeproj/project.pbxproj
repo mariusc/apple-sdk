@@ -51,16 +51,15 @@
 		626F614319A506E8006EB510 /* RLAKeyChain.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C3619A158DF001FEDCD /* RLAKeyChain.h */; };
 		6272529719AC7B89001265EB /* RLAWebConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 6272529619AC7B38001265EB /* RLAWebConstants.h */; };
 		6272529819AC7B91001265EB /* RLAWebConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 6272529619AC7B38001265EB /* RLAWebConstants.h */; };
-		6272529B19AC8573001265EB /* RLAWebViewOAuth.h in Headers */ = {isa = PBXBuildFile; fileRef = 6272529919AC8573001265EB /* RLAWebViewOAuth.h */; };
-		6272529C19AC8573001265EB /* RLAWebViewOAuth.h in Headers */ = {isa = PBXBuildFile; fileRef = 6272529919AC8573001265EB /* RLAWebViewOAuth.h */; };
-		6272529D19AC8573001265EB /* RLAWebViewOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 6272529A19AC8573001265EB /* RLAWebViewOAuth.m */; };
-		6272529E19AC8573001265EB /* RLAWebViewOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 6272529A19AC8573001265EB /* RLAWebViewOAuth.m */; };
-		627252A319AC8D5C001265EB /* RLAWebViewOAuthOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 627252A119AC8D5C001265EB /* RLAWebViewOAuthOSX.h */; };
-		627252A419AC8D5C001265EB /* RLAWebViewOAuthOSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 627252A219AC8D5C001265EB /* RLAWebViewOAuthOSX.m */; };
-		627252A719AC8FD7001265EB /* RLAWebViewOAuthIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 627252A519AC8FD7001265EB /* RLAWebViewOAuthIOS.h */; };
-		627252A819AC8FD7001265EB /* RLAWebViewOAuthIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 627252A619AC8FD7001265EB /* RLAWebViewOAuthIOS.m */; };
+		6272529B19AC8573001265EB /* RLAWebOAuthController.h in Headers */ = {isa = PBXBuildFile; fileRef = 6272529919AC8573001265EB /* RLAWebOAuthController.h */; };
+		6272529C19AC8573001265EB /* RLAWebOAuthController.h in Headers */ = {isa = PBXBuildFile; fileRef = 6272529919AC8573001265EB /* RLAWebOAuthController.h */; };
+		6272529D19AC8573001265EB /* RLAWebOAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6272529A19AC8573001265EB /* RLAWebOAuthController.m */; };
+		6272529E19AC8573001265EB /* RLAWebOAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6272529A19AC8573001265EB /* RLAWebOAuthController.m */; };
+		627252A319AC8D5C001265EB /* RLAWebOAuthControllerOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 627252A119AC8D5C001265EB /* RLAWebOAuthControllerOSX.h */; };
+		627252A419AC8D5C001265EB /* RLAWebOAuthControllerOSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 627252A219AC8D5C001265EB /* RLAWebOAuthControllerOSX.m */; };
+		627252A719AC8FD7001265EB /* RLAWebOAuthControllerIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 627252A519AC8FD7001265EB /* RLAWebOAuthControllerIOS.h */; };
+		627252A819AC8FD7001265EB /* RLAWebOAuthControllerIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 627252A619AC8FD7001265EB /* RLAWebOAuthControllerIOS.m */; };
 		627467E119A4F482005F1437 /* RLAError.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6ACF199CCD170004F9FD /* RLAError.m */; };
-		628D4EC619AE1DB60094F0A1 /* test.html in Resources */ = {isa = PBXBuildFile; fileRef = 628D4EC519AE1DB60094F0A1 /* test.html */; };
 		62925939199CB3EF0079D5A7 /* iOSRelayrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6252F0DC199C24C4002ECE4D /* iOSRelayrTests.m */; };
 		62D1718419A6039F009BBED1 /* RLANetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C3219A15520001FEDCD /* RLANetworkInfo.m */; };
 		62D1718519A603A3009BBED1 /* RLANetworkInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C3119A15520001FEDCD /* RLANetworkInfo.h */; };
@@ -120,13 +119,12 @@
 		6252F107199C2C0C002ECE4D /* OSXRelayrTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSXRelayrTests.m; sourceTree = "<group>"; };
 		6252F10A199C2C0C002ECE4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6272529619AC7B38001265EB /* RLAWebConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RLAWebConstants.h; sourceTree = "<group>"; };
-		6272529919AC8573001265EB /* RLAWebViewOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebViewOAuth.h; sourceTree = "<group>"; };
-		6272529A19AC8573001265EB /* RLAWebViewOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebViewOAuth.m; sourceTree = "<group>"; };
-		627252A119AC8D5C001265EB /* RLAWebViewOAuthOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebViewOAuthOSX.h; sourceTree = "<group>"; };
-		627252A219AC8D5C001265EB /* RLAWebViewOAuthOSX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebViewOAuthOSX.m; sourceTree = "<group>"; };
-		627252A519AC8FD7001265EB /* RLAWebViewOAuthIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebViewOAuthIOS.h; sourceTree = "<group>"; };
-		627252A619AC8FD7001265EB /* RLAWebViewOAuthIOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebViewOAuthIOS.m; sourceTree = "<group>"; };
-		628D4EC519AE1DB60094F0A1 /* test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
+		6272529919AC8573001265EB /* RLAWebOAuthController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebOAuthController.h; sourceTree = "<group>"; };
+		6272529A19AC8573001265EB /* RLAWebOAuthController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebOAuthController.m; sourceTree = "<group>"; };
+		627252A119AC8D5C001265EB /* RLAWebOAuthControllerOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebOAuthControllerOSX.h; sourceTree = "<group>"; };
+		627252A219AC8D5C001265EB /* RLAWebOAuthControllerOSX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebOAuthControllerOSX.m; sourceTree = "<group>"; };
+		627252A519AC8FD7001265EB /* RLAWebOAuthControllerIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebOAuthControllerIOS.h; sourceTree = "<group>"; };
+		627252A619AC8FD7001265EB /* RLAWebOAuthControllerIOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebOAuthControllerIOS.m; sourceTree = "<group>"; };
 		62D1718619A62D63009BBED1 /* RelayrCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrCloud.h; sourceTree = "<group>"; };
 		62D1718719A62D63009BBED1 /* RelayrCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrCloud.m; sourceTree = "<group>"; };
 		62D1718A19A62E8D009BBED1 /* RelayrApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrApp.h; sourceTree = "<group>"; };
@@ -555,7 +553,6 @@
 		6252F0FF199C2BFC002ECE4D /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				628D4EC519AE1DB60094F0A1 /* test.html */,
 				6252F100199C2BFC002ECE4D /* Relayr.h */,
 			);
 			path = Classes;
@@ -659,12 +656,12 @@
 		62E87DE319AB311C00728AC6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				6272529919AC8573001265EB /* RLAWebViewOAuth.h */,
-				6272529A19AC8573001265EB /* RLAWebViewOAuth.m */,
-				627252A119AC8D5C001265EB /* RLAWebViewOAuthOSX.h */,
-				627252A219AC8D5C001265EB /* RLAWebViewOAuthOSX.m */,
-				627252A519AC8FD7001265EB /* RLAWebViewOAuthIOS.h */,
-				627252A619AC8FD7001265EB /* RLAWebViewOAuthIOS.m */,
+				6272529919AC8573001265EB /* RLAWebOAuthController.h */,
+				6272529A19AC8573001265EB /* RLAWebOAuthController.m */,
+				627252A119AC8D5C001265EB /* RLAWebOAuthControllerOSX.h */,
+				627252A219AC8D5C001265EB /* RLAWebOAuthControllerOSX.m */,
+				627252A519AC8FD7001265EB /* RLAWebOAuthControllerIOS.h */,
+				627252A619AC8FD7001265EB /* RLAWebOAuthControllerIOS.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -686,8 +683,8 @@
 				6272529819AC7B91001265EB /* RLAWebConstants.h in Headers */,
 				62D1719F19A65D3B009BBED1 /* RelayrTransmitter.h in Headers */,
 				623F325619A74C3600F774EB /* RLAWebRequest.h in Headers */,
-				6272529B19AC8573001265EB /* RLAWebViewOAuth.h in Headers */,
-				627252A719AC8FD7001265EB /* RLAWebViewOAuthIOS.h in Headers */,
+				6272529B19AC8573001265EB /* RLAWebOAuthController.h in Headers */,
+				627252A719AC8FD7001265EB /* RLAWebOAuthControllerIOS.h in Headers */,
 				626F613F19A4FFAF006EB510 /* RLAError.h in Headers */,
 				626F614019A4FFAF006EB510 /* RLALog.h in Headers */,
 				626F614319A506E8006EB510 /* RLAKeyChain.h in Headers */,
@@ -716,8 +713,8 @@
 				623F326A19A7873100F774EB /* RLAWebService.h in Headers */,
 				6272529719AC7B89001265EB /* RLAWebConstants.h in Headers */,
 				623F326B19A7873300F774EB /* RLAWebRequest.h in Headers */,
-				6272529C19AC8573001265EB /* RLAWebViewOAuth.h in Headers */,
-				627252A319AC8D5C001265EB /* RLAWebViewOAuthOSX.h in Headers */,
+				6272529C19AC8573001265EB /* RLAWebOAuthController.h in Headers */,
+				627252A319AC8D5C001265EB /* RLAWebOAuthControllerOSX.h in Headers */,
 				623F326F19A7874200F774EB /* RLANetworkInfo.h in Headers */,
 				623F326E19A7873D00F774EB /* RLAKeyChain.h in Headers */,
 				623F326C19A7873700F774EB /* RLAError.h in Headers */,
@@ -868,7 +865,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				628D4EC619AE1DB60094F0A1 /* test.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -924,8 +920,8 @@
 				623F325219A7325300F774EB /* RLABluetoothService.m in Sources */,
 				623F324E19A731B100F774EB /* RLAWebService.m in Sources */,
 				623F325719A74C3600F774EB /* RLAWebRequest.m in Sources */,
-				6272529D19AC8573001265EB /* RLAWebViewOAuth.m in Sources */,
-				627252A819AC8FD7001265EB /* RLAWebViewOAuthIOS.m in Sources */,
+				6272529D19AC8573001265EB /* RLAWebOAuthController.m in Sources */,
+				627252A819AC8FD7001265EB /* RLAWebOAuthControllerIOS.m in Sources */,
 				627467E119A4F482005F1437 /* RLAError.m in Sources */,
 				621F3E5119A4FBAF004E3156 /* RLALog.m in Sources */,
 				626F614219A506E4006EB510 /* RLAKeyChain.m in Sources */,
@@ -953,8 +949,8 @@
 				623F326119A786EE00F774EB /* RLABluetoothService.m in Sources */,
 				623F325F19A786D800F774EB /* RLAWebService.m in Sources */,
 				623F326019A786DB00F774EB /* RLAWebRequest.m in Sources */,
-				6272529E19AC8573001265EB /* RLAWebViewOAuth.m in Sources */,
-				627252A419AC8D5C001265EB /* RLAWebViewOAuthOSX.m in Sources */,
+				6272529E19AC8573001265EB /* RLAWebOAuthController.m in Sources */,
+				627252A419AC8D5C001265EB /* RLAWebOAuthControllerOSX.m in Sources */,
 				623F326519A7871000F774EB /* RLANetworkInfo.m in Sources */,
 				623F326419A7870D00F774EB /* RLAKeyChain.m in Sources */,
 				623F326219A786FC00F774EB /* RLAError.m in Sources */,

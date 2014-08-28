@@ -32,7 +32,8 @@ typedef NS_ENUM(NSInteger, RLAErrorCode) {
     kRLAErrorCodeMissingExpectedValue   = 3,
     kRLAErrorCodeWebrequestFailure      = 4,
     kRLAErrorCodeSigningFailure         = 5,
-    kRLAErrorCodeSystemNotSupported     = 6
+    kRLAErrorCodeSystemNotSupported     = 6,
+    kRLAErrorCodeUserStoppedProcess     = 7
 };
 
 #define RLAErrorUserInfoLocal   @{                                                                      \
@@ -42,19 +43,21 @@ typedef NS_ENUM(NSInteger, RLAErrorCode) {
 
 #pragma mark Error messages
 
-#define RLAErrorMessageMissingArgument      NSLocalizedStringFromTable(@"Error missing argument", kRLAErrorStringFile, @"This error happens when a method is expecting an argument which is not there.")
-#define RLAErrorMessageMissingExpectedValue NSLocalizedStringFromTable(@"The value is not the expected (probably nil)", kRLAErrorStringFile, @"This error happens when a value is received and it wasn't the expected.")
-#define RLAErrorMessageWebrequestFailure    NSLocalizedStringFromTable(@"The web request could not be satisfied", kRLAErrorStringFile, @"This error happens when a web request could not be routed or the answer was not the expected.")
-#define RLAErrorMessageSigningFailure       NSLocalizedStringFromTable(@"The OAuth user signing process failed.", kRLAErrorStringFile, @"This error happens when an OAuth signing process failed.")
-#define RLAErrorMessageSystemNotSupported   NSLocalizedStringFromTable(@"The system your are running on doesn't support the Relayr framework.", kRLAErrorStringFile, @"This error happens when your system is not supported")
+#define dRLAErrorMessageMissingArgument      NSLocalizedStringFromTable(@"Error missing argument", kRLAErrorStringFile, @"This error happens when a method is expecting an argument which is not there.")
+#define dRLAErrorMessageMissingExpectedValue NSLocalizedStringFromTable(@"The value is not the expected (probably nil)", kRLAErrorStringFile, @"This error happens when a value is received and it wasn't the expected.")
+#define dRLAErrorMessageWebrequestFailure    NSLocalizedStringFromTable(@"The web request could not be satisfied", kRLAErrorStringFile, @"This error happens when a web request could not be routed or the answer was not the expected.")
+#define dRLAErrorMessageSigningFailure       NSLocalizedStringFromTable(@"The OAuth user signing process failed.", kRLAErrorStringFile, @"This error happens when an OAuth signing process failed.")
+#define dRLAErrorMessageSystemNotSupported   NSLocalizedStringFromTable(@"The system your are running on doesn't support the Relayr framework.", kRLAErrorStringFile, @"This error happens when your system is not supported")
+#define dRLAErrorMessageUserStoppedProcess   NSLocalizedStringFromTable(@"The user has stopped the current process.", kRLAErrorStringFile, @"This error happens when an user has canceled somehow the current process.")
 
 #pragma mark Error objects
 
-#define RLAErrorMissingArgument         [RLAError errorWithCode:kRLAErrorCodeMissingArgument localizedDescription:RLAErrorMessageMissingArgument userInfo:RLAErrorUserInfoLocal]
-#define RLAErrorMissingExpectedValue    [RLAError errorWithCode:kRLAErrorCodeMissingExpectedValue localizedDescription:RLAErrorMessageMissingExpectedValue userInfo:RLAErrorUserInfoLocal]
-#define RLAErrorWebrequestFailure       [RLAError errorWithCode:kRLAErrorCodeWebrequestFailure localizedDescription:RLAErrorMessageWebrequestFailure userInfo:RLAErrorUserInfoLocal]
-#define RLAErrorSigningFailure          [RLAError errorWithCode:kRLAErrorCodeSigningFailure localizedDescription:RLAErrorMessageSigningFailure userInfo:RLAErrorUserInfoLocal]
-#define RLAErrorSystemNotSupported      [RLAError errorWithCode:kRLAErrorCodeSystemNotSupported localizedDescription:RLAErrorMessageSystemNotSupported userInfo:RLAErrorUserInfoLocal]
+#define RLAErrorMissingArgument         [RLAError errorWithCode:kRLAErrorCodeMissingArgument localizedDescription:dRLAErrorMessageMissingArgument userInfo:RLAErrorUserInfoLocal]
+#define RLAErrorMissingExpectedValue    [RLAError errorWithCode:kRLAErrorCodeMissingExpectedValue localizedDescription:dRLAErrorMessageMissingExpectedValue userInfo:RLAErrorUserInfoLocal]
+#define RLAErrorWebrequestFailure       [RLAError errorWithCode:kRLAErrorCodeWebrequestFailure localizedDescription:dRLAErrorMessageWebrequestFailure userInfo:RLAErrorUserInfoLocal]
+#define RLAErrorSigningFailure          [RLAError errorWithCode:kRLAErrorCodeSigningFailure localizedDescription:dRLAErrorMessageSigningFailure userInfo:RLAErrorUserInfoLocal]
+#define RLAErrorSystemNotSupported      [RLAError errorWithCode:kRLAErrorCodeSystemNotSupported localizedDescription:dRLAErrorMessageSystemNotSupported userInfo:RLAErrorUserInfoLocal]
+#define RLAErrorUserStoppedProcess      [RLAError errorWithCode:kRLAErrorCodeUserStoppedProcess localizedDescription:dRLAErrorMessageUserStoppedProcess userInfo:RLAErrorUserInfoLocal]
 
 /*!
  *  @class RLAError

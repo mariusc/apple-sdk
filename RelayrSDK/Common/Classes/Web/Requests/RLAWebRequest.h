@@ -84,7 +84,7 @@ FOUNDATION_EXPORT NSString* const kRLAWebRequestModePOST;
  *  @abstract Object that will be sent in the HTTP request body. It can be <code>nl</code>.
  *  @discussion This object can currently be a <code>NSString</code> or a <code>NSDictionary</code> (representing a JSON) and it must later be encoded into <code>NSData</code> before sending. This will be done automatically.
  */
-@property (readonly,nonatomic) id body;
+@property (strong,nonatomic) id body;
 
 /*!
  *  @method executeInHTTPMode:withExpectedStatusCode:completion:

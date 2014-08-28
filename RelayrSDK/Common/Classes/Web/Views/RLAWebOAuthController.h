@@ -1,26 +1,36 @@
 @import Foundation;
 
 /*!
- *  @def RLAWebViewOAuthTitle
+ *  @def RLAWebOAuthControllerTitle
  *
  *  @abstract This is the title that the WebView will display.
  */
-#define dRLAWebViewOAuthTitle   @"Relayr"
+#define dRLAWebOAuthControllerTitle     @"Relayr"
+#define dRLAWebOAuthControllerTimeout   10.0
 
 /*!
- *  @protocol RLAWebViewOAuth
+ *  @protocol RLAWebOAuthController
  *
  *  @abstract It represents a WebView Controller that it is presented modally to ask for user credentials.
  */
-@protocol RLAWebViewOAuth <NSObject>
+@protocol RLAWebOAuthController <NSObject>
 
 @required
 /*!
- *  @property url
+ *  @property urlRequest
  *
- *  @abstract It indicates where the webView will be directed to.
+ *  @abstract It indicates where the webView will be trying to connect to.
  */
-@property (readonly,nonatomic) NSURL* url;
+@property (readonly,nonatomic) NSURLRequest* urlRequest;
+
+@required
+/*!
+ *  @property redirectURI
+ *
+ *  @abstract The redirect URI from which Relayr cloud message are arriving.
+ *  @discussion It is a security meassure.
+ */
+@property (readonly,nonatomic) NSString* redirectURI;
 
 @required
 /*!
@@ -57,14 +67,14 @@
 @end
 
 /*!
- *  @class RLAWebViewOAuth
+ *  @class RLAWebOAuthController
  *
  *  @abstract This class only gives you the appropriate webView object for your system.
  *
- *  @see RLAWebViewOAuthIOS
- *  @see RLAWebViewOAuthOSX
+ *  @see RLAWebOAuthControllerIOS
+ *  @see RLAWebOAuthControllerOSX
  */
-@interface RLAWebViewOAuth : NSObject
+@interface RLAWebOAuthController : NSObject
 
 /*!
  *  @method webViewWithOAuthClientID:redirectURI:completion:
@@ -74,12 +84,25 @@
  *  @param clientID OAuth client ID.
  *  @param redirectURI URI that will be tested for when the answer comes back.
  *  @param completion Completion block given back the answer of the request.
- *	@return Fully initialised object that implements the <code>RLAWebViewOAuth</code> protocol, or <code>nil</code>.
+ *	@return Fully initialised object that implements the <code>RLAWebOAuthController</code> protocol, or <code>nil</code>.
  *
- *  @see RLAWebViewOAuth
+ *  @see RLAWebOAuthController
  */
-+ (id<RLAWebViewOAuth>)webViewWithOAuthClientID:(NSString*)clientID
-                                    redirectURI:(NSString*)redirectURI
-                                     completion:(void (^)(NSError* error, NSString* tmpCode))completion;
++ (id<RLAWebOAuthController>)webOAuthControllerWithClientID:(NSString*)clientID
+                                                redirectURI:(NSString*)redirectURI
+                                                 completion:(void (^)(NSError* error, NSString* tmpCode))completion;
+
+/*!
+ *  @method OAuthTemporalCodeFromRequest:withRedirectURI:
+ *
+ *  @abstract It retrieves the OAuth temporal code from an <code>NSURLRequest</code> coming from the Relayr server.
+ *  @discussion This method is usually called from within the <code>RLAWebOAuthController</code> specific from each system.
+ *
+ *  @param request <code>NSURLRequest</code> coming from the Relayr cloud.
+ *  @param redirectURI URI to test whether the <code>NSURLRequest</code> is coming from the appropriate place. It is a security measure.
+ *	@return If successful, this method returns the OAUth temporal code as a <code>NSString</code>. If not, it returns <code>nil</code>.
+ */
++ (NSString*)OAuthTemporalCodeFromRequest:(NSURLRequest*)request
+                          withRedirectURI:(NSString*)redirectURI;
 
 @end

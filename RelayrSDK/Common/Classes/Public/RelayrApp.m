@@ -29,7 +29,7 @@
 
 - (instancetype)initWithID:(NSString*)appID OAuthClientID:(NSString*)clientID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI
 {
-    if (!appID || !clientID || !clientSecret || !redirectURI) { [RLALog debug:RLAErrorMessageMissingArgument]; return nil; }
+    if (!appID || !clientID || !clientSecret || !redirectURI) { [RLALog debug:dRLAErrorMessageMissingArgument]; return nil; }
     
     self = [super init];
     if (self)
@@ -44,7 +44,7 @@
 
 - (void)isValid:(void (^)(NSError* error, BOOL isValid))completion
 {
-    if (!completion) { return [RLALog debug:RLAErrorMessageMissingArgument]; }
+    if (!completion) { return [RLALog debug:dRLAErrorMessageMissingArgument]; }
     
     [RelayrCloud isApplicationID:_uid valid:completion];
 }

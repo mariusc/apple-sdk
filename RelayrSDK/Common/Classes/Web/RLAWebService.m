@@ -3,7 +3,7 @@
 #import "RelayrUser_Setup.h"    // Relayr.framework (Private)
 #import "RLAWebRequest.h"       // Relayr.framework (Web)
 #import "RLAWebConstants.h"     // Relayr.framework (Web)
-#import "RLAWebViewOAuth.h"     // Relayr.framework (Web)
+#import "RLAWebOAuthController.h"     // Relayr.framework (Web)
 #import "RLAError.h"            // Relayr.framework (Utilities)
 
 @implementation RLAWebService
@@ -12,7 +12,7 @@
 
 + (void)requestOAuthCodeWithOAuthClientID:(NSString*)clientID redirectURI:(NSString*)redirectURI completion:(void (^)(NSError* error, NSString* tmpCode))completion
 {
-    [[RLAWebViewOAuth webViewWithOAuthClientID:clientID redirectURI:redirectURI completion:completion] presentModally];
+    [[RLAWebOAuthController webOAuthControllerWithClientID:clientID redirectURI:redirectURI completion:completion] presentModally];
 }
 
 + (void)requestOAuthTokenWithOAuthCode:(NSString*)code OAuthClientID:(NSString*)clientID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI completion:(void (^)(NSError* error, NSString* token))completion
@@ -23,13 +23,13 @@
     RLAWebRequest* tokenRequest = [[RLAWebRequest alloc] initWithHostURL:[NSURL URLWithString:dRLARequestHost]];
     tokenRequest.relativePath = dRLARequestOAuthToken_RelativePath;
     
+    NSData* header64Data = [[[NSString stringWithFormat:@"%@:%@", clientID, clientSecret] dataUsingEncoding:NSUTF8StringEncoding] base64EncodedDataWithOptions:kNilOptions];
+    NSString* header64String = [[NSString alloc] initWithData:header64Data encoding:NSUTF8StringEncoding];
     tokenRequest.httpHeaders = @{
-        dRLARequestOAuthToken_HeaderKey_ClientID : clientID,
-        dRLARequestOAuthToken_HeaderKey_ClientSecret : clientSecret,
-        dRLARequestOAuthToken_HeaderKey_GrantType : dRLARequestOAuthToken_HeaderVal_GrantType,
-        dRLARequestOAuthToken_HeaderKey_Code : code,
-        dRLARequestOAuthToken_HeaderKey_RedirectURI : redirectURI
+        @"Authorization" : [NSString stringWithFormat:@"Basic %@", header64String]
     };
+    
+    tokenRequest.body = [NSString stringWithFormat:@"code=%@", [code stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     [tokenRequest executeInHTTPMode:kRLAWebRequestModePOST withExpectedStatusCode:dRLARequestOAuthToken_RespondKey_Code completion:^(NSError *error, NSData *data) {
         if (error) { return completion(error, nil); }
