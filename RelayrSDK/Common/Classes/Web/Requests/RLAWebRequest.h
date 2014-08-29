@@ -1,7 +1,17 @@
 @import Foundation;
 
+// Retrieval methods ("safe" methods)
 FOUNDATION_EXPORT NSString* const kRLAWebRequestModeGET;
+FOUNDATION_EXPORT NSString* const kRLAWebRequestModeHEAD;
+
+// Modifying methods ("unsafe" methods)
+FOUNDATION_EXPORT NSString* const kRLAWebRequestModeCOPY;
+FOUNDATION_EXPORT NSString* const kRLAWebRequestModeDELETE;
+FOUNDATION_EXPORT NSString* const kRLAWebRequestModeOPTIONS;
+FOUNDATION_EXPORT NSString* const kRLAWebRequestModePATCH;
 FOUNDATION_EXPORT NSString* const kRLAWebRequestModePOST;
+FOUNDATION_EXPORT NSString* const kRLAWebRequestModePUT;
+/* For more info: http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html */
 
 /*!
  *  @class RLAWebRequest
@@ -81,8 +91,8 @@ FOUNDATION_EXPORT NSString* const kRLAWebRequestModePOST;
 /*!
  *  @property body
  *
- *  @abstract Object that will be sent in the HTTP request body. It can be <code>nl</code>.
- *  @discussion This object can currently be a <code>NSString</code> or a <code>NSDictionary</code> (representing a JSON) and it must later be encoded into <code>NSData</code> before sending. This will be done automatically.
+ *  @abstract Object that will be sent in the HTTP request body. It can be <code>nil</code>.
+ *  @discussion This object can currently be a <code>NSString</code>, a <code>NSDictionary</code> or a <code>NSArray</code> (representing a JSON). This will be done automatically.
  */
 @property (strong,nonatomic) id body;
 
@@ -90,8 +100,10 @@ FOUNDATION_EXPORT NSString* const kRLAWebRequestModePOST;
  *  @method executeInHTTPMode:withExpectedStatusCode:completion:
  *
  *  @abstract It enqueues for execution the HTTP request and monitor its result to check if the request was successful.
+ *  @discussion If this method returns <code>NO</code>, the <code>completion</code> block is not executed. That block is only executed once a response from the server is received (or a lack of it); but the point is that the request must have been enqueued.
  *
  *  @param mode HTTP request mode (@"GET", @"POST", etc.).
+ *  @param completion Block returning the respond of the request
  *	@return Boolean indicating whether the request was enqueued for execution or not.
  */
 - (BOOL)executeInHTTPMode:(NSString*)mode withExpectedStatusCode:(NSUInteger const)statusCode completion:(void (^)(NSError* error, NSData* data))completion;

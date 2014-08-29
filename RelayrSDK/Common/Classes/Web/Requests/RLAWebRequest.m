@@ -1,16 +1,16 @@
 #import "RLAWebRequest.h"       // Header
+#import "RLAWebConstants.h"     // Relayr.framework (Web)
 #import "RLALog.h"              // Relayr.framework (Utilities)
 #import "RLAError.h"            // Relayr.framework (Utilities)
 
-NSString* const kRLAWebRequestModeGET = @"GET";
-NSString* const kRLAWebRequestModePOST = @"POST";
-
-static NSTimeInterval const kDefaultTimeout = 10;
-static NSString* const kDefaultHTTPHeaderFieldAuthorization = @"Authorization";
-static NSString* const kDefaultHTTPHeaderValueTokenFormat   = @"Bearer %@";
-static NSString* const kDefaultHTTPHeaderFieldContentType   = @"Content-Type";
-static NSString* const kDefaultHTTPHeaderValueContentUTF8   = @"application/x-www-form-urlencoded";
-static NSString* const kDefaultHTTPHeaderValueContentJSON   = @"application/json";
+NSString* const kRLAWebRequestModeCOPY      = @"COPY";
+NSString* const kRLAWebRequestModeDELETE    = @"DELETE";
+NSString* const kRLAWebRequestModeGET       = @"GET";
+NSString* const kRLAWebRequestModeHEAD      = @"HEAD";
+NSString* const kRLAWebRequestModeOPTIONS   = @"OPTIONS";
+NSString* const kRLAWebRequestModePATCH     = @"PATCH";
+NSString* const kRLAWebRequestModePOST      = @"POST";
+NSString* const kRLAWebRequestModePUT       = @"PUT";
 
 @implementation RLAWebRequest
 
@@ -43,12 +43,12 @@ static NSString* const kDefaultHTTPHeaderValueContentJSON   = @"application/json
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
     request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
     request.HTTPMethod = mode;
-    request.timeoutInterval = (_timeout) ? _timeout.doubleValue : kDefaultTimeout;
+    request.timeoutInterval = (_timeout) ? _timeout.doubleValue : dRLAWebRequest_Timeout;
     if (!request) { return NO; }
     
     if (_oauthToken)
     {
-        [request setValue:kDefaultHTTPHeaderFieldAuthorization forHTTPHeaderField:kDefaultHTTPHeaderValueTokenFormat];
+        [request setValue:dRLAWebRequest_HeaderValue_Authorization(_oauthToken) forHTTPHeaderField:dRLAWebRequest_HeaderField_Authorization];
     }
     
     if (_httpHeaders.count)
@@ -60,43 +60,39 @@ static NSString* const kDefaultHTTPHeaderValueContentJSON   = @"application/json
     
     if (_body)
     {
-        NSData* bodyData;
-        NSError* error;
+        NSString* headerValue;
+        NSData* bodyValue;
         
         if ( [_body isKindOfClass:[NSString class]] && ((NSString*)_body).length )
         {
-            bodyData = [((NSString*)_body) dataUsingEncoding:NSUTF8StringEncoding];
-            [request setValue:kDefaultHTTPHeaderValueContentUTF8 forHTTPHeaderField:kDefaultHTTPHeaderFieldContentType];
+            headerValue = dRLAWebRequest_HeaderValue_ContentType_UTF8;
+            bodyValue = [((NSString*)_body) dataUsingEncoding:NSUTF8StringEncoding];
         }
-        else if ( [_body isKindOfClass:[NSDictionary class]] && ((NSDictionary*)_body).count )
+        else if ( ([_body isKindOfClass:[NSDictionary class]] && ((NSDictionary*)_body).count) ||
+                  ([_body isKindOfClass:[NSArray class]] && ((NSArray*)_body).count) )
         {
-            bodyData = [NSJSONSerialization dataWithJSONObject:_body options:kNilOptions error:&error];
-            [request setValue:kDefaultHTTPHeaderValueContentJSON forHTTPHeaderField:kDefaultHTTPHeaderFieldContentType];
+            headerValue = dRLAWebRequest_HeaderValue_ContentType_JSON;
+            
+            NSError* error;
+            bodyValue = [NSJSONSerialization dataWithJSONObject:_body options:kNilOptions error:&error];
+            if (error) { return NO; }
         }
         
-        if (!bodyData)
-        {
-            [request setValue:kDefaultHTTPHeaderFieldContentType forHTTPHeaderField:nil];
-            [RLALog debug:((error) ? error.localizedDescription : dRLAErrorMessageMissingExpectedValue)];
-            return NO;
-        }
-        
-        request.HTTPBody = bodyData;
+        if (!bodyValue) { return NO; }
+        [request setValue:headerValue forHTTPHeaderField:dRLAWebRequest_HeaderField_ContentType];
+        request.HTTPBody = bodyValue;
     }
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse* response, NSData* data, NSError* connectionError) {
-        if (!completion) { return; }
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:(!completion) ? nil : ^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         if (connectionError) { return completion(connectionError, nil); }
         
         if ( ((NSHTTPURLResponse*)response).statusCode != statusCode )
         {
             NSString* serverString = (data) ? [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] : nil;
             NSError* error = [RLAError errorWithCode:kRLAErrorCodeWebrequestFailure localizedDescription:((serverString) ? serverString : dRLAErrorMessageWebrequestFailure) userInfo:RLAErrorUserInfoLocal];
-            
             return completion(error, nil);
         }
-        
-        if (completion) { completion(nil, data); }
+        else { completion(nil, data); }
     }];
     
     return YES;
@@ -106,18 +102,14 @@ static NSString* const kDefaultHTTPHeaderValueContentJSON   = @"application/json
 
 + (NSURL*)buildAbsoluteURLWithHost:(NSURL*)hostURL relativeURL:(NSString*)relativePath
 {
-    NSURL* result;
-    
     if (hostURL)
     {
-        result = (!relativePath.length) ? hostURL : [hostURL URLByAppendingPathComponent:relativePath];
+        return (!relativePath.length) ? hostURL : [hostURL URLByAppendingPathComponent:relativePath];
     }
     else
     {
-        result = (!relativePath.length) ? nil : [NSURL URLWithString:relativePath];
+        return (!relativePath.length) ? nil : [NSURL URLWithString:relativePath];
     }
-    
-    return result;
 }
 
 @end

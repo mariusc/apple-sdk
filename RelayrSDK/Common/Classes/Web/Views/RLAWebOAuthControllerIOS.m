@@ -1,7 +1,6 @@
 #import "RLAWebOAuthControllerIOS.h"    // Header
+#import "RLAWebConstants.h"             // Relayr.framework (Web)
 #import "RLAError.h"                    // Relayr.framework (Utilities)
-
-#define dRLAWebOAuthControllerIOS_Spinner_AnimationDuration 0.3
 
 @interface RLAWebOAuthControllerIOS () <UIWebViewDelegate>
 @property (strong,nonatomic) UIActivityIndicatorView* spinner;
@@ -32,7 +31,7 @@
         _urlRequest = urlRequest;
         _redirectURI = redirectURI;
         _completion = completion;
-        self.title = dRLAWebOAuthControllerTitle;
+        self.title = dRLAWebOAuthController_Title;
     }
     return self;
 }
@@ -157,7 +156,7 @@
         
         _spinner.alpha = 0.1f;
         UIActivityIndicatorView* spinner = _spinner;
-        [UIView animateWithDuration:dRLAWebOAuthControllerIOS_Spinner_AnimationDuration animations:^{ spinner.alpha = 1.0f; }];
+        [UIView animateWithDuration:dRLAWebOAuthControllerIOS_Spinner_Animation animations:^{ spinner.alpha = 1.0f; }];
     }
     
     [_spinner startAnimating];
@@ -170,7 +169,7 @@
     if (_spinner.superview)
     {
         UIActivityIndicatorView* spinner = _spinner;
-        [UIView animateWithDuration:dRLAWebOAuthControllerIOS_Spinner_AnimationDuration animations:^{
+        [UIView animateWithDuration:dRLAWebOAuthControllerIOS_Spinner_Animation animations:^{
             spinner.alpha = 0.1f;
         } completion:^(BOOL finished) {
             [spinner stopAnimating];

@@ -46,6 +46,16 @@
                             completion:(void (^)(NSError* error, NSString* token))completion;
 
 /*!
+ *  @method isUserWithEmail:registeredInRelayrCloud:
+ *
+ *  @abstract It checks whether a email is registered into the Relayr cloud.
+ *
+ *  @param email <code>NSString</code> representing the user's email.
+ *  @param completion Block answering the query.
+ */
++ (void)isUserWithEmail:(NSString*)email registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))completion;
+
+/*!
  *  @method initWithUser:
  *
  *  @abstract It is initialised with a <code>RelayrUser</code> token.

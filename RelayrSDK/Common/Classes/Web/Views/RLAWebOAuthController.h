@@ -1,14 +1,6 @@
 @import Foundation;
 
 /*!
- *  @def RLAWebOAuthControllerTitle
- *
- *  @abstract This is the title that the WebView will display.
- */
-#define dRLAWebOAuthControllerTitle     @"Relayr"
-#define dRLAWebOAuthControllerTimeout   10.0
-
-/*!
  *  @protocol RLAWebOAuthController
  *
  *  @abstract It represents a WebView Controller that it is presented modally to ask for user credentials.

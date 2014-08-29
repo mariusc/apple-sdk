@@ -1,10 +1,10 @@
-#import "RLAWebService.h"       // Header
-#import "RelayrUser.h"          // Relayr.framework (Public)
-#import "RelayrUser_Setup.h"    // Relayr.framework (Private)
-#import "RLAWebRequest.h"       // Relayr.framework (Web)
-#import "RLAWebConstants.h"     // Relayr.framework (Web)
-#import "RLAWebOAuthController.h"     // Relayr.framework (Web)
-#import "RLAError.h"            // Relayr.framework (Utilities)
+#import "RLAWebService.h"           // Header
+#import "RelayrUser.h"              // Relayr.framework (Public)
+#import "RelayrUser_Setup.h"        // Relayr.framework (Private)
+#import "RLAWebRequest.h"           // Relayr.framework (Web)
+#import "RLAWebConstants.h"         // Relayr.framework (Web)
+#import "RLAWebOAuthController.h"   // Relayr.framework (Web)
+#import "RLAError.h"                // Relayr.framework (Utilities)
 
 @implementation RLAWebService
 
@@ -20,27 +20,34 @@
     if (!completion) { return; }
     if (!clientID || !clientSecret || !redirectURI) { return completion(RLAErrorMissingArgument, nil); }
     
-    RLAWebRequest* tokenRequest = [[RLAWebRequest alloc] initWithHostURL:[NSURL URLWithString:dRLARequestHost]];
-    tokenRequest.relativePath = dRLARequestOAuthToken_RelativePath;
+    RLAWebRequest* tokenRequest = [[RLAWebRequest alloc] initWithHostURL:[NSURL URLWithString:dRLAWebService_Host]];
+    tokenRequest.relativePath = dRLAWebService_OAuthToken_RelativePath;
+    tokenRequest.body = dRLAWebService_OAuthToken_Body(code, redirectURI, clientID, clientSecret);
     
-    NSData* header64Data = [[[NSString stringWithFormat:@"%@:%@", clientID, clientSecret] dataUsingEncoding:NSUTF8StringEncoding] base64EncodedDataWithOptions:kNilOptions];
-    NSString* header64String = [[NSString alloc] initWithData:header64Data encoding:NSUTF8StringEncoding];
-    tokenRequest.httpHeaders = @{
-        @"Authorization" : [NSString stringWithFormat:@"Basic %@", header64String]
-    };
-    
-    tokenRequest.body = [NSString stringWithFormat:@"code=%@", [code stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    
-    [tokenRequest executeInHTTPMode:kRLAWebRequestModePOST withExpectedStatusCode:dRLARequestOAuthToken_RespondKey_Code completion:^(NSError *error, NSData *data) {
+    [tokenRequest executeInHTTPMode:kRLAWebRequestModePOST withExpectedStatusCode:dRLAWebService_OAuthToken_Respond_StatusCode completion:^(NSError *error, NSData *data) {
         if (error) { return completion(error, nil); }
         
         NSDictionary* jsonDict = (data) ? [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] : nil;
         if (error) { return completion(error, nil); }
         
-        NSString* token = jsonDict[dRLARequestOAuthToken_RespondKey_Token];
+        NSString* token = jsonDict[dRLAWebService_OAuthToken_RespondKey_Token];
         if (!token) { return completion(RLAErrorSigningFailure, nil); }
         
         completion(nil, token);
+    }];
+}
+
++ (void)isUserWithEmail:(NSString*)email registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))completion
+{
+    if (!completion) { return; }
+    if (!email) { return completion(RLAErrorMissingArgument, nil); }
+    
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:[NSURL URLWithString:dRLAWebService_Host]];
+    request.relativePath = dRLAWebService_UserQuery_RelativePath(email);
+    [request executeInHTTPMode:kRLAWebRequestModeGET withExpectedStatusCode:dRLAWebService_UserQuery_Respond_StatusCode completion:^(NSError *error, NSData *data) {
+        if (error) { return completion(error, nil); }
+        
+        // TODO: Talk to Dmitry about the body implementation
     }];
 }
 
@@ -58,29 +65,29 @@
     if (self)
     {
         _user = user;
-        _hostURL = [NSURL URLWithString:dRLARequestHost];
+        _hostURL = [NSURL URLWithString:dRLAWebService_Host];
     }
     return self;
 }
 
 - (void)setHostURL:(NSURL*)hostURL
 {
-    _hostURL = (hostURL) ? hostURL : [NSURL URLWithString:dRLARequestHost];
+    _hostURL = (hostURL) ? hostURL : [NSURL URLWithString:dRLAWebService_Host];
 }
 
 - (void)requestUserInfo:(void (^)(NSError* error, NSString* name, NSString* email))completion
 {
-    RLAWebRequest* infoRequest = [[RLAWebRequest alloc] initWithHostURL:_hostURL timeout:nil oauthToken:_user.token];
-    infoRequest.relativePath = dRLARequestUserInfo_RelativePath;
+    RLAWebRequest* userInfoRequest = [[RLAWebRequest alloc] initWithHostURL:_hostURL timeout:nil oauthToken:_user.token];
+    userInfoRequest.relativePath = dRLAWebService_UserInfo_RelativePath;
     
-    [infoRequest executeInHTTPMode:kRLAWebRequestModeGET withExpectedStatusCode:dRLARequestUserInfo_RespondKey_Code completion:^(NSError* error, NSData* data) {
+    [userInfoRequest executeInHTTPMode:kRLAWebRequestModeGET withExpectedStatusCode:dRLAWebService_UserInfo_Respond_StatusCode completion:^(NSError* error, NSData* data) {
         if (error) { if (completion) { completion(error, nil, nil); } return; }
         
         NSDictionary* jsonDict = (data) ? [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] : nil;
         if (error) { if (completion) { completion(error, nil, nil); } return; }
         
-        NSString* futureName = jsonDict[dRLARequestUserInfo_RespondKey_Name];
-        NSString* futureEmail = jsonDict[dRLARequestUserInfo_RespondKey_Email];
+        NSString* futureName = jsonDict[dRLAWebService_UserInfo_RespondKey_Name];
+        NSString* futureEmail = jsonDict[dRLAWebService_UserInfo_RespondKey_Email];
         if (!futureName || !futureEmail) { if (completion) { completion(RLAErrorMissingExpectedValue, nil, nil); }  return; }
         
         if (completion) { completion(nil, futureName, futureEmail); }

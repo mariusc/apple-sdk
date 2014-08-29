@@ -29,33 +29,49 @@
                        redirectURI:(NSString*)redirectURI
                         completion:(void (^)(NSError* error, NSString* tmpCode))completion;
 
+#pragma mark WebPolicyDelegate
+
+/*!
+ *  @method webView:decidePolicyForNavigationAction:request:frame:decisionListener:
+ *
+ *  @abstract It routes a navigation action internally or to an external viewer.
+ *  @discussion This method will be called before loading starts, and on every redirect.
+ *
+ *  @param actionInformation Dictionary that describes the action that triggered this navigation.
+ *  @param request The request for the proposed navigation
+ *  @param frame The WebFrame in which the navigation is happening
+ *  @param listener The object to call when the decision is made
+ *
+ *  @see WebPolicyDelegate
+ */
+- (void)webView:(WebView*)webView decidePolicyForNavigationAction:(NSDictionary*)actionInformation request:(NSURLRequest*)request frame:(WebFrame*)frame decisionListener:(id<WebPolicyDecisionListener>)listener;
+
 #pragma mark WebFrameLoadDelegate
 
 /*!
  *  @method webView:didFinishLoadForFrame:
  *
- *  @abstract <#Brief intro#>
- *  @discussion <#Description with maybe some <code>Code</code> and links to other methods {@link method:name:}#>
+ *  @abstract Notifies the delegate that the committed load of a frame has completed
+ *  @discussion This method is called after the committed data source of a frame has successfully loaded and will only be called when all subresources such as images and stylesheets are done loading. Plug-In content and JavaScript-requested loads may occur after this method is called.
  *
- *  @param <#name#> <#Description#>
- *	@return <#What it is returned#>
+ *  @param webView The WebView sending the message
+ *  @param frame The frame that finished loading
  *
- *  @see <#Method:to:see:#>
- *  @seealso <#ConstantVariable#>
+ *  @see WebFrameLoadDelegate
  */
 - (void)webView:(WebView*)sender didFinishLoadForFrame:(WebFrame*)frame;
 
 /*!
  *  @method webView:didFailLoadWithError:
  *
- *  @abstract <#Brief intro#>
- *  @discussion <#Description with maybe some <code>Code</code> and links to other methods {@link method:name:}#>
+ *  @abstract Notifies the delegate that the committed load of a frame has failed
+ *  @discussion This method is called after a data source has committed but failed to completely load.
  *
- *  @param <#name#> <#Description#>
- *	@return <#What it is returned#>
+ *  @param webView The WebView sending the message
+ *  @param error The error that occurred
+ *  @param frame The frame that failed to load
  *
- *  @see <#Method:to:see:#>
- *  @seealso <#ConstantVariable#>
+ *  @see WebFrameLoadDelegate
  */
 - (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error forFrame:(WebFrame*)frame;
 

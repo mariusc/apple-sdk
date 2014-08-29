@@ -24,14 +24,9 @@
     if (!completion) { return nil; }
     if (!clientID || !redirectURI) { completion(RLAErrorMissingArgument, nil); return nil; }
     
-    NSURL* hostURL = [NSURL URLWithString:dRLARequestHost];
-    NSMutableString* relativePath = [[NSMutableString alloc] initWithString:dRLARequestOAuthCode1];
-    [relativePath appendString:clientID];
-    [relativePath appendString:dRLARequestOAuthCode2];
-    [relativePath appendString:redirectURI];
-    [relativePath appendString:dRLARequestOAuthCode3];
-    NSURL* absoluteURL = [NSURL URLWithString:relativePath relativeToURL:hostURL];
-    NSURLRequest* request = [NSURLRequest requestWithURL:absoluteURL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:dRLAWebOAuthControllerTimeout];
+    NSURL* hostURL = [NSURL URLWithString:dRLAWebService_Host];
+    NSURL* absoluteURL = [NSURL URLWithString:dRLAWebOAuthController_CodeRequestURL(clientID, redirectURI) relativeToURL:hostURL];
+    NSURLRequest* request = [NSURLRequest requestWithURL:absoluteURL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:dRLAWebOAuthController_Timeout];
     
     #if defined(OS_APPLE_IOS) || defined (OS_APPLE_IOS_SIMULATOR)
     return [[RLAWebOAuthControllerIOS alloc] initWithURLRequest:request redirectURI:redirectURI completion:completion];

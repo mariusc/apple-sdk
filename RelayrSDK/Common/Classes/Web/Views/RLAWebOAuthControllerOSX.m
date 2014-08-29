@@ -1,16 +1,14 @@
 #import "RLAWebOAuthControllerOSX.h"    // Header
+#import "RLAWebConstants.h"             // Relayr.framework (Web)
 #import "RLAError.h"                    // Relayr.framework (Utilities)
 
-#define dRLAWebViewWindowStyle                  NSTitledWindowMask | NSClosableWindowMask | NSResizableWindowMask
-#define dRLAWebViewOAuthOSX_DefaultWindowSize   NSMakeRect(0.0f, 0.0f, 1050.0f, 710.0f)
-#define dRLAWebViewOAuthOSX_MinimumWindowSize   NSMakeSize(350.0f, 450.0f)
-
 @interface RLAWebOAuthControllerOSX () <NSWindowDelegate>
+@property (strong,nonatomic) RLAWebOAuthControllerOSX* retainedSelf;
 @end
 
 @implementation RLAWebOAuthControllerOSX
 {
-    __strong RLAWebOAuthControllerOSX* _retainedSelf;
+    NSProgressIndicator* _spinner;
 }
 
 @synthesize urlRequest=_urlRequest;
@@ -42,10 +40,10 @@
     if (!completion) { return nil; }
     if (!urlRequest || !redirectURI) { completion(RLAErrorMissingArgument, nil); return nil; }
     
-    // [super initWithFrame:dRLAWebViewOAuthOSX_DefaultWindowSize frameName:nil groupName:nil];
-    NSWindow* window = [[NSWindow alloc] initWithContentRect:dRLAWebViewOAuthOSX_DefaultWindowSize styleMask:dRLAWebViewWindowStyle backing:NSBackingStoreBuffered defer:YES];
-    [window setMinSize:dRLAWebViewOAuthOSX_MinimumWindowSize];
-    [window setTitle:dRLAWebOAuthControllerTitle];
+    // [super initWithFrame:dRLAWebOAuthControllerOSX_WindowSize frameName:nil groupName:nil];
+    NSWindow* window = [[NSWindow alloc] initWithContentRect:dRLAWebOAuthControllerOSX_WindowSize styleMask:dRLAWebOAuthControllerOSX_WindowStyle backing:NSBackingStoreBuffered defer:YES];
+    [window setMinSize:dRLAWebOAuthControllerOSX_WindowSizeMin];
+    [window setTitle:dRLAWebOAuthController_Title];
     
     self = [super initWithWindow:window];
     if (self)
@@ -55,10 +53,14 @@
         _completion = completion;
         
         window.delegate = self;
-        WebView* webView = [[WebView alloc] initWithFrame:dRLAWebViewOAuthOSX_DefaultWindowSize frameName:nil groupName:nil];
+        WebView* webView = [[WebView alloc] initWithFrame:dRLAWebOAuthControllerOSX_WindowSize frameName:nil groupName:nil];
         [webView setPolicyDelegate:self];
         [webView setFrameLoadDelegate:self];
         [window setContentView:webView];
+        
+        _spinner = [[NSProgressIndicator alloc] initWithFrame:NSMakeRect(20, 20, 30, 30)];
+        [_spinner setTranslatesAutoresizingMaskIntoConstraints:NO];
+        _spinner.style = NSProgressIndicatorSpinningStyle;
     }
     return self;
 }
@@ -68,7 +70,9 @@
     _retainedSelf = self;
     
     NSWindow* window = self.window;
-    [((WebView*)window.contentView).mainFrame loadRequest:[NSURLRequest requestWithURL:_url]];
+    [((WebView*)window.contentView).mainFrame loadRequest:_urlRequest];
+    [self showSpinner];
+    
     [self showWindow:window];
     [window center];
     
@@ -87,20 +91,64 @@
     _retainedSelf = nil;
 }
 
-#pragma mark WebPolicyDelegate
-
-
-
 #pragma mark WebFrameLoadDelegate
 
 - (void)webView:(WebView*)sender didFinishLoadForFrame:(WebFrame*)frame
 {
-    
+    [self hideSpinner];
 }
 
 - (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error forFrame:(WebFrame*)frame
 {
+    [self hideSpinner];
+}
+
+#pragma mark WebPolicyDelegate
+
+- (void)webView:(WebView*)webView decidePolicyForNavigationAction:(NSDictionary*)actionInformation request:(NSURLRequest*)request frame:(WebFrame*)frame decisionListener:(id<WebPolicyDecisionListener>)listener
+{
+    NSString* tmpCode = [RLAWebOAuthController OAuthTemporalCodeFromRequest:request withRedirectURI:_redirectURI];
+    if (!tmpCode) { return [listener use]; }
     
+    if (_completion)
+    {
+        void (^completion)(NSError*, NSString*) = _completion;
+        _completion = nil;
+        
+        [self close];
+        completion(nil, tmpCode);
+        //_retainedSelf = nil;
+    }
+}
+
+#pragma mark - Private methods
+
+- (void)showSpinner
+{
+    if (!_spinner.superview)
+    {
+        NSView* view = self.window.contentView;
+        [view addSubview:_spinner];
+        
+        if (_spinner.constraints.count == 0)
+        {
+            [view addConstraints:@[
+                [NSLayoutConstraint constraintWithItem:_spinner attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f],
+                [NSLayoutConstraint constraintWithItem:_spinner attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]
+            ]];
+        }
+        
+        [_spinner startAnimation:nil];
+    }
+}
+
+- (void)hideSpinner
+{
+    if (_spinner.superview)
+    {
+        [_spinner stopAnimation:nil];
+        [_spinner removeFromSuperview];
+    }
 }
 
 @end

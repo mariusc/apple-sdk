@@ -31,4 +31,16 @@
 + (void)isApplicationID:(NSString*)appID
                   valid:(void (^)(NSError* error, BOOL exists))completion;
 
+/*!
+ *  @method isUserWithEmail:registered:
+ *
+ *  @abstract It checks whether a email is registered into the Relayr cloud.
+ *
+ *  @param email <code>NSString</code> representing the user's email.
+ *  @param completion Block answering the query.
+ *
+ *  @seea RelayrUser
+ */
++ (void)isUserWithEmail:(NSString*)email registered:(void (^)(NSError* error, NSNumber* isUserRegistered))completion;
+
 @end
