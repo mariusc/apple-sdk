@@ -97,7 +97,7 @@ FOUNDATION_EXPORT NSString* const kRLAWebRequestModePUT;
 @property (strong,nonatomic) id body;
 
 /*!
- *  @method executeInHTTPMode:withExpectedStatusCode:completion:
+ *  @method executeInHTTPMode:completion:
  *
  *  @abstract It enqueues for execution the HTTP request and monitor its result to check if the request was successful.
  *  @discussion If this method returns <code>NO</code>, the <code>completion</code> block is not executed. That block is only executed once a response from the server is received (or a lack of it); but the point is that the request must have been enqueued.
@@ -106,6 +106,6 @@ FOUNDATION_EXPORT NSString* const kRLAWebRequestModePUT;
  *  @param completion Block returning the respond of the request
  *	@return Boolean indicating whether the request was enqueued for execution or not.
  */
-- (BOOL)executeInHTTPMode:(NSString*)mode withExpectedStatusCode:(NSUInteger const)statusCode completion:(void (^)(NSError* error, NSData* data))completion;
+- (BOOL)executeInHTTPMode:(NSString*)mode completion:(void (^)(NSError* error, NSNumber* responseCode, NSData* data))completion;
 
 @end

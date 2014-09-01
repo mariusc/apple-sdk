@@ -2,7 +2,8 @@
 #import "RLAError.h"        // Relayr.framework
 #import "RLALog.h"          // Relayr.framework
 
-NSString* const kRLAKeyChainUsers = @"Relayr.userTokens";
+NSString* const kRLAKeyChainService = @"io.relayr.framework";
+NSString* const kRLAKeyChainKeyUser = @"Users";
 
 @implementation RLAKeyChain
 
@@ -10,18 +11,14 @@ NSString* const kRLAKeyChainUsers = @"Relayr.userTokens";
 
 + (NSObject <NSCoding>*)objectForKey:(NSString*)key
 {
-    if (!key)
-    {
-        [RLALog debug:dRLAErrorMessageMissingArgument];
-        return nil;
-    }
+    if (!key) { [RLALog debug:dRLAErrorMessageMissingArgument]; return nil; }
     
     // Build keychain query dictionary (the key identifying the data stored is added to the query)
     NSMutableDictionary* queryDict = [NSMutableDictionary dictionaryWithDictionary:[RLAKeyChain keychainQueryWithKey:key]];
     
     // Append fetch parameters
-    queryDict[(__bridge id)kSecReturnData] = (__bridge id)kCFBooleanTrue;
     queryDict[(__bridge id)kSecMatchLimit] = (__bridge id)kSecMatchLimitOne;
+    queryDict[(__bridge id)kSecReturnData] = (__bridge id)kCFBooleanTrue;
     
     // Fetch data from keychain
     CFDataRef keyData = NULL;
@@ -52,7 +49,9 @@ NSString* const kRLAKeyChainUsers = @"Relayr.userTokens";
     
     NSMutableDictionary* mutableQuery = queryDict.mutableCopy;
     mutableQuery[(__bridge id)kSecValueData] = data;
-    SecItemAdd((__bridge CFDictionaryRef)mutableQuery.copy, NULL);
+    OSStatus const addStatus = SecItemAdd((__bridge CFDictionaryRef)[NSDictionary dictionaryWithDictionary:mutableQuery], NULL);
+    
+    if (addStatus != errSecSuccess) { [RLALog debug:dRLAErrorMessageMissingExpectedValue]; }
 }
 
 + (void)removeObjectForKey:(NSString *)key
@@ -69,8 +68,10 @@ NSString* const kRLAKeyChainUsers = @"Relayr.userTokens";
 + (NSDictionary*)keychainQueryWithKey:(NSString*)key
 {
     return @{
-        (__bridge id)kSecClass : (__bridge id)kSecClassGenericPassword,
-        (__bridge id)kSecAttrGeneric : key
+        (__bridge id)kSecClass : (__bridge id)kSecClassGenericPassword, // The class of the KeyChain Item we will be storing/removing
+        (__bridge id)kSecAttrService : kRLAKeyChainService,
+        (__bridge id)kSecAttrAccount : kRLAKeyChainKeyUser,
+        (__bridge id)kSecAttrGeneric : kRLAKeyChainKeyUser
     };
 }
 

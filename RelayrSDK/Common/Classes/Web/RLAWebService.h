@@ -91,7 +91,7 @@
  *
  *  @see RelayrUser
  */
-- (void)requestUserInfo:(void (^)(NSError* error, NSString* name, NSString* email))completion;
+- (void)requestUserInfo:(void (^)(NSError* error, NSString* uid, NSString* name, NSString* email))completion;
 
 /*!
  *  @method requestUserPublishers:

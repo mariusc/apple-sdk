@@ -33,7 +33,7 @@ NSString* const kRLAWebRequestModePUT       = @"PUT";
     return self;
 }
 
-- (BOOL)executeInHTTPMode:(NSString*)mode withExpectedStatusCode:(NSUInteger const)statusCode completion:(void (^)(NSError* error, NSData* data))completion
+- (BOOL)executeInHTTPMode:(NSString *)mode completion:(void (^)(NSError* error, NSNumber* responseCode, NSData* data))completion
 {
     if (!mode) { return NO; }
     
@@ -83,16 +83,18 @@ NSString* const kRLAWebRequestModePUT       = @"PUT";
         request.HTTPBody = bodyValue;
     }
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:(!completion) ? nil : ^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        if (connectionError) { return completion(connectionError, nil); }
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse* response, NSData* data, NSError* connectionError) {
+        if (!completion) { return; }
+        if (connectionError) { completion(connectionError, nil, nil); return; }
         
-        if ( ((NSHTTPURLResponse*)response).statusCode != statusCode )
+        NSNumber* statusCode;
+        if ([response isKindOfClass:[NSHTTPURLResponse class]])
         {
-            NSString* serverString = (data) ? [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] : nil;
-            NSError* error = [RLAError errorWithCode:kRLAErrorCodeWebrequestFailure localizedDescription:((serverString) ? serverString : dRLAErrorMessageWebrequestFailure) userInfo:RLAErrorUserInfoLocal];
-            return completion(error, nil);
+            NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
+            if (httpResponse.statusCode != NSNotFound) { statusCode = [NSNumber numberWithInteger:httpResponse.statusCode]; }
         }
-        else { completion(nil, data); }
+        
+        completion(nil, statusCode, data);
     }];
     
     return YES;

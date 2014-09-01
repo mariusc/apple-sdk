@@ -33,7 +33,8 @@ typedef NS_ENUM(NSInteger, RLAErrorCode) {
     kRLAErrorCodeWebrequestFailure      = 4,
     kRLAErrorCodeSigningFailure         = 5,
     kRLAErrorCodeSystemNotSupported     = 6,
-    kRLAErrorCodeUserStoppedProcess     = 7
+    kRLAErrorCodeUserStoppedProcess     = 7,
+    kRLAErrorCodeWrongRelayrUser        = 8
 };
 
 #define RLAErrorUserInfoLocal   @{                                                                      \
@@ -49,6 +50,7 @@ typedef NS_ENUM(NSInteger, RLAErrorCode) {
 #define dRLAErrorMessageSigningFailure       NSLocalizedStringFromTable(@"The OAuth user signing process failed.", kRLAErrorStringFile, @"This error happens when an OAuth signing process failed.")
 #define dRLAErrorMessageSystemNotSupported   NSLocalizedStringFromTable(@"The system your are running on doesn't support the Relayr framework.", kRLAErrorStringFile, @"This error happens when your system is not supported")
 #define dRLAErrorMessageUserStoppedProcess   NSLocalizedStringFromTable(@"The user has stopped the current process.", kRLAErrorStringFile, @"This error happens when an user has canceled somehow the current process.")
+#define dRLAErrorMessageWrongRelayrUser      NSLocalizedStringFromTable(@"The user passed or selected is not a valid Relayr user.", kRLAErrorStringFile, @"This error occurs when trying to perform operations on an invalid Relayr user.")
 
 #pragma mark Error objects
 
@@ -58,6 +60,7 @@ typedef NS_ENUM(NSInteger, RLAErrorCode) {
 #define RLAErrorSigningFailure          [RLAError errorWithCode:kRLAErrorCodeSigningFailure localizedDescription:dRLAErrorMessageSigningFailure userInfo:RLAErrorUserInfoLocal]
 #define RLAErrorSystemNotSupported      [RLAError errorWithCode:kRLAErrorCodeSystemNotSupported localizedDescription:dRLAErrorMessageSystemNotSupported userInfo:RLAErrorUserInfoLocal]
 #define RLAErrorUserStoppedProcess      [RLAError errorWithCode:kRLAErrorCodeUserStoppedProcess localizedDescription:dRLAErrorMessageUserStoppedProcess userInfo:RLAErrorUserInfoLocal]
+#define RLAErrorWrongRelayrUser         [RLAError errorWithCode:kRLAErrorCodeWrongRelayrUser localizedDescription:dRLAErrorMessageWrongRelayrUser userInfo:RLAErrorUserInfoLocal]
 
 /*!
  *  @class RLAError

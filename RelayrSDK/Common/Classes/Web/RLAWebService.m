@@ -24,7 +24,7 @@
     tokenRequest.relativePath = dRLAWebService_OAuthToken_RelativePath;
     tokenRequest.body = dRLAWebService_OAuthToken_Body(code, redirectURI, clientID, clientSecret);
     
-    [tokenRequest executeInHTTPMode:kRLAWebRequestModePOST withExpectedStatusCode:dRLAWebService_OAuthToken_Respond_StatusCode completion:^(NSError *error, NSData *data) {
+    [tokenRequest executeInHTTPMode:kRLAWebRequestModePOST completion:^(NSError *error, NSNumber *responseCode, NSData *data) {
         if (error) { return completion(error, nil); }
         
         NSDictionary* jsonDict = (data) ? [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] : nil;
@@ -44,7 +44,7 @@
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:[NSURL URLWithString:dRLAWebService_Host]];
     request.relativePath = dRLAWebService_UserQuery_RelativePath(email);
-    [request executeInHTTPMode:kRLAWebRequestModeGET withExpectedStatusCode:dRLAWebService_UserQuery_Respond_StatusCode completion:^(NSError *error, NSData *data) {
+    [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
         if (error) { return completion(error, nil); }
         
         // TODO: Talk to Dmitry about the body implementation
@@ -75,22 +75,24 @@
     _hostURL = (hostURL) ? hostURL : [NSURL URLWithString:dRLAWebService_Host];
 }
 
-- (void)requestUserInfo:(void (^)(NSError* error, NSString* name, NSString* email))completion
+- (void)requestUserInfo:(void (^)(NSError* error, NSString* uid, NSString* name, NSString* email))completion
 {
     RLAWebRequest* userInfoRequest = [[RLAWebRequest alloc] initWithHostURL:_hostURL timeout:nil oauthToken:_user.token];
     userInfoRequest.relativePath = dRLAWebService_UserInfo_RelativePath;
     
-    [userInfoRequest executeInHTTPMode:kRLAWebRequestModeGET withExpectedStatusCode:dRLAWebService_UserInfo_Respond_StatusCode completion:^(NSError* error, NSData* data) {
-        if (error) { if (completion) { completion(error, nil, nil); } return; }
+    [userInfoRequest executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
+        if (!completion) { return; }
+        if (error) { return completion(error, nil, nil, nil); }
         
         NSDictionary* jsonDict = (data) ? [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] : nil;
-        if (error) { if (completion) { completion(error, nil, nil); } return; }
+        if (error) { return completion(error, nil, nil, nil); }
         
+        NSString* futureID = jsonDict[dRLAWebService_UserInfo_RespondKey_ID];
         NSString* futureName = jsonDict[dRLAWebService_UserInfo_RespondKey_Name];
         NSString* futureEmail = jsonDict[dRLAWebService_UserInfo_RespondKey_Email];
-        if (!futureName || !futureEmail) { if (completion) { completion(RLAErrorMissingExpectedValue, nil, nil); }  return; }
+        if (!futureName || !futureEmail) { return completion(RLAErrorMissingExpectedValue, nil, nil, nil); }
         
-        if (completion) { completion(nil, futureName, futureEmail); }
+        completion(nil, futureID, futureName, futureEmail);
     }];
 }
 

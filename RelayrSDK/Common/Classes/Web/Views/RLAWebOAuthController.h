@@ -30,7 +30,7 @@
  *
  *  @abstract Block containing what it will be executed once the request fail or success.
  */
-@property (strong,nonatomic) void (^completion)(NSError* error, NSString* tmpCode);
+@property (copy,nonatomic) void (^completion)(NSError* error, NSString* tmpCode);
 
 @required
 /*!
@@ -75,7 +75,6 @@
  *
  *  @param clientID OAuth client ID.
  *  @param redirectURI URI that will be tested for when the answer comes back.
- *  @param completion Completion block given back the answer of the request.
  *	@return Fully initialised object that implements the <code>RLAWebOAuthController</code> protocol, or <code>nil</code>.
  *
  *  @see RLAWebOAuthController

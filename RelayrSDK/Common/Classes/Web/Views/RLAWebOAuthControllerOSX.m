@@ -3,12 +3,13 @@
 #import "RLAError.h"                    // Relayr.framework (Utilities)
 
 @interface RLAWebOAuthControllerOSX () <NSWindowDelegate>
-@property (strong,nonatomic) RLAWebOAuthControllerOSX* retainedSelf;
+@property (strong,nonatomic) RLAWebOAuthControllerOSX* selfRetained;
 @end
 
 @implementation RLAWebOAuthControllerOSX
 {
     NSProgressIndicator* _spinner;
+    WebView* _webView;
 }
 
 @synthesize urlRequest=_urlRequest;
@@ -35,10 +36,9 @@
     return nil;
 }
 
-- (instancetype)initWithURLRequest:(NSURLRequest*)urlRequest redirectURI:(NSString *)redirectURI completion:(void (^)(NSError *, NSString *))completion
+- (instancetype)initWithURLRequest:(NSURLRequest*)urlRequest redirectURI:(NSString*)redirectURI completion:(void (^)(NSError*, NSString*))completion
 {
-    if (!completion) { return nil; }
-    if (!urlRequest || !redirectURI) { completion(RLAErrorMissingArgument, nil); return nil; }
+    if (!urlRequest || !redirectURI) { return nil; }
     
     // [super initWithFrame:dRLAWebOAuthControllerOSX_WindowSize frameName:nil groupName:nil];
     NSWindow* window = [[NSWindow alloc] initWithContentRect:dRLAWebOAuthControllerOSX_WindowSize styleMask:dRLAWebOAuthControllerOSX_WindowStyle backing:NSBackingStoreBuffered defer:YES];
@@ -53,10 +53,10 @@
         _completion = completion;
         
         window.delegate = self;
-        WebView* webView = [[WebView alloc] initWithFrame:dRLAWebOAuthControllerOSX_WindowSize frameName:nil groupName:nil];
-        [webView setPolicyDelegate:self];
-        [webView setFrameLoadDelegate:self];
-        [window setContentView:webView];
+        _webView = [[WebView alloc] initWithFrame:dRLAWebOAuthControllerOSX_WindowSize frameName:nil groupName:nil];
+        [_webView setPolicyDelegate:self];
+        [_webView setFrameLoadDelegate:self];
+        [window setContentView:_webView];
         
         _spinner = [[NSProgressIndicator alloc] initWithFrame:NSMakeRect(20, 20, 30, 30)];
         [_spinner setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -67,7 +67,7 @@
 
 - (BOOL)presentModally
 {
-    _retainedSelf = self;
+    _selfRetained = self;
     
     NSWindow* window = self.window;
     [((WebView*)window.contentView).mainFrame loadRequest:_urlRequest];
@@ -82,13 +82,6 @@
 - (BOOL)presentAsPopOverInViewController:(id)viewController witTipLocation:(NSValue*)location
 {
     return NO;
-}
-
-#pragma mark NSWindowDelegate
-
-- (void)windowWillClose:(NSNotification*)notification
-{
-    _retainedSelf = nil;
 }
 
 #pragma mark WebFrameLoadDelegate
@@ -112,13 +105,26 @@
     
     if (_completion)
     {
-        void (^completion)(NSError*, NSString*) = _completion;
-        _completion = nil;
-        
+        _completion(nil, tmpCode);
         [self close];
-        completion(nil, tmpCode);
-        //_retainedSelf = nil;
+        _completion = nil;
     }
+}
+
+#pragma mark NSWindowDelegate
+
+- (void)windowWillClose:(NSNotification*)notification
+{
+    NSWindow* window = self.window;
+    window.delegate = nil;
+    
+    [_webView setPolicyDelegate:nil];
+    [_webView setFrameLoadDelegate:nil];
+    [window setContentView:nil];
+    _webView = nil;
+    
+    //_selfRetained = nil;
+    // FIXME: This is a retain cycle
 }
 
 #pragma mark - Private methods

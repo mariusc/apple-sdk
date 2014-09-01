@@ -6,15 +6,14 @@
 
 + (void)debug:(NSString*)format, ...
 {
-#ifdef DEBUG
-    
+    #ifdef DEBUG
     va_list args;
     va_start(args, format);
     NSString* msg = [[NSString alloc] initWithFormat:format arguments:args];
     va_end(args);
     
-    [RLALog logWithPrefix:nil logCallStack:NO message:msg];
-#endif
+    [RLALog logWithPrefix:nil logCallStack:YES message:msg];
+    #endif
 }
 
 + (void)error:(NSString*)format, ...
@@ -31,8 +30,7 @@
 
 + (void)logWithPrefix:(NSString*)prefix logCallStack:(BOOL)logCallStack message:(NSString*)msg
 {
-    char const* arch = [[RLALog arch] cStringUsingEncoding:NSUTF8StringEncoding];
-    printf("Relayr.framework(%s): ", arch);
+    printf("Relayr.framework: ");
     
     if (prefix) {
         printf("%s: ", [prefix cStringUsingEncoding:NSUTF8StringEncoding]);
@@ -45,15 +43,6 @@
     if (logCallStack) {
         printf("%s\n", [[NSThread callStackSymbols].description cStringUsingEncoding:NSUTF8StringEncoding]);
     }
-}
-
-+ (NSString*)arch
-{
-#if __LP64__
-    return @"64";
-#else
-    return @"32";
-#endif
 }
 
 @end

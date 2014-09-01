@@ -13,21 +13,20 @@
 @interface RLAWebOAuthControllerOSX : NSWindowController <RLAWebOAuthController>
 
 /*!
- *  @method initWithURLRequest:redirectURI:completion:
+ *  @method initWithURLRequest:redirectURI:
  *
  *  @abstract It creates the webview and initialise it with the passed arguments.
  *  @discussion Then it is ready to launch at any time a <i>present</i> method is called.
  *
  *  @param urlRequest <code>NSURLRequest</code> with the URL request for the webView.
  *  @param redirectURI URI used for security measures to test that the answer is coming from the right place.
- *  @param completion Block that will carry out the answer of the request.
  *	@return Fully initialised WebView implementing the <code>RLAWebOAuthController</code> or <code>nil</code>.
  *
  *  @see RLAWebViewOAuth
  */
 - (instancetype)initWithURLRequest:(NSURLRequest*)urlRequest
                        redirectURI:(NSString*)redirectURI
-                        completion:(void (^)(NSError* error, NSString* tmpCode))completion;
+                        completion:(void (^)(NSError*, NSString*))completion;
 
 #pragma mark WebPolicyDelegate
 
@@ -73,6 +72,6 @@
  *
  *  @see WebFrameLoadDelegate
  */
-- (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error forFrame:(WebFrame*)frame;
+- (void)webView:(WebView *)sender didFailLoadWithError:(NSError*)error forFrame:(WebFrame*)frame;
 
 @end

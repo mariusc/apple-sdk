@@ -19,10 +19,9 @@
     return nil;
 }
 
-+ (id<RLAWebOAuthController>)webOAuthControllerWithClientID:(NSString*)clientID redirectURI:(NSString*)redirectURI completion:(void (^)(NSError*, NSString*))completion
++ (id<RLAWebOAuthController>)webOAuthControllerWithClientID:(NSString*)clientID redirectURI:(NSString*)redirectURI completion:(void (^)(NSError* error, NSString* tmpCode))completion
 {
-    if (!completion) { return nil; }
-    if (!clientID || !redirectURI) { completion(RLAErrorMissingArgument, nil); return nil; }
+    if (!clientID || !redirectURI) { return nil; }
     
     NSURL* hostURL = [NSURL URLWithString:dRLAWebService_Host];
     NSURL* absoluteURL = [NSURL URLWithString:dRLAWebOAuthController_CodeRequestURL(clientID, redirectURI) relativeToURL:hostURL];
@@ -33,12 +32,11 @@
     #elif defined(OS_APPLE_OSX)
     return [[RLAWebOAuthControllerOSX alloc] initWithURLRequest:request redirectURI:redirectURI completion:completion];
     #else
-    completion(RLAErrorSystemNotSupported, nil);
     return nil;
     #endif
 }
 
-+ (NSString *)OAuthTemporalCodeFromRequest:(NSURLRequest *)request withRedirectURI:(NSString *)redirectURI
++ (NSString*)OAuthTemporalCodeFromRequest:(NSURLRequest*)request withRedirectURI:(NSString*)redirectURI
 {
     NSString* result;
     if (!request || !redirectURI) { return result; }

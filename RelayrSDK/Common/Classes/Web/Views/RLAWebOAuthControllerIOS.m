@@ -20,10 +20,9 @@
     return nil;
 }
 
-- (instancetype)initWithURLRequest:(NSURLRequest*)urlRequest redirectURI:(NSString *)redirectURI completion:(void (^)(NSError *, NSString *))completion
+- (instancetype)initWithURLRequest:(NSURLRequest*)urlRequest redirectURI:(NSString*)redirectURI completion:(void (^)(NSError* error, NSString* tmpCode))completion
 {
-    if (!completion) { return nil; }
-    if (!urlRequest) { completion(RLAErrorMissingArgument, nil); return nil; }
+    if (!urlRequest) { return nil; }
     
     self = [super initWithNibName:nil bundle:nil];
     if (self)
@@ -52,7 +51,7 @@
     return YES;
 }
 
-- (BOOL)presentAsPopOverInViewController:(id)viewController witTipLocation:(NSValue *)location
+- (BOOL)presentAsPopOverInViewController:(id)viewController witTipLocation:(NSValue*)location
 {
     return NO;
 }
@@ -86,15 +85,8 @@
     NSString* tmpCode = [RLAWebOAuthController OAuthTemporalCodeFromRequest:request withRedirectURI:_redirectURI];
     if (!tmpCode) { return YES; }
     
-    if (_completion)
-    {
-        void (^completion)(NSError*, NSString*) = _completion;
-        _completion = nil;
-        
-        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-        completion(nil, tmpCode);
-    }
-    
+    if (_completion) { _completion(nil, tmpCode); }
+    [self dismiss];
     return NO;
 }
 
@@ -124,18 +116,8 @@
 
 - (void)cancelPressed
 {
-    void (^completion)(NSError* error, NSString* tmpCode) = _completion;
-    _completion = nil;
-    
-    if ([self isViewLoaded])
-    {
-        [((UIWebView*)self.view) stopLoading];
-        
-        [self.navigationController dismissViewControllerAnimated:YES completion:^{
-            completion(RLAErrorUserStoppedProcess, nil);
-        }];
-    }
-    else { completion(RLAErrorUserStoppedProcess, nil); }
+    if (_completion) { _completion(RLAErrorUserStoppedProcess, nil); }
+    [self dismiss];
 }
 
 - (void)showSpinner
@@ -176,6 +158,13 @@
             [spinner removeFromSuperview];
         }];
     }
+}
+
+- (void)dismiss
+{
+    if ([self isViewLoaded]) { [((UIWebView*)self.view) stopLoading]; }
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    _completion = nil;
 }
 
 @end

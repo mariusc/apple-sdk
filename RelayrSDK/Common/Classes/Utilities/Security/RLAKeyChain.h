@@ -1,6 +1,7 @@
 @import Foundation;
 
-FOUNDATION_EXPORT NSString* const kRLAKeyChainUsers;
+FOUNDATION_EXPORT NSString* const kRLAKeyChainService;
+FOUNDATION_EXPORT NSString* const kRLAKeyChainKeyUser;
 
 /*!
  *  @class RLAKeyChain

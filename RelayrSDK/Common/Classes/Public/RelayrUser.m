@@ -1,6 +1,7 @@
 #import "RelayrUser.h"          // Header
-#import "RelayrUser_Setup.h"    // Private extension
+#import "RelayrUser_Setup.h"    // Relayr.framework (Private)
 #import "RLAWebService.h"       // Relayr.framework (Web)
+#import "RLAError.h"            // Relayr.framework (Utilities)
 
 static NSString* const kCodingToken = @"tok";
 static NSString* const kCodingID = @"uid";
@@ -39,10 +40,14 @@ static NSString* const kCodingPublishers = @"pub";
 {
     __weak RelayrUser* weakSelf = self;
     
-    [_webService requestUserInfo:^(NSError *error, NSString *name, NSString *email) {
+    [_webService requestUserInfo:^(NSError *error, NSString* uid, NSString *name, NSString *email) {
         if (error) { if (completion) { completion(error, nil, nil); } }
+        if (!uid) { if (completion) { completion(RLAErrorWrongRelayrUser, nil, nil); } return; }
         
         __strong RelayrUser* strongSelf = weakSelf;
+        if (!strongSelf.uid) { strongSelf.uid = uid; }
+        else if (strongSelf.uid != uid) { if (completion) { completion(RLAErrorWrongRelayrUser, nil, nil); } return; }
+        
         NSString* pName = strongSelf.name;      strongSelf.name = name;
         NSString* pEmail = strongSelf.email;    strongSelf.email = email;
         if (completion) { completion(nil, pName, pEmail); }
@@ -85,6 +90,13 @@ static NSString* const kCodingPublishers = @"pub";
     [coder encodeObject:_devices forKey:kCodingDevices];
     [coder encodeObject:_devicesBookmarked forKey:kCodingBookmarks];
     [coder encodeObject:_publishers forKey:kCodingPublishers];
+}
+
+#pragma mark Base class
+
+- (NSString*)description
+{
+    return [NSString stringWithFormat:@"Relayr User:\n{\n\t ID:\t%@\n\t Token:\t%@\n\t Name:\t%@\n\t Email:\t%@\n\t Number of transmitters:\t\t%@\n\t Number of devices:\t\t\t\t%@\n\t Number of bookmarked devices:\t%@\n\t Number of publishers under this user:\t%@\n}", _uid, _token, _name, _email, (!_transmitter) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_transmitter.count], (!_devices) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_devices.count], (!_devicesBookmarked) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_devicesBookmarked.count], (!_publishers) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_publishers.count]];
 }
 
 @end

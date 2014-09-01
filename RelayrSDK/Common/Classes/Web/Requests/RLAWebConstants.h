@@ -28,6 +28,7 @@
 // User info
 #define dRLAWebService_UserInfo_RelativePath            @"oauth2/user-info"
 #define dRLAWebService_UserInfo_Respond_StatusCode      200
+#define dRLAWebService_UserInfo_RespondKey_ID           @"id"
 #define dRLAWebService_UserInfo_RespondKey_Name         @"name"
 #define dRLAWebService_UserInfo_RespondKey_Email        @"email"
 

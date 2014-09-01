@@ -82,18 +82,6 @@
 @property (readonly,nonatomic) NSString* publisherID;
 
 /*!
- *  @method isValid:
- *
- *  @abstract It checks the validity of the current <code>RelayrApplication</code> ID.
- *  @discussion This method performs the same as the one in <code>RelayrCloud</code>.
- *
- *  @param completion Block handing the result of the server query.
- *
- *  @see RelayrCloud
- */
-- (void)isValid:(void (^)(NSError* error, BOOL valid))completion;
-
-/*!
  *  @method queryCloudForAppInfo:
  *
  *  @abstract It queries the Relayr Cloud for the lacking application properties.
@@ -137,5 +125,18 @@
  *  @see RelayrUser
  */
 - (void)signOutUser:(RelayrUser*)user;
+
+/*!
+ *  @method loggedUserWithRelayrID:
+ *
+ *  @abstract Retrieved a logged user (<code>loggedUsers</code>) with the passed RelayrID. If the user is not logged or it is not valid, <code>nil</code> will be the result.
+ *  @discussion This is a convenience method. It does the same as iterating through the logged user array and check for the Relayr ID of every user.
+ *
+ *  @param relayrID The Relayr ID that identifies the Relayr user in the Relayr Cloud.
+ *	@return <code>nil</code> or a fully initialised RelayrUser.
+ *
+ *  @see RelayrUser
+ */
+- (RelayrUser*)loggedUserWithRelayrID:(NSString*)relayrID;
 
 @end
