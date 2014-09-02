@@ -1,4 +1,4 @@
-@import Foundation;
+@import Foundation;     // Apple
 
 /*!
  *  @class RelayrCloud
@@ -16,20 +16,7 @@
  *
  *  @param completion Block giving you a Boolean answer about the availability of the service and an error explaining the unreachability (in case that happened).
  */
-+ (void)isReachable:(void (^)(NSError* error, BOOL isReachable))completion;
-
-/*!
- *  @method isApplicationID:valid:
- *
- *  @abstract It checks whether the passed Relayr Application ID exists in the Relayr cloud.
- *
- *  @param appID <code>NSString</code> representing a Relayr Application ID.
- *  @param completion Block having a Boolean with the validity/existance of the Relayr Application.
- *
- *  @see RelayrApplication
- */
-+ (void)isApplicationID:(NSString*)appID
-                  valid:(void (^)(NSError* error, BOOL exists))completion;
++ (void)isReachable:(void (^)(NSError* error, NSNumber* isReachable))completion;
 
 /*!
  *  @method isUserWithEmail:registered:

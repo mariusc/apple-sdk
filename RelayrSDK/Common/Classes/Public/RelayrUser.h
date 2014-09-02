@@ -40,14 +40,6 @@
 @property (readonly,nonatomic) NSString* email;
 
 /*!
- *  @property apps
- *
- *  @abstract Relayr applications for this <code>RelayrUser</code>'s instace.
- *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
- */
-@property (readonly,nonatomic) NSArray* apps;
-
-/*!
  *  @property transmitter
  *
  *  @abstract Transmitter that this <code>RelayrUser</code>'s instace owns.
@@ -70,6 +62,14 @@
  *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
  */
 @property (readonly,nonatomic) NSArray* devicesBookmarked;
+
+/*!
+ *  @property apps
+ *
+ *  @abstract Relayr applications for this <code>RelayrUser</code>'s instace.
+ *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
+ */
+@property (readonly,nonatomic) NSArray* apps;
 
 /*!
  *  @property publishers
@@ -95,12 +95,22 @@
  *  @method queryCloudForIoTs:
  *
  *  @abstract It queries the Relayr servers for all devices, transmitters, and bookmarked devices of this <code>RelayUser</code> instance.
- *  @discussion Every time this method is call a server query is launched. Once that request is returned successfuly, all the <i>readonly</i>-devices related properties would have changed to accomodate the new values.
+ *  @discussion Every time this method is called a server query is launched. Once that request is returned successfuly, all the <i>readonly</i>-devices related properties would have changed to accomodate the new values.
  *
  *  @param completion Block indicating whether the server query was successful or not.
  *
  *  @see queryCloudForUserInfo:
  */
-- (void)queryCloudForIoTs:(void (^)(NSError* error, BOOL isThereChanges))completion;
+- (void)queryCloudForIoTs:(void (^)(NSError* error, NSNumber* isThereChanges))completion;
+
+/*!
+ *  @method queryCloudForUserAppsAndPublishers:
+ *
+ *  @abstract It queries the Relayr servers for all the applications, and publishers entities own by the user.
+ *  @discussion Every time this method is called a server query is launched. Once that request is returned successfully, the <i>readonly</i> apps and publishers properties would have changed to accomodate the new values.
+ *
+ *  @param completion Block indicating whether the server query was successful or not.
+ */
+- (void)queryCloudForUserAppsAndPublishers:(void (^)(NSError* error, NSNumber* isThereChanges))completion;
 
 @end

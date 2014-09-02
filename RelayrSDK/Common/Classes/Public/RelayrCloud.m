@@ -13,24 +13,13 @@
     return nil;
 }
 
-// TODO: Fill up
-+ (void)isReachable:(void (^)(NSError* error, BOOL isReachable))completion
++ (void)isReachable:(void (^)(NSError* error, NSNumber* isReachable))completion
 {
     if (!completion) { return [RLALog debug:dRLAErrorMessageMissingArgument]; }
-    
-    
+    [RLAWebService isRelayrCloudReachable:completion];
 }
 
-// TODO: Fill up
-+ (void)isApplicationID:(NSString *)appID valid:(void (^)(NSError* error, BOOL exists))completion
-{
-    if (!completion) { return [RLALog debug:dRLAErrorMessageMissingArgument]; }
-    
-    
-}
-
-// TODO: Fill up
-+ (void)isUserWithEmail:(NSString *)email registered:(void (^)(NSError*, NSNumber*))completion
++ (void)isUserWithEmail:(NSString*)email registered:(void (^)(NSError* error, NSNumber* isUserRegistered))completion
 {
     if (!completion) { return [RLALog debug:dRLAErrorMessageMissingArgument]; }
     [RLAWebService isUserWithEmail:email registeredInRelayrCloud:completion];

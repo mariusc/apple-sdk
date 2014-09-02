@@ -1,5 +1,5 @@
-@import Foundation;     // Apple
 @class RelayrUser;      // Relayr.framework (public)
+@import Foundation;     // Apple
 
 /*!
  *  @class RelayrApp
@@ -84,12 +84,12 @@
 /*!
  *  @method queryCloudForAppInfo:
  *
- *  @abstract It queries the Relayr Cloud for the lacking application properties.
+ *  @abstract It queries the Relayr Cloud for the lacking application properties. You need a Relayr user with the credentials to look for the application information.
  *  @discussion The method is called asynchronously and it can fail. If the request was successful, the old values will be writen as block arguments, and the new ones will be set in the <code>RelayrApp</code> instance.
  *
  *  @param completion Block handing status of the cloud request.
  */
-- (void)queryCloudForAppInfo:(void (^)(NSError* error, NSString* previousName, NSString* previousDescription, NSString* previousRedirectURI))completion;
+- (void)queryCloudForAppInfoWithRelayrUser:(RelayrUser*)user completion:(void (^)(NSError* error, NSString* previousName, NSString* previousDescription))completion;
 
 /*!
  *  @property loggedUsers

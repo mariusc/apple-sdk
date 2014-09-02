@@ -1,5 +1,5 @@
-@import Foundation;     // Apple
 @class RelayrUser;      // Relayr.framework (Public)
+@import Foundation;     // Apple
 
 /*!
  *  @class RLAWebService
@@ -10,6 +10,16 @@
  *  @see RelayrUser
  */
 @interface RLAWebService : NSObject
+
+/*!
+ *  @method isRelayrCloudReachable:
+ *
+ *  @abstract It checks whether the Relayr cloud is reachable and the service is up.
+ *  @discussion The Relayr cloud can be unreachable for several reasons: no internet connection, cannot resolve DNS, Relayr service is temporarily unavailable. It is worth noticing, that you can still work with the SDK even when the Relayr cloud is unavailable (in the unlikely case that that happened).
+ *
+ *  @param completion Block giving you a Boolean answer about the availability of the service and an error explaining the unreachability (in case that happened).
+ */
++ (void)isRelayrCloudReachable:(void (^)(NSError* error, NSNumber* isReachable))completion;
 
 /*!
  *  @method requestOAuthCodeWithOAuthClientID:redirectURI:completion:
@@ -72,7 +82,7 @@
  *  @abstract <code>RelayrUser</code> who is associated with this <code>RLAWebService</code> instance.
  *  @discussion This object will be set at initialisation and never touched again.
  */
-@property (weak,readonly,nonatomic) RelayrUser* user;
+@property (readonly,weak,nonatomic) RelayrUser* user;
 
 /*!
  *  @property hostURL
@@ -94,16 +104,16 @@
 - (void)requestUserInfo:(void (^)(NSError* error, NSString* uid, NSString* name, NSString* email))completion;
 
 /*!
- *  @method requestUserPublishers:
+ *  @method requestUserTransmitters:
  *
- *  @abstract It queries the Relayr Cloud for all the publishers that a Relayr user owns.
- *  @discussion A publisher is a Relayr user who is able to publish apps in the Relayr cloud.
+ *  @abstract It queries the Relayr Cloud for all the transmitters own by a Relayr user.
+ *  @discussion Devices and transmitters are different concepts.
  *
  *  @param completion Block indicating the result of the server query.
  *
  *  @see RelayrUser
  */
-- (void)requestUserPublishers:(void (^)(NSError* error, NSArray* publishers))completion;
+- (void)requestUserTransmitters:(void (^)(NSError* error, NSArray* transmitters))completion;
 
 /*!
  *  @method requestUserDevices:
@@ -118,18 +128,6 @@
 - (void)requestUserDevices:(void (^)(NSError* error, NSArray* devices))completion;
 
 /*!
- *  @method requestUserTransmitters:
- *
- *  @abstract It queries the Relayr Cloud for all the transmitters own by a Relayr user.
- *  @discussion Devices and transmitters are different concepts.
- *
- *  @param completion Block indicating the result of the server query.
- *
- *  @see RelayrUser
- */
-- (void)requestUserTransmitters:(void (^)(NSError* error, NSArray* transmitter))completion;
-
-/*!
  *  @method resquestUserBookmarkedDevices:
  *
  *  @abstract It queries the Relayr Cloud for all the bookmarked devices of a specific Relayr user.
@@ -139,6 +137,36 @@
  *
  *  @see RelayrUser
  */
-- (void)resquestUserBookmarkedDevices:(void (^)(NSError* error, NSArray* bookDevices))completion;
+- (void)requestUserBookmarkedDevices:(void (^)(NSError* error, NSArray* bookDevices))completion;
+
+/*!
+ *  @method requestUserPublishers:
+ *
+ *  @abstract It queries the Relayr Cloud for all the publishers that a Relayr user owns.
+ *  @discussion A publisher is a Relayr user who is able to publish apps in the Relayr cloud.
+ *
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrUser
+ */
+- (void)requestUserPublishers:(void (^)(NSError* error, NSArray* publishers))completion;
+
+/*!
+ *  @method requestUserApps:
+ *
+ *  @abstract It queries the Relayr Cloud for all the apps installed under this user.
+ *
+ *  @param completion Block indicating the result of the server query.
+ */
+- (void)requestUserApps:(void (^)(NSError* error, NSArray* apps))completion;
+
+/*!
+ *  @method requestAppInfoOf:completion:
+ *
+ *  @abstract It queries the Relayr Cloud for information of a Relayr application.
+ *
+ *  @param completion Block indicating the result of the server query.
+ */
+- (void)requestAppInfoOf:(NSString*)appID completion:(void (^)(NSError* error, NSString* appID, NSString* appName, NSString* appDescription))completion;
 
 @end

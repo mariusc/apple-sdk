@@ -1,6 +1,6 @@
+#import "RLAWebOAuthController.h"   // Relayr.framework (Web)
 @import Cocoa;                      // Apple
 @import WebKit;                     // Apple
-#import "RLAWebOAuthController.h"   // Relayr.framework (Web)
 
 /*!
  *  @class RLAWebOAuthControllerOSX
@@ -72,6 +72,6 @@
  *
  *  @see WebFrameLoadDelegate
  */
-- (void)webView:(WebView *)sender didFailLoadWithError:(NSError*)error forFrame:(WebFrame*)frame;
+- (void)webView:(WebView*)sender didFailLoadWithError:(NSError*)error forFrame:(WebFrame*)frame;
 
 @end

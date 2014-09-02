@@ -1,14 +1,25 @@
 #import "RLAWebService.h"           // Header
+#import "RelayrApp.h"               // Relayr.framework (Public)
 #import "RelayrUser.h"              // Relayr.framework (Public)
+#import "RelayrPublisher.h"         // Relayr.framework (Public)
+#import "RelayrApp_Setup.h"         // Relayr.framework (Private)
 #import "RelayrUser_Setup.h"        // Relayr.framework (Private)
+#import "RelayrPublisher_Setup.h"   // Relayr.framework (Private)
+
 #import "RLAWebRequest.h"           // Relayr.framework (Web)
 #import "RLAWebConstants.h"         // Relayr.framework (Web)
 #import "RLAWebOAuthController.h"   // Relayr.framework (Web)
+
 #import "RLAError.h"                // Relayr.framework (Utilities)
 
 @implementation RLAWebService
 
 #pragma mark - Public API
+
++ (void)isRelayrCloudReachable:(void (^)(NSError*, NSNumber*))completion
+{
+    // TODO: Fill up
+}
 
 + (void)requestOAuthCodeWithOAuthClientID:(NSString*)clientID redirectURI:(NSString*)redirectURI completion:(void (^)(NSError* error, NSString* tmpCode))completion
 {
@@ -77,11 +88,11 @@
 
 - (void)requestUserInfo:(void (^)(NSError* error, NSString* uid, NSString* name, NSString* email))completion
 {
+    if (!completion) { return; }
     RLAWebRequest* userInfoRequest = [[RLAWebRequest alloc] initWithHostURL:_hostURL timeout:nil oauthToken:_user.token];
     userInfoRequest.relativePath = dRLAWebService_UserInfo_RelativePath;
     
     [userInfoRequest executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
-        if (!completion) { return; }
         if (error) { return completion(error, nil, nil, nil); }
         
         NSDictionary* jsonDict = (data) ? [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] : nil;
@@ -96,28 +107,76 @@
     }];
 }
 
-// TODO: Fill up
-- (void)requestUserPublishers:(void (^)(NSError* error, NSArray* publishers))completion
+- (void)requestUserTransmitters:(void (^)(NSError* error, NSArray* transmitters))completion
 {
-    
+    // TODO: Fill up
 }
 
-// TODO: Fill up
 - (void)requestUserDevices:(void (^)(NSError* error, NSArray* devices))completion
 {
-    
+    // TODO: Fill up
 }
 
-// TODO: Fill up
-- (void)requestUserTransmitters:(void (^)(NSError* error, NSArray* transmitter))completion
+- (void)requestUserBookmarkedDevices:(void (^)(NSError* error, NSArray* bookDevices))completion
 {
-    
+    // TODO: Fill up
 }
 
-// TODO: Fill up
-- (void)resquestUserBookmarkedDevices:(void (^)(NSError* error, NSArray* bookDevices))completion
+- (void)requestUserPublishers:(void (^)(NSError* error, NSArray* publishers))completion
 {
+    if (!completion) { return; }
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:_hostURL timeout:nil oauthToken:_user.token];
+    request.relativePath = dRLAWebService_Publishers_RelativePath(_user.uid);
     
+    __weak RelayrUser* weakUser = _user;
+    [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
+        if (error) { return completion(error, nil); }
+        
+        NSArray* jsonArray = (data) ? [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] : nil;
+        if (error) { return completion(error, nil); }
+        
+        __strong RelayrUser* strongUser = weakUser;
+        if (!strongUser) { return completion(RLAErrorMissingExpectedValue, nil); }
+        
+        NSMutableArray* publishers = [NSMutableArray arrayWithCapacity:jsonArray.count];
+        for (NSDictionary* tmp in jsonArray)
+        {
+            NSString* tmpOwnerID = tmp[dRLAWebService_Publishers_RespondKey_Owner];
+            if ( ![tmpOwnerID isEqualToString:strongUser.uid] ) { break; }
+            
+            RelayrPublisher* pub = [[RelayrPublisher alloc] initWithPublisherID:tmp[dRLAWebService_Publishers_RespondKey_ID] owner:strongUser];
+            pub.name = tmp[dRLAWebService_Publishers_RespondKey_Name];
+            if (pub) { [publishers addObject:pub]; }
+        }
+        
+        completion(nil, [NSArray arrayWithArray:publishers]);
+    }];
+}
+
+- (void)requestUserApps:(void (^)(NSError* error, NSArray* apps))completion
+{
+    if (!completion) { return; }
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:_hostURL timeout:nil oauthToken:_user.token];
+    request.relativePath = dRLAWebService_Apps_RelativePath(_user.uid);
+    
+    [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
+        if (error) { return completion(error, nil); }
+        
+        NSArray* jsonArray = (data) ? [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] : nil;
+        if (error) { return completion(error, nil); }
+        
+        NSMutableArray* apps = [NSMutableArray arrayWithCapacity:jsonArray.count];
+        for (NSDictionary* tmp in jsonArray)
+        {
+            RelayrApp* app = [[RelayrApp alloc] initWithID:tmp[dRLAWebService_Apps_RespondKey_ID] publisherID:tmp[dRLAWebService_Apps_RespondKey_Owner]];
+            if (app) { [apps addObject:app]; }
+        }
+    }];
+}
+
+- (void)requestAppInfoOf:(NSString*)appID completion:(void (^)(NSError* error, NSString* appID, NSString* appName, NSString* appDescription))completion
+{
+    // TODO: Fill up
 }
 
 @end

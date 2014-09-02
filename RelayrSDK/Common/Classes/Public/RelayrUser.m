@@ -7,10 +7,10 @@ static NSString* const kCodingToken = @"tok";
 static NSString* const kCodingID = @"uid";
 static NSString* const kCodingName = @"nam";
 static NSString* const kCodingEmail = @"ema";
-static NSString* const kCodingApps = @"app";
 static NSString* const kCodingTransmitters = @"tra";
 static NSString* const kCodingDevices = @"dev";
 static NSString* const kCodingBookmarks = @"bok";
+static NSString* const kCodingApps = @"app";
 static NSString* const kCodingPublishers = @"pub";
 
 @implementation RelayrUser
@@ -39,9 +39,8 @@ static NSString* const kCodingPublishers = @"pub";
 - (void)queryCloudForUserInfo:(void (^)(NSError* error, NSString* previousName, NSString* previousEmail))completion
 {
     __weak RelayrUser* weakSelf = self;
-    
     [_webService requestUserInfo:^(NSError *error, NSString* uid, NSString *name, NSString *email) {
-        if (error) { if (completion) { completion(error, nil, nil); } }
+        if (error) { if (completion) { completion(error, nil, nil); } return; }
         if (!uid) { if (completion) { completion(RLAErrorWrongRelayrUser, nil, nil); } return; }
         
         __strong RelayrUser* strongSelf = weakSelf;
@@ -54,10 +53,33 @@ static NSString* const kCodingPublishers = @"pub";
     }];
 }
 
-// TODO: Fill up
-- (void)queryCloudForIoTs:(void (^)(NSError* error, BOOL isThereChanges))completion
+- (void)queryCloudForIoTs:(void (^)(NSError* error, NSNumber* isThereChanges))completion
 {
-    
+    __weak RelayrUser* weakSelf = self;
+    [_webService requestUserTransmitters:^(NSError* transmitterError, NSArray* transmitters) {
+        if (transmitterError) { if (completion) { completion(transmitterError, nil); } return; }
+        [weakSelf.webService requestUserDevices:^(NSError* deviceError, NSArray* devices) {
+            if (deviceError) { if (completion) { completion(deviceError, nil); } return ; }
+            [weakSelf.webService requestUserBookmarkedDevices:^(NSError* bookmarkError, NSArray* bookDevices) {
+                if (bookmarkError) { if (completion) { completion(bookmarkError, nil); } return; }
+                BOOL const result = [weakSelf setUsersIoTsFromServerTransmitterArray:transmitters deviceArray:devices bookmarkDeviceArray:bookDevices];
+                if (completion) { completion(nil, [NSNumber numberWithBool:result]); }
+            }];
+        }];
+    }];
+}
+
+- (void)queryCloudForUserAppsAndPublishers:(void (^)(NSError* error, NSNumber* isThereChanges))completion
+{
+    __weak RelayrUser* weakSelf = self;
+    [_webService requestUserApps:^(NSError *appError, NSArray *apps) {
+        if (appError) { if (completion) { completion(appError, nil); } return; }
+        [weakSelf.webService requestUserPublishers:^(NSError* publisherError, NSArray* publishers) {
+            if (publisherError) { if (completion) { completion(publisherError, nil); } return; }
+            BOOL const result = [weakSelf setUsersAppsFromServerArray:apps publishersFrom:publishers];
+            if (completion) { completion(nil, [NSNumber numberWithBool:result]); }
+        }];
+    }];
 }
 
 #pragma mark NSCoding
@@ -70,10 +92,10 @@ static NSString* const kCodingPublishers = @"pub";
         _uid = [decoder decodeObjectForKey:kCodingID];
         _name = [decoder decodeObjectForKey:kCodingName];
         _email = [decoder decodeObjectForKey:kCodingEmail];
-        _apps = [decoder decodeObjectForKey:kCodingApps];
         _transmitter = [decoder decodeObjectForKey:kCodingTransmitters];
         _devices = [decoder decodeObjectForKey:kCodingDevices];
         _devicesBookmarked = [decoder decodeObjectForKey:kCodingDevices];
+        _apps = [decoder decodeObjectForKey:kCodingApps];
         _publishers = [decoder decodeObjectForKey:kCodingPublishers];
     }
     return self;
@@ -85,10 +107,10 @@ static NSString* const kCodingPublishers = @"pub";
     [coder encodeObject:_uid forKey:kCodingID];
     [coder encodeObject:_name forKey:kCodingName];
     [coder encodeObject:_email forKey:kCodingEmail];
-    [coder encodeObject:_apps forKey:kCodingApps];
     [coder encodeObject:_transmitter forKey:kCodingTransmitters];
     [coder encodeObject:_devices forKey:kCodingDevices];
     [coder encodeObject:_devicesBookmarked forKey:kCodingBookmarks];
+    [coder encodeObject:_apps forKey:kCodingApps];
     [coder encodeObject:_publishers forKey:kCodingPublishers];
 }
 
@@ -97,6 +119,30 @@ static NSString* const kCodingPublishers = @"pub";
 - (NSString*)description
 {
     return [NSString stringWithFormat:@"Relayr User:\n{\n\t ID:\t%@\n\t Token:\t%@\n\t Name:\t%@\n\t Email:\t%@\n\t Number of transmitters:\t\t%@\n\t Number of devices:\t\t\t\t%@\n\t Number of bookmarked devices:\t%@\n\t Number of publishers under this user:\t%@\n}", _uid, _token, _name, _email, (!_transmitter) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_transmitter.count], (!_devices) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_devices.count], (!_devicesBookmarked) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_devicesBookmarked.count], (!_publishers) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_publishers.count]];
+}
+
+#pragma mark - Private methods
+
+/*******************************************************************************
+ * It sets the user's IoTs with the server query.
+ * No checks are performed onto the method parameters. Be sure to send the correct ones.
+ ******************************************************************************/
+- (BOOL)setUsersIoTsFromServerTransmitterArray:(NSArray*)serverTransmitters deviceArray:(NSArray*)serverDevices bookmarkDeviceArray:(NSArray*)serverBookmarks
+{
+    BOOL isThereChanges = NO;
+    
+    // TODO: Fill up
+    
+    return isThereChanges;
+}
+
+- (BOOL)setUsersAppsFromServerArray:(NSArray*)serverApps publishersFrom:(NSArray*)serverPublishers
+{
+    BOOL isThereChanges = NO;
+    
+    // TODO: Fill up
+    
+    return isThereChanges;
 }
 
 @end

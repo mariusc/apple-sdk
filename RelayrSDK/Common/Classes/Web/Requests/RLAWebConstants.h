@@ -22,7 +22,7 @@
 #define dRLAWebService_OAuthToken_RespondKey_Token      @"access_token"
 
 // User registration query
-#define dRLAWebService_UserQuery_RelativePath(email)    [NSString stringWithFormat:@"/users/validate?email=%@", email]
+#define dRLAWebService_UserQuery_RelativePath(email)    [NSString stringWithFormat:@"users/validate?email=%@", email]
 #define dRLAWebService_UserQuery_Respond_StatusCode     200
 
 // User info
@@ -31,6 +31,21 @@
 #define dRLAWebService_UserInfo_RespondKey_ID           @"id"
 #define dRLAWebService_UserInfo_RespondKey_Name         @"name"
 #define dRLAWebService_UserInfo_RespondKey_Email        @"email"
+
+// Publishers
+#define dRLAWebService_Publishers_RelativePath(userID)  [NSString stringWithFormat:@"users/%@/publishers", userID]
+#define dRLAWebService_Publishers_Respond_StatusCode    200
+#define dRLAWebService_Publishers_RespondKey_ID         @"id"
+#define dRLAWebService_Publishers_RespondKey_Name       @"name"
+#define dRLAWebService_Publishers_RespondKey_Owner      @"owner"
+
+// Apps
+#define dRLAWebService_Apps_RelativePath(userID)        [NSString stringWithFormat:@"users/%@/apps", userID]
+#define dRLAWebService_Apps_Respond_StatusCode          200
+#define dRLAWebService_Apps_RespondKey_ID               @"id"
+#define dRLAWebService_Apps_RespondKey_Name             @"name"
+#define dRLAWebService_Apps_RespondKey_Owner            @"owner"
+#define dRLAWebService_Apps_RespondKey_ConnectedDevices @"connectedDevices"
 
 #pragma mark - RLAWebOAuthController
 

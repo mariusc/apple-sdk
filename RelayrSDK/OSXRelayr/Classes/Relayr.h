@@ -12,3 +12,4 @@ FOUNDATION_EXPORT const unsigned char OSXRelayrVersionString[];
 #import <Relayr/RelayrUser.h>
 #import <Relayr/RelayrTransmitter.h>
 #import <Relayr/RelayrDevice.h>
+#import <Relayr/RelayrPublisher.h>

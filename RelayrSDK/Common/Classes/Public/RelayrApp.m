@@ -1,4 +1,5 @@
 #import "RelayrApp.h"       // Header
+#import "RelayrApp_Setup.h" // Relayr.framework (Private)
 
 #import "RelayrCloud.h"     // Relayr.framework (Public)
 #import "RelayrUser.h"      // Relayr.framework (Public)
@@ -12,7 +13,6 @@
 @property (readwrite,nonatomic) NSString* oauthClientID;
 @property (readwrite,nonatomic) NSString* oauthClientSecret;
 @property (readwrite,nonatomic) NSString* redirectURI;
-@property (readwrite,nonatomic) NSString* name;
 @property (readwrite,nonatomic) NSString* appDescription;
 @property (readwrite,nonatomic) NSString* publisherID;
 @end
@@ -42,30 +42,52 @@
     return self;
 }
 
-// TODO: Fill up
-- (void)queryCloudForAppInfo:(void (^)(NSError*, NSString*, NSString*, NSString*))completion
+- (instancetype)initWithID:(NSString*)appID publisherID:(NSString*)publisherID
 {
+    if (!appID || !publisherID) { return nil; }
     
+    self = [super init];
+    if (self)
+    {
+        _uid = appID;
+        _publisherID = publisherID;
+    }
+    return self;
+}
+
+- (void)queryCloudForAppInfoWithRelayrUser:(RelayrUser*)user completion:(void (^)(NSError* error, NSString* previousName, NSString* previousDescription))completion
+{
+    if (!user) { if (completion) { completion(RLAErrorMissingArgument, nil, nil); } return; }
     
-    
-    
+    __weak RelayrApp* weakSelf = self;
+    [user.webService requestAppInfoOf:_uid completion:^(NSError *error, NSString *appID, NSString *appName, NSString *appDescription) {
+        if (error) { if (completion) { completion(error, nil, nil); } return; }
+        
+        __strong RelayrApp* strongSelf = weakSelf;
+        if ( ![strongSelf.uid isEqualToString:appID] ) { if (completion) { completion(RLAErrorMissingExpectedValue, nil, nil); } return; }
+        
+        NSString* pName = strongSelf.name, * pDesc = strongSelf.description;
+        strongSelf.name = appName; strongSelf.appDescription = appDescription;
+        completion(nil, pName, pDesc);
+    }];
 }
 
 - (NSArray*)loggedUsers
 {
     NSObject <NSCoding> * retrievedObj = [RLAKeyChain objectForKey:kRLAKeyChainKeyUser];
     if ( !retrievedObj || ![retrievedObj isKindOfClass:[NSArray class]] ) { return nil; }
-    NSArray* users = (NSArray*)retrievedObj;
     
+    NSArray* users = (NSArray*)retrievedObj;
     return (users.count) ? users : nil;
 }
 
 - (void)signUserStoringCredentialsIniCloud:(BOOL)sendCredentialsToiCloud completion:(void (^)(NSError*, RelayrUser*))completion
 {
+    __weak RelayrApp* weakSelf = self;
     [RLAWebService requestOAuthCodeWithOAuthClientID:self.oauthClientID redirectURI:self.redirectURI completion:^(NSError* error, NSString* tmpCode) {
         if (error) { if (completion) { completion(error, nil); } return; }
         
-        [RLAWebService requestOAuthTokenWithOAuthCode:tmpCode OAuthClientID:self.oauthClientID OAuthClientSecret:self.oauthClientSecret redirectURI:self.redirectURI completion:^(NSError *error, NSString *token) {
+        [RLAWebService requestOAuthTokenWithOAuthCode:tmpCode OAuthClientID:weakSelf.oauthClientID OAuthClientSecret:weakSelf.oauthClientSecret redirectURI:weakSelf.redirectURI completion:^(NSError *error, NSString *token) {
             if (error) { if (completion) { completion(error, nil); } return; }
             if (!token.length) { if (completion) { completion(RLAErrorMissingArgument, nil); } return; }
             
@@ -76,12 +98,14 @@
             [serverUser queryCloudForUserInfo:^(NSError *error, NSString* previousName, NSString* previousEmail) {
                 if (error) { if (completion) { completion(error, nil); } return; }
                 
+                __strong RelayrApp* strongSelf = weakSelf;
+                
                 // If the user was already logged, return that user.
-                RelayrUser* localUser = [self loggedUserWithRelayrID:serverUser.uid];
+                RelayrUser* localUser = [strongSelf loggedUserWithRelayrID:serverUser.uid];
                 if (localUser) { if (completion) { completion(nil, localUser); } return; }
                 
                 // If not, add it to the keyChain
-                [self addUserToICloud:serverUser];
+                [strongSelf addUserToICloud:serverUser];
                 if (completion) { completion(nil, serverUser); }
             }];
         }];
