@@ -22,6 +22,25 @@
 + (void)isRelayrCloudReachable:(void (^)(NSError* error, NSNumber* isReachable))completion;
 
 /*!
+ *  @method requestAppInfoFor:completion:
+ *
+ *  @abstract It queries the Relayr Cloud for information of a Relayr application.
+ *
+ *  @param completion Block indicating the result of the server query.
+ */
++ (void)requestAppInfoFor:(NSString*)appID completion:(void (^)(NSError* error, NSString* appID, NSString* appName, NSString* appDescription))completion;
+
+/*!
+ *  @method isUserWithEmail:registeredInRelayrCloud:
+ *
+ *  @abstract It checks whether a email is registered into the Relayr cloud.
+ *
+ *  @param email <code>NSString</code> representing the user's email.
+ *  @param completion Block answering the query.
+ */
++ (void)isUserWithEmail:(NSString*)email registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))completion;
+
+/*!
  *  @method requestOAuthCodeWithOAuthClientID:redirectURI:completion:
  *
  *  @abstract It requests the temporal access OAuth code needed to ask for a 100 year OAuth access token.
@@ -54,16 +73,6 @@
                      OAuthClientSecret:(NSString*)clientSecret
                            redirectURI:(NSString*)redirectURI
                             completion:(void (^)(NSError* error, NSString* token))completion;
-
-/*!
- *  @method isUserWithEmail:registeredInRelayrCloud:
- *
- *  @abstract It checks whether a email is registered into the Relayr cloud.
- *
- *  @param email <code>NSString</code> representing the user's email.
- *  @param completion Block answering the query.
- */
-+ (void)isUserWithEmail:(NSString*)email registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))completion;
 
 /*!
  *  @method initWithUser:
@@ -159,14 +168,5 @@
  *  @param completion Block indicating the result of the server query.
  */
 - (void)requestUserApps:(void (^)(NSError* error, NSArray* apps))completion;
-
-/*!
- *  @method requestAppInfoOf:completion:
- *
- *  @abstract It queries the Relayr Cloud for information of a Relayr application.
- *
- *  @param completion Block indicating the result of the server query.
- */
-- (void)requestAppInfoOf:(NSString*)appID completion:(void (^)(NSError* error, NSString* appID, NSString* appName, NSString* appDescription))completion;
 
 @end

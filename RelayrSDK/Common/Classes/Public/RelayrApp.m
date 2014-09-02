@@ -5,16 +5,29 @@
 #import "RelayrUser.h"      // Relayr.framework (Public)
 #import "RelayrUser_Setup.h"// Relayr.framework (Private)
 #import "RLAWebService.h"   // Relayr.framework (Web)
+
 #import "RLAError.h"        // Relayr.framework (Utilities)
 #import "RLALog.h"          // Relayr.framework (Utilities)
 #import "RLAKeyChain.h"     // Relayr.framework (Utilities)
+
+// KeyChain key
+static NSString* const kRelayrAppStorageKey = @"RelayrApps";
+
+// NSCoding variables
+static NSString* const kCodingID = @"uid";
+static NSString* const kCodingClientID = @"cid";
+static NSString* const kCodingClientSecret = @"cse";
+static NSString* const kCodingRedirectURI = @"uri";
+static NSString* const kCodingName = @"nam";
+static NSString* const kCodingDescription = @"des";
+static NSString* const kCodingPublisherID = @"pub";
+static NSString* const kCodingUsers = @"usr";
 
 @interface RelayrApp ()
 @property (readwrite,nonatomic) NSString* oauthClientID;
 @property (readwrite,nonatomic) NSString* oauthClientSecret;
 @property (readwrite,nonatomic) NSString* redirectURI;
-@property (readwrite,nonatomic) NSString* appDescription;
-@property (readwrite,nonatomic) NSString* publisherID;
+@property (readwrite,nonatomic) NSMutableArray* users;
 @end
 
 @implementation RelayrApp
@@ -27,45 +40,76 @@
     return nil;
 }
 
-- (instancetype)initWithID:(NSString*)appID OAuthClientID:(NSString*)clientID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI
++ (void)appWithID:(NSString*)appID OAuthClientID:(NSString*)clientID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI completion:(void (^)(NSError*, RelayrApp*))completion
 {
-    if (!appID || !clientID || !clientSecret || !redirectURI) { [RLALog debug:dRLAErrorMessageMissingArgument]; return nil; }
+    if (!completion) { return [RLALog debug:dRLAErrorMessageMissingArgument]; }
+    if (appID.length==0) { return completion(RLAErrorMissingArgument, nil); }
     
-    self = [super init];
-    if (self)
-    {
-        _uid = appID;
-        _oauthClientID = clientID;
-        _oauthClientSecret = clientSecret;
-        _redirectURI = redirectURI;
-    }
-    return self;
+    RelayrApp* result = [RelayrApp retrieveFromKeyChainAppWithID:appID];
+    if (result) { return completion(nil, result); }
+    
+    result = [[RelayrApp alloc] initPrivatelyWithID:appID OAuthClientID:clientID OAuthClientSecret:clientSecret redirectURI:redirectURI];
+    if (!result) { return completion(RLAErrorSigningFailure, nil); }
+    
+    [RLAWebService requestAppInfoFor:result.uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription) {
+        if ( ![result.uid isEqualToString:appID] ) { return completion(RLAErrorWebrequestFailure, nil); }
+        result.name = appName;
+        result.appDescription = appDescription;
+        completion(nil, result);
+    }];
 }
 
-- (instancetype)initWithID:(NSString*)appID publisherID:(NSString*)publisherID
++ (BOOL)storeAppInKeyChain:(RelayrApp*)app
 {
-    if (!appID || !publisherID) { return nil; }
+    if (!app.uid || !app.oauthClientID || !app.oauthClientSecret || !app.redirectURI) { [RLALog debug:dRLAErrorMessageMissingArgument]; return NO; }
+    NSMutableArray* storedApps = [RelayrApp storedRelayrApps];
     
-    self = [super init];
-    if (self)
+    if (storedApps.count)
     {
-        _uid = appID;
-        _publisherID = publisherID;
+        NSNumber* appIndex = [RelayrApp indexForRelayrAppID:app.uid inRelayrAppsArray:storedApps];
+        if (!appIndex) { [storedApps addObject:app]; }
+        else { [storedApps replaceObjectAtIndex:appIndex.unsignedIntegerValue withObject:app]; }
     }
-    return self;
+    else { storedApps = [NSMutableArray arrayWithObject:app]; }
+    
+    [RLAKeyChain setObject:storedApps forKey:kRelayrAppStorageKey];
+    return YES;
 }
 
-- (void)queryCloudForAppInfoWithRelayrUser:(RelayrUser*)user completion:(void (^)(NSError* error, NSString* previousName, NSString* previousDescription))completion
++ (RelayrApp*)retrieveFromKeyChainAppWithID:(NSString*)appID
+{
+    NSArray* currentlyStoredApps = [RelayrApp storedRelayrApps];
+    NSNumber* appIndex = [RelayrApp indexForRelayrAppID:appID inRelayrAppsArray:currentlyStoredApps];
+    return (appIndex) ? [currentlyStoredApps objectAtIndex:appIndex.unsignedIntegerValue] : nil;
+}
+
++ (BOOL)removeFromKeyChainApp:(RelayrApp*)app
+{
+    if (!app.uid) { return NO; }
+    
+    NSMutableArray* storedApps = [RelayrApp storedRelayrApps];
+    if (storedApps.count==0) { return YES; }
+    
+    NSNumber* appIndex = [RelayrApp indexForRelayrAppID:app.uid inRelayrAppsArray:storedApps];
+    if (appIndex)
+    {
+        [storedApps removeObjectAtIndex:appIndex.unsignedIntegerValue];
+        
+        if (storedApps.count == 0) { [RLAKeyChain removeObjectForKey:kRelayrAppStorageKey]; }
+        else { [RLAKeyChain setObject:storedApps forKey:kRelayrAppStorageKey]; }
+    }
+    return YES;
+}
+
+- (void)queryForAppInfoWithUserCredentials:(RelayrUser*)user completion:(void (^)(NSError*, NSString*, NSString*))completion
 {
     if (!user) { if (completion) { completion(RLAErrorMissingArgument, nil, nil); } return; }
     
     __weak RelayrApp* weakSelf = self;
-    [user.webService requestAppInfoOf:_uid completion:^(NSError *error, NSString *appID, NSString *appName, NSString *appDescription) {
-        if (error) { if (completion) { completion(error, nil, nil); } return; }
-        
+    [RLAWebService requestAppInfoFor:_uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription) {
         __strong RelayrApp* strongSelf = weakSelf;
-        if ( ![strongSelf.uid isEqualToString:appID] ) { if (completion) { completion(RLAErrorMissingExpectedValue, nil, nil); } return; }
         
+        if ( ![strongSelf.uid isEqualToString:appID] ) { return completion(RLAErrorWebrequestFailure, nil, nil); }
         NSString* pName = strongSelf.name, * pDesc = strongSelf.description;
         strongSelf.name = appName; strongSelf.appDescription = appDescription;
         completion(nil, pName, pDesc);
@@ -74,20 +118,31 @@
 
 - (NSArray*)loggedUsers
 {
-    NSObject <NSCoding> * retrievedObj = [RLAKeyChain objectForKey:kRLAKeyChainKeyUser];
-    if ( !retrievedObj || ![retrievedObj isKindOfClass:[NSArray class]] ) { return nil; }
-    
-    NSArray* users = (NSArray*)retrievedObj;
-    return (users.count) ? users : nil;
+    return (_users.count>0) ? [NSMutableArray arrayWithArray:_users] : nil ;
 }
 
-- (void)signUserStoringCredentialsIniCloud:(BOOL)sendCredentialsToiCloud completion:(void (^)(NSError*, RelayrUser*))completion
+- (RelayrUser*)loggedUserWithRelayrID:(NSString*)relayrID
+{
+    if (!relayrID || relayrID.length==0) { [RLALog debug:RLAErrorMissingArgument.localizedDescription]; return nil; }
+    
+    RelayrUser* result;
+    NSArray* loggedUsers = self.loggedUsers;
+    
+    for (RelayrUser* user in loggedUsers)
+    {
+        if ( [user.uid isEqualToString:relayrID] ) { result=user; break; }
+    }
+    
+    return result;
+}
+
+- (void)signInUser:(void (^)(NSError*, RelayrUser*))completion
 {
     __weak RelayrApp* weakSelf = self;
     [RLAWebService requestOAuthCodeWithOAuthClientID:self.oauthClientID redirectURI:self.redirectURI completion:^(NSError* error, NSString* tmpCode) {
         if (error) { if (completion) { completion(error, nil); } return; }
         
-        [RLAWebService requestOAuthTokenWithOAuthCode:tmpCode OAuthClientID:weakSelf.oauthClientID OAuthClientSecret:weakSelf.oauthClientSecret redirectURI:weakSelf.redirectURI completion:^(NSError *error, NSString *token) {
+        [RLAWebService requestOAuthTokenWithOAuthCode:tmpCode OAuthClientID:weakSelf.oauthClientID OAuthClientSecret:weakSelf.oauthClientSecret redirectURI:weakSelf.redirectURI completion:^(NSError* error, NSString* token) {
             if (error) { if (completion) { completion(error, nil); } return; }
             if (!token.length) { if (completion) { completion(RLAErrorMissingArgument, nil); } return; }
             
@@ -99,14 +154,20 @@
                 if (error) { if (completion) { completion(error, nil); } return; }
                 
                 __strong RelayrApp* strongSelf = weakSelf;
-                
                 // If the user was already logged, return that user.
                 RelayrUser* localUser = [strongSelf loggedUserWithRelayrID:serverUser.uid];
-                if (localUser) { if (completion) { completion(nil, localUser); } return; }
-                
-                // If not, add it to the keyChain
-                [strongSelf addUserToICloud:serverUser];
-                if (completion) { completion(nil, serverUser); }
+                if (localUser)
+                {
+                    localUser.name = serverUser.name;
+                    localUser.email = serverUser.email;
+                    if (completion) { completion(nil, localUser); }
+                    return;
+                }
+                else
+                {
+                    [strongSelf.users addObject:serverUser];
+                    if (completion) { completion(nil, serverUser); }
+                }
             }];
         }];
     }];
@@ -115,63 +176,97 @@
 - (void)signOutUser:(RelayrUser*)user
 {
     NSString* userToken = user.token;
-    NSArray* storedUsers = self.loggedUsers;
+    if (userToken.length == 0) { return; }
     
-    NSUInteger const userCount = storedUsers.count;
+    NSUInteger const userCount = _users.count;
     for (NSUInteger i=0; i<userCount; ++i)
     {
-        RelayrUser* tmpUser = storedUsers[i];
-        if ( [userToken isEqualToString:tmpUser.token] )
-        {
-            if (userCount > 1)
-            {
-                NSMutableArray* users = [NSMutableArray arrayWithArray:self.loggedUsers];
-                [users removeObjectAtIndex:i];
-                [RLAKeyChain setObject:[NSArray arrayWithArray:users] forKey:kRLAKeyChainKeyUser];
-            }
-            else
-            {
-                [RLAKeyChain removeObjectForKey:kRLAKeyChainKeyUser];
-            }
-            break;
-        }
+        RelayrUser* tmpUser = _users[i];
+        if ( [userToken isEqualToString:tmpUser.token] ) { return [_users removeObjectAtIndex:i]; }
     }
 }
 
-- (RelayrUser*)loggedUserWithRelayrID:(NSString*)relayrID
-{
-    if (!relayrID || relayrID.length==0) { [RLALog debug:RLAErrorMissingArgument.localizedDescription]; return nil; }
+#pragma mark NSCoding
 
-    RelayrUser* result;
-    NSArray* loggedUsers = self.loggedUsers;
-    
-    for (RelayrUser* user in loggedUsers)
+- (id)initWithCoder:(NSCoder*)decoder
+{
+    self = [self initPrivatelyWithID:[decoder decodeObjectForKey:kCodingID] OAuthClientID:[decoder decodeObjectForKey:kCodingClientID] OAuthClientSecret:[decoder decodeObjectForKey:kCodingClientSecret] redirectURI:[decoder decodeObjectForKey:kCodingRedirectURI]];
+    if (self)
     {
-        if (user.uid == relayrID) { result=user; break; }
+        _name = [decoder decodeObjectForKey:kCodingName];
+        _appDescription = [decoder decodeObjectForKey:kCodingDescription];
+        _publisherID = [decoder decodeObjectForKey:kCodingPublisherID];
+        _users = [decoder decodeObjectForKey:kCodingUsers];
     }
-    
-    return result;
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder*)coder
+{
+    [coder encodeObject:_uid forKey:kCodingID];
+    [coder encodeObject:_oauthClientID forKey:kCodingClientID];
+    [coder encodeObject:_oauthClientSecret forKey:kCodingClientSecret];
+    [coder encodeObject:_redirectURI forKey:kCodingRedirectURI];
+    [coder encodeObject:_name forKey:kCodingName];
+    [coder encodeObject:_appDescription forKey:kCodingDescription];
+    [coder encodeObject:_publisherID forKey:kCodingPublisherID];
+    [coder encodeObject:_users forKey:kCodingUsers];
+}
+
+#pragma mark NSObject
+
+- (NSString*)description
+{
+    return [NSString stringWithFormat:@"RelayrApp\n{\n\t ID:\t%@\n\t Name:\t%@\n\t Description: %@\n}\n", _uid, _name, _appDescription];
 }
 
 #pragma mark - Private methods
 
 /*******************************************************************************
- * It adds a user to the logged Relayr User shared with iCloud.
+ * It retrieves all currently stored Relayr Apps.
+ * If there are none, it returns <code>nil</code>.
  ******************************************************************************/
-- (void)addUserToICloud:(RelayrUser*)user
++ (NSMutableArray*)storedRelayrApps
 {
-    NSString* uid = user.uid;
-    if (!uid) { return; }
+    NSObject<NSCoding> * obj = [RLAKeyChain objectForKey:kRelayrAppStorageKey];
+    return ([obj isKindOfClass:[NSMutableArray class]] && ((NSMutableArray*)obj).count!=0) ? (NSMutableArray*)obj : nil;
+}
+
+/*******************************************************************************
+ * It returns the index of the Relayr Application with the specified ID (or nil).
+ ******************************************************************************/
++ (NSNumber*)indexForRelayrAppID:(NSString*)appID inRelayrAppsArray:(NSArray*)apps
+{
+    if (apps.count==0 || appID.length==0) { return nil; }
     
-    NSMutableArray* iCloudUsers = [NSMutableArray arrayWithArray:self.loggedUsers];
+    __block NSNumber* result = nil;
+    [apps enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop) {
+        if ( [obj isKindOfClass:[RelayrApp class]] && [((RelayrApp*)obj).uid isEqualToString:appID] )
+        {
+            result = [NSNumber numberWithUnsignedInteger:idx];
+            *stop = YES;
+        }
+    }];
+    return result;
+}
+
+/*******************************************************************************
+ * Private initialiser. Only used by this class.
+ ******************************************************************************/
+- (instancetype)initPrivatelyWithID:(NSString*)appID OAuthClientID:(NSString*)clientID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI
+{
+    if (!appID.length || !clientID.length || !clientSecret.length || !redirectURI.length) { return nil; }
     
-    for (RelayrUser* loggedUser in iCloudUsers)
+    self = [super init];
+    if (self)
     {
-        if ([loggedUser.uid isEqualToString:uid]) { return; }
+        _uid = appID;
+        _oauthClientID = clientID;
+        _oauthClientSecret = clientSecret;
+        _redirectURI = redirectURI;
+        _users = [NSMutableArray array];
     }
-    
-    [iCloudUsers addObject:user];
-    [RLAKeyChain setObject:[NSArray arrayWithArray:iCloudUsers] forKey:kRLAKeyChainKeyUser];
+    return self;
 }
 
 @end

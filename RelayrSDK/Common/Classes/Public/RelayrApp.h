@@ -10,23 +10,54 @@
 @interface RelayrApp : NSObject
 
 /*!
- *  @method initWithID:OAuthClientID:OAuthClientSecret:redirectURI:
+ *  @method appWithID:OAuthClientID:OAuthClientSecret:redirectURI:
  *
- *  @abstract It represents a Relayr application as an object.
- *  @discussion This initialisator will only store the app credentials. If the credentials passed are false/wrong, you will have an useless <code>RelayrApp</code> object. You can check whether an Relayr Application ID actually exists within the <code>RelayrCloud</code> class.
+ *  @abstract It retrieves from the database or create an applicationID and query the server for its authenticity.
  *
  *  @param appID <code>NSString</code> representing the Relayr Application ID. You receive this when creating an app in the Relayr developer platform.
  *  @param clientID <code>NSString</code> representing the Oauth client ID. You receive this when creating an app in the Relayr developer platform.
  *  @param clientSecret <code>NSString</code> representing the Oauth client secret. You receive this when creating an app in the Relayr developer platform.
  *  @param redirectURI <code>NSString</code> representing the redirect URI you chosed when creating an app in the Relayr developer platform.
- *	@return Object storing the minimum/basic Relayr Application information.
+ *  @param completion Block indicating the result of the initialisation. This method is potentially asynchronous, if it does need to talk to the server. Be aware!
  *
  *  @see RelayrCloud
  */
-- (instancetype)initWithID:(NSString*)appID
-             OAuthClientID:(NSString*)clientID
-         OAuthClientSecret:(NSString*)clientSecret
-               redirectURI:(NSString*)redirectURI;
++ (void)appWithID:(NSString*)appID
+    OAuthClientID:(NSString*)clientID
+OAuthClientSecret:(NSString*)clientSecret
+      redirectURI:(NSString*)redirectURI
+       completion:(void (^)(NSError* error, RelayrApp* app))completion;
+
+/*!
+ *  @method storeAppInKeyChain:
+ *
+ *  @abstract It stores a Relayr Application in a permanent storage (KeyChain or iCloud, depending on your application capabilities).
+ *  @param app Relayr Application to be removed from the permanent storage.
+ *
+ *	@return Boolean indicating whether the operation was successful.
+ */
++ (BOOL)storeAppInKeyChain:(RelayrApp*)app;
+
+/*!
+ *  @method retrieveFromKeyChainAppWithID:
+ *
+ *  @abstract It retrieves a previously stored Relayr Application from a permanent storage (KeyChain or iCloud, depending on your device capabilities).
+ *
+ *  @param appID Relayr ID for a Relayr application.
+ *
+ *	@return Fully initialised <code>RelayrApp</code> or <code>nil</code>.
+ */
++ (RelayrApp*)retrieveFromKeyChainAppWithID:(NSString*)appID;
+
+/*!
+ *  @method removeFromKeyChainApp:
+ *
+ *  @abstract It removes a previously stored Relayr Application from a permanent storage (KeyChain or iCloud).
+ *
+ *  @param app Relayr Application to be removed from the permanent storage.
+ *	@return If the object is successfully removed or the object was not there, <code>YES</code> is returned. If the remove operation could not be performed, the method will return <code>NO</code>.
+ */
++ (BOOL)removeFromKeyChainApp:(RelayrApp*)app;
 
 /*!
  *  @property uid
@@ -82,25 +113,38 @@
 @property (readonly,nonatomic) NSString* publisherID;
 
 /*!
- *  @method queryCloudForAppInfo:
+ *  @method queryForAppInfoWithUserCredentials:completion:
  *
  *  @abstract It queries the Relayr Cloud for the lacking application properties. You need a Relayr user with the credentials to look for the application information.
  *  @discussion The method is called asynchronously and it can fail. If the request was successful, the old values will be writen as block arguments, and the new ones will be set in the <code>RelayrApp</code> instance.
  *
  *  @param completion Block handing status of the cloud request.
  */
-- (void)queryCloudForAppInfoWithRelayrUser:(RelayrUser*)user completion:(void (^)(NSError* error, NSString* previousName, NSString* previousDescription))completion;
+- (void)queryForAppInfoWithUserCredentials:(RelayrUser*)user completion:(void (^)(NSError* error, NSString* previousName, NSString* previousDescription))completion;
 
 /*!
  *  @property loggedUsers
  *
  *  @abstract Array containing all the currently signed <code>RelayrUser</code>s.
- *  @discussion By logged, it means the user credentials that the application is currently storing. Calling the signing out method, will remove those credential from the application database.
+ *  @discussion By logged, it means the user credentials that the application is currently storing. Calling the signing out method, will remove those credential from the application's database.
  */
 @property (readonly,nonatomic) NSArray* loggedUsers;
 
 /*!
- *  @method signUserStoringCredentialsIniCloud:completion
+ *  @method loggedUserWithRelayrID:
+ *
+ *  @abstract Retrieved a logged user (<code>loggedUsers</code>) with the passed RelayrID. If the user is not logged or it is not valid, <code>nil</code> will be the result.
+ *  @discussion This is a convenience method. It does the same as iterating through <code>loggedUsers</code> array and check for the Relayr ID of every user.
+ *
+ *  @param relayrID The Relayr ID that identifies the Relayr user in the Relayr Cloud.
+ *	@return <code>nil</code> or the <code>RelayrUser</code> with that <code>relayrID</code>.
+ *
+ *  @see RelayrUser
+ */
+- (RelayrUser*)loggedUserWithRelayrID:(NSString*)relayrID;
+
+/*!
+ *  @method signInUser:
  *
  *  @abstract It signs a Relayr User for the current Relayr Application and returns (in the completion block) the object representing the user.
  *  @discussion The user will be confronted by a modal webview asking for his/her Relayr's credentials. If the sign in process is successful, a fully formed <code>RelayrUser</code> object will be returned in the <code>completion</code> block.
@@ -111,32 +155,18 @@
  *
  *  @see RelayrUser
  */
-- (void)signUserStoringCredentialsIniCloud:(BOOL)sendCredentialsToiCloud
-                                completion:(void (^)(NSError* error, RelayrUser* user))completion;
+- (void)signInUser:(void (^)(NSError* error, RelayrUser* user))completion;
 
 /*!
  *  @method signOutUser:
  *
  *  @abstract It signs out an user from the Relayr Application.
- *  @discussion What this actually do is to remove the user from the stored users array (and the iCloud if it was there). Meanwhile you are keeping a <code>RelayrUser</code> reference alive, you can still use the user.
+ *  @discussion What this actually do is to remove the user from the stored users array. Meanwhile you are keeping a <code>RelayrUser</code> reference alive, you can still use the user.
  *
  *  @param user Representaton of a Relayr user, if <code>RelayrUser</code> is not valid or <code>nil</code>, this method won't perform any job.
  *
  *  @see RelayrUser
  */
 - (void)signOutUser:(RelayrUser*)user;
-
-/*!
- *  @method loggedUserWithRelayrID:
- *
- *  @abstract Retrieved a logged user (<code>loggedUsers</code>) with the passed RelayrID. If the user is not logged or it is not valid, <code>nil</code> will be the result.
- *  @discussion This is a convenience method. It does the same as iterating through the logged user array and check for the Relayr ID of every user.
- *
- *  @param relayrID The Relayr ID that identifies the Relayr user in the Relayr Cloud.
- *	@return <code>nil</code> or a fully initialised RelayrUser.
- *
- *  @see RelayrUser
- */
-- (RelayrUser*)loggedUserWithRelayrID:(NSString*)relayrID;
 
 @end

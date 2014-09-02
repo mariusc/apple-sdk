@@ -3,7 +3,6 @@
 #import "RLALog.h"          // Relayr.framework
 
 NSString* const kRLAKeyChainService = @"io.relayr.framework";
-NSString* const kRLAKeyChainKeyUser = @"Users";
 
 @implementation RLAKeyChain
 
@@ -70,8 +69,8 @@ NSString* const kRLAKeyChainKeyUser = @"Users";
     return @{
         (__bridge id)kSecClass : (__bridge id)kSecClassGenericPassword, // The class of the KeyChain Item we will be storing/removing
         (__bridge id)kSecAttrService : kRLAKeyChainService,
-        (__bridge id)kSecAttrAccount : kRLAKeyChainKeyUser,
-        (__bridge id)kSecAttrGeneric : kRLAKeyChainKeyUser
+        (__bridge id)kSecAttrAccount : key,
+        (__bridge id)kSecAttrGeneric : key
     };
 }
 
