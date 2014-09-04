@@ -106,7 +106,7 @@ static NSString* const kCodingPublishers = @"pub";
         _uid = [decoder decodeObjectForKey:kCodingID];
         _name = [decoder decodeObjectForKey:kCodingName];
         _email = [decoder decodeObjectForKey:kCodingEmail];
-        _transmitter = [decoder decodeObjectForKey:kCodingTransmitters];
+        _transmitters = [decoder decodeObjectForKey:kCodingTransmitters];
         _devices = [decoder decodeObjectForKey:kCodingDevices];
         _devicesBookmarked = [decoder decodeObjectForKey:kCodingDevices];
         _apps = [decoder decodeObjectForKey:kCodingApps];
@@ -121,7 +121,7 @@ static NSString* const kCodingPublishers = @"pub";
     [coder encodeObject:_uid forKey:kCodingID];
     [coder encodeObject:_name forKey:kCodingName];
     [coder encodeObject:_email forKey:kCodingEmail];
-    [coder encodeObject:_transmitter forKey:kCodingTransmitters];
+    [coder encodeObject:_transmitters forKey:kCodingTransmitters];
     [coder encodeObject:_devices forKey:kCodingDevices];
     [coder encodeObject:_devicesBookmarked forKey:kCodingBookmarks];
     [coder encodeObject:_apps forKey:kCodingApps];
@@ -132,7 +132,7 @@ static NSString* const kCodingPublishers = @"pub";
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"Relayr User:\n{\n\t ID:\t%@\n\t Token:\t%@\n\t Name:\t%@\n\t Email:\t%@\n\t Number of transmitters:\t\t%@\n\t Number of devices:\t\t\t\t%@\n\t Number of bookmarked devices:\t%@\n\t Number of publishers under this user:\t%@\n}", _uid, _token, _name, _email, (!_transmitter) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_transmitter.count], (!_devices) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_devices.count], (!_devicesBookmarked) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_devicesBookmarked.count], (!_publishers) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_publishers.count]];
+    return [NSString stringWithFormat:@"Relayr User:\n{\n\t ID:\t%@\n\t Token:\t%@\n\t Name:\t%@\n\t Email:\t%@\n\t Number of transmitters:\t\t%@\n\t Number of devices:\t\t\t\t%@\n\t Number of bookmarked devices:\t%@\n\t Number of publishers under this user:\t%@\n}", _uid, _token, _name, _email, (!_transmitters) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_transmitters.count], (!_devices) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_devices.count], (!_devicesBookmarked) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_devicesBookmarked.count], (!_publishers) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_publishers.count]];
 }
 
 #pragma mark - Private methods

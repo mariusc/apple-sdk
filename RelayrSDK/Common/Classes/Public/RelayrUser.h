@@ -33,7 +33,7 @@
  *  @abstract Transmitter that this <code>RelayrUser</code>'s instace owns.
  *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
  */
-@property (readonly,nonatomic) NSArray* transmitter;
+@property (readonly,nonatomic) NSArray* transmitters;
 
 /*!
  *  @abstract Devices that this <code>RelayrUser</code>'s instace owns.
