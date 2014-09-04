@@ -4,7 +4,4 @@
    <FileRef
       location = "group:RelayrSDK/RelayrSDK.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:../Old Examples/8 - OSX_SDK_test/OSX_SDK_test/OSX_SDK_test.xcodeproj">
-   </FileRef>
 </Workspace>
