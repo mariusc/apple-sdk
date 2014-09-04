@@ -55,7 +55,7 @@ static NSString* const kCodingPublishers = @"pub";
         {
             strongSelf.uid = uid;
         }
-        else if ( ![strongSelf.uid isEqualTo:uid] )
+        else if ( ![strongSelf.uid isEqualToString:uid] )
         {
             if (completion) { completion(RLAErrorWrongRelayrUser, nil, nil); }
             return;

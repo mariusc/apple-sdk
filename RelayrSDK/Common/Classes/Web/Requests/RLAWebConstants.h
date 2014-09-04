@@ -8,6 +8,7 @@
 #define dRLAWebRequest_HeaderField_ContentType          @"Content-Type"
 #define dRLAWebRequest_HeaderValue_ContentType_UTF8     @"application/x-www-form-urlencoded; charset=utf-8"
 #define dRLAWebRequest_HeaderValue_ContentType_JSON     @"application/json"
+#define dRLAWebRequest_HeaderField_UserAgent            @"User-Agent"
 #define dRLAWebRequest_Respond_BadRequest               400
 
 #pragma mark - RLAWebService

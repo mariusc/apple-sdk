@@ -3,6 +3,7 @@
 #import "RLALog.h"              // Relayr.framework (Utilities)
 #import "RLAError.h"            // Relayr.framework (Utilities)
 
+// WebRequests methods
 NSString* const kRLAWebRequestModeCOPY      = @"COPY";
 NSString* const kRLAWebRequestModeDELETE    = @"DELETE";
 NSString* const kRLAWebRequestModeGET       = @"GET";
@@ -12,9 +13,18 @@ NSString* const kRLAWebRequestModePATCH     = @"PATCH";
 NSString* const kRLAWebRequestModePOST      = @"POST";
 NSString* const kRLAWebRequestModePUT       = @"PUT";
 
+// UserAgent WebRequest header
+NSString* kRLAWebRequestUserAgent;
+
 @implementation RLAWebRequest
 
 #pragma mark - Public API
+
++ (void)initialize
+{
+    // TODO: Find a better way that doesn't require it to retrieve the constant at runtime.
+    kRLAWebRequestUserAgent = [[NSProcessInfo processInfo].environment objectForKey:@"WEBREQUEST_USERAGENT"];
+}
 
 - (instancetype)initWithHostURL:(NSURL*)hostURL
 {
@@ -26,6 +36,7 @@ NSString* const kRLAWebRequestModePUT       = @"PUT";
     self = [self init];
     if (self)
     {
+        [[NSProcessInfo processInfo].environment objectForKey:@"WEBREQUEST_USERAGENT"];
         _hostURL = hostURL;
         _timeout = timeout;
         _oauthToken = token;
@@ -44,6 +55,7 @@ NSString* const kRLAWebRequestModePUT       = @"PUT";
     request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
     request.HTTPMethod = mode;
     request.timeoutInterval = (_timeout) ? _timeout.doubleValue : dRLAWebRequest_Timeout;
+    [request setValue:kRLAWebRequestUserAgent forHTTPHeaderField:dRLAWebRequest_HeaderField_UserAgent];
     if (!request) { return NO; }
     
     if (_oauthToken)
