@@ -2,8 +2,6 @@
 #import "RLAWebOAuthController.h"   // Relayr.framework (Web)
 
 /*!
- *  @class RLAWebOAuthControllerIOS
- *
  *  @abstract It creates a viewController hosting a <code>UIWebView</code> that will ask for Relayr user credentials.
  *
  *  @see RLAWebOAuthController
@@ -11,8 +9,6 @@
 @interface RLAWebOAuthControllerIOS : UIViewController <RLAWebOAuthController>
 
 /*!
- *  @method initWithURLRequest:redirectURI:
- *
  *  @abstract It initializes the <code>UIViewController</code> with a request URL and a completion block.
  *  @discussion Both arguments must be valid for the method to not return <code>nil</code>.
  *

@@ -1,5 +1,5 @@
 #import "RLALocalUser.h"        // Base class
-@class RLABluetoothService;     // Relayr.framework
+@class RLABluetoothService;     // FIXME: Old
 
 @interface RLALocalUser ()
 

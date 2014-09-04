@@ -12,53 +12,77 @@
 
 #pragma mark - RLAWebService
 
-#define dRLAWebService_Host                             @"https://api.relayr.io"
+#define Web_Host                            @"https://api.relayr.io"
 
-// Relayr cloud reachability
-#define dRLAWebService_Reachability_RelativePath        @"/device-models"
-#define dRLAWebService_Reachability_Respond_StatusCode  200
+// Relayr Applications
+#define Web_RespondKey_AppID                @"id"
+#define Web_RespondKey_AppName              @"name"
+#define Web_RespondKey_AppDescription       @"description"
+#define Web_RespondKey_AppConnectedDevices  @"connectedDevices"
 
-// App info
-#define dRLAWebService_AppInfo_RelativePath(appID)      [NSString stringWithFormat:@"/apps/%@", appID]
-#define dRLAWebService_AppInfo_Respond_StatusCode       200
-#define dRLAWebService_AppInfo_RespondKey_ID            @"id"
-#define dRLAWebService_AppInfo_RespondKey_Name          @"name"
-#define dRLAWebService_AppInfo_RespondKey_Description   @"description"
+// Relayr Users
+#define Web_RespondKey_UserID               @"id"
+#define Web_RespondKey_UserName             @"name"
+#define Web_RespondKey_UserEmail            @"email"
+
+// Relayr Publishers
+#define Web_RespondKey_PublisherID          @"id"
+#define Web_RespondKey_PublisherName        @"name"
+#define Web_RespondKey_PublisherOwner       @"owner"
+
+// Relayr Transmitters
+#define Web_RespondKey_TransmitterID        @"id"
+#define Web_RespondKey_TransmitterName      @"name"
+#define Web_RespondKey_TransmitterSecret    @"secret"
+#define Web_RespondKey_TransmitterOwner     @"owner"
+
+// Relayr Devices
+#define Web_RespondKey_DeviceID             @"id"
+#define Web_RespondKey_DeviceName           @"name"
+#define Web_RespondKey_DeviceSecret         @"secret"
+#define Web_RespondKey_DeviceOwner          @"owner"
+
+#pragma Requests
+
+// Cloud reachability
+#define Web_RequestRelativePath_Reachability            @"/device-models"
+#define Web_RequestResponseCode_Reachability            200
+
+// App's info
+#define Web_RequestRelativePath_AppInfo(appID)          [NSString stringWithFormat:@"/apps/%@", appID]
+#define Web_RequestResponseCode_AppInfo                 200
+
+// Email check
+#define Web_RequestRelativePath_EmailCheck(email)       [NSString stringWithFormat:@"/users/validate?email=%@", email]
+#define Web_RequestResponseCode_EmailCheck              200
+#define Web_RequestResponseKey_EmailCheck_Exists        @"exists"
+#define Web_RequestResponseVal_EmailCheck_Exists        @"true"
 
 // OAuth token
-#define dRLAWebService_OAuthToken_RelativePath          @"/oauth2/token"
-#define dRLAWebService_OAuthToken_Body(code, redirectURI, clientID, clientSecret)   \
-[NSString stringWithFormat:@"code=%@&redirect_uri=%@&client_id=%@&scope=&client_secret=%@&grant_type=authorization_code", code, [redirectURI stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], clientID, clientSecret]
-#define dRLAWebService_OAuthToken_Respond_StatusCode    200
-#define dRLAWebService_OAuthToken_RespondKey_Token      @"access_token"
+#define Web_RequestRelativePath_OAuthToken              @"/oauth2/token"
+#define Web_RequestBody_OAuthToken(code, redirectURI, clientID, clientSecret)   [NSString stringWithFormat:@"code=%@&redirect_uri=%@&client_id=%@&scope=&client_secret=%@&grant_type=authorization_code", code, [redirectURI stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], clientID, clientSecret]
+#define Web_RequestResponseCode_OAuthToken              200
+#define Web_RequestResponseKey_OAuthToken_AccessToken   @"access_token"
 
-// User registration query
-#define dRLAWebService_UserQuery_RelativePath(email)    [NSString stringWithFormat:@"/users/validate?email=%@", email]
-#define dRLAWebService_UserQuery_Respond_StatusCode     200
-#define dRLAWebService_UserQuery_RespondKey_Message     @"message"
-#define dRLAWebService_UserQuery_RespondVal_ValidSubstr @"is already registered"
+// User's info
+#define Web_RequestRelativePath_UserInfo                @"/oauth2/user-info"
+#define Web_RequestResponseCode_UserInfo                200
 
-// User info
-#define dRLAWebService_UserInfo_RelativePath            @"/oauth2/user-info"
-#define dRLAWebService_UserInfo_Respond_StatusCode      200
-#define dRLAWebService_UserInfo_RespondKey_ID           @"id"
-#define dRLAWebService_UserInfo_RespondKey_Name         @"name"
-#define dRLAWebService_UserInfo_RespondKey_Email        @"email"
+// User's transmitters
+#define Web_RequestRelativePath_UserTrans(userID)       [NSString stringWithFormat:@"/users/%@/transmitters", userID];
+#define Web_RequestResponseCode_UserTrans               200
 
-// Publishers
-#define dRLAWebService_Publishers_RelativePath(userID)  [NSString stringWithFormat:@"/users/%@/publishers", userID]
-#define dRLAWebService_Publishers_Respond_StatusCode    200
-#define dRLAWebService_Publishers_RespondKey_ID         @"id"
-#define dRLAWebService_Publishers_RespondKey_Name       @"name"
-#define dRLAWebService_Publishers_RespondKey_Owner      @"owner"
+// User's devices
+#define Web_RequestRelativePath_UserDevices(userID)     [NSString stringWithFormat:@"/users/%@/devices", userID];
+#define Web_RequestResponseCode_UserDevices             200
 
-// Apps
+// User's publishers
+#define Web_RequestRelativePath_UserPubs(userID)        [NSString stringWithFormat:@"/users/%@/publishers", userID]
+#define Web_RequestResponseCode_UserPubs                200
+
+// User's apps
 #define dRLAWebService_Apps_RelativePath(userID)        [NSString stringWithFormat:@"/users/%@/apps", userID]
 #define dRLAWebService_Apps_Respond_StatusCode          200
-#define dRLAWebService_Apps_RespondKey_ID               @"id"
-#define dRLAWebService_Apps_RespondKey_Name             @"name"
-#define dRLAWebService_Apps_RespondKey_Owner            @"owner"
-#define dRLAWebService_Apps_RespondKey_ConnectedDevices @"connectedDevices"
 
 #pragma mark - RLAWebOAuthController
 

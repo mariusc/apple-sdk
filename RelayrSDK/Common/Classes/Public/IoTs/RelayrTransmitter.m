@@ -1,4 +1,6 @@
 #import "RelayrTransmitter.h"       // Header
+#import "RelayrUser.h"              // Relayr.framework (Public)
+#import "RelayrTransmitter_Setup.h" // Relayr.framework (Private)
 
 static NSString* const kCodingID = @"uid";
 static NSString* const kCodingSecret = @"sec";
@@ -14,6 +16,19 @@ static NSString* const kCodingDevices = @"dev";
 {
     [self doesNotRecognizeSelector:_cmd];
     return nil;
+}
+
+- (instancetype)initWithID:(NSString*)uid secret:(NSString*)secret
+{
+    if (uid.length==0 || secret.length==0) { return nil; }
+    
+    self = [super init];
+    if (self)
+    {
+        _uid = uid;
+        _secret = secret;
+    }
+    return self;
 }
 
 #pragma mark NSCoding
@@ -39,6 +54,13 @@ static NSString* const kCodingDevices = @"dev";
     [coder encodeObject:_name forKey:kCodingName];
     [coder encodeObject:_owner forKey:kCodingOwner];
     [coder encodeObject:_devices forKey:kCodingDevices];
+}
+
+#pragma mark NSObject
+
+- (NSString*)description
+{
+    return [NSString stringWithFormat:@"Relayr Transmitter\n{\n\t Relayr ID: %@\n\t Name: %@\n\t MQTT Secret: %@\n\t Owner: %@\n\t Number of devices: %lu\n}\n", _uid, _name, _secret, (_owner) ? _owner : @"?", (unsigned long)_devices.count];
 }
 
 @end

@@ -81,6 +81,10 @@
 		62D1719C19A65CCC009BBED1 /* RelayrDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D1719A19A65CCC009BBED1 /* RelayrDevice.m */; };
 		62D1719F19A65D3B009BBED1 /* RelayrTransmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D1719D19A65D3B009BBED1 /* RelayrTransmitter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		62D171A019A65D3B009BBED1 /* RelayrTransmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D1719E19A65D3B009BBED1 /* RelayrTransmitter.m */; };
+		62D73C9C19B70CAB006F417D /* RelayrTransmitter_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D73C9B19B70CAB006F417D /* RelayrTransmitter_Setup.h */; };
+		62D73C9D19B70CAB006F417D /* RelayrTransmitter_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D73C9B19B70CAB006F417D /* RelayrTransmitter_Setup.h */; };
+		62D73C9F19B718C8006F417D /* RelayrDevice_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D73C9E19B718C8006F417D /* RelayrDevice_Setup.h */; };
+		62D73CA019B718C8006F417D /* RelayrDevice_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D73C9E19B718C8006F417D /* RelayrDevice_Setup.h */; };
 		62E87DD919AB2AAA00728AC6 /* CDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E87DD419AB2AAA00728AC6 /* CDebug.h */; };
 		62E87DDA19AB2AAA00728AC6 /* CDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E87DD419AB2AAA00728AC6 /* CDebug.h */; };
 		62E87DDB19AB2AAA00728AC6 /* CMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E87DD519AB2AAA00728AC6 /* CMacros.h */; };
@@ -147,6 +151,8 @@
 		62D1719A19A65CCC009BBED1 /* RelayrDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrDevice.m; sourceTree = "<group>"; };
 		62D1719D19A65D3B009BBED1 /* RelayrTransmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrTransmitter.h; sourceTree = "<group>"; };
 		62D1719E19A65D3B009BBED1 /* RelayrTransmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrTransmitter.m; sourceTree = "<group>"; };
+		62D73C9B19B70CAB006F417D /* RelayrTransmitter_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrTransmitter_Setup.h; sourceTree = "<group>"; };
+		62D73C9E19B718C8006F417D /* RelayrDevice_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrDevice_Setup.h; sourceTree = "<group>"; };
 		62E04C3119A15520001FEDCD /* RLANetworkInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLANetworkInfo.h; sourceTree = "<group>"; };
 		62E04C3219A15520001FEDCD /* RLANetworkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLANetworkInfo.m; sourceTree = "<group>"; };
 		62E04C3619A158DF001FEDCD /* RLAKeyChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAKeyChain.h; sourceTree = "<group>"; };
@@ -342,6 +348,7 @@
 				6250E19219B51566003932AA /* RelayrApp_Setup.h */,
 				622BA3BB19ABDC2800FD5C24 /* RelayrUser_Setup.h */,
 				6250E18F19B50AAD003932AA /* RelayrPublisher_Setup.h */,
+				62D73C9A19B70B39006F417D /* IoTs */,
 			);
 			path = Private;
 			sourceTree = "<group>";
@@ -623,6 +630,15 @@
 			path = IoTs;
 			sourceTree = "<group>";
 		};
+		62D73C9A19B70B39006F417D /* IoTs */ = {
+			isa = PBXGroup;
+			children = (
+				62D73C9B19B70CAB006F417D /* RelayrTransmitter_Setup.h */,
+				62D73C9E19B718C8006F417D /* RelayrDevice_Setup.h */,
+			);
+			path = IoTs;
+			sourceTree = "<group>";
+		};
 		62E04C2C19A15046001FEDCD /* Web */ = {
 			isa = PBXGroup;
 			children = (
@@ -692,6 +708,8 @@
 				6252F0DF199C24E2002ECE4D /* Relayr.h in Headers */,
 				62D1718819A62D63009BBED1 /* RelayrCloud.h in Headers */,
 				62D1718C19A62E8D009BBED1 /* RelayrApp.h in Headers */,
+				62D73C9C19B70CAB006F417D /* RelayrTransmitter_Setup.h in Headers */,
+				62D73C9F19B718C8006F417D /* RelayrDevice_Setup.h in Headers */,
 				62D1719719A65C98009BBED1 /* RelayrUser.h in Headers */,
 				62D1719F19A65D3B009BBED1 /* RelayrTransmitter.h in Headers */,
 				62D1719B19A65CCC009BBED1 /* RelayrDevice.h in Headers */,
@@ -724,6 +742,8 @@
 				6252F10B199C2C3B002ECE4D /* Relayr.h in Headers */,
 				623F325919A786BA00F774EB /* RelayrCloud.h in Headers */,
 				623F325B19A786BE00F774EB /* RelayrApp.h in Headers */,
+				62D73C9D19B70CAB006F417D /* RelayrTransmitter_Setup.h in Headers */,
+				62D73CA019B718C8006F417D /* RelayrDevice_Setup.h in Headers */,
 				623F326619A7871F00F774EB /* RelayrUser.h in Headers */,
 				623F326719A7872400F774EB /* RelayrTransmitter.h in Headers */,
 				623F326819A7872700F774EB /* RelayrDevice.h in Headers */,
@@ -996,18 +1016,21 @@
 		6252F0AB199C243D002ECE4D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 			};
 			name = Debug;
 		};
 		6252F0AC199C243D002ECE4D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 			};
 			name = Release;
 		};
 		6252F0AD199C2443002ECE4D /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 			};
 			name = Distribution;
 		};

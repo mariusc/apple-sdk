@@ -3,18 +3,14 @@
 @import WebKit;                     // Apple
 
 /*!
- *  @class RLAWebOAuthControllerOSX
- *
  *  @abstract It represents a WebController for OS X.
- *  @discussion An instance of this class implements the <code>RLAWebOAuthControllerOSX<code> protocol.
+ *  @discussion An instance of this class implements the <code>RLAWebOAuthControllerOSX</code> protocol.
  *
  *  @see RLAWebOAuthControllerOSX
  */
 @interface RLAWebOAuthControllerOSX : NSWindowController <RLAWebOAuthController>
 
 /*!
- *  @method initWithURLRequest:redirectURI:
- *
  *  @abstract It creates the webview and initialise it with the passed arguments.
  *  @discussion Then it is ready to launch at any time a <i>present</i> method is called.
  *
@@ -31,8 +27,6 @@
 #pragma mark WebPolicyDelegate
 
 /*!
- *  @method webView:decidePolicyForNavigationAction:request:frame:decisionListener:
- *
  *  @abstract It routes a navigation action internally or to an external viewer.
  *  @discussion This method will be called before loading starts, and on every redirect.
  *
@@ -48,12 +42,10 @@
 #pragma mark WebFrameLoadDelegate
 
 /*!
- *  @method webView:didFinishLoadForFrame:
- *
  *  @abstract Notifies the delegate that the committed load of a frame has completed
  *  @discussion This method is called after the committed data source of a frame has successfully loaded and will only be called when all subresources such as images and stylesheets are done loading. Plug-In content and JavaScript-requested loads may occur after this method is called.
  *
- *  @param webView The WebView sending the message
+ *  @param sender The WebView sending the message
  *  @param frame The frame that finished loading
  *
  *  @see WebFrameLoadDelegate
@@ -61,12 +53,10 @@
 - (void)webView:(WebView*)sender didFinishLoadForFrame:(WebFrame*)frame;
 
 /*!
- *  @method webView:didFailLoadWithError:
- *
  *  @abstract Notifies the delegate that the committed load of a frame has failed
  *  @discussion This method is called after a data source has committed but failed to completely load.
  *
- *  @param webView The WebView sending the message
+ *  @param sender The WebView sending the message
  *  @param error The error that occurred
  *  @param frame The frame that failed to load
  *

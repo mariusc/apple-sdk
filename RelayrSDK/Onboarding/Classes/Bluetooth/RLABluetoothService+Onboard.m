@@ -1,5 +1,5 @@
 #import "RLABluetoothService+Onboard.h"     // Header
-#import "RLACredentialsWunderbar.h"         // Relayr.framework
+#import "RLACredentialsWunderbar.h"         // FIXME: Old
 
 @implementation RLABluetoothService (Onboard)
 

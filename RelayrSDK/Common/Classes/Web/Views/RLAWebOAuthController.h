@@ -1,24 +1,18 @@
 @import Foundation;
 
 /*!
- *  @protocol RLAWebOAuthController
- *
  *  @abstract It represents a WebView Controller that it is presented modally to ask for user credentials.
  */
 @protocol RLAWebOAuthController <NSObject>
 
 @required
 /*!
- *  @property urlRequest
- *
  *  @abstract It indicates where the webView will be trying to connect to.
  */
 @property (readonly,nonatomic) NSURLRequest* urlRequest;
 
 @required
 /*!
- *  @property redirectURI
- *
  *  @abstract The redirect URI from which Relayr cloud message are arriving.
  *  @discussion It is a security meassure.
  */
@@ -26,16 +20,12 @@
 
 @required
 /*!
- *  @method completion
- *
  *  @abstract Block containing what it will be executed once the request fail or success.
  */
 @property (copy,nonatomic) void (^completion)(NSError* error, NSString* tmpCode);
 
 @required
 /*!
- *  @method presentModally
- *
  *  @abstract It presents the called WebView modally in your system.
  *  @discussion If it can't present itself, it will return <code>NO</code>. The completion won't be called with an error.
  *
@@ -45,9 +35,7 @@
 
 @optional
 /*!
- *  @method presentAsPopOverInViewController:witTipLocation:
- *
- *  @abstract It presents the called WebView as a popover of the passed <code>viewController.
+ *  @abstract It presents the called WebView as a popover of the passed <code>viewController</code>.
  *  @discussion This method also accepts an optional <code>NSValue</code> with the rectangle or point indicating where the tip of the buble should be.
  *
  *  @param viewController <code>UIViewController</code> or <code>NSViewController</code> where the webView will be presented. If <code>nil</code>, this method won't perform any job.
@@ -59,8 +47,6 @@
 @end
 
 /*!
- *  @class RLAWebOAuthController
- *
  *  @abstract This class only gives you the appropriate webView object for your system.
  *
  *  @see RLAWebOAuthControllerIOS
@@ -69,8 +55,6 @@
 @interface RLAWebOAuthController : NSObject
 
 /*!
- *  @method webViewWithOAuthClientID:redirectURI:completion:
- *
  *  @abstract It gives you the appropriate webview for your system. If the arguments are invalid, <code>nil</code> is returned.
  *
  *  @param clientID OAuth client ID.
@@ -84,8 +68,6 @@
                                                  completion:(void (^)(NSError* error, NSString* tmpCode))completion;
 
 /*!
- *  @method OAuthTemporalCodeFromRequest:withRedirectURI:
- *
  *  @abstract It retrieves the OAuth temporal code from an <code>NSURLRequest</code> coming from the Relayr server.
  *  @discussion This method is usually called from within the <code>RLAWebOAuthController</code> specific from each system.
  *

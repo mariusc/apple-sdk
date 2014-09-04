@@ -1,11 +1,9 @@
 #import "RLABluetoothService.h"     // Base class
-@class RLACredentialsWunderbar;     // Relayr.framework
+@class RLACredentialsWunderbar;     // FIXME: Old class
 
 @interface RLABluetoothService (Onboard)
 
 /*!
- *  @method peripheralWithWunderbarCredentials:wifiSSID:wifiPassword:andCompletionHandler:
- *
  *  @abstract This request is meant to be used for the onboarding of a new wunderbar
  *  @discussion It sets up the users phone to act as a peripheral in order to expose a predefined set of credentials which are beeing read by the master module and used by it in order to authenticate to the relayr server.
  *

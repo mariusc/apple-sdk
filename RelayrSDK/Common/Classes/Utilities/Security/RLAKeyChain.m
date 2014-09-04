@@ -1,6 +1,6 @@
 #import "RLAKeyChain.h"     // Header
-#import "RLAError.h"        // Relayr.framework
-#import "RLALog.h"          // Relayr.framework
+#import "RLAError.h"        // Relayr.framework (Utilities)
+#import "RLALog.h"          // Relayr.framework (Utilities)
 
 NSString* const kRLAKeyChainService = @"io.relayr.framework";
 

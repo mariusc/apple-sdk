@@ -1,5 +1,5 @@
 #import "RLALocalUser+Onboard.h"        // Header
-#import "RLALocalUser_Private.h"        // Relayr.framework (extension)
+#import "RLALocalUser_Private.h"        // FIXME: Old
 
 @implementation RLALocalUser (Onboard)
 

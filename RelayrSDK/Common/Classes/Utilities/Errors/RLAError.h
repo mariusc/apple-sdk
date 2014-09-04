@@ -1,15 +1,11 @@
 @import Foundation; // Apple
 
 /*!
- *  @constant kRLAErrorDomain
- *
  *  @abstract It specifies the error domain of relayr.
  */
 FOUNDATION_EXPORT NSString* const kRLAErrorDomain;
 
 /*!
- *  @constant kRLAErrorStringFile
- *
  *  @abstract The string that contains the translation of all Relayr.framework error messages.
  */
 FOUNDATION_EXPORT NSString* const kRLAErrorStringFile;
@@ -17,8 +13,6 @@ FOUNDATION_EXPORT NSString* const kRLAErrorStringFile;
 #pragma mark Error codes
 
 /*!
- *  @enum RLAErrorCode
- *
  *  @abstract Enumeration of all the error codes inside the relayr error domain.
  *
  *  @constant kRLAErrorCodeUnknown Error Unknown.
@@ -63,20 +57,16 @@ typedef NS_ENUM(NSInteger, RLAErrorCode) {
 #define RLAErrorWrongRelayrUser         [RLAError errorWithCode:kRLAErrorCodeWrongRelayrUser localizedDescription:dRLAErrorMessageWrongRelayrUser userInfo:RLAErrorUserInfoLocal]
 
 /*!
- *  @class RLAError
- *
  *  @abstract Utility class which provides convenience methods for initializing errors as well as internal framework error codes.
  */
 @interface RLAError : NSObject
 
 /*!
- *  @method errorWithCode:localizedDescription:info:
- *
  *  @abstract Convenience method for initializing framework specific errors.
  *
  *  @param code The predefined <code>RLAErrorCode</code> for the error.
  *  @param localizedDescription Localised string with the description of the error.
- *  @param info A dictionary of information for the error. This parameter may be <code>nil</code>.
+ *  @param userInfo A dictionary of information for the error. This parameter may be <code>nil</code>.
  *	@return An <code>NSError</code> object for the error domain with the specified error code and a dictionary of error user information.
  *
  *  @seealso RLAErrorCode
@@ -86,8 +76,6 @@ typedef NS_ENUM(NSInteger, RLAErrorCode) {
                  userInfo:(NSDictionary*)userInfo;
 
 /*!
- *  @method errorWithCode:localizedDescription:failureReason:
- *
  *  @abstract Convenience method for initializing framework specific errors.
  *
  *  @param code The predefined RLAErrorCode for the error.

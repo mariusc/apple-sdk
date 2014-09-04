@@ -16,7 +16,7 @@ static NSString* const kCodingOwner = @"own";
     return nil;
 }
 
-- (instancetype)initWithPublisherID:(NSString*)uid owner:(RelayrUser*)owner
+- (instancetype)initWithPublisherID:(NSString*)uid owner:(NSString*)owner
 {
     if (uid.length==0 || !owner) return nil;
     
@@ -51,7 +51,7 @@ static NSString* const kCodingOwner = @"own";
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"Relayr Publisher:\n{\n\t ID:\t%@\n\t Name:\t%@\n\t User ID:\t%@\n}", _uid, _name, _owner.uid];
+    return [NSString stringWithFormat:@"Relayr Publisher:\n{\n\t ID:\t%@\n\t Name:\t%@\n\t User ID:\t%@\n}", _uid, _name, _owner];
 }
 
 @end

@@ -1,6 +1,6 @@
 #import "RLANetworkInfo.h"                  // Header
-@import SystemConfiguration.CaptiveNetwork; // Apple
 #import "CPlatforms.h"                      // Relayr.framework (Utilities)
+@import SystemConfiguration.CaptiveNetwork; // Apple
 
 @implementation RLANetworkInfo
 
@@ -35,7 +35,6 @@
     
 #elif defined(OS_APPLE_OSX)
     #warning "Implement a function to discover current Wifi connection
-    
     return nil;
 #endif
 }

@@ -26,7 +26,6 @@ static NSString* const kCodingUsers = @"usr";
 @interface RelayrApp ()
 @property (readwrite,nonatomic) NSString* oauthClientID;
 @property (readwrite,nonatomic) NSString* oauthClientSecret;
-@property (readwrite,nonatomic) NSString* redirectURI;
 @property (readwrite,nonatomic) NSMutableArray* users;
 @end
 
@@ -233,7 +232,7 @@ static NSString* const kCodingUsers = @"usr";
 }
 
 /*******************************************************************************
- * It returns the index of the Relayr Application with the specified ID (or nil).
+ * It returns the index of the Relayr Application with the specified ID (or <code>nil</code>), within an array of RelayrApp objects.
  ******************************************************************************/
 + (NSNumber*)indexForRelayrAppID:(NSString*)appID inRelayrAppsArray:(NSArray*)apps
 {
@@ -251,7 +250,7 @@ static NSString* const kCodingUsers = @"usr";
 }
 
 /*******************************************************************************
- * Private initialiser. Only used by this class.
+ * Private designated initialiser. Only used by this class.
  ******************************************************************************/
 - (instancetype)initPrivatelyWithID:(NSString*)appID OAuthClientID:(NSString*)clientID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI
 {

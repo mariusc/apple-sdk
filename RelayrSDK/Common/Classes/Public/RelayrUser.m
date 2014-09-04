@@ -1,7 +1,14 @@
-#import "RelayrUser.h"          // Header
-#import "RelayrUser_Setup.h"    // Relayr.framework (Private)
-#import "RLAWebService.h"       // Relayr.framework (Web)
-#import "RLAError.h"            // Relayr.framework (Utilities)
+#import "RelayrUser.h"              // Header
+#import "RelayrApp.h"               // Relayr.framework (Public)
+#import "RelayrTransmitter.h"       // Relayr.framework (Public)
+#import "RelayrDevice.h"            // Relayr.framework (Public)
+#import "RelayrPublisher.h"         // Relayr.framework (Public)
+#import "RelayrUser_Setup.h"        // Relayr.framework (Private)
+#import "RelayrTransmitter_Setup.h" // Relayr.framework (Private)
+#import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
+#import "RelayrPublisher_Setup.h"   // Relayr.framework (Private)
+#import "RLAWebService.h"           // Relayr.framework (Web)
+#import "RLAError.h"                // Relayr.framework (Utilities)
 
 static NSString* const kCodingToken = @"tok";
 static NSString* const kCodingID = @"uid";
@@ -39,16 +46,23 @@ static NSString* const kCodingPublishers = @"pub";
 - (void)queryCloudForUserInfo:(void (^)(NSError* error, NSString* previousName, NSString* previousEmail))completion
 {
     __weak RelayrUser* weakSelf = self;
-    [_webService requestUserInfo:^(NSError *error, NSString* uid, NSString *name, NSString *email) {
+    [_webService requestUserInfo:^(NSError* error, NSString* uid, NSString* name, NSString* email) {
         if (error) { if (completion) { completion(error, nil, nil); } return; }
-        if (!uid) { if (completion) { completion(RLAErrorWrongRelayrUser, nil, nil); } return; }
+        if (uid.length==0) { if (completion) { completion(RLAErrorWrongRelayrUser, nil, nil); } return; }
         
         __strong RelayrUser* strongSelf = weakSelf;
-        if (!strongSelf.uid) { strongSelf.uid = uid; }
-        else if (strongSelf.uid != uid) { if (completion) { completion(RLAErrorWrongRelayrUser, nil, nil); } return; }
+        if (!strongSelf.uid)
+        {
+            strongSelf.uid = uid;
+        }
+        else if ( ![strongSelf.uid isEqualTo:uid] )
+        {
+            if (completion) { completion(RLAErrorWrongRelayrUser, nil, nil); }
+            return;
+        }
         
-        NSString* pName = strongSelf.name;      strongSelf.name = name;
-        NSString* pEmail = strongSelf.email;    strongSelf.email = email;
+        NSString* pName = strongSelf.name, * pEmail = strongSelf.email;
+        strongSelf.name = name; strongSelf.email = email;
         if (completion) { completion(nil, pName, pEmail); }
     }];
 }
@@ -114,7 +128,7 @@ static NSString* const kCodingPublishers = @"pub";
     [coder encodeObject:_publishers forKey:kCodingPublishers];
 }
 
-#pragma mark Base class
+#pragma mark NSObject
 
 - (NSString*)description
 {
@@ -125,17 +139,21 @@ static NSString* const kCodingPublishers = @"pub";
 
 /*******************************************************************************
  * It sets the user's IoTs with the server query.
- * No checks are performed onto the method parameters. Be sure to send the correct ones.
+ * The arrays contain a 
  ******************************************************************************/
 - (BOOL)setUsersIoTsFromServerTransmitterArray:(NSArray*)serverTransmitters deviceArray:(NSArray*)serverDevices bookmarkDeviceArray:(NSArray*)serverBookmarks
 {
     BOOL isThereChanges = NO;
     
-    // TODO: Fill up
+    
     
     return isThereChanges;
 }
 
+/*******************************************************************************
+ * It sets the user's applications and publishers with the server query.
+ * No checks are performed onto the method parameters. Be
+ ******************************************************************************/
 - (BOOL)setUsersAppsFromServerArray:(NSArray*)serverApps publishersFrom:(NSArray*)serverPublishers
 {
     BOOL isThereChanges = NO;
