@@ -27,11 +27,11 @@ There are two options at the time to use the `Relayr.framework`.
 Usage
 -----
 
-The `Relayr.framework` have a small subset of useful classes.
+The `Relayr.framework` has a small subset of useful classes.
 
 ### Web features
 
-The Relayr framework can call Relayr servers for information on apps, users, transmitters, devices, etc. It is worth noticing that all this call are asynchronous and the answer takes an amount of time propertional to the quality of your connection and the size of the response asked for.
+The Relayr framework can call the Relayr servers for information on apps, users, transmitters, devices, etc. It is worth noticing that all these calls are asynchronous and the answers take an amount of time proportional to the quality of your connection and the size of the response asked for.
 
 * `RelayrCloud.h`. It is used as a static class to check up several status from the Relayr Cloud.
 
@@ -40,7 +40,7 @@ The Relayr framework can call Relayr servers for information on apps, users, tra
       if (isReachable.boolValue) {
           NSLog(@"The Relayr Cloud is reachable!")
       }
-  }]
+  }];
   ```
 
 * `RelayrApp.h`. It represents a Relayr Application. You can think of it as the representation of your iOS/OSX app in the Relayr Cloud. You create an object with the *appID*, *OAuthClientID*, *OAuthClientSecret*, and *redirectURI* given to you when you create a Relayr Application in [developer.relayr.io](https://developer.relayr.io).
@@ -51,7 +51,7 @@ The Relayr framework can call Relayr servers for information on apps, users, tra
           NSLog(@"Application with name: %@ and description: %@" app.name, app.description);
           self.app = app;
       }
-  }]
+  }];
   ```
   
   You can look into the app properties, query the server for information related to the up, or more commonly to sign in and sign out users into your application.
@@ -61,7 +61,7 @@ The Relayr framework can call Relayr servers for information on apps, users, tra
       if (user) {
           [self.users addObject user];
       }
-  }]
+  }];
   ```
 
 * `RelayrUser.h` represents a logged in users. Users can access data from devices or sent data to the cloud. They can check for transmitters/devices they own. Bookmark favorite devices or even become publishers. You can have as many logged in users as you want.
@@ -86,6 +86,6 @@ The Relayr framework can call Relayr servers for information on apps, users, tra
   }]
   ```
 
-* `RelayrTransmitter.h` represents a relayr that connects sensors (usually BLE) to the Relayr Cloud. For example, the Wunderbar is composed of 7 pieces: 1 Transmitter (Master Module) and 6 BLE sensors. The transmitter takes the data from the 6 sensors and sensor over MQTT to the Relayr Cloud. From there, that data is routed to any Relayr App/User interested on it.
+* `RelayrTransmitter.h` instance represents a ----- that connects to sensors (usually BLE) to the Relayr Cloud. For example, the Wunderbar is composed of 7 pieces: 1 Transmitter (Master Module) and 6 BLE sensors. The transmitter takes the data from the 6 sensors and send it over MQTT to the Relayr Cloud. From there, that data is routed to any Relayr App/User interested on it.
 
-* `RelayrDevice.h` represents a sensing device. A single Relayr device can *sense* many values at the same time. So you should always query for the capabilities of the device.
+* `RelayrDevice.h` represents a sensing device. A single Relayr device can *sense* many values at the same time. Thus, you should always query for the capabilities of the device.
