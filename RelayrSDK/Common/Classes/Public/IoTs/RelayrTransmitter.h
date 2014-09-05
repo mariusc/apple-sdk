@@ -13,16 +13,16 @@
 @property (readonly,nonatomic) NSString* uid;
 
 /*!
- *  @abstract Secret for the MQTT messages.
- *  @discussion Take it as the transmitter's password.
- */
-@property (readonly,nonatomic) NSString* secret;
-
-/*!
  *  @abstract The given name of the transmitter.
  *  @discussion It can be changed by server calls.
  */
 @property (readonly,nonatomic) NSString* name;
+
+/*!
+ *  @abstract Secret for the MQTT messages.
+ *  @discussion Take it as the transmitter's password.
+ */
+@property (readonly,nonatomic) NSString* secret;
 
 /*!
  *  @abstract Owner ID of this transmitter.

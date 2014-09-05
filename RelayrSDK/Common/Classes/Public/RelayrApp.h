@@ -55,22 +55,6 @@ OAuthClientSecret:(NSString*)clientSecret
 @property (readonly,nonatomic) NSString* uid;
 
 /*!
- *  @abstract OAuth credential for the client ID.
- */
-@property (readonly,nonatomic) NSString* oauthClientID;
-
-/*!
- *  @abstract OAuth credential for the client secret.
- */
-@property (readonly,nonatomic) NSString* oauthClientSecret;
-
-/*!
- *  @abstract This URI is check for security.
- *  @discussion The Relayr related information should arrived from this URI.
- */
-@property (readonly,nonatomic) NSString* redirectURI;
-
-/*!
  *  @abstract Relayr Application name.
  *  @discussion This value must be first retrieved asynchronously from the Relayr Cloud. If you don't query the server, this property is <code>nil</code>.
  */
@@ -87,6 +71,22 @@ OAuthClientSecret:(NSString*)clientSecret
  *  @discussion This value must be first retrieved asynchronously from the Relayr Cloud. If you don't query the server, this property is <code>nil</code>.
  */
 @property (readonly,nonatomic) NSString* publisherID;
+
+/*!
+ *  @abstract OAuth credential for the client ID.
+ */
+@property (readonly,nonatomic) NSString* oauthClientID;
+
+/*!
+ *  @abstract OAuth credential for the client secret.
+ */
+@property (readonly,nonatomic) NSString* oauthClientSecret;
+
+/*!
+ *  @abstract This URI is check for security.
+ *  @discussion The Relayr related information should arrived from this URI.
+ */
+@property (readonly,nonatomic) NSString* redirectURI;
 
 /*!
  *  @abstract It queries the Relayr Cloud for the lacking application properties. You need a Relayr user with the credentials to look for the application information.

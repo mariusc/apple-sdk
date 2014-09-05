@@ -30,6 +30,18 @@
 @property (readonly,nonatomic) NSString* email;
 
 /*!
+ *  @abstract Relayr applications for this <code>RelayrUser</code>'s instace.
+ *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
+ */
+@property (readonly,nonatomic) NSArray* apps;
+
+/*!
+ *  @abstract How many <code>publisher</code>s have the Relayr user owns.
+ *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
+ */
+@property (readonly,nonatomic) NSArray* publishers;
+
+/*!
  *  @abstract Transmitter that this <code>RelayrUser</code>'s instace owns.
  *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
  */
@@ -46,18 +58,6 @@
  *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
  */
 @property (readonly,nonatomic) NSArray* devicesBookmarked;
-
-/*!
- *  @abstract Relayr applications for this <code>RelayrUser</code>'s instace.
- *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
- */
-@property (readonly,nonatomic) NSArray* apps;
-
-/*!
- *  @abstract How many <code>publisher</code>s have the Relayr user owns.
- *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
- */
-@property (readonly,nonatomic) NSArray* publishers;
 
 /*!
  *  @abstract It queries the Relayr servers for the user information.
