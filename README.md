@@ -1,5 +1,5 @@
-# Introduction
---------------
+Introduction
+------------
 Welcome to the relayr Apple-SDK repository.
 This repository contains the code which allows you to build the relayr Framework for iOS and MAC OS X. The *RelayrSDK* project generates a product called `Relayr.framework`, which, depending on your use purpose, can be run on a mac or on an iOS device.
 
@@ -11,7 +11,8 @@ For Mac applications, you can use Xcode 5.
 
 There are currently two methods of including the `Relayr.framework` in your project:
 
-#### Method 1: Getting the *.framework* file and dragging and dropping it into your project.
+#### Method 1: 
+#####Getting the *.framework* file and dragging and dropping it into your project.
 
   * Download or generate the `Relayr.framework` file:
      
@@ -21,7 +22,8 @@ There are currently two methods of including the `Relayr.framework` in your proj
      
      ![Second step of the build process](./README/Assets/BuildProcess02.gif)
 
-#### Method 2: Integrating the *RelayrSDK* project as a subproject of your workspace and then dragging and dropping the `Relayr.framework` product into the *Embedded Binaries* tab:
+#### Method 2: 
+#####Integrating the *RelayrSDK* project as a subproject of your workspace and then dragging and dropping the `Relayr.framework` product into the *Embedded Binaries* tab:
 
   ![Method 2 of the build process](./README/Assets/BuildProcess03.gif)
 
@@ -30,7 +32,7 @@ There are currently two methods of including the `Relayr.framework` in your proj
 The `Relayr.framework` includes a small subset of useful classes, which allow you to communicate with the relayr cloud, receive sensor data and manage users, devices transmitters and other entities. At the moment The BLE Direct Connection Classes are not fully implemented but they should be available in upcoming releases. The classes indicated below are all related to App > Cloud > Device communication.  
 All calls are asynchronous and the server response time is proportional to the quality of your connection and the size of the response requetsed.
 
-### `RelayrCloud.h`
+#### `RelayrCloud.h`
 
 Used as a static class to receive several statuses on the relayr servers.
 
@@ -42,7 +44,7 @@ Used as a static class to receive several statuses on the relayr servers.
   }];
   ```
 
-###`RelayrApp.h`
+####`RelayrApp.h`
 
 A representation of your iOS/OSX app on the Relayr Cloud. 
 
@@ -67,7 +69,7 @@ You create an object with the respective *appID*, *OAuthClientID*, *OAuthClientS
   }];
   ```
 
-### `RelayrUser.h` 
+#### `RelayrUser.h` 
 
 Represents a logged-in user. 
 Users can access device data. They can query transmitters/devices they own, bookmark favorite devices and become app publishers. 
@@ -93,16 +95,15 @@ You can have as many logged in users as you want.
   }]
   ```
 
-### `RelayrTransmitter.h` 
+#### `RelayrTransmitter.h` 
 
-An instance representing a Transmitter. A transmitter is one of the basic relayr entities. 
+An instance representing a *Transmitter*. A transmitter is one of the basic relayr entities. 
 A transmitter, contrary to a device does not gather data but is only used to *relay* the data from the devices to the relayr cloud platform. The transmitter is also used to authenticate the different devices that transmit data via it.
 In the case of the relayr WunderBar, the transmitter is the Master Module in the Cloud Platform scenario (data being sent from the sensors by the Master Module to the relayr cloud over MQTT/SSL). In the future case of direct connection the an app running on your phone could serve as a transmitter.
 
-### `RelayrDevice.h` 
+#### `RelayrDevice.h` 
 
-An instance representing a device. A device is another basic relayr entity. 
+An instance representing a *Device*. A device is another basic relayr entity. 
 A device is any external entity capable of producing measurements 
-and sending them to a transmitter to be further sent to the relayr cloud, or one which is capable of receiving information from the relayr platform. 
-Examples would be a thermometer, a gyroscope or an infrared sensor.
+and sending them to a transmitter to be further sent to the relayr platform, or one which is capable of receiving information from the relayr platform. 
 Since a single relayr device can produce more than one reading at the same time, you should always first query device capabilities.
