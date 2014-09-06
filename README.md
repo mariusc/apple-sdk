@@ -1,30 +1,31 @@
-Introduction
-------------
+# Introduction
+--------------
+Welcome to the relayr Apple-SDK repository.
+This repository contains the code which allows you to build the relayr Framework for iOS and MAC OS X. The *RelayrSDK* project generates a product called `Relayr.framework`, which, depending on your use purpose, can be run on a mac or on an iOS device.
 
-This repository contains the code to build the Relayr Framework for iOS and OS X. The *RelayrSDK* project generates a product called `Relary.framework` that depending on your target can be run on the mac or on an iOS device.
+Currently, the only dependecy of the project is the PUBNUB library. 
+If you are interested in building the framework *for iOS devices*, you will require **Xcode 6 and iOS 8**, since embedded frameworks have only been introduced in iOS 8 enable devices. 
+For Mac applications, you can use Xcode 5.
 
-Currently the only dependecy of the project is the PUBNUB library and if you want to build the framework **for iOS devices, you need Xcode 6 and iOS 8**, since embedded Frameworks have only been introduced to iOS 8 enable devices. For the Mac, you can still use Xcode 5.
+## The Build process
+--------------
+There are currently two options to implement the `Relayr.framework` in your project:
 
-Build process
--------------
+#### Option 1: Getting the *.framework* file and dragging and dropping it into your project.
 
-There are two options at the time to use the `Relayr.framework`.
-
-* Get the *.framework* file and drag and drop it into your project.
-
-  1. First you need to download or generate the `Relayr.framework` file.
+  * Download or generate the `Relayr.framework` file:
      
      ![First step of the build process](./README/Assets/BuildProcess01.gif)
   
-  2. Drag and drop the file into your project and be sure that the framework shows up in both *Embedded Binaries* and *Linked Frameworks and Libraries*.
+  * Drag and drop the file into your project and make sure that the framework appears both in *Embedded Binaries* and in *Linked Frameworks and Libraries*:
      
      ![Second step of the build process](./README/Assets/BuildProcess02.gif)
 
-* Integrate the *RelayrSDK* project as a subproject of your workspace and drag and drop the product into the *Embedded Binaries* tab of your project.
+#### Option 2: Integrating the *RelayrSDK* project as a subproject of your workspace and then dragging and dropping the product into the *Embedded Binaries* tab:
 
   ![Second step of the build process](./README/Assets/BuildProcess03.gif)
 
-Usage
+## Usage
 -----
 
 The `Relayr.framework` has a small subset of useful classes.
