@@ -7,11 +7,11 @@ Currently, the only dependecy of the project is the PUBNUB library.
 If you are interested in building the framework *for iOS devices*, you will require **Xcode 6 and iOS 8**, since embedded frameworks have only been introduced in iOS 8 enable devices. 
 For Mac applications, you can use Xcode 5.
 
-## The Build process
---------------
-There are currently two options to implement the `Relayr.framework` in your project:
+## Getting Started - The Build process
 
-#### Option 1: Getting the *.framework* file and dragging and dropping it into your project.
+There are currently two methods of including the `Relayr.framework` in your project:
+
+#### Method 1: Getting the *.framework* file and dragging and dropping it into your project.
 
   * Download or generate the `Relayr.framework` file:
      
@@ -21,20 +21,18 @@ There are currently two options to implement the `Relayr.framework` in your proj
      
      ![Second step of the build process](./README/Assets/BuildProcess02.gif)
 
-#### Option 2: Integrating the *RelayrSDK* project as a subproject of your workspace and then dragging and dropping the product into the *Embedded Binaries* tab:
+#### Method 2: Integrating the *RelayrSDK* project as a subproject of your workspace and then dragging and dropping the `Relayr.framework` product into the *Embedded Binaries* tab:
 
-  ![Second step of the build process](./README/Assets/BuildProcess03.gif)
+  ![Method 2 of the build process](./README/Assets/BuildProcess03.gif)
 
 ## Usage
------
 
-The `Relayr.framework` has a small subset of useful classes.
+The `Relayr.framework` includes a small subset of useful classes, which allow you to communicate with the relayr cloud, receive sensor data and manage users, devices transmitters and other entities. At the moment The BLE Direct Connection Classes are not fully implemented but they should be available in upcoming releases. The classes indicated below are all related to App > Cloud > Device communication.  
+All calls are asynchronous and the server response time is proportional to the quality of your connection and the size of the response requetsed.
 
-### Web features
+### `RelayrCloud.h`
 
-The Relayr framework can call the Relayr servers for information on apps, users, transmitters, devices, etc. It is worth noticing that all these calls are asynchronous and the answers take an amount of time proportional to the quality of your connection and the size of the response asked for.
-
-* `RelayrCloud.h`. It is used as a static class to check up several status from the Relayr Cloud.
+Used as a static class to receive several statuses on the relayr servers.
 
   ```objective-c
   [RelayrCloud isReachable:^(NSError* error, NSNumber* isReachable){
@@ -44,7 +42,11 @@ The Relayr framework can call the Relayr servers for information on apps, users,
   }];
   ```
 
-* `RelayrApp.h`. It represents a Relayr Application. You can think of it as the representation of your iOS/OSX app in the Relayr Cloud. You create an object with the *appID*, *OAuthClientID*, *OAuthClientSecret*, and *redirectURI* given to you when you create a Relayr Application in [developer.relayr.io](https://developer.relayr.io).
+###`RelayrApp.h`. 
+
+A representation of your iOS/OSX app on the Relayr Cloud. 
+
+You create an object with the respective *appID*, *OAuthClientID*, *OAuthClientSecret*, and *redirectURI* given to you when you first create your application Application on [developer.relayr.io](https://developer.relayr.io).
 
   ```objective-c
   [RelayrApp appWithID:@"..." OAuthClientID:@"..." OAuthClientSecret:@"..." redirectURI:@"..." completion:^(NSError* error, RelayrApp* app){
