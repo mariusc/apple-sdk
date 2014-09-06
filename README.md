@@ -46,7 +46,7 @@ Used as a static class to receive several statuses on the relayr servers.
 
 A representation of your iOS/OSX app on the Relayr Cloud. 
 
-You create an object with the respective *appID*, *OAuthClientID*, *OAuthClientSecret*, and *redirectURI* given to you when you first create your application Application on [developer.relayr.io](https://developer.relayr.io).
+You create an object with the respective *appID*, *OAuthClientID*, *OAuthClientSecret*, and *redirectURI* generated when you first create your application on [the Developer Dashboard Apps section](https://developer.relayr.io/dashboard/apps/myApps).
 
   ```objective-c
   [RelayrApp appWithID:@"..." OAuthClientID:@"..." OAuthClientSecret:@"..." redirectURI:@"..." completion:^(NSError* error, RelayrApp* app){
@@ -57,7 +57,7 @@ You create an object with the respective *appID*, *OAuthClientID*, *OAuthClientS
   }];
   ```
   
-  You can look into the app properties, query the server for information related to the up, or more commonly to sign in and sign out users into your application.
+  You can check your app's properties, query the server for information related to it, or sign users in and out of it.
   
   ```objective-c
   [self.app signInUser:^(NSError* error, RelayrUser* user){
@@ -67,7 +67,11 @@ You create an object with the respective *appID*, *OAuthClientID*, *OAuthClientS
   }];
   ```
 
-* `RelayrUser.h` represents a logged in users. Users can access data from devices or sent data to the cloud. They can check for transmitters/devices they own. Bookmark favorite devices or even become publishers. You can have as many logged in users as you want.
+### `RelayrUser.h` 
+
+Represents a logged-in user. 
+Users can access device data. They can query transmitters/devices they own, bookmark favorite devices and become app publishers. 
+You can have as many logged in users as you want.
 
   ```objective-c
   RelayrUser* user = ...;
@@ -89,6 +93,16 @@ You create an object with the respective *appID*, *OAuthClientID*, *OAuthClientS
   }]
   ```
 
-* `RelayrTransmitter.h` instance represents a bridge that connects to sensors (usually BLE) to the Relayr Cloud. For example, the Wunderbar is composed of 7 pieces: 1 Transmitter (Master Module) and 6 BLE sensors. The transmitter takes the data from the 6 sensors and send it over MQTT to the Relayr Cloud. From there, that data is routed to any Relayr App/User interested on it.
+### `RelayrTransmitter.h` 
 
-* `RelayrDevice.h` represents a sensing device. A single Relayr device can *sense* many values at the same time. Thus, you should always query for the capabilities of the device.
+An instance representing a Transmitter. A transmitter is one of the basic relayr entities. 
+A transmitter, contrary to a device does not gather data but is only used to *relay* the data from the devices to the relayr cloud platform. The transmitter is also used to authenticate the different devices that transmit data via it.
+In the case of the relayr WunderBar, the transmitter is the Master Module in the Cloud Platform scenario (data being sent from the sensors by the Master Module to the relayr cloud over MQTT/SSL). In the future case of direct connection the an app running on your phone could serve as a transmitter.
+
+### `RelayrDevice.h` 
+
+An instance representing a device. A device is another basic relayr entity. 
+A device is any external entity capable of producing measurements 
+and sending them to a transmitter to be further sent to the relayr cloud, or one which is capable of receiving information from the relayr platform. 
+Examples would be a thermometer, a gyroscope or an infrared sensor.
+Since a single relayr device can produce more than one reading at the same time, you should always first query device capabilities.
