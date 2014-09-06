@@ -42,7 +42,7 @@ Used as a static class to receive several statuses on the relayr servers.
   }];
   ```
 
-###`RelayrApp.h`. 
+###`RelayrApp.h`
 
 A representation of your iOS/OSX app on the Relayr Cloud. 
 
