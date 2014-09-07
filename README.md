@@ -3,7 +3,7 @@ Introduction
 Welcome to the relayr Apple-SDK repository.
 This repository contains the code which allows you to build the relayr Framework for iOS and MAC OS X. The *RelayrSDK* project generates a product called `Relayr.framework`, which, depending on your use purpose, can be run on a mac or on an iOS device.
 
-Currently, the only dependecy of the project is the PUBNUB library. 
+Currently, the only dependency of the project is the PUBNUB library. 
 If you are interested in building the framework *for iOS devices*, you will require **Xcode 6 and iOS 8**, since embedded frameworks have only been introduced in iOS 8 enable devices. 
 For Mac applications, you can use Xcode 5.
 
@@ -30,7 +30,7 @@ There are currently two methods of including the `Relayr.framework` in your proj
 ## Usage
 
 The `Relayr.framework` includes a small subset of useful classes, which allow you to communicate with the relayr cloud, receive sensor data and manage users, devices transmitters and other entities. At the moment The BLE Direct Connection Classes are not fully implemented but they should be available in upcoming releases. The classes indicated below are all related to App > Cloud > Device communication.  
-All calls are asynchronous and the server response time is proportional to the quality of your connection and the size of the response requetsed.
+All calls are asynchronous and the server response time is proportional to the quality of your connection and the size of the response requested.
 
 #### `RelayrCloud.h`
 
