@@ -40,8 +40,11 @@
 // Relayr Devices
 #define Web_RespondKey_DeviceID             @"id"
 #define Web_RespondKey_DeviceName           @"name"
+#define Web_RespondKey_DeviceModel          @"model"
+#define Web_RespondKey_DeviceFirmware       @"firmwareVersion"
 #define Web_RespondKey_DeviceSecret         @"secret"
 #define Web_RespondKey_DeviceOwner          @"owner"
+#define Web_RespondKey_DevicePublic         @"public"
 
 #pragma Requests
 

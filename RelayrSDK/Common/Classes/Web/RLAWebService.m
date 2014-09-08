@@ -151,12 +151,14 @@
         for (NSDictionary* dict in json)
         {
             RelayrTransmitter* transmitter = [[RelayrTransmitter alloc] initWithID:dict[Web_RespondKey_TransmitterID] secret:dict[Web_RespondKey_TransmitterSecret]];
-            if (!transmitter) { break; }
+            if (!transmitter) { continue; }
             
             transmitter.owner = dict[Web_RespondKey_TransmitterOwner];
             transmitter.name = dict[Web_RespondKey_TransmitterName];
             [result addObject:transmitter];
         }
+        
+        // ???: What about the transmitter's devices.
         
         return (result.count) ? completion(nil, [NSArray arrayWithArray:result]) : completion(RLAErrorWebrequestFailure, nil);
     }];
@@ -173,12 +175,17 @@
         NSArray* json = processRequest(Web_RequestResponseCode_UserDevices, nil);
         
         NSMutableArray* result = [NSMutableArray arrayWithCapacity:json.count];
-//        for (NSDictionary* dev in json)
-//        {
-//            <#statements#>
-//        }
+        for (NSDictionary* dict in json)
+        {
+            RelayrDevice* device = [[RelayrDevice alloc] initWithID:dict[Web_RespondKey_DeviceID] secret:dict[Web_RespondKey_DeviceSecret]];
+            if (!device) { continue; }
+            
+            device.name = dict[Web_RespondKey_DeviceName];
+            device.owner = dict[Web_RespondKey_DeviceOwner];
+            device.isPublic = dict[Web_RespondKey_DevicePublic];
+        }
         
-        // TODO: Fill up
+        return (result.count) ? completion(nil, [NSArray arrayWithArray:result]) : completion(RLAErrorWebrequestFailure, nil);
     }];
 }
 

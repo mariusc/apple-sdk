@@ -19,15 +19,15 @@
 @property (readonly,nonatomic) NSString* name;
 
 /*!
+ *  @abstract Owner ID of this transmitter.
+ */
+@property (readonly,nonatomic) NSString* owner;
+
+/*!
  *  @abstract Secret for the MQTT messages.
  *  @discussion Take it as the transmitter's password.
  */
 @property (readonly,nonatomic) NSString* secret;
-
-/*!
- *  @abstract Owner ID of this transmitter.
- */
-@property (readonly,nonatomic) NSString* owner;
 
 /*!
  *  @abstract All the devices associated with this transmitter.
