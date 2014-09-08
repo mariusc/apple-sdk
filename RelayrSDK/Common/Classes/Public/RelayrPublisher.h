@@ -2,8 +2,9 @@
 @import Foundation;     // Apple
 
 /*!
- *  @abstract Each instance of this class represent a <i>publisher</i> Relayr entity.
- *  @discussion A <i>publisher</i> is a Relayr user that can create Relayr applications.
+ *  @abstract Every instance of this class represents a <i>publisher</i> entity.
+ *  @discussion A Publisher is a basic entity in the relayr platform. 
+ *	Each user can choose to have the option to publish apps on the relayr platform and they are then assigned a publisherId.
  *
  *  @see RelayrUser
  *  @see RelayrApp
@@ -11,19 +12,19 @@
 @interface RelayrPublisher : NSObject <NSCoding>
 
 /*!
- *  @abstract It represents uniquely a Publisher in the Relayr cloud.
- *  @discussion It cannot be <code>nil</code>.
+ *  @abstract Uniquely represents a Publisher on the relayr platform.
+ *  @discussion Cannot be <code>nil</code>.
  */
 @property (readonly,nonatomic) NSString* uid;
 
 /*!
- *  @abstract It give a human friendly name to a Relayr publisher.
- *  @discussion It can be <code>nil</code>.
+ *  @abstract Represents the publisher name. 
+ *  @discussion Can be <code>nil</code>.
  */
 @property (readonly,nonatomic) NSString* name;
 
 /*!
- *  @abstract Relayr User ID of this publisher entity.
+ *  @abstract The owner of the publisher entity. This is the User by whom the Publisher was created. 
  */
 @property (readonly,nonatomic) NSString* owner;
 

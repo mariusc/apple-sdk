@@ -1,24 +1,26 @@
 @import Foundation;     // Apple
 
 /*!
- *  @abstract This class object (it doesn't accept instantiation) represents the Relayr cloud.
- *  @discussion It allows you to interact with the Relayr cloud in a higher level manner. Such as check whether the Relayr cloud is available or the connection is broken.
+ *  @abstract This class object represents the relayr <a href="https://developer.relayr.io/documents/Welcome/Platform">Cloud Platform</a> (it does not accept instantiation).
+ *  @discussion It allows high level interaction with the relayr platform. 
+ *	For example: checking if the platform is available or the connection is broken.
  */
 @interface RelayrCloud : NSObject
 
 /*!
- *  @abstract It checks whether the Relayr cloud is reachable (needs internet connection) and the service is up.
- *  @discussion The Relayr cloud can be unreachable for several reasons: no internet connection, cannot resolve DNS, Relayr service is temporarily unavailable. It is worth noticing, that you can still work with the SDK even when the Relayr cloud is unavailable (in the unlikely case that that happened).
+ *  @abstract Checks if the relayr cloud platform is reachable and whether the service is up or not.
+ *  @discussion The Relayr cloud may be unreachable for various reasons such as no internet connection, inability to resolve DNS, temporary unavailability of the relayr service. 
+ *	Please note that you can still work with the SDK even when the relayr cloud is unavailable (in the unlikely case that this happens).
  *
- *  @param completion Block giving you a Boolean answer about the availability of the service and an error explaining the unreachability (in case that happened).
+ *  @param completion A block with a Boolean with the availability status of the service or an error in case of unavailibility
  */
 + (void)isReachable:(void (^)(NSError* error, NSNumber* isReachable))completion;
 
 /*!
- *  @abstract It checks whether a email is registered into the Relayr cloud.
+ *  @abstract Checks whether an email is registered on the relayr platform.
  *
- *  @param email <code>NSString</code> representing the user's email.
- *  @param completion Block answering the query.
+ *  @param email <code>NSString</code> representing the user's email address.
+ *  @param completion A Block with the respective response.
  *
  *  @see RelayrUser
  */
