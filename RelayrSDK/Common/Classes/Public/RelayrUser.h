@@ -1,89 +1,97 @@
 @import Foundation;
 
 /*!
- *  @abstract Each instance of this class represent a Relayr User that is associated with the Relayr Application that created.
+ *  @abstract The very basic entity in the relayr platform is the user. 
+ *	@discussion Every user registers with an email address, a respective name and password and is assigned a unique userId. 
+ *	A user can be both an application owner (a publisher) and an end user. 
+ *	A user is required in order to add other entities to the relayr platform.
  */
 @interface RelayrUser : NSObject <NSCoding>
 
 /*!
- *  @abstract The representation of a Relayr User and its Relayr Application.
- *  @discussion It doesn't change along the lifetime of the <code>RelayrUser</code>
+ *  @abstract A representation of a relayr user and their relayr application.
+ *  @discussion This property does not change during the life cycle of the <code>RelayrUser</code>
  */
 @property (readonly,nonatomic) NSString* token;
 
 /*!
- *  @abstract Relyar idenfier for the <code>RelayrUser</code>'s instance.
- *  @discussion This identifier is unique for the Relayr Cloud and never changes.
+ *  @abstract A unique idenfier of a <code>RelayrUser</code> instance.
+ *  
  */
 @property (readonly,nonatomic) NSString* uid;
 
 /*!
- *  @abstract Relayr user name for this <code>RelayrUser</code>'s instace.
- *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
+ *  @abstract A user name for a specific <code>RelayrUser</code> instace.
+ *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
 @property (readonly,nonatomic) NSString* name;
 
 /*!
- *  @abstract Relayr user email for this <code>RelayrUser</code>'s instace.
- *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
+ *  @abstract Relayr user email for a specific <code>RelayrUser</code> instace.
+ *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
 @property (readonly,nonatomic) NSString* email;
 
 /*!
- *  @abstract Relayr applications for this <code>RelayrUser</code>'s instace.
- *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
+ *  @abstract The relayr applications under the specific <code>RelayrUser</code> instace.
+ *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
 @property (readonly,nonatomic) NSArray* apps;
 
 /*!
- *  @abstract How many <code>publisher</code>s have the Relayr user owns.
- *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
+ *  @abstract An array of the <code>publisher</code>s listed under the specific user.
+ *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
 @property (readonly,nonatomic) NSArray* publishers;
 
 /*!
- *  @abstract Transmitter that this <code>RelayrUser</code>'s instace owns.
- *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
+ *  @abstract An array of the Transmitter entities owned by the specific <code>RelayrUser</code> instace.
+ *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
 @property (readonly,nonatomic) NSArray* transmitters;
 
 /*!
- *  @abstract Devices that this <code>RelayrUser</code>'s instace owns.
- *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
+ *  @abstract An array of the Device entities owned by the specific <code>RelayrUser</code> instace
+ *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
 @property (readonly,nonatomic) NSArray* devices;
 
 /*!
- *  @abstract Favorite devices that this <code>RelayrUser</code>'s instace have bookmarked.
- *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
+ *  @abstract Devices that the specific <code>RelayrUser</code> instace has bookmarked.
+ *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call. 
+ *	By Bookmarking a device you are indicating that you have a particular interest in this device. 
+ *	In the relayr context, a bookmarked device will appear on a user's Developer Dashboard.
  */
 @property (readonly,nonatomic) NSArray* devicesBookmarked;
 
 /*!
- *  @abstract It queries the Relayr servers for the user information.
- *  @discussion Every time this method is call a server query is launched. Once that request is returned successfuly, all the <i>readonly</i>-user related properties would have changed to accomodate the new values.
+ *  @abstract Queries the relayr platform for the user information.
+ *  @discussion Every time this method is called a server query is launched. 
+ *	Once response is returned successfuly, all the <i>readonly</i> user related properties would be populated with respective values.
  *
- *  @param completion Block indiciating whether the server query was successful or not.
+ *  @param completion A block indiciating whether the server query was successful or not.
  *
  *  @see queryCloudForIoTs:
  */
 - (void)queryCloudForUserInfo:(void (^)(NSError* error, NSString* previousName, NSString* previousEmail))completion;
 
 /*!
- *  @abstract It queries the Relayr servers for all devices, transmitters, and bookmarked devices of this <code>RelayUser</code> instance.
- *  @discussion Every time this method is called a server query is launched. Once that request is returned successfuly, all the <i>readonly</i>-devices related properties would have changed to accomodate the new values.
+ *  @abstract Queries the relayr platform for all devices, transmitters, and bookmarked devices under the specific <code>RelayUser</code> instance.
+ *  @discussion Every time this method is called a server query is launched. 
+ *	Once the response is returned successfuly, all the <i>readonly</i> device related properties would be populated with the respective values.
  *
- *  @param completion Block indicating whether the server query was successful or not.
+ *  @param completion A block indicating whether the server query was successful or not.
  *
  *  @see queryCloudForUserInfo:
  */
 - (void)queryCloudForIoTs:(void (^)(NSError* error, NSNumber* isThereChanges))completion;
 
 /*!
- *  @abstract It queries the Relayr servers for all the applications, and publishers entities own by the user.
- *  @discussion Every time this method is called a server query is launched. Once that request is returned successfully, the <i>readonly</i> apps and publishers properties would have changed to accomodate the new values.
+ *  @abstract Queries the relayr platform for all the application and publisher entities owned by the user.
+ *  @discussion Every time this method is called a server query is launched. 
+ *	Once the response is returned successfully, the <i>readonly</i> app and publisher properties would would be populated with the respective values.
  *
- *  @param completion Block indicating whether the server query was successful or not.
+ *  @param completion A block indicating whether the server query was successful or not.
  */
 - (void)queryCloudForUserAppsAndPublishers:(void (^)(NSError* error, NSNumber* isThereChanges))completion;
 
