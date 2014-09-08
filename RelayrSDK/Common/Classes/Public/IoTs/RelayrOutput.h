@@ -1,7 +1,7 @@
 @import Foundation;
 
 /*!
- *  @abstract It represents the object with the output commands/signals of a Relayr Device (sensor).
+ *  @abstract Represents an object with commands or configuration settings sent to a Device.
  */
 @interface RelayrOutput : NSObject
 
