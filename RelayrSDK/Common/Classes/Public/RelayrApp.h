@@ -11,7 +11,6 @@
  *  @abstract It retrieves from the database or create an applicationID and query the server for its authenticity.
  *
  *  @param appID <code>NSString</code> representing the Relayr Application ID. You receive this when creating an app in the Relayr developer platform.
- *  @param clientID <code>NSString</code> representing the Oauth client ID. You receive this when creating an app in the Relayr developer platform.
  *  @param clientSecret <code>NSString</code> representing the Oauth client secret. You receive this when creating an app in the Relayr developer platform.
  *  @param redirectURI <code>NSString</code> representing the redirect URI you chosed when creating an app in the Relayr developer platform.
  *  @param completion Block indicating the result of the initialisation. This method is potentially asynchronous, if it does need to talk to the server. Be aware!
@@ -19,7 +18,6 @@
  *  @see RelayrCloud
  */
 + (void)appWithID:(NSString*)appID
-    OAuthClientID:(NSString*)clientID
 OAuthClientSecret:(NSString*)clientSecret
       redirectURI:(NSString*)redirectURI
        completion:(void (^)(NSError* error, RelayrApp* app))completion;
@@ -39,7 +37,7 @@ OAuthClientSecret:(NSString*)clientSecret
  *
  *	@return Fully initialised <code>RelayrApp</code> or <code>nil</code>.
  */
-+ (RelayrApp*)retrieveFromKeyChainAppWithID:(NSString*)appID;
++ (RelayrApp*)retrieveAppFromKeyChain:(NSString*)appID;
 
 /*!
  *  @abstract It removes a previously stored Relayr Application from a permanent storage (KeyChain or iCloud).
@@ -47,7 +45,7 @@ OAuthClientSecret:(NSString*)clientSecret
  *  @param app Relayr Application to be removed from the permanent storage.
  *	@return If the object is successfully removed or the object was not there, <code>YES</code> is returned. If the remove operation could not be performed, the method will return <code>NO</code>.
  */
-+ (BOOL)removeFromKeyChainApp:(RelayrApp*)app;
++ (BOOL)removeAppFromKeyChain:(RelayrApp*)app;
 
 /*!
  *  @abstract Relayr Application ID.
@@ -71,11 +69,6 @@ OAuthClientSecret:(NSString*)clientSecret
  *  @discussion This value must be first retrieved asynchronously from the Relayr Cloud. If you don't query the server, this property is <code>nil</code>.
  */
 @property (readonly,nonatomic) NSString* publisherID;
-
-/*!
- *  @abstract OAuth credential for the client ID.
- */
-@property (readonly,nonatomic) NSString* oauthClientID;
 
 /*!
  *  @abstract OAuth credential for the client secret.

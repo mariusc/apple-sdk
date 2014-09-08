@@ -15,7 +15,6 @@ static NSString* const kRelayrAppStorageKey = @"RelayrApps";
 
 // NSCoding variables
 static NSString* const kCodingID = @"uid";
-static NSString* const kCodingClientID = @"cid";
 static NSString* const kCodingClientSecret = @"cse";
 static NSString* const kCodingRedirectURI = @"uri";
 static NSString* const kCodingName = @"nam";
@@ -24,7 +23,6 @@ static NSString* const kCodingPublisherID = @"pub";
 static NSString* const kCodingUsers = @"usr";
 
 @interface RelayrApp ()
-@property (readwrite,nonatomic) NSString* oauthClientID;
 @property (readwrite,nonatomic) NSString* oauthClientSecret;
 @property (readwrite,nonatomic) NSMutableArray* users;
 @end
@@ -39,15 +37,15 @@ static NSString* const kCodingUsers = @"usr";
     return nil;
 }
 
-+ (void)appWithID:(NSString*)appID OAuthClientID:(NSString*)clientID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI completion:(void (^)(NSError*, RelayrApp*))completion
++ (void)appWithID:(NSString*)appID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI completion:(void (^)(NSError*, RelayrApp*))completion
 {
     if (!completion) { return [RLALog debug:dRLAErrorMessageMissingArgument]; }
     if (appID.length==0) { return completion(RLAErrorMissingArgument, nil); }
     
-    RelayrApp* result = [RelayrApp retrieveFromKeyChainAppWithID:appID];
+    RelayrApp* result = [RelayrApp retrieveAppFromKeyChain:appID];
     if (result) { return completion(nil, result); }
     
-    result = [[RelayrApp alloc] initPrivatelyWithID:appID OAuthClientID:clientID OAuthClientSecret:clientSecret redirectURI:redirectURI];
+    result = [[RelayrApp alloc] initPrivatelyWithID:appID OAuthClientSecret:clientSecret redirectURI:redirectURI];
     if (!result) { return completion(RLAErrorSigningFailure, nil); }
     
     [RLAWebService requestAppInfoFor:result.uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription) {
@@ -60,7 +58,7 @@ static NSString* const kCodingUsers = @"usr";
 
 + (BOOL)storeAppInKeyChain:(RelayrApp*)app
 {
-    if (!app.uid || !app.oauthClientID || !app.oauthClientSecret || !app.redirectURI) { [RLALog debug:dRLAErrorMessageMissingArgument]; return NO; }
+    if (!app.uid || !app.oauthClientSecret || !app.redirectURI) { [RLALog debug:dRLAErrorMessageMissingArgument]; return NO; }
     NSMutableArray* storedApps = [RelayrApp storedRelayrApps];
     
     if (storedApps.count)
@@ -75,14 +73,14 @@ static NSString* const kCodingUsers = @"usr";
     return YES;
 }
 
-+ (RelayrApp*)retrieveFromKeyChainAppWithID:(NSString*)appID
++ (RelayrApp*)retrieveAppFromKeyChain:(NSString*)appID
 {
     NSArray* currentlyStoredApps = [RelayrApp storedRelayrApps];
     NSNumber* appIndex = [RelayrApp indexForRelayrAppID:appID inRelayrAppsArray:currentlyStoredApps];
     return (appIndex) ? [currentlyStoredApps objectAtIndex:appIndex.unsignedIntegerValue] : nil;
 }
 
-+ (BOOL)removeFromKeyChainApp:(RelayrApp*)app
++ (BOOL)removeAppFromKeyChain:(RelayrApp*)app
 {
     if (!app.uid) { return NO; }
     
@@ -138,10 +136,10 @@ static NSString* const kCodingUsers = @"usr";
 - (void)signInUser:(void (^)(NSError*, RelayrUser*))completion
 {
     __weak RelayrApp* weakSelf = self;
-    [RLAWebService requestOAuthCodeWithOAuthClientID:self.oauthClientID redirectURI:self.redirectURI completion:^(NSError* error, NSString* tmpCode) {
+    [RLAWebService requestOAuthCodeWithOAuthClientID:_uid redirectURI:_redirectURI completion:^(NSError* error, NSString* tmpCode) {
         if (error) { if (completion) { completion(error, nil); } return; }
         
-        [RLAWebService requestOAuthTokenWithOAuthCode:tmpCode OAuthClientID:weakSelf.oauthClientID OAuthClientSecret:weakSelf.oauthClientSecret redirectURI:weakSelf.redirectURI completion:^(NSError* error, NSString* token) {
+        [RLAWebService requestOAuthTokenWithOAuthCode:tmpCode OAuthClientID:weakSelf.uid OAuthClientSecret:weakSelf.oauthClientSecret redirectURI:weakSelf.redirectURI completion:^(NSError* error, NSString* token) {
             if (error) { if (completion) { completion(error, nil); } return; }
             if (!token.length) { if (completion) { completion(RLAErrorMissingArgument, nil); } return; }
             
@@ -189,7 +187,7 @@ static NSString* const kCodingUsers = @"usr";
 
 - (id)initWithCoder:(NSCoder*)decoder
 {
-    self = [self initPrivatelyWithID:[decoder decodeObjectForKey:kCodingID] OAuthClientID:[decoder decodeObjectForKey:kCodingClientID] OAuthClientSecret:[decoder decodeObjectForKey:kCodingClientSecret] redirectURI:[decoder decodeObjectForKey:kCodingRedirectURI]];
+    self = [self initPrivatelyWithID:[decoder decodeObjectForKey:kCodingID] OAuthClientSecret:[decoder decodeObjectForKey:kCodingClientSecret] redirectURI:[decoder decodeObjectForKey:kCodingRedirectURI]];
     if (self)
     {
         _name = [decoder decodeObjectForKey:kCodingName];
@@ -203,7 +201,6 @@ static NSString* const kCodingUsers = @"usr";
 - (void)encodeWithCoder:(NSCoder*)coder
 {
     [coder encodeObject:_uid forKey:kCodingID];
-    [coder encodeObject:_oauthClientID forKey:kCodingClientID];
     [coder encodeObject:_oauthClientSecret forKey:kCodingClientSecret];
     [coder encodeObject:_redirectURI forKey:kCodingRedirectURI];
     [coder encodeObject:_name forKey:kCodingName];
@@ -252,15 +249,14 @@ static NSString* const kCodingUsers = @"usr";
 /*******************************************************************************
  * Private designated initialiser. Only used by this class.
  ******************************************************************************/
-- (instancetype)initPrivatelyWithID:(NSString*)appID OAuthClientID:(NSString*)clientID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI
+- (instancetype)initPrivatelyWithID:(NSString*)appID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI
 {
-    if (!appID.length || !clientID.length || !clientSecret.length || !redirectURI.length) { return nil; }
+    if (!appID.length || !clientSecret.length || !redirectURI.length) { return nil; }
     
     self = [super init];
     if (self)
     {
         _uid = appID;
-        _oauthClientID = clientID;
         _oauthClientSecret = clientSecret;
         _redirectURI = redirectURI;
         _users = [NSMutableArray array];
