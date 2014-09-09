@@ -2,10 +2,10 @@
 @class RLAWebService;           // Relayr.framework (Web)
 
 /*!
- *  @abstract Private extension to setup <code>RelayrUser</code> properties.
- *  @discussion These methods and properties are only accessible for the objects that initialises <code>RelayrUser</code>.
- *
- *  @see RelayrUser
+ *  @abstract The very basic entity in the relayr platform is the user.
+ *	@discussion Every user registers with an email address, a respective name and password and is assigned a unique userId.
+ *	A user can be both an application owner (a publisher) and an end user.
+ *	A user is required in order to add other entities to the relayr platform.
  */
 @interface RelayrUser ()
 
@@ -25,50 +25,52 @@
 @property (readonly,nonatomic) RLAWebService* webService;
 
 /*!
- *  @abstract Relyar idenfier for the <code>RelayrUser</code>'s instance.
+ *  @abstract A unique idenfier of a <code>RelayrUser</code> instance.
  */
 @property (readwrite,nonatomic) NSString* uid;
 
 /*!
- *  @abstract Relayr user name for this <code>RelayrUser</code>'s instace.
- *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
+ *  @abstract A user name for a specific <code>RelayrUser</code> instace.
+ *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
 @property (readwrite,nonatomic) NSString* name;
 
 /*!
- *  @abstract Relayr user email for this <code>RelayrUser</code>'s instace.
- *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
+ *  @abstract Relayr user email for a specific <code>RelayrUser</code> instace.
+ *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
 @property (readwrite,nonatomic) NSString* email;
 
 /*!
- *  @abstract Relayr applications for this <code>RelayrUser</code>'s instace.
- *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
+ *  @abstract The relayr applications under the specific <code>RelayrUser</code> instace.
+ *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
 @property (readwrite,nonatomic) NSArray* apps;
 
 /*!
- *  @abstract Transmitter that this <code>RelayrUser</code>'s instace owns.
- *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
+ *  @abstract An array of the <code>publisher</code>s listed under the specific user.
+ *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
+ */
+@property (readwrite,nonatomic) NSArray* publishers;
+
+/*!
+ *  @abstract An array of the Transmitter entities owned by the specific <code>RelayrUser</code> instace.
+ *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
 @property (readwrite,nonatomic) NSArray* transmitters;
 
 /*!
- *  @abstract Devices that this <code>RelayrUser</code>'s instace owns.
- *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
+ *  @abstract An array of the Device entities owned by the specific <code>RelayrUser</code> instace
+ *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
 @property (readwrite,nonatomic) NSArray* devices;
 
 /*!
- *  @abstract Favorite devices that this <code>RelayrUser</code>'s instace have bookmarked.
- *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
+ *  @abstract Devices that the specific <code>RelayrUser</code> instace has bookmarked.
+ *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
+ *	By Bookmarking a device you are indicating that you have a particular interest in this device.
+ *	In the relayr context, a bookmarked device will appear on a user's Developer Dashboard.
  */
 @property (readwrite,nonatomic) NSArray* devicesBookmarked;
-
-/*!
- *  @abstract How many <code>publisher</code>s have the Relayr user owns.
- *  @discussion It can change after a successful <code>queryCloudForUserInfo:</code> call.
- */
-@property (readwrite,nonatomic) NSArray* publishers;
 
 @end

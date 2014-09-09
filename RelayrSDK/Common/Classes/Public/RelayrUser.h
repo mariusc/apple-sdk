@@ -16,7 +16,6 @@
 
 /*!
  *  @abstract A unique idenfier of a <code>RelayrUser</code> instance.
- *  
  */
 @property (readonly,nonatomic) NSString* uid;
 

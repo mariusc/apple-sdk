@@ -1,15 +1,16 @@
 #import "RelayrInput.h"
+#import "RelayrInput_Setup.h"
 
 static NSString* const kCodingMeaning = @"men";
-static NSString* const kCodingUnit = @"uni";
+static NSString* const kCodingUnits = @"unis";
 static NSString* const kCodingValues = @"val";
 static NSString* const kCodingDates = @"dat";
 
 @implementation RelayrInput
-{
-    NSMutableArray* _values;
-    NSMutableArray* _dates;
-}
+
+@synthesize values = _values;
+@synthesize units = _units;
+@synthesize dates = _dates;
 
 #pragma mark - Public API
 
@@ -19,9 +20,29 @@ static NSString* const kCodingDates = @"dat";
     return nil;
 }
 
+- (instancetype)initWithMeaning:(NSString*)meaning
+{
+    if (!meaning.length) { return nil; }
+    
+    self = [super init];
+    if (self)
+    {
+        _meaning = meaning;
+        _values = [[NSMutableArray alloc] init];
+        _units = [[NSMutableArray alloc] init];
+        _dates = [[NSMutableArray alloc] init];
+    }
+    return self;
+}
+
 - (id)value
 {
     return _values.firstObject;
+}
+
+- (NSString*)unit
+{
+    return _units.firstObject;
 }
 
 - (NSDate*)date
@@ -34,6 +55,11 @@ static NSString* const kCodingDates = @"dat";
     return [NSArray arrayWithArray:_values];
 }
 
+- (NSArray*)historicUnits
+{
+    return [NSArray arrayWithArray:_units];
+}
+
 - (NSArray*)historicDates
 {
     return [NSArray arrayWithArray:_dates];
@@ -43,19 +69,19 @@ static NSString* const kCodingDates = @"dat";
 
 - (id)initWithCoder:(NSCoder*)decoder
 {
-    self = [super init];
+    self = [self initWithMeaning:[decoder decodeObjectForKey:kCodingMeaning]];
     if (self)
     {
-        _meaning = [decoder decodeObjectForKey:kCodingMeaning];
-        _unit = [decoder decodeObjectForKey:kCodingUnit];
+        NSMutableArray* tmpValues = [decoder decodeObjectForKey:kCodingValues];
+        NSMutableArray* tmpUnits = [decoder decodeObjectForKey:kCodingUnits];
+        NSMutableArray* tmpDates = [decoder decodeObjectForKey:kCodingDates];
         
-        _values = [decoder decodeObjectForKey:kCodingValues];
-        _dates = [decoder decodeObjectForKey:kCodingDates];
-        
-        if ( _values.count==0 || _values.count!=_dates.count)
+        NSUInteger const numValues = tmpValues.count;
+        if ( numValues > 0 && numValues == tmpUnits.count && numValues == tmpDates.count )
         {
-            _values = [[NSMutableArray alloc] init];
-            _dates = [[NSMutableArray array] init];
+            _values = tmpValues;
+            _units = tmpUnits;
+            _dates = tmpDates;
         }
     }
     return self;
@@ -64,16 +90,21 @@ static NSString* const kCodingDates = @"dat";
 - (void)encodeWithCoder:(NSCoder*)coder
 {
     [coder encodeObject:_meaning forKey:kCodingMeaning];
-    [coder encodeObject:_unit forKey:kCodingUnit];
-    if (_values.count) { [coder encodeObject:_values forKey:kCodingValues]; }
-    if (_dates.count) { [coder encodeObject:_dates forKey:kCodingDates]; }
+    
+    NSUInteger const numValues = _values.count;
+    if ( numValues && numValues == _units.count && numValues == _dates.count )
+    {
+        [coder encodeObject:_values forKey:kCodingValues];
+        [coder encodeObject:_units forKey:kCodingUnits];
+        [coder encodeObject:_dates forKey:kCodingDates];
+    }
 }
 
 #pragma mark NSObject
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"RelayrInput\n{\n\t Meaning: %@\n\t Unit: %@\n\t Value: %@\n\t Date: %@\n}\n", _meaning, _unit, (_values.firstObject) ? _values.firstObject : @"?", (_dates.firstObject) ? _dates.firstObject : @"?"];
+    return [NSString stringWithFormat:@"RelayrInput\n{\n\t Meaning: %@Value: %@\n\t Unit: %@\n\t \n\t Date: %@\n}\n", _meaning, (_values.firstObject) ? _values.firstObject : @"?", (_units.firstObject) ? _units.firstObject : @"?", (_dates.firstObject) ? _dates.firstObject : @"?"];
 }
 
 @end

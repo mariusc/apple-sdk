@@ -14,16 +14,16 @@
 @property (readonly,nonatomic) NSString* meaning;
 
 /*!
- *  @abstract The unit in which the reading is measured.
- */
-@property (readonly,nonatomic) NSString* unit;
-
-/*!
  *  @abstract The last value received from the sensor. Either queried for or pushed.
  *  @discussion This object can be a single object entity (such as an <code>NSNumber</code> or an <code>NSString</code>) 
  *	or a collection: either a <code>NSArray</code> or an <code>NSDictionary</code>.
  */
 @property (readonly,nonatomic) id value;
+
+/*!
+ *  @abstract The unit in which the reading is measured.
+ */
+@property (readonly,nonatomic) NSString* unit;
 
 /*!
  *  @abstract The timestamp of the last value received.
@@ -39,6 +39,12 @@
  *	If an object could not be measured, but a timestamp was taken, the singleton [NSNull null] is stored in the array.
  */
 @property (readonly,nonatomic) NSArray* historicValues;
+
+/*!
+ *  @abstract Returns an array with, the last 20 or less measurements (including the current one in <code>unit</code>).
+ *  @discussion The array will contain 20 units or less <code>NSString</code> objects.
+ */
+@property (readonly,nonatomic) NSArray* historicUnits;
 
 /*!
  *  @abstract Array with, at top, the last 20 measurement times (including the current one in <code>date</code>).

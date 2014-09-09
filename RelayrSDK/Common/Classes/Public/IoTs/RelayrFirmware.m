@@ -1,9 +1,12 @@
 #import "RelayrFirmware.h"
+#import "RelayrFirmware_Setup.h"
 
 static NSString* const kCodingVersion = @"ver";
 static NSString* const kCodingConfiguration = @"con";
 
 @implementation RelayrFirmware
+
+@synthesize properties=_properties;
 
 #pragma mark - Public API
 
@@ -13,15 +16,28 @@ static NSString* const kCodingConfiguration = @"con";
     return nil;
 }
 
+- (instancetype)initWithVersion:(NSString*)version
+{
+    if (!version.length) { return nil; }
+    
+    self = [super init];
+    if (self)
+    {
+        _version = version;
+        _properties = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
+
 #pragma mark NSCoding
 
 - (id)initWithCoder:(NSCoder*)decoder
 {
-    self = [super init];
+    self = [self initWithVersion:[decoder decodeObjectForKey:kCodingVersion]];
     if (self)
     {
-        _version = [decoder decodeObjectForKey:kCodingVersion];
-        _configuration = [decoder decodeObjectForKey:kCodingConfiguration];
+        NSMutableDictionary* tmpProperties = [decoder decodeObjectForKey:kCodingConfiguration];
+        if (tmpProperties.count) { _properties = tmpProperties; }
     }
     return self;
 }
@@ -36,7 +52,7 @@ static NSString* const kCodingConfiguration = @"con";
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"RelayrFirmware\n{\n\t Version: %@\n}\n", _version];
+    return [NSString stringWithFormat:@"RelayrFirmware\n{\n\t Version: %@\n\t Number of configurations: %lu\n}\n", _version, (unsigned long)_properties.count];
 }
 
 @end

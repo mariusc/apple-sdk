@@ -1,31 +1,40 @@
 #import "RelayrApp.h"       // Header
 
 /*!
- *  @abstract It represents a Relayr Application and through it, you can interact with the Relayr cloud.
- *  @discussion Relayr applications allow your mobile app to access information on the Relayr cloud. They are the starting point on any Relayr information retrieval or information pushing into the cloud.
+ *  @abstract Represents a relayr Application which allows interaction with the relayr Cloud.
+ *  @discussion An app is a basic entity in the relayr platform.
+ *	The relayr platform relates to apps in two manners: Publisher Apps and User Apps.
+ *	Publisher apps are apps which are purchasable on an app store and are owned by a publisher.
+ *	User apps are apps which have been approved to the data of an end user. This approval has been granted by the user.
  */
 @interface RelayrApp () <NSCoding>
 
 /*!
- *  @abstract It returns (or set) the given name of this Relayr application.
+ *  @abstract The relayr application name.
+ *  @discussion This value should first be retrieved asynchronously, from the relayr server.
+ *	If the server is not queried, this property is <code>nil</code>.
  */
 @property (readwrite,nonatomic) NSString* name;
 
 /*!
- *  @abstract Relayr Application description.
- *  @discussion This value must be first retrieved asynchronously from the Relayr Cloud. If you don't query the server, this property is <code>nil</code>.
+ *  @abstract The relayr application description.
+ *  @discussion This value should first be retrieved asynchronously, from the relayr server.
+ *	If the server is not queried, this property is <code>nil</code>.
  */
 @property (readwrite,nonatomic) NSString* appDescription;
 
 /*!
- *  @abstract Creator of the Relayr Application ID.
- *  @discussion This value must be first retrieved asynchronously from the Relayr Cloud. If you don't query the server, this property is <code>nil</code>.
+ *  @abstract The Id of the app Publisher.
+ *  @discussion This value should first be retrieved asynchronously, from the relayr server.
+ *	If the server is not queried, this property is <code>nil</code>.
  */
 @property (readwrite,nonatomic) NSString* publisherID;
 
 /*!
- *  @abstract This is a security password used to check the procedence of the server messages.
- *  @discussion The <code>redirectURI</code> is specified at the Relayr App creation time.
+ *  @abstract The OAuth redirect URI.
+ *  @discussion The URI of the page where the user is redirected upon successful login. The URI must include the protocol used e.g. 'http'.
+ *	The redirect URI is set when an application is registered on the relayr Platform.
+ *	@see <a href="https://developer.relayr.io/documents/Authorization/OAuthAndRelayr">The OAuth on relayr section on the Develooper Dashboard.</a>
  */
 @property (readwrite,nonatomic) NSString* redirectURI;
 

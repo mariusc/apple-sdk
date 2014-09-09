@@ -6,8 +6,7 @@
  *  @discussion An app is a basic entity in the relayr platform. 
  *	The relayr platform relates to apps in two manners: Publisher Apps and User Apps.
  *	Publisher apps are apps which are purchasable on an app store and are owned by a publisher.
- *	User apps are apps which have been approved to the data of an end user. This approval has been granted by the user. 
- *  
+ *	User apps are apps which have been approved to the data of an end user. This approval has been granted by the user.
  */
 @interface RelayrApp : NSObject
 
@@ -86,7 +85,7 @@ OAuthClientSecret:(NSString*)clientSecret
  *  @abstract The OAuth redirect URI.
  *  @discussion The URI of the page where the user is redirected upon successful login. The URI must include the protocol used e.g. 'http'. 
  *	The redirect URI is set when an application is registered on the relayr Platform. 
- *	@see <a href="https://developer.relayr.io/documents/Authorization/OAuthAndRelayr"> The OAuth on relayr section on the Develooper Dashboard.
+ *	@see <a href="https://developer.relayr.io/documents/Authorization/OAuthAndRelayr">The OAuth on relayr section on the Develooper Dashboard.</a>
  */
 @property (readonly,nonatomic) NSString* redirectURI;
 

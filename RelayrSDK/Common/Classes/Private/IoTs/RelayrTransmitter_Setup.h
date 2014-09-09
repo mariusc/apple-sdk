@@ -1,9 +1,9 @@
 #import "RelayrTransmitter.h"   // Relayr.framework (Public)
-@class RelayrUser;              // Relayr.framework (Public)
 
 /*!
- *  @abstract An instance of this class represents a Relayr Transmitter.
- *  @discussion A Relayr transmitter usually represent a connected device that perform the functions of router, gateway, etc.
+ *  @abstract An instance of this class represents a relayr Transmitter. a basic entity on the relayr platform.
+ *  @discussion A transmitter contrary to a device does not gather data but is only used to relay the data from the
+ *	devices to the relayr platform. The transmitter is also used to authenticate the different devices that transmit data via it.
  */
 @interface RelayrTransmitter ()
 
@@ -20,19 +20,19 @@
 - (instancetype)initWithID:(NSString*)uid secret:(NSString*)secret;
 
 /*!
- *  @abstract The given name of the transmitter.
- *  @discussion It can be changed by server calls.
+ *  @abstract Transmitter name.
+ *  @discussion Can be updated on the server.
  */
 @property (readwrite,nonatomic) NSString* name;
 
 /*!
- *  @abstract Owner ID of this transmitter.
+ *  @abstract The owner ID of the specific transmitter, a relayr user.
  */
 @property (readwrite,nonatomic) NSString* owner;
 
 /*!
- *  @abstract All the devices associated with this transmitter.
- *  @discussion All are weak links to <code>RelayrDevice</code>s owned by the <code>RelayrUser</code>.
+ *  @abstract Returns an array with all devices related to the specific Transmitter.
+ *  @discussion Links to <code>RelayrDevice</code>s owned by the <code>RelayrUser</code> which owns the Transmitter.
  */
 @property (readwrite,nonatomic) NSArray* devices;
 

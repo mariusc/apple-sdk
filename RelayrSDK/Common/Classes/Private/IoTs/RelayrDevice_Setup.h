@@ -1,8 +1,10 @@
 #import "RelayrDevice.h"    // Relayr.framework (Public)
-@class RelayrUser;          // Relayr.framework (Public)
 
 /*!
- *  @abstract An instance of this class represents a Relayr Device, which can be capable of capting many different measures and/or transmit information (IR, etc.).
+ *  @abstract An instance of this class represents a Device. A basic relayr entity
+ *	@discussion A device is any external entity capable of producing measurements and sending them to a transmitter to be further sent to the relayr cloud,
+ *	or one which is capable of receiving information from the relayr platform.
+ *	Examples would be a thermometer, a gyroscope or an infrared sensor.
  */
 @interface RelayrDevice ()
 
@@ -19,19 +21,20 @@
 - (instancetype)initWithID:(NSString*)uid secret:(NSString*)secret;
 
 /*!
- *  @abstract The given name of the transmitter.
- *  @discussion It can be changed by server calls.
+ *  @abstract Device name.
+ *  @discussion Can be updated using a server call.
  */
 @property (readwrite,nonatomic) NSString* name;
 
 /*!
- *  @abstract Owner ID of this transmitter.
+ *  @abstract The Id of the owner of the Device.
+ *  @discussion A relayr User Id.
  */
 @property (readwrite,nonatomic) NSString* owner;
 
 /*!
- *  @abstract It informs whether the data of this device is being publicly published or the owner is the only one allowed to see it.
- *  @discussion It is a <code>NSNumber</code> wrapping a boolean value (use <code>.boolValue</code> to unwrap it). An object is used instead of <code>BOOL</code> to express the absence of knowing whether the device is public or not. Meaning, that the server hasn't been queried yet.
+ *  @abstract Indicates wheather the data gathered by the device is public (available to all users) or not (available to the Device owner only).
+ *  @discussion An <code>NSNumber</code> wrapping a boolean value (use <code>.boolValue</code> to unwrap it).
  */
 @property (readwrite,nonatomic) NSNumber* isPublic;
 
