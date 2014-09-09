@@ -35,11 +35,9 @@ static NSString* const kCodingDevices = @"dev";
 
 - (id)initWithCoder:(NSCoder*)decoder
 {
-    self = [super init];
+    self = [self initWithID:[decoder decodeObjectForKey:kCodingID] secret:[decoder decodeObjectForKey:kCodingSecret]];
     if (self)
     {
-        _uid = [decoder decodeObjectForKey:kCodingID];
-        _secret = [decoder decodeObjectForKey:kCodingSecret];
         _name = [decoder decodeObjectForKey:kCodingName];
         _owner = [decoder decodeObjectForKey:kCodingOwner];
         _devices = [decoder decodeObjectForKey:kCodingDevices];

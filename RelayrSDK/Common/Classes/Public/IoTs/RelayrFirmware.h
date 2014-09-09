@@ -19,4 +19,15 @@
  */
 @property (readonly,nonatomic) NSDictionary* configuration;
 
+/*!
+ *  @abstract Queries the relayr platform for the current firmware properties.
+ *  @discussion Every time this method is called a server query is launched.
+ *	Once response is returned successfuly, all the <i>readonly</i> user related properties would be populated with respective values.
+ *
+ *  @param completion A block indiciating whether the server query was successful or not.
+ *
+ *  @see queryCloudForIoTs:
+ */
+- (void)queryCloudForProperties:(void (^)(NSError* error, BOOL isThereChanges))completion;
+
 @end

@@ -1,6 +1,7 @@
 #import "RelayrDevice.h"        // Header
 #import "RelayrUser.h"          // Relayr.framework (Public)
 #import "RelayrFirmware.h"      // Relayr.framework (Public)
+#import "RelayrInput.h"         // Relayr.framework (Public)
 #import "RelayrDevice_Setup.h"  // Relayr.framework (Private)
 
 
@@ -37,15 +38,35 @@ static NSString* const kCodingSecret = @"sec";
     return self;
 }
 
+#pragma mark Subscription
+
+- (void)subscribeWithTarget:(id)target action:(SEL)action error:(BOOL (^)(NSError* error))subscriptionError
+{
+    // TODO: Fill up
+}
+
+- (void)subscribeWithBlock:(void (^)(RelayrDevice* device, RelayrInput* input, BOOL* unsubscribe))block error:(BOOL (^)(NSError* error))subscriptionError
+{
+    // TODO: Fill up
+}
+
+- (void)unsubscribeTarget:(id)target action:(SEL)action
+{
+    // TODO: Fill up
+}
+
+- (void)removeAllSubscriptions
+{
+    // TODO: Fill up
+}
+
 #pragma mark NSCoding
 
 - (id)initWithCoder:(NSCoder*)decoder
 {
-    self = [super init];
+    self = [self initWithID:[decoder decodeObjectForKey:kCodingID] secret:[decoder decodeObjectForKey:kCodingName]];
     if (self)
     {
-        _uid = [decoder decodeObjectForKey:kCodingID];
-        _name = [decoder decodeObjectForKey:kCodingName];
         _owner = [decoder decodeObjectForKey:kCodingOwner];
         _manufacturer = [decoder decodeObjectForKey:kCodingManufacturer];
         _isPublic = [decoder decodeObjectForKey:kCodingPublic];

@@ -29,6 +29,11 @@ static NSString* const kCodingConfiguration = @"con";
     return self;
 }
 
+- (void)queryCloudForProperties:(void (^)(NSError* error, BOOL isThereChanges))completion
+{
+    // TODO: Fill up
+}
+
 #pragma mark NSCoding
 
 - (id)initWithCoder:(NSCoder*)decoder
