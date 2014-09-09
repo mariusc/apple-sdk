@@ -1,36 +1,42 @@
 @import Foundation;
 
 /*!
- *  @abstract It references a type of reading that a Relayr device (sensor) can perform.
- *  @discussion This object have a single meaning, but can take more than one value. For example: luminosity (meaning) reads a single value (in lumens); however, color (meaning) reads three or four values (red, green, blue, and maybe alpha).
+ *  @abstract References the type of reading a relayr Device (sensor) can collect.
+ *  @discussion This object has a single 'meaning', however, This meaning could consist of one or more values. 
+ *	For example: The Luminosity meaning is represented by a single value  
+ *	however, the Color meaning consists of three or four values (red, green, blue, and white).
  */
 @interface RelayrInput : NSObject <NSCoding>
 
 /*!
- *  @abstract How the "reading"/input is identified in the Relayr Cloud.
+ *  @abstract The name of the reading as it is defined on the relayr platform.
  */
 @property (readonly,nonatomic) NSString* meaning;
 
 /*!
- *  @abstract How the unit use to scale the input is identified in the Realyr Cloud.
+ *  @abstract The unit in which the reading is measured.
  */
 @property (readonly,nonatomic) NSString* unit;
 
 /*!
- *  @abstract The last value received or queried from the sensor.
- *  @discussion This object can be a single object entity (such as <code>NSNumber</code> or <code>NSString</code>) or it can be a collection (whether a <code>NSArray</code> or <code>NSDictionary</code>).
+ *  @abstract The last value received from the sensor. Either queried for or pushed.
+ *  @discussion This object can be a single object entity (such as an <code>NSNumber</code> or an <code>NSString</code>) 
+ *	or a collection: either a <code>NSArray</code> or an <code>NSDictionary</code>.
  */
 @property (readonly,nonatomic) id value;
 
 /*!
- *  @abstract The time the last value was taken.
- *  @discussion You can see it as the time this instance was updated. When <code>nil</code>, it means this object has been never updated.
+ *  @abstract The timestamp of the last value received.
+ *  @discussion Can be seen as the 'last update' timestamp. 
+ *	When <code>nil</code>, it means that a value has not yet been received or queried for.
  */
 @property (readonly,nonatomic) NSDate* date;
 
 /*!
- *  @abstract Array with, at top, the last 20 measurements (including the current one in <code>value</code>).
- *  @discussion The array will contain 20 or less values. The object type will be the same as the <code>value</code> property. If an object could not be measured, but the time was taken, the singleton [NSNull null] will be stored in the array.
+ *  @abstract Returns an array with, the last 20 or less measurements (including the one in <code>value</code>).
+ *  @discussion The array will contain 20  values or less. 
+ *	The object type will be the same as the <code>value</code> property. 
+ *	If an object could not be measured, but a timestamp was taken, the singleton [NSNull null] is stored in the array.
  */
 @property (readonly,nonatomic) NSArray* historicValues;
 
