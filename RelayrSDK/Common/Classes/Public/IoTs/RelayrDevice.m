@@ -3,6 +3,7 @@
 #import "RelayrFirmware.h"      // Relayr.framework (Public)
 #import "RelayrInput.h"         // Relayr.framework (Public)
 #import "RelayrDevice_Setup.h"  // Relayr.framework (Private)
+#import "RelayrInput_Setup.h"   // Relayr.framework (Private)
 
 
 static NSString* const kCodingID = @"uid";
@@ -40,12 +41,12 @@ static NSString* const kCodingSecret = @"sec";
 
 #pragma mark Subscription
 
-- (void)subscribeWithTarget:(id)target action:(SEL)action error:(BOOL (^)(NSError* error))subscriptionError
+- (void)subscribeToAllInputsWithTarget:(id)target action:(SEL)action error:(BOOL (^)(NSError* error))subscriptionError
 {
     // TODO: Fill up
 }
 
-- (void)subscribeWithBlock:(void (^)(RelayrDevice* device, RelayrInput* input, BOOL* unsubscribe))block error:(BOOL (^)(NSError* error))subscriptionError
+- (void)subscribeToAllInputsWithBlock:(void (^)(RelayrDevice* device, RelayrInput* input, BOOL* unsubscribe))block error:(BOOL (^)(NSError* error))subscriptionError
 {
     // TODO: Fill up
 }

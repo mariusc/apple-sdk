@@ -46,6 +46,16 @@
 #define Web_RespondKey_DeviceOwner          @"owner"
 #define Web_RespondKey_DevicePublic         @"public"
 
+// Relayr Device Models
+#define Web_RespondKey_ModelID              @"id"
+#define Web_RespondKey_ModelName            @"name"
+#define Web_RespondKey_ModelManufacturer    @"manufacturer"
+#define Web_RespondKey_ModelReadings        @"readings"
+
+// Relayr Device Model Readings
+#define Web_RespondKey_ReadingsMeaning      @"meaning"
+#define Web_RespondKey_ReadingsUnit         @"unit"
+
 #pragma Requests
 
 // Cloud reachability

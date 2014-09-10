@@ -51,7 +51,7 @@
  *
  *  @see RelayrInput
  */
-@property (readonly,nonatomic) NSArray* inputs;
+@property (readonly,nonatomic) NSSet* inputs;
 
 /*!
  *  @abstract Returns an array of possible Outputs a Device is capable of receiving.
@@ -61,7 +61,7 @@
  *
  *  @see RelayrOutput
  */
-@property (readonly,nonatomic) NSArray* outputs;
+@property (readonly,nonatomic) NSSet* outputs;
 
 /*!
  *  @abstract The secret for MQTT comminucation with the relayr Cloud Platform
@@ -72,19 +72,18 @@
 #pragma mark Subscription
 
 /*!
- *  @abstract Subscribes the object target to the data sent from the <code>RelayrDevice</code>.
+ *  @abstract Subscribes the object target to all data (all inputs) sent from the <code>RelayrDevice</code>.
  *  @discussion It doesn't matter how the device is connected (Web/Cloud, Bluetooth, etc.), the caller of this method expects that the action is called on the target as soon as the data is available.
  *
  *  @param target The object where the <code>action</code> will be called onto.
- *  @param action The method to be called. It can have three modalities:
+ *  @param action The method to be called. It can have two modalities:
  *      - No parameters.
- *      - One parameter. The parameter must be a <code>RelayrDevice</code> object or a <code>RelayrInput</code> object, or this method will return a subscription error.
- *      - Two paramters. The first paremeter must be a <code>RelayrDevice</code> object and the second, a <code>RelayrInput</code> object, or this method will return a subscription error.
+ *      - One parameter. The parameter must be a <code>RelayrInput</code> object, or this method will return a subscription error.
  *  @param subscriptionError Block executed if the subscription could not be performed (it can be <code>nil</code>. If you define this block, you must return a boolean indicating if you want to retry the subscription.
  *
  *  @see RelayrInput
  */
-- (void)subscribeWithTarget:(id)target action:(SEL)action error:(BOOL (^)(NSError* error))subscriptionError;
+- (void)subscribeToAllInputsWithTarget:(id)target action:(SEL)action error:(BOOL (^)(NSError* error))subscriptionError;
 
 /*!
  *  @abstract Subscribes the block to the data sent from the <code>RelayrDevice</code>.
@@ -98,7 +97,7 @@
  *
  *  @see RelayrInput
  */
-- (void)subscribeWithBlock:(void (^)(RelayrDevice* device, RelayrInput* input, BOOL* unsubscribe))block error:(BOOL (^)(NSError* error))subscriptionError;
+- (void)subscribeToAllInputsWithBlock:(void (^)(RelayrDevice* device, RelayrInput* input, BOOL* unsubscribe))block error:(BOOL (^)(NSError* error))subscriptionError;
 
 /*!
  *  @abstract Unsubscribe the specific action of a target object.

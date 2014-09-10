@@ -33,9 +33,38 @@
 @property (readwrite,nonatomic) NSString* owner;
 
 /*!
+ *  @abstract The manufacturer of the device.
+ */
+@property (readwrite,nonatomic) NSString* manufacturer;
+
+/*!
  *  @abstract Indicates wheather the data gathered by the device is public (available to all users) or not (available to the Device owner only).
  *  @discussion An <code>NSNumber</code> wrapping a boolean value (use <code>.boolValue</code> to unwrap it).
  */
 @property (readwrite,nonatomic) NSNumber* isPublic;
+
+/*!
+ *  @abstract Indicates firmware attributes of the Device instance being called.
+ *  @discussion You can request the current version and other firmware properties.
+ */
+@property (readwrite,nonatomic) RelayrFirmware* firmware;
+
+/*!
+ *  @abstract Returns an array of all possible readings the device can gather.
+ *  @discussion Each item in this array is an object of type <code>RelayrInput</code>. Each input represents a different kind of reading. That is, a <code>RelayrDevice</code> can have a luminosity sensor and a gyroscope; thus, this array would have two different inputs.
+ *
+ *  @see RelayrInput
+ */
+@property (readwrite,nonatomic) NSSet* inputs;
+
+/*!
+ *  @abstract Returns an array of possible Outputs a Device is capable of receiving.
+ *  @discussion By 'Output' we refer to an object with commands or configuration settings sent to a Device.
+ *	These are usually infrarred commands, ultrasound pulses etc.
+ *	Each item in this array is an object of type <code>RelayrOutput</code>.
+ *
+ *  @see RelayrOutput
+ */
+@property (readwrite,nonatomic) NSSet* outputs;
 
 @end

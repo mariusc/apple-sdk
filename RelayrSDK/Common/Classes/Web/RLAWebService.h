@@ -91,10 +91,20 @@
 - (void)requestUserInfo:(void (^)(NSError* error, NSString* uid, NSString* name, NSString* email))completion;
 
 /*!
+ *  @abstract It queries the Relayr Cloud for all the publishers that a Relayr user owns.
+ *  @discussion A publisher is a Relayr user who is able to publish apps in the Relayr cloud.
+ *
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrUser
+ */
+- (void)requestUserPublishers:(void (^)(NSError* error, NSArray* publishers))completion;
+
+/*!
  *  @abstract It queries the Relayr Cloud for all the transmitters own by a Relayr user.
  *  @discussion Devices and transmitters are different concepts.
  *
- *  @param completion Block indicating the result of the server query.
+ *  @param completion Block indicating the result of the server query. The <code>transmitter</code> parameter is an <code>NSArray</code> containing fully initialised <code>RelayrTransmitter</code> objects without any device.
  *
  *  @see RelayrUser
  */
@@ -119,16 +129,6 @@
  *  @see RelayrUser
  */
 - (void)requestUserBookmarkedDevices:(void (^)(NSError* error, NSArray* bookDevices))completion;
-
-/*!
- *  @abstract It queries the Relayr Cloud for all the publishers that a Relayr user owns.
- *  @discussion A publisher is a Relayr user who is able to publish apps in the Relayr cloud.
- *
- *  @param completion Block indicating the result of the server query.
- *
- *  @see RelayrUser
- */
-- (void)requestUserPublishers:(void (^)(NSError* error, NSArray* publishers))completion;
 
 /*!
  *  @abstract It queries the Relayr Cloud for all the apps installed under this user.

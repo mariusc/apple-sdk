@@ -4,11 +4,16 @@
 #import "RelayrPublisher.h"         // Relayr.framework (Public)
 #import "RelayrTransmitter.h"       // Relayr.framework (Public)
 #import "RelayrDevice.h"            // Relayr.framework (Public)
+#import "RelayrFirmware.h"          // Relayr.framework (Public)
+#import "RelayrInput.h"             // Relayr.framework (Public)
+#import "RelayrOutput.h"            // Relayr.framework (Public)
 #import "RelayrApp_Setup.h"         // Relayr.framework (Private)
 #import "RelayrUser_Setup.h"        // Relayr.framework (Private)
 #import "RelayrPublisher_Setup.h"   // Relayr.framework (Private)
 #import "RelayrTransmitter_Setup.h" // Relayr.framework (Private)
 #import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
+#import "RelayrFirmware_Setup.h"    // Relayr.framework (Private)
+#import "RelayrInput_Setup.h"       // Relayr.framework (Private)
 
 #import "RLAWebRequest.h"           // Relayr.framework (Web)
 #import "RLAWebConstants.h"         // Relayr.framework (Web)
@@ -137,6 +142,28 @@
     }];
 }
 
+- (void)requestUserPublishers:(void (^)(NSError* error, NSArray* publishers))completion
+{
+    if (!completion) { return; }
+    
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:_hostURL timeout:nil oauthToken:_user.token];
+    request.relativePath = Web_RequestRelativePath_UserPubs(_user.uid);
+    
+    [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
+        NSArray* json = processRequest(Web_RequestResponseCode_UserPubs, nil);
+        
+        NSMutableArray* publishers = [NSMutableArray arrayWithCapacity:json.count];
+        for (NSDictionary* tmp in json)
+        {
+            RelayrPublisher* pub = [[RelayrPublisher alloc] initWithPublisherID:tmp[Web_RespondKey_PublisherID] owner:tmp[Web_RespondKey_PublisherOwner]];
+            pub.name = tmp[Web_RespondKey_PublisherName];
+            if (pub) { [publishers addObject:pub]; }
+        }
+        
+        completion(nil, (publishers.count) ? [NSArray arrayWithArray:publishers] : nil);
+    }];
+}
+
 - (void)requestUserTransmitters:(void (^)(NSError* error, NSArray* transmitters))completion
 {
     if (!completion) { return; }
@@ -157,9 +184,7 @@
             transmitter.name = dict[Web_RespondKey_TransmitterName];
             [result addObject:transmitter];
         }
-        
-        // ???: What about the transmitter's devices.
-        
+
         return (result.count) ? completion(nil, [NSArray arrayWithArray:result]) : completion(RLAErrorWebrequestFailure, nil);
     }];
 }
@@ -183,6 +208,17 @@
             device.name = dict[Web_RespondKey_DeviceName];
             device.owner = dict[Web_RespondKey_DeviceOwner];
             device.isPublic = dict[Web_RespondKey_DevicePublic];
+            
+            NSString* firmVer = dict[Web_RespondKey_DeviceFirmware];
+            if (firmVer.length) { device.firmware = [[RelayrFirmware alloc] initWithVersion:firmVer]; }
+            
+            NSDictionary* model = dict[Web_RespondKey_DeviceModel];
+            if (model.count)
+            {
+                device.manufacturer = dict[Web_RespondKey_ModelManufacturer];
+                device.inputs = [self parseDeviceInputs:dict[Web_RespondKey_ModelReadings] ofDevice:device];
+                //device.outputs = [self parseDeviceOutputs:dict[<#name#>];
+            }
         }
         
         return (result.count) ? completion(nil, [NSArray arrayWithArray:result]) : completion(RLAErrorWebrequestFailure, nil);
@@ -192,28 +228,7 @@
 - (void)requestUserBookmarkedDevices:(void (^)(NSError* error, NSArray* bookDevices))completion
 {
     // TODO: Fill up
-}
-
-- (void)requestUserPublishers:(void (^)(NSError* error, NSArray* publishers))completion
-{
-    if (!completion) { return; }
-    
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:_hostURL timeout:nil oauthToken:_user.token];
-    request.relativePath = Web_RequestRelativePath_UserPubs(_user.uid);
-    
-    [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
-        NSArray* json = processRequest(Web_RequestResponseCode_UserPubs, nil);
-        
-        NSMutableArray* publishers = [NSMutableArray arrayWithCapacity:json.count];
-        for (NSDictionary* tmp in json)
-        {
-            RelayrPublisher* pub = [[RelayrPublisher alloc] initWithPublisherID:tmp[Web_RespondKey_PublisherID] owner:tmp[Web_RespondKey_PublisherOwner]];
-            pub.name = tmp[Web_RespondKey_PublisherName];
-            if (pub) { [publishers addObject:pub]; }
-        }
-        
-        completion(nil, (publishers.count) ? [NSArray arrayWithArray:publishers] : nil);
-    }];
+    // Create full RelayrDevice objects
 }
 
 - (void)requestUserApps:(void (^)(NSError* error, NSArray* apps))completion
@@ -236,6 +251,38 @@
 //            if (app) { [apps addObject:app]; }
 //        }
 //    }];
+}
+
+#pragma mark - Private methods
+
+/*******************************************************************************
+ * This methods parses the <code>reading</code> property of the device model.
+ * It will return a set of <code>RelayrInput</code> objects.
+ ******************************************************************************/
+- (NSSet*)parseDeviceInputs:(NSArray*)readings ofDevice:(RelayrDevice*)device
+{
+    if (!readings.count) { return nil; }
+    
+    NSMutableSet* result = [NSMutableSet setWithCapacity:readings.count];
+    for (NSDictionary* dict in readings)
+    {
+        RelayrInput* input = [[RelayrInput alloc] initWithMeaning:dict[Web_RespondKey_ReadingsMeaning] unit:dict[Web_RespondKey_ReadingsUnit]];
+        if (!input) { continue; }
+        
+        input.device = device;
+        [result addObject:input];
+    }
+    
+    return (result.count) ? [NSSet setWithSet:result] : nil;
+}
+
+/*******************************************************************************
+ * This methods parses the <code>...</code> property of the device model.
+ * It will return a set of <code>RelayrOutput</code> objects.
+ ******************************************************************************/
+- (NSSet*)parseDeviceOutputs:(NSArray*)writings ofDevice:(RelayrDevice*)device
+{
+    return nil;
 }
 
 @end
