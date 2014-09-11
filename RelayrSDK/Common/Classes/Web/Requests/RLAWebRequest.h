@@ -13,6 +13,12 @@ FOUNDATION_EXPORT NSString* const kRLAWebRequestModePOST;
 FOUNDATION_EXPORT NSString* const kRLAWebRequestModePUT;
 /* For more info: http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html */
 
+// This macro expands into the reiterative process request (Be careful when changing variable names.
+#define processRequest(expectedCode, ...)   \
+    (!error && responseCode.unsignedIntegerValue==expectedCode && data)                              \
+    ? [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] : nil;          \
+    if (json.count==0) { return completion( (error) ? error : RLAErrorWebrequestFailure, __VA_ARGS__); }
+
 /*!
  *  @abstract Base class for the Relayr.framework HTTP requests.
  *  @discussion This class specifies the core properties of the Relayr.framework web requests.

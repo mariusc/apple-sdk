@@ -56,15 +56,37 @@
 #define Web_RespondKey_ReadingsMeaning      @"meaning"
 #define Web_RespondKey_ReadingsUnit         @"unit"
 
-#pragma Requests
+#pragma mark RLAWebService+Cloud
 
-// Cloud reachability
+// isReachable
 #define Web_RequestRelativePath_Reachability            @"/device-models"
 #define Web_RequestResponseCode_Reachability            200
+
+// OAuth temporal code
+#define dRLAWebOAuthController_Timeout                  10
+#define dRLAWebOAuthController_CodeRequestURL(clientID, redirectURI) \
+[NSString stringWithFormat:@"/oauth2/auth?client_id=%@&redirect_uri=%@&response_type=code&scope=access-own-user-info", clientID, redirectURI]
+
+#define dRLAWebOAuthController_Title                    @"Relayr"
+#define dRLAWebOAuthControllerIOS_Spinner_Animation     0.3
+#define dRLAWebOAuthControllerOSX_WindowStyle           (NSTitledWindowMask | NSClosableWindowMask | NSResizableWindowMask)
+#define dRLAWebOAuthControllerOSX_WindowSize            NSMakeRect(0.0f, 0.0f, 1050.0f, 710.0f)
+#define dRLAWebOAuthControllerOSX_WindowSizeMin         NSMakeSize(350.0f, 450.0f)
+
+// OAuth token
+#define Web_RequestRelativePath_OAuthToken              @"/oauth2/token"
+#define Web_RequestBody_OAuthToken(code, redirectURI, clientID, clientSecret) \
+    [NSString stringWithFormat:@"code=%@&redirect_uri=%@&client_id=%@&scope=&client_secret=%@&grant_type=authorization_code", code, [redirectURI stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], clientID, clientSecret]
+#define Web_RequestResponseCode_OAuthToken              200
+#define Web_RequestResponseKey_OAuthToken_AccessToken   @"access_token"
+
+#pragma mark RLAWebService+App
 
 // App's info
 #define Web_RequestRelativePath_AppInfo(appID)          [NSString stringWithFormat:@"/apps/%@", appID]
 #define Web_RequestResponseCode_AppInfo                 200
+
+#pragma mark RLAWebService+User
 
 // Email check
 #define Web_RequestRelativePath_EmailCheck(email)       [NSString stringWithFormat:@"/users/validate?email=%@", email]
@@ -72,15 +94,17 @@
 #define Web_RequestResponseKey_EmailCheck_Exists        @"exists"
 #define Web_RequestResponseVal_EmailCheck_Exists        @"true"
 
-// OAuth token
-#define Web_RequestRelativePath_OAuthToken              @"/oauth2/token"
-#define Web_RequestBody_OAuthToken(code, redirectURI, clientID, clientSecret)   [NSString stringWithFormat:@"code=%@&redirect_uri=%@&client_id=%@&scope=&client_secret=%@&grant_type=authorization_code", code, [redirectURI stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], clientID, clientSecret]
-#define Web_RequestResponseCode_OAuthToken              200
-#define Web_RequestResponseKey_OAuthToken_AccessToken   @"access_token"
-
 // User's info
 #define Web_RequestRelativePath_UserInfo                @"/oauth2/user-info"
 #define Web_RequestResponseCode_UserInfo                200
+
+// User's apps
+#define Web_RequestRelativePath_UserInstalledApps(userID)   [NSString stringWithFormat:@"}/users/%@/apps", userID]
+#define Web_RequestResponseCode_UserInstalledApps       200
+
+// User's publishers
+#define Web_RequestRelativePath_UserPubs(userID)        [NSString stringWithFormat:@"/users/%@/publishers", userID]
+#define Web_RequestResponseCode_UserPubs                200
 
 // User's transmitters
 #define Web_RequestRelativePath_UserTrans(userID)       [NSString stringWithFormat:@"/users/%@/transmitters", userID];
@@ -90,24 +114,16 @@
 #define Web_RequestRelativePath_UserDevices(userID)     [NSString stringWithFormat:@"/users/%@/devices", userID];
 #define Web_RequestResponseCode_UserDevices             200
 
-// User's publishers
-#define Web_RequestRelativePath_UserPubs(userID)        [NSString stringWithFormat:@"/users/%@/publishers", userID]
-#define Web_RequestResponseCode_UserPubs                200
+// User's bookmark devices
+#define Web_RequestRelativePath_UserBookmarkDevices(userID) [NSString stringWithFormat:@"/users/%@/devices/bookmarks", userID];
+#define Web_RequestResponseCode_UserBookmarkDevices     200
 
-// User's apps
-#define dRLAWebService_Apps_RelativePath(userID)        [NSString stringWithFormat:@"/users/%@/apps", userID]
-#define dRLAWebService_Apps_Respond_StatusCode          200
+#pragma mark RLAWebService+Publisher
 
-#pragma mark - RLAWebOAuthController
 
-#define dRLAWebOAuthController_Timeout                  10
-#define dRLAWebOAuthController_CodeRequestURL(clientID, redirectURI) \
-        [NSString stringWithFormat:@"/oauth2/auth?client_id=%@&redirect_uri=%@&response_type=code&scope=access-own-user-info", clientID, redirectURI]
 
-#define mark - RLAWebOAuthController
+#pragma mark RLAWebService+Transmitter
 
-#define dRLAWebOAuthController_Title                    @"Relayr"
-#define dRLAWebOAuthControllerIOS_Spinner_Animation     0.3
-#define dRLAWebOAuthControllerOSX_WindowStyle           (NSTitledWindowMask | NSClosableWindowMask | NSResizableWindowMask)
-#define dRLAWebOAuthControllerOSX_WindowSize            NSMakeRect(0.0f, 0.0f, 1050.0f, 710.0f)
-#define dRLAWebOAuthControllerOSX_WindowSizeMin         NSMakeSize(350.0f, 450.0f)
+
+
+#pragma mark RLAWebService+Device

@@ -8,6 +8,7 @@
 #import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
 #import "RelayrPublisher_Setup.h"   // Relayr.framework (Private)
 #import "RLAWebService.h"           // Relayr.framework (Web)
+#import "RLAWebService+User.h"      // Relayr.framework (Web)
 #import "RLAError.h"                // Relayr.framework (Utilities)
 
 static NSString* const kCodingToken = @"tok";

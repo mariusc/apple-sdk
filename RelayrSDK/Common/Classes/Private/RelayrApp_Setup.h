@@ -10,6 +10,21 @@
 @interface RelayrApp () <NSCoding>
 
 /*!
+ *  @abstract Designated initialiser for <code>RelayrApp</code>.
+ *
+ *  @param appID <code>NSString</code> representing the Relayr Application ID.
+ *  @param clientSecret <code>NSString</code> with the OAuth client secret.
+ *  @param redirectURI <code>NSString</code> with the security address.
+ *	@return Fully initialised <code>RelayrApp</code> object.
+ */
+- (instancetype)initWithID:(NSString*)appID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI;
+
+/*!
+ *  @abstract Convenience initialiser for <code>RelayrApp</code>.
+ */
+- (instancetype)initWithID:(NSString *)appID;
+
+/*!
  *  @abstract The relayr application name.
  *  @discussion This value should first be retrieved asynchronously, from the relayr server.
  *	If the server is not queried, this property is <code>nil</code>.

@@ -1,14 +1,16 @@
-#import "RelayrApp.h"       // Header
-#import "RelayrApp_Setup.h" // Relayr.framework (Private)
+#import "RelayrApp.h"           // Header
+#import "RelayrApp_Setup.h"     // Relayr.framework (Private)
 
-#import "RelayrCloud.h"     // Relayr.framework (Public)
-#import "RelayrUser.h"      // Relayr.framework (Public)
-#import "RelayrUser_Setup.h"// Relayr.framework (Private)
-#import "RLAWebService.h"   // Relayr.framework (Web)
+#import "RelayrCloud.h"         // Relayr.framework (Public)
+#import "RelayrUser.h"          // Relayr.framework (Public)
+#import "RelayrUser_Setup.h"    // Relayr.framework (Private)
+#import "RLAWebService.h"       // Relayr.framework (Web)
+#import "RLAWebService+Cloud.h" // Relayr.framework (Web)
+#import "RLAWebService+App.h"   // Relayr.framework (Web)
 
-#import "RLAError.h"        // Relayr.framework (Utilities)
-#import "RLALog.h"          // Relayr.framework (Utilities)
-#import "RLAKeyChain.h"     // Relayr.framework (Utilities)
+#import "RLAError.h"            // Relayr.framework (Utilities)
+#import "RLALog.h"              // Relayr.framework (Utilities)
+#import "RLAKeyChain.h"         // Relayr.framework (Utilities)
 
 // KeyChain key
 static NSString* const kRelayrAppStorageKey = @"RelayrApps";
@@ -37,6 +39,26 @@ static NSString* const kCodingUsers = @"usr";
     return nil;
 }
 
+- (instancetype)initWithID:(NSString*)appID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI
+{
+    if (!appID.length || !clientSecret.length || !redirectURI.length) { return nil; }
+    
+    self = [super init];
+    if (self)
+    {
+        _uid = appID;
+        _oauthClientSecret = clientSecret;
+        _redirectURI = redirectURI;
+        _users = [NSMutableArray array];
+    }
+    return self;
+}
+
+- (instancetype)initWithID:(NSString*)appID
+{
+    return [self initWithID:appID OAuthClientSecret:nil redirectURI:nil];
+}
+
 + (void)appWithID:(NSString*)appID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI completion:(void (^)(NSError*, RelayrApp*))completion
 {
     if (!completion) { return [RLALog debug:dRLAErrorMessageMissingArgument]; }
@@ -45,7 +67,7 @@ static NSString* const kCodingUsers = @"usr";
     RelayrApp* result = [RelayrApp retrieveAppFromKeyChain:appID];
     if (result) { return completion(nil, result); }
     
-    result = [[RelayrApp alloc] initPrivatelyWithID:appID OAuthClientSecret:clientSecret redirectURI:redirectURI];
+    result = [[RelayrApp alloc] initWithID:appID OAuthClientSecret:clientSecret redirectURI:redirectURI];
     if (!result) { return completion(RLAErrorSigningFailure, nil); }
     
     [RLAWebService requestAppInfoFor:result.uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription) {
@@ -187,7 +209,7 @@ static NSString* const kCodingUsers = @"usr";
 
 - (id)initWithCoder:(NSCoder*)decoder
 {
-    self = [self initPrivatelyWithID:[decoder decodeObjectForKey:kCodingID] OAuthClientSecret:[decoder decodeObjectForKey:kCodingClientSecret] redirectURI:[decoder decodeObjectForKey:kCodingRedirectURI]];
+    self = [self initWithID:[decoder decodeObjectForKey:kCodingID] OAuthClientSecret:[decoder decodeObjectForKey:kCodingClientSecret] redirectURI:[decoder decodeObjectForKey:kCodingRedirectURI]];
     if (self)
     {
         _name = [decoder decodeObjectForKey:kCodingName];
@@ -244,24 +266,6 @@ static NSString* const kCodingUsers = @"usr";
         }
     }];
     return result;
-}
-
-/*******************************************************************************
- * Private designated initialiser. Only used by this class.
- ******************************************************************************/
-- (instancetype)initPrivatelyWithID:(NSString*)appID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI
-{
-    if (!appID.length || !clientSecret.length || !redirectURI.length) { return nil; }
-    
-    self = [super init];
-    if (self)
-    {
-        _uid = appID;
-        _oauthClientSecret = clientSecret;
-        _redirectURI = redirectURI;
-        _users = [NSMutableArray array];
-    }
-    return self;
 }
 
 @end
