@@ -23,6 +23,18 @@
 - (void)requestUserInfo:(void (^)(NSError* error, NSString* uid, NSString* name, NSString* email))completion;
 
 /*!
+ *  @abstract It sets some properties of the called Relayr User.
+ *  @discussion If the method succees, <code>nil</code> is returned in the completion block.
+ *
+ *  @param name The future name of the current user. If <code>nil</code>, the name is not modified.
+ *  @param email The future email string of the current user. If <code>nil</code>, the email is not modified.
+ *  @param completion Block indicationg the result of the operation. If you want to risk it and not check for the result of the operation; you can pass <code>nil</code> here.
+ *
+ *  @see RelayrUser
+ */
+- (void)setUserName:(NSString*)name email:(NSString*)email completion:(void (^)(NSError* error))completion;
+
+/*!
  *  @abstract It queries the Relayr Cloud for all the apps installed under this user.
  *
  *  @param completion Block indicating the result of the server query.

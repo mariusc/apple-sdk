@@ -65,6 +65,22 @@
     }];
 }
 
+- (void)setUserName:(NSString*)name email:(NSString*)email completion:(void (^)(NSError* error))completion
+{
+    NSMutableDictionary* body = [[NSMutableDictionary alloc] initWithCapacity:2];
+    if (name) { body[Web_RespondKey_UserID] = name; }
+    if (email) { body[Web_RespondKey_UserName] = email; }
+    if (!body.count) { if (completion) { completion(nil); } return; }
+    
+    __weak RelayrUser* user = self.user;
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:user.token];
+    request.relativePath = Web_RequestRelativePath_UserInfoSet;
+    request.body = [NSDictionary dictionaryWithDictionary:body];
+//    [request executeInHTTPMode:kRLAWebRequestModePATCH completion:if (!completion) ? nil : ^ (NSError* error){
+//        
+//    }];
+}
+
 - (void)requestUserApps:(void (^)(NSError* error, NSArray* apps))completion
 {
     if (!completion) { return; }

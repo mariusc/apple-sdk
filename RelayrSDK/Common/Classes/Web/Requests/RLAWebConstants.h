@@ -94,9 +94,13 @@
 #define Web_RequestResponseKey_EmailCheck_Exists        @"exists"
 #define Web_RequestResponseVal_EmailCheck_Exists        @"true"
 
-// User's info
+// User's info (get)
 #define Web_RequestRelativePath_UserInfo                @"/oauth2/user-info"
 #define Web_RequestResponseCode_UserInfo                200
+
+// User's info (set)
+#define Web_RequestRelativePath_UserInfoSet             @"/oauth2/user-info"
+#define Web_RequestResponseCode_UserInfoSet             200
 
 // User's apps
 #define Web_RequestRelativePath_UserInstalledApps(userID)   [NSString stringWithFormat:@"}/users/%@/apps", userID]
