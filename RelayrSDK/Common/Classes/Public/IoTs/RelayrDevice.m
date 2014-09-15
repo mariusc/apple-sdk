@@ -11,6 +11,7 @@ static NSString* const kCodingName = @"nam";
 static NSString* const kCodingOwner = @"own";
 static NSString* const kCodingManufacturer = @"man";
 static NSString* const kCodingPublic = @"isP";
+static NSString* const kCodingModelID = @"mod";
 static NSString* const kCodingFirmware = @"fir";
 static NSString* const kCodingInputs = @"inp";
 static NSString* const kCodingOutputs = @"out";
@@ -26,15 +27,16 @@ static NSString* const kCodingSecret = @"sec";
     return nil;
 }
 
-- (instancetype)initWithID:(NSString*)uid secret:(NSString*)secret
+- (instancetype)initWithID:(NSString*)uid secret:(NSString*)secret modelID:(NSString*)modelID
 {
-    if (uid.length==0 || secret.length==0) { return nil; }
+    if ( uid.length==0 || secret.length==0 || modelID.length==0 ) { return nil; }
     
     self = [super init];
     if (self)
     {
         _uid = uid;
         _secret = secret;
+        _modelID = modelID;
     }
     return self;
 }
@@ -65,7 +67,7 @@ static NSString* const kCodingSecret = @"sec";
 
 - (id)initWithCoder:(NSCoder*)decoder
 {
-    self = [self initWithID:[decoder decodeObjectForKey:kCodingID] secret:[decoder decodeObjectForKey:kCodingName]];
+    self = [self initWithID:[decoder decodeObjectForKey:kCodingID] secret:[decoder decodeObjectForKey:kCodingName] modelID:[decoder decodeObjectForKey:kCodingModelID]];
     if (self)
     {
         _owner = [decoder decodeObjectForKey:kCodingOwner];
@@ -86,6 +88,7 @@ static NSString* const kCodingSecret = @"sec";
     [coder encodeObject:_owner forKey:kCodingOwner];
     [coder encodeObject:_manufacturer forKey:kCodingManufacturer];
     [coder encodeObject:_isPublic forKey:kCodingPublic];
+    [coder encodeObject:_modelID forKey:kCodingModelID];
     [coder encodeObject:_firmware forKey:kCodingFirmware];
     [coder encodeObject:_inputs forKey:kCodingInputs];
     [coder encodeObject:_outputs forKey:kCodingOutputs];
@@ -96,7 +99,7 @@ static NSString* const kCodingSecret = @"sec";
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"RelayrDevice\n{\n\t Relayr ID: %@\n\t Name: %@\n\t Owner: %@\n\t Manufacturer: %@\n\t Firmware version: %@\n\t Number of inputs: %lu\n\t Number of outputs: %lu\n\t MQTT secret: %@\n}\n", _uid, _name, (_owner) ? _owner : @"?", _manufacturer, _firmware.version, (unsigned long)_inputs.count, (unsigned long)_outputs.count, _secret];
+    return [NSString stringWithFormat:@"RelayrDevice\n{\n\t Relayr ID: %@\n\t Name: %@\n\t Owner: %@\n\t Manufacturer: %@\n\tModel ID: %@\n\t Firmware version: %@\n\t Number of inputs: %lu\n\t Number of outputs: %lu\n\t MQTT secret: %@\n}\n", _uid, _name, (_owner) ? _owner : @"?", (_manufacturer) ? _manufacturer : @"?", _modelID, (_firmware.version) ? _firmware.version : @"?", (unsigned long)_inputs.count, (unsigned long)_outputs.count, _secret];
 }
 
 @end

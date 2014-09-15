@@ -40,6 +40,11 @@
 @property (readonly,nonatomic) NSNumber* isPublic;
 
 /*!
+ *  @abstract Identifies the device model within the Relayr Cloud.
+ */
+@property (readonly,nonatomic) NSString* modelID;
+
+/*!
  *  @abstract Indicates firmware attributes of the Device instance being called.
  *  @discussion You can request the current version and other firmware properties.
  */

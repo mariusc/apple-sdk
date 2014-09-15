@@ -14,11 +14,12 @@
  *
  *  @param uid Relayr ID that identifies uniquely the transmitter within the Relayr cloud.
  *  @param secret MQTT password.
+ *  @param modelID Relayr model identifier. It identifies the device (independently of the firmware version).
  *	@return Fully instanciate <code>RelayrTransmitter</code> or <code>nil</code>
  *
  *  @see RelayrDevice
  */
-- (instancetype)initWithID:(NSString*)uid secret:(NSString*)secret;
+- (instancetype)initWithID:(NSString*)uid secret:(NSString*)secret modelID:(NSString*)modelID;
 
 /*!
  *  @abstract Device name.

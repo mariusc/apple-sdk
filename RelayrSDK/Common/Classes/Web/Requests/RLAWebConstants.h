@@ -19,6 +19,8 @@
 #define Web_RespondKey_AppID                @"id"
 #define Web_RespondKey_AppName              @"name"
 #define Web_RespondKey_AppDescription       @"description"
+#define Web_RespondKey_AppOwner             @"owner"
+#define Web_RespondKey_AppOAuthClientSecret @"clientSecret"
 #define Web_RespondKey_AppConnectedDevices  @"connectedDevices"
 
 // Relayr Users
@@ -82,9 +84,34 @@
 
 #pragma mark RLAWebService+App
 
-// App's info
+// All Relayr's apps
+#define Web_RequestRelativePath_Apps                    @"/apps"
+#define Web_RequestResponseCode_Apps                    200
+
+// App registration
+#define Web_RequestRelativePath_AppRegistration         @"/apps"
+#define Web_RequestResponseCode_Apps                    200
+
+// App info
 #define Web_RequestRelativePath_AppInfo(appID)          [NSString stringWithFormat:@"/apps/%@", appID]
 #define Web_RequestResponseCode_AppInfo                 200
+
+// App info (extended)
+#define Web_RequestRelativePath_AppInfoExtended(appID)  [NSString stringWithFormat:@"/apps/%@/extended", appID]
+#define Web_RequestResponseCode_AppInfoExtended         200
+
+// App info (set)
+#define Web_RequestRelativePath_AppInfoSet(appID)       [NSString stringWithFormat:@"/apps/%@", appID]
+#define Web_RequestResponseCode_AppInfoSet              200
+
+// App deletion
+#define Web_RequestRelativePath_AppDeletion(appID)      [NSString stringWithFormat:@"/apps/%@", appID]
+#define Web_RequestResponseCode_AppDeletion             204
+
+#define Web_RequestBodyKey_AppName                      @"name"
+#define Web_RequestBodyKey_AppPublisher                 @"publisher"
+#define Web_RequestBodyKey_AppDescription               @"description"
+#define Web_RequestBodyKey_AppRedirectURI               @"redirectUri"
 
 #pragma mark RLAWebService+User
 
@@ -99,7 +126,7 @@
 #define Web_RequestResponseCode_UserInfo                200
 
 // User's info (set)
-#define Web_RequestRelativePath_UserInfoSet             @"/oauth2/user-info"
+#define Web_RequestRelativePath_UserInfoSet(userID)     [NSString stringWithFormat:@"/users/%@", userID]
 #define Web_RequestResponseCode_UserInfoSet             200
 
 // User's apps
@@ -124,10 +151,40 @@
 
 #pragma mark RLAWebService+Publisher
 
+#define Web_RequestRelativePath_PublisherRegistration   @"/publishers"
+#define Web_RequestResponseCode_PublisherRegistration   200
 
+#define Web_RequestRelativePath_Publishers              @"/publishers"
+#define Web_RequestResponseCode_Publishers              200
+
+#define Web_RequestRelativePath_PublisherSet(pubID)     [NSString stringWithFormat:@"/publishers/%@", pubID]
+#define Web_RequestResponseCode_PublisherSet            200
+
+#define Web_RequestBodyKey_PublisherName                @"name"
+#define Web_RequestBodyKey_PublisherOwner               @"owner"
 
 #pragma mark RLAWebService+Transmitter
 
+#define Web_RequestRelativePath_TransRegistration       @"/transmitters"
+#define Web_RequestResponseCode_TransRegistration       200
 
+#define Web_RequestRelativePath_TransInfo(transID)      [NSString stringWithFormat:@"/transmitters/%@", transID];
+#define Web_RequestResponseCode_TransInfo               200
+
+#define Web_RequestRelativePath_TransInfoSet(transID)   [NSString stringWithFormat:@"/transmitters/%@", transID];
+#define Web_RequestResponseCode_TransInfoSet            200
+
+#define Web_RequestRelativePath_TransConnectionDev(transID, devID)  [NSString stringWithFormat:@"/transmitter/%@/device/%@", transID, devID];
+#define Web_RequestResponseCode_TransConnectionDev      200
+
+#define Web_RequestRelativePath_TransDevices(transID)   [NSString stringWithFormat:@"/transmitters/%@/devices", transID];
+#define Web_RequestResponseCode_TransDevices            200
+
+#define Web_RequestBodyKey_TransName                    @"name"
+#define Web_RequestBodyKey_TransOwner                   @"owner"
 
 #pragma mark RLAWebService+Device
+
+
+
+

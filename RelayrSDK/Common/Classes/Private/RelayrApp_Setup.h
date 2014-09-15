@@ -46,6 +46,11 @@
 @property (readwrite,nonatomic) NSString* publisherID;
 
 /*!
+ *  @abstract OAuth client (app) secret.
+ */
+@property (readwrite,nonatomic) NSString* oauthClientSecret;
+
+/*!
  *  @abstract The OAuth redirect URI.
  *  @discussion The URI of the page where the user is redirected upon successful login. The URI must include the protocol used e.g. 'http'.
  *	The redirect URI is set when an application is registered on the relayr Platform.

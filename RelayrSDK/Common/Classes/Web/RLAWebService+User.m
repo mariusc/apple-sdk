@@ -33,6 +33,7 @@
     if (!email) { return completion(RLAErrorMissingArgument, nil); }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:[NSURL URLWithString:Web_Host]];
+    if (!request) { return completion(RLAErrorWebrequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_EmailCheck(email);
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
@@ -50,7 +51,9 @@
 - (void)requestUserInfo:(void (^)(NSError* error, NSString* uid, NSString* name, NSString* email))completion
 {
     if (!completion) { return; }
+    
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    if (!request) { return completion(RLAErrorWebrequestFailure, nil, nil, nil); }
     request.relativePath = Web_RequestRelativePath_UserInfo;
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
@@ -72,13 +75,18 @@
     if (email) { body[Web_RespondKey_UserName] = email; }
     if (!body.count) { if (completion) { completion(nil); } return; }
     
-    __weak RelayrUser* user = self.user;
+    RelayrUser* user = self.user;
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:user.token];
-    request.relativePath = Web_RequestRelativePath_UserInfoSet;
+    if (!request) { return completion(RLAErrorWebrequestFailure); }
+    
+    request.relativePath = Web_RequestRelativePath_UserInfoSet(user.uid);
     request.body = [NSDictionary dictionaryWithDictionary:body];
-//    [request executeInHTTPMode:kRLAWebRequestModePATCH completion:if (!completion) ? nil : ^ (NSError* error){
-//        
-//    }];
+    [request executeInHTTPMode:kRLAWebRequestModePATCH completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
+        if (error) { return completion(error); }
+        if (responseCode.unsignedIntegerValue!=Web_RequestResponseCode_UserInfoSet || !data) { return completion(RLAErrorWebrequestFailure); }
+        
+        return completion(nil);
+    }];
 }
 
 - (void)requestUserApps:(void (^)(NSError* error, NSArray* apps))completion
@@ -86,7 +94,9 @@
     if (!completion) { return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    if (!request) { return completion(RLAErrorWebrequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_UserInstalledApps(self.user.uid);
+    
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError *error, NSNumber *responseCode, NSData *data) {
         NSArray* json = processRequest(Web_RequestResponseCode_UserInstalledApps, nil);
         
@@ -108,6 +118,7 @@
     if (!completion) { return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    if (!request) { return completion(RLAErrorWebrequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_UserPubs(self.user.uid);
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
@@ -130,6 +141,7 @@
     if (!completion) { return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    if (!request) { return completion(RLAErrorWebrequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_UserTrans(self.user.uid);
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
@@ -138,7 +150,7 @@
         
         for (NSDictionary* dict in json)
         {
-            RelayrTransmitter* transmitter = [self parseTransmitterFromJSONDictionary:dict];
+            RelayrTransmitter* transmitter = [self user_parseTransmitterFromJSONDictionary:dict];
             if (transmitter) { [result addObject:transmitter]; }
         }
         
@@ -151,6 +163,7 @@
     if (!completion) { return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    if (!request) { return completion(RLAErrorWebrequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_UserDevices(self.user.uid);
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
@@ -159,7 +172,7 @@
         
         for (NSDictionary* dict in json)
         {
-            RelayrDevice* device = [self parseDeviceFromJSONDictionary:dict];
+            RelayrDevice* device = [self user_parseDeviceFromJSONDictionary:dict];
             if (device) { [result addObject:device]; }
         }
         
@@ -172,6 +185,7 @@
     if (!completion) { return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    if (!request) { return completion(RLAErrorWebrequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_UserBookmarkDevices(self.user.uid);
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
@@ -180,7 +194,7 @@
         
         for (NSDictionary* dict in json)
         {
-            RelayrDevice* device = [self parseDeviceFromJSONDictionary:dict];
+            RelayrDevice* device = [self user_parseDeviceFromJSONDictionary:dict];
             if (device) { [result addObject:device]; }
         }
         
@@ -190,7 +204,10 @@
 
 #pragma mark - Private methods
 
-- (RelayrTransmitter*)parseTransmitterFromJSONDictionary:(NSDictionary*)jsonDict
+/*******************************************************************************
+ * This method parses a json dictionary representing a Relayr Transmitter
+ ******************************************************************************/
+- (RelayrTransmitter*)user_parseTransmitterFromJSONDictionary:(NSDictionary*)jsonDict
 {
     RelayrTransmitter* transmitter = [[RelayrTransmitter alloc] initWithID:jsonDict[Web_RespondKey_TransmitterID] secret:jsonDict[Web_RespondKey_TransmitterSecret]];
     if (!transmitter) { return transmitter; }
@@ -203,10 +220,10 @@
 /*******************************************************************************
  * This method parses a json dictionary representing a Relayr Device.
  ******************************************************************************/
-- (RelayrDevice*)parseDeviceFromJSONDictionary:(NSDictionary*)jsonDict
+- (RelayrDevice*)user_parseDeviceFromJSONDictionary:(NSDictionary*)jsonDict
 {
-    RelayrDevice* device = [[RelayrDevice alloc] initWithID:jsonDict[Web_RespondKey_DeviceID] secret:jsonDict[Web_RespondKey_DeviceSecret]];
-    if (!device) { return device; }
+    RelayrDevice* device = [[RelayrDevice alloc] initWithID:jsonDict[Web_RespondKey_DeviceID] secret:jsonDict[Web_RespondKey_DeviceSecret] modelID:jsonDict[Web_RespondKey_DeviceModel]];
+    if (!device) { return nil; }
     
     device.name = jsonDict[Web_RespondKey_DeviceName];
     device.owner = jsonDict[Web_RespondKey_DeviceOwner];
@@ -219,8 +236,8 @@
     if (model.count)
     {
         device.manufacturer = jsonDict[Web_RespondKey_ModelManufacturer];
-        device.inputs = [self parseDeviceReadingsFromJSONArray:jsonDict[Web_RespondKey_ModelReadings] ofDevice:device];
-        //device.outputs = [self parseDeviceWritingsFromJSONArray:dict[<#name#>];
+        device.inputs = [self user_parseDeviceReadingsFromJSONArray:jsonDict[Web_RespondKey_ModelReadings] ofDevice:device];
+        //device.outputs = [self user_parseDeviceWritingsFromJSONArray:dict[<#name#>];
     }
     
     return device;
@@ -230,7 +247,7 @@
  * This methods parses the <code>reading</code> property of the device model.
  * It will return a set of <code>RelayrInput</code> objects.
  ******************************************************************************/
-- (NSSet*)parseDeviceReadingsFromJSONArray:(NSArray*)readings ofDevice:(RelayrDevice*)device
+- (NSSet*)user_parseDeviceReadingsFromJSONArray:(NSArray*)readings ofDevice:(RelayrDevice*)device
 {
     if (!readings.count) { return nil; }
     
@@ -251,7 +268,7 @@
  * This methods parses the <code>...</code> property of the device model.
  * It will return a set of <code>RelayrOutput</code> objects.
  ******************************************************************************/
-- (NSSet*)parseDeviceWritingsFromJSONArray:(NSArray*)writings ofDevice:(RelayrDevice*)device
+- (NSSet*)user_parseDeviceWritingsFromJSONArray:(NSArray*)writings ofDevice:(RelayrDevice*)device
 {
     if (!writings.count) { return nil; }
     

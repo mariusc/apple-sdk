@@ -4,4 +4,7 @@
    <FileRef
       location = "group:RelayrSDK/RelayrSDK.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:BLETester/BLETester.xcodeproj">
+   </FileRef>
 </Workspace>

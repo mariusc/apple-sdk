@@ -11,7 +11,8 @@
  *  @param email <code>NSString</code> representing the user's email.
  *  @param completion Block answering the query.
  */
-+ (void)isUserWithEmail:(NSString*)email registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))completion;
++ (void)isUserWithEmail:(NSString*)email
+registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))completion;
 
 /*!
  *  @abstract It queries the Relayr Cloud for data about the user Information.
@@ -32,7 +33,9 @@
  *
  *  @see RelayrUser
  */
-- (void)setUserName:(NSString*)name email:(NSString*)email completion:(void (^)(NSError* error))completion;
+- (void)setUserName:(NSString*)name
+              email:(NSString*)email
+         completion:(void (^)(NSError* error))completion;
 
 /*!
  *  @abstract It queries the Relayr Cloud for all the apps installed under this user.

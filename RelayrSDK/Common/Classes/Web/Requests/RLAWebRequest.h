@@ -15,9 +15,9 @@ FOUNDATION_EXPORT NSString* const kRLAWebRequestModePUT;
 
 // This macro expands into the reiterative process request (Be careful when changing variable names.
 #define processRequest(expectedCode, ...)   \
-    (!error && responseCode.unsignedIntegerValue==expectedCode && data)                              \
-    ? [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] : nil;          \
-    if (json.count==0) { return completion( (error) ? error : RLAErrorWebrequestFailure, __VA_ARGS__); }
+    (!error && responseCode.unsignedIntegerValue==expectedCode && data) \
+    ? [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] : nil; \
+    if (!json) { return completion( (error) ? error : RLAErrorWebrequestFailure, __VA_ARGS__); }
 
 /*!
  *  @abstract Base class for the Relayr.framework HTTP requests.

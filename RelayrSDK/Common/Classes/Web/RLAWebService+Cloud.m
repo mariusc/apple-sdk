@@ -16,7 +16,7 @@
     request.relativePath = Web_RequestRelativePath_Reachability;
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
-        NSArray* json = processRequest(Web_RequestResponseCode_Reachability, nil);
+        NSArray* json = processRequest(Web_RequestResponseCode_Reachability, @NO);
         completion(nil, @YES);
     }];
 }

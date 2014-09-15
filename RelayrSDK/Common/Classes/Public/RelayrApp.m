@@ -25,7 +25,6 @@ static NSString* const kCodingPublisherID = @"pub";
 static NSString* const kCodingUsers = @"usr";
 
 @interface RelayrApp ()
-@property (readwrite,nonatomic) NSString* oauthClientSecret;
 @property (readwrite,nonatomic) NSMutableArray* users;
 @end
 
@@ -56,7 +55,14 @@ static NSString* const kCodingUsers = @"usr";
 
 - (instancetype)initWithID:(NSString*)appID
 {
-    return [self initWithID:appID OAuthClientSecret:nil redirectURI:nil];
+    if (!appID.length) { return nil; }
+    
+    self = [super init];
+    if (self)
+    {
+        _uid = appID;
+    }
+    return self;
 }
 
 + (void)appWithID:(NSString*)appID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI completion:(void (^)(NSError*, RelayrApp*))completion
@@ -172,8 +178,7 @@ static NSString* const kCodingUsers = @"usr";
             [serverUser queryCloudForUserInfo:^(NSError *error, NSString* previousName, NSString* previousEmail) {
                 if (error) { if (completion) { completion(error, nil); } return; }
                 
-                __strong RelayrApp* strongSelf = weakSelf;
-                // If the user was already logged, return that user.
+                __strong RelayrApp* strongSelf = weakSelf;  // If the user was already logged, return that user.
                 RelayrUser* localUser = [strongSelf loggedUserWithRelayrID:serverUser.uid];
                 if (localUser)
                 {
@@ -200,8 +205,7 @@ static NSString* const kCodingUsers = @"usr";
     NSUInteger const userCount = _users.count;
     for (NSUInteger i=0; i<userCount; ++i)
     {
-        RelayrUser* tmpUser = _users[i];
-        if ( [userToken isEqualToString:tmpUser.token] ) { return [_users removeObjectAtIndex:i]; }
+        if ( [userToken isEqualToString:((RelayrUser*)_users[i]).token] ) { return [_users removeObjectAtIndex:i]; }
     }
 }
 
