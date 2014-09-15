@@ -1,8 +1,8 @@
 ########################################
 # Temporary and build files of the workspace
 ########################################
+/bin/
 /tmp/
-/BluetoothApp/
 
 ########################################
 # OS X temporary files that should never be committed

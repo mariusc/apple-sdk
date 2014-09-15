@@ -22,6 +22,7 @@
 		622CB00519BCB07200F686B3 /* RelayrOutput.h in Headers */ = {isa = PBXBuildFile; fileRef = 622CB00219BCB07200F686B3 /* RelayrOutput.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		622CB00619BCB07200F686B3 /* RelayrOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = 622CB00319BCB07200F686B3 /* RelayrOutput.m */; };
 		622CB00719BCB07200F686B3 /* RelayrOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = 622CB00319BCB07200F686B3 /* RelayrOutput.m */; };
+		622CD0D719C384D5003E8660 /* TRelayrCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 622CD0D619C384D5003E8660 /* TRelayrCloud.m */; };
 		623F324D19A731B100F774EB /* RLAWebService.h in Headers */ = {isa = PBXBuildFile; fileRef = 623F324B19A731B100F774EB /* RLAWebService.h */; };
 		623F324E19A731B100F774EB /* RLAWebService.m in Sources */ = {isa = PBXBuildFile; fileRef = 623F324C19A731B100F774EB /* RLAWebService.m */; };
 		623F325119A7325300F774EB /* RLABluetoothService.h in Headers */ = {isa = PBXBuildFile; fileRef = 623F324F19A7325300F774EB /* RLABluetoothService.h */; };
@@ -62,6 +63,9 @@
 		6250E19419B51566003932AA /* RelayrApp_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 6250E19219B51566003932AA /* RelayrApp_Setup.h */; };
 		6252F0DF199C24E2002ECE4D /* Relayr.h in Headers */ = {isa = PBXBuildFile; fileRef = 6252F0D5199C24AD002ECE4D /* Relayr.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6252F10B199C2C3B002ECE4D /* Relayr.h in Headers */ = {isa = PBXBuildFile; fileRef = 6252F100199C2BFC002ECE4D /* Relayr.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6263019319C4B8D8009DCA30 /* TRelayrApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 6263019219C4B8D8009DCA30 /* TRelayrApp.m */; };
+		6263019519C4BB10009DCA30 /* TRelayrUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6263019419C4BB10009DCA30 /* TRelayrUser.m */; };
+		6263019719C4BB1C009DCA30 /* TRelayrPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 6263019619C4BB1C009DCA30 /* TRelayrPublisher.m */; };
 		626F613F19A4FFAF006EB510 /* RLAError.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6ACE199CCD170004F9FD /* RLAError.h */; };
 		626F614019A4FFAF006EB510 /* RLALog.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6AD1199CCD170004F9FD /* RLALog.h */; };
 		626F614219A506E4006EB510 /* RLAKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C3719A158DF001FEDCD /* RLAKeyChain.m */; };
@@ -77,6 +81,12 @@
 		62732D4419C05A24000E9545 /* RelayrConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 62732D4119C05A24000E9545 /* RelayrConnection.m */; };
 		62732D4519C05A24000E9545 /* RelayrConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 62732D4119C05A24000E9545 /* RelayrConnection.m */; };
 		627467E119A4F482005F1437 /* RLAError.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6ACF199CCD170004F9FD /* RLAError.m */; };
+		627AC51519C4BC6100986B6A /* TRelayrTransmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 627AC51419C4BC6100986B6A /* TRelayrTransmitter.m */; };
+		627AC51719C4BC8C00986B6A /* TRelayrDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 627AC51619C4BC8C00986B6A /* TRelayrDevice.m */; };
+		627AC51919C4BC9C00986B6A /* TRelayrFirmware.m in Sources */ = {isa = PBXBuildFile; fileRef = 627AC51819C4BC9C00986B6A /* TRelayrFirmware.m */; };
+		627AC51B19C4BCB000986B6A /* TRelayrInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 627AC51A19C4BCB000986B6A /* TRelayrInput.m */; };
+		627AC51D19C4BCBE00986B6A /* TRelayrOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = 627AC51C19C4BCBE00986B6A /* TRelayrOutput.m */; };
+		627AC51F19C4BCF000986B6A /* TRelayrConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 627AC51E19C4BCF000986B6A /* TRelayrConnection.m */; };
 		6285F34F19C1A92D0097B299 /* RLAWebService+User.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F34D19C1A92D0097B299 /* RLAWebService+User.h */; };
 		6285F35019C1A92D0097B299 /* RLAWebService+User.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F34D19C1A92D0097B299 /* RLAWebService+User.h */; };
 		6285F35119C1A92D0097B299 /* RLAWebService+User.m in Sources */ = {isa = PBXBuildFile; fileRef = 6285F34E19C1A92D0097B299 /* RLAWebService+User.m */; };
@@ -123,7 +133,6 @@
 		62D73C9D19B70CAB006F417D /* RelayrTransmitter_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D73C9B19B70CAB006F417D /* RelayrTransmitter_Setup.h */; };
 		62D73C9F19B718C8006F417D /* RelayrDevice_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D73C9E19B718C8006F417D /* RelayrDevice_Setup.h */; };
 		62D73CA019B718C8006F417D /* RelayrDevice_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D73C9E19B718C8006F417D /* RelayrDevice_Setup.h */; };
-		62E41FD019C35DB8008459B7 /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E41FCF19C35DB8008459B7 /* Tests.m */; };
 		62E87DD919AB2AAA00728AC6 /* CDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E87DD419AB2AAA00728AC6 /* CDebug.h */; };
 		62E87DDA19AB2AAA00728AC6 /* CDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E87DD419AB2AAA00728AC6 /* CDebug.h */; };
 		62E87DDB19AB2AAA00728AC6 /* CMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E87DD519AB2AAA00728AC6 /* CMacros.h */; };
@@ -152,6 +161,7 @@
 		622CAFFD19BCB04B00F686B3 /* RelayrInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrInput.m; sourceTree = "<group>"; };
 		622CB00219BCB07200F686B3 /* RelayrOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrOutput.h; sourceTree = "<group>"; };
 		622CB00319BCB07200F686B3 /* RelayrOutput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrOutput.m; sourceTree = "<group>"; };
+		622CD0D619C384D5003E8660 /* TRelayrCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRelayrCloud.m; sourceTree = "<group>"; };
 		623F324B19A731B100F774EB /* RLAWebService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebService.h; sourceTree = "<group>"; };
 		623F324C19A731B100F774EB /* RLAWebService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebService.m; sourceTree = "<group>"; };
 		623F324F19A7325300F774EB /* RLABluetoothService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothService.h; sourceTree = "<group>"; };
@@ -162,6 +172,7 @@
 		6250E18A19B50A0D003932AA /* RelayrPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrPublisher.m; sourceTree = "<group>"; };
 		6250E18F19B50AAD003932AA /* RelayrPublisher_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrPublisher_Setup.h; sourceTree = "<group>"; };
 		6250E19219B51566003932AA /* RelayrApp_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrApp_Setup.h; sourceTree = "<group>"; };
+		6252ABDC19C4C27E00A53221 /* Tests.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Tests.xcconfig; path = Tests/Configuration/Tests.xcconfig; sourceTree = SOURCE_ROOT; };
 		6252F0B3199C2465002ECE4D /* Relayr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Relayr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6252F0D1199C2492002ECE4D /* Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Common.xcconfig; sourceTree = "<group>"; };
 		6252F0D5199C24AD002ECE4D /* Relayr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Relayr.h; sourceTree = "<group>"; };
@@ -171,11 +182,20 @@
 		6252F100199C2BFC002ECE4D /* Relayr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Relayr.h; sourceTree = "<group>"; };
 		6252F102199C2BFC002ECE4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6252F103199C2BFC002ECE4D /* OSX.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = OSX.xcconfig; sourceTree = "<group>"; };
+		6263019219C4B8D8009DCA30 /* TRelayrApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRelayrApp.m; path = Tests/Classes/Public/TRelayrApp.m; sourceTree = SOURCE_ROOT; };
+		6263019419C4BB10009DCA30 /* TRelayrUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRelayrUser.m; path = Tests/Classes/Public/TRelayrUser.m; sourceTree = SOURCE_ROOT; };
+		6263019619C4BB1C009DCA30 /* TRelayrPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRelayrPublisher.m; path = Tests/Classes/Public/TRelayrPublisher.m; sourceTree = SOURCE_ROOT; };
 		6272529619AC7B38001265EB /* RLAWebConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RLAWebConstants.h; sourceTree = "<group>"; };
 		6272529919AC8573001265EB /* RLAWebOAuthController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebOAuthController.h; sourceTree = "<group>"; };
 		6272529A19AC8573001265EB /* RLAWebOAuthController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebOAuthController.m; sourceTree = "<group>"; };
 		62732D4019C05A24000E9545 /* RelayrConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrConnection.h; sourceTree = "<group>"; };
 		62732D4119C05A24000E9545 /* RelayrConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrConnection.m; sourceTree = "<group>"; };
+		627AC51419C4BC6100986B6A /* TRelayrTransmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRelayrTransmitter.m; path = Tests/Classes/Public/IoTs/TRelayrTransmitter.m; sourceTree = SOURCE_ROOT; };
+		627AC51619C4BC8C00986B6A /* TRelayrDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRelayrDevice.m; path = Tests/Classes/Public/IoTs/TRelayrDevice.m; sourceTree = SOURCE_ROOT; };
+		627AC51819C4BC9C00986B6A /* TRelayrFirmware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRelayrFirmware.m; path = Tests/Classes/Public/IoTs/TRelayrFirmware.m; sourceTree = SOURCE_ROOT; };
+		627AC51A19C4BCB000986B6A /* TRelayrInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRelayrInput.m; path = Tests/Classes/Public/IoTs/TRelayrInput.m; sourceTree = SOURCE_ROOT; };
+		627AC51C19C4BCBE00986B6A /* TRelayrOutput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRelayrOutput.m; path = Tests/Classes/Public/IoTs/TRelayrOutput.m; sourceTree = SOURCE_ROOT; };
+		627AC51E19C4BCF000986B6A /* TRelayrConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TRelayrConnection.m; path = Tests/Classes/Public/IoTs/TRelayrConnection.m; sourceTree = SOURCE_ROOT; };
 		6285F34D19C1A92D0097B299 /* RLAWebService+User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLAWebService+User.h"; sourceTree = "<group>"; };
 		6285F34E19C1A92D0097B299 /* RLAWebService+User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLAWebService+User.m"; sourceTree = "<group>"; };
 		6285F35319C1A98B0097B299 /* RLAWebService+App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLAWebService+App.h"; sourceTree = "<group>"; };
@@ -210,7 +230,6 @@
 		62E04C3619A158DF001FEDCD /* RLAKeyChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAKeyChain.h; sourceTree = "<group>"; };
 		62E04C3719A158DF001FEDCD /* RLAKeyChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAKeyChain.m; sourceTree = "<group>"; };
 		62E41FC219C35B90008459B7 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		62E41FCF19C35DB8008459B7 /* Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		62E41FD119C35DF1008459B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		62E87DD419AB2AAA00728AC6 /* CDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDebug.h; sourceTree = "<group>"; };
 		62E87DD519AB2AAA00728AC6 /* CMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMacros.h; sourceTree = "<group>"; };
@@ -285,6 +304,70 @@
 				62D73C9A19B70B39006F417D /* IoTs */,
 			);
 			path = Private;
+			sourceTree = "<group>";
+		};
+		622CD0CB19C3820F003E8660 /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Bluetooth;
+			sourceTree = "<group>";
+		};
+		622CD0CC19C3820F003E8660 /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				622CD0D319C382A1003E8660 /* IoTs */,
+			);
+			path = Private;
+			sourceTree = "<group>";
+		};
+		622CD0CD19C3820F003E8660 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				622CD0D619C384D5003E8660 /* TRelayrCloud.m */,
+				6263019219C4B8D8009DCA30 /* TRelayrApp.m */,
+				6263019419C4BB10009DCA30 /* TRelayrUser.m */,
+				6263019619C4BB1C009DCA30 /* TRelayrPublisher.m */,
+				627AC51319C4BC5300986B6A /* IoTs */,
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
+		622CD0CE19C3820F003E8660 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		622CD0CF19C3820F003E8660 /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				622CD0D019C3828A003E8660 /* Requests */,
+				622CD0D119C3828A003E8660 /* Views */,
+			);
+			path = Web;
+			sourceTree = "<group>";
+		};
+		622CD0D019C3828A003E8660 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
+		622CD0D119C3828A003E8660 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		622CD0D319C382A1003E8660 /* IoTs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = IoTs;
 			sourceTree = "<group>";
 		};
 		623F324919A7317700F774EB /* Bluetooth */ = {
@@ -481,6 +564,19 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
+		627AC51319C4BC5300986B6A /* IoTs */ = {
+			isa = PBXGroup;
+			children = (
+				627AC51419C4BC6100986B6A /* TRelayrTransmitter.m */,
+				627AC51619C4BC8C00986B6A /* TRelayrDevice.m */,
+				627AC51819C4BC9C00986B6A /* TRelayrFirmware.m */,
+				627AC51A19C4BCB000986B6A /* TRelayrInput.m */,
+				627AC51C19C4BCBE00986B6A /* TRelayrOutput.m */,
+				627AC51E19C4BCF000986B6A /* TRelayrConnection.m */,
+			);
+			path = IoTs;
+			sourceTree = "<group>";
+		};
 		6285F37719C1AF8E0097B299 /* Web */ = {
 			isa = PBXGroup;
 			children = (
@@ -603,7 +699,11 @@
 		62E41FCD19C35DA2008459B7 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				62E41FCF19C35DB8008459B7 /* Tests.m */,
+				622CD0CD19C3820F003E8660 /* Public */,
+				622CD0CC19C3820F003E8660 /* Private */,
+				622CD0CB19C3820F003E8660 /* Bluetooth */,
+				622CD0CF19C3820F003E8660 /* Web */,
+				622CD0CE19C3820F003E8660 /* Utilities */,
 			);
 			name = Classes;
 			path = "../../../Apple-SDK/RelayrSDK/Tests/Classes";
@@ -613,6 +713,7 @@
 			isa = PBXGroup;
 			children = (
 				62E41FD119C35DF1008459B7 /* Info.plist */,
+				6252ABDC19C4C27E00A53221 /* Tests.xcconfig */,
 			);
 			name = Configuration;
 			path = "../../../Apple-SDK/RelayrSDK/Tests/Configuration";
@@ -955,7 +1056,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62E41FD019C35DB8008459B7 /* Tests.m in Sources */,
+				627AC51519C4BC6100986B6A /* TRelayrTransmitter.m in Sources */,
+				622CD0D719C384D5003E8660 /* TRelayrCloud.m in Sources */,
+				6263019519C4BB10009DCA30 /* TRelayrUser.m in Sources */,
+				6263019719C4BB1C009DCA30 /* TRelayrPublisher.m in Sources */,
+				627AC51D19C4BCBE00986B6A /* TRelayrOutput.m in Sources */,
+				627AC51B19C4BCB000986B6A /* TRelayrInput.m in Sources */,
+				6263019319C4B8D8009DCA30 /* TRelayrApp.m in Sources */,
+				627AC51F19C4BCF000986B6A /* TRelayrConnection.m in Sources */,
+				627AC51719C4BC8C00986B6A /* TRelayrDevice.m in Sources */,
+				627AC51919C4BC9C00986B6A /* TRelayrFirmware.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1250,6 +1360,7 @@
 		};
 		62E41FC819C35B90008459B7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6252ABDC19C4C27E00A53221 /* Tests.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1272,7 +1383,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 				);
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1286,17 +1397,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = Tests/Configuration/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
 		62E41FC919C35B90008459B7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6252ABDC19C4C27E00A53221 /* Tests.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1321,23 +1431,22 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 				);
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = Tests/Configuration/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
 			name = Release;
 		};
 		62E41FCA19C35B90008459B7 /* Distribution */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6252ABDC19C4C27E00A53221 /* Tests.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1362,17 +1471,15 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 				);
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = Tests/Configuration/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
 			name = Distribution;
@@ -1418,6 +1525,7 @@
 				62E41FCA19C35B90008459B7 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

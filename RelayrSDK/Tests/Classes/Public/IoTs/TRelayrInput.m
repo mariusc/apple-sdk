@@ -1,10 +1,13 @@
-@import Cocoa;
-@import XCTest;
+@import Cocoa;              // Apple
+@import XCTest;             // Apple
+#import <Relayr/Relayr.h>   // Relayr.framework
 
-@interface Tests : XCTestCase
+@interface TRelayrInput : XCTestCase
 @end
 
-@implementation Tests
+@implementation TRelayrInput
+
+#pragma mark - Setup
 
 - (void)setUp
 {
@@ -18,11 +21,15 @@
     [super tearDown];
 }
 
+#pragma mark - Unit tests
+
 - (void)testExample
 {
     // This is an example of a functional test case.
     XCTAssert(YES, @"Pass");
 }
+
+#pragma mark - Performance
 
 - (void)testPerformanceExample
 {
