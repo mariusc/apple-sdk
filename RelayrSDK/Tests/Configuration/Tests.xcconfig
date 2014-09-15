@@ -1,3 +1,5 @@
+#include "Common/Configuration/Common.xcconfig"
+
 PRODUCT_NAME = Tests
 BUNDLE_NAME = $(PRODUCT_NAME)
 BUNDLE_IDENTIFIER = io.relayr.sdk.tests
