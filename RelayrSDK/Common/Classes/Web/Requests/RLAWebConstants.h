@@ -21,6 +21,7 @@
 #define Web_RespondKey_AppDescription       @"description"
 #define Web_RespondKey_AppOwner             @"owner"
 #define Web_RespondKey_AppOAuthClientSecret @"clientSecret"
+#define Web_RespondKey_AppRedirectURI       @"redirectUri"
 #define Web_RespondKey_AppConnectedDevices  @"connectedDevices"
 
 // Relayr Users
@@ -151,12 +152,19 @@
 
 #pragma mark RLAWebService+Publisher
 
+// Publisher registration
 #define Web_RequestRelativePath_PublisherRegistration   @"/publishers"
 #define Web_RequestResponseCode_PublisherRegistration   200
 
+// Retrieve all publishers in Relayr cloud
 #define Web_RequestRelativePath_Publishers              @"/publishers"
 #define Web_RequestResponseCode_Publishers              200
 
+// Publisher info
+#define Web_RequestRelativePath_PublishersApps(pubID)   [NSString stringWithFormat:@"/publishers/%@", pubID]
+#define Web_RequestResponseCode_PublishersApps          200
+
+// Set specific publisher
 #define Web_RequestRelativePath_PublisherSet(pubID)     [NSString stringWithFormat:@"/publishers/%@", pubID]
 #define Web_RequestResponseCode_PublisherSet            200
 
@@ -174,11 +182,20 @@
 #define Web_RequestRelativePath_TransInfoSet(transID)   [NSString stringWithFormat:@"/transmitters/%@", transID];
 #define Web_RequestResponseCode_TransInfoSet            200
 
-#define Web_RequestRelativePath_TransConnectionDev(transID, devID)  [NSString stringWithFormat:@"/transmitter/%@/device/%@", transID, devID];
-#define Web_RequestResponseCode_TransConnectionDev      200
-
 #define Web_RequestRelativePath_TransDevices(transID)   [NSString stringWithFormat:@"/transmitters/%@/devices", transID];
 #define Web_RequestResponseCode_TransDevices            200
+
+// Create an association between a transmitter and a device
+#define Web_RequestRelativePath_TransConnectionDev(transID, devID)          [NSString stringWithFormat:@"/transmitter/%@/devices/%@", transID, devID]
+#define Web_RequestResponseCode_TransConnectionDev                          200
+
+// Remove an association between a transmitter and a device
+#define Web_RequestRelativePath_TransConnectionDevDeletion(transID, devID)  [NSString stringWithFormat:@"/transmitter/%@/devices/%@", transID, devID];
+#define Web_RequestResponseCode_TransConnectionDevDeletion                  204
+
+// Transmitter deletion
+#define Web_RequestRelativePath_TransDeletion(transID)  [NSString stringWithFormat:@"/transmitters/%@", transID];
+#define Web_RequestResponseCode_TransDeletion           204
 
 #define Web_RequestBodyKey_TransName                    @"name"
 #define Web_RequestBodyKey_TransOwner                   @"owner"

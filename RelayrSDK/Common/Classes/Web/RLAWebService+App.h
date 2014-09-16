@@ -10,6 +10,7 @@
 
 /*!
  *  @abstract It queries the Relayr Cloud for information of a Relayr application.
+ *  @discussion There are two API call for retrieving Relayr Application information. This one is the more limited. You don't need authorization and all information retrieved is very basic.
  *
  *  @param completion Block indicating the result of the server query.
  */
@@ -81,5 +82,7 @@
  */
 - (void)removeApp:(NSString*)appID
        completion:(void (^)(NSError* error))completion;
+
+// TODO: Code the methods two connect apps and devices
 
 @end

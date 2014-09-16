@@ -1,11 +1,10 @@
 #import "RLAWebService+Transmitter.h"   // Header
+#import "RLAWebService+Parsing.h"       // Relayr.framework (Web)
+
 #import "RelayrUser.h"                  // Relayr.framework (Public)
 #import "RelayrTransmitter.h"           // Relayr.framework (Public)
 #import "RelayrDevice.h"                // Relayr.framework (Public)
 #import "RelayrFirmware.h"              // Relayr.framework (Public)
-#import "RelayrTransmitter_Setup.h"     // Relayr.framework (Private)
-#import "RelayrDevice_Setup.h"          // Relayr.framework (Private)
-#import "RelayrFirmware_Setup.h"        // Relayr.framework (Private)
 #import "RLAWebRequest.h"               // Relayr.framework (Web)
 #import "RLAWebConstants.h"             // Relayr.framework (Web)
 #import "RLAError.h"                    // Relayr.framework (Utilities)
@@ -26,7 +25,7 @@
     [request executeInHTTPMode:kRLAWebRequestModePOST completion:(!completion) ? nil : ^(NSError *error, NSNumber *responseCode, NSData *data) {
         NSDictionary* json = processRequest(Web_RequestResponseCode_TransRegistration, nil);
         
-        RelayrTransmitter* result = [self trans_parseTransmitterFromJSONDictionary:json];
+        RelayrTransmitter* result = [RLAWebService parseTransmitterFromJSONDictionary:json];
         return (result) ? completion(nil, result) : completion(RLAErrorWebrequestFailure, nil);
     }];
 }
@@ -43,7 +42,7 @@
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError *error, NSNumber *responseCode, NSData *data) {
         NSDictionary* json = processRequest(Web_RequestResponseCode_TransInfo, nil);
         
-        RelayrTransmitter* result = [self trans_parseTransmitterFromJSONDictionary:json];
+        RelayrTransmitter* result = [RLAWebService parseTransmitterFromJSONDictionary:json];
         return (result) ? completion(nil, result) : completion(RLAErrorWebrequestFailure, nil);
     }];
 }
@@ -96,7 +95,7 @@
         
         for (NSDictionary* dict in json)
         {
-            RelayrDevice* device = [self trans_parseDeviceFromJSONDictionary:dict];
+            RelayrDevice* device = [RLAWebService parseDeviceFromJSONDictionary:dict];
             if (device) { [result addObject:device]; }
         }
         
@@ -104,37 +103,36 @@
     }];
 }
 
-#pragma mark - Private methods
-
-/*******************************************************************************
- * This method parses a json dictionary representing a Relayr Transmitter
- ******************************************************************************/
-- (RelayrTransmitter*)trans_parseTransmitterFromJSONDictionary:(NSDictionary*)jsonDict
+- (void)deleteConnectionBetweenTransmitter:(NSString*)transmitterID andDevice:(NSString*)deviceID completion:(void (^)(NSError* error))completion
 {
-    RelayrTransmitter* transmitter = [[RelayrTransmitter alloc] initWithID:jsonDict[Web_RespondKey_TransmitterID] secret:jsonDict[Web_RespondKey_TransmitterSecret]];
-    if (!transmitter) { return nil; }
+    if (!transmitterID.length || !deviceID.length) { if (completion) { completion(RLAErrorMissingArgument); } return; }
     
-    transmitter.owner = jsonDict[Web_RespondKey_TransmitterOwner];
-    transmitter.name = jsonDict[Web_RespondKey_TransmitterName];
-    return transmitter;
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    if (!request) { if (completion) { completion(RLAErrorWebrequestFailure); } return; }
+    request.relativePath = Web_RequestRelativePath_TransConnectionDevDeletion(transmitterID, deviceID);
+    
+    [request executeInHTTPMode:kRLAWebRequestModeDELETE completion:(!completion) ? nil : ^(NSError *error, NSNumber *responseCode, NSData *data) {
+        if (error) { return completion(error); }
+        if (responseCode.unsignedIntegerValue != Web_RequestResponseCode_TransConnectionDevDeletion) { return completion(RLAErrorWebrequestFailure); }
+        
+        return completion(nil);
+    }];
 }
 
-/*******************************************************************************
- * This method parses a json dictionary representing a Relayr Device.
- ******************************************************************************/
-- (RelayrDevice*)trans_parseDeviceFromJSONDictionary:(NSDictionary*)jsonDict
+- (void)deleteTransmitter:(NSString*)transmitterID completion:(void (^)(NSError* error))completion
 {
-    RelayrDevice* device = [[RelayrDevice alloc] initWithID:jsonDict[Web_RespondKey_DeviceID] secret:jsonDict[Web_RespondKey_DeviceSecret] modelID:jsonDict[Web_RespondKey_DeviceModel]];
-    if (!device) { return nil; }
+    if (!transmitterID.length) { if (completion) { completion(RLAErrorMissingArgument); } return; }
     
-    device.name = jsonDict[Web_RespondKey_DeviceName];
-    device.owner = jsonDict[Web_RespondKey_DeviceOwner];
-    device.isPublic = jsonDict[Web_RespondKey_DevicePublic];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    if (!request) { if (completion) { completion(RLAErrorWebrequestFailure); } return; }
+    request.relativePath = Web_RequestRelativePath_TransDeletion(transmitterID);
     
-    NSString* firmVer = jsonDict[Web_RespondKey_DeviceFirmware];
-    if (firmVer.length) { device.firmware = [[RelayrFirmware alloc] initWithVersion:firmVer]; }
-    
-    return device;
+    [request executeInHTTPMode:kRLAWebRequestModeDELETE completion:(!completion) ? nil : ^(NSError *error, NSNumber *responseCode, NSData *data) {
+        if (error) { return completion(error); }
+        if (responseCode.unsignedIntegerValue != Web_RequestResponseCode_TransDeletion) { return completion(RLAErrorWebrequestFailure); }
+        
+        return completion(nil);
+    }];
 }
 
 @end

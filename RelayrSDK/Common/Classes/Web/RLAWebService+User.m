@@ -1,4 +1,5 @@
 #import "RLAWebService+User.h"      // Header
+#import "RLAWebService+Parsing.h"   // Relayr.framework (Web)
 
 #import "RelayrApp.h"               // Relayr.framework (Public)
 #import "RelayrUser.h"              // Relayr.framework (Public)
@@ -11,15 +12,6 @@
 
 #import "RLAWebRequest.h"           // Relayr.framework (Web)
 #import "RLAWebConstants.h"         // Relayr.framework (Web)
-
-#import "RelayrApp_Setup.h"         // Relayr.framework (Private)
-#import "RelayrUser_Setup.h"        // Relayr.framework (Private)
-#import "RelayrPublisher_Setup.h"   // Relayr.framework (Private)
-#import "RelayrTransmitter_Setup.h" // Relayr.framework (Private)
-#import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
-#import "RelayrFirmware_Setup.h"    // Relayr.framework (Private)
-#import "RelayrInput_Setup.h"       // Relayr.framework (Private)
-
 #import "RLAError.h"                // Relayr.framework (Utilities)
 
 @implementation RLAWebService (User)
@@ -103,9 +95,7 @@
         NSMutableArray* result = [NSMutableArray arrayWithCapacity:json.count];
         for (NSDictionary* dict in json)
         {
-            RelayrApp* app = [[RelayrApp alloc] initWithID:dict[Web_RespondKey_AppID]];
-            app.name = dict[Web_RespondKey_AppName];
-            app.appDescription = dict[Web_RespondKey_AppDescription];
+            RelayrApp* app = [RLAWebService parseAppFromJSONDictionary:dict];
             if (app) { [result addObject:app]; }
         }
         
@@ -125,10 +115,9 @@
         NSArray* json = processRequest(Web_RequestResponseCode_UserPubs, nil);
         
         NSMutableArray* publishers = [NSMutableArray arrayWithCapacity:json.count];
-        for (NSDictionary* tmp in json)
+        for (NSDictionary* dict in json)
         {
-            RelayrPublisher* pub = [[RelayrPublisher alloc] initWithPublisherID:tmp[Web_RespondKey_PublisherID] owner:tmp[Web_RespondKey_PublisherOwner]];
-            pub.name = tmp[Web_RespondKey_PublisherName];
+            RelayrPublisher* pub = [RLAWebService parsePublisherFromJSONDictionary:dict];
             if (pub) { [publishers addObject:pub]; }
         }
         
@@ -150,7 +139,7 @@
         
         for (NSDictionary* dict in json)
         {
-            RelayrTransmitter* transmitter = [self user_parseTransmitterFromJSONDictionary:dict];
+            RelayrTransmitter* transmitter = [RLAWebService parseTransmitterFromJSONDictionary:dict];
             if (transmitter) { [result addObject:transmitter]; }
         }
         
@@ -172,7 +161,7 @@
         
         for (NSDictionary* dict in json)
         {
-            RelayrDevice* device = [self user_parseDeviceFromJSONDictionary:dict];
+            RelayrDevice* device = [RLAWebService parseDeviceFromJSONDictionary:dict];
             if (device) { [result addObject:device]; }
         }
         
@@ -194,93 +183,12 @@
         
         for (NSDictionary* dict in json)
         {
-            RelayrDevice* device = [self user_parseDeviceFromJSONDictionary:dict];
+            RelayrDevice* device = [RLAWebService parseDeviceFromJSONDictionary:dict];
             if (device) { [result addObject:device]; }
         }
         
         return completion(nil, (result.count) ? [NSArray arrayWithArray:result] : nil);
     }];
-}
-
-#pragma mark - Private methods
-
-/*******************************************************************************
- * This method parses a json dictionary representing a Relayr Transmitter
- ******************************************************************************/
-- (RelayrTransmitter*)user_parseTransmitterFromJSONDictionary:(NSDictionary*)jsonDict
-{
-    RelayrTransmitter* transmitter = [[RelayrTransmitter alloc] initWithID:jsonDict[Web_RespondKey_TransmitterID] secret:jsonDict[Web_RespondKey_TransmitterSecret]];
-    if (!transmitter) { return transmitter; }
-    
-    transmitter.owner = jsonDict[Web_RespondKey_TransmitterOwner];
-    transmitter.name = jsonDict[Web_RespondKey_TransmitterName];
-    return transmitter;
-}
-
-/*******************************************************************************
- * This method parses a json dictionary representing a Relayr Device.
- ******************************************************************************/
-- (RelayrDevice*)user_parseDeviceFromJSONDictionary:(NSDictionary*)jsonDict
-{
-    RelayrDevice* device = [[RelayrDevice alloc] initWithID:jsonDict[Web_RespondKey_DeviceID] secret:jsonDict[Web_RespondKey_DeviceSecret] modelID:jsonDict[Web_RespondKey_DeviceModel]];
-    if (!device) { return nil; }
-    
-    device.name = jsonDict[Web_RespondKey_DeviceName];
-    device.owner = jsonDict[Web_RespondKey_DeviceOwner];
-    device.isPublic = jsonDict[Web_RespondKey_DevicePublic];
-    
-    NSString* firmVer = jsonDict[Web_RespondKey_DeviceFirmware];
-    if (firmVer.length) { device.firmware = [[RelayrFirmware alloc] initWithVersion:firmVer]; }
-    
-    NSDictionary* model = jsonDict[Web_RespondKey_DeviceModel];
-    if (model.count)
-    {
-        device.manufacturer = jsonDict[Web_RespondKey_ModelManufacturer];
-        device.inputs = [self user_parseDeviceReadingsFromJSONArray:jsonDict[Web_RespondKey_ModelReadings] ofDevice:device];
-        //device.outputs = [self user_parseDeviceWritingsFromJSONArray:dict[<#name#>];
-    }
-    
-    return device;
-}
-
-/*******************************************************************************
- * This methods parses the <code>reading</code> property of the device model.
- * It will return a set of <code>RelayrInput</code> objects.
- ******************************************************************************/
-- (NSSet*)user_parseDeviceReadingsFromJSONArray:(NSArray*)readings ofDevice:(RelayrDevice*)device
-{
-    if (!readings.count) { return nil; }
-    
-    NSMutableSet* result = [NSMutableSet setWithCapacity:readings.count];
-    for (NSDictionary* dict in readings)
-    {
-        RelayrInput* input = [[RelayrInput alloc] initWithMeaning:dict[Web_RespondKey_ReadingsMeaning] unit:dict[Web_RespondKey_ReadingsUnit]];
-        if (!input) { continue; }
-        
-        input.device = device;
-        [result addObject:input];
-    }
-    
-    return (result.count) ? [NSSet setWithSet:result] : nil;
-}
-
-/*******************************************************************************
- * This methods parses the <code>...</code> property of the device model.
- * It will return a set of <code>RelayrOutput</code> objects.
- ******************************************************************************/
-- (NSSet*)user_parseDeviceWritingsFromJSONArray:(NSArray*)writings ofDevice:(RelayrDevice*)device
-{
-    if (!writings.count) { return nil; }
-    
-    NSMutableSet* result = [NSMutableSet setWithCapacity:writings.count];
-    //    for (NSDictionary* dict in writings)
-    //    {
-    //        // Fill up
-    //    }
-    
-    return (result.count) ? [NSSet setWithSet:result] : nil;
-    
-    return nil;
 }
 
 @end

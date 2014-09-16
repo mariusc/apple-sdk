@@ -68,4 +68,30 @@
 - (void)requestDevicesFromTransmitter:(NSString*)transmitterID
                            completion:(void (^)(NSError* error, NSArray* devices))completion;
 
+/*!
+ *  @abstract Deletes the abstract connection between a transmitter and a device.
+ *  @discussion Both Transmitter and device entities will still exist after this API call.
+ *
+ *  @param transmitterID <code>NSString</code> representing the unique Relayr identifier for the searched for transmitter.
+ *  @param deviceID <code>NSString</code> representing the unique Relayr identifier for the given device.
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrTransmitter
+ *  @see RelayrDevice
+ */
+- (void)deleteConnectionBetweenTransmitter:(NSString*)transmitterID
+                                 andDevice:(NSString*)deviceID
+                                completion:(void (^)(NSError* error))completion;
+
+/*!
+ *  @abstract Deletes a transmitter entity from the Relayr Cloud.
+ *
+ *  @param transmitterID <code>NSString</code> identifying the transmitter in the Relayr Cloud.
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrTransmitter
+ */
+- (void)deleteTransmitter:(NSString*)transmitterID
+               completion:(void (^)(NSError* error))completion;
+
 @end

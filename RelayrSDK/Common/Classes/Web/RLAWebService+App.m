@@ -1,10 +1,11 @@
-#import "RLAWebService+App.h"   // Header
-#import "RelayrApp.h"           // Relayr.framework (Public)
-#import "RelayrUser.h"          // Relayr.framework (Public)
-#import "RelayrApp_Setup.h"     // Relayr.framework (Private)
-#import "RLAWebRequest.h"       // Relayr.framework (Web)
-#import "RLAWebConstants.h"     // Relayr.framework (Web)
-#import "RLAError.h"            // Relayr.framework (Utilities)
+#import "RLAWebService+App.h"       // Header
+#import "RLAWebService+Parsing.h"   // Relayr.framework (Web)
+
+#import "RelayrApp.h"               // Relayr.framework (Public)
+#import "RelayrUser.h"              // Relayr.framework (Public)
+#import "RLAWebRequest.h"           // Relayr.framework (Web)
+#import "RLAWebConstants.h"         // Relayr.framework (Web)
+#import "RLAError.h"                // Relayr.framework (Utilities)
 
 @implementation RLAWebService (App)
 
@@ -40,7 +41,7 @@
         
         for (NSDictionary* dict in json)
         {
-            RelayrApp* app = [self app_parseAppFromJSONDictionary:dict];
+            RelayrApp* app = [RLAWebService parseAppFromJSONDictionary:dict];
             if (app) { [result addObject:app]; }
         }
         
@@ -64,7 +65,7 @@
     [request executeInHTTPMode:kRLAWebRequestModePOST completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
         NSDictionary* json = processRequest(Web_RequestResponseCode_Apps, nil);
         
-        RelayrApp* result = [self app_parseAppFromJSONDictionary:json];
+        RelayrApp* result = [RLAWebService parseAppFromJSONDictionary:json];
         return (result) ? completion(nil, result) : completion(RLAErrorWebrequestFailure, nil);
     }];
 }
@@ -80,8 +81,7 @@
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
         NSDictionary* json = processRequest(Web_RequestResponseCode_AppInfo, nil);
-#warning Apiary says that I receive an array here, although it doesn't make sense. Check it out with Postman
-        RelayrApp* result = [self app_parseAppFromJSONDictionary:json];
+        RelayrApp* result = [RLAWebService parseAppFromJSONDictionary:json];
         return (result) ? completion(nil, result) : completion(RLAErrorWebrequestFailure, nil);
     }];
 }
@@ -102,7 +102,7 @@
     
     [request executeInHTTPMode:kRLAWebRequestModePATCH completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
         if (error) { return completion(error); }
-        if (responseCode.unsignedIntegerValue != Web_RequestResponseCode_AppInfoSet || !data) { return completion(RLAErrorWebrequestFailure); }
+        if (responseCode.unsignedIntegerValue != Web_RequestResponseCode_AppInfoSet) { return completion(RLAErrorWebrequestFailure); }
         
         return completion(nil);
     }];
@@ -122,20 +122,6 @@
         
         return completion(nil);
     }];
-}
-
-#pragma mark - Private methods
-
-- (RelayrApp*)app_parseAppFromJSONDictionary:(NSDictionary*)jsonDict
-{
-    RelayrApp* app = [[RelayrApp alloc] initWithID:jsonDict[Web_RespondKey_AppID]];
-    if (!app) { return nil; }
-    
-    app.name = jsonDict[Web_RespondKey_AppName];
-    app.publisherID = jsonDict[Web_RespondKey_AppOwner];
-    app.oauthClientSecret = jsonDict[Web_RespondKey_AppOAuthClientSecret];
-    app.appDescription = jsonDict[Web_RespondKey_AppDescription];
-    return app;
 }
 
 @end

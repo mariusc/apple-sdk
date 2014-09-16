@@ -4,6 +4,15 @@
 @interface RLAWebService (Publisher)
 
 /*!
+ *  @abstract Retrieves all the publishers in the Relayr cloud.
+ *
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrPublisher
+ */
++ (void)requestAllRelayrPublishers:(void (^)(NSError* error, NSArray* publishers))completion;
+
+/*!
  *  @abstract Registers a publisher entity in the Relayr cloud.
  *
  *  @param publisherName The given name for the publisher.
@@ -17,15 +26,6 @@
                        completion:(void (^)(NSError* error, RelayrPublisher* publisher))completion;
 
 /*!
- *  @abstract Retrieves all the publishers in the Relayr cloud.
- *
- *  @param completion Block indicating the result of the server query.
- *
- *  @see RelayrPublisher
- */
-- (void)requestAllRelayrPublishers:(void (^)(NSError* error, NSArray* publishers))completion;
-
-/*!
  *  @abstract Set some properties of the Relayr publisher entity in the Relayr cloud.
  *
  *  @param publisherID <code>NSString</code> representing the unique Relayr identifier for a given publisher.
@@ -37,5 +37,17 @@
 - (void)setPublisher:(NSString*)publisherID
             withName:(NSString*)futurePublisherName
           completion:(void (^)(NSError* error))completion;
+
+/*!
+ *  @abstract Retrieves all the Relayr Applications under a publisher.
+ *
+ *  @param publisherID The Relayr unique identifer for a given publisher.
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrPublisher
+ *  @see RelayrApp
+ */
+- (void)requestAppsFromPublisher:(NSString*)publisherID
+                     completion:(void (^)(NSError* error, NSArray* apps))completion;
 
 @end
