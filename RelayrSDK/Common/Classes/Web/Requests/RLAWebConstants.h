@@ -61,7 +61,7 @@
 
 #pragma mark RLAWebService+Cloud
 
-// isReachable
+// Cloud reachable?
 #define Web_RequestRelativePath_Reachability            @"/device-models"
 #define Web_RequestResponseCode_Reachability            200
 
@@ -116,7 +116,7 @@
 
 #pragma mark RLAWebService+User
 
-// Email check
+// User's email check
 #define Web_RequestRelativePath_EmailCheck(email)       [NSString stringWithFormat:@"/users/validate?email=%@", email]
 #define Web_RequestResponseCode_EmailCheck              200
 #define Web_RequestResponseKey_EmailCheck_Exists        @"exists"
@@ -156,15 +156,15 @@
 #define Web_RequestRelativePath_PublisherRegistration   @"/publishers"
 #define Web_RequestResponseCode_PublisherRegistration   200
 
-// Retrieve all publishers in Relayr cloud
+// All Publishers in the Cloud
 #define Web_RequestRelativePath_Publishers              @"/publishers"
 #define Web_RequestResponseCode_Publishers              200
 
-// Publisher info
+// Publisher info (get)
 #define Web_RequestRelativePath_PublishersApps(pubID)   [NSString stringWithFormat:@"/publishers/%@", pubID]
 #define Web_RequestResponseCode_PublishersApps          200
 
-// Set specific publisher
+// Publisher info (set)
 #define Web_RequestRelativePath_PublisherSet(pubID)     [NSString stringWithFormat:@"/publishers/%@", pubID]
 #define Web_RequestResponseCode_PublisherSet            200
 
@@ -173,15 +173,19 @@
 
 #pragma mark RLAWebService+Transmitter
 
+// Transmitter registration
 #define Web_RequestRelativePath_TransRegistration       @"/transmitters"
 #define Web_RequestResponseCode_TransRegistration       200
 
+// Transmitter's info (get)
 #define Web_RequestRelativePath_TransInfo(transID)      [NSString stringWithFormat:@"/transmitters/%@", transID];
 #define Web_RequestResponseCode_TransInfo               200
 
+// Transmitter's info (set)
 #define Web_RequestRelativePath_TransInfoSet(transID)   [NSString stringWithFormat:@"/transmitters/%@", transID];
 #define Web_RequestResponseCode_TransInfoSet            200
 
+// Transmitter's devices
 #define Web_RequestRelativePath_TransDevices(transID)   [NSString stringWithFormat:@"/transmitters/%@/devices", transID];
 #define Web_RequestResponseCode_TransDevices            200
 
@@ -189,7 +193,7 @@
 #define Web_RequestRelativePath_TransConnectionDev(transID, devID)          [NSString stringWithFormat:@"/transmitter/%@/devices/%@", transID, devID]
 #define Web_RequestResponseCode_TransConnectionDev                          200
 
-// Remove an association between a transmitter and a device
+// Delete an association between a transmitter and a device
 #define Web_RequestRelativePath_TransConnectionDevDeletion(transID, devID)  [NSString stringWithFormat:@"/transmitter/%@/devices/%@", transID, devID];
 #define Web_RequestResponseCode_TransConnectionDevDeletion                  204
 
@@ -202,6 +206,50 @@
 
 #pragma mark RLAWebService+Device
 
+// Device registration
+#define Web_RequestRelativePath_DevRegistration         @"/devices"
+#define Web_RequestResponseCode_DevRegistration         200
 
+// Device's info (get)
+#define Web_RequestRelativePath_DevInfo(devID)          [NSString stringWithFormat:@"/devices/%@", devID]
+#define Web_RequestResponseCode_DevInfo                 200
 
+// Device's info (set)
+#define Web_RequestRelativePath_DevInfoSet(devID)       [NSString stringWithFormat:@"/devices/%@", devID]
+#define Web_RequestResponseCode_DevInfoSet              200
 
+// Device removal
+#define Web_RequestRelativePath_DevDelete(devID)        [NSString stringWithFormat:@"/devices/%@", devID]
+#define Web_RequestResponseCode_DevDelete               200
+
+// Connect device to an app
+#define Web_RequestRelativePath_DevConnection(devID, appID) [NSString stringWithFormat:@"/devices/%@/apps/%@", devID, appID]
+#define Web_RequestResponseCode_DevConnection               200
+
+// Disconnect device to an app
+#define Web_RequestRelativePath_DevDisconnect(devID, appID) [NSString stringWithFormat:@"/devices/%@/apps/%@", devID, appID]
+#define Web_RequestResponseCode_DevDisconnect               200
+
+// Device's that are public
+#define Web_RequestRelativePath_DevPublic               @"/devices/public"
+#define Web_RequestResponseCode_DevPublic               200
+
+// Devices that are public (filtered by meaning)
+#define Web_RequestRelativePath_DevPublicMeaning(meaning)   [NSString stringWithFormat:@"/devices/public?meaning=%@", meaning]
+#define Web_RequestResponseCode_DevPublicMeaning            200
+
+// Subscribe to a public device (it gives PubNub credentials to anyone. It doesn't need token)
+#define Web_RequestRelativePath_DevPublicSubcription(devID) [NSString stringWithFormat:@"/devices/%@/subscription", devID]
+#define Web_RequestResponseCode_DevPublicSubcription        200
+
+// Device-model (all in Cloud)
+#define Web_RequestRelativePath_DevModel                [NSString stringWithFormat:@"/device-models", devID]
+#define Web_RequestResponseCode_DevModel                200
+
+// Device-model (get)
+#define Web_RequestRelativePath_DevModelID(modelID)     [NSString stringWithFormat:@"/device-model/%@", modelID]
+#define Web_RequestResponseCode_DevModelID              200
+
+// Device-model's meaning (all devices in Cloud)
+#define Web_RequestRelativePath_DevModelMeanings        @"/device-model/meanings"
+#define Web_RequestResponseCode_DevModelMeanings        200

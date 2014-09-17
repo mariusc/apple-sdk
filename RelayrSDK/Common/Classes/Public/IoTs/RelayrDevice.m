@@ -1,9 +1,14 @@
-#import "RelayrDevice.h"        // Header
-#import "RelayrUser.h"          // Relayr.framework (Public)
-#import "RelayrFirmware.h"      // Relayr.framework (Public)
-#import "RelayrInput.h"         // Relayr.framework (Public)
-#import "RelayrDevice_Setup.h"  // Relayr.framework (Private)
-#import "RelayrInput_Setup.h"   // Relayr.framework (Private)
+#import "RelayrDevice.h"            // Header
+#import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
+
+#import "RelayrUser.h"              // Relayr.framework (Public)
+#import "RelayrFirmware.h"          // Relayr.framework (Public)
+#import "RelayrInput.h"             // Relayr.framework (Public)
+#import "RelayrInput_Setup.h"       // Relayr.framework (Private)
+#import "RLAWebService.h"           // Relayr.framework (Web)
+#import "RLAWebService+Device.h"    // Relayr.framework (Web)
+#import "RLAError.h"                // Relayr.framework (Utilities)
+#import "RLALog.h"                  // Relayr.framework (Utilities)
 
 
 static NSString* const kCodingID = @"uid";
@@ -18,6 +23,13 @@ static NSString* const kCodingOutputs = @"out";
 static NSString* const kCodingSecret = @"sec";
 
 @implementation RelayrDevice
+
+@synthesize modelID = _modelID;
+@synthesize manufacturer = _manufacturer;
+@synthesize firmware = _firmware;
+@synthesize inputs = _inputs;
+@synthesize outputs = _outputs;
+
 
 #pragma mark - Public API
 

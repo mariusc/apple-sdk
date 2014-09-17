@@ -80,7 +80,7 @@
  *
  *  @see RelayrApp
  */
-- (void)removeApp:(NSString*)appID
+- (void)deleteApp:(NSString*)appID
        completion:(void (^)(NSError* error))completion;
 
 // TODO: Code the methods two connect apps and devices

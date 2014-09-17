@@ -1,7 +1,7 @@
-@class RelayrUser;      // Relayr.framework (Public)
-@class RelayrFirmware;  // Relayr.framework (Public)
-@class RelayrInput;     // Relayr.framework (Public)
-@import Foundation;     // Apple
+#import "RelayrDeviceModel.h"   // Relayr.framework (Public)
+@class RelayrUser;              // Relayr.framework (Public)
+@class RelayrInput;             // Relayr.framework (Public)
+@import Foundation;             // Apple
 
 /*!
  *  @abstract An instance of this class represents a Device. A basic relayr entity
@@ -9,7 +9,7 @@
  *	or one which is capable of receiving information from the relayr platform. 
  *	Examples would be a thermometer, a gyroscope or an infrared sensor.
  */
-@interface RelayrDevice : NSObject <NSCoding>
+@interface RelayrDevice : NSObject <RelayrDeviceModel,NSCoding>
 
 /*!
  *  @abstract A unique idenfier of the <code>RelayrDevice</code>'s instance.
@@ -29,44 +29,10 @@
 @property (readonly,nonatomic) NSString* owner;
 
 /*!
- *  @abstract The manufacturer of the device.
- */
-@property (readonly,nonatomic) NSString* manufacturer;
-
-/*!
  *  @abstract Indicates wheather the data gathered by the device is public (available to all users) or not (available to the Device owner only).
  *  @discussion An <code>NSNumber</code> wrapping a boolean value (use <code>.boolValue</code> to unwrap it). 
  */
 @property (readonly,nonatomic) NSNumber* isPublic;
-
-/*!
- *  @abstract Identifies the device model within the Relayr Cloud.
- */
-@property (readonly,nonatomic) NSString* modelID;
-
-/*!
- *  @abstract Indicates firmware attributes of the Device instance being called.
- *  @discussion You can request the current version and other firmware properties.
- */
-@property (readonly,nonatomic) RelayrFirmware* firmware;
-
-/*!
- *  @abstract Returns an array of all possible readings the device can gather.
- *  @discussion Each item in this array is an object of type <code>RelayrInput</code>. Each input represents a different kind of reading. That is, a <code>RelayrDevice</code> can have a luminosity sensor and a gyroscope; thus, this array would have two different inputs.
- *
- *  @see RelayrInput
- */
-@property (readonly,nonatomic) NSSet* inputs;
-
-/*!
- *  @abstract Returns an array of possible Outputs a Device is capable of receiving.
- *  @discussion By 'Output' we refer to an object with commands or configuration settings sent to a Device.
- *	These are usually infrarred commands, ultrasound pulses etc. 
- *	Each item in this array is an object of type <code>RelayrOutput</code>.
- *
- *  @see RelayrOutput
- */
-@property (readonly,nonatomic) NSSet* outputs;
 
 /*!
  *  @abstract The secret for MQTT comminucation with the relayr Cloud Platform

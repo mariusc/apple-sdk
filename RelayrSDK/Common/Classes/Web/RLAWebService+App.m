@@ -108,7 +108,7 @@
     }];
 }
 
-- (void)removeApp:(NSString*)appID completion:(void (^)(NSError* error))completion
+- (void)deleteApp:(NSString*)appID completion:(void (^)(NSError* error))completion
 {
     if (!appID.length) { if (completion) { completion(RLAErrorMissingArgument); } return; }
     
