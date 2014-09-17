@@ -59,6 +59,10 @@
 #define Web_RespondKey_ReadingsMeaning      @"meaning"
 #define Web_RespondKey_ReadingsUnit         @"unit"
 
+// Device-model attributes
+#define Web_RespondKey_DeviceModelKey       @"key"
+#define Web_RespondKey_DeviceModelValue     @"value"
+
 #pragma mark RLAWebService+Cloud
 
 // Cloud reachable?
@@ -224,11 +228,15 @@
 
 // Connect device to an app
 #define Web_RequestRelativePath_DevConnection(devID, appID) [NSString stringWithFormat:@"/devices/%@/apps/%@", devID, appID]
-#define Web_RequestResponseCode_DevConnection               200
+#define Web_RequestResponseCode_DevConnection           200
+
+// Applications connect to device
+#define Web_RequestRelativePath_DevConnected(devID)     [NSString stringWithFormat:@"/devices/%@/apps", devID]
+#define Web_RequestResponseCode_DevConnected            200
 
 // Disconnect device to an app
 #define Web_RequestRelativePath_DevDisconnect(devID, appID) [NSString stringWithFormat:@"/devices/%@/apps/%@", devID, appID]
-#define Web_RequestResponseCode_DevDisconnect               200
+#define Web_RequestResponseCode_DevDisconnect           204
 
 // Device's that are public
 #define Web_RequestRelativePath_DevPublic               @"/devices/public"
@@ -243,7 +251,7 @@
 #define Web_RequestResponseCode_DevPublicSubcription        200
 
 // Device-model (all in Cloud)
-#define Web_RequestRelativePath_DevModel                [NSString stringWithFormat:@"/device-models", devID]
+#define Web_RequestRelativePath_DevModel                @"/device-models"
 #define Web_RequestResponseCode_DevModel                200
 
 // Device-model (get)

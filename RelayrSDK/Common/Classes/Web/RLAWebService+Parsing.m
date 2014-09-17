@@ -4,6 +4,7 @@
 #import "RelayrPublisher.h"         // Relayr.framework (Public)
 #import "RelayrTransmitter.h"       // Relayr.framework (Public)
 #import "RelayrDevice.h"            // Relayr.framework (Public)
+#import "RelayrDeviceModel.h"       // Relayr.framework (Public)
 #import "RelayrFirmware.h"          // Relayr.framework (Public)
 #import "RelayrInput.h"             // Relayr.framework (Public)
 #import "RelayrOutput.h"            // Relayr.framework (Public)
@@ -81,6 +82,12 @@
     }
     
     return device;
+}
+
++ (id <RelayrDeviceModel>)parseDeviceModelFromJSONDictionary:(NSDictionary*)jsonDict
+{
+    // TODO: Fill up
+    return nil;
 }
 
 #pragma mark - Private methods

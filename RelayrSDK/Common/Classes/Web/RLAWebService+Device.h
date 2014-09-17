@@ -1,6 +1,6 @@
 #import "RLAWebService.h"       // Base class
 @class RelayrDevice;            // Relayr.framework (Public)
-#import "RelayrDeviceModel.h"   // Relayr.framework (Public)
+@protocol RelayrDeviceModel;    // Relayr.framework (Public)
 
 @interface RLAWebService (Device)
 
@@ -77,6 +77,18 @@
                         completion:(void (^)(NSError* error, id credentials))completion;
 
 /*!
+ *  @abstract Retrieves all the Relayr Application connected to the passed Relayr Device.
+ *
+ *  @param deviceID Unique identifier within the Relayr Cloud for a specific Relayr Device.
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrApp
+ *  @see RelayrDevice
+ */
+- (void)requestAppsConnectedToDevice:(NSString*)deviceID
+                          completion:(void (^)(NSError* error, NSArray* apps))completion;
+
+/*!
  *  @abstract Deletes the abstract connection between a device and an app.
  *
  *  @param deviceID Unique identifier within the Relayr Cloud for a specific Relayr Device.
@@ -110,7 +122,7 @@
                                    completion:(void (^)(NSError* error, NSArray* devices))completion;
 
 /*!
- *  @abstract Sets in the server an abstract connection between a public device and an unspecified endpoint.
+ *  @abstract Sets in the server an abstract connection between a public device and an unspecified endpoint. No credentials are needed.
  *  @discussion After this call, you get some credentials to open a channel between the server and a device. There is no need to close/delete this channel, since public devices have open channels.
  *
  *  @param deviceID Unique identifier within the Relayr Cloud for a specific Relayr Device.
@@ -144,10 +156,10 @@
 /*!
  *  @abstract Retrieves all meanings within the Relayr Cloud.
  *
- *  @param completion Block indicating the result of the server query.
+ *  @param completion Block indicating the result of the server query. The meaning dictionary contains as keys the values accepted by the server and as values the english naming.
  *
  *  @see RelayrDevice
  */
-- (void)requestAllDeviceMeanings:(void (^)(NSError* error, NSArray* meanings))completion;
+- (void)requestAllDeviceMeanings:(void (^)(NSError* error, NSDictionary* meanings))completion;
 
 @end
