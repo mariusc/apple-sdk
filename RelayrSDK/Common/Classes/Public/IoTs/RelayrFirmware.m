@@ -2,10 +2,11 @@
 #import "RelayrFirmware_Setup.h"
 
 static NSString* const kCodingVersion = @"ver";
-static NSString* const kCodingConfiguration = @"con";
+static NSString* const kCodingProperties = @"properties";
 
 @implementation RelayrFirmware
 
+@synthesize version=_version;
 @synthesize properties=_properties;
 
 #pragma mark - Public API
@@ -29,6 +30,11 @@ static NSString* const kCodingConfiguration = @"con";
     return self;
 }
 
+- (NSDictionary*)configuration
+{
+    return [NSDictionary dictionaryWithDictionary:_properties];
+}
+
 - (void)queryCloudForProperties:(void (^)(NSError* error, BOOL isThereChanges))completion
 {
     // TODO: Fill up
@@ -41,7 +47,7 @@ static NSString* const kCodingConfiguration = @"con";
     self = [self initWithVersion:[decoder decodeObjectForKey:kCodingVersion]];
     if (self)
     {
-        NSMutableDictionary* tmpProperties = [decoder decodeObjectForKey:kCodingConfiguration];
+        NSMutableDictionary* tmpProperties = [decoder decodeObjectForKey:kCodingProperties];
         if (tmpProperties.count) { _properties = tmpProperties; }
     }
     return self;
@@ -50,7 +56,7 @@ static NSString* const kCodingConfiguration = @"con";
 - (void)encodeWithCoder:(NSCoder*)coder
 {
     [coder encodeObject:_version forKey:kCodingVersion];
-    [coder encodeObject:_configuration forKey:kCodingConfiguration];
+    [coder encodeObject:_properties forKey:kCodingProperties];
 }
 
 #pragma mark NSObject

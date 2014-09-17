@@ -39,9 +39,7 @@
         NSDictionary* json = processRequest(Web_RequestResponseCode_OAuthToken, nil);
         
         NSString* token = json[Web_RequestResponseKey_OAuthToken_AccessToken];
-        if (!token) { return completion(RLAErrorSigningFailure, nil); }
-        
-        return completion(nil, token);
+        return (!token) ? completion(RLAErrorRequestParsingFailure, nil) : completion(nil, token);
     }];
 }
 

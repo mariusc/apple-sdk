@@ -70,7 +70,7 @@
           name:(NSString*)appName
    description:(NSString*)appDescription
    redirectURI:(NSString*)redirectURI
-    completion:(void (^)(NSError* error))completion;
+    completion:(void (^)(NSError* error, RelayrApp* app))completion;
 
 /*!
  *  @abstract Deletes/Removes a Relayr application from the Relayr cloud.

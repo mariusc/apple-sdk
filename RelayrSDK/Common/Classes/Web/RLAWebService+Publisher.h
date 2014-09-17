@@ -36,7 +36,7 @@
  */
 - (void)setPublisher:(NSString*)publisherID
             withName:(NSString*)futurePublisherName
-          completion:(void (^)(NSError* error))completion;
+          completion:(void (^)(NSError* error, RelayrPublisher* publisher))completion;
 
 /*!
  *  @abstract Retrieves all the Relayr Applications under a publisher.

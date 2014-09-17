@@ -18,6 +18,12 @@
 
 @implementation RLAWebService (Parsing)
 
++ (RelayrUser*)parseUserFromJSONDictionary:(NSDictionary*)jsonDict
+{
+    // TODO: Fill up
+    return nil;
+}
+
 + (RelayrPublisher*)parsePublisherFromJSONDictionary:(NSDictionary*)jsonDict
 {
     RelayrPublisher* publisher = [[RelayrPublisher alloc] initWithPublisherID:jsonDict[Web_RespondKey_PublisherID] owner:jsonDict[Web_RespondKey_PublisherOwner]];

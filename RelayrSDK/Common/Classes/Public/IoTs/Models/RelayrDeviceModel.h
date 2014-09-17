@@ -1,5 +1,5 @@
-@import Foundation;     // Apple
-@class RelayrFirmware;  // Relayr.framework (Public)
+@import Foundation;             // Apple
+@protocol RelayrFirmwareModel;  // Relayr.framework (Public)
 
 /*!
  *  @abstract It specifies the minimum functionality of a device.
@@ -20,7 +20,7 @@
  *  @abstract Indicates firmware attributes of the Device instance being called.
  *  @discussion You can request the current version and other firmware properties.
  */
-@property (readonly,nonatomic) RelayrFirmware* firmware;
+@property (readonly,nonatomic) id <RelayrFirmwareModel> firmware;
 
 /*!
  *  @abstract Returns an array of all possible readings the device can gather.

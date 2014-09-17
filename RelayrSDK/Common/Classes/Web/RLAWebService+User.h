@@ -35,7 +35,7 @@ registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))co
  */
 - (void)setUserName:(NSString*)name
               email:(NSString*)email
-         completion:(void (^)(NSError* error))completion;
+         completion:(void (^)(NSError* error, RelayrUser* user))completion;
 
 /*!
  *  @abstract It queries the Relayr Cloud for all the apps installed under this user.

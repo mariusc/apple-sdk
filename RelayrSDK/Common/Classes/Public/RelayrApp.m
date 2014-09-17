@@ -76,7 +76,7 @@ static NSString* const kCodingUsers = @"usr";
     if (!result) { return completion(RLAErrorSigningFailure, nil); }
     
     [RLAWebService requestAppInfoFor:result.uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription) {
-        if ( ![result.uid isEqualToString:appID] ) { return completion(RLAErrorWebrequestFailure, nil); }
+        if ( ![result.uid isEqualToString:appID] ) { return completion(RLAErrorWebRequestFailure, nil); }
         result.name = appName;
         result.appDescription = appDescription;
         completion(nil, result);
@@ -133,7 +133,7 @@ static NSString* const kCodingUsers = @"usr";
     [RLAWebService requestAppInfoFor:_uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription) {
         __strong RelayrApp* strongSelf = weakSelf;
         
-        if ( ![strongSelf.uid isEqualToString:appID] ) { return completion(RLAErrorWebrequestFailure, nil, nil); }
+        if ( ![strongSelf.uid isEqualToString:appID] ) { return completion(RLAErrorWebRequestFailure, nil, nil); }
         NSString* pName = strongSelf.name, * pDesc = strongSelf.description;
         strongSelf.name = appName; strongSelf.appDescription = appDescription;
         completion(nil, pName, pDesc);

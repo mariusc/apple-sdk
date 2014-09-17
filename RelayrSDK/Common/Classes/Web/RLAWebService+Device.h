@@ -6,6 +6,7 @@
 
 /*!
  *  @abstract Adds a new device entity to the Relayr Cloud.
+ *  @discussion You must provide all arguments.
  *
  *  @param deviceName The device name (identifier).
  *  @param ownerID The Relayr user that will own this device entity.
@@ -44,10 +45,11 @@
  *  @see RelayrDevice
  */
 - (void)setDevice:(NSString*)deviceID
+             name:(NSString*)deviceName
           modelID:(NSString*)futureModelID
          isPublic:(NSNumber*)isPublic
       description:(NSString*)description
-       completion:(void (^)(NSError* error))completion;
+       completion:(void (^)(NSError* error, RelayrDevice* device))completion;
 
 /*!
  *  @abstract Delete a Relayr device entity from the Relayr Cloud.
@@ -104,7 +106,8 @@
  *
  *  @see RelayrDevice
  */
-- (void)requestPublicDevicesFilteredByMeaning:(NSString*)meaning completion:(void (^)(NSError* error, NSArray* devices))completion;
+- (void)requestPublicDevicesFilteredByMeaning:(NSString*)meaning
+                                   completion:(void (^)(NSError* error, NSArray* devices))completion;
 
 /*!
  *  @abstract Sets in the server an abstract connection between a public device and an unspecified endpoint.

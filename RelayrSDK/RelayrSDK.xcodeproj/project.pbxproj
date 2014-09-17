@@ -119,8 +119,10 @@
 		6285F37C19C1AF8E0097B299 /* RLAWebOAuthControllerIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 6285F37A19C1AF8E0097B299 /* RLAWebOAuthControllerIOS.m */; };
 		6285F38119C1B2700097B299 /* RLAWebOAuthControllerOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F37F19C1B2700097B299 /* RLAWebOAuthControllerOSX.h */; };
 		6285F38219C1B2700097B299 /* RLAWebOAuthControllerOSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 6285F38019C1B2700097B299 /* RLAWebOAuthControllerOSX.m */; };
-		6292F24619C99FAD00087F3B /* RelayrDeviceModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6292F24519C99FAD00087F3B /* RelayrDeviceModel.h */; };
-		6292F24719C99FAD00087F3B /* RelayrDeviceModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6292F24519C99FAD00087F3B /* RelayrDeviceModel.h */; };
+		6292F24619C99FAD00087F3B /* RelayrDeviceModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6292F24519C99FAD00087F3B /* RelayrDeviceModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6292F24719C99FAD00087F3B /* RelayrDeviceModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6292F24519C99FAD00087F3B /* RelayrDeviceModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6292F24919C9B91300087F3B /* RelayrFirmwareModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6292F24819C9B91300087F3B /* RelayrFirmwareModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6292F24A19C9D86B00087F3B /* RelayrFirmwareModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6292F24819C9B91300087F3B /* RelayrFirmwareModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		62D0907219C0729900999142 /* RelayrConnection_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D0907119C0729900999142 /* RelayrConnection_Setup.h */; };
 		62D0907319C0729900999142 /* RelayrConnection_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D0907119C0729900999142 /* RelayrConnection_Setup.h */; };
 		62D1718419A6039F009BBED1 /* RLANetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C3219A15520001FEDCD /* RLANetworkInfo.m */; };
@@ -221,6 +223,7 @@
 		6285F37F19C1B2700097B299 /* RLAWebOAuthControllerOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebOAuthControllerOSX.h; sourceTree = "<group>"; };
 		6285F38019C1B2700097B299 /* RLAWebOAuthControllerOSX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebOAuthControllerOSX.m; sourceTree = "<group>"; };
 		6292F24519C99FAD00087F3B /* RelayrDeviceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrDeviceModel.h; sourceTree = "<group>"; };
+		6292F24819C9B91300087F3B /* RelayrFirmwareModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrFirmwareModel.h; sourceTree = "<group>"; };
 		62D0907119C0729900999142 /* RelayrConnection_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrConnection_Setup.h; sourceTree = "<group>"; };
 		62D1718619A62D63009BBED1 /* RelayrCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrCloud.h; sourceTree = "<group>"; };
 		62D1718719A62D63009BBED1 /* RelayrCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrCloud.m; sourceTree = "<group>"; };
@@ -628,6 +631,7 @@
 			isa = PBXGroup;
 			children = (
 				6292F24519C99FAD00087F3B /* RelayrDeviceModel.h */,
+				6292F24819C9B91300087F3B /* RelayrFirmwareModel.h */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -778,9 +782,10 @@
 				622CB00419BCB07200F686B3 /* RelayrOutput.h in Headers */,
 				622CAFF819BCB02100F686B3 /* RelayrFirmware.h in Headers */,
 				62732D4219C05A24000E9545 /* RelayrConnection.h in Headers */,
+				6292F24619C99FAD00087F3B /* RelayrDeviceModel.h in Headers */,
+				6292F24919C9B91300087F3B /* RelayrFirmwareModel.h in Headers */,
 				6250E19319B51566003932AA /* RelayrApp_Setup.h in Headers */,
 				622BA3BC19ABDC2800FD5C24 /* RelayrUser_Setup.h in Headers */,
-				6292F24619C99FAD00087F3B /* RelayrDeviceModel.h in Headers */,
 				6250E19019B50AAD003932AA /* RelayrPublisher_Setup.h in Headers */,
 				62D73C9C19B70CAB006F417D /* RelayrTransmitter_Setup.h in Headers */,
 				62D73C9F19B718C8006F417D /* RelayrDevice_Setup.h in Headers */,
@@ -824,12 +829,13 @@
 				623F326719A7872400F774EB /* RelayrTransmitter.h in Headers */,
 				6250E19419B51566003932AA /* RelayrApp_Setup.h in Headers */,
 				623F326819A7872700F774EB /* RelayrDevice.h in Headers */,
+				6292F24719C99FAD00087F3B /* RelayrDeviceModel.h in Headers */,
 				622CAFFF19BCB04B00F686B3 /* RelayrInput.h in Headers */,
 				622CB00519BCB07200F686B3 /* RelayrOutput.h in Headers */,
 				622CAFF919BCB02100F686B3 /* RelayrFirmware.h in Headers */,
+				6292F24A19C9D86B00087F3B /* RelayrFirmwareModel.h in Headers */,
 				62732D4319C05A24000E9545 /* RelayrConnection.h in Headers */,
 				622BA3BD19ABDC2800FD5C24 /* RelayrUser_Setup.h in Headers */,
-				6292F24719C99FAD00087F3B /* RelayrDeviceModel.h in Headers */,
 				6250E19119B50AAD003932AA /* RelayrPublisher_Setup.h in Headers */,
 				62D73CA019B718C8006F417D /* RelayrDevice_Setup.h in Headers */,
 				62D73C9D19B70CAB006F417D /* RelayrTransmitter_Setup.h in Headers */,

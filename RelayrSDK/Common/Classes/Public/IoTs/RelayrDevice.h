@@ -2,6 +2,7 @@
 @class RelayrUser;              // Relayr.framework (Public)
 @class RelayrInput;             // Relayr.framework (Public)
 @import Foundation;             // Apple
+#import "RelayrFirmware.h"      // Relayr.framework (Public)
 
 /*!
  *  @abstract An instance of this class represents a Device. A basic relayr entity
@@ -33,6 +34,12 @@
  *  @discussion An <code>NSNumber</code> wrapping a boolean value (use <code>.boolValue</code> to unwrap it). 
  */
 @property (readonly,nonatomic) NSNumber* isPublic;
+
+/*!
+ *  @abstract Indicates firmware attributes of the Device instance being called.
+ *  @discussion You can request the current version and other firmware properties.
+ */
+@property (readonly,nonatomic) RelayrFirmware* firmware;
 
 /*!
  *  @abstract The secret for MQTT comminucation with the relayr Cloud Platform

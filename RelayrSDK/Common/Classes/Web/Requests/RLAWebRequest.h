@@ -17,7 +17,7 @@ FOUNDATION_EXPORT NSString* const kRLAWebRequestModePUT;
 #define processRequest(expectedCode, ...)   \
     (!error && responseCode.unsignedIntegerValue==expectedCode && data) \
     ? [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] : nil; \
-    if (!json) { return completion( (error) ? error : RLAErrorWebrequestFailure, __VA_ARGS__); }
+    if (!json) { return completion( (error) ? error : RLAErrorWebRequestFailure, __VA_ARGS__); }
 
 /*!
  *  @abstract Base class for the Relayr.framework HTTP requests.

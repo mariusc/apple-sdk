@@ -220,7 +220,7 @@
 
 // Device removal
 #define Web_RequestRelativePath_DevDelete(devID)        [NSString stringWithFormat:@"/devices/%@", devID]
-#define Web_RequestResponseCode_DevDelete               200
+#define Web_RequestResponseCode_DevDelete               204
 
 // Connect device to an app
 #define Web_RequestRelativePath_DevConnection(devID, appID) [NSString stringWithFormat:@"/devices/%@/apps/%@", devID, appID]
@@ -253,3 +253,10 @@
 // Device-model's meaning (all devices in Cloud)
 #define Web_RequestRelativePath_DevModelMeanings        @"/device-model/meanings"
 #define Web_RequestResponseCode_DevModelMeanings        200
+
+#define Web_RequestBodyKey_DevName                      @"name"
+#define Web_RequestBodyKey_DevOwner                     @"owner"
+#define Web_RequestBodyKey_DevModel                     @"model"
+#define Web_RequestBodyKey_DevFirmwareVersion           @"firmwareVersion"
+#define Web_RequestBodyKey_DevDescription               @"description"
+#define Web_RequestBodyKey_DevPublic                    @"public"

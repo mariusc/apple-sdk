@@ -16,7 +16,7 @@
     if (!completion) { return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:[NSURL URLWithString:Web_Host]];
-    if (!request) { return completion(RLAErrorMissingArgument, nil); }
+    if (!request) { return completion(RLAErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_Publishers;
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError *error, NSNumber *responseCode, NSData *data) {
@@ -38,7 +38,7 @@
     if (!publisherName.length || !ownerID.length) { if (completion) { completion(RLAErrorMissingArgument, nil); } return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { if (completion) { completion(RLAErrorWebrequestFailure, nil); } return; }
+    if (!request) { if (completion) { completion(RLAErrorWebRequestFailure, nil); } return; }
     request.relativePath = Web_RequestRelativePath_PublisherRegistration;
     request.body = @{ Web_RequestBodyKey_PublisherName : publisherName, Web_RequestBodyKey_PublisherOwner : ownerID };
     
@@ -46,23 +46,28 @@
         NSDictionary* json = processRequest(Web_RequestResponseCode_PublisherRegistration, nil);
         
         RelayrPublisher* result = [RLAWebService parsePublisherFromJSONDictionary:json];
-        return (result) ? completion(nil, result) : completion(RLAErrorWebrequestFailure, nil);
+        return (!result) ? completion(RLAErrorRequestParsingFailure, nil) : completion(nil, result);
     }];
 }
 
-- (void)setPublisher:(NSString*)publisherID withName:(NSString*)futurePublisherName completion:(void (^)(NSError* error))completion
+- (void)setPublisher:(NSString*)publisherID withName:(NSString*)futurePublisherName completion:(void (^)(NSError* error, RelayrPublisher* publisher))completion
 {
-    if (!publisherID.length || !futurePublisherName.length) { if (completion) { completion(RLAErrorMissingArgument); } return; }
+    if (!publisherID.length) { if (completion) { completion(RLAErrorMissingArgument, nil); } return; }
+    
+    NSMutableDictionary* tmpDict = [[NSMutableDictionary alloc] init];
+    tmpDict[Web_RequestBodyKey_PublisherName] = futurePublisherName;
+    if (!tmpDict.count) { if (completion) { completion(RLAErrorMissingArgument, nil); } return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { if (completion) { completion(RLAErrorWebrequestFailure); } return; }
+    if (!request) { if (completion) { completion(RLAErrorWebRequestFailure, nil); } return; }
     request.relativePath = Web_RequestRelativePath_PublisherSet(publisherID);
+    request.body = [NSDictionary dictionaryWithDictionary:tmpDict];
     
     [request executeInHTTPMode:kRLAWebRequestModePATCH completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
-        if (error) { return completion(error); }
-        if (responseCode.unsignedIntegerValue != Web_RequestResponseCode_PublisherSet || !data) { return completion(RLAErrorWebrequestFailure); }
+        NSDictionary* json = processRequest(Web_RequestResponseCode_PublisherSet, nil);
         
-        return completion(nil);
+        RelayrPublisher* result = [RLAWebService parsePublisherFromJSONDictionary:json];
+        return (!result) ? completion(RLAErrorRequestParsingFailure, nil) : completion(nil, result);
     }];
 }
 
@@ -72,7 +77,7 @@
     if (!publisherID.length) { return completion(RLAErrorMissingArgument, nil); }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { return completion(RLAErrorWebrequestFailure, nil); }
+    if (!request) { return completion(RLAErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_PublishersApps(publisherID);
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
