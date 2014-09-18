@@ -4,7 +4,7 @@
 static NSString* const kCodingModelID = @"mID";
 static NSString* const kCodingModelName = @"mNa";
 static NSString* const kCodingManufacturer = @"man";
-static NSString* const kCodingFirmwareModel = @"fir";
+static NSString* const kCodingFirmwareModels = @"firms";
 static NSString* const kCodingInputs = @"inp";
 static NSString* const kCodingOutputs = @"out";
 
@@ -33,7 +33,7 @@ static NSString* const kCodingOutputs = @"out";
     {
         _modelName = [decoder decodeObjectForKey:kCodingModelName];
         _manufacturer = [decoder decodeObjectForKey:kCodingManufacturer];
-        _firmware = [decoder decodeObjectForKey:kCodingFirmwareModel];
+        _firmwaresAvailable = [decoder decodeObjectForKey:kCodingFirmwareModels];
         _inputs = [decoder decodeObjectForKey:kCodingInputs];
         _outputs = [decoder decodeObjectForKey:kCodingOutputs];
     }
@@ -45,7 +45,7 @@ static NSString* const kCodingOutputs = @"out";
     [coder encodeObject:_modelID forKey:kCodingModelID];
     [coder encodeObject:_modelName forKey:kCodingModelName];
     [coder encodeObject:_manufacturer forKey:kCodingManufacturer];
-    [coder encodeObject:_firmware forKey:kCodingFirmwareModel];
+    [coder encodeObject:_firmwaresAvailable forKey:kCodingFirmwareModels];
     [coder encodeObject:_inputs forKey:kCodingInputs];
     [coder encodeObject:_outputs forKey:kCodingOutputs];
 }

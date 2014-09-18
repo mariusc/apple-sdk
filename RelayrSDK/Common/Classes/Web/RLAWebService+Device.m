@@ -206,7 +206,7 @@
         NSMutableArray* result = [NSMutableArray arrayWithCapacity:json.count];
         for (NSDictionary* dict in json)
         {
-            id <RelayrDeviceModel> devModel = [RLAWebService parseDeviceModelFromJSONDictionary:dict];
+            RelayrDeviceModel* devModel = [RLAWebService parseDeviceModelFromJSONDictionary:dict inDeviceObject:nil];
             if (devModel) { [result addObject:devModel]; }
         }
         
@@ -214,7 +214,7 @@
     }];
 }
 
-- (void)requestDeviceModel:(NSString*)deviceModelID completion:(void (^)(NSError* error, id <RelayrDeviceModel> deviceModel))completion
+- (void)requestDeviceModel:(NSString*)deviceModelID completion:(void (^)(NSError* error, RelayrDeviceModel* deviceModel))completion
 {
     if (!completion) { return; }
     if (!deviceModelID) { return completion(RLAErrorMissingArgument, nil); }
@@ -226,7 +226,7 @@
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError *error, NSNumber *responseCode, NSData *data) {
         NSDictionary* json = processRequest(Web_RequestResponseCode_DevModelID, nil);
         
-        id <RelayrDeviceModel> devModel = [RLAWebService parseDeviceModelFromJSONDictionary:json];
+        RelayrDeviceModel* devModel = [RLAWebService parseDeviceModelFromJSONDictionary:json inDeviceObject:nil];
         return (!deviceModelID) ? completion(RLAErrorRequestParsingFailure, nil) : completion(nil, devModel);
     }];
 }

@@ -14,13 +14,12 @@
  *  @discussion Both arguments must be valid <code>NSString</code>s.
  *
  *  @param uid Relayr ID that identifies uniquely the device within the Relayr cloud.
- *  @param secret MQTT password.
  *  @param modelID Relayr model identifier. It identifies the device (independently of the firmware version).
  *	@return Fully instanciate <code>RelayrDevice</code> or <code>nil</code>
  *
  *  @see RelayrDevice
  */
-- (instancetype)initWithID:(NSString*)uid secret:(NSString*)secret modelID:(NSString*)modelID;
+- (instancetype)initWithID:(NSString*)uid modelID:(NSString*)modelID;
 
 /*!
  *  @abstract Device name.
@@ -45,5 +44,11 @@
  *  @discussion You can request the current version and other firmware properties.
  */
 @property (readwrite,nonatomic) RelayrFirmware* firmware;
+
+/*!
+ *  @abstract The secret for MQTT comminucation with the relayr Cloud Platform
+ *  @discussion Could be seen as the Device's password.
+ */
+@property (readwrite,nonatomic) NSString* secret;
 
 @end

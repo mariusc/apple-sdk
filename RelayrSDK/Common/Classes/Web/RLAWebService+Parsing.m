@@ -72,85 +72,89 @@
 {
     if (!jsonDict) { return nil; }
     
-    id tmp = jsonDict[Web_RespondKey_DeviceModel];
-    NSString* modelID = ([tmp isKindOfClass:[NSString class]])     ? tmp :
-                        ([tmp isKindOfClass:[NSDictionary class]]) ? ((NSDictionary*)tmp)[Web_RespondKey_ModelID] : nil;
-    
-    RelayrDevice* device = [[RelayrDevice alloc] initWithID:jsonDict[Web_RespondKey_DeviceID] secret:jsonDict[Web_RespondKey_DeviceSecret] modelID:modelID];
+    NSDictionary* modelDict = jsonDict[Web_RespondKey_DeviceModel];
+    RelayrDevice* device = [[RelayrDevice alloc] initWithID:jsonDict[Web_RespondKey_DeviceID] modelID:modelDict[Web_RespondKey_ModelID]];
     if (!device) { return nil; }
     
     device.name = jsonDict[Web_RespondKey_DeviceName];
     device.owner = jsonDict[Web_RespondKey_DeviceOwner];
-    device.isPublic = jsonDict[Web_RespondKey_DevicePublic];
+    device.firmware = [[RelayrFirmware alloc] initWithVersion:jsonDict[Web_RespondKey_DeviceFirmware]];
+    device.secret = jsonDict[Web_RespondKey_DeviceSecret];
     
-    NSString* firmVer = jsonDict[Web_RespondKey_DeviceFirmware];
-    if (firmVer.length) { device.firmware = [[RelayrFirmware alloc] initWithVersion:firmVer]; }
+    NSNumber* isPublic = jsonDict[Web_RespondKey_DevicePublic];
+    device.isPublic = (isPublic) ? isPublic : @YES;
     
-    if ([tmp isKindOfClass:[NSDictionary class]] && ((NSDictionary*)tmp).count)
-    {
-        NSDictionary* modelDict = tmp;
-        device.manufacturer = modelDict[Web_RespondKey_ModelManufacturer];
-        device.inputs = [RLAWebService parseDeviceReadingsFromJSONArray:modelDict[Web_RespondKey_ModelReadings] ofDevice:device];
-        //device.outputs = [RLAWebService parseDeviceWritingsFromJSONArray:dict[<#name#>];
-    }
-    
+    [RLAWebService parseDeviceModelFromJSONDictionary:modelDict inDeviceObject:device];
     return device;
 }
 
-+ (RelayrDeviceModel*)parseDeviceModelFromJSONDictionary:(NSDictionary*)jsonDict
++ (RelayrDeviceModel*)parseDeviceModelFromJSONDictionary:(NSDictionary*)jsonDict inDeviceObject:(RelayrDevice*)device
 {
-    if (!jsonDict) { return nil; }
+    if (!jsonDict) { return device; }
     
+    RelayrDeviceModel* deviceModel;
+    if (!device)
+    {
+        deviceModel = [[RelayrDeviceModel alloc] initWithModelID:jsonDict[Web_RespondKey_ModelID]];
+        if (!deviceModel) { return nil; }
+    }
+    else { deviceModel = device; }
     
+    deviceModel.modelName = jsonDict[Web_RespondKey_ModelName];
+    deviceModel.manufacturer = jsonDict[Web_RespondKey_ModelManufacturer];
+    deviceModel.inputs = [RLAWebService parseDeviceReadingsFromJSONArray:jsonDict[Web_RespondKey_ModelReadings] ofDevice:deviceModel];
+    //device.outputs = [RLAWebService parseDeviceWritingsFromJSONArray:dict[<#name#>];
     
-    // TODO: Fill up
-    return nil;
+    NSDictionary* availableFirms = jsonDict[Web_RespondKey_ModelFirmwares];
+    if (availableFirms.count)
+    {
+        NSMutableArray* firms = [[NSMutableArray alloc] initWithCapacity:availableFirms.count];
+        for (NSDictionary* firmDict in availableFirms)
+        {
+            RelayrFirmwareModel* firmModel = [RLAWebService parseFirmwareModelFromJSONDictionary:firmDict inFirmwareObject:nil];
+            if (firmModel) { [firms addObject:firmModel]; }
+        }
+        if (firms.count) { deviceModel.firmwaresAvailable = [NSArray arrayWithArray:firms]; }
+    }
+    
+    return deviceModel;
 }
 
 + (RelayrFirmware*)parseFirmwareFromJSONDictionary:(NSDictionary*)jsonDict
 {
     if (!jsonDict) { return nil; }
     
-    RelayrFirmware* firModel = [[RelayrFirmware alloc] initWithVersion:jsonDict[Web_RespondKey_FirmwareVersion]];
-    if (!firModel) { return nil; }
+    RelayrFirmware* firmware = [[RelayrFirmware alloc] initWithVersion:jsonDict[Web_RespondKey_FirmwareVersion]];
+    if (!firmware) { return nil; }
     
-    NSDictionary* configuration = jsonDict[Web_RespondKey_FirmwareConfiguration];
-    NSDictionary* properties = ((NSDictionary*)configuration[Web_RespondKey_FirmwareSchema])[JSONSchema_Keyword_Properties];
-    NSDictionary* defaultValue = configuration[Web_RespondKey_DefaultValues];
-    
-    NSUInteger const numProperties = properties.count;
-    if (numProperties)
-    {
-        NSMutableDictionary* firmwareConfs = [[NSMutableDictionary alloc] initWithCapacity:configuration.count];
-        [properties enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-            NSString* confKey = key;
-            id confValue = [RLAWebService objectFromJSONSchemaWithType:((NSDictionary*)obj)[JSONSchema_Keyword_Type] withDefaultValue:defaultValue[confKey]];
-            if (confValue) { firmwareConfs[key] = confValue; }
-        }];
-    }
-    
-    return firModel;
+    [RLAWebService parseFirmwareModelFromJSONDictionary:jsonDict inFirmwareObject:firmware];
+    return firmware;
 }
 
-+ (RelayrFirmwareModel*)parseFirmwareModelFromJSONDictionary:(NSDictionary*)jsonDict
++ (RelayrFirmwareModel*)parseFirmwareModelFromJSONDictionary:(NSDictionary*)jsonDict inFirmwareObject:(RelayrFirmware*)firmware
 {
-    if (!jsonDict) { return nil; }
+    if (!jsonDict) { return firmware; }
     
-    RelayrFirmwareModel* firModel = [[RelayrFirmwareModel alloc] initWithVersion:jsonDict[Web_RespondKey_FirmwareVersion]];
-    if (!firModel) { return nil; }
+    RelayrFirmwareModel* firModel;
+    if (!firmware)
+    {
+        firModel = [[RelayrFirmwareModel alloc] initWithVersion:jsonDict[Web_RespondKey_FirmwareVersion]];
+        if (!firModel) { return nil; }
+    }
+    else { firModel = firmware; }
     
     NSDictionary* configuration = jsonDict[Web_RespondKey_FirmwareConfiguration];
-    NSDictionary* properties = ((NSDictionary*)configuration[Web_RespondKey_FirmwareSchema])[JSONSchema_Keyword_Properties];
     NSDictionary* defaultValue = configuration[Web_RespondKey_DefaultValues];
     
+    NSDictionary* properties = ((NSDictionary*)configuration[Web_RespondKey_FirmwareSchema])[JSONSchema_Keyword_Properties];
     NSUInteger const numProperties = properties.count;
-    if (numProperties)
+    if (numProperties && numProperties==defaultValue.count)
     {
-        NSMutableDictionary* firmwareConfs = [[NSMutableDictionary alloc] initWithCapacity:configuration.count];
+        NSMutableDictionary* firmProperties = [[NSMutableDictionary alloc] initWithCapacity:configuration.count];
         [properties enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
             NSString* confKey = key;
             id confValue = [RLAWebService objectFromJSONSchemaWithType:((NSDictionary*)obj)[JSONSchema_Keyword_Type] withDefaultValue:defaultValue[confKey]];
-            if (confValue) { firmwareConfs[key] = confValue; }
+            if (confValue) { firmProperties[key] = confValue; }
         }];
     }
     
@@ -163,7 +167,7 @@
  * This methods parses the <code>reading</code> property of the device model.
  * It will return a set of <code>RelayrInput</code> objects.
  ******************************************************************************/
-+ (NSSet*)parseDeviceReadingsFromJSONArray:(NSArray*)readings ofDevice:(RelayrDevice*)device
++ (NSSet*)parseDeviceReadingsFromJSONArray:(NSArray*)readings ofDevice:(RelayrDeviceModel*)device
 {
     if (!readings.count) { return nil; }
     
@@ -189,17 +193,14 @@
     if (!writings.count) { return nil; }
     
     NSMutableSet* result = [NSMutableSet setWithCapacity:writings.count];
-    //    for (NSDictionary* dict in writings)
-    //    {
-    //        // Fill up
-    //    }
+    // FIX ME: No outputs are yet tested.
     
     return (result.count) ? [NSSet setWithSet:result] : nil;
     
     return nil;
 }
 
-// Change this...
+// FIX ME: This method is pretty dumb. Wait till Dmitry really change the JSONSchema
 + (id)objectFromJSONSchemaWithType:(NSString*)type withDefaultValue:(id)defaultValue
 {
     id result;

@@ -1,6 +1,6 @@
 #import "RLAWebService.h"       // Base class
 @class RelayrDevice;            // Relayr.framework (Public)
-@protocol RelayrDeviceModel;    // Relayr.framework (Public)
+@class RelayrDeviceModel;       // Relayr.framework (Public)
 
 @interface RLAWebService (Device)
 
@@ -151,7 +151,7 @@
  *  @see RelayrDevice
  */
 - (void)requestDeviceModel:(NSString*)deviceModelID
-                completion:(void (^)(NSError* error, id <RelayrDeviceModel> deviceModel))completion;
+                completion:(void (^)(NSError* error, RelayrDeviceModel* deviceModel))completion;
 
 /*!
  *  @abstract Retrieves all meanings within the Relayr Cloud.

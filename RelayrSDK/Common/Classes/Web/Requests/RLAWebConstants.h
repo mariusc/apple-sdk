@@ -54,6 +54,7 @@
 #define Web_RespondKey_ModelName            @"name"
 #define Web_RespondKey_ModelManufacturer    @"manufacturer"
 #define Web_RespondKey_ModelReadings        @"readings"
+#define Web_RespondKey_ModelFirmwares       @"firmwareVersions"
 
 // Relayr Device Model Readings
 #define Web_RespondKey_ReadingsMeaning      @"meaning"

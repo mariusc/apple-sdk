@@ -1,5 +1,6 @@
-@class RelayrDevice;    // Relayr.framework (Public)
-@import Foundation;     // Apple
+@class RelayrDevice;        // Relayr.framework (Public)
+@class RelayrDeviceModel;   // Relayr.framework (Public)
+@import Foundation;         // Apple
 
 /*!
  *  @abstract References the type of reading a relayr Device (sensor) can collect.
@@ -13,7 +14,7 @@
  *  @abstract The device that this input/reading is coming from.
  *  @discussion This property will never be <code>nil</code>.
  */
-@property (readonly,weak,nonatomic) RelayrDevice* device;
+@property (readonly,weak,nonatomic) RelayrDeviceModel* device;
 
 /*!
  *  @abstract The name of the reading as it is defined on the relayr platform.

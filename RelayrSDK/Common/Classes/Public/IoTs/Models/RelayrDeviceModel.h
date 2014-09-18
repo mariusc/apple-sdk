@@ -24,10 +24,9 @@
 @property (readonly,nonatomic) NSString* manufacturer;
 
 /*!
- *  @abstract Indicates firmware attributes of the Device instance being called.
- *  @discussion You can request the current version and other firmware properties.
+ *  @abstract Array containing all possible firmware models (<code>RelayrFirmwareModel</code>) for this <code>RelayrDeviceModel</code>.
  */
-@property (readonly,nonatomic) RelayrFirmwareModel* firmware;
+@property (readonly,nonatomic) NSArray* firmwaresAvailable;
 
 /*!
  *  @abstract Returns an array of all possible readings the device can gather.

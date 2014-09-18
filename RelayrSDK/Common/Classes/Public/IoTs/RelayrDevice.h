@@ -37,7 +37,7 @@
 
 /*!
  *  @abstract Indicates firmware attributes of the Device instance being called.
- *  @discussion You can request the current version and other firmware properties.
+ *  @discussion A device can have many different firmware versions. This indicates the firmware in the current device.
  */
 @property (readonly,nonatomic) RelayrFirmware* firmware;
 

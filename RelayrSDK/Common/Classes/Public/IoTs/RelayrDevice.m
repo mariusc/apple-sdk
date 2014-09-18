@@ -28,15 +28,14 @@ static NSString* const kCodingSecret = @"sec";
     return nil;
 }
 
-- (instancetype)initWithID:(NSString*)uid secret:(NSString*)secret modelID:(NSString*)modelID
+- (instancetype)initWithID:(NSString*)uid modelID:(NSString*)modelID
 {
-    if ( uid.length==0 || secret.length==0 || modelID.length==0 ) { return nil; }
+    if ( uid.length==0 || modelID.length==0 ) { return nil; }
     
     self = [super initWithModelID:modelID];
     if (self)
     {
         _uid = uid;
-        _secret = secret;
     }
     return self;
 }
@@ -74,7 +73,7 @@ static NSString* const kCodingSecret = @"sec";
         _name = [decoder decodeObjectForKey:kCodingName];
         _owner = [decoder decodeObjectForKey:kCodingOwner];
         _isPublic = [decoder decodeObjectForKey:kCodingPublic];
-        self.firmware = [decoder decodeObjectForKey:kCodingFirmware];
+        _firmware = [decoder decodeObjectForKey:kCodingFirmware];
         _secret = [decoder decodeObjectForKey:kCodingSecret];
     }
     return self;
@@ -87,7 +86,7 @@ static NSString* const kCodingSecret = @"sec";
     [coder encodeObject:_name forKey:kCodingName];
     [coder encodeObject:_owner forKey:kCodingOwner];
     [coder encodeObject:_isPublic forKey:kCodingPublic];
-    [coder encodeObject:self.firmware forKey:kCodingFirmware];
+    [coder encodeObject:_firmware forKey:kCodingFirmware];
     [coder encodeObject:_secret forKey:kCodingSecret];
 }
 
@@ -95,7 +94,7 @@ static NSString* const kCodingSecret = @"sec";
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"RelayrDevice\n{\n\t Relayr ID: %@\n\t Name: %@\n\t Owner: %@\n\t Firmware version: %@\n\t MQTT secret: %@\n}\n", _uid, _name, (_owner) ? _owner : @"?", (self.firmware.version) ? self.firmware.version : @"?", _secret];
+    return [NSString stringWithFormat:@"RelayrDevice\n{\n\t Relayr ID: %@\n\t Name: %@\n\t Owner: %@\n\t Firmware version: %@\n\t MQTT secret: %@\n}\n", _uid, _name, (_owner) ? _owner : @"?", (_firmware.version) ? _firmware.version : @"?", _secret];
 }
 
 @end
