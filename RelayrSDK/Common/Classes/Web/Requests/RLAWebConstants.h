@@ -63,6 +63,12 @@
 #define Web_RespondKey_DeviceModelKey       @"key"
 #define Web_RespondKey_DeviceModelValue     @"value"
 
+// Firmware
+#define Web_RespondKey_FirmwareVersion      @"version"
+#define Web_RespondKey_FirmwareConfiguration @"configuration"
+#define Web_RespondKey_FirmwareSchema       @"schema"
+#define Web_RespondKey_DefaultValues        @"defaultValues"
+
 #pragma mark RLAWebService+Cloud
 
 // Cloud reachable?
@@ -268,3 +274,19 @@
 #define Web_RequestBodyKey_DevFirmwareVersion           @"firmwareVersion"
 #define Web_RequestBodyKey_DevDescription               @"description"
 #define Web_RequestBodyKey_DevPublic                    @"public"
+
+#pragma mark - JSON Schema
+
+#define JSONSchema_Type_Array                           @"array"
+#define JSONSchema_Type_Boolean                         @"boolean"
+#define JSONSchema_Type_Integer                         @"integer"
+#define JSONSchema_Type_Number                          @"number"
+#define JSONSchema_Type_Null                            @"null"
+#define JSONSchema_Type_Object                          @"object"
+#define JSONSchema_Type_String                          @"string"
+
+#define JSONSchema_Keyword_ID                           @"id"
+#define JSONSchema_Keyword_Title                        @"title"
+#define JSONSchema_Keyword_Description                  @"description"
+#define JSONSchema_Keyword_Type                         @"type"
+#define JSONSchema_Keyword_Properties                   @"properties"

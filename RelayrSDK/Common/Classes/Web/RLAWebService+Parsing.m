@@ -1,32 +1,39 @@
-#import "RLAWebService+Parsing.h"   // Header
-#import "RelayrApp.h"               // Relayr.framework (Public)
-#import "RelayrUser.h"              // Relayr.framework (Public)
-#import "RelayrPublisher.h"         // Relayr.framework (Public)
-#import "RelayrTransmitter.h"       // Relayr.framework (Public)
-#import "RelayrDevice.h"            // Relayr.framework (Public)
-#import "RelayrDeviceModel.h"       // Relayr.framework (Public)
-#import "RelayrFirmware.h"          // Relayr.framework (Public)
-#import "RelayrInput.h"             // Relayr.framework (Public)
-#import "RelayrOutput.h"            // Relayr.framework (Public)
-#import "RelayrApp_Setup.h"         // Relayr.framework (Private)
-#import "RelayrUser_Setup.h"        // Relayr.framework (Private)
-#import "RelayrPublisher_Setup.h"   // Relayr.framework (Private)
-#import "RelayrTransmitter_Setup.h" // Relayr.framework (Private)
-#import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
-#import "RelayrFirmware_Setup.h"    // Relayr.framework (Private)
-#import "RelayrInput_Setup.h"       // Relayr.framework (Private)
-#import "RLAWebConstants.h"         // Relayr.framework (Web)
+#import "RLAWebService+Parsing.h"       // Header
+#import "RelayrApp.h"                   // Relayr.framework (Public)
+#import "RelayrUser.h"                  // Relayr.framework (Public)
+#import "RelayrPublisher.h"             // Relayr.framework (Public)
+#import "RelayrTransmitter.h"           // Relayr.framework (Public)
+#import "RelayrDevice.h"                // Relayr.framework (Public)
+#import "RelayrDeviceModel.h"           // Relayr.framework (Public)
+#import "RelayrFirmware.h"              // Relayr.framework (Public)
+#import "RelayrFirmwareModel.h"         // Relayr.framework (Public)
+#import "RelayrInput.h"                 // Relayr.framework (Public)
+#import "RelayrOutput.h"                // Relayr.framework (Public)
+#import "RelayrApp_Setup.h"             // Relayr.framework (Private)
+#import "RelayrUser_Setup.h"            // Relayr.framework (Private)
+#import "RelayrPublisher_Setup.h"       // Relayr.framework (Private)
+#import "RelayrTransmitter_Setup.h"     // Relayr.framework (Private)
+#import "RelayrDevice_Setup.h"          // Relayr.framework (Private)
+#import "RelayrDeviceModel_Setup.h"     // Relayr.framework (Private)
+#import "RelayrFirmware_Setup.h"        // Relayr.framework (Private)
+#import "RelayrFirmwareModel_Setup.h"   // Relayr.framework (Private)
+#import "RelayrInput_Setup.h"           // Relayr.framework (Private)
+#import "RLAWebConstants.h"             // Relayr.framework (Web)
 
 @implementation RLAWebService (Parsing)
 
 + (RelayrUser*)parseUserFromJSONDictionary:(NSDictionary*)jsonDict
 {
+    if (!jsonDict) { return nil; }
+    
     // TODO: Fill up
     return nil;
 }
 
 + (RelayrPublisher*)parsePublisherFromJSONDictionary:(NSDictionary*)jsonDict
 {
+    if (!jsonDict) { return nil; }
+    
     RelayrPublisher* publisher = [[RelayrPublisher alloc] initWithPublisherID:jsonDict[Web_RespondKey_PublisherID] owner:jsonDict[Web_RespondKey_PublisherOwner]];
     if (!publisher) { return nil; }
     
@@ -36,6 +43,8 @@
 
 + (RelayrApp*)parseAppFromJSONDictionary:(NSDictionary*)jsonDict
 {
+    if (!jsonDict) { return nil; }
+    
     RelayrApp* app = [[RelayrApp alloc] initWithID:jsonDict[Web_RespondKey_AppID]];
     if (!app) { return nil; }
     
@@ -49,6 +58,8 @@
 
 + (RelayrTransmitter*)parseTransmitterFromJSONDictionary:(NSDictionary*)jsonDict
 {
+    if (!jsonDict) { return nil; }
+    
     RelayrTransmitter* transmitter = [[RelayrTransmitter alloc] initWithID:jsonDict[Web_RespondKey_TransmitterID] secret:jsonDict[Web_RespondKey_TransmitterSecret]];
     if (!transmitter) { return nil; }
     
@@ -59,6 +70,8 @@
 
 + (RelayrDevice*)parseDeviceFromJSONDictionary:(NSDictionary*)jsonDict
 {
+    if (!jsonDict) { return nil; }
+    
     id tmp = jsonDict[Web_RespondKey_DeviceModel];
     NSString* modelID = ([tmp isKindOfClass:[NSString class]])     ? tmp :
                         ([tmp isKindOfClass:[NSDictionary class]]) ? ((NSDictionary*)tmp)[Web_RespondKey_ModelID] : nil;
@@ -84,10 +97,64 @@
     return device;
 }
 
-+ (id <RelayrDeviceModel>)parseDeviceModelFromJSONDictionary:(NSDictionary*)jsonDict
++ (RelayrDeviceModel*)parseDeviceModelFromJSONDictionary:(NSDictionary*)jsonDict
 {
+    if (!jsonDict) { return nil; }
+    
+    
+    
     // TODO: Fill up
     return nil;
+}
+
++ (RelayrFirmware*)parseFirmwareFromJSONDictionary:(NSDictionary*)jsonDict
+{
+    if (!jsonDict) { return nil; }
+    
+    RelayrFirmware* firModel = [[RelayrFirmware alloc] initWithVersion:jsonDict[Web_RespondKey_FirmwareVersion]];
+    if (!firModel) { return nil; }
+    
+    NSDictionary* configuration = jsonDict[Web_RespondKey_FirmwareConfiguration];
+    NSDictionary* properties = ((NSDictionary*)configuration[Web_RespondKey_FirmwareSchema])[JSONSchema_Keyword_Properties];
+    NSDictionary* defaultValue = configuration[Web_RespondKey_DefaultValues];
+    
+    NSUInteger const numProperties = properties.count;
+    if (numProperties)
+    {
+        NSMutableDictionary* firmwareConfs = [[NSMutableDictionary alloc] initWithCapacity:configuration.count];
+        [properties enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+            NSString* confKey = key;
+            id confValue = [RLAWebService objectFromJSONSchemaWithType:((NSDictionary*)obj)[JSONSchema_Keyword_Type] withDefaultValue:defaultValue[confKey]];
+            if (confValue) { firmwareConfs[key] = confValue; }
+        }];
+    }
+    
+    return firModel;
+}
+
++ (RelayrFirmwareModel*)parseFirmwareModelFromJSONDictionary:(NSDictionary*)jsonDict
+{
+    if (!jsonDict) { return nil; }
+    
+    RelayrFirmwareModel* firModel = [[RelayrFirmwareModel alloc] initWithVersion:jsonDict[Web_RespondKey_FirmwareVersion]];
+    if (!firModel) { return nil; }
+    
+    NSDictionary* configuration = jsonDict[Web_RespondKey_FirmwareConfiguration];
+    NSDictionary* properties = ((NSDictionary*)configuration[Web_RespondKey_FirmwareSchema])[JSONSchema_Keyword_Properties];
+    NSDictionary* defaultValue = configuration[Web_RespondKey_DefaultValues];
+    
+    NSUInteger const numProperties = properties.count;
+    if (numProperties)
+    {
+        NSMutableDictionary* firmwareConfs = [[NSMutableDictionary alloc] initWithCapacity:configuration.count];
+        [properties enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+            NSString* confKey = key;
+            id confValue = [RLAWebService objectFromJSONSchemaWithType:((NSDictionary*)obj)[JSONSchema_Keyword_Type] withDefaultValue:defaultValue[confKey]];
+            if (confValue) { firmwareConfs[key] = confValue; }
+        }];
+    }
+    
+    return firModel;
 }
 
 #pragma mark - Private methods
@@ -130,6 +197,39 @@
     return (result.count) ? [NSSet setWithSet:result] : nil;
     
     return nil;
+}
+
+// Change this...
++ (id)objectFromJSONSchemaWithType:(NSString*)type withDefaultValue:(id)defaultValue
+{
+    id result;
+    
+    if ([type isEqualToString:JSONSchema_Type_Integer])
+    {
+        result = defaultValue;
+    }
+    else if ([type isEqualToString:JSONSchema_Type_Number])
+    {
+        result = defaultValue;
+    }
+    else if ([type isEqualToString:JSONSchema_Type_Boolean])
+    {
+        result = defaultValue;
+    }
+    else if ([type isEqualToString:JSONSchema_Type_String])
+    {
+        result = defaultValue;
+    }
+    else if ([type isEqualToString:JSONSchema_Type_Null])
+    {
+        result = [NSNull null];
+    }
+    else
+    {
+        result = nil;
+    }
+    
+    return result;
 }
 
 @end
