@@ -87,7 +87,7 @@ static NSString* const kCodingPublishers = @"pub";
 - (void)queryCloudForUserAppsAndPublishers:(void (^)(NSError* error, NSNumber* isThereChanges))completion
 {
     __weak RelayrUser* weakSelf = self;
-    [_webService requestUserApps:^(NSError *appError, NSArray *apps) {
+    [_webService requestUserInstalledApps:^(NSError *appError, NSArray *apps) {
         if (appError) { if (completion) { completion(appError, nil); } return; }
         [weakSelf.webService requestUserPublishers:^(NSError* publisherError, NSArray* publishers) {
             if (publisherError) { if (completion) { completion(publisherError, nil); } return; }

@@ -73,6 +73,33 @@
     completion:(void (^)(NSError* error, RelayrApp* app))completion;
 
 /*!
+ *  @abstract Sets in the server an abstract connection between an app and a device.
+ *  @discussion After this call, you get some credentials to open a channel between the server and a device.
+ *
+ *  @param appID Unique identifier within the Relayr Cloud for a specific Relayr Application.
+ *  @param deviceID Unique identifier within the Relayr Cloud for a specific Relayr Device.
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrDevice
+ */
+- (void)setConnectionBetweenApp:(NSString*)appID
+                      andDevice:(NSString*)deviceID
+                     completion:(void (^)(NSError* error, id credentials))completion;
+
+/*!
+ *  @abstract Deletes the abstract connection between an app and a device.
+ *
+ *  @param appID Unique identifier within the Relayr Cloud for a specific Relayr Application.
+ *  @param deviceID Unique identifier within the Relayr Cloud for a specific Relayr Device.
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrDevice
+ */
+- (void)deleteConnectionBetweenApp:(NSString*)appID
+                         andDevice:(NSString*)deviceID
+                        completion:(void (^)(NSError* error))completion;
+
+/*!
  *  @abstract Deletes/Removes a Relayr application from the Relayr cloud.
  *
  *  @param appID The Relayr unique identifier for the searched for Application.
@@ -82,7 +109,5 @@
  */
 - (void)deleteApp:(NSString*)appID
        completion:(void (^)(NSError* error))completion;
-
-// TODO: Code the methods two connect apps and devices
 
 @end

@@ -11,7 +11,7 @@
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>D98EB0C7B173137539EE034A982D08235CCD975D</key>
-		<string>https://github.com/relayr/Apple-SDK.git</string>
+		<string>https://github.com/relayr/apple-sdk.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>RelayrSDK/RelayrSDK.xcodeproj</string>
@@ -21,7 +21,7 @@
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/relayr/Apple-SDK.git</string>
+	<string>https://github.com/relayr/apple-sdk.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
@@ -34,7 +34,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>D98EB0C7B173137539EE034A982D08235CCD975D</string>
 			<key>IDESourceControlWCCName</key>
-			<string>Apple-SDK</string>
+			<string>apple-sdk</string>
 		</dict>
 	</array>
 </dict>

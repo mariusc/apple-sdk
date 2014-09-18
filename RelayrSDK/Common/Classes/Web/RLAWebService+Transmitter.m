@@ -62,6 +62,20 @@
     }];
 }
 
+- (void)deleteTransmitter:(NSString*)transmitterID completion:(void (^)(NSError* error))completion
+{
+    if (!transmitterID.length) { if (completion) { completion(RLAErrorMissingArgument); } return; }
+    
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    if (!request) { if (completion) { completion(RLAErrorWebRequestFailure); } return; }
+    request.relativePath = Web_RequestRelativePath_TransDeletion(transmitterID);
+    
+    [request executeInHTTPMode:kRLAWebRequestModeDELETE completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
+        if (error) { return completion(error); }
+        return (responseCode.unsignedIntegerValue != Web_RequestResponseCode_TransDeletion) ? completion(RLAErrorWebRequestFailure) : completion(nil);
+    }];
+}
+
 - (void)setConnectionBetweenTransmitter:(NSString*)transmitterID andDevice:(NSString*)deviceID completion:(void (^)(NSError* error))completion
 {
     if (!transmitterID.length || !deviceID.length) { if (completion) { completion(RLAErrorMissingArgument); } return; }
@@ -110,20 +124,6 @@
     [request executeInHTTPMode:kRLAWebRequestModeDELETE completion:(!completion) ? nil : ^(NSError *error, NSNumber *responseCode, NSData *data) {
         if (error) { return completion(error); }
         return (responseCode.unsignedIntegerValue != Web_RequestResponseCode_TransConnectionDevDeletion) ? completion(RLAErrorWebRequestFailure) : completion(nil);
-    }];
-}
-
-- (void)deleteTransmitter:(NSString*)transmitterID completion:(void (^)(NSError* error))completion
-{
-    if (!transmitterID.length) { if (completion) { completion(RLAErrorMissingArgument); } return; }
-    
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { if (completion) { completion(RLAErrorWebRequestFailure); } return; }
-    request.relativePath = Web_RequestRelativePath_TransDeletion(transmitterID);
-    
-    [request executeInHTTPMode:kRLAWebRequestModeDELETE completion:(!completion) ? nil : ^(NSError *error, NSNumber *responseCode, NSData *data) {
-        if (error) { return completion(error); }
-        return (responseCode.unsignedIntegerValue != Web_RequestResponseCode_TransDeletion) ? completion(RLAErrorWebRequestFailure) : completion(nil);
     }];
 }
 

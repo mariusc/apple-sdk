@@ -38,11 +38,36 @@ registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))co
          completion:(void (^)(NSError* error, RelayrUser* user))completion;
 
 /*!
+ *  @abstract Install an app under a specific user.
+ *
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrUser
+ *  @see RelayrApp
+ */
+- (void)installApp:(NSString*)appID
+    forCurrentUser:(void (^)(NSError* error))completion;
+
+/*!
  *  @abstract It queries the Relayr Cloud for all the apps installed under this user.
  *
  *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrUser
+ *  @see RelayrApp
  */
-- (void)requestUserApps:(void (^)(NSError* error, NSArray* apps))completion;
+- (void)requestUserInstalledApps:(void (^)(NSError* error, NSArray* apps))completion;
+
+/*!
+ *  @abstract Uninstall an app under a specific user.
+ *
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrUser
+ *  @see RelayrApp
+ */
+- (void)uninstallApp:(NSString*)appID
+      forCurrentUser:(void (^)(NSError* error))completion;
 
 /*!
  *  @abstract It queries the Relayr Cloud for all the publishers that a Relayr user owns.
@@ -51,6 +76,7 @@ registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))co
  *  @param completion Block indicating the result of the server query.
  *
  *  @see RelayrUser
+ *  @see RelayrPublisher
  */
 - (void)requestUserPublishers:(void (^)(NSError* error, NSArray* publishers))completion;
 
@@ -61,27 +87,66 @@ registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))co
  *  @param completion Block indicating the result of the server query. The <code>transmitter</code> parameter is an <code>NSArray</code> containing fully initialised <code>RelayrTransmitter</code> objects without any device.
  *
  *  @see RelayrUser
+ *  @see RelayrTransmitter
  */
 - (void)requestUserTransmitters:(void (^)(NSError* error, NSArray* transmitters))completion;
 
 /*!
- *  @abstract It queries the Relayr Cloud for all the devices own by a Realyr user.
+ *  @abstract Retrieves the <code>RelayrDevice</code>s the user owns.
  *  @discussion Devices and transmitters are different concepts.
  *
  *  @param completion Block indicating the result of the server query.
  *
  *  @see RelayrUser
+ *  @see RelayrDevice
  */
 - (void)requestUserDevices:(void (^)(NSError* error, NSArray* devices))completion;
 
 /*!
- *  @abstract It queries the Relayr Cloud for all the bookmarked devices of a specific Relayr user.
+ *  @abstract Retrieves the user devices entities filtered by meaning.
+ *
+ *  @param meaning The type of input the device reads.
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrUser
+ *  @see RelayrDevice
+ */
+- (void)requestUserDevicesFilteredByMeaning:(NSString*)meaning
+                                 completion:(void (^)(NSError* error, NSArray* devices))completion;
+
+/*!
+ *  @abstract Creates a link/bookmark in the server, giving quick access to a favourite <code>RelayrDevice</code>.
+ *
+ *  @param deviceID The device that wanted to be bookmarked.
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrUser
+ *  @see RelayrDevice
+ */
+- (void)registerUserBookmarkToDevice:(NSString*)deviceID
+                          completion:(void (^) (NSError* error))completion;
+
+/*!
+ *  @abstract Retrieves all the bookmarked devices of a specific Relayr user.
  *  @discussion A bookmarked device is a normally own device that the user finds him/herself reading/sending data often.
  *
  *  @param completion Block indicating the result of the server query.
  *
  *  @see RelayrUser
+ *  @see RelayrDevice
  */
 - (void)requestUserBookmarkedDevices:(void (^)(NSError* error, NSArray* bookDevices))completion;
+
+/*!
+ *  @abstract Deletes a bookmark that a user had to a specific device.
+ *
+ *  @param deviceID The device that wanted to be bookmarked.
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrUser
+ *  @see RelayrDevice
+ */
+- (void)deleteUserBookmarkToDevice:(NSString*)deviceID
+                        completion:(void (^) (NSError* error))completion;
 
 @end

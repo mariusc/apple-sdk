@@ -120,6 +120,14 @@
 #define Web_RequestRelativePath_AppDeletion(appID)      [NSString stringWithFormat:@"/apps/%@", appID]
 #define Web_RequestResponseCode_AppDeletion             204
 
+// Connect app to device
+#define Web_RequestRelativePath_AppConnection(devID, appID) [NSString stringWithFormat:@"/apps/%@/devices/%@", appID, devID]
+#define Web_RequestResponseCode_AppConnection           200
+
+// Disconnect app to device
+#define Web_RequestRelativePath_AppDisconnect(devID, appID) [NSString stringWithFormat:@"/apps/%@/devices/%@", appID, devID]
+#define Web_RequestResponseCode_AppDisconnect           204
+
 #define Web_RequestBodyKey_AppName                      @"name"
 #define Web_RequestBodyKey_AppPublisher                 @"publisher"
 #define Web_RequestBodyKey_AppDescription               @"description"
@@ -141,9 +149,17 @@
 #define Web_RequestRelativePath_UserInfoSet(userID)     [NSString stringWithFormat:@"/users/%@", userID]
 #define Web_RequestResponseCode_UserInfoSet             200
 
+// Install app under user
+#define Web_RequestRelativePath_UserInstallApp(userID, appID)   [NSString stringWithFormat:@"}/users/%@/apps/%@", userID, appID]
+#define Web_RequestResponseCode_UserInstallApp          200
+
 // User's apps
 #define Web_RequestRelativePath_UserInstalledApps(userID)   [NSString stringWithFormat:@"}/users/%@/apps", userID]
 #define Web_RequestResponseCode_UserInstalledApps       200
+
+// Install app under user
+#define Web_RequestRelativePath_UserUninstallApp(userID, appID) [NSString stringWithFormat:@"}/users/%@/apps/%@", userID, appID]
+#define Web_RequestResponseCode_UserUninstallApp        204
 
 // User's publishers
 #define Web_RequestRelativePath_UserPubs(userID)        [NSString stringWithFormat:@"/users/%@/publishers", userID]
@@ -157,9 +173,21 @@
 #define Web_RequestRelativePath_UserDevices(userID)     [NSString stringWithFormat:@"/users/%@/devices", userID];
 #define Web_RequestResponseCode_UserDevices             200
 
+// User's devices (filtered by meaning)
+#define Web_RequestRelativePath_UserDevicesMeaning(userID, meaning) [NSString stringWithFormat:@"/users/%@/devices?meaning=%@", userID, meaning];
+#define Web_RequestResponseCode_UserDevicesMeaning      200
+
+// Register user's bookmark devices
+#define Web_RequestRelativePath_UserBookmarkDev(userID, devID)      [NSString stringWithFormat:@"/users/%@/devices/%@/bookmarks", userID, devID];
+#define Web_RequestResponseCode_UserBookmarkDev         200
+
 // User's bookmark devices
 #define Web_RequestRelativePath_UserBookmarkDevices(userID) [NSString stringWithFormat:@"/users/%@/devices/bookmarks", userID];
 #define Web_RequestResponseCode_UserBookmarkDevices     200
+
+// Delete user's bookmark devices
+#define Web_RequestRelativePath_UserBookmarkDeletion(userID, devID) [NSString stringWithFormat:@"/users/%@/devices/%@/bookmarks", userID, devID];
+#define Web_RequestResponseCode_UserBookmarkDeletion    204
 
 #pragma mark RLAWebService+Publisher
 

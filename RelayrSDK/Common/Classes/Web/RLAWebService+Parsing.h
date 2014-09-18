@@ -66,7 +66,7 @@
  *  @param jsonDict <code>NSDictionary</code> with the properties of a <code>RelayrDeviceModel</code> object.
  *	@return Fully initialised <code>RelayrDeviceModel</code> or <code>nil</code>.
  *
- *  @see RelayrDevice
+ *  @see RelayrDeviceModel
  */
 + (RelayrDeviceModel*)parseDeviceModelFromJSONDictionary:(NSDictionary*)jsonDict inDeviceObject:(RelayrDevice*)device;
 
@@ -76,7 +76,7 @@
  *  @param jsonDict <code>NSDictionary</code> with the properties of a <code>RelayrFirmware</code> object.
  *	@return Fully initialised <code>RelayrFirmware</code> or <code>nil</code>.
  *
- *  @see RelayrDevice
+ *  @see RelayrFirmware
  */
 + (RelayrFirmware*)parseFirmwareFromJSONDictionary:(NSDictionary*)jsonDict;
 
@@ -86,7 +86,7 @@
  *  @param jsonDict <code>NSDictionary</code> with the properties of a <code>RelayrFirmwareModel</code> object.
  *	@return Fully initialised <code>RelayrFirmwareModel</code> or <code>nil</code>.
  *
- *  @see RelayrDevice
+ *  @see RelayrFirmwareModel
  */
 + (RelayrFirmwareModel*)parseFirmwareModelFromJSONDictionary:(NSDictionary*)jsonDict inFirmwareObject:(RelayrFirmware*)firmware;
 

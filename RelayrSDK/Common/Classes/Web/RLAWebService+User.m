@@ -51,9 +51,7 @@
         NSDictionary* json = processRequest(Web_RequestResponseCode_UserInfo, nil, nil, nil);
         
         NSString* futureID = json[Web_RespondKey_UserID];
-        NSString* futureName = json[Web_RespondKey_UserName];
-        NSString* futureEmail = json[Web_RespondKey_UserEmail];
-        return (!futureID) ? completion(RLAErrorRequestParsingFailure, nil, nil, nil) : completion(nil, futureID, futureName, futureEmail);
+        return (!futureID) ? completion(RLAErrorRequestParsingFailure, nil, nil, nil) : completion(nil, futureID, json[Web_RespondKey_UserName], json[Web_RespondKey_UserEmail]);
     }];
 }
 
@@ -77,7 +75,21 @@
     }];
 }
 
-- (void)requestUserApps:(void (^)(NSError* error, NSArray* apps))completion
+- (void)installApp:(NSString*)appID forCurrentUser:(void (^)(NSError* error))completion
+{
+    if (!appID.length) { if (completion) { completion(RLAErrorMissingArgument); } return; }
+    
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    if (!request) { if (completion) { completion(RLAErrorWebRequestFailure); } return; }
+    request.relativePath = Web_RequestRelativePath_UserInstallApp(self.user.uid, appID);
+    
+    [request executeInHTTPMode:kRLAWebRequestModePOST completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
+        if (error) { return completion(error); }
+        return completion((responseCode.unsignedIntegerValue != Web_RequestResponseCode_UserInstallApp) ? RLAErrorWebRequestFailure : nil);
+    }];
+}
+
+- (void)requestUserInstalledApps:(void (^)(NSError* error, NSArray* apps))completion
 {
     if (!completion) { return; }
     
@@ -85,7 +97,7 @@
     if (!request) { return completion(RLAErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_UserInstalledApps(self.user.uid);
     
-    [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError *error, NSNumber *responseCode, NSData *data) {
+    [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
         NSArray* json = processRequest(Web_RequestResponseCode_UserInstalledApps, nil);
         
         NSMutableArray* result = [NSMutableArray arrayWithCapacity:json.count];
@@ -96,6 +108,20 @@
         }
         
         return completion(nil, (result.count) ? [NSArray arrayWithArray:result] : nil);
+    }];
+}
+
+- (void)uninstallApp:(NSString*)appID forCurrentUser:(void (^)(NSError* error))completion
+{
+    if (!appID.length) { if (completion) { completion(RLAErrorMissingArgument); } return; }
+    
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    if (!request) { if (completion) { completion(RLAErrorWebRequestFailure); } return; }
+    request.relativePath = Web_RequestRelativePath_UserUninstallApp(self.user.uid, appID);
+    
+    [request executeInHTTPMode:kRLAWebRequestModePOST completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
+        if (error) { return completion(error); }
+        return completion((responseCode.unsignedIntegerValue != Web_RequestResponseCode_UserUninstallApp) ? RLAErrorWebRequestFailure : nil);
     }];
 }
 
@@ -165,6 +191,43 @@
     }];
 }
 
+- (void)requestUserDevicesFilteredByMeaning:(NSString*)meaning completion:(void (^)(NSError* error, NSArray* devices))completion
+{
+    if (!completion) { return; }
+    if (!meaning.length) { return completion(RLAErrorMissingArgument, nil); }
+    
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    if (!request) { return completion(RLAErrorWebRequestFailure, nil); }
+    request.relativePath = Web_RequestRelativePath_UserDevicesMeaning(self.user.uid, meaning);
+    
+    [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
+        NSArray* json = processRequest(Web_RequestResponseCode_UserDevices, nil);
+        NSMutableArray* result = [NSMutableArray arrayWithCapacity:json.count];
+        
+        for (NSDictionary* dict in json)
+        {
+            RelayrDevice* device = [RLAWebService parseDeviceFromJSONDictionary:dict];
+            if (device) { [result addObject:device]; }
+        }
+        
+        return completion(nil, (result.count) ? [NSArray arrayWithArray:result] : nil);
+    }];
+}
+
+- (void)registerUserBookmarkToDevice:(NSString*)deviceID completion:(void (^) (NSError* error))completion
+{
+    if (!deviceID.length) { if (completion) { completion(RLAErrorMissingArgument); } return; }
+    
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    if (!request) { return completion(RLAErrorWebRequestFailure); }
+    request.relativePath = Web_RequestRelativePath_UserBookmarkDev(self.user.uid, deviceID);
+    
+    [request executeInHTTPMode:kRLAWebRequestModePOST completion:(!completion) ? nil : ^(NSError *error, NSNumber *responseCode, NSData *data) {
+        if (error) { return completion(error); }
+        return completion((responseCode.unsignedIntegerValue!=Web_RequestResponseCode_UserBookmarkDev) ? RLAErrorWebRequestFailure : nil);
+    }];
+}
+
 - (void)requestUserBookmarkedDevices:(void (^)(NSError* error, NSArray* bookDevices))completion
 {
     if (!completion) { return; }
@@ -184,6 +247,20 @@
         }
         
         return completion(nil, (result.count) ? [NSArray arrayWithArray:result] : nil);
+    }];
+}
+
+- (void)deleteUserBookmarkToDevice:(NSString*)deviceID completion:(void (^) (NSError* error))completion
+{
+    if (!deviceID.length) { if (completion) { completion(RLAErrorMissingArgument); } return; }
+    
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    if (!request) { return completion(RLAErrorWebRequestFailure); }
+    request.relativePath = Web_RequestRelativePath_UserBookmarkDeletion(self.user.uid, deviceID);
+    
+    [request executeInHTTPMode:kRLAWebRequestModeDELETE completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
+        if (error) { return completion(error); }
+        return completion((responseCode.unsignedIntegerValue!=Web_RequestResponseCode_UserBookmarkDeletion) ? RLAErrorWebRequestFailure : nil);
     }];
 }
 

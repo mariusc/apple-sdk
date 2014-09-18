@@ -42,6 +42,17 @@
             completion:(void (^)(NSError* error))completion;
 
 /*!
+ *  @abstract Deletes the transmitter entity from the Relayr Cloud.
+ *
+ *  @param transmitterID <code>NSString</code> representing the unique Relayr identifier for the searched for transmitter.
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrTransmitter
+ */
+- (void)deleteTransmitter:(NSString*)transmitterID
+               completion:(void (^)(NSError* error))completion;
+
+/*!
  *  @abstract Sets in the server an abstract connection between a transmitter and a device.
  *  @discussion After the successful call of this method, the device will be listed under the children devices of the given transmitter.
  *
@@ -82,16 +93,5 @@
 - (void)deleteConnectionBetweenTransmitter:(NSString*)transmitterID
                                  andDevice:(NSString*)deviceID
                                 completion:(void (^)(NSError* error))completion;
-
-/*!
- *  @abstract Deletes a transmitter entity from the Relayr Cloud.
- *
- *  @param transmitterID <code>NSString</code> identifying the transmitter in the Relayr Cloud.
- *  @param completion Block indicating the result of the server query.
- *
- *  @see RelayrTransmitter
- */
-- (void)deleteTransmitter:(NSString*)transmitterID
-               completion:(void (^)(NSError* error))completion;
 
 @end

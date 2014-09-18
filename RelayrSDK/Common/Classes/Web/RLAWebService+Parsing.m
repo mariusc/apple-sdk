@@ -72,8 +72,22 @@
 {
     if (!jsonDict) { return nil; }
     
-    NSDictionary* modelDict = jsonDict[Web_RespondKey_DeviceModel];
-    RelayrDevice* device = [[RelayrDevice alloc] initWithID:jsonDict[Web_RespondKey_DeviceID] modelID:modelDict[Web_RespondKey_ModelID]];
+    NSString* modelID;
+    NSDictionary* modelDict;
+    
+    id tmp = jsonDict[Web_RespondKey_DeviceModel];
+    if ([modelID isKindOfClass:[NSDictionary class]])
+    {
+        modelDict = tmp;
+        modelID = modelDict[Web_RespondKey_ModelID];
+    }
+    else if ([tmp isKindOfClass:[NSString class]])
+    {
+        modelID = tmp;
+    }
+    else { return nil; }
+    
+    RelayrDevice* device = [[RelayrDevice alloc] initWithID:jsonDict[Web_RespondKey_DeviceID] modelID:modelID];
     if (!device) { return nil; }
     
     device.name = jsonDict[Web_RespondKey_DeviceName];

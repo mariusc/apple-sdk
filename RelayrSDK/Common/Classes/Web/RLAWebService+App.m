@@ -110,6 +110,35 @@
     }];
 }
 
+- (void)setConnectionBetweenApp:(NSString*)appID andDevice:(NSString*)deviceID completion:(void (^)(NSError* error, id credentials))completion
+{
+    if (!completion) { return; }
+    if (!deviceID.length || !appID.length) { return completion(RLAErrorMissingArgument, nil); }
+    
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    if (!request) { return completion(RLAErrorWebRequestFailure, nil); }
+    request.relativePath = Web_RequestRelativePath_AppConnection(appID, deviceID);
+    
+    [request executeInHTTPMode:kRLAWebRequestModePOST completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
+        NSDictionary* json = processRequest(Web_RequestResponseCode_AppConnection, nil);
+        return completion(nil, json);
+    }];
+}
+
+- (void)deleteConnectionBetweenApp:(NSString*)appID andDevice:(NSString*)deviceID completion:(void (^)(NSError* error))completion
+{
+    if (!appID.length || !deviceID.length) { if (completion) { completion(RLAErrorMissingArgument); } return; }
+    
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    if (!request) { if (completion) { completion(RLAErrorWebRequestFailure); } return; }
+    request.relativePath = Web_RequestRelativePath_AppDisconnect(appID, deviceID);
+    
+    [request executeInHTTPMode:kRLAWebRequestModeDELETE completion:(!completion) ? nil : ^(NSError *error, NSNumber *responseCode, NSData *data) {
+        if (error) { return completion(error); }
+        return (responseCode.unsignedIntegerValue != Web_RequestResponseCode_AppDisconnect) ? completion(RLAErrorWebRequestFailure) : completion(nil);
+    }];
+}
+
 - (void)deleteApp:(NSString*)appID completion:(void (^)(NSError* error))completion
 {
     if (!appID.length) { if (completion) { completion(RLAErrorMissingArgument); } return; }
