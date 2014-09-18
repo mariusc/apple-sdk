@@ -210,6 +210,10 @@
 #define Web_RequestBodyKey_PublisherName                @"name"
 #define Web_RequestBodyKey_PublisherOwner               @"owner"
 
+// Publisher deletion
+#define Web_RequestRelativePath_PublishersDelete(pubID) [NSString stringWithFormat:@"/publishers/%@", pubID]
+#define Web_RequestResponseCode_PublishersDelete        204
+
 #pragma mark RLAWebService+Transmitter
 
 // Transmitter registration

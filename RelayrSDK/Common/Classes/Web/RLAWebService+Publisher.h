@@ -50,4 +50,15 @@
 - (void)requestAppsFromPublisher:(NSString*)publisherID
                      completion:(void (^)(NSError* error, NSArray* apps))completion;
 
+/*!
+ *  @abstract Deletes the publisher entity from the Relayr Cloud.
+ *
+ *  @param publisherID <code>NSString</code> representing the unique Relayr identifier for the Publisher.
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrTransmitter
+ */
+- (void)deletePublisher:(NSString*)publisherID
+             completion:(void (^)(NSError* error))completion;
+
 @end

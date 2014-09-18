@@ -94,4 +94,18 @@
     }];
 }
 
+- (void)deletePublisher:(NSString*)publisherID completion:(void (^)(NSError* error))completion
+{
+    if (!publisherID.length) { if (completion) { completion(RLAErrorMissingArgument); }return; }
+    
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    if (!request) { return completion(RLAErrorWebRequestFailure); }
+    request.relativePath = Web_RequestRelativePath_PublishersDelete(publisherID);
+    
+    [request executeInHTTPMode:kRLAWebRequestModeGET completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
+        if (error) { return completion(error); }
+        return completion((responseCode.unsignedIntegerValue!=Web_RequestResponseCode_PublishersDelete) ? RLAErrorWebRequestFailure : nil);
+    }];
+}
+
 @end
