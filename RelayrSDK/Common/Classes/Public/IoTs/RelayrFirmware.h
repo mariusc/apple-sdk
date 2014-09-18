@@ -1,5 +1,5 @@
-@import Foundation;             // Apple
 #import "RelayrFirmwareModel.h" // Relayr.framework (Public)
+@import Foundation;             // Apple
 
 /*!
  *  @abstract Represents the firmware running on a <code>RelayrDevice</code> or a <code>RelayrTransmitter</code>.
@@ -7,7 +7,7 @@
  *  @see RelayrDevice
  *  @see RelayrTransmitter
  */
-@interface RelayrFirmware : NSObject <RelayrFirmwareModel,NSCoding>
+@interface RelayrFirmware : RelayrFirmwareModel <NSCoding>
 
 /*!
  *  @abstract Queries the relayr platform for the current firmware properties.
@@ -18,6 +18,6 @@
  *
  *  @see queryCloudForIoTs:
  */
-- (void)queryCloudForProperties:(void (^)(NSError* error, BOOL isThereChanges))completion;
+- (void)queryCloudForProperties:(void (^)(NSError* error, NSNumber* isThereChanges))completion;
 
 @end

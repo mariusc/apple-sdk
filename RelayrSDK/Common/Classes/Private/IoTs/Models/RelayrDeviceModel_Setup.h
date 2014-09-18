@@ -1,24 +1,24 @@
 #import "RelayrDeviceModel.h"    // Relayr.framework (Public)
 
 /*!
- *  @abstract An instance of this class represents a Device. A basic relayr entity
- *	@discussion A device is any external entity capable of producing measurements and sending them to a transmitter to be further sent to the relayr cloud,
- *	or one which is capable of receiving information from the relayr platform.
- *	Examples would be a thermometer, a gyroscope or an infrared sensor.
+ *  @abstract An instance of this class models how a device should look and perform.
  */
 @interface RelayrDeviceModel ()
 
 /*!
- *  @abstract It initialises a Transmitter with a Relayr ID and an MQTT secret/password.
- *  @discussion Both arguments must be valid <code>NSString</code>s.
+ *  @abstract It initialises a Device-model with a Relayr Device-Model ID and a name identifying it.
  *
  *  @param modelID Relayr model identifier. It identifies the device (independently of the firmware version).
- *  @param modelName Name for the Relayr Device-Model.
  *	@return Fully instanciate <code>RelayrDeviceModel</code> or <code>nil</code>
  *
- *  @see RelayrDevice
+ *  @see RelayrDeviceModel
  */
-- (instancetype)initWithModelID:(NSString*)modelID modelName:(NSString*)modelName;
+- (instancetype)initWithModelID:(NSString*)modelID;
+
+/*!
+ *  @abstract Device-Model name.
+ */
+@property (readwrite,nonatomic) NSString* modelName;
 
 /*!
  *  @abstract The manufacturer of the device.

@@ -1,8 +1,8 @@
 #import "RelayrDeviceModel.h"   // Relayr.framework (Public)
+#import "RelayrFirmware.h"      // Relayr.framework (Public)
 @class RelayrUser;              // Relayr.framework (Public)
 @class RelayrInput;             // Relayr.framework (Public)
 @import Foundation;             // Apple
-#import "RelayrFirmware.h"      // Relayr.framework (Public)
 
 /*!
  *  @abstract An instance of this class represents a Device. A basic relayr entity
@@ -10,7 +10,7 @@
  *	or one which is capable of receiving information from the relayr platform. 
  *	Examples would be a thermometer, a gyroscope or an infrared sensor.
  */
-@interface RelayrDevice : NSObject <RelayrDeviceModel,NSCoding>
+@interface RelayrDevice : RelayrDeviceModel <NSCoding>
 
 /*!
  *  @abstract A unique idenfier of the <code>RelayrDevice</code>'s instance.

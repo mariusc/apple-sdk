@@ -25,15 +25,15 @@
 @property (readonly,nonatomic) NSString* owner;
 
 /*!
- *  @abstract Returns an array with all devices related to the specific Transmitter.
- *  @discussion Links to <code>RelayrDevice</code>s owned by the <code>RelayrUser</code> which owns the Transmitter.
- */
-@property (readonly,nonatomic) NSArray* devices;
-
-/*!
  *  @abstract The secret for MQTT comminucation with the relayr <a href="https://developer.relayr.io/documents/Welcome/Platform">Cloud Platform</a>.
  *  @discussion Could be seen as the transmitter's password.
  */
 @property (readonly,nonatomic) NSString* secret;
+
+/*!
+ *  @abstract Returns an array with all devices related to the specific Transmitter.
+ *  @discussion Links to <code>RelayrDevice</code>s owned by the <code>RelayrUser</code> which owns the Transmitter.
+ */
+@property (readonly,nonatomic) NSArray* devices;
 
 @end

@@ -4,7 +4,9 @@
 @class RelayrPublisher;         // Relayr.framework (Public)
 @class RelayrTransmitter;       // Relayr.framework (Public)
 @class RelayrDevice;            // Relayr.framework (Public)
-@protocol RelayrDeviceModel;    // Relayr.framework (Public)
+@class RelayrDeviceModel;       // Relayr.framework (Public)
+@class RelayrFirmware;          // Relayr.framework (Public)
+@class RelayrFirmwareModel;     // Relayr.framework (Public)
 
 @interface RLAWebService (Parsing)
 
@@ -66,6 +68,26 @@
  *
  *  @see RelayrDevice
  */
-+ (id <RelayrDeviceModel>)parseDeviceModelFromJSONDictionary:(NSDictionary*)jsonDict;
++ (RelayrDeviceModel*)parseDeviceModelFromJSONDictionary:(NSDictionary*)jsonDict;
+
+/*!
+ *  @abstract Parse a JSON dictionary into a <code>RelayrFirmware</code> object.
+ *
+ *  @param jsonDict <code>NSDictionary</code> with the properties of a <code>RelayrFirmware</code> object.
+ *	@return Fully initialised <code>RelayrFirmware</code> or <code>nil</code>.
+ *
+ *  @see RelayrDevice
+ */
++ (RelayrFirmware*)parseFirmwareFromJSONDictionary:(NSDictionary*)jsonDict;
+
+/*!
+ *  @abstract Parse a JSON dictionary into a <code>RelayrFirmwareModel</code> object.
+ *
+ *  @param jsonDict <code>NSDictionary</code> with the properties of a <code>RelayrFirmwareModel</code> object.
+ *	@return Fully initialised <code>RelayrFirmwareModel</code> or <code>nil</code>.
+ *
+ *  @see RelayrDevice
+ */
++ (RelayrFirmwareModel*)parseFirmwareModelFromJSONDictionary:(NSDictionary*)jsonDict;
 
 @end
