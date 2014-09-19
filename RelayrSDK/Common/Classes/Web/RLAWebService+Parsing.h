@@ -11,16 +11,6 @@
 @interface RLAWebService (Parsing)
 
 /*!
- *  @abstract Parse a JSON dictionary into a <code>RelayrUser</code> object.
- *
- *  @param jsonDict <code>NSDictionary</code> with the properties of a <code>RelayrUser</code> object.
- *	@return Fully initialised <code>RelayrUser</code> or <code>nil</code>.
- *
- *  @see RelayrUser
- */
-+ (RelayrUser*)parseUserFromJSONDictionary:(NSDictionary*)jsonDict;
-
-/*!
  *  @abstract Parse a JSON dictionary into a <code>RelayrPublisher</code> object.
  *
  *  @param jsonDict <code>NSDictionary</code> with the properties of a <code>RelayrPublisher</code> object.

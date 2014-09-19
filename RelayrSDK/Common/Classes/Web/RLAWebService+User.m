@@ -55,23 +55,21 @@
     }];
 }
 
-- (void)setUserName:(NSString*)name email:(NSString*)email completion:(void (^)(NSError* error, RelayrUser* user))completion
+- (void)setUserName:(NSString*)name email:(NSString*)email completion:(void (^)(NSError* error))completion
 {
     NSMutableDictionary* tmpDict = [[NSMutableDictionary alloc] init];
     if (name.length) { tmpDict[Web_RespondKey_UserID] = name; }
     if (email.length) { tmpDict[Web_RespondKey_UserName] = email; }
-    if (!tmpDict.count) { if (completion) { completion(RLAErrorMissingArgument, nil); } return; }
+    if (!tmpDict.count) { if (completion) { completion(RLAErrorMissingArgument); } return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { return completion(RLAErrorWebRequestFailure, nil); }
+    if (!request) { return completion(RLAErrorWebRequestFailure); }
     request.relativePath = Web_RequestRelativePath_UserInfoSet(self.user.uid);
     request.body = [NSDictionary dictionaryWithDictionary:tmpDict];
     
     [request executeInHTTPMode:kRLAWebRequestModePATCH completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
-        NSDictionary* json = processRequest(Web_RequestResponseCode_UserInfoSet, nil);
-        
-        RelayrUser* result = [RLAWebService parseUserFromJSONDictionary:json];
-        return (!result) ? completion(RLAErrorRequestParsingFailure, nil) : completion(nil, result);
+        if (error) { return completion(error); }
+        return completion((responseCode.unsignedIntegerValue!=Web_RequestResponseCode_UserInfoSet) ? RLAErrorWebRequestFailure : nil);
     }];
 }
 

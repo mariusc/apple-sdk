@@ -24,7 +24,7 @@ registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))co
 - (void)requestUserInfo:(void (^)(NSError* error, NSString* uid, NSString* name, NSString* email))completion;
 
 /*!
- *  @abstract It sets some properties of the called Relayr User.
+ *  @abstract It sets some properties of the called Relayr User (both arguments are optional).
  *  @discussion If the method succees, <code>nil</code> is returned in the completion block.
  *
  *  @param name The future name of the current user. If <code>nil</code>, the name is not modified.
@@ -35,7 +35,7 @@ registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))co
  */
 - (void)setUserName:(NSString*)name
               email:(NSString*)email
-         completion:(void (^)(NSError* error, RelayrUser* user))completion;
+         completion:(void (^)(NSError* error))completion;
 
 /*!
  *  @abstract Install an app under a specific user.

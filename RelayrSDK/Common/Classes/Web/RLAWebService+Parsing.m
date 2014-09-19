@@ -22,14 +22,6 @@
 
 @implementation RLAWebService (Parsing)
 
-+ (RelayrUser*)parseUserFromJSONDictionary:(NSDictionary*)jsonDict
-{
-    if (!jsonDict) { return nil; }
-    
-    // TODO: Fill up
-    return nil;
-}
-
 + (RelayrPublisher*)parsePublisherFromJSONDictionary:(NSDictionary*)jsonDict
 {
     if (!jsonDict) { return nil; }
