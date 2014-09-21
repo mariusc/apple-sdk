@@ -8,16 +8,14 @@
 @interface RelayrTransmitter ()
 
 /*!
- *  @abstract It initialises a Transmitter with a Relayr ID and an MQTT secret/password.
- *  @discussion Both arguments must be valid <code>NSString</code>s.
+ *  @abstract It initialises a Transmitter with a Relayr ID.
  *
  *  @param uid Relayr ID that identifies uniquely the transmitter within the Relayr cloud.
- *  @param secret MQTT password.
  *	@return Fully instanciate <code>RelayrTransmitter</code> or <code>nil</code>
  *
  *  @see RelayrDevice
  */
-- (instancetype)initWithID:(NSString*)uid secret:(NSString*)secret;
+- (instancetype)initWithID:(NSString*)uid;
 
 /*!
  *  @abstract Transmitter name.
@@ -31,9 +29,15 @@
 @property (readwrite,nonatomic) NSString* owner;
 
 /*!
- *  @abstract Returns an array with all devices related to the specific Transmitter.
+ *  @abstract The secret for MQTT comminucation with the relayr <a href="https://developer.relayr.io/documents/Welcome/Platform">Cloud Platform</a>.
+ *  @discussion Could be seen as the transmitter's password.
+ */
+@property (readwrite,nonatomic) NSString* secret;
+
+/*!
+ *  @abstract Returns all devices related to the specific Transmitter.
  *  @discussion Links to <code>RelayrDevice</code>s owned by the <code>RelayrUser</code> which owns the Transmitter.
  */
-@property (readwrite,nonatomic) NSArray* devices;
+@property (readwrite,nonatomic) NSMutableSet* devices;
 
 @end

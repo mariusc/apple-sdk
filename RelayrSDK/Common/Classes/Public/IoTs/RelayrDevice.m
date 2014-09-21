@@ -4,6 +4,8 @@
 #import "RelayrUser.h"              // Relayr.framework (Public)
 #import "RelayrFirmware.h"          // Relayr.framework (Public)
 #import "RelayrInput.h"             // Relayr.framework (Public)
+#import "RelayrOnboarding.h"        // Relayr.framework (Public)
+#import "RelayrFirmwareUpdate.h"    // Relayr.framework (Public)
 #import "RelayrInput_Setup.h"       // Relayr.framework (Private)
 #import "RLAWebService.h"           // Relayr.framework (Web)
 #import "RLAWebService+Device.h"    // Relayr.framework (Web)
@@ -38,6 +40,30 @@ static NSString* const kCodingSecret = @"sec";
         _uid = uid;
     }
     return self;
+}
+
+- (void)setWith:(RelayrDevice*)device
+{
+    if (_uid != device.uid) { return; }
+    
+    [super setWith:device];
+    if (device.name) { _name = device.name; }
+    if (device.owner) { _owner = device.owner; }
+    if (device.isPublic) { _isPublic = device.isPublic; }
+    if (device.firmware) { [_firmware setWith:device.firmware]; }
+    if (device.secret) { _secret = device.secret; }
+}
+
+#pragma mark Processes
+
+- (void)onboardWithClass:(Class <RelayrOnboarding>)onboardingClass completion:(void (^)(NSError* error))completion
+{
+    [onboardingClass launchOnboardingProcessForDevice:self completion:completion];
+}
+
+- (void)updateFirmwareWithClass:(Class)updateClass completion:(void (^)(NSError* error))completion
+{
+    [updateClass launchFirmwareUpdateProcessForDevice:self completion:completion];
 }
 
 #pragma mark Subscription

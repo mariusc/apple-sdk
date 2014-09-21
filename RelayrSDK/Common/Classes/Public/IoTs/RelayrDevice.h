@@ -1,8 +1,9 @@
-#import "RelayrDeviceModel.h"   // Relayr.framework (Public)
-#import "RelayrFirmware.h"      // Relayr.framework (Public)
-@class RelayrUser;              // Relayr.framework (Public)
-@class RelayrInput;             // Relayr.framework (Public)
 @import Foundation;             // Apple
+#import "RelayrDeviceModel.h"   // Relayr.framework (Public)
+@class RelayrFirmware;          // Relayr.framework (Public)
+@class RelayrInput;             // Relayr.framework (Public)
+@protocol RelayrOnboarding;     // Relayr.framework (Public)
+@protocol RelayrFirmwareUpdate; // Relayr.framework (Public)
 
 /*!
  *  @abstract An instance of this class represents a Device. A basic relayr entity
@@ -46,6 +47,34 @@
  *  @discussion Could be seen as the Device's password.
  */
 @property (readonly,nonatomic) NSString* secret;
+
+/*!
+ *  @abstract Sets the instance where this object is being called onto, with the properties of the object passed as the argument.
+ *  @discussion The object passed as the argument is considered new and thus the properties have more priority.
+ *
+ *  @param device The newly <code>RelayrDevice</code> instance.
+ */
+- (void)setWith:(RelayrDevice*)device;
+
+#pragma mark Processes
+
+/*!
+ *  @abstract Initialises a physical device with the properties of this <code>RelayrDevice</code> entity.
+ *  @discussion The onboarding process writes in physical memory of the targeted device the properties needed for the device to be a full member of the Relayr Cloud.
+ *
+ *
+ *  @param onboardingClass Class in charge of the onboarding process. This class "knows" how to talk to the specific transmitter.
+ *  @param completion Block indicating whether the onboarding process was successful or not.
+ */
+- (void)onboardWithClass:(Class <RelayrOnboarding>)onboardingClass completion:(void (^)(NSError* error))completion;
+
+/*!
+ *  @abstract Performs a firmware update to a specific device.
+ *
+ *  @param updateClass Class in charge of the firmware update process. This class "knows" how to talk to the specific transmitter.
+ *  @param completion Block indicating whether the update process was successful or not.
+ */
+- (void)updateFirmwareWithClass:(Class <RelayrFirmwareUpdate>)updateClass completion:(void (^)(NSError* error))completion;
 
 #pragma mark Subscription
 

@@ -7,14 +7,18 @@
  *  @abstract Registers a transmitter in the Relayr Cloud.
  *  @discussion After the successful call of this method, a <i>transmitter</i> entity is created in the Relayr Cloud.
  *
- *  @param transmitterName The given name of the transmitter
+ *  @param transmitterName The given name of the transmitter.
  *  @param ownerID <code>NSString</code> representing a transmitter Relayr identifier.
+ *  @param modelID Currently, it must be <code>nil</code>.
+ *  @param firmwareVersion Currently, it must be <code>nil</code>.
  *  @param completion Block indicating the result of the server query.
  *
  *  @see RelayrTransmitter
  */
 - (void)registerTransmitterWithName:(NSString*)transmitterName
                             ownerID:(NSString*)ownerID
+                              model:(NSString*)modelID
+                    firmwareVersion:(NSString*)firmwareVersion
                          completion:(void (^)(NSError* error, RelayrTransmitter* transmitter))completion;
 
 /*!
@@ -69,6 +73,7 @@
 
 /*!
  *  @abstract Requests the devices that are associated with the transmitter argument.
+ *  @discussion If the transmitter doesn't manage any device, a empty array will be returned in the block.
  *
  *  @param transmitterID <code>NSString</code> identifying the transmitter in the Relayr Cloud.
  *  @param completion Block indicating the result of the server query.

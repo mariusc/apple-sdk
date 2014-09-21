@@ -13,7 +13,7 @@
 
 #pragma mark - Public API
 
-- (void)registerTransmitterWithName:(NSString*)transmitterName ownerID:(NSString*)ownerID completion:(void (^)(NSError* error, RelayrTransmitter* transmitter))completion
+- (void)registerTransmitterWithName:(NSString*)transmitterName ownerID:(NSString*)ownerID model:(NSString*)modelID firmwareVersion:(NSString*)firmwareVersion completion:(void (^)(NSError* error, RelayrTransmitter* transmitter))completion
 {
     if (!transmitterName.length || !ownerID.length) { if (completion) { completion(RLAErrorMissingArgument, nil); } return; }
     
@@ -101,15 +101,18 @@
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError *error, NSNumber *responseCode, NSData *data) {
         NSArray* json = processRequest(Web_RequestResponseCode_TransDevices, nil);
-        NSMutableArray* result = [NSMutableArray arrayWithCapacity:json.count];
         
+        NSUInteger const numDevices = json.count;
+        if (numDevices == 0) { return completion(nil, [NSArray array]); }
+        
+        NSMutableArray* result = [NSMutableArray arrayWithCapacity:numDevices];
         for (NSDictionary* dict in json)
         {
             RelayrDevice* device = [RLAWebService parseDeviceFromJSONDictionary:dict];
             if (device) { [result addObject:device]; }
         }
         
-        return completion(nil, (!result.count) ? nil : [NSArray arrayWithArray:result]);
+        return completion(nil, [NSArray arrayWithArray:result]);
     }];
 }
 

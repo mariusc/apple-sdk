@@ -1,4 +1,6 @@
-@import Foundation;
+@import Foundation;         // Apple
+@class RelayrTransmitter;   // Relayr.framework (Public)
+@class RelayrDevice;        // Relayr.framework (Public)
 
 /*!
  *  @abstract The very basic entity in the relayr platform is the user. 
@@ -32,28 +34,28 @@
 @property (readonly,nonatomic) NSString* email;
 
 /*!
- *  @abstract The relayr applications under the specific <code>RelayrUser</code> instace.
+ *  @abstract Relayr applications installed the specific <code>RelayrUser</code> instace.
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
-@property (readonly,nonatomic) NSArray* apps;
+@property (readonly,nonatomic) NSSet* apps;
 
 /*!
- *  @abstract An array of the <code>publisher</code>s listed under the specific user.
+ *  @abstract A set of the <code>publisher</code>s listed under the specific user.
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
-@property (readonly,nonatomic) NSArray* publishers;
+@property (readonly,nonatomic) NSSet* publishers;
 
 /*!
- *  @abstract An array of the Transmitter entities owned by the specific <code>RelayrUser</code> instace.
+ *  @abstract A set of the Transmitter entities owned by the specific <code>RelayrUser</code> instace.
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
-@property (readonly,nonatomic) NSArray* transmitters;
+@property (readonly,nonatomic) NSSet* transmitters;
 
 /*!
- *  @abstract An array of the Device entities owned by the specific <code>RelayrUser</code> instace
+ *  @abstract A set of the Device entities owned by the specific <code>RelayrUser</code> instace
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
-@property (readonly,nonatomic) NSArray* devices;
+@property (readonly,nonatomic) NSSet* devices;
 
 /*!
  *  @abstract Devices that the specific <code>RelayrUser</code> instace has bookmarked.
@@ -61,7 +63,7 @@
  *	By Bookmarking a device you are indicating that you have a particular interest in this device. 
  *	In the relayr context, a bookmarked device will appear on a user's Developer Dashboard.
  */
-@property (readonly,nonatomic) NSArray* devicesBookmarked;
+@property (readonly,nonatomic) NSSet* devicesBookmarked;
 
 /*!
  *  @abstract Queries the relayr platform for the user information.
@@ -93,5 +95,37 @@
  *  @param completion A block indicating whether the server query was successful or not.
  */
 - (void)queryCloudForUserAppsAndPublishers:(void (^)(NSError* error, NSNumber* isThereChanges))completion;
+
+/*!
+ *  @abstract It creates/register a transmitter entity in the Relayr Cloud.
+ *  @discussion If this call is successful a <code>RelayrTransmitter</code> object is created and it is added to the <code>transmitters</code> array.
+ *
+ *  @param modelID Model representing the newly transmittter instance. Currently, this argument must be <code>nil</code>. Currently, this argument must be <code>nil</code>.
+ *  @param firmwareVersion The version of the firmware running on the transmitter. Currently, this argument must be <code>nil</code>.
+ *  @param name The given name to identify this transmitter. This parameter is required.
+ *  @param completion Block indicating whether the server registration call was successful or not. It can be <code>nil</code>.
+ *
+ *  @see RelayrTransmitter
+ */
+- (void)registerTransmitterWithModelID:(NSString*)modelID
+                        firmwareVerion:(NSString*)firmwareVersion
+                                  name:(NSString*)name
+                            completion:(void (^)(NSError* error, RelayrTransmitter* transmitter))completion;
+
+/*!
+ *  @abstract It creates/register a device entity in the Relayr Cloud.
+ *  @discussion If this call is successful a <code>RelayrDevice</code> object is created and it is added to the <code>devices</code> array.
+ *
+ *  @param modelID Model representing the newly transmittter instance. This parameter is required.
+ *  @param firmwareVersion The version of the firmware running on the transmitter. This parameter is required.
+ *  @param name The given name to identify this transmitter. This parameter is required.
+ *  @param completion Block indicating whether the server registration call was successful or not. It can be <code>nil</code>.
+ *
+ *  @see RelayrDevice
+ */
+- (void)registerDeviceWithModelID:(NSString*)modelID
+                   firmwareVerion:(NSString*)firmwareVersion
+                             name:(NSString*)name
+                       completion:(void (^)(NSError* error, RelayrDevice* device))completion;
 
 @end

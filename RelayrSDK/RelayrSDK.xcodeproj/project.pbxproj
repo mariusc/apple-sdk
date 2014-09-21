@@ -23,6 +23,10 @@
 		622CB00619BCB07200F686B3 /* RelayrOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = 622CB00319BCB07200F686B3 /* RelayrOutput.m */; };
 		622CB00719BCB07200F686B3 /* RelayrOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = 622CB00319BCB07200F686B3 /* RelayrOutput.m */; };
 		622CD0D719C384D5003E8660 /* TRelayrCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 622CD0D619C384D5003E8660 /* TRelayrCloud.m */; };
+		622E7EA819CF829400948558 /* RelayrOnboarding.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EA719CF829400948558 /* RelayrOnboarding.h */; };
+		622E7EA919CF829400948558 /* RelayrOnboarding.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EA719CF829400948558 /* RelayrOnboarding.h */; };
+		622E7EAB19CF834500948558 /* RelayrFirmwareUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EAA19CF834500948558 /* RelayrFirmwareUpdate.h */; };
+		622E7EAC19CF834500948558 /* RelayrFirmwareUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EAA19CF834500948558 /* RelayrFirmwareUpdate.h */; };
 		623F324D19A731B100F774EB /* RLAWebService.h in Headers */ = {isa = PBXBuildFile; fileRef = 623F324B19A731B100F774EB /* RLAWebService.h */; };
 		623F324E19A731B100F774EB /* RLAWebService.m in Sources */ = {isa = PBXBuildFile; fileRef = 623F324C19A731B100F774EB /* RLAWebService.m */; };
 		623F325119A7325300F774EB /* RLABluetoothService.h in Headers */ = {isa = PBXBuildFile; fileRef = 623F324F19A7325300F774EB /* RLABluetoothService.h */; };
@@ -178,6 +182,8 @@
 		622CB00219BCB07200F686B3 /* RelayrOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrOutput.h; sourceTree = "<group>"; };
 		622CB00319BCB07200F686B3 /* RelayrOutput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrOutput.m; sourceTree = "<group>"; };
 		622CD0D619C384D5003E8660 /* TRelayrCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRelayrCloud.m; sourceTree = "<group>"; };
+		622E7EA719CF829400948558 /* RelayrOnboarding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrOnboarding.h; sourceTree = "<group>"; };
+		622E7EAA19CF834500948558 /* RelayrFirmwareUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrFirmwareUpdate.h; sourceTree = "<group>"; };
 		623F324B19A731B100F774EB /* RLAWebService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebService.h; sourceTree = "<group>"; };
 		623F324C19A731B100F774EB /* RLAWebService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebService.m; sourceTree = "<group>"; };
 		623F324F19A7325300F774EB /* RLABluetoothService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABluetoothService.h; sourceTree = "<group>"; };
@@ -392,6 +398,15 @@
 			children = (
 			);
 			path = IoTs;
+			sourceTree = "<group>";
+		};
+		622E7E9A19CF7F4200948558 /* Processes */ = {
+			isa = PBXGroup;
+			children = (
+				622E7EA719CF829400948558 /* RelayrOnboarding.h */,
+				622E7EAA19CF834500948558 /* RelayrFirmwareUpdate.h */,
+			);
+			path = Processes;
 			sourceTree = "<group>";
 		};
 		623F324919A7317700F774EB /* Bluetooth */ = {
@@ -675,6 +690,7 @@
 				62732D4019C05A24000E9545 /* RelayrConnection.h */,
 				62732D4119C05A24000E9545 /* RelayrConnection.m */,
 				6292F24419C99F9A00087F3B /* Models */,
+				622E7E9A19CF7F4200948558 /* Processes */,
 			);
 			path = IoTs;
 			sourceTree = "<group>";
@@ -819,6 +835,7 @@
 				62FDB16B19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */,
 				62D0907219C0729900999142 /* RelayrConnection_Setup.h in Headers */,
 				623F325119A7325300F774EB /* RLABluetoothService.h in Headers */,
+				622E7EA819CF829400948558 /* RelayrOnboarding.h in Headers */,
 				623F324D19A731B100F774EB /* RLAWebService.h in Headers */,
 				6285F36119C1AA410097B299 /* RLAWebService+Cloud.h in Headers */,
 				6285F35519C1A98B0097B299 /* RLAWebService+App.h in Headers */,
@@ -840,6 +857,7 @@
 				62E87DDB19AB2AAA00728AC6 /* CMacros.h in Headers */,
 				62E87DDD19AB2AAA00728AC6 /* CMath.h in Headers */,
 				62E87DD919AB2AAA00728AC6 /* CDebug.h in Headers */,
+				622E7EAB19CF834500948558 /* RelayrFirmwareUpdate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -871,6 +889,7 @@
 				62FDB16C19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */,
 				62D0907319C0729900999142 /* RelayrConnection_Setup.h in Headers */,
 				623F326919A7872D00F774EB /* RLABluetoothService.h in Headers */,
+				622E7EA919CF829400948558 /* RelayrOnboarding.h in Headers */,
 				623F326A19A7873100F774EB /* RLAWebService.h in Headers */,
 				6285F36219C1AA410097B299 /* RLAWebService+Cloud.h in Headers */,
 				6285F35619C1A98B0097B299 /* RLAWebService+App.h in Headers */,
@@ -892,6 +911,7 @@
 				62E87DDC19AB2AAA00728AC6 /* CMacros.h in Headers */,
 				62E87DDE19AB2AAA00728AC6 /* CMath.h in Headers */,
 				62E87DDA19AB2AAA00728AC6 /* CDebug.h in Headers */,
+				622E7EAC19CF834500948558 /* RelayrFirmwareUpdate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -925,7 +945,6 @@
 				6252F0E1199C2AFA002ECE4D /* Frameworks */,
 				6252F0E2199C2AFA002ECE4D /* Headers */,
 				6252F0E3199C2AFA002ECE4D /* Resources */,
-				627252AB19ACB817001265EB /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1018,19 +1037,6 @@
 
 /* Begin PBXShellScriptBuildPhase section */
 		627252AA19ACB772001265EB /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "KEYWORDS=\"TODO|FIXME|\\?\\?\\?:|\\!\\!\\!:\"\nfind \"${SRCROOT}\" \\( -name \"*.h\" -or -name \"*.m\" \\) -and \\( -path \"${SRCROOT}/Pods/*\" -prune -o -print0 \\) | xargs -0 egrep --with-filename --line-number --only-matching \"($KEYWORDS).*\\$\" | perl -p -e \"s/($KEYWORDS)/ warning: \\$1/\"";
-		};
-		627252AB19ACB817001265EB /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (

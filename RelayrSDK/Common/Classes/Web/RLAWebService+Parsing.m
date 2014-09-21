@@ -52,11 +52,12 @@
 {
     if (!jsonDict) { return nil; }
     
-    RelayrTransmitter* transmitter = [[RelayrTransmitter alloc] initWithID:jsonDict[Web_RespondKey_TransmitterID] secret:jsonDict[Web_RespondKey_TransmitterSecret]];
+    RelayrTransmitter* transmitter = [[RelayrTransmitter alloc] initWithID:jsonDict[Web_RespondKey_TransmitterID]];
     if (!transmitter) { return nil; }
     
-    transmitter.owner = jsonDict[Web_RespondKey_TransmitterOwner];
     transmitter.name = jsonDict[Web_RespondKey_TransmitterName];
+    transmitter.owner = jsonDict[Web_RespondKey_TransmitterOwner];
+    transmitter.secret = jsonDict[Web_RespondKey_TransmitterSecret];
     return transmitter;
 }
 

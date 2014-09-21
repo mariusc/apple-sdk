@@ -1,15 +1,20 @@
-#import "RelayrUser.h"              // Header
-#import "RelayrApp.h"               // Relayr.framework (Public)
-#import "RelayrTransmitter.h"       // Relayr.framework (Public)
-#import "RelayrDevice.h"            // Relayr.framework (Public)
-#import "RelayrPublisher.h"         // Relayr.framework (Public)
-#import "RelayrUser_Setup.h"        // Relayr.framework (Private)
-#import "RelayrTransmitter_Setup.h" // Relayr.framework (Private)
-#import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
-#import "RelayrPublisher_Setup.h"   // Relayr.framework (Private)
-#import "RLAWebService.h"           // Relayr.framework (Web)
-#import "RLAWebService+User.h"      // Relayr.framework (Web)
-#import "RLAError.h"                // Relayr.framework (Utilities)
+#import "RelayrUser.h"                  // Header
+
+#import "RelayrApp.h"                   // Relayr.framework (Public)
+#import "RelayrTransmitter.h"           // Relayr.framework (Public)
+#import "RelayrDevice.h"                // Relayr.framework (Public)
+#import "RelayrPublisher.h"             // Relayr.framework (Public)
+
+#import "RelayrUser_Setup.h"            // Relayr.framework (Private)
+#import "RelayrPublisher_Setup.h"       // Relayr.framework (Private)
+#import "RelayrTransmitter_Setup.h"     // Relayr.framework (Private)
+#import "RelayrDevice_Setup.h"          // Relayr.framework (Private)
+
+#import "RLAWebService.h"               // Relayr.framework (Web)
+#import "RLAWebService+User.h"          // Relayr.framework (Web)
+#import "RLAWebService+Transmitter.h"   // Relayr.framework (Web)
+#import "RLAWebService+Device.h"        // Relayr.framework (Web)
+#import "RLAError.h"                    // Relayr.framework (Utilities)
 
 static NSString* const kCodingToken = @"tok";
 static NSString* const kCodingID = @"uid";
@@ -97,6 +102,30 @@ static NSString* const kCodingPublishers = @"pub";
     }];
 }
 
+- (void)registerTransmitterWithModelID:(NSString*)modelID firmwareVerion:(NSString*)firmwareVersion name:(NSString*)name completion:(void (^)(NSError* error, RelayrTransmitter* transmitter))completion
+{
+    if (!name) { if (completion) { completion(RLAErrorMissingArgument, nil); } return; }
+    
+    __weak RelayrUser* weakSelf = self;
+    [_webService registerTransmitterWithName:name ownerID:_uid model:modelID firmwareVersion:firmwareVersion completion:^(NSError* error, RelayrTransmitter* transmitter) {
+        if (error) { if (completion) { completion(error, nil); } return; }
+        [weakSelf addTransmitter:transmitter];
+        if (completion) { completion(nil, transmitter); }
+    }];
+}
+
+- (void)registerDeviceWithModelID:(NSString*)modelID firmwareVerion:(NSString*)firmwareVersion name:(NSString*)name completion:(void (^)(NSError* error, RelayrDevice* device))completion
+{
+    if (!modelID || !firmwareVersion || !name) { if (completion) { completion(RLAErrorMissingArgument, nil); } return; }
+    
+    __weak RelayrUser* weakSelf = self;
+    [_webService registerDeviceWithName:name owner:_uid model:modelID firmwareVersion:firmwareVersion completion:^(NSError *error, RelayrDevice *device) {
+        if (error) { if (completion) { completion(error, nil); } return; }
+        [weakSelf addDevice:device];
+        if (completion) { completion(nil, device); }
+    }];
+}
+
 #pragma mark NSCoding
 
 - (id)initWithCoder:(NSCoder*)decoder
@@ -140,7 +169,7 @@ static NSString* const kCodingPublishers = @"pub";
 
 /*******************************************************************************
  * It sets the user's IoTs with the server query.
- * The arrays contain a 
+ * If there were previous transmitters, devices, or bookmarks, those are removed.
  ******************************************************************************/
 - (BOOL)setUsersIoTsFromServerTransmitterArray:(NSArray*)serverTransmitters deviceArray:(NSArray*)serverDevices bookmarkDeviceArray:(NSArray*)serverBookmarks
 {
@@ -153,7 +182,7 @@ static NSString* const kCodingPublishers = @"pub";
 
 /*******************************************************************************
  * It sets the user's applications and publishers with the server query.
- * No checks are performed onto the method parameters. Be
+ * If there were previous apps or publishers; those are removed.
  ******************************************************************************/
 - (BOOL)setUsersAppsFromServerArray:(NSArray*)serverApps publishersFrom:(NSArray*)serverPublishers
 {
@@ -162,6 +191,46 @@ static NSString* const kCodingPublishers = @"pub";
     // TODO: Fill up
     
     return isThereChanges;
+}
+
+- (void)addTransmitter:(RelayrTransmitter*)transmitter
+{
+    if (!_transmitters)
+    {
+        _transmitters = [NSSet setWithObject:transmitter];
+    }
+    else
+    {
+        NSString* transmitterID = transmitter.uid;
+        for (RelayrTransmitter* storedTransmitter in _transmitters)
+        {
+            if (storedTransmitter.uid == transmitterID) { return [storedTransmitter setWith:transmitter]; }
+        }
+        
+        NSMutableSet* tmpSet = [NSMutableSet setWithSet:_transmitters];
+        [tmpSet addObject:transmitter];
+        _transmitters = [NSSet setWithSet:tmpSet];
+    }
+}
+
+- (void)addDevice:(RelayrDevice*)device
+{
+    if (!_devices)
+    {
+        _devices = [NSSet setWithObject:device];
+    }
+    else
+    {
+        NSString* deviceID = device.uid;
+        for (RelayrDevice* storedDevice in _devices)
+        {
+            if (storedDevice.uid == deviceID) { return [storedDevice setWith:device]; }
+        }
+        
+        NSMutableSet* tmpSet = [NSMutableSet setWithSet:_devices];
+        [tmpSet addObject:device];
+        _devices = [NSSet setWithSet:tmpSet];
+    }
 }
 
 @end

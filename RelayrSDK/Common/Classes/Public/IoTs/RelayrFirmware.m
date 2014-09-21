@@ -5,6 +5,11 @@
 
 #pragma mark - Public API
 
+- (void)setWith:(RelayrFirmware*)firmware
+{
+    [super setWith:firmware];
+}
+
 - (void)queryCloudForProperties:(void (^)(NSError* error, NSNumber* isThereChanges))completion
 {
     // TODO: Fill up

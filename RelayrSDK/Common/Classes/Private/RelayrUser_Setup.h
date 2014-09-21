@@ -45,25 +45,25 @@
  *  @abstract The relayr applications under the specific <code>RelayrUser</code> instace.
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
-@property (readwrite,nonatomic) NSArray* apps;
+@property (readwrite,nonatomic) NSSet* apps;
 
 /*!
  *  @abstract An array of the <code>publisher</code>s listed under the specific user.
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
-@property (readwrite,nonatomic) NSArray* publishers;
+@property (readwrite,nonatomic) NSSet* publishers;
 
 /*!
  *  @abstract An array of the Transmitter entities owned by the specific <code>RelayrUser</code> instace.
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
-@property (readwrite,nonatomic) NSArray* transmitters;
+@property (readwrite,nonatomic) NSSet* transmitters;
 
 /*!
  *  @abstract An array of the Device entities owned by the specific <code>RelayrUser</code> instace
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
-@property (readwrite,nonatomic) NSArray* devices;
+@property (readwrite,nonatomic) NSSet* devices;
 
 /*!
  *  @abstract Devices that the specific <code>RelayrUser</code> instace has bookmarked.
@@ -71,6 +71,6 @@
  *	By Bookmarking a device you are indicating that you have a particular interest in this device.
  *	In the relayr context, a bookmarked device will appear on a user's Developer Dashboard.
  */
-@property (readwrite,nonatomic) NSArray* devicesBookmarked;
+@property (readwrite,nonatomic) NSSet* devicesBookmarked;
 
 @end

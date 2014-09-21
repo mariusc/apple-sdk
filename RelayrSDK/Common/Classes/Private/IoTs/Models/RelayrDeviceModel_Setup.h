@@ -28,7 +28,7 @@
 /*!
  *  @abstract Array containing all possible firmware models (<code>RelayrFirmwareModel</code>) for this <code>RelayrDeviceModel</code>.
  */
-@property (readwrite,nonatomic) NSArray* firmwaresAvailable;
+@property (readwrite,nonatomic) NSMutableArray* firmwaresAvailable;
 
 /*!
  *  @abstract Returns an array of all possible readings the device can gather.
@@ -36,7 +36,7 @@
  *
  *  @see RelayrInput
  */
-@property (readwrite,nonatomic) NSSet* inputs;
+@property (readwrite,nonatomic) NSMutableSet* inputs;
 
 /*!
  *  @abstract Returns an array of possible Outputs a Device is capable of receiving.
@@ -46,6 +46,6 @@
  *
  *  @see RelayrOutput
  */
-@property (readwrite,nonatomic) NSSet* outputs;
+@property (readwrite,nonatomic) NSMutableSet* outputs;
 
 @end

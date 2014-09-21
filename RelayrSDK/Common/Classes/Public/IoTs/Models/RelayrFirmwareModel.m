@@ -5,6 +5,11 @@ static NSString* const kCodingVersion = @"ver";
 static NSString* const kCodingConfiguration = @"con";
 
 @implementation RelayrFirmwareModel
+{
+    NSMutableDictionary* _configuration;
+}
+
+@synthesize configuration = _configuration;
 
 #pragma mark - Public API
 
@@ -20,6 +25,12 @@ static NSString* const kCodingConfiguration = @"con";
     return nil;
 }
 
+- (void)setWith:(RelayrFirmwareModel*)firmwareModel
+{
+    if (firmwareModel.version) { _version = firmwareModel.version; }
+    if (firmwareModel.configuration) { _configuration = (NSMutableDictionary*)firmwareModel.configuration; }
+}
+
 #pragma mark NSCoding
 
 - (id)initWithCoder:(NSCoder*)decoder
@@ -27,8 +38,7 @@ static NSString* const kCodingConfiguration = @"con";
     self = [self initWithVersion:[decoder decodeObjectForKey:kCodingVersion]];
     if (self)
     {
-        NSDictionary* tmpConfiguration = [decoder decodeObjectForKey:kCodingConfiguration];
-        if (tmpConfiguration.count) { _configuration = tmpConfiguration; }
+        _configuration = [decoder decodeObjectForKey:kCodingConfiguration];
     }
     return self;
 }

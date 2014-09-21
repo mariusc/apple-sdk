@@ -16,4 +16,12 @@
  */
 @property (readonly,nonatomic) NSDictionary* configuration;
 
+/*!
+ *  @abstract Sets the instance where this object is being called onto, with the properties of the object passed as the argument.
+ *  @discussion The object passed as the argument is considered new and thus the properties have more priority.
+ *
+ *  @param firmwareModel The newly <code>RelayrFirmwareModel</code> instance.
+ */
+- (void)setWith:(RelayrFirmwareModel*)firmwareModel;
+
 @end
