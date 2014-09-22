@@ -29,7 +29,12 @@ typedef NS_ENUM(NSInteger, RLAErrorCode) {
     kRLAErrorCodeSigningFailure         = 6,
     kRLAErrorCodeSystemNotSupported     = 7,
     kRLAErrorCodeUserStoppedProcess     = 8,
-    kRLAErrorCodeWrongRelayrUser        = 9
+    kRLAErrorCodeWrongRelayrUser        = 9,
+    kRLAErrorCodeBLEModulePoweredOff    = 20,
+    kRLAErrorCodeBLEModuleUnauthorized  = 21,
+    kRLAErrorCodeBLEUnsupported         = 22,
+    kRLAErrorCodeBLEModuleResetting     = 23,
+    kRLAErrorCodeBLEProblemUnknown      = 24
 };
 
 #define RLAErrorUserInfoLocal   @{                                                                      \
@@ -39,14 +44,19 @@ typedef NS_ENUM(NSInteger, RLAErrorCode) {
 
 #pragma mark Error messages
 
-#define dRLAErrorMessageMissingArgument      NSLocalizedStringFromTable(@"Error missing argument", kRLAErrorStringFile, @"This error happens when a method is expecting an argument which is not there.")
-#define dRLAErrorMessageMissingExpectedValue NSLocalizedStringFromTable(@"The value is not the expected (probably nil)", kRLAErrorStringFile, @"This error happens when a value is received and it wasn't the expected.")
-#define dRLAErrorMessageWebRequestFailure    NSLocalizedStringFromTable(@"The web request could not be satisfied", kRLAErrorStringFile, @"This error happens when a web request could not be routed or the answer was not the expected.")
-#define dRLAErrorMessageRequestParsingFailure NSLocalizedStringFromTable(@"The web request could not be successfully parsed", kRLAErrorStringFile, @"This error happens when the message from the server could not be parsed.")
-#define dRLAErrorMessageSigningFailure       NSLocalizedStringFromTable(@"The OAuth user signing process failed.", kRLAErrorStringFile, @"This error happens when an OAuth signing process failed.")
-#define dRLAErrorMessageSystemNotSupported   NSLocalizedStringFromTable(@"The system your are running on doesn't support the Relayr framework.", kRLAErrorStringFile, @"This error happens when your system is not supported")
-#define dRLAErrorMessageUserStoppedProcess   NSLocalizedStringFromTable(@"The user has stopped the current process.", kRLAErrorStringFile, @"This error happens when an user has canceled somehow the current process.")
-#define dRLAErrorMessageWrongRelayrUser      NSLocalizedStringFromTable(@"The user passed or selected is not a valid Relayr user.", kRLAErrorStringFile, @"This error occurs when trying to perform operations on an invalid Relayr user.")
+#define dRLAErrorMessageMissingArgument         NSLocalizedStringFromTable(@"Missing one or more arguments", kRLAErrorStringFile, @"It happens when a method is expecting an argument which is not there.")
+#define dRLAErrorMessageMissingExpectedValue    NSLocalizedStringFromTable(@"The value is not the expected (probably nil)", kRLAErrorStringFile, @"It happens when a value is received and it wasn't the expected.")
+#define dRLAErrorMessageWebRequestFailure       NSLocalizedStringFromTable(@"The web request could not be satisfied", kRLAErrorStringFile, @"It happens when a web request could not be routed or the answer was not the expected.")
+#define dRLAErrorMessageRequestParsingFailure   NSLocalizedStringFromTable(@"The web request could not be successfully parsed", kRLAErrorStringFile, @"It happens when the message from the server could not be parsed.")
+#define dRLAErrorMessageSigningFailure          NSLocalizedStringFromTable(@"The OAuth user signing process failed.", kRLAErrorStringFile, @"It happens when an OAuth signing process failed.")
+#define dRLAErrorMessageSystemNotSupported      NSLocalizedStringFromTable(@"The system your are running on doesn't support the Relayr framework.", kRLAErrorStringFile, @"It happens when your system is not supported")
+#define dRLAErrorMessageUserStoppedProcess      NSLocalizedStringFromTable(@"The user has stopped the current process.", kRLAErrorStringFile, @"It happens when an user has canceled somehow the current process.")
+#define dRLAErrorMessageWrongRelayrUser         NSLocalizedStringFromTable(@"The user passed or selected is not a valid Relayr user.", kRLAErrorStringFile, @"It occurs when trying to perform operations on an invalid Relayr user.")
+#define dRLAErrorMessageBLEModulePowerOff       NSLocalizedStringFromTable(@"The BLE module is powered off", kRLAErrorStringFile, @"It appears when trying to use the BLE module and the user has it powered off")
+#define dRLAErrorMessageBLEModuleUnauthorized   NSLocalizedStringFromTable(@"The application is not authorised to use the BLE module", kRLAErrorStringFile, @"It happens when the application tries to use the Bluetooth module and the user has actively unathorise the application")
+#define dRLAErrorMessageBLEUnupported           NSLocalizedStringFromTable(@"The current system doesn't support Bluetooth Low Energy", kRLAErrorStringFile, @"It happens when the system running the SDK doesn't have a BLE transceiver")
+#define dRLAErrorMessageBLEModuleResetting      NSLocalizedStringFromTable(@"The BLE module is being resetted", kRLAErrorStringFile, @"It happens when the BLE is being resetted by the system or the user")
+#define dRLAErrorMessageBLEProblemUnknwon       NSLocalizedStringFromTable(@"BLE error unknown", kRLAErrorStringFile, @"There was a problem with the BLE Module, but it is unknown")
 
 #pragma mark Error objects
 
@@ -58,6 +68,11 @@ typedef NS_ENUM(NSInteger, RLAErrorCode) {
 #define RLAErrorSystemNotSupported      [RLAError errorWithCode:kRLAErrorCodeSystemNotSupported localizedDescription:dRLAErrorMessageSystemNotSupported userInfo:RLAErrorUserInfoLocal]
 #define RLAErrorUserStoppedProcess      [RLAError errorWithCode:kRLAErrorCodeUserStoppedProcess localizedDescription:dRLAErrorMessageUserStoppedProcess userInfo:RLAErrorUserInfoLocal]
 #define RLAErrorWrongRelayrUser         [RLAError errorWithCode:kRLAErrorCodeWrongRelayrUser localizedDescription:dRLAErrorMessageWrongRelayrUser userInfo:RLAErrorUserInfoLocal]
+#define RLAErrorBLEModulePowerOff       [RLAError errorWithCode:kRLAErrorCodeBLEModulePoweredOff localizedDescription:dRLAErrorMessageBLEModulePowerOff userInfo:RLAErrorUserInfoLocal]
+#define RLAErrorBLEModuleUnauthorized   [RLAError errorWithCode:kRLAErrorCodeBLEModuleUnauthorized localizedDescription:dRLAErrorMessageBLEModuleUnauthorized userInfo:RLAErrorUserInfoLocal]
+#define RLAErrorBLEModuleResetting      [RLAError errorWithCode:kRLAErrorCodeBLEModuleResetting localizedDescription:dRLAErrorMessageBLEModuleResetting userInfo:RLAErrorUserInfoLocal]
+#define RLAErrorBLEUnsupported          [RLAError errorWithCode:kRLAErrorCodeBLEUnsupported localizedDescription:dRLAErrorMessageBLEUnupported userInfo:RLAErrorUserInfoLocal]
+#define RLAErrorBLEProblemUnknown       [RLAError errorWithCode:kRLAErrorCodeBLEProblemUnknown localizedDescription:dRLAErrorMessageBLEProblemUnknwon userInfo:RLAErrorUserInfoLocal]
 
 /*!
  *  @abstract Utility class which provides convenience methods for initializing errors as well as internal framework error codes.

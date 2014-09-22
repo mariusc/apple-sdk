@@ -102,7 +102,7 @@
 
 // App registration
 #define Web_RequestRelativePath_AppRegistration         @"/apps"
-#define Web_RequestResponseCode_Apps                    200
+#define Web_RequestResponseCode_AppRegistration         201
 
 // App info
 #define Web_RequestRelativePath_AppInfo(appID)          [NSString stringWithFormat:@"/apps/%@", appID]
@@ -179,7 +179,7 @@
 
 // Register user's bookmark devices
 #define Web_RequestRelativePath_UserBookmarkDev(userID, devID)      [NSString stringWithFormat:@"/users/%@/devices/%@/bookmarks", userID, devID];
-#define Web_RequestResponseCode_UserBookmarkDev         200
+#define Web_RequestResponseCode_UserBookmarkDev         201
 
 // User's bookmark devices
 #define Web_RequestRelativePath_UserBookmarkDevices(userID) [NSString stringWithFormat:@"/users/%@/devices/bookmarks", userID];
@@ -193,7 +193,7 @@
 
 // Publisher registration
 #define Web_RequestRelativePath_PublisherRegistration   @"/publishers"
-#define Web_RequestResponseCode_PublisherRegistration   200
+#define Web_RequestResponseCode_PublisherRegistration   201
 
 // All Publishers in the Cloud
 #define Web_RequestRelativePath_Publishers              @"/publishers"
@@ -218,7 +218,7 @@
 
 // Transmitter registration
 #define Web_RequestRelativePath_TransRegistration       @"/transmitters"
-#define Web_RequestResponseCode_TransRegistration       200
+#define Web_RequestResponseCode_TransRegistration       201
 
 // Transmitter's info (get)
 #define Web_RequestRelativePath_TransInfo(transID)      [NSString stringWithFormat:@"/transmitters/%@", transID];
@@ -251,7 +251,7 @@
 
 // Device registration
 #define Web_RequestRelativePath_DevRegistration         @"/devices"
-#define Web_RequestResponseCode_DevRegistration         200
+#define Web_RequestResponseCode_DevRegistration         201
 
 // Device's info (get)
 #define Web_RequestRelativePath_DevInfo(devID)          [NSString stringWithFormat:@"/devices/%@", devID]

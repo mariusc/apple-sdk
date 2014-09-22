@@ -63,7 +63,7 @@
     request.body = [NSDictionary dictionaryWithDictionary:body];
     
     [request executeInHTTPMode:kRLAWebRequestModePOST completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
-        NSDictionary* json = processRequest(Web_RequestResponseCode_Apps, nil);
+        NSDictionary* json = processRequest(Web_RequestResponseCode_AppRegistration, nil);
         
         RelayrApp* result = [RLAWebService parseAppFromJSONDictionary:json];
         return (!result) ? completion(RLAErrorRequestParsingFailure, nil) : completion(nil, result);

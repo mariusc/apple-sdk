@@ -8,13 +8,15 @@
 #if defined(OS_APPLE_IOS) || defined(OS_APPLE_IOS_SIMULATOR)
 @import CoreBluetooth;              // Apple
 #elif defined (OS_APPLE_OSX)
-@import IOBluetooth;
+@import IOBluetooth;                // Apple
 #endif
 
 #define WunderbarOnboarding_timeout_transmitter 10
 #define WunderbarOnboarding_timeout_device      10
 
 @interface WunderbarOnboarding () <CBPeripheralManagerDelegate,CBCentralManagerDelegate>
+@property (readonly,nonatomic) void (^completion)(NSError* error);
+
 @property (readonly,nonatomic) CBPeripheralManager* peripheralManager;
 @property (readonly,nonatomic) RelayrTransmitter* transmitter;
 
@@ -37,11 +39,11 @@
     NSTimeInterval const timeInterval = (!timeout) ? WunderbarOnboarding_timeout_transmitter : timeout.doubleValue;
     if (!timeInterval <= 0.0) { if (completion) { completion(RLAErrorMissingExpectedValue); } return; }
     
-    WunderbarOnboarding* onboarding = [[WunderbarOnboarding alloc] initForTransmitter:transmitter];
+    WunderbarOnboarding* onboarding = [[WunderbarOnboarding alloc] initForTransmitter:transmitter withCompletion:completion];
     if (!onboarding) { if (completion) { completion(RLAErrorMissingArgument); } return; }
     
     [NSTimer scheduledTimerWithTimeInterval:timeInterval target:[NSBlockOperation blockOperationWithBlock:^{
-        [WunderbarOnboarding stopOnboarding:onboarding andCallbackWithError:completion];
+//        [WunderbarOnboarding stopOnboarding:onboarding withError:<#(NSError *)#>];
     }] selector:@selector(main) userInfo:nil repeats:NO];
 }
 
@@ -50,11 +52,11 @@
     NSTimeInterval const timeInterval = (!timeout) ? WunderbarOnboarding_timeout_transmitter : timeout.doubleValue;
     if (!timeInterval <= 0.0) { if (completion) { completion(RLAErrorMissingExpectedValue); } return; }
     
-    WunderbarOnboarding* onboarding = [[WunderbarOnboarding alloc] initForDevice:device];
+    WunderbarOnboarding* onboarding = [[WunderbarOnboarding alloc] initForDevice:device withCompletion:completion];
     if (!onboarding) { if (completion) { completion(RLAErrorMissingArgument); } return; }
     
     [NSTimer scheduledTimerWithTimeInterval:timeInterval target:[NSBlockOperation blockOperationWithBlock:^{
-        [WunderbarOnboarding stopOnboarding:onboarding andCallbackWithError:completion];
+//        [WunderbarOnboarding stopOnboarding:onboarding withError:<#(NSError *)#>];
     }] selector:@selector(main) userInfo:nil repeats:NO];
 }
 
@@ -68,28 +70,28 @@
 
 - (void)peripheralManagerDidUpdateState:(CBPeripheralManager*)peripheral
 {
-//    switch (peripheral.state) {
-//        case CBPeripheralManagerStatePoweredOn:
+    switch (peripheral.state) {
+        case CBPeripheralManagerStatePoweredOn:
 //            <#statements#>
-//            break;
-//        case CBPeripheralManagerStatePoweredOff:
-//            [RLALog debug:<#(NSString *), ...#>];
-//            break;
-//        case CBPeripheralManagerStateUnauthorized:
-//            [RLALog debug:<#(NSString *), ...#>];
-//            break;
-//        case CBPeripheralManagerStateResetting:
-//            [RLALog debug:<#(NSString *), ...#>];
-//            break;
-//        case CBPeripheralManagerStateUnsupported:
+            break;
+        case CBPeripheralManagerStatePoweredOff:
+            [RLALog debug:RLAErrorBLEModulePowerOff.localizedDescription];
+            break;
+        case CBPeripheralManagerStateUnauthorized:
+            [RLALog debug:RLAErrorBLEModuleUnauthorized.localizedDescription];
+            break;
+        case CBPeripheralManagerStateResetting:
+            [RLALog debug:RLAErrorBLEModuleResetting.localizedDescription];
+            break;
+        case CBPeripheralManagerStateUnsupported:
+//            [WunderbarOnboarding stopOnboarding:self callbackError:<#^(NSError *error)callback#>]
+            break;
+        case CBPeripheralManagerStateUnknown:
 //            <#statements#>
-//            break;
-//        case CBPeripheralManagerStateUnknown:
-//            <#statements#>
-//            break;
-//        default:
-//            break;
-//    }
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)peripheralManager:(CBPeripheralManager *)peripheral didAddService:(CBService *)service error:(NSError *)error
@@ -107,22 +109,35 @@
     
 }
 
+#pragma mark CBCentralManagerDelegate
+
+- (void)centralManager:(CBCentralManager*)central willRestoreState:(NSDictionary*)dict
+{
+    
+}
+
+- (void)centralManagerDidUpdateState:(CBCentralManager*)central
+{
+    
+}
+
 #pragma mark - Private methods
 
-- (instancetype)initForTransmitter:(RelayrTransmitter*)transmitter
+- (instancetype)initForTransmitter:(RelayrTransmitter*)transmitter withCompletion:(void (^)(NSError* error))completion
 {
     if (!transmitter.uid.length) { return nil; }
     
     self = [super init];
     if (self)
-    {
-//        _peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil options:@{ CBPeripheralManagerOptionShowPowerAlertKey : @YES, CBPeripheralManagerOptionRestoreIdentifierKey : <#Identifier#> }];
+    {   // { CBPeripheralManagerOptionRestoreIdentifierKey : <#Identifier#> }
+        _peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil options:@{ CBPeripheralManagerOptionShowPowerAlertKey : @YES }];
         _transmitter = transmitter;
+        _completion = completion;
     }
     return self;
 }
 
-- (instancetype)initForDevice:(RelayrDevice*)device
+- (instancetype)initForDevice:(RelayrDevice*)device withCompletion:(void (^)(NSError* error))completion
 {
     if (!device.uid.length) { return nil; }
     
@@ -131,11 +146,12 @@
     {
         _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil options:@{}];
         _device = device;
+        _completion = completion;
     }
     return self;
 }
 
-+ (void)stopOnboarding:(WunderbarOnboarding*)onboardingProcess andCallbackWithError:(void (^)(NSError* error))callback
++ (void)stopOnboarding:(WunderbarOnboarding*)onboardingProcess withError:(NSError*)error
 {
     
 }
