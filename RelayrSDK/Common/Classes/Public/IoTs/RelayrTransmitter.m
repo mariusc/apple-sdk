@@ -51,12 +51,12 @@ static NSString* const kCodingDevices = @"dev";
 - (void)onboardWithClass:(Class <RelayrOnboarding>)onboardingClass completion:(void (^)(NSError* error))completion
 {
     if (!onboardingClass) { if (completion) { completion(RLAErrorMissingArgument); } return; }
-    [onboardingClass launchOnboardingProcessForTransmitter:self completion:completion];
+    [onboardingClass launchOnboardingProcessForTransmitter:self timeout:nil completion:completion];
 }
 
 - (void)updateFirmwareWithClass:(Class)updateClass completion:(void (^)(NSError* error))completion
 {
-    if (!onboardingClass) { if (completion) { completion(RLAErrorMissingArgument); } return; }
+    if (!updateClass) { if (completion) { completion(RLAErrorMissingArgument); } return; }
     [updateClass launchFirmwareUpdateProcessForTransmitter:self completion:completion];
 }
 

@@ -58,7 +58,7 @@ static NSString* const kCodingSecret = @"sec";
 
 - (void)onboardWithClass:(Class <RelayrOnboarding>)onboardingClass completion:(void (^)(NSError* error))completion
 {
-    [onboardingClass launchOnboardingProcessForDevice:self completion:completion];
+    [onboardingClass launchOnboardingProcessForDevice:self timeout:nil completion:completion];
 }
 
 - (void)updateFirmwareWithClass:(Class)updateClass completion:(void (^)(NSError* error))completion

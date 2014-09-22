@@ -1,13 +1,20 @@
 #import "WunderbarOnboarding.h"     // Header
 #import "RelayrTransmitter.h"       // Relayr.framework (Public)
+#import "RelayrDevice.h"            // Relayr.framework (Public)
 #import "RLAError.h"                // Relayr.framework (Utilities)
 #import "RLALog.h"                  // Relayr.framework (Utilities)
+#import "CPlatforms.h"              // Relayr.framework (Utilities)
+
+#if defined(OS_APPLE_IOS) || defined(OS_APPLE_IOS_SIMULATOR)
 @import CoreBluetooth;              // Apple
+#elif defined (OS_APPLE_OSX)
+@import IOBluetooth;
+#endif
 
 #define WunderbarOnboarding_timeout_transmitter 10
 #define WunderbarOnboarding_timeout_device      10
 
-@interface WunderbarOnboarding () <CBPeripheralManagerDelegate>
+@interface WunderbarOnboarding () <CBPeripheralManagerDelegate,CBCentralManagerDelegate>
 @property (readonly,nonatomic) CBPeripheralManager* peripheralManager;
 @property (readonly,nonatomic) RelayrTransmitter* transmitter;
 
@@ -33,9 +40,9 @@
     WunderbarOnboarding* onboarding = [[WunderbarOnboarding alloc] initForTransmitter:transmitter];
     if (!onboarding) { if (completion) { completion(RLAErrorMissingArgument); } return; }
     
-    NSTimer* timer = [NSTimer scheduledTimerWithTimeInterval:timeInterval target:[NSBlockOperation blockOperationWithBlock:^{
+    [NSTimer scheduledTimerWithTimeInterval:timeInterval target:[NSBlockOperation blockOperationWithBlock:^{
         [WunderbarOnboarding stopOnboarding:onboarding andCallbackWithError:completion];
-    }] selector:@selector(main) userInfo:nil repeats:nil];
+    }] selector:@selector(main) userInfo:nil repeats:NO];
 }
 
 + (void)launchOnboardingProcessForDevice:(RelayrDevice*)device timeout:(NSNumber*)timeout completion:(void (^)(NSError* error))completion
@@ -46,9 +53,9 @@
     WunderbarOnboarding* onboarding = [[WunderbarOnboarding alloc] initForDevice:device];
     if (!onboarding) { if (completion) { completion(RLAErrorMissingArgument); } return; }
     
-    NSTimer* timer = [NSTimer scheduledTimerWithTimeInterval:timeInterval target:[NSBlockOperation blockOperationWithBlock:^{
+    [NSTimer scheduledTimerWithTimeInterval:timeInterval target:[NSBlockOperation blockOperationWithBlock:^{
         [WunderbarOnboarding stopOnboarding:onboarding andCallbackWithError:completion];
-    }] selector:@selector(main) userInfo:nil repeats:nil];
+    }] selector:@selector(main) userInfo:nil repeats:NO];
 }
 
 #pragma mark CBPeripheralManagerDelegate
