@@ -23,10 +23,10 @@
 		622CB00619BCB07200F686B3 /* RelayrOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = 622CB00319BCB07200F686B3 /* RelayrOutput.m */; };
 		622CB00719BCB07200F686B3 /* RelayrOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = 622CB00319BCB07200F686B3 /* RelayrOutput.m */; };
 		622CD0D719C384D5003E8660 /* TRelayrCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 622CD0D619C384D5003E8660 /* TRelayrCloud.m */; };
-		622E7EA819CF829400948558 /* RelayrOnboarding.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EA719CF829400948558 /* RelayrOnboarding.h */; };
-		622E7EA919CF829400948558 /* RelayrOnboarding.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EA719CF829400948558 /* RelayrOnboarding.h */; };
-		622E7EAB19CF834500948558 /* RelayrFirmwareUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EAA19CF834500948558 /* RelayrFirmwareUpdate.h */; };
-		622E7EAC19CF834500948558 /* RelayrFirmwareUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EAA19CF834500948558 /* RelayrFirmwareUpdate.h */; };
+		622E7EA819CF829400948558 /* RelayrOnboarding.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EA719CF829400948558 /* RelayrOnboarding.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		622E7EA919CF829400948558 /* RelayrOnboarding.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EA719CF829400948558 /* RelayrOnboarding.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		622E7EAB19CF834500948558 /* RelayrFirmwareUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EAA19CF834500948558 /* RelayrFirmwareUpdate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		622E7EAC19CF834500948558 /* RelayrFirmwareUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EAA19CF834500948558 /* RelayrFirmwareUpdate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		623F324D19A731B100F774EB /* RLAWebService.h in Headers */ = {isa = PBXBuildFile; fileRef = 623F324B19A731B100F774EB /* RLAWebService.h */; };
 		623F324E19A731B100F774EB /* RLAWebService.m in Sources */ = {isa = PBXBuildFile; fileRef = 623F324C19A731B100F774EB /* RLAWebService.m */; };
 		623F325619A74C3600F774EB /* RLAWebRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 623F325419A74C3600F774EB /* RLAWebRequest.h */; };
@@ -819,12 +819,13 @@
 				62D1719F19A65D3B009BBED1 /* RelayrTransmitter.h in Headers */,
 				62D1719B19A65CCC009BBED1 /* RelayrDevice.h in Headers */,
 				62C50A6119CAB8CB0078907A /* RelayrDeviceModel.h in Headers */,
-				622CAFFE19BCB04B00F686B3 /* RelayrInput.h in Headers */,
-				622CB00419BCB07200F686B3 /* RelayrOutput.h in Headers */,
-				629666E019D0169B003C99D9 /* WunderbarOnboarding.h in Headers */,
 				622CAFF819BCB02100F686B3 /* RelayrFirmware.h in Headers */,
 				62C50A6719CAB9150078907A /* RelayrFirmwareModel.h in Headers */,
+				622CAFFE19BCB04B00F686B3 /* RelayrInput.h in Headers */,
+				622CB00419BCB07200F686B3 /* RelayrOutput.h in Headers */,
 				62732D4219C05A24000E9545 /* RelayrConnection.h in Headers */,
+				622E7EA819CF829400948558 /* RelayrOnboarding.h in Headers */,
+				622E7EAB19CF834500948558 /* RelayrFirmwareUpdate.h in Headers */,
 				6250E19319B51566003932AA /* RelayrApp_Setup.h in Headers */,
 				622BA3BC19ABDC2800FD5C24 /* RelayrUser_Setup.h in Headers */,
 				6250E19019B50AAD003932AA /* RelayrPublisher_Setup.h in Headers */,
@@ -835,7 +836,7 @@
 				6254F80719CACA62006C836F /* RelayrFirmwareModel_Setup.h in Headers */,
 				62FDB16B19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */,
 				62D0907219C0729900999142 /* RelayrConnection_Setup.h in Headers */,
-				622E7EA819CF829400948558 /* RelayrOnboarding.h in Headers */,
+				629666E019D0169B003C99D9 /* WunderbarOnboarding.h in Headers */,
 				623F324D19A731B100F774EB /* RLAWebService.h in Headers */,
 				6285F36119C1AA410097B299 /* RLAWebService+Cloud.h in Headers */,
 				6285F35519C1A98B0097B299 /* RLAWebService+App.h in Headers */,
@@ -857,7 +858,6 @@
 				62E87DDB19AB2AAA00728AC6 /* CMacros.h in Headers */,
 				62E87DDD19AB2AAA00728AC6 /* CMath.h in Headers */,
 				62E87DD919AB2AAA00728AC6 /* CDebug.h in Headers */,
-				622E7EAB19CF834500948558 /* RelayrFirmwareUpdate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -871,15 +871,16 @@
 				623F326619A7871F00F774EB /* RelayrUser.h in Headers */,
 				6250E18C19B50A0D003932AA /* RelayrPublisher.h in Headers */,
 				623F326719A7872400F774EB /* RelayrTransmitter.h in Headers */,
-				6250E19419B51566003932AA /* RelayrApp_Setup.h in Headers */,
 				623F326819A7872700F774EB /* RelayrDevice.h in Headers */,
-				622CAFFF19BCB04B00F686B3 /* RelayrInput.h in Headers */,
-				622CB00519BCB07200F686B3 /* RelayrOutput.h in Headers */,
-				629666E119D0169B003C99D9 /* WunderbarOnboarding.h in Headers */,
 				62C50A6219CAB8CB0078907A /* RelayrDeviceModel.h in Headers */,
 				622CAFF919BCB02100F686B3 /* RelayrFirmware.h in Headers */,
 				62C50A6819CAB9150078907A /* RelayrFirmwareModel.h in Headers */,
+				622CAFFF19BCB04B00F686B3 /* RelayrInput.h in Headers */,
+				622CB00519BCB07200F686B3 /* RelayrOutput.h in Headers */,
 				62732D4319C05A24000E9545 /* RelayrConnection.h in Headers */,
+				622E7EA919CF829400948558 /* RelayrOnboarding.h in Headers */,
+				6250E19419B51566003932AA /* RelayrApp_Setup.h in Headers */,
+				622E7EAC19CF834500948558 /* RelayrFirmwareUpdate.h in Headers */,
 				622BA3BD19ABDC2800FD5C24 /* RelayrUser_Setup.h in Headers */,
 				6250E19119B50AAD003932AA /* RelayrPublisher_Setup.h in Headers */,
 				62D73C9D19B70CAB006F417D /* RelayrTransmitter_Setup.h in Headers */,
@@ -889,7 +890,7 @@
 				6254F80819CACA62006C836F /* RelayrFirmwareModel_Setup.h in Headers */,
 				62FDB16C19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */,
 				62D0907319C0729900999142 /* RelayrConnection_Setup.h in Headers */,
-				622E7EA919CF829400948558 /* RelayrOnboarding.h in Headers */,
+				629666E119D0169B003C99D9 /* WunderbarOnboarding.h in Headers */,
 				623F326A19A7873100F774EB /* RLAWebService.h in Headers */,
 				6285F36219C1AA410097B299 /* RLAWebService+Cloud.h in Headers */,
 				6285F35619C1A98B0097B299 /* RLAWebService+App.h in Headers */,
@@ -911,7 +912,6 @@
 				62E87DDC19AB2AAA00728AC6 /* CMacros.h in Headers */,
 				62E87DDE19AB2AAA00728AC6 /* CMath.h in Headers */,
 				62E87DDA19AB2AAA00728AC6 /* CDebug.h in Headers */,
-				622E7EAC19CF834500948558 /* RelayrFirmwareUpdate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
