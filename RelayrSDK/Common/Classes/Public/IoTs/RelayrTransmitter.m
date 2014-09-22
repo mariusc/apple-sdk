@@ -4,6 +4,7 @@
 #import "RelayrDevice.h"            // Relayr.framework (Public)
 #import "RelayrOnboarding.h"        // Relayr.framework (Public)
 #import "RelayrFirmwareUpdate.h"    // Relayr.framework (Public)
+#import "RLAError.h"                // Relayr.framework (Utilities)
 
 static NSString* const kCodingID = @"uid";
 static NSString* const kCodingSecret = @"sec";
@@ -49,11 +50,13 @@ static NSString* const kCodingDevices = @"dev";
 
 - (void)onboardWithClass:(Class <RelayrOnboarding>)onboardingClass completion:(void (^)(NSError* error))completion
 {
+    if (!onboardingClass) { if (completion) { completion(RLAErrorMissingArgument); } return; }
     [onboardingClass launchOnboardingProcessForTransmitter:self completion:completion];
 }
 
 - (void)updateFirmwareWithClass:(Class)updateClass completion:(void (^)(NSError* error))completion
 {
+    if (!onboardingClass) { if (completion) { completion(RLAErrorMissingArgument); } return; }
     [updateClass launchFirmwareUpdateProcessForTransmitter:self completion:completion];
 }
 
