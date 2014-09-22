@@ -12,7 +12,7 @@
     NSString* msg = [[NSString alloc] initWithFormat:format arguments:args];
     va_end(args);
     
-    [RLALog logWithPrefix:nil logCallStack:YES message:msg];
+    [RLALog logWithPrefix:nil logCallStack:NO message:msg];
     #endif
 }
 

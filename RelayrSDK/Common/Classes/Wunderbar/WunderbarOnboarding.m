@@ -11,17 +11,27 @@
 @import IOBluetooth;                // Apple
 #endif
 
-#define WunderbarOnboarding_timeout_transmitter 10
-#define WunderbarOnboarding_timeout_device      10
+#define WunderbarOnboarding_transmitter_timeout         10
+#define WunderbarOnboarding_transmitter_service         @"2000"
+#define WunderbarOnboarding_transmitter_characteristic_htuGyroLightPasskey  @"2010"
+#define WunderbarOnboarding_transmitter_characteristic_micBridIRPasskey     @"2011"
+#define WunderbarOnboarding_transmitter_characteristic_wifiSSID             @"2012"
+#define WunderbarOnboarding_transmitter_characteristic_wifiPasskey          @"2013"
+#define WunderbarOnboarding_transmitter_characteristic_wunderbarID          @"2014"
+#define WunderbarOnboarding_transmitter_characteristic_wunderbarSecurity    @"2015"
+#define WunderbarOnboarding_transmitter_characteristic_wunderbarURL         @"2016"
+
+#define WunderbarOnboarding_device_timeout              10
 
 @interface WunderbarOnboarding () <CBPeripheralManagerDelegate,CBCentralManagerDelegate>
-@property (readonly,nonatomic) void (^completion)(NSError* error);
+@property (strong,nonatomic) void (^completion)(NSError* error);
+@property (strong,nonatomic) NSTimer* timer;
 
-@property (readonly,nonatomic) CBPeripheralManager* peripheralManager;
-@property (readonly,nonatomic) RelayrTransmitter* transmitter;
+@property (strong,nonatomic) CBPeripheralManager* peripheralManager;
+@property (strong,nonatomic) RelayrTransmitter* transmitter;
 
-@property (readonly,nonatomic) CBCentralManager* centralManager;
-@property (readonly,nonatomic) RelayrDevice* device;
+@property (strong,nonatomic) CBCentralManager* centralManager;
+@property (strong,nonatomic) RelayrDevice* device;
 @end
 
 @implementation WunderbarOnboarding
@@ -36,28 +46,30 @@
 
 + (void)launchOnboardingProcessForTransmitter:(RelayrTransmitter*)transmitter timeout:(NSNumber*)timeout completion:(void (^)(NSError* error))completion
 {
-    NSTimeInterval const timeInterval = (!timeout) ? WunderbarOnboarding_timeout_transmitter : timeout.doubleValue;
+    NSTimeInterval const timeInterval = (!timeout) ? WunderbarOnboarding_transmitter_timeout : timeout.doubleValue;
     if (!timeInterval <= 0.0) { if (completion) { completion(RelayrErrorMissingExpectedValue); } return; }
     
     WunderbarOnboarding* onboarding = [[WunderbarOnboarding alloc] initForTransmitter:transmitter withCompletion:completion];
     if (!onboarding) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
     
-    [NSTimer scheduledTimerWithTimeInterval:timeInterval target:[NSBlockOperation blockOperationWithBlock:^{
-//        [WunderbarOnboarding stopOnboarding:onboarding withError:<#(NSError *)#>];
-    }] selector:@selector(main) userInfo:nil repeats:NO];
+    // You must send this message from the thread on which the timer was installed
+    onboarding.timer = [NSTimer scheduledTimerWithTimeInterval:timeInterval target:[NSBlockOperation blockOperationWithBlock:^{
+        [WunderbarOnboarding stopOnboarding:onboarding withError:RelayrErrorTimeoutExpired];
+    }] selector:@selector(main) userInfo:onboarding repeats:NO];
 }
 
 + (void)launchOnboardingProcessForDevice:(RelayrDevice*)device timeout:(NSNumber*)timeout completion:(void (^)(NSError* error))completion
 {
-    NSTimeInterval const timeInterval = (!timeout) ? WunderbarOnboarding_timeout_transmitter : timeout.doubleValue;
+    NSTimeInterval const timeInterval = (!timeout) ? WunderbarOnboarding_transmitter_timeout : timeout.doubleValue;
     if (!timeInterval <= 0.0) { if (completion) { completion(RelayrErrorMissingExpectedValue); } return; }
     
     WunderbarOnboarding* onboarding = [[WunderbarOnboarding alloc] initForDevice:device withCompletion:completion];
     if (!onboarding) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
     
-    [NSTimer scheduledTimerWithTimeInterval:timeInterval target:[NSBlockOperation blockOperationWithBlock:^{
-//        [WunderbarOnboarding stopOnboarding:onboarding withError:<#(NSError *)#>];
-    }] selector:@selector(main) userInfo:nil repeats:NO];
+    // You must send this message from the thread on which the timer was installed
+    onboarding.timer = [NSTimer scheduledTimerWithTimeInterval:timeInterval target:[NSBlockOperation blockOperationWithBlock:^{
+        [WunderbarOnboarding stopOnboarding:onboarding withError:RelayrErrorTimeoutExpired];
+    }] selector:@selector(main) userInfo:onboarding repeats:NO];
 }
 
 #pragma mark CBPeripheralManagerDelegate
@@ -68,11 +80,12 @@
 //    dict[CBPeripheralManagerRestoredStateServicesKey];
 }
 
-- (void)peripheralManagerDidUpdateState:(CBPeripheralManager*)peripheral
+- (void)peripheralManagerDidUpdateState:(CBPeripheralManager*)peripheralManager
 {
-    switch (peripheral.state) {
+    switch (peripheralManager.state)
+    {
         case CBPeripheralManagerStatePoweredOn:
-//            <#statements#>
+            if (![peripheralManager isAdvertising]) { [self startAdvertisingToSetupTransmitterWith:peripheralManager]; }
             break;
         case CBPeripheralManagerStatePoweredOff:
             [RLALog debug:RelayrErrorBLEModulePowerOff.localizedDescription];
@@ -84,27 +97,26 @@
             [RLALog debug:RelayrErrorBLEModuleResetting.localizedDescription];
             break;
         case CBPeripheralManagerStateUnsupported:
-//            [WunderbarOnboarding stopOnboarding:self callbackError:<#^(NSError *error)callback#>]
+            [WunderbarOnboarding stopOnboarding:self withError:RelayrErrorBLEUnsupported];
             break;
         case CBPeripheralManagerStateUnknown:
-//            <#statements#>
-            break;
-        default:
+            [WunderbarOnboarding stopOnboarding:self withError:RelayrErrorBLEProblemUnknown];
             break;
     }
 }
 
-- (void)peripheralManager:(CBPeripheralManager *)peripheral didAddService:(CBService *)service error:(NSError *)error
+- (void)peripheralManager:(CBPeripheralManager*)peripheralManager didAddService:(CBService*)service error:(NSError*)error
 {
     
 }
 
-- (void)peripheralManagerDidStartAdvertising:(CBPeripheralManager*)peripheral error:(NSError*)error
+- (void)peripheralManagerDidStartAdvertising:(CBPeripheralManager*)peripheralManager error:(NSError*)error
 {
-    
+    if (error) { return [WunderbarOnboarding stopOnboarding:self withError:error]; }
+    [RLALog debug:@"Wunderbar onboarding process for transmitter has started advertising..."];
 }
 
-- (void)peripheralManager:(CBPeripheralManager*)peripheral didReceiveReadRequest:(CBATTRequest*)request
+- (void)peripheralManager:(CBPeripheralManager*)peripheralManager didReceiveReadRequest:(CBATTRequest*)request
 {
     
 }
@@ -123,6 +135,9 @@
 
 #pragma mark - Private methods
 
+/*******************************************************************************
+ * It creates an onboarding process for a wunderbar transmitter.
+ ******************************************************************************/
 - (instancetype)initForTransmitter:(RelayrTransmitter*)transmitter withCompletion:(void (^)(NSError* error))completion
 {
     if (!transmitter.uid.length) { return nil; }
@@ -137,6 +152,9 @@
     return self;
 }
 
+/*******************************************************************************
+ * It creates an onboarding process for a wunderbar device (sensor).
+ ******************************************************************************/
 - (instancetype)initForDevice:(RelayrDevice*)device withCompletion:(void (^)(NSError* error))completion
 {
     if (!device.uid.length) { return nil; }
@@ -151,9 +169,61 @@
     return self;
 }
 
+/*******************************************************************************
+ * It stop the onboarding process passed and execute the completion block with the passed error.
+ * If <code>error</code> is <code>nil</code>, the completion block will be executed as if it were successful.
+ ******************************************************************************/
 + (void)stopOnboarding:(WunderbarOnboarding*)onboardingProcess withError:(NSError*)error
 {
+    if (!onboardingProcess) { return; }
     
+    if (onboardingProcess.timer)
+    {
+        if ([onboardingProcess.timer isValid]) { [onboardingProcess.timer invalidate]; }
+        onboardingProcess.timer = nil;
+    }
+    
+    if (onboardingProcess.peripheralManager)
+    {
+        [onboardingProcess.peripheralManager stopAdvertising];
+        onboardingProcess.peripheralManager = nil;
+    }
+    
+    if (onboardingProcess.centralManager)
+    {
+        [onboardingProcess.centralManager stopScan];
+        onboardingProcess.centralManager = nil;
+    }
+    
+    onboardingProcess.transmitter = nil;
+    onboardingProcess.device = nil;
+    
+    if (onboardingProcess.completion)
+    {
+        onboardingProcess.completion(error);
+        onboardingProcess.completion = nil;
+    }
+}
+
+- (void)startAdvertisingToSetupTransmitterWith:(CBPeripheralManager*)peripheralManager
+{
+//    CBMutableService* service = [[CBMutableService alloc] initWithType:[CBUUID UUIDWithString:WunderbarOnboarding_transmitter_service] primary:YES];
+//    service.characteristics = @[
+//        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:WunderbarOnboarding_transmitter_characteristic_htuGyroLightPasskey] properties:CBCharacteristicPropertyRead value:<#(NSData *)#> permissions:CBAttributePermissionsReadable],
+//        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:WunderbarOnboarding_transmitter_characteristic_micBridIRPasskey] properties:CBCharacteristicPropertyRead value:<#(NSData *)#> permissions:CBAttributePermissionsReadable],
+//        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:WunderbarOnboarding_transmitter_characteristic_wifiSSID] properties:CBCharacteristicPropertyRead value:<#(NSData *)#> permissions:CBAttributePermissionsReadable],
+//        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:WunderbarOnboarding_transmitter_characteristic_wifiPasskey] properties:CBCharacteristicPropertyRead value:<#(NSData *)#> permissions:CBAttributePermissionsReadable],
+//        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:WunderbarOnboarding_transmitter_characteristic_wunderbarID] properties:CBCharacteristicPropertyRead value:<#(NSData *)#> permissions:CBAttributePermissionsReadable],
+//        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:WunderbarOnboarding_transmitter_characteristic_wunderbarSecurity] properties:CBCharacteristicPropertyRead value:<#(NSData *)#> permissions:CBAttributePermissionsReadable],
+//        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:WunderbarOnboarding_transmitter_characteristic_wunderbarURL] properties:CBCharacteristicPropertyRead value:<#(NSData *)#> permissions:CBAttributePermissionsReadable]
+//    ];
+//    
+//    [peripheralManager addService:service];
+//#warning There are many "CBAdvertisementData". Explore them!
+//    [peripheralManager startAdvertising:@{
+//        CBAdvertisementDataLocalNameKey     : @"<#name#>",
+//        CBAdvertisementDataServiceUUIDsKey  : @[service.UUID]
+//    }];
 }
 
 @end

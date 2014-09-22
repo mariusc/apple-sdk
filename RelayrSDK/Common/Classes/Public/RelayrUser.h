@@ -116,7 +116,7 @@
  *  @abstract It creates/register a device entity in the Relayr Cloud.
  *  @discussion If this call is successful a <code>RelayrDevice</code> object is created and it is added to the <code>devices</code> array.
  *
- *  @param modelID Model representing the newly transmittter instance. This parameter is required.
+ *  @param modelID Model representing the newly model instance. This parameter is required.
  *  @param firmwareVersion The version of the firmware running on the transmitter. This parameter is required.
  *  @param name The given name to identify this transmitter. This parameter is required.
  *  @param completion Block indicating whether the server registration call was successful or not. It can be <code>nil</code>.
