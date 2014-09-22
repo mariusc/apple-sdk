@@ -19,30 +19,36 @@
 
 #pragma mark - Public API
 
+- (instancetype)init
+{
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
+}
+
 + (void)launchOnboardingProcessForTransmitter:(RelayrTransmitter*)transmitter timeout:(NSNumber*)timeout completion:(void (^)(NSError* error))completion
 {
     NSTimeInterval const timeInterval = (!timeout) ? WunderbarOnboarding_timeout_transmitter : timeout.doubleValue;
     if (!timeInterval <= 0.0) { if (completion) { completion(RLAErrorMissingExpectedValue); } return; }
     
-    
     WunderbarOnboarding* onboarding = [[WunderbarOnboarding alloc] initForTransmitter:transmitter];
     if (!onboarding) { if (completion) { completion(RLAErrorMissingArgument); } return; }
-    [WunderbarOnboarding addOnboardProcess:onboarding];
     
-//    NSTimer* timer = [NSTimer scheduledTimerWithTimeInterval:<#(NSTimeInterval)#> target:<#(id)#> selector:<#(SEL)#> userInfo:<#(id)#> repeats:<#(BOOL)#>];
+    NSTimer* timer = [NSTimer scheduledTimerWithTimeInterval:timeInterval target:[NSBlockOperation blockOperationWithBlock:^{
+        [WunderbarOnboarding stopOnboarding:onboarding andCallbackWithError:completion];
+    }] selector:@selector(main) userInfo:nil repeats:nil];
 }
 
 + (void)launchOnboardingProcessForDevice:(RelayrDevice*)device timeout:(NSNumber*)timeout completion:(void (^)(NSError* error))completion
 {
+    NSTimeInterval const timeInterval = (!timeout) ? WunderbarOnboarding_timeout_transmitter : timeout.doubleValue;
+    if (!timeInterval <= 0.0) { if (completion) { completion(RLAErrorMissingExpectedValue); } return; }
+    
     WunderbarOnboarding* onboarding = [[WunderbarOnboarding alloc] initForDevice:device];
     if (!onboarding) { if (completion) { completion(RLAErrorMissingArgument); } return; }
-    [WunderbarOnboarding addOnboardProcess:onboarding];
-}
-
-- (instancetype)init
-{
-    [self doesNotRecognizeSelector:_cmd];
-    return nil;
+    
+    NSTimer* timer = [NSTimer scheduledTimerWithTimeInterval:timeInterval target:[NSBlockOperation blockOperationWithBlock:^{
+        [WunderbarOnboarding stopOnboarding:onboarding andCallbackWithError:completion];
+    }] selector:@selector(main) userInfo:nil repeats:nil];
 }
 
 #pragma mark CBPeripheralManagerDelegate
@@ -120,6 +126,11 @@
         _device = device;
     }
     return self;
+}
+
++ (void)stopOnboarding:(WunderbarOnboarding*)onboardingProcess andCallbackWithError:(void (^)(NSError* error))callback
+{
+    
 }
 
 @end
