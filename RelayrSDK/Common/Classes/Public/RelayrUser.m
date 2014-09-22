@@ -14,7 +14,7 @@
 #import "RLAWebService+User.h"          // Relayr.framework (Web)
 #import "RLAWebService+Transmitter.h"   // Relayr.framework (Web)
 #import "RLAWebService+Device.h"        // Relayr.framework (Web)
-#import "RLAError.h"                    // Relayr.framework (Utilities)
+#import "RelayrErrors.h"                    // Relayr.framework (Utilities)
 
 static NSString* const kCodingToken = @"tok";
 static NSString* const kCodingID = @"uid";
@@ -54,7 +54,7 @@ static NSString* const kCodingPublishers = @"pub";
     __weak RelayrUser* weakSelf = self;
     [_webService requestUserInfo:^(NSError* error, NSString* uid, NSString* name, NSString* email) {
         if (error) { if (completion) { completion(error, nil, nil); } return; }
-        if (uid.length==0) { if (completion) { completion(RLAErrorWrongRelayrUser, nil, nil); } return; }
+        if (uid.length==0) { if (completion) { completion(RelayrErrorWrongRelayrUser, nil, nil); } return; }
         
         __strong RelayrUser* strongSelf = weakSelf;
         if (!strongSelf.uid)
@@ -63,7 +63,7 @@ static NSString* const kCodingPublishers = @"pub";
         }
         else if ( ![strongSelf.uid isEqualToString:uid] )
         {
-            if (completion) { completion(RLAErrorWrongRelayrUser, nil, nil); }
+            if (completion) { completion(RelayrErrorWrongRelayrUser, nil, nil); }
             return;
         }
         
@@ -104,7 +104,7 @@ static NSString* const kCodingPublishers = @"pub";
 
 - (void)registerTransmitterWithModelID:(NSString*)modelID firmwareVerion:(NSString*)firmwareVersion name:(NSString*)name completion:(void (^)(NSError* error, RelayrTransmitter* transmitter))completion
 {
-    if (!name) { if (completion) { completion(RLAErrorMissingArgument, nil); } return; }
+    if (!name) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
     
     __weak RelayrUser* weakSelf = self;
     [_webService registerTransmitterWithName:name ownerID:_uid model:modelID firmwareVersion:firmwareVersion completion:^(NSError* error, RelayrTransmitter* transmitter) {
@@ -116,7 +116,7 @@ static NSString* const kCodingPublishers = @"pub";
 
 - (void)registerDeviceWithModelID:(NSString*)modelID firmwareVerion:(NSString*)firmwareVersion name:(NSString*)name completion:(void (^)(NSError* error, RelayrDevice* device))completion
 {
-    if (!modelID || !firmwareVersion || !name) { if (completion) { completion(RLAErrorMissingArgument, nil); } return; }
+    if (!modelID || !firmwareVersion || !name) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
     
     __weak RelayrUser* weakSelf = self;
     [_webService registerDeviceWithName:name owner:_uid model:modelID firmwareVersion:firmwareVersion completion:^(NSError *error, RelayrDevice *device) {

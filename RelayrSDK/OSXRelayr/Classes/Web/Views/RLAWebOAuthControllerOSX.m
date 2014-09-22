@@ -1,6 +1,6 @@
 #import "RLAWebOAuthControllerOSX.h"    // Header
 #import "RLAWebConstants.h"             // Relayr.framework (Web)
-#import "RLAError.h"                    // Relayr.framework (Utilities)
+#import "RelayrErrors.h"                    // Relayr.framework (Utilities)
 
 @interface RLAWebOAuthControllerOSX () <NSWindowDelegate>
 @property (strong,nonatomic) RLAWebOAuthControllerOSX* selfRetained;

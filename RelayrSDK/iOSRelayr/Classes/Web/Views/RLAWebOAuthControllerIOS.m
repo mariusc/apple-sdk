@@ -1,6 +1,6 @@
 #import "RLAWebOAuthControllerIOS.h"    // Header
 #import "RLAWebConstants.h"             // Relayr.framework (Web)
-#import "RLAError.h"                    // Relayr.framework (Utilities)
+#import "RelayrErrors.h"                    // Relayr.framework (Utilities)
 
 @interface RLAWebOAuthControllerIOS () <UIWebViewDelegate>
 @property (strong,nonatomic) UIActivityIndicatorView* spinner;
@@ -116,7 +116,7 @@
 
 - (void)cancelPressed
 {
-    if (_completion) { _completion(RLAErrorUserStoppedProcess, nil); }
+    if (_completion) { _completion(RelayrErrorUserStoppedProcess, nil); }
     [self dismiss];
 }
 

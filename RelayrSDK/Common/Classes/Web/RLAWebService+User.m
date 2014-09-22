@@ -12,7 +12,7 @@
 
 #import "RLAWebRequest.h"           // Relayr.framework (Web)
 #import "RLAWebConstants.h"         // Relayr.framework (Web)
-#import "RLAError.h"                // Relayr.framework (Utilities)
+#import "RelayrErrors.h"                // Relayr.framework (Utilities)
 
 @implementation RLAWebService (User)
 
@@ -22,17 +22,17 @@
 + (void)isUserWithEmail:(NSString*)email registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))completion
 {
     if (!completion) { return; }
-    if (!email) { return completion(RLAErrorMissingArgument, nil); }
+    if (!email) { return completion(RelayrErrorMissingArgument, nil); }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:[NSURL URLWithString:Web_Host]];
-    if (!request) { return completion(RLAErrorWebRequestFailure, nil); }
+    if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_EmailCheck(email);
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
         NSDictionary* json = processRequest(Web_RequestResponseCode_EmailCheck, nil);
         
         NSString* exists = json[Web_RequestResponseKey_EmailCheck_Exists];
-        if (!exists) { return completion(RLAErrorRequestParsingFailure, nil); }
+        if (!exists) { return completion(RelayrErrorRequestParsingFailure, nil); }
         
         NSRange const result = [exists rangeOfString:Web_RequestResponseVal_EmailCheck_Exists];
         return (result.location == NSNotFound || result.length == 0) ? completion(nil, @NO) : completion(nil, @YES);
@@ -44,14 +44,14 @@
     if (!completion) { return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { return completion(RLAErrorWebRequestFailure, nil, nil, nil); }
+    if (!request) { return completion(RelayrErrorWebRequestFailure, nil, nil, nil); }
     request.relativePath = Web_RequestRelativePath_UserInfo;
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
         NSDictionary* json = processRequest(Web_RequestResponseCode_UserInfo, nil, nil, nil);
         
         NSString* futureID = json[Web_RespondKey_UserID];
-        return (!futureID) ? completion(RLAErrorRequestParsingFailure, nil, nil, nil) : completion(nil, futureID, json[Web_RespondKey_UserName], json[Web_RespondKey_UserEmail]);
+        return (!futureID) ? completion(RelayrErrorRequestParsingFailure, nil, nil, nil) : completion(nil, futureID, json[Web_RespondKey_UserName], json[Web_RespondKey_UserEmail]);
     }];
 }
 
@@ -60,30 +60,30 @@
     NSMutableDictionary* tmpDict = [[NSMutableDictionary alloc] init];
     if (name.length) { tmpDict[Web_RespondKey_UserID] = name; }
     if (email.length) { tmpDict[Web_RespondKey_UserName] = email; }
-    if (!tmpDict.count) { if (completion) { completion(RLAErrorMissingArgument); } return; }
+    if (!tmpDict.count) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { return completion(RLAErrorWebRequestFailure); }
+    if (!request) { return completion(RelayrErrorWebRequestFailure); }
     request.relativePath = Web_RequestRelativePath_UserInfoSet(self.user.uid);
     request.body = [NSDictionary dictionaryWithDictionary:tmpDict];
     
     [request executeInHTTPMode:kRLAWebRequestModePATCH completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
         if (error) { return completion(error); }
-        return completion((responseCode.unsignedIntegerValue!=Web_RequestResponseCode_UserInfoSet) ? RLAErrorWebRequestFailure : nil);
+        return completion((responseCode.unsignedIntegerValue!=Web_RequestResponseCode_UserInfoSet) ? RelayrErrorWebRequestFailure : nil);
     }];
 }
 
 - (void)installApp:(NSString*)appID forCurrentUser:(void (^)(NSError* error))completion
 {
-    if (!appID.length) { if (completion) { completion(RLAErrorMissingArgument); } return; }
+    if (!appID.length) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { if (completion) { completion(RLAErrorWebRequestFailure); } return; }
+    if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure); } return; }
     request.relativePath = Web_RequestRelativePath_UserInstallApp(self.user.uid, appID);
     
     [request executeInHTTPMode:kRLAWebRequestModePOST completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
         if (error) { return completion(error); }
-        return completion((responseCode.unsignedIntegerValue != Web_RequestResponseCode_UserInstallApp) ? RLAErrorWebRequestFailure : nil);
+        return completion((responseCode.unsignedIntegerValue != Web_RequestResponseCode_UserInstallApp) ? RelayrErrorWebRequestFailure : nil);
     }];
 }
 
@@ -92,7 +92,7 @@
     if (!completion) { return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { return completion(RLAErrorWebRequestFailure, nil); }
+    if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_UserInstalledApps(self.user.uid);
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
@@ -111,15 +111,15 @@
 
 - (void)uninstallApp:(NSString*)appID forCurrentUser:(void (^)(NSError* error))completion
 {
-    if (!appID.length) { if (completion) { completion(RLAErrorMissingArgument); } return; }
+    if (!appID.length) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { if (completion) { completion(RLAErrorWebRequestFailure); } return; }
+    if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure); } return; }
     request.relativePath = Web_RequestRelativePath_UserUninstallApp(self.user.uid, appID);
     
     [request executeInHTTPMode:kRLAWebRequestModePOST completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
         if (error) { return completion(error); }
-        return completion((responseCode.unsignedIntegerValue != Web_RequestResponseCode_UserUninstallApp) ? RLAErrorWebRequestFailure : nil);
+        return completion((responseCode.unsignedIntegerValue != Web_RequestResponseCode_UserUninstallApp) ? RelayrErrorWebRequestFailure : nil);
     }];
 }
 
@@ -128,7 +128,7 @@
     if (!completion) { return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { return completion(RLAErrorWebRequestFailure, nil); }
+    if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_UserPubs(self.user.uid);
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
@@ -150,7 +150,7 @@
     if (!completion) { return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { return completion(RLAErrorWebRequestFailure, nil); }
+    if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_UserTrans(self.user.uid);
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
@@ -172,7 +172,7 @@
     if (!completion) { return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { return completion(RLAErrorWebRequestFailure, nil); }
+    if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_UserDevices(self.user.uid);
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
@@ -192,10 +192,10 @@
 - (void)requestUserDevicesFilteredByMeaning:(NSString*)meaning completion:(void (^)(NSError* error, NSArray* devices))completion
 {
     if (!completion) { return; }
-    if (!meaning.length) { return completion(RLAErrorMissingArgument, nil); }
+    if (!meaning.length) { return completion(RelayrErrorMissingArgument, nil); }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { return completion(RLAErrorWebRequestFailure, nil); }
+    if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_UserDevicesMeaning(self.user.uid, meaning);
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
@@ -214,15 +214,15 @@
 
 - (void)registerUserBookmarkToDevice:(NSString*)deviceID completion:(void (^) (NSError* error))completion
 {
-    if (!deviceID.length) { if (completion) { completion(RLAErrorMissingArgument); } return; }
+    if (!deviceID.length) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { return completion(RLAErrorWebRequestFailure); }
+    if (!request) { return completion(RelayrErrorWebRequestFailure); }
     request.relativePath = Web_RequestRelativePath_UserBookmarkDev(self.user.uid, deviceID);
     
     [request executeInHTTPMode:kRLAWebRequestModePOST completion:(!completion) ? nil : ^(NSError *error, NSNumber *responseCode, NSData *data) {
         if (error) { return completion(error); }
-        return completion((responseCode.unsignedIntegerValue!=Web_RequestResponseCode_UserBookmarkDev) ? RLAErrorWebRequestFailure : nil);
+        return completion((responseCode.unsignedIntegerValue!=Web_RequestResponseCode_UserBookmarkDev) ? RelayrErrorWebRequestFailure : nil);
     }];
 }
 
@@ -231,7 +231,7 @@
     if (!completion) { return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { return completion(RLAErrorWebRequestFailure, nil); }
+    if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_UserBookmarkDevices(self.user.uid);
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
@@ -250,15 +250,15 @@
 
 - (void)deleteUserBookmarkToDevice:(NSString*)deviceID completion:(void (^) (NSError* error))completion
 {
-    if (!deviceID.length) { if (completion) { completion(RLAErrorMissingArgument); } return; }
+    if (!deviceID.length) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { return completion(RLAErrorWebRequestFailure); }
+    if (!request) { return completion(RelayrErrorWebRequestFailure); }
     request.relativePath = Web_RequestRelativePath_UserBookmarkDeletion(self.user.uid, deviceID);
     
     [request executeInHTTPMode:kRLAWebRequestModeDELETE completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
         if (error) { return completion(error); }
-        return completion((responseCode.unsignedIntegerValue!=Web_RequestResponseCode_UserBookmarkDeletion) ? RLAErrorWebRequestFailure : nil);
+        return completion((responseCode.unsignedIntegerValue!=Web_RequestResponseCode_UserBookmarkDeletion) ? RelayrErrorWebRequestFailure : nil);
     }];
 }
 

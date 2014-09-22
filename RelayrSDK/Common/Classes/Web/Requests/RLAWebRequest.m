@@ -1,7 +1,7 @@
 #import "RLAWebRequest.h"       // Header
 #import "RLAWebConstants.h"     // Relayr.framework (Web)
 #import "RLALog.h"              // Relayr.framework (Utilities)
-#import "RLAError.h"            // Relayr.framework (Utilities)
+#import "RelayrErrors.h"            // Relayr.framework (Utilities)
 
 // WebRequests methods
 NSString* const kRLAWebRequestModeCOPY      = @"COPY";

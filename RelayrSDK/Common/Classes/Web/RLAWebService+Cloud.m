@@ -2,7 +2,7 @@
 #import "RLAWebRequest.h"           // Relayr.framework (Web)
 #import "RLAWebConstants.h"         // Relayr.framework (Web)
 #import "RLAWebOAuthController.h"   // Relayr.framework (Web)
-#import "RLAError.h"                // Relayr.framework (Utilities)
+#import "RelayrErrors.h"                // Relayr.framework (Utilities)
 
 @implementation RLAWebService (Cloud)
 
@@ -29,7 +29,7 @@
 + (void)requestOAuthTokenWithOAuthCode:(NSString*)code OAuthClientID:(NSString*)clientID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI completion:(void (^)(NSError* error, NSString* token))completion
 {
     if (!completion) { return; }
-    if (!clientID || !clientSecret || !redirectURI) { return completion(RLAErrorMissingArgument, nil); }
+    if (!clientID || !clientSecret || !redirectURI) { return completion(RelayrErrorMissingArgument, nil); }
     
     RLAWebRequest* tokenRequest = [[RLAWebRequest alloc] initWithHostURL:[NSURL URLWithString:Web_Host]];
     tokenRequest.relativePath = Web_RequestRelativePath_OAuthToken;
@@ -39,7 +39,7 @@
         NSDictionary* json = processRequest(Web_RequestResponseCode_OAuthToken, nil);
         
         NSString* token = json[Web_RequestResponseKey_OAuthToken_AccessToken];
-        return (!token) ? completion(RLAErrorRequestParsingFailure, nil) : completion(nil, token);
+        return (!token) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, token);
     }];
 }
 

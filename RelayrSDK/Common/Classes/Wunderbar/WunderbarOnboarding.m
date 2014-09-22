@@ -1,7 +1,7 @@
 #import "WunderbarOnboarding.h"     // Header
 #import "RelayrTransmitter.h"       // Relayr.framework (Public)
 #import "RelayrDevice.h"            // Relayr.framework (Public)
-#import "RLAError.h"                // Relayr.framework (Utilities)
+#import "RelayrErrors.h"                // Relayr.framework (Utilities)
 #import "RLALog.h"                  // Relayr.framework (Utilities)
 #import "CPlatforms.h"              // Relayr.framework (Utilities)
 
@@ -37,10 +37,10 @@
 + (void)launchOnboardingProcessForTransmitter:(RelayrTransmitter*)transmitter timeout:(NSNumber*)timeout completion:(void (^)(NSError* error))completion
 {
     NSTimeInterval const timeInterval = (!timeout) ? WunderbarOnboarding_timeout_transmitter : timeout.doubleValue;
-    if (!timeInterval <= 0.0) { if (completion) { completion(RLAErrorMissingExpectedValue); } return; }
+    if (!timeInterval <= 0.0) { if (completion) { completion(RelayrErrorMissingExpectedValue); } return; }
     
     WunderbarOnboarding* onboarding = [[WunderbarOnboarding alloc] initForTransmitter:transmitter withCompletion:completion];
-    if (!onboarding) { if (completion) { completion(RLAErrorMissingArgument); } return; }
+    if (!onboarding) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
     
     [NSTimer scheduledTimerWithTimeInterval:timeInterval target:[NSBlockOperation blockOperationWithBlock:^{
 //        [WunderbarOnboarding stopOnboarding:onboarding withError:<#(NSError *)#>];
@@ -50,10 +50,10 @@
 + (void)launchOnboardingProcessForDevice:(RelayrDevice*)device timeout:(NSNumber*)timeout completion:(void (^)(NSError* error))completion
 {
     NSTimeInterval const timeInterval = (!timeout) ? WunderbarOnboarding_timeout_transmitter : timeout.doubleValue;
-    if (!timeInterval <= 0.0) { if (completion) { completion(RLAErrorMissingExpectedValue); } return; }
+    if (!timeInterval <= 0.0) { if (completion) { completion(RelayrErrorMissingExpectedValue); } return; }
     
     WunderbarOnboarding* onboarding = [[WunderbarOnboarding alloc] initForDevice:device withCompletion:completion];
-    if (!onboarding) { if (completion) { completion(RLAErrorMissingArgument); } return; }
+    if (!onboarding) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
     
     [NSTimer scheduledTimerWithTimeInterval:timeInterval target:[NSBlockOperation blockOperationWithBlock:^{
 //        [WunderbarOnboarding stopOnboarding:onboarding withError:<#(NSError *)#>];
@@ -75,13 +75,13 @@
 //            <#statements#>
             break;
         case CBPeripheralManagerStatePoweredOff:
-            [RLALog debug:RLAErrorBLEModulePowerOff.localizedDescription];
+            [RLALog debug:RelayrErrorBLEModulePowerOff.localizedDescription];
             break;
         case CBPeripheralManagerStateUnauthorized:
-            [RLALog debug:RLAErrorBLEModuleUnauthorized.localizedDescription];
+            [RLALog debug:RelayrErrorBLEModuleUnauthorized.localizedDescription];
             break;
         case CBPeripheralManagerStateResetting:
-            [RLALog debug:RLAErrorBLEModuleResetting.localizedDescription];
+            [RLALog debug:RelayrErrorBLEModuleResetting.localizedDescription];
             break;
         case CBPeripheralManagerStateUnsupported:
 //            [WunderbarOnboarding stopOnboarding:self callbackError:<#^(NSError *error)callback#>]

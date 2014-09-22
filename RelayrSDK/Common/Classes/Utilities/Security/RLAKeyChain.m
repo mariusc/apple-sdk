@@ -1,5 +1,5 @@
 #import "RLAKeyChain.h"     // Header
-#import "RLAError.h"        // Relayr.framework (Utilities)
+#import "RelayrErrors.h"    // Relayr.framework (Utilities)
 #import "RLALog.h"          // Relayr.framework (Utilities)
 
 NSString* const kRLAKeyChainService = @"io.relayr.framework";
@@ -10,7 +10,7 @@ NSString* const kRLAKeyChainService = @"io.relayr.framework";
 
 + (NSObject <NSCoding>*)objectForKey:(NSString*)key
 {
-    if (!key) { [RLALog debug:dRLAErrorMessageMissingArgument]; return nil; }
+    if (!key) { [RLALog debug:RelayrErrorMissingArgument.localizedDescription]; return nil; }
     
     // Build keychain query dictionary (the key identifying the data stored is added to the query)
     NSMutableDictionary* queryDict = [NSMutableDictionary dictionaryWithDictionary:[RLAKeyChain keychainQueryWithKey:key]];
@@ -36,7 +36,7 @@ NSString* const kRLAKeyChainService = @"io.relayr.framework";
 + (void)setObject:(NSObject <NSCoding>*)object forKey:(NSString*)key
 {
     // Check arguments
-    if (!key || !object) { return [RLALog debug:dRLAErrorMessageMissingArgument]; }
+    if (!key || !object) { return [RLALog debug:RelayrErrorMissingArgument.localizedDescription]; }
     
     // Delete any previously stored value
     NSDictionary* queryDict = [RLAKeyChain keychainQueryWithKey:key];
@@ -44,19 +44,19 @@ NSString* const kRLAKeyChainService = @"io.relayr.framework";
     
     // Append data which should be stored to query dictionary
     NSData* data = [NSKeyedArchiver archivedDataWithRootObject:object];
-    if (!data) { return [RLALog debug:dRLAErrorMessageMissingExpectedValue]; }
+    if (!data) { return [RLALog debug:RelayrErrorMissingExpectedValue.localizedDescription]; }
     
     NSMutableDictionary* mutableQuery = queryDict.mutableCopy;
     mutableQuery[(__bridge id)kSecValueData] = data;
     OSStatus const addStatus = SecItemAdd((__bridge CFDictionaryRef)[NSDictionary dictionaryWithDictionary:mutableQuery], NULL);
     
-    if (addStatus != errSecSuccess) { [RLALog debug:dRLAErrorMessageMissingExpectedValue]; }
+    if (addStatus != errSecSuccess) { [RLALog debug:RelayrErrorMissingExpectedValue.localizedDescription]; }
 }
 
 + (void)removeObjectForKey:(NSString *)key
 {
     // Check arguments
-    if (!key) { return [RLALog debug:dRLAErrorMessageMissingArgument]; }
+    if (!key) { return [RLALog debug:RelayrErrorMissingArgument.localizedDescription]; }
     
     // Delete stored value
     SecItemDelete((__bridge CFDictionaryRef)[RLAKeyChain keychainQueryWithKey:key]);

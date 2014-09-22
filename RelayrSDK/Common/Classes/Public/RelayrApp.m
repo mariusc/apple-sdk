@@ -7,7 +7,7 @@
 #import "RLAWebService.h"       // Relayr.framework (Web)
 #import "RLAWebService+Cloud.h" // Relayr.framework (Web)
 #import "RLAWebService+App.h"   // Relayr.framework (Web)
-#import "RLAError.h"            // Relayr.framework (Utilities)
+#import "RelayrErrors.h"            // Relayr.framework (Utilities)
 #import "RLALog.h"              // Relayr.framework (Utilities)
 #import "RLAKeyChain.h"         // Relayr.framework (Utilities)
 
@@ -66,17 +66,17 @@ static NSString* const kCodingUsers = @"usr";
 
 + (void)appWithID:(NSString*)appID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI completion:(void (^)(NSError*, RelayrApp*))completion
 {
-    if (!completion) { return [RLALog debug:dRLAErrorMessageMissingArgument]; }
-    if (appID.length==0) { return completion(RLAErrorMissingArgument, nil); }
+    if (!completion) { return [RLALog debug:RelayrErrorMissingArgument.localizedDescription]; }
+    if (appID.length==0) { return completion(RelayrErrorMissingArgument, nil); }
     
     RelayrApp* result = [RelayrApp retrieveAppFromKeyChain:appID];
     if (result) { return completion(nil, result); }
     
     result = [[RelayrApp alloc] initWithID:appID OAuthClientSecret:clientSecret redirectURI:redirectURI];
-    if (!result) { return completion(RLAErrorSigningFailure, nil); }
+    if (!result) { return completion(RelayrErrorSigningFailure, nil); }
     
     [RLAWebService requestAppInfoFor:result.uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription) {
-        if ( ![result.uid isEqualToString:appID] ) { return completion(RLAErrorWebRequestFailure, nil); }
+        if ( ![result.uid isEqualToString:appID] ) { return completion(RelayrErrorWebRequestFailure, nil); }
         result.name = appName;
         result.appDescription = appDescription;
         completion(nil, result);
@@ -85,7 +85,7 @@ static NSString* const kCodingUsers = @"usr";
 
 + (BOOL)storeAppInKeyChain:(RelayrApp*)app
 {
-    if (!app.uid || !app.oauthClientSecret || !app.redirectURI) { [RLALog debug:dRLAErrorMessageMissingArgument]; return NO; }
+    if (!app.uid || !app.oauthClientSecret || !app.redirectURI) { [RLALog debug:RelayrErrorMissingArgument.localizedDescription]; return NO; }
     NSMutableArray* storedApps = [RelayrApp storedRelayrApps];
     
     if (storedApps.count)
@@ -127,13 +127,13 @@ static NSString* const kCodingUsers = @"usr";
 
 - (void)queryForAppInfoWithUserCredentials:(RelayrUser*)user completion:(void (^)(NSError*, NSString*, NSString*))completion
 {
-    if (!user) { if (completion) { completion(RLAErrorMissingArgument, nil, nil); } return; }
+    if (!user) { if (completion) { completion(RelayrErrorMissingArgument, nil, nil); } return; }
     
     __weak RelayrApp* weakSelf = self;
     [RLAWebService requestAppInfoFor:_uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription) {
         __strong RelayrApp* strongSelf = weakSelf;
         
-        if ( ![strongSelf.uid isEqualToString:appID] ) { return completion(RLAErrorWebRequestFailure, nil, nil); }
+        if ( ![strongSelf.uid isEqualToString:appID] ) { return completion(RelayrErrorWebRequestFailure, nil, nil); }
         NSString* pName = strongSelf.name, * pDesc = strongSelf.description;
         strongSelf.name = appName; strongSelf.appDescription = appDescription;
         completion(nil, pName, pDesc);
@@ -147,7 +147,7 @@ static NSString* const kCodingUsers = @"usr";
 
 - (RelayrUser*)loggedUserWithRelayrID:(NSString*)relayrID
 {
-    if (!relayrID || relayrID.length==0) { [RLALog debug:RLAErrorMissingArgument.localizedDescription]; return nil; }
+    if (!relayrID || relayrID.length==0) { [RLALog debug:RelayrErrorMissingArgument.localizedDescription]; return nil; }
     
     RelayrUser* result;
     NSArray* loggedUsers = self.loggedUsers;
@@ -168,10 +168,10 @@ static NSString* const kCodingUsers = @"usr";
         
         [RLAWebService requestOAuthTokenWithOAuthCode:tmpCode OAuthClientID:weakSelf.uid OAuthClientSecret:weakSelf.oauthClientSecret redirectURI:weakSelf.redirectURI completion:^(NSError* error, NSString* token) {
             if (error) { if (completion) { completion(error, nil); } return; }
-            if (!token.length) { if (completion) { completion(RLAErrorMissingArgument, nil); } return; }
+            if (!token.length) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
             
             RelayrUser* serverUser = [[RelayrUser alloc] initWithToken:token];
-            if (!serverUser) { if (completion) { completion(RLAErrorMissingExpectedValue,nil); } return; }
+            if (!serverUser) { if (completion) { completion(RelayrErrorMissingExpectedValue,nil); } return; }
             
             // If the user wasn't logged, retrieve the basic information.
             [serverUser queryCloudForUserInfo:^(NSError *error, NSString* previousName, NSString* previousEmail) {

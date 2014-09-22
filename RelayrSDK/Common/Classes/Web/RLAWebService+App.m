@@ -5,7 +5,7 @@
 #import "RelayrUser.h"              // Relayr.framework (Public)
 #import "RLAWebRequest.h"           // Relayr.framework (Web)
 #import "RLAWebConstants.h"         // Relayr.framework (Web)
-#import "RLAError.h"                // Relayr.framework (Utilities)
+#import "RelayrErrors.h"                // Relayr.framework (Utilities)
 
 @implementation RLAWebService (App)
 
@@ -14,10 +14,10 @@
 + (void)requestAppInfoFor:(NSString*)appID completion:(void (^)(NSError*, NSString*, NSString*, NSString*))completion
 {
     if (!completion) { return; }
-    if (!appID.length) { return completion(RLAErrorMissingArgument, nil, nil, nil); }
+    if (!appID.length) { return completion(RelayrErrorMissingArgument, nil, nil, nil); }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:[NSURL URLWithString:Web_Host]];
-    if (!request) { return completion(RLAErrorWebRequestFailure, nil, nil, nil); }
+    if (!request) { return completion(RelayrErrorWebRequestFailure, nil, nil, nil); }
     request.relativePath = Web_RequestRelativePath_AppInfo(appID);
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
@@ -32,7 +32,7 @@
     if (!completion) { return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { return completion(RLAErrorWebRequestFailure, nil); }
+    if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_Apps;
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError *error, NSNumber *responseCode, NSData *data) {
@@ -51,10 +51,10 @@
 
 - (void)registerAppWithName:(NSString*)appName description:(NSString*)appDescription publisher:(NSString*)publisher redirectURI:(NSString*)redirectURI completion:(void (^)(NSError* error, RelayrApp* app))completion
 {
-    if (!appName.length || !publisher.length) { if (completion) { completion(RLAErrorMissingArgument, nil); } return; }
+    if (!appName.length || !publisher.length) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { if (completion) { completion(RLAErrorWebRequestFailure, nil); } return; }
+    if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure, nil); } return; }
     request.relativePath = Web_RequestRelativePath_AppRegistration;
     
     NSMutableDictionary* body = [NSMutableDictionary dictionaryWithDictionary:@{ Web_RequestBodyKey_AppName : appName, Web_RequestBodyKey_AppPublisher : publisher }];
@@ -66,39 +66,39 @@
         NSDictionary* json = processRequest(Web_RequestResponseCode_AppRegistration, nil);
         
         RelayrApp* result = [RLAWebService parseAppFromJSONDictionary:json];
-        return (!result) ? completion(RLAErrorRequestParsingFailure, nil) : completion(nil, result);
+        return (!result) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, result);
     }];
 }
 
 - (void)requestApp:(NSString*)appID completion:(void (^)(NSError* error, RelayrApp* app))completion
 {
     if (!completion) { return; }
-    if (!appID.length) { return completion(RLAErrorMissingArgument, nil); }
+    if (!appID.length) { return completion(RelayrErrorMissingArgument, nil); }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { return completion(RLAErrorWebRequestFailure, nil); }
+    if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_AppInfoExtended(appID);
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
         NSDictionary* json = processRequest(Web_RequestResponseCode_AppInfo, nil);
         
         RelayrApp* result = [RLAWebService parseAppFromJSONDictionary:json];
-        return (!result) ? completion(RLAErrorRequestParsingFailure, nil) : completion(nil, result);
+        return (!result) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, result);
     }];
 }
 
 - (void)setApp:(NSString*)appID name:(NSString*)appName description:(NSString*)appDescription redirectURI:(NSString*)redirectURI completion:(void (^)(NSError* error, RelayrApp* app))completion
 {
-    if (!appID.length) { if (completion) { completion(RLAErrorMissingArgument, nil); } return; }
+    if (!appID.length) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
     
     NSMutableDictionary* tmpDict = [[NSMutableDictionary alloc] init];
     if (appName.length) { tmpDict[Web_RequestBodyKey_AppName] = appName; }
     if (appDescription.length) { tmpDict[Web_RequestBodyKey_AppDescription] = appDescription; }
     if (redirectURI.length) { tmpDict[Web_RequestBodyKey_AppRedirectURI] = redirectURI; }
-    if (!tmpDict.count) { if (completion) { completion(RLAErrorMissingArgument, nil); } return; }
+    if (!tmpDict.count) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { if (completion) { completion(RLAErrorMissingArgument, nil); } return; }
+    if (!request) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
     request.relativePath = Web_RequestRelativePath_AppInfoSet(appID);
     request.body = [NSDictionary dictionaryWithDictionary:tmpDict];
     
@@ -106,17 +106,17 @@
         NSDictionary* json = processRequest(Web_RequestResponseCode_AppInfoSet, nil);
         
         RelayrApp* result = [RLAWebService parseAppFromJSONDictionary:json];
-        return (!result) ? completion(RLAErrorRequestParsingFailure, nil) : completion(nil, result);
+        return (!result) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, result);
     }];
 }
 
 - (void)setConnectionBetweenApp:(NSString*)appID andDevice:(NSString*)deviceID completion:(void (^)(NSError* error, id credentials))completion
 {
     if (!completion) { return; }
-    if (!deviceID.length || !appID.length) { return completion(RLAErrorMissingArgument, nil); }
+    if (!deviceID.length || !appID.length) { return completion(RelayrErrorMissingArgument, nil); }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { return completion(RLAErrorWebRequestFailure, nil); }
+    if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_AppConnection(appID, deviceID);
     
     [request executeInHTTPMode:kRLAWebRequestModePOST completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
@@ -127,29 +127,29 @@
 
 - (void)deleteConnectionBetweenApp:(NSString*)appID andDevice:(NSString*)deviceID completion:(void (^)(NSError* error))completion
 {
-    if (!appID.length || !deviceID.length) { if (completion) { completion(RLAErrorMissingArgument); } return; }
+    if (!appID.length || !deviceID.length) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { if (completion) { completion(RLAErrorWebRequestFailure); } return; }
+    if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure); } return; }
     request.relativePath = Web_RequestRelativePath_AppDisconnect(appID, deviceID);
     
     [request executeInHTTPMode:kRLAWebRequestModeDELETE completion:(!completion) ? nil : ^(NSError *error, NSNumber *responseCode, NSData *data) {
         if (error) { return completion(error); }
-        return (responseCode.unsignedIntegerValue != Web_RequestResponseCode_AppDisconnect) ? completion(RLAErrorWebRequestFailure) : completion(nil);
+        return (responseCode.unsignedIntegerValue != Web_RequestResponseCode_AppDisconnect) ? completion(RelayrErrorWebRequestFailure) : completion(nil);
     }];
 }
 
 - (void)deleteApp:(NSString*)appID completion:(void (^)(NSError* error))completion
 {
-    if (!appID.length) { if (completion) { completion(RLAErrorMissingArgument); } return; }
+    if (!appID.length) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { if (completion) { completion(RLAErrorWebRequestFailure); } return; }
+    if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure); } return; }
     request.relativePath = Web_RequestRelativePath_AppDeletion(appID);
     
     [request executeInHTTPMode:kRLAWebRequestModeDELETE completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
         if (error) { return completion(error); }
-        return completion( (responseCode.unsignedIntegerValue != Web_RequestResponseCode_AppDeletion) ? RLAErrorWebRequestFailure : nil);
+        return completion( (responseCode.unsignedIntegerValue != Web_RequestResponseCode_AppDeletion) ? RelayrErrorWebRequestFailure : nil);
     }];
 }
 

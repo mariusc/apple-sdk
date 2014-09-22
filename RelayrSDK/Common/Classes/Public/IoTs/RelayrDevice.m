@@ -9,7 +9,7 @@
 #import "RelayrInput_Setup.h"       // Relayr.framework (Private)
 #import "RLAWebService.h"           // Relayr.framework (Web)
 #import "RLAWebService+Device.h"    // Relayr.framework (Web)
-#import "RLAError.h"                // Relayr.framework (Utilities)
+#import "RelayrErrors.h"                // Relayr.framework (Utilities)
 #import "RLALog.h"                  // Relayr.framework (Utilities)
 
 
