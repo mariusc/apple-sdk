@@ -4,10 +4,9 @@
 @interface RLAWebService (Wunderbar)
 
 /*!
- *  @abstract <#Brief intro#>
- *  @discussion <#Description with maybe some <code>Code</code> and links to other methods {@link method:name:}#>
+ *  @abstract Creates/Registers a transmitter entity and six devices on the server.
  *
- *  @param completion <#Description#>
+ *  @param completion Block indicating whether the operation was successful or not.
  *
  *  @see RLAWebService
  */

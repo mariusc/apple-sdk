@@ -1,6 +1,19 @@
 #pragma once
 
-#pragma mark - Wunderbar
+#pragma mark - Wunderbar requests
+
+#define Web_RequestRelativePath_WunderbarRegistration(userID)   [NSString stringWithFormat:@"/users/%@/wunderbar", userID]
+#define Web_RequestResponseCode_WunderbarRegistration           201
+
+#define Web_RespondKey_WunderbarMasterModule    @"masterModule"
+#define Web_RespondKey_WunderbarGyroscope       @"gyroscope"
+#define Web_RespondKey_WunderbarLight           @"light"
+#define Web_RespondKey_WunderbarMicrophone      @"microphone"
+#define Web_RespondKey_WunderbarThermomether    @"thermometer"
+#define Web_ResopndKey_WunderbarInfrared        @"infrared"
+#define Web_RespondKey_WunderbarBridge          @"bridge"
+
+#pragma mark - Wunderbar model IDs
 
 #define Wunderbar_devicemodel_gyroscope         @"173c44b5-334e-493f-8eb8-82c8cc65d29f"
 #define Wunderbar_devicemodel_light             @"a7ec1b21-8582-4304-b1cf-15a1fc66d1e8"

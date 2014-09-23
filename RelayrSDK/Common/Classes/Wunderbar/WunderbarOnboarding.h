@@ -1,5 +1,5 @@
 @import Foundation;             // Apple
-#import "RelayrOnboarding.h"    // Relayr.framework
+#import "Relayr/RelayrOnboarding.h"    // Relayr.framework
 
 /*!
  *  @abstract Performs the onboarding for Relayr Wunderbars.

@@ -5,17 +5,7 @@
 #import "RLAWebService+Parsing.h"   // Relayr.framework (Web)
 #import "RLAWebRequest.h"           // Relayr.framework (Web)
 #import "RelayrErrors.h"            // Relayr.framework (Utilities)
-
-#define Web_RequestRelativePath_WunderbarRegistration(userID)   [NSString stringWithFormat:@"/users/%@/wunderbar", userID]
-#define Web_RequestResponseCode_WunderbarRegistration           201
-
-#define Web_RespondKey_WunderbarMasterModule    @"masterModule"
-#define Web_RespondKey_WunderbarGyroscope       @"gyroscope"
-#define Web_RespondKey_WunderbarLight           @"light"
-#define Web_RespondKey_WunderbarMicrophone      @"microphone"
-#define Web_RespondKey_WunderbarThermomether    @"thermometer"
-#define Web_ResopndKey_WunderbarInfrared        @"infrared"
-#define Web_RespondKey_WunderbarBridge          @"bridge"
+#import "WunderbarConstants.h"      // Relayr.framework (Wunderbar)
 
 @implementation RLAWebService (Wunderbar)
 
@@ -50,19 +40,19 @@
     if (gyroscope) { [set addObject:gyroscope]; }
     
     RelayrDevice* light = [RLAWebService parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarLight]];
-    if (light) { [set addObject:gyroscope]; }
+    if (light) { [set addObject:light]; }
     
     RelayrDevice* mic = [RLAWebService parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarMicrophone]];
-    if (mic) { [set addObject:gyroscope]; }
+    if (mic) { [set addObject:mic]; }
     
     RelayrDevice* thermometer = [RLAWebService parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarThermomether]];
-    if (thermometer) { [set addObject:gyroscope]; }
+    if (thermometer) { [set addObject:thermometer]; }
     
     RelayrDevice* infrared = [RLAWebService parseDeviceFromJSONDictionary:jsonDict[Web_ResopndKey_WunderbarInfrared]];
-    if (infrared) { [set addObject:gyroscope]; }
+    if (infrared) { [set addObject:infrared]; }
     
     RelayrDevice* bridge = [RLAWebService parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarBridge]];
-    if (bridge) { [set addObject:gyroscope]; }
+    if (bridge) { [set addObject:bridge]; }
     
     masterModule.devices = set;
     return masterModule;
