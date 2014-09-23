@@ -53,16 +53,22 @@
  *  @discussion The onboarding process writes in physical memory of the targeted transmitter the properties needed for the device to be a full member of the Relayr Cloud.
  *
  *  @param onboardingClass Class in charge of the onboarding process. This class "knows" how to talk to the specific transmitter.
+ *  @param timeout The seconds that the onboarding process can span. If the onboarding process hasn't finished by the specified seconds, the completion block will be executed.
+ *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. If a negative number is passed, then the block is returned with a proper error.
+ *  @param options Specific options for the transmitter you are onboarding. The specific <code>RelayrOnboarding</code> class will list all the additional variables needed for a correct onboarding.
  *  @param completion Block indicating whether the onboarding process was successful or not.
  */
-- (void)onboardWithClass:(Class <RelayrOnboarding>)onboardingClass completion:(void (^)(NSError* error))completion;
+- (void)onboardWithClass:(Class <RelayrOnboarding>)onboardingClass timeout:(NSNumber*)timeout options:(NSDictionary*)options completion:(void (^)(NSError* error))completion;
 
 /*!
  *  @abstract Performs a firmware update to a specific transmitter.
  *
  *  @param updateClass Class in charge of the firmware update process. This class "knows" how to talk to the specific transmitter.
+ *  @param timeout The seconds that the onboarding process can span. If the onboarding process hasn't finished by the specified seconds, the completion block will be executed.
+ *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. If a negative number is passed, then the block is returned with a proper error.
+ *  @param options Specific options for the transmitter you are onboarding. The specific <code>RelayrFirmwareUpdate</code> class will list all the additional variables needed for a correct onboarding.
  *  @param completion Block indicating whether the update process was successful or not.
  */
-- (void)updateFirmwareWithClass:(Class <RelayrFirmwareUpdate>)updateClass completion:(void (^)(NSError* error))completion;
+- (void)updateFirmwareWithClass:(Class <RelayrFirmwareUpdate>)updateClass timeout:(NSNumber*)timeout options:(NSDictionary*)options completion:(void (^)(NSError* error))completion;
 
 @end

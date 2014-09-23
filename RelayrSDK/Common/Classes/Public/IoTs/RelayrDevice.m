@@ -56,14 +56,14 @@ static NSString* const kCodingSecret = @"sec";
 
 #pragma mark Processes
 
-- (void)onboardWithClass:(Class <RelayrOnboarding>)onboardingClass completion:(void (^)(NSError* error))completion
+- (void)onboardWithClass:(Class <RelayrOnboarding>)onboardingClass timeout:(NSNumber*)timeout options:(NSDictionary*)options completion:(void (^)(NSError* error))completion
 {
-    [onboardingClass launchOnboardingProcessForDevice:self timeout:nil completion:completion];
+    [onboardingClass launchOnboardingProcessForDevice:self timeout:timeout options:options completion:completion];
 }
 
-- (void)updateFirmwareWithClass:(Class)updateClass completion:(void (^)(NSError* error))completion
+- (void)updateFirmwareWithClass:(Class <RelayrFirmwareUpdate>)updateClass timeout:(NSNumber*)timeout options:(NSDictionary*)options completion:(void (^)(NSError* error))completion
 {
-    [updateClass launchFirmwareUpdateProcessForDevice:self timeout:nil completion:completion];
+    [updateClass launchFirmwareUpdateProcessForDevice:self timeout:timeout options:options completion:completion];
 }
 
 #pragma mark Subscription

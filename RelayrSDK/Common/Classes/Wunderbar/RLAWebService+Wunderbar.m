@@ -1,0 +1,71 @@
+#import "RLAWebService+Wunderbar.h" // Header
+#import "RelayrUser.h"              // Relayr.framework (Public)
+#import "RelayrTransmitter.h"       // Relayr.framework (Public)
+#import "RelayrTransmitter_Setup.h" // Relayr.framework (Private)
+#import "RLAWebService+Parsing.h"   // Relayr.framework (Web)
+#import "RLAWebRequest.h"           // Relayr.framework (Web)
+#import "RelayrErrors.h"            // Relayr.framework (Utilities)
+
+#define Web_RequestRelativePath_WunderbarRegistration(userID)   [NSString stringWithFormat:@"/users/%@/wunderbar", userID]
+#define Web_RequestResponseCode_WunderbarRegistration           201
+
+#define Web_RespondKey_WunderbarMasterModule    @"masterModule"
+#define Web_RespondKey_WunderbarGyroscope       @"gyroscope"
+#define Web_RespondKey_WunderbarLight           @"light"
+#define Web_RespondKey_WunderbarMicrophone      @"microphone"
+#define Web_RespondKey_WunderbarThermomether    @"thermometer"
+#define Web_ResopndKey_WunderbarInfrared        @"infrared"
+#define Web_RespondKey_WunderbarBridge          @"bridge"
+
+@implementation RLAWebService (Wunderbar)
+
+#pragma mark - Public API
+
+- (void)registerWunderbar:(void (^)(NSError* error, RelayrTransmitter* transmitter))completion
+{
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure, nil); } return; }
+    request.relativePath = Web_RequestRelativePath_WunderbarRegistration(self.user.uid);
+    
+    [request executeInHTTPMode:kRLAWebRequestModePOST completion:(!completion) ? nil : ^(NSError *error, NSNumber *responseCode, NSData *data) {
+        NSDictionary* json = processRequest(Web_RequestResponseCode_WunderbarRegistration, nil);
+        
+        RelayrTransmitter* result = [RLAWebService parseWunderbarFromJSONDictionary:json];
+        return (!result) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, result);
+    }];
+}
+
+#pragma mark - Private methods
+
++ (RelayrTransmitter*)parseWunderbarFromJSONDictionary:(NSDictionary*)jsonDict
+{
+    if (!jsonDict) { return nil; }
+    
+    RelayrTransmitter* masterModule = [RLAWebService parseTransmitterFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarMasterModule]];
+    if (!masterModule) { return nil; }
+    
+    NSMutableSet* set = [NSMutableSet setWithCapacity:6];
+    
+    RelayrDevice* gyroscope = [RLAWebService parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarGyroscope]];
+    if (gyroscope) { [set addObject:gyroscope]; }
+    
+    RelayrDevice* light = [RLAWebService parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarLight]];
+    if (light) { [set addObject:gyroscope]; }
+    
+    RelayrDevice* mic = [RLAWebService parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarMicrophone]];
+    if (mic) { [set addObject:gyroscope]; }
+    
+    RelayrDevice* thermometer = [RLAWebService parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarThermomether]];
+    if (thermometer) { [set addObject:gyroscope]; }
+    
+    RelayrDevice* infrared = [RLAWebService parseDeviceFromJSONDictionary:jsonDict[Web_ResopndKey_WunderbarInfrared]];
+    if (infrared) { [set addObject:gyroscope]; }
+    
+    RelayrDevice* bridge = [RLAWebService parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarBridge]];
+    if (bridge) { [set addObject:gyroscope]; }
+    
+    masterModule.devices = set;
+    return masterModule;
+}
+
+@end

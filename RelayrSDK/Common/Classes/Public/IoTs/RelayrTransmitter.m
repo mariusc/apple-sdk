@@ -4,7 +4,7 @@
 #import "RelayrDevice.h"            // Relayr.framework (Public)
 #import "RelayrOnboarding.h"        // Relayr.framework (Public)
 #import "RelayrFirmwareUpdate.h"    // Relayr.framework (Public)
-#import "RelayrErrors.h"                // Relayr.framework (Utilities)
+#import "RelayrErrors.h"            // Relayr.framework (Utilities)
 
 static NSString* const kCodingID = @"uid";
 static NSString* const kCodingSecret = @"sec";
@@ -48,16 +48,16 @@ static NSString* const kCodingDevices = @"dev";
 
 #pragma mark Processes
 
-- (void)onboardWithClass:(Class <RelayrOnboarding>)onboardingClass completion:(void (^)(NSError* error))completion
+- (void)onboardWithClass:(Class<RelayrOnboarding>)onboardingClass timeout:(NSNumber *)timeout options:(NSDictionary*)options completion:(void (^)(NSError*))completion
 {
     if (!onboardingClass) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
-    [onboardingClass launchOnboardingProcessForTransmitter:self timeout:nil completion:completion];
+    [onboardingClass launchOnboardingProcessForTransmitter:self timeout:timeout options:options completion:completion];
 }
 
-- (void)updateFirmwareWithClass:(Class)updateClass completion:(void (^)(NSError* error))completion
+- (void)updateFirmwareWithClass:(Class<RelayrFirmwareUpdate>)updateClass timeout:(NSNumber*)timeout options:(NSDictionary*)options completion:(void (^)(NSError *))completion
 {
     if (!updateClass) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
-    [updateClass launchFirmwareUpdateProcessForTransmitter:self timeout:nil completion:completion];
+    [updateClass launchFirmwareUpdateProcessForTransmitter:self timeout:timeout options:options completion:completion];
 }
 
 #pragma mark NSCoding
@@ -95,9 +95,9 @@ static NSString* const kCodingDevices = @"dev";
 
 /*******************************************************************************
  * It replaces/set the current managed devices by a newer set of devices.
- * If <code>futureDevices</code> is <code>nil</code>, the managed devices are unknown and thus no further working is performed.
- * If <code>futureDevices</code> is an empty set, the transmitter doesn't manage any device.
- * If <code>futureDevices</code> contains <code>RelayrDevice</code> objects, a replacing process will be launched.
+ * If <code>devices</code> is <code>nil</code>, the managed devices are unknown and thus no further working is performed.
+ * If <code>devices</code> is an empty set, the transmitter doesn't manage any device.
+ * If <code>devices</code> contains <code>RelayrDevice</code> objects, a replacing process will be launched.
  ******************************************************************************/
 - (void)replaceDevicesWith:(NSMutableSet*)devices
 {
