@@ -1,5 +1,10 @@
 #pragma once
 
+#pragma mark - Wunderbar onboarding options
+
+#define kWunderbarOnboardingOptionsWifiSSID     @"wifiSSID";
+#define kWunderbarOnboardingOptionsWifiPassword @"wifiPass";
+
 #pragma mark - Wunderbar requests
 
 #define Web_RequestRelativePath_WunderbarRegistration(userID)   [NSString stringWithFormat:@"/users/%@/wunderbar", userID]
@@ -26,13 +31,21 @@
 
 #define Wunderbar_transmitter_setupTimeout      10
 #define Wunderbar_transmitter_setupService      @"2000"
-#define Wunderbar_transmitter_setupCharacteristic_htuGyroLightPasskey @"2010"
-#define Wunderbar_transmitter_setupCharacteristic_micBridIRPasskey  @"2011"
-#define Wunderbar_transmitter_setupCharacteristic_wifiSSID          @"2012"
-#define Wunderbar_transmitter_setupCharacteristic_wifiPasskey       @"2013"
-#define Wunderbar_transmitter_setupCharacteristic_wunderbarID       @"2014"
-#define Wunderbar_transmitter_setupCharacteristic_wunderbarSecurity @"2015"
-#define Wunderbar_transmitter_setupCharacteristic_wunderbarURL      @"2016"
+#define Wunderbar_transmitter_setupCharacteristic_htuGyroLightPasskey   @"2010"
+#define Wunderbar_transmitter_setupCharacteristic_micBridIRPasskey      @"2011"
+#define Wunderbar_transmitter_setupCharacteristic_wifiSSID              @"2012"
+#define Wunderbar_transmitter_setupCharacteristic_wifiPasskey           @"2013"
+#define Wunderbar_transmitter_setupCharacteristic_wunderbarID           @"2014"
+#define Wunderbar_transmitter_setupCharacteristic_wunderbarSecurity     @"2015"
+#define Wunderbar_transmitter_setupCharacteristic_wunderbarURL          @"2016"
+
+#define Wunderbar_transmitter_setupCharacteristic_htuGyroLightPasskey_length    19
+#define Wunderbar_transmitter_setupCharacteristic_micBridIRPasskey_length       19
+#define Wunderbar_transmitter_setupCharacteristic_wifiSSID_length               20
+#define Wunderbar_transmitter_setupCharacteristic_wifiPasskey_length            20
+#define Wunderbar_transmitter_setupCharacteristic_wunderbarID_length            17
+#define Wunderbar_transmitter_setupCharacteristic_wunderbarSecurity_length      13
+#define Wunderbar_transmitter_setupCharacteristic_wunderbarURL_length           20
 
 #define Wunderbar_device_setupTimeout           10
 #define Wunderbar_device_setupService           @"2001"
