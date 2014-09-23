@@ -68,24 +68,20 @@
     NSString* modelID;
     NSDictionary* modelDict;
     
-    NSLog(@"The model object is an instance from class: %@\ndescription: %@" [(jsonDict[Web_RespondKey_DeviceModel]) className], jsonDict);
-    
     id tmp = jsonDict[Web_RespondKey_DeviceModel];
-    if ([modelID isKindOfClass:[NSDictionary class]])
+    if ([tmp isKindOfClass:[NSDictionary class]])
     {
         modelDict = tmp;
         modelID = modelDict[Web_RespondKey_ModelID];
-        NSLog(@"The jsonDict is a dictionary");
     }
     else if ([tmp isKindOfClass:[NSString class]])
     {
         modelID = tmp;
-        NSLog(@"The jsonDict is a string");
     }
-    else { NSLog(@"Error 1!!!! the jsonDict is nothing\n"); return nil; }
+    else { return nil; }
     
     RelayrDevice* device = [[RelayrDevice alloc] initWithID:jsonDict[Web_RespondKey_DeviceID] modelID:modelID];
-    if (!device) { NSLog(@"Error 2!!!!"); return nil; }
+    if (!device) { return nil; }
     
     device.name = jsonDict[Web_RespondKey_DeviceName];
     device.owner = jsonDict[Web_RespondKey_DeviceOwner];

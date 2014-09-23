@@ -33,7 +33,6 @@ NSTimeInterval const scanningPeriod = 3.0;
 //        [_centralManager scanForPeripheralsWithServices:nil options:nil];
 //        [NSTimer scheduledTimerWithTimeInterval:scanningPeriod target:self selector:@selector(stopScanning) userInfo:nil repeats:NO];
 //    }
-    
 }
 
 - (void)stopScanning
