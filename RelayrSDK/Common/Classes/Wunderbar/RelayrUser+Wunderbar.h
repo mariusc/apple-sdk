@@ -1,4 +1,4 @@
-#import "RelayrUser.h"
+#import <Relayr/RelayrUser.h>
 
 @interface RelayrUser (Wunderbar)
 

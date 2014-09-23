@@ -126,6 +126,46 @@ static NSString* const kCodingPublishers = @"pub";
     }];
 }
 
+- (void)addTransmitter:(RelayrTransmitter*)transmitter
+{
+    if (!_transmitters)
+    {
+        _transmitters = [NSSet setWithObject:transmitter];
+    }
+    else
+    {
+        NSString* transmitterID = transmitter.uid;
+        for (RelayrTransmitter* storedTransmitter in _transmitters)
+        {
+            if (storedTransmitter.uid == transmitterID) { return [storedTransmitter setWith:transmitter]; }
+        }
+        
+        NSMutableSet* tmpSet = [NSMutableSet setWithSet:_transmitters];
+        [tmpSet addObject:transmitter];
+        _transmitters = [NSSet setWithSet:tmpSet];
+    }
+}
+
+- (void)addDevice:(RelayrDevice*)device
+{
+    if (!_devices)
+    {
+        _devices = [NSSet setWithObject:device];
+    }
+    else
+    {
+        NSString* deviceID = device.uid;
+        for (RelayrDevice* storedDevice in _devices)
+        {
+            if (storedDevice.uid == deviceID) { return [storedDevice setWith:device]; }
+        }
+        
+        NSMutableSet* tmpSet = [NSMutableSet setWithSet:_devices];
+        [tmpSet addObject:device];
+        _devices = [NSSet setWithSet:tmpSet];
+    }
+}
+
 #pragma mark NSCoding
 
 - (id)initWithCoder:(NSCoder*)decoder
@@ -191,46 +231,6 @@ static NSString* const kCodingPublishers = @"pub";
     // TODO: Fill up
     
     return isThereChanges;
-}
-
-- (void)addTransmitter:(RelayrTransmitter*)transmitter
-{
-    if (!_transmitters)
-    {
-        _transmitters = [NSSet setWithObject:transmitter];
-    }
-    else
-    {
-        NSString* transmitterID = transmitter.uid;
-        for (RelayrTransmitter* storedTransmitter in _transmitters)
-        {
-            if (storedTransmitter.uid == transmitterID) { return [storedTransmitter setWith:transmitter]; }
-        }
-        
-        NSMutableSet* tmpSet = [NSMutableSet setWithSet:_transmitters];
-        [tmpSet addObject:transmitter];
-        _transmitters = [NSSet setWithSet:tmpSet];
-    }
-}
-
-- (void)addDevice:(RelayrDevice*)device
-{
-    if (!_devices)
-    {
-        _devices = [NSSet setWithObject:device];
-    }
-    else
-    {
-        NSString* deviceID = device.uid;
-        for (RelayrDevice* storedDevice in _devices)
-        {
-            if (storedDevice.uid == deviceID) { return [storedDevice setWith:device]; }
-        }
-        
-        NSMutableSet* tmpSet = [NSMutableSet setWithSet:_devices];
-        [tmpSet addObject:device];
-        _devices = [NSSet setWithSet:tmpSet];
-    }
 }
 
 @end

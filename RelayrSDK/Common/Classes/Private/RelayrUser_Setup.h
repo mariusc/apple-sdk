@@ -73,4 +73,24 @@
  */
 @property (readwrite,nonatomic) NSSet* devicesBookmarked;
 
+/*!
+ *  @abstract Adds a transmitter to the transmitters own by the user.
+ *  @discussion If a transmitter with the same uid is already there, no transmitter is added, but the previous transmitter is updated with the info of the new transmitter.
+ *
+ *  @param transmitter Transmitter to add to the user.
+ *
+ *  @see RelayrTransmitter
+ */
+- (void)addTransmitter:(RelayrTransmitter*)transmitter;
+
+/*!
+ *  @abstract Adds a device to the devices own by the user.
+ *  @discussion If a device with the same uid is already there, no device is added, but the previous device is updated with the info of the new device.
+ *
+ *  @param device <code>RelayrDevice</code> entity to add to the user.
+ *
+ *  @see RelayrDevice
+ */
+- (void)addDevice:(RelayrDevice*)device;
+
 @end

@@ -9,8 +9,11 @@
 - (void)registerWunderbarWithName:(NSString*)name completion:(void (^)(NSError* error, RelayrTransmitter* transmitter))completion
 {
     [self.webService registerWunderbar:^(NSError* error, RelayrTransmitter* transmitter) {
-#warning Properly implement
-        self.devices = transmitter.devices;
+        [self addTransmitter:transmitter];
+        for (RelayrDevice* device in transmitter.devices)
+        {
+            [self addDevice:device];
+        }
         completion(error, transmitter);
     }];
 }
