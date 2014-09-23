@@ -2,8 +2,8 @@
 
 #pragma mark - Wunderbar onboarding options
 
-#define kWunderbarOnboardingOptionsWifiSSID     @"wifiSSID";
-#define kWunderbarOnboardingOptionsWifiPassword @"wifiPass";
+FOUNDATION_EXPORT NSString* const kWunderbarOnboardingOptionsWifiSSID;
+FOUNDATION_EXPORT NSString* const kWunderbarOnboardingOptionsWifiPassword;
 
 #pragma mark - Wunderbar requests
 
