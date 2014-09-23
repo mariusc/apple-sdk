@@ -68,6 +68,8 @@
     NSString* modelID;
     NSDictionary* modelDict;
     
+    NSLog(@"The model object is an instance from class: %@\ndescription: %@" [(jsonDict[Web_RespondKey_DeviceModel]) className], jsonDict);
+    
     id tmp = jsonDict[Web_RespondKey_DeviceModel];
     if ([modelID isKindOfClass:[NSDictionary class]])
     {

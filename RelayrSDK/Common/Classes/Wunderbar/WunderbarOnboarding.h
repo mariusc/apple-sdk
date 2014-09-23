@@ -19,7 +19,9 @@
  *
  *  @see RelayrTransmitter
  */
-+ (void)launchOnboardingProcessForTransmitter:(RelayrTransmitter*)transmitter timeout:(NSNumber*)timeout completion:(void (^)(NSError* error))completion;
++ (void)launchOnboardingProcessForTransmitter:(RelayrTransmitter*)transmitter
+                                      timeout:(NSNumber*)timeout
+                                   completion:(void (^)(NSError* error))completion;
 
 /*!
  *  @abstract This method will launch a process to onboard a specific <code>RelayrDevice</code>.
@@ -32,6 +34,8 @@
  *
  *  @see RelayrDevice
  */
-+ (void)launchOnboardingProcessForDevice:(RelayrDevice*)device timeout:(NSNumber*)timeout completion:(void (^)(NSError* error))completion;
++ (void)launchOnboardingProcessForDevice:(RelayrDevice*)device
+                                 timeout:(NSNumber*)timeout
+                              completion:(void (^)(NSError* error))completion;
 
 @end

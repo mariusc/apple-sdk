@@ -58,7 +58,8 @@
  *
  *  @see RelayrDeviceModel
  */
-+ (RelayrDeviceModel*)parseDeviceModelFromJSONDictionary:(NSDictionary*)jsonDict inDeviceObject:(RelayrDevice*)device;
++ (RelayrDeviceModel*)parseDeviceModelFromJSONDictionary:(NSDictionary*)jsonDict
+                                          inDeviceObject:(RelayrDevice*)device;
 
 /*!
  *  @abstract Parse a JSON dictionary into a <code>RelayrFirmware</code> object.
@@ -78,6 +79,7 @@
  *
  *  @see RelayrFirmwareModel
  */
-+ (RelayrFirmwareModel*)parseFirmwareModelFromJSONDictionary:(NSDictionary*)jsonDict inFirmwareObject:(RelayrFirmware*)firmware;
++ (RelayrFirmwareModel*)parseFirmwareModelFromJSONDictionary:(NSDictionary*)jsonDict
+                                            inFirmwareObject:(RelayrFirmware*)firmware;
 
 @end
