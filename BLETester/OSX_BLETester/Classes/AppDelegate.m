@@ -27,12 +27,13 @@ NSTimeInterval const scanningPeriod = 3.0;
 
 - (IBAction)buttonPushed:(id)sender
 {
-    if (_centralManager.state == CBCentralManagerStatePoweredOn && !_isCentralManagerScanning)
-    {
-        _isCentralManagerScanning = YES;
-        [_centralManager scanForPeripheralsWithServices:nil options:nil];
-        [NSTimer scheduledTimerWithTimeInterval:scanningPeriod target:self selector:@selector(stopScanning) userInfo:nil repeats:NO];
-    }
+//    if (_centralManager.state == CBCentralManagerStatePoweredOn && !_isCentralManagerScanning)
+//    {
+//        _isCentralManagerScanning = YES;
+//        [_centralManager scanForPeripheralsWithServices:nil options:nil];
+//        [NSTimer scheduledTimerWithTimeInterval:scanningPeriod target:self selector:@selector(stopScanning) userInfo:nil repeats:NO];
+//    }
+    
 }
 
 - (void)stopScanning

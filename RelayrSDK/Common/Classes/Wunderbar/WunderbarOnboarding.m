@@ -1,27 +1,17 @@
 #import "WunderbarOnboarding.h"     // Header
 #import "RelayrTransmitter.h"       // Relayr.framework (Public)
 #import "RelayrDevice.h"            // Relayr.framework (Public)
-#import "RelayrErrors.h"                // Relayr.framework (Utilities)
+#import "RelayrErrors.h"            // Relayr.framework (Utilities)
 #import "RLALog.h"                  // Relayr.framework (Utilities)
 #import "CPlatforms.h"              // Relayr.framework (Utilities)
+#import "Wunderbar.h"               // Relayr.framework (Wunderbar)
+#import "WunderbarConstants.h"      // Relayr.framework (Wunderbar)
 
 #if defined(OS_APPLE_IOS) || defined(OS_APPLE_IOS_SIMULATOR)
 @import CoreBluetooth;              // Apple
 #elif defined (OS_APPLE_OSX)
 @import IOBluetooth;                // Apple
 #endif
-
-#define WunderbarOnboarding_transmitter_timeout         10
-#define WunderbarOnboarding_transmitter_service         @"2000"
-#define WunderbarOnboarding_transmitter_characteristic_htuGyroLightPasskey  @"2010"
-#define WunderbarOnboarding_transmitter_characteristic_micBridIRPasskey     @"2011"
-#define WunderbarOnboarding_transmitter_characteristic_wifiSSID             @"2012"
-#define WunderbarOnboarding_transmitter_characteristic_wifiPasskey          @"2013"
-#define WunderbarOnboarding_transmitter_characteristic_wunderbarID          @"2014"
-#define WunderbarOnboarding_transmitter_characteristic_wunderbarSecurity    @"2015"
-#define WunderbarOnboarding_transmitter_characteristic_wunderbarURL         @"2016"
-
-#define WunderbarOnboarding_device_timeout              10
 
 @interface WunderbarOnboarding () <CBPeripheralManagerDelegate,CBCentralManagerDelegate>
 @property (strong,nonatomic) void (^completion)(NSError* error);
@@ -46,7 +36,7 @@
 
 + (void)launchOnboardingProcessForTransmitter:(RelayrTransmitter*)transmitter timeout:(NSNumber*)timeout completion:(void (^)(NSError* error))completion
 {
-    NSTimeInterval const timeInterval = (!timeout) ? WunderbarOnboarding_transmitter_timeout : timeout.doubleValue;
+    NSTimeInterval const timeInterval = (!timeout) ? Wunderbar_transmitter_setupTimeout : timeout.doubleValue;
     if (!timeInterval <= 0.0) { if (completion) { completion(RelayrErrorMissingExpectedValue); } return; }
     
     WunderbarOnboarding* onboarding = [[WunderbarOnboarding alloc] initForTransmitter:transmitter withCompletion:completion];
@@ -60,7 +50,7 @@
 
 + (void)launchOnboardingProcessForDevice:(RelayrDevice*)device timeout:(NSNumber*)timeout completion:(void (^)(NSError* error))completion
 {
-    NSTimeInterval const timeInterval = (!timeout) ? WunderbarOnboarding_transmitter_timeout : timeout.doubleValue;
+    NSTimeInterval const timeInterval = (!timeout) ? Wunderbar_device_setupTimeout : timeout.doubleValue;
     if (!timeInterval <= 0.0) { if (completion) { completion(RelayrErrorMissingExpectedValue); } return; }
     
     WunderbarOnboarding* onboarding = [[WunderbarOnboarding alloc] initForDevice:device withCompletion:completion];
@@ -140,7 +130,7 @@
  ******************************************************************************/
 - (instancetype)initForTransmitter:(RelayrTransmitter*)transmitter withCompletion:(void (^)(NSError* error))completion
 {
-    if (!transmitter.uid.length) { return nil; }
+    if (!transmitter.uid.length || ![Wunderbar isWunderbar:transmitter]) { return nil; }
     
     self = [super init];
     if (self)
@@ -157,7 +147,7 @@
  ******************************************************************************/
 - (instancetype)initForDevice:(RelayrDevice*)device withCompletion:(void (^)(NSError* error))completion
 {
-    if (!device.uid.length) { return nil; }
+    if (!device.uid.length || ![Wunderbar isDeviceSupportedByWunderbar:device]) { return nil; }
     
     self = [super init];
     if (self)
@@ -207,15 +197,15 @@
 
 - (void)startAdvertisingToSetupTransmitterWith:(CBPeripheralManager*)peripheralManager
 {
-//    CBMutableService* service = [[CBMutableService alloc] initWithType:[CBUUID UUIDWithString:WunderbarOnboarding_transmitter_service] primary:YES];
+//    CBMutableService* service = [[CBMutableService alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupService] primary:YES];
 //    service.characteristics = @[
-//        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:WunderbarOnboarding_transmitter_characteristic_htuGyroLightPasskey] properties:CBCharacteristicPropertyRead value:<#(NSData *)#> permissions:CBAttributePermissionsReadable],
-//        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:WunderbarOnboarding_transmitter_characteristic_micBridIRPasskey] properties:CBCharacteristicPropertyRead value:<#(NSData *)#> permissions:CBAttributePermissionsReadable],
-//        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:WunderbarOnboarding_transmitter_characteristic_wifiSSID] properties:CBCharacteristicPropertyRead value:<#(NSData *)#> permissions:CBAttributePermissionsReadable],
-//        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:WunderbarOnboarding_transmitter_characteristic_wifiPasskey] properties:CBCharacteristicPropertyRead value:<#(NSData *)#> permissions:CBAttributePermissionsReadable],
-//        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:WunderbarOnboarding_transmitter_characteristic_wunderbarID] properties:CBCharacteristicPropertyRead value:<#(NSData *)#> permissions:CBAttributePermissionsReadable],
-//        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:WunderbarOnboarding_transmitter_characteristic_wunderbarSecurity] properties:CBCharacteristicPropertyRead value:<#(NSData *)#> permissions:CBAttributePermissionsReadable],
-//        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:WunderbarOnboarding_transmitter_characteristic_wunderbarURL] properties:CBCharacteristicPropertyRead value:<#(NSData *)#> permissions:CBAttributePermissionsReadable]
+//        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_htuGyroLightPasskey] properties:CBCharacteristicPropertyRead value:<#(NSData *)#> permissions:CBAttributePermissionsReadable],
+//        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_micBridIRPasskey] properties:CBCharacteristicPropertyRead value:<#(NSData *)#> permissions:CBAttributePermissionsReadable],
+//        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wifiSSID] properties:CBCharacteristicPropertyRead value:<#(NSData *)#> permissions:CBAttributePermissionsReadable],
+//        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wifiPasskey] properties:CBCharacteristicPropertyRead value:<#(NSData *)#> permissions:CBAttributePermissionsReadable],
+//        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wunderbarID] properties:CBCharacteristicPropertyRead value:<#(NSData *)#> permissions:CBAttributePermissionsReadable],
+//        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wunderbarSecurity] properties:CBCharacteristicPropertyRead value:<#(NSData *)#> permissions:CBAttributePermissionsReadable],
+//        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wunderbarURL] properties:CBCharacteristicPropertyRead value:<#(NSData *)#> permissions:CBAttributePermissionsReadable]
 //    ];
 //    
 //    [peripheralManager addService:service];

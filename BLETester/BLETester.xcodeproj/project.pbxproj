@@ -11,7 +11,23 @@
 		627CB2F819C702460084DE36 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 627CB2F019C702460084DE36 /* MainMenu.xib */; };
 		627CB2F919C702460084DE36 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 627CB2F319C702460084DE36 /* AppDelegate.m */; };
 		627CB2FA19C702460084DE36 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 627CB2F419C702460084DE36 /* main.m */; };
+		62B0B38A19D16F0200AD59BF /* Relayr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62B0B38919D16F0200AD59BF /* Relayr.framework */; };
+		62B0B38B19D16F0200AD59BF /* Relayr.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 62B0B38919D16F0200AD59BF /* Relayr.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		62B0B38719D16D8300AD59BF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				62B0B38B19D16F0200AD59BF /* Relayr.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		627CB2CC19C701BF0084DE36 /* OSX_BLETester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSX_BLETester.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -21,6 +37,7 @@
 		627CB2F319C702460084DE36 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		627CB2F419C702460084DE36 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		627CB2F619C702460084DE36 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		62B0B38919D16F0200AD59BF /* Relayr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = Relayr.framework; path = "/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug/Relayr.framework"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -28,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62B0B38A19D16F0200AD59BF /* Relayr.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,6 +111,7 @@
 		62C3932819C6E8B20007F902 = {
 			isa = PBXGroup;
 			children = (
+				62B0B38919D16F0200AD59BF /* Relayr.framework */,
 				627CB2CD19C701BF0084DE36 /* OSX_BLETester */,
 				62C3933219C6E8B20007F902 /* Products */,
 			);
@@ -116,6 +135,7 @@
 				627CB2C819C701BF0084DE36 /* Sources */,
 				627CB2C919C701BF0084DE36 /* Frameworks */,
 				627CB2CA19C701BF0084DE36 /* Resources */,
+				62B0B38719D16D8300AD59BF /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -188,6 +208,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -203,6 +227,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
+				);
 				INFOPLIST_FILE = OSX_BLETester/Configuration/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -295,6 +323,7 @@
 				627CB2E819C701BF0084DE36 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		62C3932C19C6E8B20007F902 /* Build configuration list for PBXProject "BLETester" */ = {
 			isa = XCConfigurationList;

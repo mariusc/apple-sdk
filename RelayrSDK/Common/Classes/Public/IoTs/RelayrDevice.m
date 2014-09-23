@@ -32,7 +32,7 @@ static NSString* const kCodingSecret = @"sec";
 
 - (instancetype)initWithID:(NSString*)uid modelID:(NSString*)modelID
 {
-    if ( uid.length==0 || modelID.length==0 ) { return nil; }
+    if ( !uid.length || !modelID.length ) { return nil; }
     
     self = [super initWithModelID:modelID];
     if (self)
@@ -63,7 +63,7 @@ static NSString* const kCodingSecret = @"sec";
 
 - (void)updateFirmwareWithClass:(Class)updateClass completion:(void (^)(NSError* error))completion
 {
-    [updateClass launchFirmwareUpdateProcessForDevice:self completion:completion];
+    [updateClass launchFirmwareUpdateProcessForDevice:self timeout:nil completion:completion];
 }
 
 #pragma mark Subscription

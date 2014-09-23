@@ -1,13 +1,13 @@
-@import Foundation;             // Apple
-@class RelayrTransmitter;       // Relayr.framework (Public)
-@class RelayrDevice;            // Relayr.framework (Public)
+@import Foundation;                 // Apple
+#import "RelayrFirmwareUpdate.h"    // Relayr.framework
 
 /*!
- *  @abstract Describes the minimum methods needed to support the Relayr firmware update process.
+ *  @abstract Performs the firmware update process for Relayr Wunderbars.
+ *
+ *  @see RelayrFirmwareUpdate
  */
-@protocol RelayrFirmwareUpdate <NSObject>
+@interface WunderbarFirmwareUpdate : NSObject
 
-@required
 /*!
  *  @abstract This method will launch a process to update the firmware of a specific <code>RelayrTransmitter</code>.
  *  @discussion The method MUST not modify the primal characteristics of the <code>RelayrTransmitter</code> entity passed as an argument.
@@ -21,7 +21,6 @@
  */
 + (void)launchFirmwareUpdateProcessForTransmitter:(RelayrTransmitter*)transmitter timeout:(NSNumber*)timeout completion:(void (^)(NSError* error))completion;
 
-@required
 /*!
  *  @abstract This method will launch a process to update the firmware of a specific <code>RelayrDevice</code>.
  *  @discussion The method MUST not modify the primal characteristics of the <code>RelayrDevice</code> entity passed as an argument.

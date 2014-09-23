@@ -8,7 +8,7 @@
  *  @see RelayrCloud
  */
 @interface TRelayrCloud : XCTestCase
-@property (readonly,nonatomic) NSTimeInterval networkTiemout;
+@property (readonly,nonatomic) NSTimeInterval networkTimeout;
 @property (readonly,nonatomic) NSString* userEmail;
 @end
 
@@ -19,7 +19,7 @@
 - (void)setUp
 {
     [super setUp];
-    _networkTiemout = 10;
+    _networkTimeout = 10;
     _userEmail = @"roberto@relayr.de";
 }
 
@@ -30,7 +30,7 @@
     XCTestExpectation* expectation = [self expectationWithDescription:nil];
     
     [RelayrCloud isReachable:^(NSError* error, NSNumber* isReachable) {
-        XCTAssertNil(error)
+        XCTAssertNil(error);
         XCTAssertNotNil(isReachable);
         [expectation fulfill];
     }];
@@ -45,6 +45,7 @@
     [RelayrCloud isUserWithEmail:self.userEmail registered:^(NSError* error, NSNumber* isUserRegistered) {
         XCTAssertNil(error);
         XCTAssertNotNil(isUserRegistered);
+        [expectation fulfill];
     }];
     
     [self waitForExpectationsWithTimeout:self.networkTimeout handler:nil];

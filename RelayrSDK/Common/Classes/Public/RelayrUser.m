@@ -119,7 +119,7 @@ static NSString* const kCodingPublishers = @"pub";
     if (!modelID || !firmwareVersion || !name) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
     
     __weak RelayrUser* weakSelf = self;
-    [_webService registerDeviceWithName:name owner:_uid model:modelID firmwareVersion:firmwareVersion completion:^(NSError *error, RelayrDevice *device) {
+    [_webService registerDeviceWithName:name owner:_uid model:modelID firmwareVersion:firmwareVersion completion:^(NSError* error, RelayrDevice* device) {
         if (error) { if (completion) { completion(error, nil); } return; }
         [weakSelf addDevice:device];
         if (completion) { completion(nil, device); }

@@ -57,7 +57,7 @@ static NSString* const kCodingDevices = @"dev";
 - (void)updateFirmwareWithClass:(Class)updateClass completion:(void (^)(NSError* error))completion
 {
     if (!updateClass) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
-    [updateClass launchFirmwareUpdateProcessForTransmitter:self completion:completion];
+    [updateClass launchFirmwareUpdateProcessForTransmitter:self timeout:nil completion:completion];
 }
 
 #pragma mark NSCoding

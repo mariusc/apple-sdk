@@ -1,6 +1,8 @@
 @import Cocoa;              // Apple
 @import XCTest;             // Apple
 #import <Relayr/Relayr.h>   // Relayr.framework
+#import "RLALog.h"          // Relayr.framework (Utilities)
+#import "RelayrUser_Setup.h"// Relayr.framework (Private)
 
 /*!
  *  @abstract Test the high-level methods of <code>RelayrUser</code> objects.
@@ -10,9 +12,23 @@
 @interface TRelayrUser : XCTestCase
 @end
 
+//RelayrApp* _relayrApp;
+//#define RelayrAppID
+//#define RelayrAppSecret
+//#define RelayrRedirectURI
+#define dRelayrUserToken     @""
+
 @implementation TRelayrUser
 
 #pragma mark - Setup
+
+//+ (void)setUp
+//{
+//    [RelayrApp appWithID:RelayrAppID OAuthClientSecret:RelayrAppSecret redirectURI:RelayrRedirectURI completion:^(NSError* error, RelayrApp* app) {
+//        if (error) { return [RLALog debu]; }
+//        _relayrApp = app;
+//    }];
+//}
 
 - (void)setUp
 {
@@ -26,22 +42,20 @@
     [super tearDown];
 }
 
+//+ (void)tearDown
+//{
+//    _relayrApp = nil;
+//}
+
 #pragma mark - Unit tests
 
-- (void)testExample
+- (void)test_registerDevice
 {
-    // This is an example of a functional test case.
-    XCTFail(nil);
-}
-
-#pragma mark - Performance
-
-- (void)testPerformanceExample
-{
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+//    RelayrUser* user = [[RelayrUser alloc] initWithToken:dRelayrUserToken];
+//    [user registerDeviceWithModelID:@"ecf6cf94-cb07-43ac-a85e-dccf26b48c86" firmwareVerion:@"1.0.0" name:@"Random name" completion:^(NSError* error, RelayrDevice* device) {
+//        XCTAssertNil(error);
+//        XCTAssertNotNil(device);
+//    }];
 }
 
 @end

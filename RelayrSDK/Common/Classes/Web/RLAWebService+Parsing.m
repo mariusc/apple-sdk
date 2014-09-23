@@ -73,15 +73,17 @@
     {
         modelDict = tmp;
         modelID = modelDict[Web_RespondKey_ModelID];
+        NSLog(@"The jsonDict is a dictionary");
     }
     else if ([tmp isKindOfClass:[NSString class]])
     {
         modelID = tmp;
+        NSLog(@"The jsonDict is a string");
     }
-    else { return nil; }
+    else { NSLog(@"Error 1!!!! the jsonDict is nothing\n"); return nil; }
     
     RelayrDevice* device = [[RelayrDevice alloc] initWithID:jsonDict[Web_RespondKey_DeviceID] modelID:modelID];
-    if (!device) { return nil; }
+    if (!device) { NSLog(@"Error 2!!!!"); return nil; }
     
     device.name = jsonDict[Web_RespondKey_DeviceName];
     device.owner = jsonDict[Web_RespondKey_DeviceOwner];

@@ -40,7 +40,7 @@ NSString* redirectURI;
 - (void)test_keyChain
 {
     // This is an example of a functional test case.
-    XCTFail(nil);
+    XCTFail();
 }
 
 #pragma mark - Performance
