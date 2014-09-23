@@ -167,6 +167,30 @@ NSString* const kWunderbarOnboardingOptionsWifiPassword = @"wifiPass";
 }
 
 /*******************************************************************************
+ * It transforms the Relayr ID of a transmitter/device from a String to a binary version.
+ * The Relayr ID of a server entity has a specific hexadecimal form, where groups are separated by dashes. To obtain the binary form, you need to remove the dashes and transform each par of character into a byte.
+ ******************************************************************************/
++ (NSData*)transformRelayrID:(NSString*)relayrID toBinaryWithMaximumLength:(size_t const)maximumLength
+{
+    char const* buffer = [[relayrID stringByReplacingOccurrencesOfString:@"-" withString:@""] cStringUsingEncoding:NSASCIIStringEncoding];
+    
+    size_t const length = strlen(buffer);
+    if (length%2 == 1) { return nil; }
+    
+    size_t const result_length = length/(size_t)2;
+    if (maximumLength > result_length) { return nil; }
+    unsigned char result[result_length];
+    
+    for (size_t i=0, j=0; i<length; i+=2, j+=1)
+    {
+        char const tmpString[] = { buffer[i], buffer[i+1], '\0' };
+        result[j] = (unsigned char)strtol(tmpString, NULL, 16);
+    }
+    
+    return [NSData dataWithBytes:result length:result_length];
+}
+
+/*******************************************************************************
  * It creates an onboarding process for a wunderbar transmitter.
  ******************************************************************************/
 - (instancetype)initForTransmitter:(RelayrTransmitter*)transmitter withOptions:(NSDictionary*)options completion:(void (^)(NSError* error))completion
@@ -209,33 +233,39 @@ NSString* const kWunderbarOnboardingOptionsWifiPassword = @"wifiPass";
 {
     CBMutableService* service = [[CBMutableService alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupService] primary:YES];
     
+    int8_t const flag1 = INT8_C(0x01);
+    int8_t const flag3 = INT8_C(0x07);
+    
     char htuGyroLightPasskey[Wunderbar_transmitter_setupCharacteristic_htuGyroLightPasskey_length];
     [[Wunderbar humidityTemperatureDeviceFromWunderbar:_transmitter].secret getCString:htuGyroLightPasskey maxLength:7 encoding:NSASCIIStringEncoding];
     [[Wunderbar gyroscopeDeviceFromWunderbar:_transmitter].secret getCString:(htuGyroLightPasskey + 6) maxLength:7 encoding:NSASCIIStringEncoding];
     [[Wunderbar lighProximityDeviceFromWunderbar:_transmitter].secret getCString:(htuGyroLightPasskey + 12) maxLength:7 encoding:NSASCIIStringEncoding];
-    htuGyroLightPasskey[Wunderbar_transmitter_setupCharacteristic_htuGyroLightPasskey_length - 1] = 0x07;
+    htuGyroLightPasskey[Wunderbar_transmitter_setupCharacteristic_htuGyroLightPasskey_length - 1] = flag3;
     
     char micBridIRPasskey[Wunderbar_transmitter_setupCharacteristic_micBridIRPasskey_length];
     [[Wunderbar microphoneDeviceFromWunderbar:_transmitter].secret getCString:micBridIRPasskey maxLength:7 encoding:NSASCIIStringEncoding];
     [[Wunderbar bridgeDeviceFromWunderbar:_transmitter].secret getCString:(micBridIRPasskey + 6) maxLength:7 encoding:NSASCIIStringEncoding];
     [[Wunderbar infraredDeviceFromWunderbar:_transmitter].secret getCString:(micBridIRPasskey + 12) maxLength:7 encoding:NSASCIIStringEncoding];
-    htuGyroLightPasskey[Wunderbar_transmitter_setupCharacteristic_micBridIRPasskey_length - 1] = 0x07;
+    htuGyroLightPasskey[Wunderbar_transmitter_setupCharacteristic_micBridIRPasskey_length - 1] = flag3;
     
     char wifiSSID[Wunderbar_transmitter_setupCharacteristic_wifiSSID_length];
     [((NSString*)_options[kWunderbarOnboardingOptionsWifiSSID]) getCString:wifiSSID maxLength:(Wunderbar_transmitter_setupCharacteristic_wifiSSID_length-1) encoding:NSASCIIStringEncoding];
-    wifiSSID[Wunderbar_transmitter_setupCharacteristic_wifiSSID_length - 1] = 0x01;
+    wifiSSID[Wunderbar_transmitter_setupCharacteristic_wifiSSID_length - 1] = flag1;
     
     char wifiPassword[Wunderbar_transmitter_setupCharacteristic_wifiPasskey_length];
     [((NSString*)_options[kWunderbarOnboardingOptionsWifiPassword]) getCString:wifiPassword maxLength:(Wunderbar_transmitter_setupCharacteristic_wifiPasskey_length-1) encoding:NSASCIIStringEncoding];
-    wifiPassword[Wunderbar_transmitter_setupCharacteristic_wifiPasskey_length - 1] = 0x01;
+    wifiPassword[Wunderbar_transmitter_setupCharacteristic_wifiPasskey_length - 1] = flag1;
     
-    char wunderbarID[Wunderbar_transmitter_setupCharacteristic_wunderbarID_length];
-    #warning Make the weird transformation to bytes
+    NSMutableData* wunderbarID = [NSMutableData dataWithData:[WunderbarOnboarding transformRelayrID:_transmitter.uid toBinaryWithMaximumLength:Wunderbar_transmitter_setupCharacteristic_wunderbarID_length]];
+    [wunderbarID appendBytes:&flag1 length:1];
     
     char wunderbarSecurity[Wunderbar_transmitter_setupCharacteristic_wunderbarSecurity_length];
-    
+    [_transmitter.secret getCString:wunderbarSecurity maxLength:Wunderbar_transmitter_setupCharacteristic_wunderbarSecurity_length encoding:NSASCIIStringEncoding];
+    wunderbarSecurity[Wunderbar_transmitter_setupCharacteristic_wunderbarSecurity_length - 1] = flag1;
     
     char wunderbarURL[Wunderbar_transmitter_setupCharacteristic_wunderbarURL_length];
+    [Wunderbar_MQTTServer getCString:wunderbarURL maxLength:Wunderbar_transmitter_setupCharacteristic_wunderbarURL_length encoding:NSASCIIStringEncoding];
+    wunderbarURL[Wunderbar_transmitter_setupCharacteristic_wunderbarURL_length - 1] = flag1;
     
     service.characteristics = @[
         // Size: 19 bytes (6 + 6 + 6 + 1 byte of flag).
@@ -252,20 +282,21 @@ NSString* const kWunderbarOnboardingOptionsWifiPassword = @"wifiPass";
         [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wifiPasskey] properties:CBCharacteristicPropertyRead value:[NSData dataWithBytes:wifiPassword length:Wunderbar_transmitter_setupCharacteristic_wifiPasskey_length] permissions:CBAttributePermissionsReadable],
         // Size: 17 bytes (16 without NULL character + 1 byte of flag).
         // Description: Contains the (short) UUID of the WunderBar and an update flag.
-        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wunderbarID] properties:CBCharacteristicPropertyRead value:[NSData dataWithBytes:wunderbarID length:Wunderbar_transmitter_setupCharacteristic_wunderbarID_length] permissions:CBAttributePermissionsReadable],
-        // Size: 13 bytes (12 + 1 byte of flag).
-        // Description: Contains the secret to conncet a particular Wunderbar to MQTT.
+        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wunderbarID] properties:CBCharacteristicPropertyRead value:[NSData dataWithData:wunderbarID] permissions:CBAttributePermissionsReadable],
+        // Size: 13 bytes (12 without NULL character + 1 byte of flag).
+        // Description: Contains the secret to connect a particular Wunderbar to MQTT.
         [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wunderbarSecurity] properties:CBCharacteristicPropertyRead value:[NSData dataWithBytes:wunderbarSecurity length:Wunderbar_transmitter_setupCharacteristic_wunderbarSecurity_length] permissions:CBAttributePermissionsReadable],
-        // Size: 20 bytes (terminating character and update_flag included).
+        // Size: 20 bytes (max characters: 19 including NULL character + 1 byte of flag).
         // Description: Contains the url of the MQTT server.
         [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wunderbarURL] properties:CBCharacteristicPropertyRead value:[NSData dataWithBytes:wunderbarURL length:Wunderbar_transmitter_setupCharacteristic_wunderbarURL_length] permissions:CBAttributePermissionsReadable]
     ];
     
     [peripheralManager addService:service];
-    #warning There are many "CBAdvertisementData". Explore them!
+
     [peripheralManager startAdvertising:@{
-        CBAdvertisementDataLocalNameKey     : @"<#name#>",
-        CBAdvertisementDataServiceUUIDsKey  : @[service.UUID]
+        CBAdvertisementDataLocalNameKey     : Wunderbar_peripheralAdvertisement_localName,
+        CBAdvertisementDataServiceUUIDsKey  : @[service.UUID]/*,
+        CBAdvertisementDataIsConnectable    : @YES */
     }];
 }
 
