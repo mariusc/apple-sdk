@@ -22,6 +22,8 @@ NSString* const kWunderbarOnboardingOptionsWifiPassword = @"wifiPass";
 @property (strong,nonatomic) NSTimer* timer;
 
 @property (strong,nonatomic) CBPeripheralManager* peripheralManager;
+@property (strong,nonatomic) CBService* peripheralManagerService;
+@property (strong,nonatomic) NSMutableSet* peripheralManagerCharacteristicsRead;
 @property (strong,nonatomic) RelayrTransmitter* transmitter;
 
 @property (strong,nonatomic) CBCentralManager* centralManager;
@@ -68,11 +70,12 @@ NSString* const kWunderbarOnboardingOptionsWifiPassword = @"wifiPass";
 
 #pragma mark CBPeripheralManagerDelegate
 
-- (void)peripheralManager:(CBPeripheralManager*)peripheral willRestoreState:(NSDictionary*)dict
-{
+// TODO: Restore state for the peripheral manager
+//- (void)peripheralManager:(CBPeripheralManager*)peripheral willRestoreState:(NSDictionary*)dict
+//{
 //    dict[CBPeripheralManagerRestoredStateAdvertisementDataKey];
 //    dict[CBPeripheralManagerRestoredStateServicesKey];
-}
+//}
 
 - (void)peripheralManagerDidUpdateState:(CBPeripheralManager*)peripheralManager
 {
@@ -102,6 +105,12 @@ NSString* const kWunderbarOnboardingOptionsWifiPassword = @"wifiPass";
 - (void)peripheralManager:(CBPeripheralManager*)peripheralManager didAddService:(CBService*)service error:(NSError*)error
 {
     if (error) { return [WunderbarOnboarding stopOnboarding:self withError:error]; }
+    
+    if (_peripheralManagerService) { return [WunderbarOnboarding stopOnboarding:self withError:RelayrErrorBLEProblemUnknown]; }
+    _peripheralManagerService = service;
+    
+    if (_peripheralManagerCharacteristicsRead) { _peripheralManagerCharacteristicsRead = nil; }
+    _peripheralManagerCharacteristicsRead = [NSMutableSet setWithCapacity:Wunderbar_transmitter_setupServiceCharacteristics];
 }
 
 - (void)peripheralManagerDidStartAdvertising:(CBPeripheralManager*)peripheralManager error:(NSError*)error
@@ -112,7 +121,29 @@ NSString* const kWunderbarOnboardingOptionsWifiPassword = @"wifiPass";
 
 - (void)peripheralManager:(CBPeripheralManager*)peripheralManager didReceiveReadRequest:(CBATTRequest*)request
 {
-    
+    for (CBCharacteristic* characteristic in _peripheralManagerService.characteristics)
+    {
+        if ([request.characteristic.UUID isEqual:characteristic.UUID])
+        {
+            // Respond with the value (if possible)
+            if (request.offset > characteristic.value.length) { return [peripheralManager respondToRequest:request withResult:CBATTErrorInvalidOffset]; }
+            request.value = [characteristic.value subdataWithRange:NSMakeRange(request.offset, characteristic.value.length - request.offset)];
+            [peripheralManager respondToRequest:request withResult:CBATTErrorSuccess];
+            
+            // Mark characteristic as read
+            [_peripheralManagerCharacteristicsRead addObject:characteristic];
+            if (_peripheralManagerCharacteristicsRead.count >= Wunderbar_transmitter_setupServiceCharacteristics && _timer)
+            {
+                if ([_timer isValid]) { [_timer invalidate]; }
+                _timer = nil;
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(Wunderbar_transmitter_setupServiceCharacteristicsReadTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [WunderbarOnboarding stopOnboarding:self withError:nil];
+                });
+            }
+            break;
+        }
+    }
 }
 
 #pragma mark CBCentralManagerDelegate
@@ -137,27 +168,32 @@ NSString* const kWunderbarOnboardingOptionsWifiPassword = @"wifiPass";
 {
     if (!onboardingProcess) { return; }
     
+    onboardingProcess.options = nil;
+    
     if (onboardingProcess.timer)
     {
         if ([onboardingProcess.timer isValid]) { [onboardingProcess.timer invalidate]; }
         onboardingProcess.timer = nil;
     }
     
+    onboardingProcess.peripheralManagerService = nil;
+    onboardingProcess.peripheralManagerCharacteristicsRead = nil;
+    onboardingProcess.transmitter = nil;
+    
     if (onboardingProcess.peripheralManager)
     {
-        [onboardingProcess.peripheralManager stopAdvertising];
+        if ([onboardingProcess.peripheralManager isAdvertising]) { [onboardingProcess.peripheralManager stopAdvertising]; }
         [onboardingProcess.peripheralManager removeAllServices];
         onboardingProcess.peripheralManager = nil;
     }
+    
+    onboardingProcess.device = nil;
     
     if (onboardingProcess.centralManager)
     {
         [onboardingProcess.centralManager stopScan];
         onboardingProcess.centralManager = nil;
     }
-    
-    onboardingProcess.transmitter = nil;
-    onboardingProcess.device = nil;
     
     if (onboardingProcess.completion)
     {
@@ -199,8 +235,8 @@ NSString* const kWunderbarOnboardingOptionsWifiPassword = @"wifiPass";
     
     self = [super init];
     if (self)
-    {   // { CBPeripheralManagerOptionRestoreIdentifierKey : <#Identifier#> }
-        _peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil options:@{ CBPeripheralManagerOptionShowPowerAlertKey : @YES }];
+    {
+        _peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil options:@{ CBPeripheralManagerOptionShowPowerAlertKey : @YES/*, CBPeripheralManagerOptionRestoreIdentifierKey : <#Identifier#> */ }];
         _transmitter = transmitter;
         _completion = completion;
         _options = options;
@@ -274,7 +310,7 @@ NSString* const kWunderbarOnboardingOptionsWifiPassword = @"wifiPass";
         // Size: 19 bytes  (6 + 6 + 6 + 1 byte of flag).
         // Description: Contains the passkeys for the MICROPHONE, BRIDGE, and IR sensors, in ASCII format, and an update mask. Like the HTU_GYRO_LIGHT passkey the update mask is a bit mask of three update flags.
         [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_micBridIRPasskey] properties:CBCharacteristicPropertyRead value:[NSData dataWithBytes:micBridIRPasskey length:Wunderbar_transmitter_setupCharacteristic_micBridIRPasskey_length] permissions:CBAttributePermissionsReadable],
-        // Size: 20 bytes (max character: 19 + 1 byte of flag).
+        // Size: 20 bytes (max character: 19 including NULL character + 1 byte of flag).
         // Description: Contains the Wifi SSID in ASCII format and an update flag. The value must be 20 characters long and finish with the update flag, therefore it is padded with zeros until it is the appropriate length.
         [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wifiSSID] properties:CBCharacteristicPropertyRead value:[NSData dataWithBytes:wifiSSID length:Wunderbar_transmitter_setupCharacteristic_wifiSSID_length] permissions:CBAttributePermissionsReadable],
         // Size: 20 bytes (max character: 19 + 1 byte of flag).
@@ -293,11 +329,14 @@ NSString* const kWunderbarOnboardingOptionsWifiPassword = @"wifiPass";
     
     [peripheralManager addService:service];
 
-    [peripheralManager startAdvertising:@{
-        CBAdvertisementDataLocalNameKey     : Wunderbar_peripheralAdvertisement_localName,
-        CBAdvertisementDataServiceUUIDsKey  : @[service.UUID]/*,
-        CBAdvertisementDataIsConnectable    : @YES */
-    }];
+    if (self.peripheralManager)
+    {
+        [peripheralManager startAdvertising:@{
+                CBAdvertisementDataLocalNameKey     : Wunderbar_peripheralAdvertisement_localName,
+                CBAdvertisementDataServiceUUIDsKey  : @[service.UUID]/*,
+                CBAdvertisementDataIsConnectable    : @YES */
+        }];
+    }
 }
 
 @end

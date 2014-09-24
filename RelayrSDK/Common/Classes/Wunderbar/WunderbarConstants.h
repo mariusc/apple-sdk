@@ -34,8 +34,10 @@ FOUNDATION_EXPORT NSString* const kWunderbarOnboardingOptionsWifiPassword;
 
 #pragma mark - Onboarding process
 
-#define Wunderbar_transmitter_setupTimeout              10
-#define Wunderbar_transmitter_setupService              @"2000"
+#define Wunderbar_transmitter_setupTimeout                  10
+#define Wunderbar_transmitter_setupService                  @"2000"
+#define Wunderbar_transmitter_setupServiceCharacteristics   7
+#define Wunderbar_transmitter_setupServiceCharacteristicsReadTime       0.2
 #define Wunderbar_transmitter_setupCharacteristic_htuGyroLightPasskey   @"2010"
 #define Wunderbar_transmitter_setupCharacteristic_micBridIRPasskey      @"2011"
 #define Wunderbar_transmitter_setupCharacteristic_wifiSSID              @"2012"
@@ -52,12 +54,12 @@ FOUNDATION_EXPORT NSString* const kWunderbarOnboardingOptionsWifiPassword;
 #define Wunderbar_transmitter_setupCharacteristic_wunderbarSecurity_length      13
 #define Wunderbar_transmitter_setupCharacteristic_wunderbarURL_length           20
 
-#define Wunderbar_device_setupTimeout                   10
-#define Wunderbar_device_setupService                   @"2001"
+#define Wunderbar_device_setupTimeout                       10
+#define Wunderbar_device_setupService                       @"2001"
 #define Wunderbar_device_setupCharacteristic_sensorID           @"2010"
 #define Wunderbar_device_setupCharacteristic_passKey            @"2018"
 #define Wunderbar_device_setupCharacteristic_mimFlag            @"2019"
-#define Wunderbar_device_cloudService                   @"2000"
+#define Wunderbar_device_cloudService                       @"2000"
 #define Wunderbar_device_cloudCharacteristic_sensorID           @"2010"
 #define Wunderbar_device_cloudCharacteristic_beaconFrequency    @"2011"
 #define Wunderbar_device_cloudCharacteristic_frequency          @"2012"
@@ -66,7 +68,7 @@ FOUNDATION_EXPORT NSString* const kWunderbarOnboardingOptionsWifiPassword;
 #define Wunderbar_device_cloudCharacteristic_config             @"2015"
 #define Wunderbar_device_cloudCharacteristic_dataRead           @"2016"
 #define Wunderbar_device_cloudCharacteristic_dataWrite          @"2017"
-#define Wunderbar_device_directService                  @"2002"
+#define Wunderbar_device_directService                      @"2002"
 #define Wunderbar_device_directCharacteristic_sensorID          @"2010"
 #define Wunderbar_device_directCharacteristic_beaconFrequency   @"2011"
 #define Wunderbar_device_directCharacteristic_frequency         @"2012"
