@@ -86,7 +86,7 @@
  *  @see RelayrDevice
  */
 - (void)requestAppsConnectedToDevice:(NSString*)deviceID
-                          completion:(void (^)(NSError* error, NSArray* apps))completion;
+                          completion:(void (^)(NSError* error, NSSet* apps))completion;
 
 /*!
  *  @abstract Deletes the abstract connection between a device and an app.
@@ -108,7 +108,7 @@
  *
  *  @see RelayrDevice
  */
-- (void)requestPublicDevices:(void (^)(NSError* error, NSArray* devices))completion;
+- (void)requestPublicDevices:(void (^)(NSError* error, NSSet* devices))completion;
 
 /*!
  *  @abstract Retrieves all the public Relayr devices entities filtered by meaning.
@@ -119,7 +119,7 @@
  *  @see RelayrDevice
  */
 - (void)requestPublicDevicesFilteredByMeaning:(NSString*)meaning
-                                   completion:(void (^)(NSError* error, NSArray* devices))completion;
+                                   completion:(void (^)(NSError* error, NSSet* devices))completion;
 
 /*!
  *  @abstract Sets in the server an abstract connection between a public device and an unspecified endpoint. No credentials are needed.
@@ -140,7 +140,7 @@
  *
  *  @see RelayrDevice
  */
-- (void)requestAllDeviceModels:(void (^)(NSError* error, NSArray* deviceModels))completion;
+- (void)requestAllDeviceModels:(void (^)(NSError* error, NSSet* deviceModels))completion;
 
 /*!
  *  @abstract Retrieves a specific device-model from the Relayr Cloud.

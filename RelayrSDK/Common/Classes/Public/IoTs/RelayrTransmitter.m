@@ -13,11 +13,6 @@ static NSString* const kCodingOwner = @"own";
 static NSString* const kCodingDevices = @"dev";
 
 @implementation RelayrTransmitter
-{
-    NSMutableSet* _devices;
-}
-
-@synthesize devices = _devices;
 
 #pragma mark - Public API
 
@@ -38,12 +33,12 @@ static NSString* const kCodingDevices = @"dev";
 
 - (void)setWith:(RelayrTransmitter*)transmitter
 {
-    if (_uid != transmitter.uid) { return; }
+    if (self==transmitter || _uid!=transmitter.uid) { return; }
     
     if (transmitter.name) { _name = transmitter.name; }
     if (transmitter.owner) { _owner = transmitter.owner; }
     if (transmitter.secret) { _secret = transmitter.secret; }
-    if (transmitter.devices) { [self replaceDevicesWith:(NSMutableSet*)transmitter.devices]; }
+    if (transmitter.devices) { _devices = transmitter.devices; }
 }
 
 #pragma mark Processes
@@ -89,48 +84,6 @@ static NSString* const kCodingDevices = @"dev";
 - (NSString*)description
 {
     return [NSString stringWithFormat:@"Relayr Transmitter\n{\n\t Relayr ID: %@\n\t Name: %@\n\t Owner: %@\n\t MQTT Secret: %@\n\t Number of devices: %lu\n}\n", _uid, _name, (_owner) ? _owner : @"?", _secret, (unsigned long)_devices.count];
-}
-
-#pragma mark - Private methods
-
-/*******************************************************************************
- * It replaces/set the current managed devices by a newer set of devices.
- * If <code>devices</code> is <code>nil</code>, the managed devices are unknown and thus no further work is performed.
- * If <code>devices</code> is an empty set, the transmitter doesn't manage any device.
- * If <code>devices</code> contains <code>RelayrDevice</code> objects, a replacing process will be launched.
- ******************************************************************************/
-- (void)replaceDevicesWith:(NSMutableSet*)devices
-{
-    if (!devices) { return; }
-    
-    if (devices.count == 0)
-    {
-        if (!_devices) { _devices = [[NSMutableSet alloc] init]; }
-        else { [_devices removeAllObjects]; }
-        return;
-    }
-    
-    NSMutableSet* minusSet = [[NSMutableSet alloc] init];
-    for (RelayrDevice* device in _devices)
-    {
-        NSString* uid = device.uid;
-        RelayrDevice* matchedDevice;
-        
-        for (RelayrDevice* tmpDevice in devices)
-        {
-            if (uid == tmpDevice.uid)
-            {
-                matchedDevice = tmpDevice;
-                [device setWith:tmpDevice];
-                break;
-            }
-        }
-        
-        if (!matchedDevice) { [minusSet addObject:device]; }
-        else { [devices removeObject:matchedDevice]; }
-    }
-    
-    [_devices minusSet:minusSet];
 }
 
 @end

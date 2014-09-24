@@ -44,7 +44,7 @@ static NSString* const kCodingSecret = @"sec";
 
 - (void)setWith:(RelayrDevice*)device
 {
-    if (_uid != device.uid) { return; }
+    if (self==device || _uid != device.uid) { return; }
     
     [super setWith:device];
     if (device.name) { _name = device.name; }

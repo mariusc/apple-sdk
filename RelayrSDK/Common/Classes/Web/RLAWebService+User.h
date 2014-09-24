@@ -89,7 +89,7 @@ registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))co
  *  @see RelayrUser
  *  @see RelayrTransmitter
  */
-- (void)requestUserTransmitters:(void (^)(NSError* error, NSArray* transmitters))completion;
+- (void)requestUserTransmitters:(void (^)(NSError* error, NSSet* transmitters))completion;
 
 /*!
  *  @abstract Retrieves the <code>RelayrDevice</code>s the user owns.
@@ -100,7 +100,7 @@ registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))co
  *  @see RelayrUser
  *  @see RelayrDevice
  */
-- (void)requestUserDevices:(void (^)(NSError* error, NSArray* devices))completion;
+- (void)requestUserDevices:(void (^)(NSError* error, NSSet* devices))completion;
 
 /*!
  *  @abstract Retrieves the user devices entities filtered by meaning.
@@ -112,7 +112,7 @@ registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))co
  *  @see RelayrDevice
  */
 - (void)requestUserDevicesFilteredByMeaning:(NSString*)meaning
-                                 completion:(void (^)(NSError* error, NSArray* devices))completion;
+                                 completion:(void (^)(NSError* error, NSSet* devices))completion;
 
 /*!
  *  @abstract Creates a link/bookmark in the server, giving quick access to a favourite <code>RelayrDevice</code>.
@@ -135,7 +135,7 @@ registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))co
  *  @see RelayrUser
  *  @see RelayrDevice
  */
-- (void)requestUserBookmarkedDevices:(void (^)(NSError* error, NSArray* bookDevices))completion;
+- (void)requestUserBookmarkedDevices:(void (^)(NSError* error, NSSet* bookDevices))completion;
 
 /*!
  *  @abstract Deletes a bookmark that a user had to a specific device.

@@ -90,7 +90,7 @@
     }];
 }
 
-- (void)requestDevicesFromTransmitter:(NSString*)transmitterID completion:(void (^)(NSError* error, NSArray* devices))completion
+- (void)requestDevicesFromTransmitter:(NSString*)transmitterID completion:(void (^)(NSError* error, NSSet* devices))completion
 {
     if (!completion) { return; }
     if (!transmitterID.length) { return completion(RelayrErrorMissingArgument, nil); }
@@ -102,17 +102,14 @@
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError *error, NSNumber *responseCode, NSData *data) {
         NSArray* json = processRequest(Web_RequestResponseCode_TransDevices, nil);
         
-        NSUInteger const numDevices = json.count;
-        if (numDevices == 0) { return completion(nil, [NSArray array]); }
-        
-        NSMutableArray* result = [NSMutableArray arrayWithCapacity:numDevices];
+        NSMutableSet* result = [NSMutableSet setWithCapacity:json.count];
         for (NSDictionary* dict in json)
         {
             RelayrDevice* device = [RLAWebService parseDeviceFromJSONDictionary:dict];
             if (device) { [result addObject:device]; }
         }
         
-        return completion(nil, [NSArray arrayWithArray:result]);
+        return completion(nil, [NSSet setWithSet:result]);
     }];
 }
 

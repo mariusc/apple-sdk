@@ -38,7 +38,7 @@
  *  @abstract Returns all devices related to the specific Transmitter.
  *  @discussion Links to <code>RelayrDevice</code>s owned by the <code>RelayrUser</code> which owns the Transmitter.
  */
-@property (readwrite,nonatomic) NSMutableSet* devices;
+@property (readwrite,nonatomic) NSSet* devices;
 
 /*!
  *  @abstract It sets the instance where this object is being called with the properties of the object passed as the argument.

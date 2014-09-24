@@ -163,6 +163,8 @@ static NSString* const kCodingUsers = @"usr";
 
 - (void)signInUser:(void (^)(NSError*, RelayrUser*))completion
 {
+    if (!_uid.length || !_redirectURI.length || !_oauthClientSecret.length) { if (completion) { completion(RelayrErrorMissingExpectedValue, nil); } return; }
+    
     __weak RelayrApp* weakSelf = self;
     [RLAWebService requestOAuthCodeWithOAuthClientID:_uid redirectURI:_redirectURI completion:^(NSError* error, NSString* tmpCode) {
         if (error) { if (completion) { completion(error, nil); } return; }
@@ -211,7 +213,13 @@ static NSString* const kCodingUsers = @"usr";
 
 - (void)setWith:(RelayrApp*)app
 {
-    // TODO: Fill up
+    if (![_uid isEqualToString:app.uid]) { return; }
+    
+    if (app.name) { _name = app.name; }
+    if (app.appDescription) { _appDescription = app.appDescription; }
+    if (app.publisherID) { _publisherID = app.publisherID; }
+    if (app.oauthClientSecret) { _oauthClientSecret = app.oauthClientSecret; }
+    if (app.redirectURI) { _redirectURI = app.redirectURI; }
 }
 
 #pragma mark NSCoding

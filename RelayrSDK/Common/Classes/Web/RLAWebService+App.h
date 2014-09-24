@@ -24,7 +24,7 @@
  *
  *  @see RelayrApp
  */
-- (void)requestAllRelayrApps:(void (^)(NSError* error, NSArray* apps))completion;
+- (void)requestAllRelayrApps:(void (^)(NSError* error, NSSet* apps))completion;
 
 /*!
  *  @abstract Adds a new application to the Relayr cloud.

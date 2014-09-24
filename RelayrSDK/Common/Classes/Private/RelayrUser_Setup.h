@@ -78,19 +78,21 @@
  *  @discussion If a transmitter with the same uid is already there, no transmitter is added, but the previous transmitter is updated with the info of the new transmitter.
  *
  *  @param transmitter Transmitter to add to the user.
+ *  @return <code>RelayrTransmitter</code> that will represent the transmitter passed as argument from now on. It could be the same, or it could not.
  *
  *  @see RelayrTransmitter
  */
-- (void)addTransmitter:(RelayrTransmitter*)transmitter;
+- (RelayrTransmitter*)addTransmitter:(RelayrTransmitter*)transmitter;
 
 /*!
  *  @abstract Adds a device to the devices own by the user.
  *  @discussion If a device with the same uid is already there, no device is added, but the previous device is updated with the info of the new device.
  *
  *  @param device <code>RelayrDevice</code> entity to add to the user.
+ *  @return <code>RelayrDevice</code> that will represent the device passed as parameter from now on. It could be the same, or it could not.
  *
  *  @see RelayrDevice
  */
-- (void)addDevice:(RelayrDevice*)device;
+- (RelayrDevice*)addDevice:(RelayrDevice*)device;
 
 @end

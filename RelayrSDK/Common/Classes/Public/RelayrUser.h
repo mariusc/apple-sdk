@@ -65,7 +65,7 @@
 @property (readonly,nonatomic) NSSet* devices;
 
 /*!
- *  @abstract Devices that the specific <code>RelayrUser</code> instace has bookmarked.
+ *  @abstract Devices that the specific <code>RelayrUser</code> instace has bookmarked. Only public devices can be bookmarked devices.
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call. 
  *      By Bookmarking a device you are indicating that you have a particular interest in this device.
  *      In the relayr context, a bookmarked device will appear on a user's Developer Dashboard.
@@ -93,7 +93,7 @@
  *
  *  @see queryCloudForUserInfo:
  */
-- (void)queryCloudForIoTs:(void (^)(NSError* error, NSNumber* isThereChanges))completion;
+- (void)queryCloudForIoTs:(void (^)(NSError* error))completion;
 
 /*!
  *  @abstract Queries the relayr platform for all the application and publisher entities owned by the user.

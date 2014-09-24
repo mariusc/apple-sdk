@@ -15,7 +15,7 @@
 #import "RLAWebService+User.h"          // Relayr.framework (Web)
 #import "RLAWebService+Transmitter.h"   // Relayr.framework (Web)
 #import "RLAWebService+Device.h"        // Relayr.framework (Web)
-#import "RelayrErrors.h"                    // Relayr.framework (Utilities)
+#import "RelayrErrors.h"                // Relayr.framework (Utilities)
 
 static NSString* const kCodingToken = @"tok";
 static NSString* const kCodingID = @"uid";
@@ -58,10 +58,7 @@ static NSString* const kCodingPublishers = @"pub";
         if (!uid.length) { if (completion) { completion(RelayrErrorWrongRelayrUser, nil, nil); } return; }
         
         __strong RelayrUser* strongSelf = weakSelf;
-        if (!strongSelf.uid)
-        {
-            strongSelf.uid = uid;
-        }
+        if (!strongSelf.uid) { strongSelf.uid = uid; }
         else if ( ![strongSelf.uid isEqualToString:uid] )
         {
             if (completion) { completion(RelayrErrorWrongRelayrUser, nil, nil); }
@@ -74,17 +71,16 @@ static NSString* const kCodingPublishers = @"pub";
     }];
 }
 
-- (void)queryCloudForIoTs:(void (^)(NSError* error, NSNumber* isThereChanges))completion
+- (void)queryCloudForIoTs:(void (^)(NSError*))completion
 {
     __weak RelayrUser* weakSelf = self;
-    [_webService requestUserTransmitters:^(NSError* transmitterError, NSArray* transmitters) {
-        if (transmitterError) { if (completion) { completion(transmitterError, nil); } return; }
-        [weakSelf.webService requestUserDevices:^(NSError* deviceError, NSArray* devices) {
-            if (deviceError) { if (completion) { completion(deviceError, nil); } return ; }
-            [weakSelf.webService requestUserBookmarkedDevices:^(NSError* bookmarkError, NSArray* bookDevices) {
-                if (bookmarkError) { if (completion) { completion(bookmarkError, nil); } return; }
-                BOOL const result = [weakSelf setUsersIoTsFromServerTransmitterArray:transmitters deviceArray:devices bookmarkDeviceArray:bookDevices];
-                if (completion) { completion(nil, [NSNumber numberWithBool:result]); }
+    [_webService requestUserTransmitters:^(NSError* transmitterError, NSSet* transmitters) {
+        if (transmitterError) { if (completion) { completion(transmitterError); } return; }
+        [weakSelf.webService requestUserDevices:^(NSError* deviceError, NSSet* devices) {
+            if (deviceError) { if (completion) { completion(deviceError); } return ; }
+            [weakSelf.webService requestUserBookmarkedDevices:^(NSError* bookmarkError, NSSet* devicesBookmarked) {
+                if (bookmarkError) { if (completion) { completion(bookmarkError); } return; }
+                [weakSelf processIoTTreeWithTransmitters:transmitters devices:devices bookmarkDevices:devicesBookmarked completion:completion];
             }];
         }];
     }];
@@ -111,8 +107,9 @@ static NSString* const kCodingPublishers = @"pub";
     __weak RelayrUser* weakSelf = self;
     [_webService registerTransmitterWithName:name ownerID:_uid model:modelID firmwareVersion:firmwareVersion completion:^(NSError* error, RelayrTransmitter* transmitter) {
         if (error) { if (completion) { completion(error, nil); } return; }
-        [weakSelf addTransmitter:transmitter];
-        if (completion) { completion(nil, transmitter); }
+        RelayrTransmitter* result = [weakSelf addTransmitter:transmitter];
+        if (!completion) { return; }
+        return (result) ? completion(nil, result) : completion(RelayrErrorMissingExpectedValue, nil);
     }];
 }
 
@@ -123,49 +120,71 @@ static NSString* const kCodingPublishers = @"pub";
     __weak RelayrUser* weakSelf = self;
     [_webService registerDeviceWithName:name owner:_uid model:modelID firmwareVersion:firmwareVersion completion:^(NSError* error, RelayrDevice* device) {
         if (error) { if (completion) { completion(error, nil); } return; }
-        [weakSelf addDevice:device];
-        if (completion) { completion(nil, device); }
+        
+        RelayrDevice* futureDevice = [weakSelf addDevice:device];
+        if (!completion) { return; }
+        return (futureDevice) ? completion(nil, futureDevice) : completion(RelayrErrorMissingExpectedValue, nil);
     }];
 }
 
-- (void)addTransmitter:(RelayrTransmitter*)transmitter
+- (RelayrTransmitter*)addTransmitter:(RelayrTransmitter*)transmitter
 {
-    if (!_transmitters)
+    if (!transmitter) { return nil; }
+    
+    // Devices need to be added first.
+    if (transmitter.devices.count)
     {
-        _transmitters = [NSSet setWithObject:transmitter];
-    }
-    else
-    {
-        NSString* transmitterID = transmitter.uid;
-        for (RelayrTransmitter* storedTransmitter in _transmitters)
+        NSMutableSet* transmitterDevices = [[NSMutableSet alloc] initWithCapacity:transmitter.devices.count];
+        for (RelayrDevice* tmpDevice in transmitter.devices)
         {
-            if (storedTransmitter.uid == transmitterID) { return [storedTransmitter setWith:transmitter]; }
+            RelayrDevice* device = [self addDevice:tmpDevice];
+            if (device) { [transmitterDevices addObject:device]; }
+        }
+        transmitter.devices = [NSSet setWithSet:transmitterDevices];
+    }
+    
+    // Then the transmitter is check for existance.
+    if (_transmitters)
+    {
+        RelayrTransmitter* matchedTransmitter;
+        NSString* transmitterID = transmitter.uid;
+        for (RelayrTransmitter* previousTransmitter in _transmitters)
+        {
+            if (previousTransmitter.uid == transmitterID) { matchedTransmitter = previousTransmitter; break; }
         }
         
-        NSMutableSet* tmpSet = [NSMutableSet setWithSet:_transmitters];
-        [tmpSet addObject:transmitter];
-        _transmitters = [NSSet setWithSet:tmpSet];
+        if (!matchedTransmitter)
+        {
+            NSMutableSet* tmpSet = [NSMutableSet setWithSet:_transmitters];
+            [tmpSet addObject:transmitter];
+            _transmitters = [NSSet setWithSet:tmpSet];
+        }
+        else { [matchedTransmitter setWith:transmitter]; return matchedTransmitter; }
     }
+    else { _transmitters = [NSSet setWithObject:transmitter]; }
+    
+    return transmitter;
 }
 
-- (void)addDevice:(RelayrDevice*)device
+- (RelayrDevice*)addDevice:(RelayrDevice*)device
 {
-    if (!_devices)
-    {
-        _devices = [NSSet setWithObject:device];
-    }
-    else
+    if (!device) { return nil; }
+    
+    if (_devices)
     {
         NSString* deviceID = device.uid;
-        for (RelayrDevice* storedDevice in _devices)
+        for (RelayrDevice* previousDevice in _devices)
         {
-            if (storedDevice.uid == deviceID) { return [storedDevice setWith:device]; }
+            if (previousDevice.uid == deviceID) { [previousDevice setWith:device]; return previousDevice; }
         }
         
         NSMutableSet* tmpSet = [NSMutableSet setWithSet:_devices];
         [tmpSet addObject:device];
         _devices = [NSSet setWithSet:tmpSet];
     }
+    else { _devices = [NSSet setWithObject:device]; }
+    
+    return device;
 }
 
 #pragma mark NSCoding
@@ -213,13 +232,74 @@ static NSString* const kCodingPublishers = @"pub";
  * It sets the user's IoTs with the server query.
  * If there were previous transmitters, devices, or bookmarks, those are removed.
  ******************************************************************************/
-- (BOOL)setUsersIoTsFromServerTransmitterArray:(NSArray*)serverTransmitters deviceArray:(NSArray*)serverDevices bookmarkDeviceArray:(NSArray*)serverBookmarks
+- (void)processIoTTreeWithTransmitters:(NSSet*)transmitters devices:(NSSet*)devices bookmarkDevices:(NSSet*)bookDevices completion:(void (^)(NSError*))completion
 {
-    BOOL isThereChanges = NO;
+    if (bookDevices.count)
+    {
+        NSMutableSet* bookResult = [[NSMutableSet alloc] initWithCapacity:bookDevices.count];
+        for (RelayrDevice* bookDevice in bookDevices)
+        {
+            NSString* bookID = bookDevice.uid;
+            for (RelayrDevice* dev in devices)
+            {
+                if ([dev.uid isEqualToString:bookID]) { [bookResult addObject:dev]; break; }
+            }
+        }
+        bookDevices = [NSSet setWithSet:bookResult];
+    }
     
-    // TODO: Fill up
+    if (transmitters.count == 0)
+    {
+        _transmitters = transmitters;
+        _devices = devices;
+        _devicesBookmarked = bookDevices;
+        if (completion) { completion(nil); }
+        return;
+    }
     
-    return isThereChanges;
+    __block NSError* error;
+    __block NSUInteger count = transmitters.count;  // Be careful with race conditions (main thread only, so far).
+    
+    void (^flagChecker)(NSError*, RelayrTransmitter*, NSSet*) = ^(NSError* connectedError, RelayrTransmitter* transmitter, NSSet* transDevices){
+        if (!error)
+        {
+            if (!connectedError)
+            {
+                NSMutableSet* result = [[NSMutableSet alloc] initWithCapacity:transDevices.count];
+                for (RelayrDevice* tDevice in transDevices)
+                {
+                    NSString* tDevID = tDevice.uid;
+                    for (RelayrDevice* dev in devices)
+                    {
+                        if ([dev.uid isEqualToString:tDevID]) { [result addObject:dev]; break; }
+                    }
+                }
+                transmitter.devices = [NSSet setWithSet:result];
+            }
+            else { error = connectedError; }
+        }
+        
+        count = count - 1;
+        if (count == 0)
+        {
+            if (error) { if (completion) { completion(error); } return; }
+            
+            __strong RelayrUser* strongSelf = self;
+            if (!strongSelf) { return; }
+            
+            strongSelf.transmitters = transmitters;
+            strongSelf.devices = devices;
+            strongSelf.devicesBookmarked = bookDevices;
+            if (completion) { completion(nil); }
+        }
+    };
+    
+    for (RelayrTransmitter* transmitter in transmitters)
+    {
+        [_webService requestDevicesFromTransmitter:transmitter.uid completion:^(NSError* error, NSSet* devices) {
+            flagChecker(error, transmitter, devices);
+        }];
+    }
 }
 
 /*******************************************************************************
@@ -235,7 +315,6 @@ static NSString* const kCodingPublishers = @"pub";
     else if (_authorisedApps.count == 0) { _authorisedApps = apps; return; }
     
     NSMutableSet* result = [[NSMutableSet alloc] init];
-    
     for (RelayrApp* app in apps)
     {
         NSString* futureID = app.uid;

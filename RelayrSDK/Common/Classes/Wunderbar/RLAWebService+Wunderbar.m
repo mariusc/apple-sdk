@@ -17,7 +17,7 @@
     if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure, nil); } return; }
     request.relativePath = Web_RequestRelativePath_WunderbarRegistration(self.user.uid);
     
-    [request executeInHTTPMode:kRLAWebRequestModePOST completion:(!completion) ? nil : ^(NSError *error, NSNumber *responseCode, NSData *data) {
+    [request executeInHTTPMode:kRLAWebRequestModePOST completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
         NSDictionary* json = processRequest(Web_RequestResponseCode_WunderbarRegistration, nil);
         
         RelayrTransmitter* result = [RLAWebService parseWunderbarFromJSONDictionary:json];
@@ -34,27 +34,27 @@
     RelayrTransmitter* masterModule = [RLAWebService parseTransmitterFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarMasterModule]];
     if (!masterModule) { return nil; }
     
-    NSMutableSet* set = [NSMutableSet setWithCapacity:6];
+    NSMutableSet* devices = [NSMutableSet setWithCapacity:6];
     
     RelayrDevice* gyroscope = [RLAWebService parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarGyroscope]];
-    if (gyroscope) { [set addObject:gyroscope]; }
+    if (gyroscope) { [devices addObject:gyroscope]; }
     
     RelayrDevice* light = [RLAWebService parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarLight]];
-    if (light) { [set addObject:light]; }
+    if (light) { [devices addObject:light]; }
     
     RelayrDevice* mic = [RLAWebService parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarMicrophone]];
-    if (mic) { [set addObject:mic]; }
+    if (mic) { [devices addObject:mic]; }
     
     RelayrDevice* thermometer = [RLAWebService parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarThermomether]];
-    if (thermometer) { [set addObject:thermometer]; }
+    if (thermometer) { [devices addObject:thermometer]; }
     
     RelayrDevice* infrared = [RLAWebService parseDeviceFromJSONDictionary:jsonDict[Web_ResopndKey_WunderbarInfrared]];
-    if (infrared) { [set addObject:infrared]; }
+    if (infrared) { [devices addObject:infrared]; }
     
     RelayrDevice* bridge = [RLAWebService parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarBridge]];
-    if (bridge) { [set addObject:bridge]; }
+    if (bridge) { [devices addObject:bridge]; }
     
-    masterModule.devices = set;
+    masterModule.devices = [NSSet setWithSet:devices];
     return masterModule;
 }
 

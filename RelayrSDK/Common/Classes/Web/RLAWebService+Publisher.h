@@ -10,7 +10,7 @@
  *
  *  @see RelayrPublisher
  */
-+ (void)requestAllRelayrPublishers:(void (^)(NSError* error, NSArray* publishers))completion;
++ (void)requestAllRelayrPublishers:(void (^)(NSError* error, NSSet* publishers))completion;
 
 /*!
  *  @abstract Registers a publisher entity in the Relayr cloud.
@@ -70,7 +70,7 @@
  *  @see RelayrApp
  */
 - (void)requestAppsFromPublisher:(NSString*)publisherID
-                     completion:(void (^)(NSError* error, NSArray* apps))completion;
+                     completion:(void (^)(NSError* error, NSSet* apps))completion;
 
 /*!
  *  @abstract Retrieves all the Relayr Applications under a publisher.
@@ -83,6 +83,6 @@
  *  @see RelayrApp
  */
 - (void)requestAppsWithExtendedInfoFromPublisher:(NSString*)publisherID
-                                      completion:(void (^)(NSError* error, NSArray* apps))completion;
+                                      completion:(void (^)(NSError* error, NSSet* apps))completion;
 
 @end

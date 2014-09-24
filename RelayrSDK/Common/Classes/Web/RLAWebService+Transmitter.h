@@ -82,7 +82,7 @@
  *  @see RelayrDevice
  */
 - (void)requestDevicesFromTransmitter:(NSString*)transmitterID
-                           completion:(void (^)(NSError* error, NSArray* devices))completion;
+                           completion:(void (^)(NSError* error, NSSet* devices))completion;
 
 /*!
  *  @abstract Deletes the abstract connection between a transmitter and a device.

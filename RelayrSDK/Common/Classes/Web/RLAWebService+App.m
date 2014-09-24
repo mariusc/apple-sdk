@@ -27,7 +27,7 @@
     }];
 }
 
-- (void)requestAllRelayrApps:(void (^)(NSError* error, NSArray* apps))completion
+- (void)requestAllRelayrApps:(void (^)(NSError* error, NSSet* apps))completion
 {
     if (!completion) { return; }
     
@@ -37,15 +37,15 @@
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError *error, NSNumber *responseCode, NSData *data) {
         NSArray* json = processRequest(Web_RequestResponseCode_Apps, nil);
-        NSMutableArray* result = [NSMutableArray arrayWithCapacity:json.count];
         
+        NSMutableSet* result = [[NSMutableSet alloc] initWithCapacity:json.count];
         for (NSDictionary* dict in json)
         {
             RelayrApp* app = [RLAWebService parseAppFromJSONDictionary:dict];
             if (app) { [result addObject:app]; }
         }
         
-        return completion(nil, (!result.count) ? nil : [NSArray arrayWithArray:result]);
+        return completion(nil, [NSSet setWithSet:result]);
     }];
 }
 
