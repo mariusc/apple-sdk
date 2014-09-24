@@ -41,7 +41,7 @@
 @property (readonly,nonatomic) NSDate* date;
 
 /*!
- *  @abstract Returns an array with, the last 20 or less measurements (including the one in <code>value</code>).
+ *  @abstract Returns an array with the last 20 or less measurements (including the one in <code>value</code>).
  *  @discussion The array will contain 20  values or less. 
  *	The object type will be the same as the <code>value</code> property. 
  *	If an object could not be measured, but a timestamp was taken, the singleton [NSNull null] is stored in the array.
@@ -49,47 +49,52 @@
 @property (readonly,nonatomic) NSArray* historicValues;
 
 /*!
- *  @abstract Array with, at top, the last 20 measurement times (including the current one in <code>date</code>).
+ *  @abstract Returns an array with the last 20 measurement times or less (including the current one in <code>date</code>).
  *  @discussion The array will contain 20 or less <code>NSDate</code> objects.
  */
 @property (readonly,nonatomic) NSArray* historicDates;
 
 /*!
- *  @abstract Subscribes the object target to data of the current input/reading sent from the parent <code>RelayrDevice</code>.
- *  @discussion It doesn't matter how the device is connected (Web/Cloud, Bluetooth, etc.), the caller of this method expects that the action is called on the target as soon as the data is available.
+ *  *  @abstract Subscribes the target object to all data (all readings) sent from the <code>RelayrDevice</code>.
+ *  @discussion Regardless of how the device is connected (Web/Cloud, Bluetooth, etc.), 
+ *	The action is called as soon as the data is available.
  *
- *  @param target The object where the <code>action</code> will be called onto.
- *  @param action The method to be called. It can have two modalities:
+ *  @param target The object where the <code>action</code> is called onto.
+ *  @param action The method to be called. It can have two modes:
  *      - No parameters.
- *      - One parameter. The parameter must be a <code>RelayrInput</code> object, or this method will return a subscription error.
- *  @param subscriptionError Block executed if the subscription could not be performed (it can be <code>nil</code>. If you define this block, you must return a boolean indicating if you want to retry the subscription.
+ *      - One parameter. The parameter must be a <code>RelayrInput</code> object, otherwise this method will return a subscription error.
+ *  @param subscriptionError A Block executed if the subscription cannot be performed (it can be <code>nil</code>. 
+ *	If this block is defined, a boolean must be returned, indicating if a subscription retry should be attempted.
  */
 - (void)subscribeWithTarget:(id)target action:(SEL)action error:(BOOL (^)(NSError* error))subscriptionError;
 
 /*!
- *  @abstract Subscribes the block to the data of this input/reading sent from the parent <code>RelayrDevice</code>.
- *  @discussion It doesn't matter how the device is connected (Web/Cloud, Bluetooth, etc.), the caller of this method expects that the action is called on the target as soon as the data is available.
+ *  @abstract Subscribes a block to the data sent from the <code>RelayrDevice</code>.
+ *  @discussion Regardless of how the device is connected (Web/Cloud, Bluetooth, etc.), 
+ *	The action is called as soon as the data is available.
  *
  *  @param block This block will be executed everytime data is available. The block contains three parameters:
- *      - <code>device</code>. The device that is reading the information.
+ *      - <code>device</code>. The device producing the reading.
  *      - <code>input</code>. The reading value received.
- *      - <code>unsubscribe</code>. Boolean pointer that when set to <code>NO</code>, will stop the subscription.
- *  @param subscriptionError Block executed if the subscription could not be performed (it can be <code>nil</code>. If you define this block, you must return a boolean indicating if you want to retry the subscription.
+ *      - <code>unsubscribe</code>. A Boolean variable, that when set to <code>NO</code>, will stop the subscription.
+ *  @param subscriptionError A Block executed if the subscription cannot be performed (it can be <code>nil</code>. 
+ *	If this block is defined, a boolean must be returned, indicating if a subscription retry should be attempted.
  */
 - (void)subscribeWithBlock:(void (^)(RelayrDevice* device, RelayrInput* input, BOOL* unsubscribe))block error:(BOOL (^)(NSError* error))subscriptionError;
 
 /*!
- *  @abstract Unsubscribe the specific action of a target object.
- *  @discussion If a target object has more than one subscription with different actions, this unsubscribe method only affects to the actions being passed.
+ *  @abstract Unsubscribes the specific action from the target object.
+ *  @discussion If a target object has more than one subscription with different actions, 
+ *	this unsubscribe method only affects the actions being passed.
  *
- *  @param target The object where the subscription was being sent to.
- *  @param action The action being executed on the target every time information arrives.
+ *  @param target The object where the subscription is being sent to.
+ *  @param action The action being executed on the target each time readings arrives.
  */
 - (void)unsubscribeTarget:(id)target action:(SEL)action;
 
 /*!
- *  @abstract It removes all the subscriptions for this input.
- *  @discussion All subscription, whether blocks or target objects are unsubscribe.
+ *  @abstract Removes all subscriptions for this devices.
+ *  @discussion All subscriptions, whether blocks or target objects are unsubscribed.
  */
 - (void)removeAllSubscriptions;
 

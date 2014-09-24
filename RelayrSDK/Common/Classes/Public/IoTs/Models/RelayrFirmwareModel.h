@@ -1,7 +1,7 @@
 @import Foundation;     // Apple
 
 /*!
- *  @abstract It specifies the minimum functionality of a device.
+ *  @abstract Specifies the basic functionality of a device.
  */
 @interface RelayrFirmwareModel : NSObject <NSCoding>
 
@@ -12,13 +12,13 @@
 
 /*!
  *  @abstract <code>NSDictionary</code> incorporating all the properties of the current firmware.
- *  @discussion This dictionary includes all values considered important such as the Reading frequency.
+ *  @discussion This dictionary includes all firmware properties, such as the Reading frequency.
  */
 @property (readonly,nonatomic) NSDictionary* configuration;
 
 /*!
- *  @abstract Sets the instance where this object is being called onto, with the properties of the object passed as the argument.
- *  @discussion The object passed as the argument is considered new and thus the properties have more priority.
+ *  @abstract Sets the instance where this object is being called for, the properties of the object are passed as the arguments.
+ *  @discussion The properties passed as the arguments are considered new and thus have a higher priority.
  *
  *  @param firmwareModel The newly <code>RelayrFirmwareModel</code> instance.
  */
