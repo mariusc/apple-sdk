@@ -15,7 +15,7 @@
  *  @param completion Block indicating the result of the server query.
  */
 + (void)requestAppInfoFor:(NSString*)appID
-               completion:(void (^)(NSError* error, NSString* appID, NSString* appName, NSString* appDescription))completion;
+               completion:(void (^)(NSError* error, NSString* appID, NSString* appName, NSString* appDescription, NSString* appPublisher))completion;
 
 /*!
  *  @abstract Retrieves all application within the Relayr cloud.

@@ -45,8 +45,8 @@ registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))co
  *  @see RelayrUser
  *  @see RelayrApp
  */
-- (void)installApp:(NSString*)appID
-    forCurrentUser:(void (^)(NSError* error))completion;
+- (void)authoriseApp:(NSString*)appID
+      forCurrentUser:(void (^)(NSError* error))completion;
 
 /*!
  *  @abstract It queries the Relayr Cloud for all the apps installed under this user.
@@ -56,7 +56,7 @@ registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))co
  *  @see RelayrUser
  *  @see RelayrApp
  */
-- (void)requestUserInstalledApps:(void (^)(NSError* error, NSArray* apps))completion;
+- (void)requestUserAuthorisedApps:(void (^)(NSError* error, NSArray* apps))completion;
 
 /*!
  *  @abstract Uninstall an app under a specific user.
@@ -66,7 +66,7 @@ registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))co
  *  @see RelayrUser
  *  @see RelayrApp
  */
-- (void)uninstallApp:(NSString*)appID
+- (void)unauthoriseApp:(NSString*)appID
       forCurrentUser:(void (^)(NSError* error))completion;
 
 /*!

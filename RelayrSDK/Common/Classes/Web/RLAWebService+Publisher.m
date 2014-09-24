@@ -5,7 +5,7 @@
 #import "RelayrPublisher.h"         // Relayr.framework (Public)
 #import "RLAWebRequest.h"           // Relayr.framework (Web)
 #import "RLAWebConstants.h"         // Relayr.framework (Web)
-#import "RelayrErrors.h"                // Relayr.framework (Utilities)
+#import "RelayrErrors.h"            // Relayr.framework (Utilities)
 
 @implementation RLAWebService (Publisher)
 
@@ -50,6 +50,23 @@
     }];
 }
 
+- (void)requestPublisher:(NSString*)publisherID completion:(void (^)(NSError* error, RelayrPublisher* publisher))completion
+{
+    if (!completion) { return; }
+    if (!publisherID.length) { return completion(RelayrErrorMissingArgument, nil); }
+    
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure, nil); } return; }
+    request.relativePath = Web_RequestRelativePath_Publisher(publisherID);
+    
+    [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError *error, NSNumber *responseCode, NSData *data) {
+        NSDictionary* json = processRequest(Web_RequestResponseCode_Publisher, nil);
+        
+        RelayrPublisher* result = [RLAWebService parsePublisherFromJSONDictionary:json];
+        return (!result) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, result);
+    }];
+}
+
 - (void)setPublisher:(NSString*)publisherID withName:(NSString*)futurePublisherName completion:(void (^)(NSError* error, RelayrPublisher* publisher))completion
 {
     if (!publisherID.length) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
@@ -68,6 +85,20 @@
         
         RelayrPublisher* result = [RLAWebService parsePublisherFromJSONDictionary:json];
         return (!result) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, result);
+    }];
+}
+
+- (void)deletePublisher:(NSString*)publisherID completion:(void (^)(NSError* error))completion
+{
+    if (!publisherID.length) { if (completion) { completion(RelayrErrorMissingArgument); }return; }
+    
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    if (!request) { return completion(RelayrErrorWebRequestFailure); }
+    request.relativePath = Web_RequestRelativePath_PublishersDelete(publisherID);
+    
+    [request executeInHTTPMode:kRLAWebRequestModeGET completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
+        if (error) { return completion(error); }
+        return completion((responseCode.unsignedIntegerValue!=Web_RequestResponseCode_PublishersApps) ? RelayrErrorWebRequestFailure : nil);
     }];
 }
 
@@ -94,17 +125,26 @@
     }];
 }
 
-- (void)deletePublisher:(NSString*)publisherID completion:(void (^)(NSError* error))completion
+- (void)requestAppsWithExtendedInfoFromPublisher:(NSString*)publisherID completion:(void (^)(NSError* error, NSArray* apps))completion
 {
-    if (!publisherID.length) { if (completion) { completion(RelayrErrorMissingArgument); }return; }
+    if (!completion) { return; }
+    if (!publisherID.length) { return completion(RelayrErrorMissingArgument, nil); }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
-    if (!request) { return completion(RelayrErrorWebRequestFailure); }
-    request.relativePath = Web_RequestRelativePath_PublishersDelete(publisherID);
+    if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
+    request.relativePath = Web_RequestRelativePath_PublishersAppsEx(publisherID);
     
-    [request executeInHTTPMode:kRLAWebRequestModeGET completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
-        if (error) { return completion(error); }
-        return completion((responseCode.unsignedIntegerValue!=Web_RequestResponseCode_PublishersDelete) ? RelayrErrorWebRequestFailure : nil);
+    [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
+        NSArray* json = processRequest(Web_RequestResponseCode_PublishersAppsEx, nil);
+        
+        NSMutableArray* result = [[NSMutableArray alloc] initWithCapacity:json.count];
+        for (NSDictionary* dict in json)
+        {
+            RelayrApp* app = [RLAWebService parseAppFromJSONDictionary:dict];
+            if (app) { [result addObject:app]; }
+        }
+        
+        return completion(nil, (result.count) ? [NSArray arrayWithArray:result] : nil);
     }];
 }
 

@@ -54,7 +54,7 @@ static NSString* const kCodingPublishers = @"pub";
     __weak RelayrUser* weakSelf = self;
     [_webService requestUserInfo:^(NSError* error, NSString* uid, NSString* name, NSString* email) {
         if (error) { if (completion) { completion(error, nil, nil); } return; }
-        if (uid.length==0) { if (completion) { completion(RelayrErrorWrongRelayrUser, nil, nil); } return; }
+        if (!uid.length) { if (completion) { completion(RelayrErrorWrongRelayrUser, nil, nil); } return; }
         
         __strong RelayrUser* strongSelf = weakSelf;
         if (!strongSelf.uid)
@@ -89,10 +89,10 @@ static NSString* const kCodingPublishers = @"pub";
     }];
 }
 
-- (void)queryCloudForUserAppsAndPublishers:(void (^)(NSError* error, NSNumber* isThereChanges))completion
+- (void)queryCloudForPublishersAndAuthorisedApps:(void (^)(NSError* error, NSNumber* isThereChanges))completion
 {
     __weak RelayrUser* weakSelf = self;
-    [_webService requestUserInstalledApps:^(NSError *appError, NSArray *apps) {
+    [_webService requestUserAuthorisedApps:^(NSError *appError, NSArray *apps) {
         if (appError) { if (completion) { completion(appError, nil); } return; }
         [weakSelf.webService requestUserPublishers:^(NSError* publisherError, NSArray* publishers) {
             if (publisherError) { if (completion) { completion(publisherError, nil); } return; }
@@ -179,7 +179,7 @@ static NSString* const kCodingPublishers = @"pub";
         _transmitters = [decoder decodeObjectForKey:kCodingTransmitters];
         _devices = [decoder decodeObjectForKey:kCodingDevices];
         _devicesBookmarked = [decoder decodeObjectForKey:kCodingDevices];
-        _apps = [decoder decodeObjectForKey:kCodingApps];
+        _authorisedApps = [decoder decodeObjectForKey:kCodingApps];
         _publishers = [decoder decodeObjectForKey:kCodingPublishers];
     }
     return self;
@@ -194,7 +194,7 @@ static NSString* const kCodingPublishers = @"pub";
     [coder encodeObject:_transmitters forKey:kCodingTransmitters];
     [coder encodeObject:_devices forKey:kCodingDevices];
     [coder encodeObject:_devicesBookmarked forKey:kCodingBookmarks];
-    [coder encodeObject:_apps forKey:kCodingApps];
+    [coder encodeObject:_authorisedApps forKey:kCodingApps];
     [coder encodeObject:_publishers forKey:kCodingPublishers];
 }
 

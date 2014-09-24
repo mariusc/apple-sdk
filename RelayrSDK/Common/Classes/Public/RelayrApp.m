@@ -73,12 +73,13 @@ static NSString* const kCodingUsers = @"usr";
     if (result) { return completion(nil, result); }
     
     result = [[RelayrApp alloc] initWithID:appID OAuthClientSecret:clientSecret redirectURI:redirectURI];
-    if (!result) { return completion(RelayrErrorSigningFailure, nil); }
+    if (!result) { return completion(RelayrErrorMissingArgument, nil); }
     
-    [RLAWebService requestAppInfoFor:result.uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription) {
+    [RLAWebService requestAppInfoFor:result.uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription, NSString* appPublisher) {
         if ( ![result.uid isEqualToString:appID] ) { return completion(RelayrErrorWebRequestFailure, nil); }
         result.name = appName;
         result.appDescription = appDescription;
+        result.publisherID = appPublisher;
         completion(nil, result);
     }];
 }
@@ -130,7 +131,7 @@ static NSString* const kCodingUsers = @"usr";
     if (!user) { if (completion) { completion(RelayrErrorMissingArgument, nil, nil); } return; }
     
     __weak RelayrApp* weakSelf = self;
-    [RLAWebService requestAppInfoFor:_uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription) {
+    [RLAWebService requestAppInfoFor:_uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription, NSString* appPublisher) {
         __strong RelayrApp* strongSelf = weakSelf;
         
         if ( ![strongSelf.uid isEqualToString:appID] ) { return completion(RelayrErrorWebRequestFailure, nil, nil); }
@@ -198,13 +199,13 @@ static NSString* const kCodingUsers = @"usr";
 
 - (void)signOutUser:(RelayrUser*)user
 {
-    NSString* userToken = user.token;
-    if (userToken.length == 0) { return; }
+    NSString* userID = user.uid;
+    if (userID.length == 0) { return; }
     
     NSUInteger const userCount = _users.count;
     for (NSUInteger i=0; i<userCount; ++i)
     {
-        if ( [userToken isEqualToString:((RelayrUser*)_users[i]).token] ) { return [_users removeObjectAtIndex:i]; }
+        if ( [userID isEqualToString:((RelayrUser*)_users[i]).uid] ) { return [_users removeObjectAtIndex:i]; }
     }
 }
 
@@ -250,7 +251,7 @@ static NSString* const kCodingUsers = @"usr";
 + (NSMutableArray*)storedRelayrApps
 {
     NSObject<NSCoding> * obj = [RLAKeyChain objectForKey:kRelayrAppStorageKey];
-    return ([obj isKindOfClass:[NSMutableArray class]] && ((NSMutableArray*)obj).count!=0) ? (NSMutableArray*)obj : nil;
+    return ([obj isKindOfClass:[NSMutableArray class]] && ((NSMutableArray*)obj).count>0) ? (NSMutableArray*)obj : nil;
 }
 
 /*******************************************************************************

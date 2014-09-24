@@ -26,4 +26,10 @@
  */
 @property (readwrite,nonatomic) NSString* name;
 
+/*!
+ *  @abstract Relayr apps owned by this publisher entity.
+ *  @discussion A <code>NSSet</code> containing <code>NSString</code>s with the Relayr ID of the Relayr Apps entities.
+ */
+@property (readwrite,nonatomic) NSSet* apps;
+
 @end

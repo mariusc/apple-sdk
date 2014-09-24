@@ -28,4 +28,10 @@
  */
 @property (readonly,nonatomic) NSString* owner;
 
+/*!
+ *  @abstract Relayr apps owned by this publisher entity.
+ *  @discussion A <code>NSSet</code> containing <code>RelayrApp</code> entities.
+ */
+@property (readonly,nonatomic) NSSet* apps;
+
 @end

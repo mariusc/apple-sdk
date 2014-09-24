@@ -34,7 +34,7 @@
     return result;
     
 #elif defined(OS_APPLE_OSX)
-    #warning "Implement a function to discover current Wifi connection
+    //TODO: Implement a function to discover current Wifi connection
     return nil;
 #endif
 }

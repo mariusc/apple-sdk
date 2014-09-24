@@ -5,6 +5,7 @@
 static NSString* const kCodingID = @"uid";
 static NSString* const kCodingName = @"nam";
 static NSString* const kCodingOwner = @"own";
+static NSString* const kCodingApps = @"apps";
 
 @implementation RelayrPublisher
 
@@ -36,6 +37,7 @@ static NSString* const kCodingOwner = @"own";
     if (self)
     {
         _name = [decoder decodeObjectForKey:kCodingName];
+        _apps = [decoder decodeObjectForKey:kCodingApps];
     }
     return self;
 }
@@ -45,6 +47,7 @@ static NSString* const kCodingOwner = @"own";
     [coder encodeObject:_uid forKey:kCodingID];
     [coder encodeObject:_name forKey:kCodingName];
     [coder encodeObject:_owner forKey:kCodingOwner];
+    [coder encodeObject:_apps forKey:kCodingApps];
 }
 
 #pragma mark Base class

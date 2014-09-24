@@ -37,7 +37,7 @@
  *  @abstract Relayr applications installed the specific <code>RelayrUser</code> instace.
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
-@property (readonly,nonatomic) NSSet* apps;
+@property (readonly,nonatomic) NSSet* authorisedApps;
 
 /*!
  *  @abstract A set of the <code>publisher</code>s listed under the specific user.
@@ -94,7 +94,7 @@
  *
  *  @param completion A block indicating whether the server query was successful or not.
  */
-- (void)queryCloudForUserAppsAndPublishers:(void (^)(NSError* error, NSNumber* isThereChanges))completion;
+- (void)queryCloudForPublishersAndAuthorisedApps:(void (^)(NSError* error, NSNumber* isThereChanges))completion;
 
 /*!
  *  @abstract It creates/register a transmitter entity in the Relayr Cloud.

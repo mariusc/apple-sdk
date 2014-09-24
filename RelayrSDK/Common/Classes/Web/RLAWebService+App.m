@@ -11,19 +11,19 @@
 
 #pragma mark - Public API
 
-+ (void)requestAppInfoFor:(NSString*)appID completion:(void (^)(NSError*, NSString*, NSString*, NSString*))completion
++ (void)requestAppInfoFor:(NSString*)appID completion:(void (^)(NSError* error, NSString* appID, NSString* appName, NSString* appDescription, NSString* appPublisher))completion
 {
     if (!completion) { return; }
-    if (!appID.length) { return completion(RelayrErrorMissingArgument, nil, nil, nil); }
+    if (!appID.length) { return completion(RelayrErrorMissingArgument, nil, nil, nil, nil); }
     
     RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:[NSURL URLWithString:Web_Host]];
-    if (!request) { return completion(RelayrErrorWebRequestFailure, nil, nil, nil); }
+    if (!request) { return completion(RelayrErrorWebRequestFailure, nil, nil, nil, nil); }
     request.relativePath = Web_RequestRelativePath_AppInfo(appID);
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
-        NSDictionary* json = processRequest(Web_RequestResponseCode_AppInfo, nil, nil, nil);
+        NSDictionary* json = processRequest(Web_RequestResponseCode_AppInfo, nil, nil, nil, nil);
         
-        completion(nil, json[Web_RespondKey_AppID], json[Web_RespondKey_AppName], json[Web_RespondKey_AppDescription]);
+        completion(nil, json[Web_RespondKey_AppID], json[Web_RespondKey_AppName], json[Web_RespondKey_AppDescription], json[Web_RespondKey_AppPublisher]);
     }];
 }
 

@@ -19,6 +19,7 @@
 #define Web_RespondKey_AppID                @"id"
 #define Web_RespondKey_AppName              @"name"
 #define Web_RespondKey_AppDescription       @"description"
+#define Web_RespondKey_AppPublisher         @"publisher"
 #define Web_RespondKey_AppOwner             @"owner"
 #define Web_RespondKey_AppOAuthClientSecret @"clientSecret"
 #define Web_RespondKey_AppRedirectURI       @"redirectUri"
@@ -200,8 +201,8 @@
 #define Web_RequestResponseCode_Publishers              200
 
 // Publisher info (get)
-#define Web_RequestRelativePath_PublishersApps(pubID)   [NSString stringWithFormat:@"/publishers/%@", pubID]
-#define Web_RequestResponseCode_PublishersApps          200
+#define Web_RequestRelativePath_Publisher(pubID)        [NSString stringWithFormat:@"/publishers/%@", pubID]
+#define Web_RequestResponseCode_Publisher               200
 
 // Publisher info (set)
 #define Web_RequestRelativePath_PublisherSet(pubID)     [NSString stringWithFormat:@"/publishers/%@", pubID]
@@ -209,6 +210,14 @@
 
 #define Web_RequestBodyKey_PublisherName                @"name"
 #define Web_RequestBodyKey_PublisherOwner               @"owner"
+
+// Publisher apps (get)
+#define Web_RequestRelativePath_PublishersApps(pubID)   [NSString stringWithFormat:@"/publishers/%@/apps", pubID]
+#define Web_RequestResponseCode_PublishersApps          200
+
+// Publisher apps (get extended)
+#define Web_RequestRelativePath_PublishersAppsEx(appID) [NSString stringWithFormat:@"/publishers/%@/apps/extended", appID]
+#define Web_RequestResponseCode_PublishersAppsEx        200
 
 // Publisher deletion
 #define Web_RequestRelativePath_PublishersDelete(pubID) [NSString stringWithFormat:@"/publishers/%@", pubID]

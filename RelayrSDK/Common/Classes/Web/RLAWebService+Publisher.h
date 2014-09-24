@@ -26,6 +26,17 @@
                        completion:(void (^)(NSError* error, RelayrPublisher* publisher))completion;
 
 /*!
+ *  @abstract Retrieves the information of a specific publisher.
+ *
+ *  @param publisherID <code>NSString</code> representing the unique Relayr identifier for a given publisher.
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrPublisher
+ */
+- (void)requestPublisher:(NSString*)publisherID
+             completion:(void (^)(NSError* error, RelayrPublisher* publisher))completion;
+
+/*!
  *  @abstract Set some properties of the Relayr publisher entity in the Relayr cloud.
  *
  *  @param publisherID <code>NSString</code> representing the unique Relayr identifier for a given publisher.
@@ -37,6 +48,17 @@
 - (void)setPublisher:(NSString*)publisherID
             withName:(NSString*)futurePublisherName
           completion:(void (^)(NSError* error, RelayrPublisher* publisher))completion;
+
+/*!
+ *  @abstract Deletes the publisher entity from the Relayr Cloud.
+ *
+ *  @param publisherID <code>NSString</code> representing the unique Relayr identifier for the Publisher.
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrTransmitter
+ */
+- (void)deletePublisher:(NSString*)publisherID
+             completion:(void (^)(NSError* error))completion;
 
 /*!
  *  @abstract Retrieves all the Relayr Applications under a publisher.
@@ -51,14 +73,16 @@
                      completion:(void (^)(NSError* error, NSArray* apps))completion;
 
 /*!
- *  @abstract Deletes the publisher entity from the Relayr Cloud.
+ *  @abstract Retrieves all the Relayr Applications under a publisher.
+ *  @discussion This request provides more information than the regular @link requestAppsFromPublisher:completion: @/link
  *
- *  @param publisherID <code>NSString</code> representing the unique Relayr identifier for the Publisher.
+ *  @param publisherID The Relayr unique identifer for a given publisher.
  *  @param completion Block indicating the result of the server query.
  *
- *  @see RelayrTransmitter
+ *  @see RelayrPublisher
+ *  @see RelayrApp
  */
-- (void)deletePublisher:(NSString*)publisherID
-             completion:(void (^)(NSError* error))completion;
+- (void)requestAppsWithExtendedInfoFromPublisher:(NSString*)publisherID
+                                      completion:(void (^)(NSError* error, NSArray* apps))completion;
 
 @end

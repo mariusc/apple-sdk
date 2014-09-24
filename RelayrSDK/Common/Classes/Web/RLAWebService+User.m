@@ -73,7 +73,7 @@
     }];
 }
 
-- (void)installApp:(NSString*)appID forCurrentUser:(void (^)(NSError* error))completion
+- (void)authoriseApp:(NSString*)appID forCurrentUser:(void (^)(NSError* error))completion
 {
     if (!appID.length) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
     
@@ -87,7 +87,7 @@
     }];
 }
 
-- (void)requestUserInstalledApps:(void (^)(NSError* error, NSArray* apps))completion
+- (void)requestUserAuthorisedApps:(void (^)(NSError* error, NSArray* apps))completion
 {
     if (!completion) { return; }
     
@@ -109,7 +109,7 @@
     }];
 }
 
-- (void)uninstallApp:(NSString*)appID forCurrentUser:(void (^)(NSError* error))completion
+- (void)unauthoriseApp:(NSString*)appID forCurrentUser:(void (^)(NSError* error))completion
 {
     if (!appID.length) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
     
