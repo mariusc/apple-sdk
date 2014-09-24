@@ -29,6 +29,13 @@ static NSString* const kCodingApps = @"apps";
     return self;
 }
 
+- (void)setWith:(RelayrPublisher*)publisher
+{
+    if (![publisher.uid isEqualToString:_uid] || ![publisher.owner isEqualToString:_owner]) { return; }
+    _name = publisher.name;
+    _apps = publisher.apps;
+}
+
 #pragma mark NSCoding
 
 - (id)initWithCoder:(NSCoder*)decoder

@@ -209,6 +209,11 @@ static NSString* const kCodingUsers = @"usr";
     }
 }
 
+- (void)setWith:(RelayrApp*)app
+{
+    // TODO: Fill up
+}
+
 #pragma mark NSCoding
 
 - (id)initWithCoder:(NSCoder*)decoder

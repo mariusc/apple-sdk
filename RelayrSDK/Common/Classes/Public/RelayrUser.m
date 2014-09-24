@@ -5,6 +5,7 @@
 #import "RelayrDevice.h"                // Relayr.framework (Public)
 #import "RelayrPublisher.h"             // Relayr.framework (Public)
 
+#import "RelayrApp_Setup.h"             // Relayr.framework (Private)
 #import "RelayrUser_Setup.h"            // Relayr.framework (Private)
 #import "RelayrPublisher_Setup.h"       // Relayr.framework (Private)
 #import "RelayrTransmitter_Setup.h"     // Relayr.framework (Private)
@@ -89,15 +90,16 @@ static NSString* const kCodingPublishers = @"pub";
     }];
 }
 
-- (void)queryCloudForPublishersAndAuthorisedApps:(void (^)(NSError* error, NSNumber* isThereChanges))completion
+- (void)queryCloudForPublishersAndAuthorisedApps:(void (^)(NSError* error))completion
 {
     __weak RelayrUser* weakSelf = self;
-    [_webService requestUserAuthorisedApps:^(NSError *appError, NSArray *apps) {
-        if (appError) { if (completion) { completion(appError, nil); } return; }
-        [weakSelf.webService requestUserPublishers:^(NSError* publisherError, NSArray* publishers) {
-            if (publisherError) { if (completion) { completion(publisherError, nil); } return; }
-            BOOL const result = [weakSelf setUsersAppsFromServerArray:apps publishersFrom:publishers];
-            if (completion) { completion(nil, [NSNumber numberWithBool:result]); }
+    [_webService requestUserAuthorisedApps:^(NSError* appError, NSSet* apps) {
+        if (appError) { if (completion) { completion(appError); } return; }
+        [weakSelf.webService requestUserPublishers:^(NSError* publisherError, NSSet* publishers) {
+            if (publisherError) { if (completion) { completion(publisherError); } return; }
+            [self replaceAuthorisedApps:apps];
+            [self replacePublishers:publishers];
+            if (completion) { completion(nil); }
         }];
     }];
 }
@@ -221,16 +223,77 @@ static NSString* const kCodingPublishers = @"pub";
 }
 
 /*******************************************************************************
- * It sets the user's applications and publishers with the server query.
- * If there were previous apps or publishers; those are removed.
+ * It replaces/set the current authorised apps with a new set of authorised apps.
+ * If <code>apps</code> is <code>nil</code>, the authorisedApps are unknown and thus no further work is performed.
+ * If <code>apps</code> is an empty set, there are no authorised apps.
+ * If <code>apps</code> contains <code>RelayrApp</code> objects, a replacing process will be launched.
  ******************************************************************************/
-- (BOOL)setUsersAppsFromServerArray:(NSArray*)serverApps publishersFrom:(NSArray*)serverPublishers
+- (void)replaceAuthorisedApps:(NSSet*)apps
 {
-    BOOL isThereChanges = NO;
+    if (!apps) { return; }
+    else if (apps.count == 0) { _authorisedApps = [[NSSet alloc] init]; return; }
+    else if (_authorisedApps.count == 0) { _authorisedApps = apps; return; }
     
-    // TODO: Fill up
+    NSMutableSet* result = [[NSMutableSet alloc] init];
     
-    return isThereChanges;
+    for (RelayrApp* app in apps)
+    {
+        NSString* futureID = app.uid;
+        BOOL matchedApp = NO;
+        
+        for (RelayrApp* previousApp in _authorisedApps)
+        {
+            if ([previousApp.uid isEqualToString:futureID])
+            {
+                [previousApp setWith:app];
+                [result addObject:previousApp];
+                matchedApp = YES;
+                break;
+            }
+        }
+        
+        if (!matchedApp) { [result addObject:app]; }
+    }
+    
+    if (result.count == 0) { _authorisedApps = [[NSSet alloc] init]; }
+    else { _authorisedApps = [NSSet setWithSet:result]; }
+}
+
+/*******************************************************************************
+ * It replaces/set the current publishers with a new set of publishers
+ * If <code>publisher</code> is <code>nil</code>, the publishers are unknown and thus no further work is performed.
+ * If <code>publisher</code> is an empty set, there are no publishers.
+ * If <code>publisher</code> contains <code>RelayrApp</code> objects, a replacing process will be launched.
+ ******************************************************************************/
+- (void)replacePublishers:(NSSet*)publishers
+{
+    if (!publishers) { return; }
+    else if (publishers.count == 0) { _publishers = [[NSSet alloc] init]; return; }
+    else if (_publishers.count == 0) { _publishers = publishers; return; }
+    
+    NSMutableSet* result = [[NSMutableSet alloc] init];
+    
+    for (RelayrPublisher* publisher in publishers)
+    {
+        NSString* futureID = publisher.uid;
+        BOOL matchedPublisher = NO;
+        
+        for (RelayrPublisher* previousPublisher in _authorisedApps)
+        {
+            if ([previousPublisher.uid isEqualToString:futureID])
+            {
+                [previousPublisher setWith:publisher];
+                [result addObject:previousPublisher];
+                matchedPublisher = YES;
+                break;
+            }
+        }
+        
+        if (!matchedPublisher) { [result addObject:publisher]; }
+    }
+    
+    if (result.count == 0) { _publishers = [[NSSet alloc] init]; }
+    else { _publishers = [NSSet setWithSet:result]; }
 }
 
 @end

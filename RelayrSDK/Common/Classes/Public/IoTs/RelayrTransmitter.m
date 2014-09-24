@@ -95,7 +95,7 @@ static NSString* const kCodingDevices = @"dev";
 
 /*******************************************************************************
  * It replaces/set the current managed devices by a newer set of devices.
- * If <code>devices</code> is <code>nil</code>, the managed devices are unknown and thus no further working is performed.
+ * If <code>devices</code> is <code>nil</code>, the managed devices are unknown and thus no further work is performed.
  * If <code>devices</code> is an empty set, the transmitter doesn't manage any device.
  * If <code>devices</code> contains <code>RelayrDevice</code> objects, a replacing process will be launched.
  ******************************************************************************/
@@ -105,11 +105,8 @@ static NSString* const kCodingDevices = @"dev";
     
     if (devices.count == 0)
     {
-        if (!_devices) {
-            _devices = [[NSMutableSet alloc] init];
-        } else {
-            [_devices removeAllObjects];
-        }
+        if (!_devices) { _devices = [[NSMutableSet alloc] init]; }
+        else { [_devices removeAllObjects]; }
         return;
     }
     
@@ -129,11 +126,8 @@ static NSString* const kCodingDevices = @"dev";
             }
         }
         
-        if (!matchedDevice) {
-            [minusSet addObject:device];
-        } else {
-            [devices removeObject:matchedDevice];
-        }
+        if (!matchedDevice) { [minusSet addObject:device]; }
+        else { [devices removeObject:matchedDevice]; }
     }
     
     [_devices minusSet:minusSet];

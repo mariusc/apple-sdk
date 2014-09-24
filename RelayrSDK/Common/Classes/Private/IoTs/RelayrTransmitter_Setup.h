@@ -40,4 +40,12 @@
  */
 @property (readwrite,nonatomic) NSMutableSet* devices;
 
+/*!
+ *  @abstract It sets the instance where this object is being called with the properties of the object passed as the argument.
+ *  @discussion The object passed as the argument is considered new and thus the properties have more priority.
+ *
+ *  @param transmitter The server instance of this object.
+ */
+- (void)setWith:(RelayrTransmitter*)transmitter;
+
 @end

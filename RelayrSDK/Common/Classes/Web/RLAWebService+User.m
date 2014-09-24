@@ -87,7 +87,7 @@
     }];
 }
 
-- (void)requestUserAuthorisedApps:(void (^)(NSError* error, NSArray* apps))completion
+- (void)requestUserAuthorisedApps:(void (^)(NSError* error, NSSet* apps))completion
 {
     if (!completion) { return; }
     
@@ -98,14 +98,14 @@
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
         NSArray* json = processRequest(Web_RequestResponseCode_UserInstalledApps, nil);
         
-        NSMutableArray* result = [NSMutableArray arrayWithCapacity:json.count];
+        NSMutableSet* result = [NSMutableSet setWithCapacity:json.count];
         for (NSDictionary* dict in json)
         {
             RelayrApp* app = [RLAWebService parseAppFromJSONDictionary:dict];
             if (app) { [result addObject:app]; }
         }
         
-        return completion(nil, (result.count) ? [NSArray arrayWithArray:result] : nil);
+        return completion(nil, (result.count) ? [NSSet setWithSet:result] : nil);
     }];
 }
 
@@ -123,7 +123,7 @@
     }];
 }
 
-- (void)requestUserPublishers:(void (^)(NSError* error, NSArray* publishers))completion
+- (void)requestUserPublishers:(void (^)(NSError* error, NSSet* publishers))completion
 {
     if (!completion) { return; }
     
@@ -134,14 +134,14 @@
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
         NSArray* json = processRequest(Web_RequestResponseCode_UserPubs, nil);
         
-        NSMutableArray* publishers = [NSMutableArray arrayWithCapacity:json.count];
+        NSMutableSet* result = [NSMutableSet setWithCapacity:json.count];
         for (NSDictionary* dict in json)
         {
             RelayrPublisher* pub = [RLAWebService parsePublisherFromJSONDictionary:dict];
-            if (pub) { [publishers addObject:pub]; }
+            if (pub) { [result addObject:pub]; }
         }
         
-        completion(nil, (publishers.count) ? [NSArray arrayWithArray:publishers] : nil);
+        completion(nil, (result.count) ? [NSSet setWithSet:result] : nil);
     }];
 }
 

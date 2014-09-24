@@ -12,56 +12,64 @@
 
 /*!
  *  @abstract A representation of a relayr user and their relayr application.
- *  @discussion This property does not change during the life cycle of the <code>RelayrUser</code>
+ *  @discussion This property does not change during the life cycle of the <code>RelayrUser</code> and it is never <code>nil</code>.
  */
 @property (readonly,nonatomic) NSString* token;
 
 /*!
  *  @abstract A unique idenfier of a <code>RelayrUser</code> instance.
+ *  @discussion This property does not change during the life cycle of the <code>RelayrUser</code> and it is never <code>nil</code>.
  */
 @property (readonly,nonatomic) NSString* uid;
 
 /*!
  *  @abstract A user name for a specific <code>RelayrUser</code> instace.
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
+ *      If <code>nil</code>, the name is unknown. If it is an empty string, the name is not set in the server.
  */
 @property (readonly,nonatomic) NSString* name;
 
 /*!
  *  @abstract Relayr user email for a specific <code>RelayrUser</code> instace.
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
+ *      If <code>nil</code>, the email is unknown. If it is an empty string, the email is not set in the server.
  */
 @property (readonly,nonatomic) NSString* email;
 
 /*!
  *  @abstract Relayr applications installed the specific <code>RelayrUser</code> instace.
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
+ *      If <code>nil</code>, the authorised apps are unknown. If it is an empty set, there are no authorised apps.
  */
 @property (readonly,nonatomic) NSSet* authorisedApps;
 
 /*!
  *  @abstract A set of the <code>publisher</code>s listed under the specific user.
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
+ *      If <code>nil</code>, the publishers are unknown. If it is an empty set, there are no publishers set in the server.
  */
 @property (readonly,nonatomic) NSSet* publishers;
 
 /*!
  *  @abstract A set of the Transmitter entities owned by the specific <code>RelayrUser</code> instace.
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
+ *      If <code>nil</code>, the transmitters are unknown. If it is an empty set, there are no transmitters owned by this user in the server.
  */
 @property (readonly,nonatomic) NSSet* transmitters;
 
 /*!
  *  @abstract A set of the Device entities owned by the specific <code>RelayrUser</code> instace
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
+ *      If <code>nil</code>, the devices are unknwon. If it is an empty set, there are no devices owned by this user in the server.
  */
 @property (readonly,nonatomic) NSSet* devices;
 
 /*!
  *  @abstract Devices that the specific <code>RelayrUser</code> instace has bookmarked.
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call. 
- *	By Bookmarking a device you are indicating that you have a particular interest in this device. 
- *	In the relayr context, a bookmarked device will appear on a user's Developer Dashboard.
+ *      By Bookmarking a device you are indicating that you have a particular interest in this device.
+ *      In the relayr context, a bookmarked device will appear on a user's Developer Dashboard.
+ *      If <code>nil</code>, the devices bookmarked are unknwon. If it is an empty set, there are no devices bookmarked by this user.
  */
 @property (readonly,nonatomic) NSSet* devicesBookmarked;
 
@@ -94,7 +102,7 @@
  *
  *  @param completion A block indicating whether the server query was successful or not.
  */
-- (void)queryCloudForPublishersAndAuthorisedApps:(void (^)(NSError* error, NSNumber* isThereChanges))completion;
+- (void)queryCloudForPublishersAndAuthorisedApps:(void (^)(NSError* error))completion;
 
 /*!
  *  @abstract It creates/register a transmitter entity in the Relayr Cloud.

@@ -58,4 +58,12 @@
  */
 @property (readwrite,nonatomic) NSString* redirectURI;
 
+/*!
+ *  @abstract Sets the instance where this object is being called onto, with the properties of the object passed as the argument.
+ *  @discussion The object passed as the argument is considered new and thus the properties have more priority.
+ *
+ *  @param app The newly <code>RelayrApp</code> instance.
+ */
+- (void)setWith:(RelayrApp*)app;
+
 @end

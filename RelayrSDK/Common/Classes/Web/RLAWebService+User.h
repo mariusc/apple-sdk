@@ -56,7 +56,7 @@ registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))co
  *  @see RelayrUser
  *  @see RelayrApp
  */
-- (void)requestUserAuthorisedApps:(void (^)(NSError* error, NSArray* apps))completion;
+- (void)requestUserAuthorisedApps:(void (^)(NSError* error, NSSet* apps))completion;
 
 /*!
  *  @abstract Uninstall an app under a specific user.
@@ -78,7 +78,7 @@ registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))co
  *  @see RelayrUser
  *  @see RelayrPublisher
  */
-- (void)requestUserPublishers:(void (^)(NSError* error, NSArray* publishers))completion;
+- (void)requestUserPublishers:(void (^)(NSError* error, NSSet* publishers))completion;
 
 /*!
  *  @abstract It queries the Relayr Cloud for all the transmitters own by a Relayr user.
