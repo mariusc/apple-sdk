@@ -2,11 +2,11 @@
 @class RelayrDevice;    // Relayr.framework (Public)
 
 /*!
- *  @abstract The type of connection of the associated device/transmitter.
+ *  @abstract The type of connection between a Device either a transmitter, a MAC, a mobile device etc.
  *
- *  @constant RelayrConnectionTypeCloud The device/transmitter is connected through the Relayr Cloud.
- *  @constant RelayrConnectionTypeBluetooth The device/transmitter is connected through the Bluetooth.
- *  @constant RelayrConnectionTypeUnknown The device/transmitter is connected through an unknown channel or not connected at all.
+ *  @constant RelayrConnectionTypeCloud The device is connected via the relayr Cloud.
+ *  @constant RelayrConnectionTypeBluetooth The device is connected via Bluetooth.
+ *  @constant RelayrConnectionTypeUnknown The device is connected via an unknown channel or not connected at all.
  */
 typedef NS_ENUM(NSUInteger, RelayrConnectionType) {
     RelayrConnectionTypeUnknown,
@@ -18,8 +18,8 @@ typedef NS_ENUM(NSUInteger, RelayrConnectionType) {
  *  @abstract The state of the connection.
  *
  *  @constant RelayrConnectionStateUnknonw The state of the connection is unknown.
- *  @constant RelayrConnectionStateConnecting The connection is being stablished.
- *  @constant RelayrConnectionStateConnected The connection is on and work as expected.
+ *  @constant RelayrConnectionStateConnecting The connection is being established.
+ *  @constant RelayrConnectionStateConnected The connection is on and functions as expected.
  *  @constant RelayrConnectionStateDisconnecting The connection is being disabled.
  */
 typedef NS_ENUM(NSUInteger, RelayrConnectionState) {

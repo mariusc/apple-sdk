@@ -2,12 +2,12 @@
 @class RelayrFirmwareModel;     // Relayr.firmware (Public)
 
 /*!
- *  @abstract It specifies the minimum functionality of a device.
+ *  @abstract Specifies the basic functionality of a device.
  */
 @interface RelayrDeviceModel : NSObject <NSCoding>
 
 /*!
- *  @abstract Identifies the device model within the Relayr Cloud.
+ *  @abstract The identifier of the device model within the Relayr Cloud.
  *  @discussion Inmutable
  */
 @property (readonly,nonatomic) NSString* modelID;
@@ -24,13 +24,15 @@
 @property (readonly,nonatomic) NSString* manufacturer;
 
 /*!
- *  @abstract Array containing all possible firmware models (<code>RelayrFirmwareModel</code>) for this <code>RelayrDeviceModel</code>.
+ *  @abstract An array containing all possible firmware models (<code>RelayrFirmwareModel</code>) for the current <code>RelayrDeviceModel</code>.
  */
 @property (readonly,nonatomic) NSArray* firmwaresAvailable;
 
 /*!
  *  @abstract Returns an array of all possible readings the device can gather.
- *  @discussion Each item in this array is an object of type <code>RelayrInput</code>. Each input represents a different kind of reading. That is, a <code>RelayrDevice</code> can have a luminosity sensor and a gyroscope; thus, this array would have two different inputs.
+ *  @discussion Each item in this array is an object of type <code>RelayrInput</code>. 
+ *	Each input represents a different kind of reading. 
+ *	That is, a <code>RelayrDevice</code> can have a luminosity sensor and a gyroscope; thus, this array would have two different inputs.
  *
  *  @see RelayrInput
  */
@@ -47,8 +49,8 @@
 @property (readonly,nonatomic) NSSet* outputs;
 
 /*!
- *  @abstract Sets the instance where this object is being called onto, with the properties of the object passed as the argument.
- *  @discussion The object passed as the argument is considered new and thus the properties have more priority.
+ *  @abstract Sets the instance where this object is being called for, with the properties of the object passed as arguments.
+ *  @discussion The objects passed as arguments are considered new and thus have a higher priority.
  *
  *  @param deviceModel The newly <code>RelayrDeviceModel</code> instance.
  */

@@ -31,14 +31,14 @@
 @property (readonly,nonatomic) NSString* owner;
 
 /*!
- *  @abstract Indicates wheather the data gathered by the device is public (available to all users) or not (available to the Device owner only).
+ *  @abstract Indicates whether the data gathered by the device is public (available to all users) or not (available to the Device owner only).
  *  @discussion An <code>NSNumber</code> wrapping a boolean value (use <code>.boolValue</code> to unwrap it). 
  */
 @property (readonly,nonatomic) NSNumber* isPublic;
 
 /*!
- *  @abstract Indicates firmware attributes of the Device instance being called.
- *  @discussion A device can have many different firmware versions. This indicates the firmware in the current device.
+ *  @abstract Indicates the firmware attributes of the Device instance being called.
+ *  @discussion A device may have many different firmware versions. This indicates the firmware of the device called.
  */
 @property (readonly,nonatomic) RelayrFirmware* firmware;
 
@@ -49,8 +49,8 @@
 @property (readonly,nonatomic) NSString* secret;
 
 /*!
- *  @abstract Sets the instance where this object is being called onto, with the properties of the object passed as the argument.
- *  @discussion The object passed as the argument is considered new and thus the properties have more priority.
+ *  @abstract Sets the instance where this object is being called for, with the properties of the object being passed as arguments.
+ *  @discussion The properties being passed as the arguments are considered new and thus have a higher priority.
  *
  *  @param device The newly <code>RelayrDevice</code> instance.
  */
@@ -59,15 +59,19 @@
 #pragma mark Processes
 
 /*!
- *  @abstract Initialises a physical device with the properties of this <code>RelayrDevice</code> entity.
- *  @discussion The onboarding process writes in physical memory of the targeted device the properties needed for the device to be a full member of the Relayr Cloud.
+ *  @abstract Denotes a physical device with the properties of this <code>RelayrDevice</code> entity.
+ *  @discussion During the onboarding process the properties needed for the device to be a member of the relayr cloud are written 
+ *	to the physical memory of the targeted device. 
+ *	
  *
  *
- *  @param onboardingClass Class in charge of the onboarding process. This class "knows" how to talk to the specific device.
- *  @param timeout The seconds that the onboarding process can span. If the onboarding process hasn't finished by the specified seconds, the completion block will be executed.
- *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. If a negative number is passed, then the block is returned with a proper error.
- *  @param options Specific options for the device you are onboarding. The specific <code>RelayrOnboarding</code> class will list all the additional variables needed for a correct onboarding.
- *  @param completion Block indicating whether the onboarding process was successful or not.
+ *  @param onboardingClass In charge of the onboarding process. This class "knows" how to communicate with the specific device.
+ *  @param timeout The period that the onboarding process can take in seconds. 
+ *	If the onboarding process doesn't finish within the specified timeout, the completion block is executed.
+ *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. 
+ *	If a negative number is passed, the block is returned with a respective error.
+ *  @param options Specific options for the device onboarded. The specific <code>RelayrOnboarding</code> class will list all additional variables required for a successful onboarding.
+ *  @param completion A Block indicating whether the onboarding process was successful or not.
  */
 - (void)onboardWithClass:(Class <RelayrOnboarding>)onboardingClass
                  timeout:(NSNumber*)timeout
@@ -75,13 +79,15 @@
               completion:(void (^)(NSError* error))completion;
 
 /*!
- *  @abstract Performs a firmware update to a specific device.
+ *  @abstract Performs a firmware update on the specific device.
  *
- *  @param updateClass Class in charge of the firmware update process. This class "knows" how to talk to the specific device.
- *  @param timeout The seconds that the firmware update process can span. If the firmware update process hasn't finished by the specified seconds, the completion block will be executed.
- *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. If a negative number is passed, then the block is returned with a proper error.
- *  @param options Specific options for the device you are updating. The specific <code>RelayrFirmwareUpdate</code> class will list all the additional variables needed for a correct firmware update.
- *  @param completion Block indicating whether the update process was successful or not.
+ *  @param updateClass In charge of the firmware update process. This class "knows" how to communicate with the specific device.
+ *  @param timeout The period that the onboarding process can take in seconds. 
+ *	If the onboarding process doesn't finish within the specified timeout, the completion block is executed.
+ *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. 
+ *	If a negative number is passed, the block is returned with a respective error.
+ *  @param options Specific options for the device you are updating. The specific <code>RelayrFirmwareUpdate</code> class will list all additional variables required for a successful firmware update.
+ *  @param completion A Block indicating whether the update process was successful or not.
  */
 - (void)updateFirmwareWithClass:(Class <RelayrFirmwareUpdate>)updateClass
                         timeout:(NSNumber*)timeout
@@ -91,14 +97,16 @@
 #pragma mark Subscription
 
 /*!
- *  @abstract Subscribes the object target to all data (all inputs) sent from the <code>RelayrDevice</code>.
- *  @discussion It doesn't matter how the device is connected (Web/Cloud, Bluetooth, etc.), the caller of this method expects that the action is called on the target as soon as the data is available.
+ *  @abstract Subscribes the target object to all data (all readings) sent from the <code>RelayrDevice</code>.
+ *  @discussion Regardless of how the device is connected (Web/Cloud, Bluetooth, etc.), 
+ *	The action is called as soon as the data is available.
  *
- *  @param target The object where the <code>action</code> will be called onto.
- *  @param action The method to be called. It can have two modalities:
+ *  @param target The object where the <code>action</code> is called onto.
+ *  @param action The method to be called. It can have two modes:
  *      - No parameters.
- *      - One parameter. The parameter must be a <code>RelayrInput</code> object, or this method will return a subscription error.
- *  @param subscriptionError Block executed if the subscription could not be performed (it can be <code>nil</code>. If you define this block, you must return a boolean indicating if you want to retry the subscription.
+ *      - One parameter. The parameter must be a <code>RelayrInput</code> object, otherwise this method will return a subscription error.
+ *  @param subscriptionError A Block executed if the subscription cannot be performed (it can be <code>nil</code>. 
+ *	If this block is defined, a boolean must be returned, indicating if a subscription retry should be attempted.
  *
  *  @see RelayrInput
  */
@@ -107,14 +115,16 @@
                                  error:(BOOL (^)(NSError* error))subscriptionError;
 
 /*!
- *  @abstract Subscribes the block to the data sent from the <code>RelayrDevice</code>.
- *  @discussion It doesn't matter how the device is connected (Web/Cloud, Bluetooth, etc.), the caller of this method expects that the action is called on the target as soon as the data is available.
+ *  @abstract Subscribes a block to the data sent from the <code>RelayrDevice</code>.
+ *  @discussion Regardless of how the device is connected (Web/Cloud, Bluetooth, etc.), 
+ *	The action is called as soon as the data is available.
  *
  *  @param block This block will be executed everytime data is available. The block contains three parameters:
- *      - <code>device</code>. The device that is reading the information.
+ *      - <code>device</code>. The device producing the reading.
  *      - <code>input</code>. The reading value received.
- *      - <code>unsubscribe</code>. Boolean pointer that when set to <code>NO</code>, will stop the subscription.
- *  @param subscriptionError Block executed if the subscription could not be performed (it can be <code>nil</code>. If you define this block, you must return a boolean indicating if you want to retry the subscription.
+ *      - <code>unsubscribe</code>. A Boolean variable, that when set to <code>NO</code>, will stop the subscription.
+ *  @param subscriptionError A Block executed if the subscription cannot be performed (it can be <code>nil</code>. 
+ *	If this block is defined, a boolean must be returned, indicating if a subscription retry should be attempted.
  *
  *  @see RelayrInput
  */
@@ -122,19 +132,20 @@
                                 error:(BOOL (^)(NSError* error))subscriptionError;
 
 /*!
- *  @abstract Unsubscribe the specific action of a target object.
- *  @discussion If a target object has more than one subscription with different actions, this unsubscribe method only affects to the actions being passed.
+ *  @abstract Unsubscribes the specific action from the target object.
+ *  @discussion If a target object has more than one subscription with different actions, 
+ *	this unsubscribe method only affects the actions being passed.
  *
- *  @param target The object where the subscription was being sent to.
- *  @param action The action being executed on the target every time information arrives.
+ *  @param target The object where the subscription is being sent to.
+ *  @param action The action being executed on the target each time readings arrives.
  *
  *  @see RelayrInput
  */
 - (void)unsubscribeTarget:(id)target action:(SEL)action;
 
 /*!
- *  @abstract It removes all the subscriptions for this devices.
- *  @discussion All subscription, whether blocks or target objects are unsubscribe.
+ *  @abstract Removes all subscriptions for this devices.
+ *  @discussion All subscriptions, whether blocks or target objects are unsubscribed.
  */
 - (void)removeAllSubscriptions;
 
