@@ -1,34 +1,38 @@
 Introduction
 ------------
-Welcome to the relayr Apple-SDK repository.
-This repository contains the code which allows you to build the relayr Framework for iOS and MAC OS X. The *RelayrSDK* project generates a product called `Relayr.framework`, which, depending on your use purpose, can be run on a mac or on an iOS device.
 
-Currently, the only dependency of the project is the PUBNUB library.
-If you are interested in building the framework *for iOS devices*, you will require **Xcode 6 and iOS 8**, since embedded frameworks have only been introduced in iOS 8 enable devices.
-For Mac applications, you can use Xcode 5.
+Welcome to the Relayr Apple SDK repository (still in Beta, so please be understanding).
 
-Getting Started - The Build process
------------------------------------
+This repository contains the code which allows you to build the Relayr Framework for iOS and Mac OS X. The *RelayrSDK* project generates a product called `Relayr.framework` which, depending on your use purpose, can be run on a mac or on an iOS device.
 
-There are currently two methods of including the `Relayr.framework` in your project:
+The Relayr SDK requires:
 
-### Method 1:
+* For iOS applications: Xcode 6+ and iOS 8+ (since the framework is released in *Cocoa Touch Framework* form).
+* For OSX applications: Xcode 5+ and OSX 10.9+.
 
-**Getting the *.framework* file and dragging and dropping it into your project.**
+Getting Started
+---------------
 
-  * Download or generate the `Relayr.framework` file:
+### Obtaining the framework
 
-     ![First step of the build process](./README/Assets/BuildProcess01.gif)
+The framework can be obtained by:
 
-  * Drag and drop the file into your project and make sure that the framework appears both in *Embedded Binaries* and in *Linked Frameworks and Libraries*:
+* downloading the binary `.framework` file for [iOS](./bin/iOS/Relayr.framework) or [OSX](./bin/OSX/Relayr.framework) (this will be updated with the latest binary); or
+* generating the binary `.framework` file from this Xcode project. Just select the platform you want from the project's targets and press *build* (⌘+B).
 
-     ![Second step of the build process](./README/Assets/BuildProcess02.gif)
+  ![Generating the framework file](./README/Assets/BuildProcess01.gif)
 
-### Method 2:
+### Using the framework
 
-**Integrating the *RelayrSDK* project as a subproject of your workspace and then dragging and dropping the `Relayr.framework` product into the *Embedded Binaries* tab:**
+The framework can be used on two different ways:
 
-  ![Method 2 of the build process](./README/Assets/BuildProcess03.gif)
+* Drag & Drop the `.framework` file onto your project and make sure that the framework appears both in *Embedded Binaries* and in *Linked Frameworks and Libraries*; or
+
+  ![Drag & Drop the framework](./README/Assets/BuildProcess02.gif)
+
+* Drag & Drop the `Relayr.xcodeproj` onto your project and add the *Relayr* project product as *Embedded Binaries* (and thus also *Linked Frameworks and Libraries*).
+
+  ![Use as subproject](./README/Assets/BuildProcess03.gif)
 
 Basic Classes
 -------------
@@ -36,23 +40,29 @@ Basic Classes
 The `Relayr.framework` includes a small subset of useful classes, which allow you to communicate with the relayr cloud, receive sensor data and manage users, devices transmitters and other entities. At the moment The BLE Direct Connection Classes are not fully implemented but they should be available in upcoming releases. The classes indicated below are all related to App > Cloud > Device communication.  
 All calls are asynchronous and the server response time is proportional to the quality of your connection and the size of the response requested.
 
-### `RelayrCloud.h`
+### *RelayrCloud*
 
 Used as a static class to receive various statuses from the relayr servers.
 
 ```objective-c
 [RelayrCloud isReachable:^(NSError* error, NSNumber* isReachable){
     if (isReachable.boolValue) {
-        NSLog(@"The Relayr Cloud is reachable!")
+        NSLog(@"The Relayr Cloud is reachable!");
     }
 }];
+
+[RelayrCloud isUserWithEmail:@"marcos@relayr.de" registered:^(NSError* error, NSNumber* isUserRegistered) {
+    if (!error && isUserRegistered.boolValue) {
+        NSLog(@"The user is registered on the platform");
+    }
+}]
 ```
 
-### `RelayrApp.h`
+### *RelayrApp*
 
-A representation of your iOS/OSX app on the Relayr Cloud.
+A representation of your iOS/OSX app on the Relayr Cloud. You need this object to interact with the Relayr services (it is worth noticing that this is not a singleton and theoretically you can define as many Relayr apps as you wish).
 
-You create an object with the respective *appID*, *OAuthClientSecret*, and *redirectURI* generated when you first create your application on [the Developer Dashboard Apps section](https://developer.relayr.io/dashboard/apps/myApps).
+An instance of `RelayrApp` can be created by passing the credentials (*appID*, *OAuthClientSecret*, and *redirectURI*) obtained from the [Developer Dashboard](https://developer.relayr.io/dashboard/apps/myApps), when you define the application to use the Relayr Cloud.
 
 ```objective-c
 [RelayrApp appWithID:@"..." OAuthClientSecret:@"..." redirectURI:@"..." completion:^(NSError* error, RelayrApp* app){
@@ -63,51 +73,111 @@ You create an object with the respective *appID*, *OAuthClientSecret*, and *redi
 }];
 ```
 
-You can check your app's properties, query the server for information related to it, or sign users in and out of it.
+You can check your app's properties, query the server for information related to it, or sign users in and out of it. You can have as many logged in users as you want.
 
 ```objective-c
-[self.app signInUser:^(NSError* error, RelayrUser* user){
+RelayrApp* app = ...;
+[app signInUser:^(NSError* error, RelayrUser* user){
     if (user) {
-        [self.users addObject user];
+        NSLog(@"User logged with name: %@ and email: %@", user.name, user.email);
     }
 }];
 ```
 
-### `RelayrUser.h`
+You don't need to store the users if you don't want, since they are stored within the `RelayrApp` instance. You can query the app for already logged users by:
 
-Represents a logged-in user.
-Users can access device data. They can query transmitters/devices they own, bookmark favorite devices and become app publishers.
-You can have as many logged in users as you want.
+```objective-c
+RelayrUser* user = app.loggedUsers.lastObject;
+// Or...
+RelayrUser* user = [app loggedUserWithRelayrID:@"..."];
+```
+
+### *RelayrUser*
+
+Represents a logged-in user. Users can access device data. They can query transmitters/devices they own, bookmark favorite devices, and become app publishers.
 
 ```objective-c
 RelayrUser* user = ...;
 NSLog(@"User with name: %@ and email: %@", user.name, user.email);
 
 // Lets ask the cloud for all the transmitters/devices own by this specific user.
-[user queryCloudForIoTs:^(NSError* error, NSNumber* isThereChanges){
-    if (error) { return; }
+[user queryCloudForIoTs:^(NSError* error){
+    if (error) { return NSLog(@"%@", error.localizedDescription); }
 
-    for (RelayrTransmitter* tran in user.transmitters)
+    for (RelayrTransmitter* transmitter in user.transmitters)
     {
-        NSLog(@"Transmitter's name: %@", tran.name);
+        NSLog(@"Transmitter's name: %@", transmitter.name);
     }
 
-    for (RelayrDevice* dev in user.devices)
+    for (RelayrDevice* devices in user.devices)
     {
-        NSLog(@"Device's name: %@", dev.name);
+        NSLog(@"Device's name: %@", devices.name);
     }
-}]
+}];
 ```
 
-### `RelayrTransmitter.h`
+### *RelayrTransmitter*
 
-An instance representing a *Transmitter*. A transmitter is one of the basic relayr entities.
-A transmitter, contrary to a device does not gather data but is only used to *relay* the data from the devices to the relayr cloud platform. The transmitter is also used to authenticate the different devices that transmit data via it.
-In the case of the relayr WunderBar, the transmitter is the Master Module in the Cloud Platform scenario (data being sent from the sensors by the Master Module to the relayr cloud over MQTT/SSL). In the future case of direct connection an app running on your phone could serve as a transmitter.
+An instance representing a *Transmitter*. A transmitter is one of the basic Relayr entities. A transmitter, contrary to a device, does not gather data but is only used to *relay* the data from the devices to the Relayr cloud platform. The transmitter is also used to authenticate the different devices that transmit data via it.
+In the case of the Relayr WunderBar, the transmitter is the Master Module in the Cloud Platform scenario (data being sent from the sensors by the Master Module to the Relayr cloud over MQTT/SSL). In the future case of direct connection an app running on your phone could serve as a transmitter.
 
-### `RelayrDevice.h`
+```objective-c
+RelayrTransmitter* transmitter = user.transmitters.anyObject;
+NSLog(@"This transmitter relays information of %lu devices", transmitter.devices.count);
+for (RelayrDevice* device in transmitter.devices)
+{
+    NSLog(@"Device name: %@, capable of measuring %lu different values", device.name, device.inputs.count);
+}
+```
 
-An instance representing a *Device*. A device is another basic relayr entity.
-A device is any external entity capable of producing measurements
-and sending them to a transmitter to be further sent to the relayr platform, or one which is capable of receiving information from the relayr platform.
+### *RelayrDevice*
+
+An instance representing a *Device*. A device is another basic Relayr entity. A device is any external entity capable of producing measurements and sending them to a transmitter to be further sent to the relayr platform, or one which is capable of receiving information from the relayr platform.
 Since a single relayr device can produce more than one reading at the same time, you should always query device capabilities prior to executing any other commands.
+
+```objective-c
+RelayrDevice* device = transmitter.devices.anyObject;
+NSLog(@"Device manufacturer: %@ and model name: %@", device.manufacturer, device.modelName);
+
+for (RelayrInput* reading in device.inputs)
+{
+    NSLog(@"This device can measure %@ in %@ units", reading.meaning, reading.unit);
+    NSLog(@"Last value obtained by this device for this specific reading is %@ at %@", input.value, input.date);
+}
+```
+
+*Note*: Please be aware that we are currently in beta and many properties won't work. For more information, please ask.
+
+The most reliable way to obtain data is to subscribe to a reading/input of a Relayr device.
+
+```objective-c
+// You can choose to subscribe with a block (it will be executed every time a new value is received):
+[device.inputs.anyObject subscribeWithBlock:^(RelayrDevice* device, RelayrInput* input, BOOL* unsubscribe){
+    NSLog(@"Value received: %@ from device: %@", input.value, device.name);
+    if (/* Many values have been read */) { *unsubscribe = YES; }
+} error:^(NSError* error){
+    NSLog(@"Some error happened while subscribing, please try again or blame PubNub for everything...");
+}];
+
+// Or you can choose to receive subscription values by target-action mechanism:
+[device.inputs.anyObject subscribeWithTarget:self action:@selector(dataReceivedFrom:) error:^(NSError* error){
+    NSLog(@"An error occurred while subscribing");
+}];
+
+- (void)dataReceivedFrom:(RelayrInput*)input
+{
+    NSLog(@"Value received: %@", input.value);
+}
+```
+
+### *RelayrInput*, *RelayrOutput*, and *RelayrConnection*
+
+These are objects abstractions of a device's input and outputs sensors, and a connection to a transmitter.
+
+You can query their properties for many useful information pieces:
+
+* `RelayrInput` for data received from the device. The type of data received is listed as a `meaning` and is measured in `unit` units.
+* `RelayrOutput` for signals that the device can output. It can be infrared, or Grove signals.
+* `RelayrConnection` to query the connection state (connected, disconnected, resetting, etc.), and the connection type (BLE, Wifi, etc.). You can even subscribe to changes into the connection channel (for example, be informed when you are near a device or when the Wifi connection of your device is cut).
+
+The `RelayrConnection` and `RelayrOutput` haven't been yet implemented (remember, we are in Beta). It will come sooner than you might expect ;)

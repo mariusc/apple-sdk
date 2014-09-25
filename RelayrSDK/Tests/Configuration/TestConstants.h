@@ -2,16 +2,16 @@
 
 #define kTestsTimeout               4
 
-#define kTestsAppID                 @""
-#define kTestsAppSecret             @""
-#define kTestsAppRedirect           @""
+#define kTestsAppID                 @"e411147f-4098-4a8e-a976-b6fe32d52f81"
+#define kTestsAppSecret             @"PuuF8IBldAHM4LxRdP95HyWUIGNBYD5O"
+#define kTestsAppRedirect           @"https://relayr.io"
 #define kTestsAppName               @""
 #define kTestsAppDescription        @""
 
-#define kTestsUserToken             @""
-#define kTestsUserID                @""
-#define kTestsUserName              @""
-#define kTestsUserEmail             @""
+#define kTestsUserToken             @"Nincqe90rw8zFSk6Dw1r7WFIJD0iJ-d3"
+#define kTestsUserID                @"0d3d5e69-735e-4dea-a6ed-fd6e6ce2c8d0"
+#define kTestsUserName              @"Roberto"
+#define kTestsUserEmail             @"roberto@relayr.de"
 
 #define kTestsTransmitterName       @"AppleTest Transmitter"
 #define kTestsTransmitterModel      nil

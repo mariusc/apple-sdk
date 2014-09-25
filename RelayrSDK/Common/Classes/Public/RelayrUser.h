@@ -136,6 +136,6 @@
                              name:(NSString*)name
                        completion:(void (^)(NSError* error, RelayrDevice* device))completion;
 
-// TODO: Make Transmitters and devices deletion and transmitter-device connection
+// TODO: Implement Transmitters and devices deletion and transmitter-device connection
 
 @end
