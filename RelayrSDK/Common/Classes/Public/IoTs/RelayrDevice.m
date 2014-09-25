@@ -1,15 +1,16 @@
 #import "RelayrDevice.h"            // Header
-#import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
 
 #import "RelayrUser.h"              // Relayr.framework (Public)
 #import "RelayrFirmware.h"          // Relayr.framework (Public)
 #import "RelayrInput.h"             // Relayr.framework (Public)
 #import "RelayrOnboarding.h"        // Relayr.framework (Public)
 #import "RelayrFirmwareUpdate.h"    // Relayr.framework (Public)
+#import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
 #import "RelayrInput_Setup.h"       // Relayr.framework (Private)
+#import "RelayrFirmware_Setup.h"    // Relayr.framework (Private)
 #import "RLAWebService.h"           // Relayr.framework (Web)
 #import "RLAWebService+Device.h"    // Relayr.framework (Web)
-#import "RelayrErrors.h"                // Relayr.framework (Utilities)
+#import "RelayrErrors.h"            // Relayr.framework (Utilities)
 #import "RLALog.h"                  // Relayr.framework (Utilities)
 
 

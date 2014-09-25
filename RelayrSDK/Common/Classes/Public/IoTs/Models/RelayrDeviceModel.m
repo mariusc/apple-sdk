@@ -9,15 +9,6 @@ static NSString* const kCodingInputs = @"inp";
 static NSString* const kCodingOutputs = @"out";
 
 @implementation RelayrDeviceModel
-{
-    NSMutableArray* _firmwaresAvailable;
-    NSMutableSet* _inputs;
-    NSMutableSet* _outputs;
-}
-
-@synthesize firmwaresAvailable = _firmwaresAvailable;
-@synthesize inputs = _inputs;
-@synthesize outputs = _outputs;
 
 #pragma mark - Public API
 
@@ -35,13 +26,13 @@ static NSString* const kCodingOutputs = @"out";
 
 - (void)setWith:(RelayrDeviceModel*)deviceModel
 {
-    if (_modelID != deviceModel.modelID) { return; }
+    if (self==deviceModel || _modelID != deviceModel.modelID) { return; }
     
     if (deviceModel.modelName) { _modelName = deviceModel.modelName; }
     if (deviceModel.manufacturer) { _manufacturer = deviceModel.manufacturer; }
     if (deviceModel.firmwaresAvailable) { [self replaceAvailableFirmwares:(NSMutableArray*)deviceModel.firmwaresAvailable]; }
-    if (deviceModel.inputs) { [self replaceInputs:(NSMutableSet*)deviceModel.inputs]; }
-    if (deviceModel.outputs) { [self replaceOutputs:(NSMutableSet*)deviceModel.outputs]; }
+    if (deviceModel.inputs) { [self replaceInputs:deviceModel.inputs]; }
+    if (deviceModel.outputs) { [self replaceOutputs:deviceModel.outputs]; }
 }
 
 #pragma mark NSCoding
@@ -72,17 +63,17 @@ static NSString* const kCodingOutputs = @"out";
 
 #pragma mark - Private methods
 
-- (void)replaceAvailableFirmwares:(NSMutableArray*)availableFirmwares
+- (void)replaceAvailableFirmwares:(NSArray*)availableFirmwares
 {
     // TODO: Fill up
 }
 
-- (void)replaceInputs:(NSMutableSet*)inputs
+- (void)replaceInputs:(NSSet*)inputs
 {
     // TODO: Fill up
 }
 
-- (void)replaceOutputs:(NSMutableSet*)outputs
+- (void)replaceOutputs:(NSSet*)outputs
 {
     // TODO: Fill up
 }

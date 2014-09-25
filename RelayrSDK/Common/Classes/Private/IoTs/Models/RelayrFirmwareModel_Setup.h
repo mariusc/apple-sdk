@@ -24,4 +24,12 @@
  */
 @property (readwrite,nonatomic) NSMutableDictionary* configuration;
 
+/*!
+ *  @abstract Sets the instance where this object is being called for, the properties of the object are passed as the arguments.
+ *  @discussion The properties passed as the arguments are considered new and thus have a higher priority.
+ *
+ *  @param firmwareModel The newly <code>RelayrFirmwareModel</code> instance.
+ */
+- (void)setWith:(RelayrFirmwareModel*)firmwareModel;
+
 @end

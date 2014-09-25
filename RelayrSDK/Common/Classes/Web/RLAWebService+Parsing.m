@@ -113,7 +113,7 @@
     //device.outputs = [RLAWebService parseDeviceWritingsFromJSONArray:dict[<#name#>];
     
     NSDictionary* availableFirms = jsonDict[Web_RespondKey_ModelFirmwares];
-    if (availableFirms.count)
+    if (availableFirms)
     {
         NSMutableArray* firms = [[NSMutableArray alloc] initWithCapacity:availableFirms.count];
         for (NSDictionary* firmDict in availableFirms)
@@ -121,7 +121,7 @@
             RelayrFirmwareModel* firmModel = [RLAWebService parseFirmwareModelFromJSONDictionary:firmDict inFirmwareObject:nil];
             if (firmModel) { [firms addObject:firmModel]; }
         }
-        if (firms.count) { deviceModel.firmwaresAvailable = [NSArray arrayWithArray:firms]; }
+        deviceModel.firmwaresAvailable = [NSArray arrayWithArray:firms];
     }
     
     return deviceModel;
@@ -174,12 +174,15 @@
  * This methods parses the <code>reading</code> property of the device model.
  * It will return a set of <code>RelayrInput</code> objects.
  ******************************************************************************/
-+ (NSSet*)parseDeviceReadingsFromJSONArray:(NSArray*)readings ofDevice:(RelayrDeviceModel*)device
++ (NSSet*)parseDeviceReadingsFromJSONArray:(NSArray*)jsonArray ofDevice:(RelayrDeviceModel*)device
 {
-    if (!readings.count) { return nil; }
+    if (!jsonArray) { return nil; }
     
-    NSMutableSet* result = [NSMutableSet setWithCapacity:readings.count];
-    for (NSDictionary* dict in readings)
+    NSUInteger const numInputs = jsonArray.count;
+    if (numInputs == 0) { return [NSSet set]; }
+    
+    NSMutableSet* result = [NSMutableSet setWithCapacity:numInputs];
+    for (NSDictionary* dict in jsonArray)
     {
         RelayrInput* input = [[RelayrInput alloc] initWithMeaning:dict[Web_RespondKey_ReadingsMeaning] unit:dict[Web_RespondKey_ReadingsUnit]];
         if (!input) { continue; }
@@ -188,23 +191,24 @@
         [result addObject:input];
     }
     
-    return (result.count) ? [NSSet setWithSet:result] : nil;
+    return [NSSet setWithSet:result];
 }
 
 /*******************************************************************************
  * This methods parses the <code>...</code> property of the device model.
  * It will return a set of <code>RelayrOutput</code> objects.
  ******************************************************************************/
-+ (NSSet*)parseDeviceWritingsFromJSONArray:(NSArray*)writings ofDevice:(RelayrDevice*)device
++ (NSSet*)parseDeviceWritingsFromJSONArray:(NSArray*)jsonArray ofDevice:(RelayrDevice*)device
 {
-    if (!writings.count) { return nil; }
+    if (jsonArray) { return nil; }
     
-    NSMutableSet* result = [NSMutableSet setWithCapacity:writings.count];
+    NSUInteger const numOutputs = jsonArray.count;
+    if (numOutputs == 0) { return [NSSet set]; }
+    
+    NSMutableSet* result = [NSMutableSet setWithCapacity:jsonArray.count];
     // FIX ME: No outputs are yet tested.
     
-    return (result.count) ? [NSSet setWithSet:result] : nil;
-    
-    return nil;
+    return [NSSet setWithSet:result];
 }
 
 // FIX ME: This method is pretty dumb. Wait till Dmitry really change the JSONSchema

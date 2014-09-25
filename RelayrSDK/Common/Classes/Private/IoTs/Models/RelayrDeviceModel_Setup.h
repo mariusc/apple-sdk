@@ -28,7 +28,7 @@
 /*!
  *  @abstract Array containing all possible firmware models (<code>RelayrFirmwareModel</code>) for this <code>RelayrDeviceModel</code>.
  */
-@property (readwrite,nonatomic) NSMutableArray* firmwaresAvailable;
+@property (readwrite,nonatomic) NSArray* firmwaresAvailable;
 
 /*!
  *  @abstract Returns an array of all possible readings the device can gather.
@@ -36,7 +36,7 @@
  *
  *  @see RelayrInput
  */
-@property (readwrite,nonatomic) NSMutableSet* inputs;
+@property (readwrite,nonatomic) NSSet* inputs;
 
 /*!
  *  @abstract Returns an array of possible Outputs a Device is capable of receiving.
@@ -46,6 +46,15 @@
  *
  *  @see RelayrOutput
  */
-@property (readwrite,nonatomic) NSMutableSet* outputs;
+@property (readwrite,nonatomic) NSSet* outputs;
+
+/*!
+ *  @abstract Sets the instance where this object is being called for, with the properties of the object passed as arguments.
+ *  @discussion The objects passed as arguments are considered new and thus have a higher priority.
+ *
+ *  @param deviceModel The newly <code>RelayrDeviceModel</code> instance.
+ */
+- (void)setWith:(RelayrDeviceModel*)deviceModel;
+
 
 @end

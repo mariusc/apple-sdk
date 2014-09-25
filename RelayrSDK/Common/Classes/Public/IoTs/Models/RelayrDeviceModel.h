@@ -48,12 +48,4 @@
  */
 @property (readonly,nonatomic) NSSet* outputs;
 
-/*!
- *  @abstract Sets the instance where this object is being called for, with the properties of the object passed as arguments.
- *  @discussion The objects passed as arguments are considered new and thus have a higher priority.
- *
- *  @param deviceModel The newly <code>RelayrDeviceModel</code> instance.
- */
-- (void)setWith:(RelayrDeviceModel*)deviceModel;
-
 @end

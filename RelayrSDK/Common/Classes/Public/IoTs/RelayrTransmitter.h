@@ -51,7 +51,10 @@
  *  @param options Specific options for the transmitter you are onboarding. The specific <code>RelayrOnboarding</code> class will list all the additional variables needed for a correct onboarding.
  *  @param completion Block indicating whether the onboarding process was successful or not.
  */
-- (void)onboardWithClass:(Class <RelayrOnboarding>)onboardingClass timeout:(NSNumber*)timeout options:(NSDictionary*)options completion:(void (^)(NSError* error))completion;
+- (void)onboardWithClass:(Class <RelayrOnboarding>)onboardingClass
+                 timeout:(NSNumber*)timeout
+                 options:(NSDictionary*)options
+              completion:(void (^)(NSError* error))completion;
 
 /*!
  *  @abstract Performs a firmware update on the specific transmitter.
@@ -64,6 +67,9 @@
  *  @param options Specific options for the device you are updating. The specific <code>RelayrFirmwareUpdate</code> class will list all additional variables required for a successful firmware update.
  *  @param completion A Block indicating whether the update process was successful or not.
  */
-- (void)updateFirmwareWithClass:(Class <RelayrFirmwareUpdate>)updateClass timeout:(NSNumber*)timeout options:(NSDictionary*)options completion:(void (^)(NSError* error))completion;
+- (void)updateFirmwareWithClass:(Class <RelayrFirmwareUpdate>)updateClass
+                        timeout:(NSNumber*)timeout
+                        options:(NSDictionary*)options
+                     completion:(void (^)(NSError* error))completion;
 
 @end
