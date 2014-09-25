@@ -3,7 +3,7 @@
 @class RelayrDevice;            // Relayr.framework (Public)
 
 /*!
- *  @abstract Describes the minimum methods needed to support the Relayr onboarding process.
+ *  @abstract Describes the basic methods equired to support the relayr Onboarding process.
  */
 @protocol RelayrOnboarding <NSObject>
 
@@ -12,11 +12,14 @@
  *  @abstract This method will launch a process to onboard a specific <code>RelayrTransmitter</code>.
  *  @discussion The method MUST not modify the primal characteristics of the <code>RelayrTransmitter</code> entity passed as an argument.
  *
- *  @param transmitter <code>RelayrTransmitter</code> entity use to configure a physical transmitter.
- *  @param timeout The seconds that the onboarding process can span. If the onboarding process hasn't finished by the specified seconds, the completion block will be executed.
- *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. If a negative number is passed, then the block is returned with a proper error.
- *  @param options Specific options for the transmitter you are onboarding. The specific <code>RelayrOnboarding</code> class will list all the additional variables needed for a correct onboarding.
- *  @param completion Block indicating whether the onboarding process was successful or not.
+ *  @param transmitter <code>RelayrTransmitter</code> entity used to represent a physical transmitter.
+ *  @param timeout The period that the onboarding process can take in seconds. 
+ *	If the onboarding process doesn't finish within the specified timeout, the completion block is executed.
+ *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. 
+ *	If a negative number is passed, the block is returned with a respective error.
+ *  @param options Specific options for the transmitter onboarded. 
+ *	The specific <code>RelayrOnboarding</code> class will list all additional variables required for successful onboarding.
+ *  @param completion A Block indicating whether the onboarding process was successful or not.
  *
  *  @see RelayrTransmitter
  */
@@ -27,10 +30,14 @@
  *  @abstract This method will launch a process to onboard a specific <code>RelayrDevice</code>.
  *  @discussion The method MUST not modify the primal characteristics of the <code>RelayrDevice</code> entity passed as an argument.
  *
- *  @param device <code>RelayrDevice</code> entity use to configure a physical device.
- *  @param timeout The seconds that the onboarding process can span. If the onboarding process hasn't finished by the specified seconds, the completion block will be executed.
- *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. If a negative number is passed, then the block is returned with a proper error.
- *  @param completion Block indicating whether the onboarding process was successful or not.
+ *  @param device <code>RelayrDevice</code> entity used to represent a physical device.
+ *  @param timeout The period that the onboarding process can take in seconds. 
+ *	If the onboarding process doesn't finish within the specified timeout, the completion block is executed.
+ *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. 
+ *	If a negative number is passed, the block is returned with a respective error.
+ *  @param options Specific options for the device onboarded. 
+ *	The specific <code>RelayrOnboarding</code> class will list all additional variables required for successful onboarding.
+ *  @param completion A Block indicating whether the onboarding process was successful or not.
  *
  *  @see RelayrDevice
  */

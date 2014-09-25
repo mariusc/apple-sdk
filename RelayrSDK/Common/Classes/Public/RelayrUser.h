@@ -105,13 +105,13 @@
 - (void)queryCloudForPublishersAndAuthorisedApps:(void (^)(NSError* error))completion;
 
 /*!
- *  @abstract It creates/register a transmitter entity in the Relayr Cloud.
- *  @discussion If this call is successful a <code>RelayrTransmitter</code> object is created and it is added to the <code>transmitters</code> array.
+ *  @abstract Creates/registers a Transmitter entity on the relayr cloud.
+ *  @discussion If this call is successful a <code>RelayrTransmitter</code> object is created and is added to the <code>transmitters</code> array.
  *
- *  @param modelID Model representing the newly transmittter instance. Currently, this argument must be <code>nil</code>. Currently, this argument must be <code>nil</code>.
+ *  @param modelID Idetifier for the newly created transmittter instance. Currently, this argument must be <code>nil</code>. 
  *  @param firmwareVersion The version of the firmware running on the transmitter. Currently, this argument must be <code>nil</code>.
- *  @param name The given name to identify this transmitter. This parameter is required.
- *  @param completion Block indicating whether the server registration call was successful or not. It can be <code>nil</code>.
+ *  @param name The given name to identify the transmitter. This parameter is required.
+ *  @param completion A Block indicating whether the server registration call was successful or not. It can be <code>nil</code>.
  *
  *  @see RelayrTransmitter
  */
@@ -121,12 +121,12 @@
                             completion:(void (^)(NSError* error, RelayrTransmitter* transmitter))completion;
 
 /*!
- *  @abstract It creates/register a device entity in the Relayr Cloud.
- *  @discussion If this call is successful a <code>RelayrDevice</code> object is created and it is added to the <code>devices</code> array.
+ *  @abstract Creates/registers a device entity on the relayr cloud.
+ *  @discussion If this call is successful a <code>RelayrDevice</code> object is created and is added to the <code>devices</code> array.
  *
- *  @param modelID Model representing the newly model instance. This parameter is required.
- *  @param firmwareVersion The version of the firmware running on the transmitter. This parameter is required.
- *  @param name The given name to identify this transmitter. This parameter is required.
+ *  @param modelID Identifier for the newly created device instance. This parameter is required.
+ *  @param firmwareVersion The version of the firmware running on the device. This parameter is required.
+ *  @param name The given name to identify this device. This parameter is required.
  *  @param completion Block indicating whether the server registration call was successful or not. It can be <code>nil</code>.
  *
  *  @see RelayrDevice
