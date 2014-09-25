@@ -136,8 +136,8 @@
 - (void)unsubscribeTarget:(id)target action:(SEL)action;
 
 /*!
- *  @abstract Removes all subscriptions for this devices.
- *  @discussion All subscriptions, whether blocks or target objects are unsubscribed.
+ *  @abstract Removes all subscriptions for this device.
+ *  @discussion All subscriptions, whether blocks or target objects are removed.
  */
 - (void)removeAllSubscriptions;
 

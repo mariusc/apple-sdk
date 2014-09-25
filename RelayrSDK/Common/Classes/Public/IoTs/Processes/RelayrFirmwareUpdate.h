@@ -3,19 +3,22 @@
 @class RelayrDevice;            // Relayr.framework (Public)
 
 /*!
- *  @abstract Describes the minimum methods needed to support the Relayr firmware update process.
+ *  @abstract Describes the basic methods required to support the relayr firmware update process.
  */
 @protocol RelayrFirmwareUpdate <NSObject>
 
 @required
 /*!
  *  @abstract This method will launch a process to update the firmware of a specific <code>RelayrTransmitter</code>.
- *  @discussion The method MUST not modify the primal characteristics of the <code>RelayrTransmitter</code> entity passed as an argument.
+ *  @discussion The method MUST not modify the primal characteristics of the <code>RelayrTransmitter</code> entity 
+ *	passed as an argument.
  *
  *  @param transmitter <code>RelayrTransmitter</code> entity representing the physical transmitter that will be updated.
- *  @param timeout The seconds that the onboarding process can span. If the firmware update process hasn't finished by the specified seconds, the completion block will be executed.
- *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. If a negative number is passed, then the block is returned with a proper error.
- *  @param completion Block indicating whether the onboarding process was successful or not.
+ *  @param timeout The period that the onboarding process can take in seconds. 
+ *	If the onboarding process doesn't finish within the specified timeout, the completion block is executed.
+ *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. 
+ *	If a negative number is passed, the block is returned with a respective error.
+ *  @param completion A Block indicating whether the update process was successful or not.
  *
  *  @see RelayrTransmitter
  */
@@ -27,9 +30,11 @@
  *  @discussion The method MUST not modify the primal characteristics of the <code>RelayrDevice</code> entity passed as an argument.
  *
  *  @param device <code>RelayrDevice</code> entity representing the physical device that will be updated.
- *  @param timeout The seconds that the onboarding process can span. If the firmware update process hasn't finished by the specified seconds, the completion block will be executed.
- *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. If a negative number is passed, then the block is returned with a proper error.
- *  @param completion Block indicating whether the onboarding process was successful or not.
+ *  @param timeout The period that the onboarding process can take in seconds. 
+ *	If the onboarding process doesn't finish within the specified timeout, the completion block is executed.
+ *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. 
+ *	If a negative number is passed, the block is returned with a respective error.
+ *  @param completion A Block indicating whether the update process was successful or not.
  *
  *  @see RelayrDevice
  */
