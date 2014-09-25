@@ -28,6 +28,6 @@
  *  @abstract The base URL that will be used in every webService instance call.
  *  @discussion It cannot be <code>nil</code>. If <code>nil</code> is passed, the default Relayr host is used.
  */
-@property (strong,nonatomic) NSURL* hostURL;
+@property (strong,nonatomic) NSString* hostString;
 
 @end

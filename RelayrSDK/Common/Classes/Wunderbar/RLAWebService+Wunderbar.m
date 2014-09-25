@@ -13,7 +13,7 @@
 
 - (void)registerWunderbar:(void (^)(NSError* error, RelayrTransmitter* transmitter))completion
 {
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure, nil); } return; }
     request.relativePath = Web_RequestRelativePath_WunderbarRegistration(self.user.uid);
     

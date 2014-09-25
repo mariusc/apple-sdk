@@ -17,7 +17,7 @@
 {
     if (!transmitterName.length || !ownerID.length) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure, nil); } return; }
     request.relativePath = Web_RequestRelativePath_TransRegistration;
     request.body = @{ Web_RequestBodyKey_TransOwner : ownerID, Web_RequestBodyKey_TransName : transmitterName };
@@ -35,7 +35,7 @@
     if (!completion) { return; }
     if (!transmitterID.length) { return completion(RelayrErrorMissingArgument, nil); }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_TransInfo(transmitterID);
     
@@ -51,7 +51,7 @@
 {
     if (!transmitterID.length || !futureTransmitterName.length) { if (completion) { return completion(RelayrErrorMissingArgument); } return; }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure); } return; }
     request.relativePath = Web_RequestRelativePath_TransInfoSet(transmitterID);
     request.body = @{ Web_RequestBodyKey_TransName : futureTransmitterName };
@@ -66,7 +66,7 @@
 {
     if (!transmitterID.length) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure); } return; }
     request.relativePath = Web_RequestRelativePath_TransDeletion(transmitterID);
     
@@ -80,7 +80,7 @@
 {
     if (!transmitterID.length || !deviceID.length) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure); } return; }
     request.relativePath = Web_RequestRelativePath_TransConnectionDev(transmitterID, deviceID);
     
@@ -95,7 +95,7 @@
     if (!completion) { return; }
     if (!transmitterID.length) { return completion(RelayrErrorMissingArgument, nil); }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_TransDevices(transmitterID);
     
@@ -117,7 +117,7 @@
 {
     if (!transmitterID.length || !deviceID.length) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure); } return; }
     request.relativePath = Web_RequestRelativePath_TransConnectionDevDeletion(transmitterID, deviceID);
     

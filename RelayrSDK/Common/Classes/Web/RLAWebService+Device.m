@@ -13,7 +13,7 @@
 {
     if (!deviceName.length || !ownerID.length || !modelID.length || !firmwareVersion.length) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure, nil); } return; }
     request.relativePath = Web_RequestRelativePath_DevRegistration;
     request.body = @{ Web_RequestBodyKey_DevName : deviceName, Web_RequestBodyKey_DevOwner : ownerID, Web_RequestBodyKey_DevModel : modelID, Web_RequestBodyKey_DevFirmwareVersion : firmwareVersion };
@@ -31,7 +31,7 @@
     if (!completion) { return; }
     if (!deviceID.length) { return completion(RelayrErrorMissingArgument, nil); }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_DevInfo(deviceID);
     
@@ -54,7 +54,7 @@
     if (isPublic) { tmpDict[Web_RequestBodyKey_DevPublic] = isPublic; }
     if (!tmpDict.count) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure, nil); } return; }
     request.relativePath = Web_RequestRelativePath_DevInfoSet(deviceID);
     request.body = [NSDictionary dictionaryWithDictionary:tmpDict];
@@ -71,7 +71,7 @@
 {
     if (!deviceID.length) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure); } return; }
     request.relativePath = Web_RequestRelativePath_DevDelete(deviceID);
     
@@ -86,7 +86,7 @@
     if (!completion) { return; }
     if (!deviceID.length || !appID.length) { return completion(RelayrErrorMissingArgument, nil); }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_DevConnection(deviceID, appID);
     
@@ -101,7 +101,7 @@
     if (!completion) { return; }
     if (!deviceID.length) { return completion(RelayrErrorMissingArgument, nil); }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_DevConnected(deviceID);
     
@@ -123,7 +123,7 @@
 {
     if (!deviceID.length || !appID.length) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure); } return; }
     request.relativePath = Web_RequestRelativePath_DevDisconnect(deviceID, appID);
     
@@ -137,7 +137,7 @@
 {
     if (!completion) { return; }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_DevPublic;
     
@@ -160,7 +160,7 @@
     if (!meaning) { return [self requestPublicDevices:completion]; }
     if (!completion) { return; }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_DevPublicMeaning(meaning);
     
@@ -182,7 +182,7 @@
 {
     if (!deviceID.length) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:[NSURL URLWithString:Web_Host]];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:Web_Host];
     if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_DevPublicSubcription(deviceID);
     
@@ -196,7 +196,7 @@
 {
     if (!completion) { return; }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_DevModel;
     
@@ -219,7 +219,7 @@
     if (!completion) { return; }
     if (!deviceModelID) { return completion(RelayrErrorMissingArgument, nil); }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_DevModelID(deviceModelID);
     
@@ -235,7 +235,7 @@
 {
     if (!completion) { return; }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_DevModelMeanings;
     

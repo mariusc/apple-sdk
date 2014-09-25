@@ -22,22 +22,22 @@ NSString* kRLAWebRequestUserAgent;
 
 + (void)initialize
 {
-    // TODO: Find a better way that doesn't require it to retrieve the constant at runtime.
+    // TODO: This is not working...
     kRLAWebRequestUserAgent = [[NSProcessInfo processInfo].environment objectForKey:@"WEBREQUEST_USERAGENT"];
 }
 
-- (instancetype)initWithHostURL:(NSURL*)hostURL
+- (instancetype)initWithHost:(NSString*)hostString
 {
-    return [self initWithHostURL:hostURL timeout:nil oauthToken:nil];
+    return [self initWithHost:hostString timeout:nil oauthToken:nil];
 }
 
-- (instancetype)initWithHostURL:(NSURL*)hostURL timeout:(NSNumber*)timeout oauthToken:(NSString*)token
+- (instancetype)initWithHost:(NSString*)hostString timeout:(NSNumber*)timeout oauthToken:(NSString*)token
 {
     self = [self init];
     if (self)
     {
-        [[NSProcessInfo processInfo].environment objectForKey:@"WEBREQUEST_USERAGENT"];
-        _hostURL = hostURL;
+        //[[NSProcessInfo processInfo].environment objectForKey:@"WEBREQUEST_USERAGENT"];
+        _hostString = hostString;
         _timeout = timeout;
         _oauthToken = token;
     }
@@ -48,7 +48,7 @@ NSString* kRLAWebRequestUserAgent;
 {
     if (!mode) { return NO; }
     
-    NSURL* url = [RLAWebRequest buildAbsoluteURLWithHost:_hostURL relativeURL:_relativePath];
+    NSURL* url = [RLAWebRequest buildAbsoluteURLWithHost:_hostString relativeURL:_relativePath];
     if (!url) { return NO; }
 
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
@@ -114,16 +114,18 @@ NSString* kRLAWebRequestUserAgent;
 
 #pragma mark - Private methods
 
-+ (NSURL*)buildAbsoluteURLWithHost:(NSURL*)hostURL relativeURL:(NSString*)relativePath
++ (NSURL*)buildAbsoluteURLWithHost:(NSString*)hostString relativeURL:(NSString*)relativePath
 {
-    if (hostURL)
+    NSString* result;
+    if (hostString)
     {
-        return (!relativePath.length) ? hostURL : [hostURL URLByAppendingPathComponent:relativePath];
+        result = (relativePath.length) ? [hostString stringByAppendingPathComponent:relativePath] : hostString;
     }
     else
     {
-        return (!relativePath.length) ? nil : [NSURL URLWithString:relativePath];
+        result = (relativePath.length) ? relativePath : nil;
     }
+    return [NSURL URLWithString:[result stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 }
 
 @end

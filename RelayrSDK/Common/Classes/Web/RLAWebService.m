@@ -19,14 +19,14 @@
     if (self)
     {
         _user = user;
-        _hostURL = [NSURL URLWithString:Web_Host];
+        _hostString = Web_Host;
     }
     return self;
 }
 
-- (void)setHostURL:(NSURL*)hostURL
+- (void)setHostString:(NSString*)hostString
 {
-    _hostURL = (hostURL) ? hostURL : [NSURL URLWithString:Web_Host];
+    _hostString = (hostString) ? hostString : Web_Host;
 }
 
 @end

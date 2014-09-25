@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6202C05519D451990023AEC7 /* Relayr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6252F0E5199C2AFA002ECE4D /* Relayr.framework */; };
 		6203381E19D06BA50088CB1D /* RelayrErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 6203381C19D06BA50088CB1D /* RelayrErrors.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6203381F19D06BA50088CB1D /* RelayrErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 6203381C19D06BA50088CB1D /* RelayrErrors.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6203382019D06BA50088CB1D /* RelayrErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 6203381D19D06BA50088CB1D /* RelayrErrors.m */; };
@@ -73,9 +74,6 @@
 		6259257F19C88D5400EC1735 /* RLAWebService+Parsing.h in Headers */ = {isa = PBXBuildFile; fileRef = 6259257C19C88D5400EC1735 /* RLAWebService+Parsing.h */; };
 		6259258019C88D5400EC1735 /* RLAWebService+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 6259257D19C88D5400EC1735 /* RLAWebService+Parsing.m */; };
 		6259258119C88D5400EC1735 /* RLAWebService+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 6259257D19C88D5400EC1735 /* RLAWebService+Parsing.m */; };
-		6263019319C4B8D8009DCA30 /* TRelayrApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 6263019219C4B8D8009DCA30 /* TRelayrApp.m */; };
-		6263019519C4BB10009DCA30 /* TRelayrUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6263019419C4BB10009DCA30 /* TRelayrUser.m */; };
-		6263019719C4BB1C009DCA30 /* TRelayrPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 6263019619C4BB1C009DCA30 /* TRelayrPublisher.m */; };
 		626F614019A4FFAF006EB510 /* RLALog.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6AD1199CCD170004F9FD /* RLALog.h */; };
 		626F614219A506E4006EB510 /* RLAKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C3719A158DF001FEDCD /* RLAKeyChain.m */; };
 		626F614319A506E8006EB510 /* RLAKeyChain.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C3619A158DF001FEDCD /* RLAKeyChain.h */; };
@@ -89,12 +87,6 @@
 		62732D4319C05A24000E9545 /* RelayrConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 62732D4019C05A24000E9545 /* RelayrConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		62732D4419C05A24000E9545 /* RelayrConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 62732D4119C05A24000E9545 /* RelayrConnection.m */; };
 		62732D4519C05A24000E9545 /* RelayrConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 62732D4119C05A24000E9545 /* RelayrConnection.m */; };
-		627AC51519C4BC6100986B6A /* TRelayrTransmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 627AC51419C4BC6100986B6A /* TRelayrTransmitter.m */; };
-		627AC51719C4BC8C00986B6A /* TRelayrDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 627AC51619C4BC8C00986B6A /* TRelayrDevice.m */; };
-		627AC51919C4BC9C00986B6A /* TRelayrFirmware.m in Sources */ = {isa = PBXBuildFile; fileRef = 627AC51819C4BC9C00986B6A /* TRelayrFirmware.m */; };
-		627AC51B19C4BCB000986B6A /* TRelayrInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 627AC51A19C4BCB000986B6A /* TRelayrInput.m */; };
-		627AC51D19C4BCBE00986B6A /* TRelayrOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = 627AC51C19C4BCBE00986B6A /* TRelayrOutput.m */; };
-		627AC51F19C4BCF000986B6A /* TRelayrConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 627AC51E19C4BCF000986B6A /* TRelayrConnection.m */; };
 		6285F34F19C1A92D0097B299 /* RLAWebService+User.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F34D19C1A92D0097B299 /* RLAWebService+User.h */; };
 		6285F35019C1A92D0097B299 /* RLAWebService+User.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F34D19C1A92D0097B299 /* RLAWebService+User.h */; };
 		6285F35119C1A92D0097B299 /* RLAWebService+User.m in Sources */ = {isa = PBXBuildFile; fileRef = 6285F34E19C1A92D0097B299 /* RLAWebService+User.m */; };
@@ -186,6 +178,16 @@
 		62FDB16B19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62FDB16A19BF050400AE2A64 /* RelayrInput_Setup.h */; };
 		62FDB16C19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62FDB16A19BF050400AE2A64 /* RelayrInput_Setup.h */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6202C05319D451700023AEC7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6252F0A7199C243D002ECE4D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6252F0E4199C2AFA002ECE4D;
+			remoteInfo = OSXRelayr;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		6203381C19D06BA50088CB1D /* RelayrErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrErrors.h; sourceTree = "<group>"; };
@@ -316,6 +318,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6202C05519D451990023AEC7 /* Relayr.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1012,6 +1015,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				6202C05419D451700023AEC7 /* PBXTargetDependency */,
 			);
 			name = Tests;
 			productName = Tests;
@@ -1180,20 +1184,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				627AC51519C4BC6100986B6A /* TRelayrTransmitter.m in Sources */,
 				622CD0D719C384D5003E8660 /* TRelayrCloud.m in Sources */,
-				6263019519C4BB10009DCA30 /* TRelayrUser.m in Sources */,
-				6263019719C4BB1C009DCA30 /* TRelayrPublisher.m in Sources */,
-				627AC51D19C4BCBE00986B6A /* TRelayrOutput.m in Sources */,
-				627AC51B19C4BCB000986B6A /* TRelayrInput.m in Sources */,
-				6263019319C4B8D8009DCA30 /* TRelayrApp.m in Sources */,
-				627AC51F19C4BCF000986B6A /* TRelayrConnection.m in Sources */,
-				627AC51719C4BC8C00986B6A /* TRelayrDevice.m in Sources */,
-				627AC51919C4BC9C00986B6A /* TRelayrFirmware.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6202C05419D451700023AEC7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6252F0E4199C2AFA002ECE4D /* OSXRelayr */;
+			targetProxy = 6202C05319D451700023AEC7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		6252F0AB199C243D002ECE4D /* Debug */ = {

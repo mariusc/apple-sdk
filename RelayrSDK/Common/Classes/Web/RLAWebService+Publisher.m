@@ -15,7 +15,7 @@
 {
     if (!completion) { return; }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:[NSURL URLWithString:Web_Host]];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:Web_Host];
     if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_Publishers;
     
@@ -37,7 +37,7 @@
 {
     if (!publisherName.length || !ownerID.length) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure, nil); } return; }
     request.relativePath = Web_RequestRelativePath_PublisherRegistration;
     request.body = @{ Web_RequestBodyKey_PublisherName : publisherName, Web_RequestBodyKey_PublisherOwner : ownerID };
@@ -55,7 +55,7 @@
     if (!completion) { return; }
     if (!publisherID.length) { return completion(RelayrErrorMissingArgument, nil); }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure, nil); } return; }
     request.relativePath = Web_RequestRelativePath_Publisher(publisherID);
     
@@ -75,7 +75,7 @@
     tmpDict[Web_RequestBodyKey_PublisherName] = futurePublisherName;
     if (!tmpDict.count) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure, nil); } return; }
     request.relativePath = Web_RequestRelativePath_PublisherSet(publisherID);
     request.body = [NSDictionary dictionaryWithDictionary:tmpDict];
@@ -92,7 +92,7 @@
 {
     if (!publisherID.length) { if (completion) { completion(RelayrErrorMissingArgument); }return; }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { return completion(RelayrErrorWebRequestFailure); }
     request.relativePath = Web_RequestRelativePath_PublishersDelete(publisherID);
     
@@ -107,7 +107,7 @@
     if (!completion) { return; }
     if (!publisherID.length) { return completion(RelayrErrorMissingArgument, nil); }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_PublishersApps(publisherID);
     
@@ -130,7 +130,7 @@
     if (!completion) { return; }
     if (!publisherID.length) { return completion(RelayrErrorMissingArgument, nil); }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:self.hostURL timeout:nil oauthToken:self.user.token];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
     if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     request.relativePath = Web_RequestRelativePath_PublishersAppsEx(publisherID);
     

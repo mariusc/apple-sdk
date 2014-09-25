@@ -140,7 +140,6 @@
 #define Web_RequestRelativePath_EmailCheck(email)       [NSString stringWithFormat:@"/users/validate?email=%@", email]
 #define Web_RequestResponseCode_EmailCheck              200
 #define Web_RequestResponseKey_EmailCheck_Exists        @"exists"
-#define Web_RequestResponseVal_EmailCheck_Exists        @"true"
 
 // User's info (get)
 #define Web_RequestRelativePath_UserInfo                @"/oauth2/user-info"

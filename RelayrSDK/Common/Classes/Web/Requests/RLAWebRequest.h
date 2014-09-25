@@ -26,28 +26,28 @@ FOUNDATION_EXPORT NSString* const kRLAWebRequestModePUT;
 @interface RLAWebRequest : NSObject
 
 /*!
- *  @abstract Convenience method that only sets the <code>hostURL</code>.
+ *  @abstract Convenience method that only sets the <code>hostString</code>.
  *  @discussion Any of the arguments can be <code>nil</code>.
  *
- *  @param hostURL Host URL path of the HTTP request.
+ *  @param hostString Host URL path of the HTTP request.
  *	@return Initialised web HTTP request in a friendly Relayr way.
  *
- *  @see initWithHostURL:timeout:token:
+ *  @see initWithHost:timeout:token:
  */
-- (instancetype)initWithHostURL:(NSURL*)hostURL;
+- (instancetype)initWithHost:(NSString*)hostString;
 
 /*!
  *  @abstract Convenience method that sets the <code>hostURL</code>, <code>timeout</code>, and <code>token</code> in one go.
  *  @discussion Any of the arguments can be <code>nil</code>. Alternatively, you can use the normal <code>init</code> method.
  *
- *  @param hostURL Host URL path of the HTTP request.
+ *  @param hostString Host URL path of the HTTP request.
  *  @param timeout Number of seconds that the request will be waiting for an answer.
  *  @param token Oauth token for a secure HTTP request.
  *	@return Initialized web HTTP request in a friendly Relayr way.
  *
- *  @see initWithHostURL:
+ *  @see initWithHost:
  */
-- (instancetype)initWithHostURL:(NSURL*)hostURL timeout:(NSNumber*)timeout oauthToken:(NSString*)token;
+- (instancetype)initWithHost:(NSString*)hostString timeout:(NSNumber*)timeout oauthToken:(NSString*)token;
 
 /*!
  *  @abstract Number of seconds that the request will look for an answer. If in that time the answer hasn't arrived, a fail completion block will be executed.
@@ -58,7 +58,7 @@ FOUNDATION_EXPORT NSString* const kRLAWebRequestModePUT;
  *  @abstract Host URL path.
  *  @discussion The request can be executed if any of the <code>hostURL</code> or <code>relativeURL</code> is not <code>nil</code>.
  */
-@property (strong,nonatomic) NSURL* hostURL;
+@property (strong,nonatomic) NSString* hostString;
 
 /*!
  *  @abstract <code>NSString</code> representing a relative URL path to be appended to the <code>hostURL</code>.

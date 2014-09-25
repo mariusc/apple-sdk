@@ -12,7 +12,7 @@
 {
     if (!completion) { return; }
     
-    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHostURL:[NSURL URLWithString:Web_Host]];
+    RLAWebRequest* request = [[RLAWebRequest alloc] initWithHost:Web_Host];
     request.relativePath = Web_RequestRelativePath_Reachability;
     
     [request executeInHTTPMode:kRLAWebRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
@@ -31,7 +31,7 @@
     if (!completion) { return; }
     if (!clientID || !clientSecret || !redirectURI) { return completion(RelayrErrorMissingArgument, nil); }
     
-    RLAWebRequest* tokenRequest = [[RLAWebRequest alloc] initWithHostURL:[NSURL URLWithString:Web_Host]];
+    RLAWebRequest* tokenRequest = [[RLAWebRequest alloc] initWithHost:Web_Host];
     tokenRequest.relativePath = Web_RequestRelativePath_OAuthToken;
     tokenRequest.body = Web_RequestBody_OAuthToken(code, redirectURI, clientID, clientSecret);
     
