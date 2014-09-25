@@ -37,7 +37,8 @@
 {
     if (!jsonDict) { return nil; }
     
-    RelayrApp* app = [[RelayrApp alloc] initWithID:jsonDict[Web_RespondKey_AppID]];
+    NSString* appID = (jsonDict[Web_RespondKey_AppID]) ? jsonDict[Web_RespondKey_AppID] : jsonDict[Web_RespondKey_AppID_];
+    RelayrApp* app = [[RelayrApp alloc] initWithID:appID];
     if (!app) { return nil; }
     
     app.name = jsonDict[Web_RespondKey_AppName];

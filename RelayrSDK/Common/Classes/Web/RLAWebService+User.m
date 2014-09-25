@@ -12,7 +12,8 @@
 
 #import "RLAWebRequest.h"           // Relayr.framework (Web)
 #import "RLAWebConstants.h"         // Relayr.framework (Web)
-#import "RelayrErrors.h"                // Relayr.framework (Utilities)
+#import "RelayrErrors.h"            // Relayr.framework (Utilities)
+#import "RLALog.h"                  // Relayr.framework (Utilities)
 
 @implementation RLAWebService (User)
 

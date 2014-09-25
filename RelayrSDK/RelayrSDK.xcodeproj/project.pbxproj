@@ -173,6 +173,8 @@
 		62E87DE019AB2AAA00728AC6 /* CPlatforms.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E87DD719AB2AAA00728AC6 /* CPlatforms.h */; };
 		62E87DE119AB2AAA00728AC6 /* CPlatforms_endianness.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E87DD819AB2AAA00728AC6 /* CPlatforms_endianness.h */; };
 		62E87DE219AB2AAA00728AC6 /* CPlatforms_endianness.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E87DD819AB2AAA00728AC6 /* CPlatforms_endianness.h */; };
+		62F9A6BD19D4785D0064942D /* TRelayrApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 6263019219C4B8D8009DCA30 /* TRelayrApp.m */; };
+		62F9A6C219D4859F0064942D /* TRelayrUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6263019419C4BB10009DCA30 /* TRelayrUser.m */; };
 		62FDB16819BEF2DD00AE2A64 /* RelayrFirmware_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62FDB16719BEF2DD00AE2A64 /* RelayrFirmware_Setup.h */; };
 		62FDB16919BEF2DD00AE2A64 /* RelayrFirmware_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62FDB16719BEF2DD00AE2A64 /* RelayrFirmware_Setup.h */; };
 		62FDB16B19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62FDB16A19BF050400AE2A64 /* RelayrInput_Setup.h */; };
@@ -295,6 +297,8 @@
 		62E87DD619AB2AAA00728AC6 /* CMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMath.h; sourceTree = "<group>"; };
 		62E87DD719AB2AAA00728AC6 /* CPlatforms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPlatforms.h; sourceTree = "<group>"; };
 		62E87DD819AB2AAA00728AC6 /* CPlatforms_endianness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPlatforms_endianness.h; sourceTree = "<group>"; };
+		62F9A6BC19D4749E0064942D /* TestConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestConstants.h; path = Tests/Configuration/TestConstants.h; sourceTree = SOURCE_ROOT; };
+		62F9A6C119D47CCB0064942D /* RelayrApp_TSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RelayrApp_TSetup.h; path = Tests/Classes/Private/RelayrApp_TSetup.h; sourceTree = SOURCE_ROOT; };
 		62FDB16719BEF2DD00AE2A64 /* RelayrFirmware_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrFirmware_Setup.h; sourceTree = "<group>"; };
 		62FDB16A19BF050400AE2A64 /* RelayrInput_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrInput_Setup.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -376,6 +380,7 @@
 		622CD0CC19C3820F003E8660 /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				62F9A6C119D47CCB0064942D /* RelayrApp_TSetup.h */,
 				622CD0D319C382A1003E8660 /* IoTs */,
 			);
 			path = Private;
@@ -817,6 +822,7 @@
 			children = (
 				62E41FD119C35DF1008459B7 /* Info.plist */,
 				6252ABDC19C4C27E00A53221 /* Tests.xcconfig */,
+				62F9A6BC19D4749E0064942D /* TestConstants.h */,
 			);
 			name = Configuration;
 			path = "../../../Apple-SDK/RelayrSDK/Tests/Configuration";
@@ -1185,6 +1191,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				622CD0D719C384D5003E8660 /* TRelayrCloud.m in Sources */,
+				62F9A6BD19D4785D0064942D /* TRelayrApp.m in Sources */,
+				62F9A6C219D4859F0064942D /* TRelayrUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

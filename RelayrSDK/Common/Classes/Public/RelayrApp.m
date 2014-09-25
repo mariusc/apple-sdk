@@ -24,7 +24,7 @@ static NSString* const kCodingPublisherID = @"pub";
 static NSString* const kCodingUsers = @"usr";
 
 @interface RelayrApp ()
-@property (readwrite,nonatomic) NSMutableArray* users;
+@property (readonly,nonatomic) NSMutableArray* users;
 @end
 
 @implementation RelayrApp
@@ -35,6 +35,18 @@ static NSString* const kCodingUsers = @"usr";
 {
     [self doesNotRecognizeSelector:_cmd];
     return nil;
+}
+
+- (instancetype)initWithID:(NSString*)appID
+{
+    if (!appID.length) { return nil; }
+    
+    self = [super init];
+    if (self)
+    {
+        _uid = appID;
+    }
+    return self;
 }
 
 - (instancetype)initWithID:(NSString*)appID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI
@@ -48,18 +60,6 @@ static NSString* const kCodingUsers = @"usr";
         _oauthClientSecret = clientSecret;
         _redirectURI = redirectURI;
         _users = [NSMutableArray array];
-    }
-    return self;
-}
-
-- (instancetype)initWithID:(NSString*)appID
-{
-    if (!appID.length) { return nil; }
-    
-    self = [super init];
-    if (self)
-    {
-        _uid = appID;
     }
     return self;
 }
@@ -232,7 +232,7 @@ static NSString* const kCodingUsers = @"usr";
         _name = [decoder decodeObjectForKey:kCodingName];
         _appDescription = [decoder decodeObjectForKey:kCodingDescription];
         _publisherID = [decoder decodeObjectForKey:kCodingPublisherID];
-        _users = [decoder decodeObjectForKey:kCodingUsers];
+        [_users addObjectsFromArray:[decoder decodeObjectForKey:kCodingUsers]];
     }
     return self;
 }

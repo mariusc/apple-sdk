@@ -17,6 +17,7 @@
 
 // Relayr Applications
 #define Web_RespondKey_AppID                @"id"
+#define Web_RespondKey_AppID_               @"app"      // TODO: Tell the server guys about the inconsistency on  User: authorised apps
 #define Web_RespondKey_AppName              @"name"
 #define Web_RespondKey_AppDescription       @"description"
 #define Web_RespondKey_AppPublisher         @"publisher"
@@ -150,15 +151,15 @@
 #define Web_RequestResponseCode_UserInfoSet             200
 
 // Install app under user
-#define Web_RequestRelativePath_UserInstallApp(userID, appID)   [NSString stringWithFormat:@"}/users/%@/apps/%@", userID, appID]
+#define Web_RequestRelativePath_UserInstallApp(userID, appID)   [NSString stringWithFormat:@"/users/%@/apps/%@", userID, appID]
 #define Web_RequestResponseCode_UserInstallApp          200
 
 // User's apps
-#define Web_RequestRelativePath_UserInstalledApps(userID)   [NSString stringWithFormat:@"}/users/%@/apps", userID]
+#define Web_RequestRelativePath_UserInstalledApps(userID)   [NSString stringWithFormat:@"/users/%@/apps", userID]
 #define Web_RequestResponseCode_UserInstalledApps       200
 
 // Install app under user
-#define Web_RequestRelativePath_UserUninstallApp(userID, appID) [NSString stringWithFormat:@"}/users/%@/apps/%@", userID, appID]
+#define Web_RequestRelativePath_UserUninstallApp(userID, appID) [NSString stringWithFormat:@"/users/%@/apps/%@", userID, appID]
 #define Web_RequestResponseCode_UserUninstallApp        204
 
 // User's publishers

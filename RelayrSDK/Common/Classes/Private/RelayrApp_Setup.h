@@ -10,6 +10,13 @@
 @interface RelayrApp () <NSCoding>
 
 /*!
+ *  @abstract Convenience initialiser for <code>RelayrApp</code>.
+ *  @discussion It is needed when querying for apps that you are not authorised to acces data from. You can just query their ID number and some other properties more.
+ *      Be aware that this <code>RelayrApp</code> object cannot have logged users.
+ */
+- (instancetype)initWithID:(NSString *)appID;
+
+/*!
  *  @abstract Designated initialiser for <code>RelayrApp</code>.
  *
  *  @param appID <code>NSString</code> representing the Relayr Application ID.
@@ -18,11 +25,6 @@
  *	@return Fully initialised <code>RelayrApp</code> object.
  */
 - (instancetype)initWithID:(NSString*)appID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI;
-
-/*!
- *  @abstract Convenience initialiser for <code>RelayrApp</code>.
- */
-- (instancetype)initWithID:(NSString *)appID;
 
 /*!
  *  @abstract The relayr application name.

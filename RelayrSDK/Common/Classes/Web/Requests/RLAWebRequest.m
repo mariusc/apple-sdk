@@ -14,7 +14,8 @@ NSString* const kRLAWebRequestModePOST      = @"POST";
 NSString* const kRLAWebRequestModePUT       = @"PUT";
 
 // UserAgent WebRequest header
-NSString* kRLAWebRequestUserAgent;
+// TODO: Look for a way to import WEBREQUEST_USERAGENT. It is not working at the moment.
+// NSString* kRLAWebRequestUserAgent;
 
 @implementation RLAWebRequest
 
@@ -22,8 +23,7 @@ NSString* kRLAWebRequestUserAgent;
 
 + (void)initialize
 {
-    // TODO: This is not working...
-    kRLAWebRequestUserAgent = [[NSProcessInfo processInfo].environment objectForKey:@"WEBREQUEST_USERAGENT"];
+    //kRLAWebRequestUserAgent = [[NSProcessInfo processInfo].environment objectForKey:@"WEBREQUEST_USERAGENT"];
 }
 
 - (instancetype)initWithHost:(NSString*)hostString
@@ -55,7 +55,8 @@ NSString* kRLAWebRequestUserAgent;
     request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
     request.HTTPMethod = mode;
     request.timeoutInterval = (_timeout) ? _timeout.doubleValue : dRLAWebRequest_Timeout;
-    [request setValue:kRLAWebRequestUserAgent forHTTPHeaderField:dRLAWebRequest_HeaderField_UserAgent];
+    // FIX ME: Resolve the problem
+    //[request setValue:kRLAWebRequestUserAgent forHTTPHeaderField:dRLAWebRequest_HeaderField_UserAgent];
     if (!request) { return NO; }
     
     if (_oauthToken)
@@ -119,7 +120,7 @@ NSString* kRLAWebRequestUserAgent;
     NSString* result;
     if (hostString)
     {
-        result = (relativePath.length) ? [hostString stringByAppendingPathComponent:relativePath] : hostString;
+        result = (relativePath.length) ? [hostString stringByAppendingString:relativePath] : hostString;
     }
     else
     {
