@@ -16,6 +16,7 @@
 #import "RLAWebService+Transmitter.h"   // Relayr.framework (Web)
 #import "RLAWebService+Device.h"        // Relayr.framework (Web)
 #import "RelayrErrors.h"                // Relayr.framework (Utilities)
+#import "RLALog.h"                      // Relayr.framework (Utilities)
 
 static NSString* const kCodingToken = @"tok";
 static NSString* const kCodingID = @"uid";
@@ -73,13 +74,18 @@ static NSString* const kCodingPublishers = @"pub";
 
 - (void)queryCloudForIoTs:(void (^)(NSError*))completion
 {
+    [RLALog debug:@"Start the queryCloudForIoT: method..."];
+    
     __weak RelayrUser* weakSelf = self;
     [_webService requestUserTransmitters:^(NSError* transmitterError, NSSet* transmitters) {
         if (transmitterError) { if (completion) { completion(transmitterError); } return; }
+        [RLALog debug:@"Transmitters received"];
         [weakSelf.webService requestUserDevices:^(NSError* deviceError, NSSet* devices) {
             if (deviceError) { if (completion) { completion(deviceError); } return ; }
+            [RLALog debug:@"Devices received"];
             [weakSelf.webService requestUserBookmarkedDevices:^(NSError* bookmarkError, NSSet* devicesBookmarked) {
                 if (bookmarkError) { if (completion) { completion(bookmarkError); } return; }
+                [RLALog debug:@"Devices bookmarked received"];
                 [weakSelf processIoTTreeWithTransmitters:transmitters devices:devices bookmarkDevices:devicesBookmarked completion:completion];
             }];
         }];
@@ -235,21 +241,29 @@ static NSString* const kCodingPublishers = @"pub";
 - (void)processIoTTreeWithTransmitters:(NSSet*)transmitters devices:(NSSet*)devices bookmarkDevices:(NSSet*)bookDevices completion:(void (^)(NSError*))completion
 {
     if (bookDevices.count)
-    {
+    {   // There could be bookmark devices that are not devices owned by this user
+        [RLALog debug:@"There were bookmarked devices. Hooking them up to the tree..."];
         NSMutableSet* bookResult = [[NSMutableSet alloc] initWithCapacity:bookDevices.count];
         for (RelayrDevice* bookDevice in bookDevices)
         {
+            RelayrDevice* selectedDevice;
             NSString* bookID = bookDevice.uid;
+            
             for (RelayrDevice* dev in devices)
             {
-                if ([dev.uid isEqualToString:bookID]) { [bookResult addObject:dev]; break; }
+                if ([dev.uid isEqualToString:bookID]) { selectedDevice = dev; break; }
             }
+            
+            if (!selectedDevice) { selectedDevice = bookDevice; }
+            [bookResult addObject:selectedDevice];
         }
         bookDevices = [NSSet setWithSet:bookResult];
+        [RLALog debug:@"Bookmarked devices on tree!"];
     }
     
     if (transmitters.count == 0)
     {
+        [RLALog debug:@"There are no transmitters. Thus the tree is completed and set up."];
         _transmitters = transmitters;
         _devices = devices;
         _devicesBookmarked = bookDevices;
@@ -259,7 +273,9 @@ static NSString* const kCodingPublishers = @"pub";
     
     __block NSError* error;
     __block NSUInteger count = transmitters.count;  // Be careful with race conditions (main thread only, so far).
+    [RLALog debug:@"There are %lu transmitters", transmitters.count];
     
+    __weak RelayrUser* weakSelf = self;
     void (^flagChecker)(NSError*, RelayrTransmitter*, NSSet*) = ^(NSError* connectedError, RelayrTransmitter* transmitter, NSSet* transDevices){
         if (!error)
         {
@@ -280,22 +296,26 @@ static NSString* const kCodingPublishers = @"pub";
         }
         
         count = count - 1;
+        [RLALog debug:@"%lu transmitter remainings...", count];
         if (count == 0)
         {
+            [RLALog debug:@"Setting up final tree..."];
             if (error) { if (completion) { completion(error); } return; }
             
-            __strong RelayrUser* strongSelf = self;
+            __strong RelayrUser* strongSelf = weakSelf;
             if (!strongSelf) { return; }
             
             strongSelf.transmitters = transmitters;
             strongSelf.devices = devices;
             strongSelf.devicesBookmarked = bookDevices;
+            [RLALog debug:@"Setup done!"];
             if (completion) { completion(nil); }
         }
     };
     
     for (RelayrTransmitter* transmitter in transmitters)
     {
+        [RLALog debug:@"Asking for transmitter's devices"];
         [_webService requestDevicesFromTransmitter:transmitter.uid completion:^(NSError* error, NSSet* devices) {
             flagChecker(error, transmitter, devices);
         }];
