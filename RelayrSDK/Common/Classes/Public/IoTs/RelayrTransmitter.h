@@ -39,7 +39,7 @@
 @property (readonly,nonatomic) NSString* secret;
 
 /*!
- *  @abstract Returns all devices related to the specific Transmitter.
+ *  @abstract Returns all devices related to the specific transmitter.
  *  @discussion Links to <code>RelayrDevice</code>s owned by the <code>RelayrUser</code> which owns the Transmitter.
  *      If this property is <code>nil</code>, it indicates that the number of devices managed by this transmitter is unknown and you should query the server for more information. If this property is an empty set, the transmitter doesn't manage any device.
  */

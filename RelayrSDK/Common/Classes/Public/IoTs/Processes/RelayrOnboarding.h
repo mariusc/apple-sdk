@@ -3,7 +3,7 @@
 @class RelayrDevice;            // Relayr.framework (Public)
 
 /*!
- *  @abstract Describes the basic methods equired to support the relayr Onboarding process.
+ *  @abstract Describes the basic methods required to support the relayr Onboarding process.
  */
 @protocol RelayrOnboarding <NSObject>
 

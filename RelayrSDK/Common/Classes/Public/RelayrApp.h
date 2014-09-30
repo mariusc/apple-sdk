@@ -70,7 +70,7 @@ OAuthClientSecret:(NSString*)clientSecret
 @property (readonly,nonatomic) NSString* appDescription;
 
 /*!
- *  @abstract The Id of the app Publisher.
+ *  @abstract The Id of the app's Publisher.
  *  @discussion This value should first be retrieved asynchronously, from the relayr server. 
  *	If the server is not queried, this property is <code>nil</code>.
  */
@@ -90,7 +90,7 @@ OAuthClientSecret:(NSString*)clientSecret
 @property (readonly,nonatomic) NSString* redirectURI;
 
 /*!
- *  @abstract Queries the server for missing application properties. A User with credential is required to retrieve this information.
+ *  @abstract Queries the server for missing application properties. A User with credentials is required to retrieve this information.
  *  @discussion The method is called asynchronously. 
  *	If the request is successful, old values will be written as block arguments, and new ones will be set in the <code>RelayrApp</code> instance.
  *
@@ -100,7 +100,7 @@ OAuthClientSecret:(NSString*)clientSecret
 
 /*!
  *  @abstract An Array containing all logged in <code>RelayrUser</code>s.
- *  @discussion By logged in, we mean that the user's credentials are stored by the application. 
+ *  @discussion By logged in, we refer to user credentials which are stored by the application. 
  *	Calling the sign out method, will remove those credential from the application.
  */
 @property (readonly,nonatomic) NSArray* loggedUsers;

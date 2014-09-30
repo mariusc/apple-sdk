@@ -156,7 +156,7 @@
 /*!
  *  @abstract Deletes a device entity from the Relayr cloud and also from the iOS/OSX client.
  *
- *  @param device Relayr device to be deleted.
+ *  @param device The relayr device to be deleted.
  *  @param completion Block indicating whether the server call was successful or not. It can be <code>nil</code>
  *
  *  @see RelayrDevice

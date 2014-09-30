@@ -17,7 +17,7 @@ typedef void(^RelayrInputDataReceivedBlock)(RelayrDevice* device, RelayrInput* i
 @interface RelayrInput : NSObject <NSCoding>
 
 /*!
- *  @abstract The device that this input/reading is coming from.
+ *  @abstract The source of the input/reading.
  *  @discussion This property will never be <code>nil</code>.
  */
 @property (readonly,weak,nonatomic) RelayrDeviceModel* device;
@@ -68,7 +68,10 @@ typedef void(^RelayrInputDataReceivedBlock)(RelayrDevice* device, RelayrInput* i
  *      - <code>device</code>. The device producing the reading.
  *      - <code>input</code>. The reading value received.
  *      - <code>unsubscribe</code>. A Boolean variable, that when set to <code>NO</code>, will stop the subscription.
- *  @param errorBlock A Block executed every time an error occurr. The error can be because the subscription could not be completed, or because the subscription is stopped by external factor. If this block is defined, a boolean must be returned, indicating if a subscription retry should be attempted.
+ *  @param errorBlock A Block executed every time an error occurs. 
+ *	The error could be received because the subscription could not be completed, 
+ *	or because the subscription is stopped by an external factor. 
+ *	If this block is defined, a boolean must be returned, indicating whether a subscription retry should be attempted.
  *
  *  @note If the method doesn't provide the block argument, the <code>errorBlock</code> won't give the option to retry to subscribe.
  */
@@ -84,11 +87,13 @@ typedef void(^RelayrInputDataReceivedBlock)(RelayrDevice* device, RelayrInput* i
  *      - No parameters.
  *      - One parameter. The parameter must be a <code>RelayrInput</code> object, or the program will crash.
  *      - Two parameters. The first one is a <code>RelayrDevice</code> object, and the second is a <code>RelayrInput</code> object.
- *  @param errorBlock A Block executed every time an error occurr. The error can be because the subscription could not be completed, or because the subscription is stopped by external factor. If this block is defined, a boolean must be returned, indicating if a subscription retry should be attempted.
+ *  @param errorBlock A Block executed every time an error occurs. The error could be received because the subscription could not be completed, 
+ *	or because the subscription is stopped by an external factor. 
+ *	If this block is defined, a boolean must be returned, indicating whether a subscription retry should be attempted.
  *
  *  @note If the method doesn't provide the target or the target cannot perform the action, the <code>errorBlock</code> won't give the option to retry to subscribe.
  *
- *  @warning The action selector should not return anything. If the method does return something, there will be memory leaks.
+ *  @warning The action selector should not return anything. If the method does return something, this will cause memory leaks.
  */
 - (void)subscribeWithTarget:(id)target
                      action:(SEL)action
@@ -106,7 +111,7 @@ typedef void(^RelayrInputDataReceivedBlock)(RelayrDevice* device, RelayrInput* i
                    action:(SEL)action;
 
 /*!
- *  @abstract Removes all subscriptions for this devices.
+ *  @abstract Removes all subscriptions for the device.
  *  @discussion All subscriptions, whether blocks or target objects are unsubscribed.
  */
 - (void)removeAllSubscriptions;

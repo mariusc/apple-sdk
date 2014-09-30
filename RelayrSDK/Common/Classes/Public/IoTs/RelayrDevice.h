@@ -104,7 +104,9 @@
  *      - <code>device</code>. The device producing the reading.
  *      - <code>input</code>. The reading value received.
  *      - <code>unsubscribe</code>. A Boolean variable, that when set to <code>NO</code>, will stop the subscription.
- *  @param errorBlock A Block executed every time an error occurr. The error can be because the subscription could not be completed, or because the subscription is stopped by external factor. If this block is defined, a boolean must be returned, indicating if a subscription retry should be attempted.
+ *  @param errorBlock A Block executed every time an error occurs. 
+ *	The error could be received because the subscription could not be completed, or because the subscription is stopped by an external factor. 
+ *	If this block is defined, a boolean must be returned, indicating if a subscription retry should be attempted.
  *
  *  @note If the method doesn't provide the block argument, the <code>errorBlock</code> won't give the option to retry to subscribe.
  *
@@ -122,7 +124,9 @@
  *  @param action The method to be called. It can have two modes:
  *      - No parameters.
  *      - One parameter. The parameter must be a <code>RelayrInput</code> object, otherwise this method will return a subscription error.
- *  @param errorBlock A Block executed every time an error occurr. The error can be because the subscription could not be completed, or because the subscription is stopped by external factor. If this block is defined, a boolean must be returned, indicating if a subscription retry should be attempted.
+ *  @param errorBlock A Block executed every time an error occurs. 
+ *	The error could be received because the subscription could not be completed, or because the subscription is stopped by an external factor. 
+ *	If this block is defined, a boolean must be returned, indicating if a subscription retry should be attempted.
  *
  *  @note If the method doesn't provide the target or the target cannot perform the action, the <code>errorBlock</code> won't give the option to retry to subscribe.
  *
@@ -145,7 +149,7 @@
 - (void)unsubscribeTarget:(id)target action:(SEL)action;
 
 /*!
- *  @abstract Removes all subscriptions for this device.
+ *  @abstract Removes all subscriptions for the device.
  *  @discussion All subscriptions, whether blocks or target objects are removed.
  */
 - (void)removeAllSubscriptions;

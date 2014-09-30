@@ -7,7 +7,7 @@
 @interface RelayrDeviceModel : NSObject <NSCoding>
 
 /*!
- *  @abstract The identifier of the device model within the Relayr Cloud.
+ *  @abstract The identifier of the device model within the relayr Cloud.
  *  @discussion Inmutable
  */
 @property (readonly,nonatomic) NSString* modelID;
@@ -29,10 +29,11 @@
 @property (readonly,nonatomic) NSArray* firmwaresAvailable;
 
 /*!
- *  @abstract Returns an array of all possible readings the device can gather.
+ *  @abstract Returns an array of all possible readings the device can collect.
  *  @discussion Each item in this array is an object of type <code>RelayrInput</code>. 
  *	Each input represents a different kind of reading. 
- *	That is, a <code>RelayrDevice</code> can have a luminosity sensor and a gyroscope; thus, this array would have two different inputs.
+ *	That is, a <code>RelayrDevice</code> can have a luminosity sensor and a gyroscope; 
+ *	Therefore, this array would have two different inputs.
  *
  *  @see RelayrInput
  */
