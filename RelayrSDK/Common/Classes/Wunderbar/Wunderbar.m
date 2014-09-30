@@ -13,10 +13,10 @@
     if (numDevices < 6) { return NO; }
     
     if ( ![Wunderbar humidityTemperatureDeviceFromWunderbar:transmitter] ||
-         ![Wunderbar gyroscopeDeviceFromWunderbar:transmitter] ||
-         ![Wunderbar lighProximityDeviceFromWunderbar:transmitter] ||
-         ![Wunderbar microphoneDeviceFromWunderbar:transmitter] ||
-         ![Wunderbar bridgeDeviceFromWunderbar:transmitter] ||
+         ![Wunderbar gyroscopeDeviceFromWunderbar:transmitter]           ||
+         ![Wunderbar lighProximityDeviceFromWunderbar:transmitter]       ||
+         ![Wunderbar microphoneDeviceFromWunderbar:transmitter]          ||
+         ![Wunderbar bridgeDeviceFromWunderbar:transmitter]              ||
          ![Wunderbar infraredDeviceFromWunderbar:transmitter] ) { return NO; }
     
     return YES;
@@ -27,11 +27,11 @@
     NSString* modelID = device.modelID;
     if (!modelID) { return NO; }
     
-    if ( [modelID isEqualToString:Wunderbar_devicemodel_gyroscope] ||
-         [modelID isEqualToString:Wunderbar_devicemodel_light] ||
-         [modelID isEqualToString:Wunderbar_devicemodel_microphone] ||
+    if ( [modelID isEqualToString:Wunderbar_devicemodel_gyroscope]   ||
+         [modelID isEqualToString:Wunderbar_devicemodel_light]       ||
+         [modelID isEqualToString:Wunderbar_devicemodel_microphone]  ||
          [modelID isEqualToString:Wunderbar_devicemodel_thermometer] ||
-         [modelID isEqualToString:Wunderbar_devicemodel_bridge] ||
+         [modelID isEqualToString:Wunderbar_devicemodel_bridge]      ||
          [modelID isEqualToString:Wunderbar_devicemodel_infrared] ) { return YES; }
     
     return NO;

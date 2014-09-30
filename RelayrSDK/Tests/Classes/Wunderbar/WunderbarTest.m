@@ -53,7 +53,7 @@
 {
     XCTestExpectation* expectation = [self expectationWithDescription:nil];
     
-    __weak RelayrUser* user = _user;
+    __strong RelayrUser* user = _user;
     [_user queryCloudForIoTs:^(NSError* error) {
         XCTAssertNil(error);
         
@@ -77,29 +77,29 @@
     [self waitForExpectationsWithTimeout:kTestsWunderbarOnboardingTimeout handler:nil];
 }
 
-- (void)testUpdateFirmwareWunderbar
-{
-    XCTestExpectation* expectation = [self expectationWithDescription:nil];
-    
-    __weak RelayrUser* user = _user;
-    [_user queryCloudForIoTs:^(NSError* error) {
-        XCTAssertNil(error);
-        
-        RelayrTransmitter* transmitter = user.transmitters.anyObject;
-        XCTAssertNotNil(transmitter.uid);
-        NSSet* devices = transmitter.devices;
-        XCTAssertGreaterThanOrEqual(devices.count, 6);
-        
-        NSDictionary* firmwareUpdateOptions = @{};
-        
-        [transmitter onboardWithClass:[WunderbarFirmwareUpdate class] timeout:@(kTestsWunderbarFirmwareUpdateTransmitterTimeout) options:firmwareUpdateOptions completion:^(NSError* error) {
-            XCTAssertNil(error);
-            
-            [expectation fulfill];
-        }];
-    }];
-    
-    [self waitForExpectationsWithTimeout:kTestsWunderbarFirmwareUpdateTimeout handler:nil];
-}
+//- (void)testUpdateFirmwareWunderbar
+//{
+//    XCTestExpectation* expectation = [self expectationWithDescription:nil];
+//    
+//    __weak RelayrUser* user = _user;
+//    [_user queryCloudForIoTs:^(NSError* error) {
+//        XCTAssertNil(error);
+//        
+//        RelayrTransmitter* transmitter = user.transmitters.anyObject;
+//        XCTAssertNotNil(transmitter.uid);
+//        NSSet* devices = transmitter.devices;
+//        XCTAssertGreaterThanOrEqual(devices.count, 6);
+//        
+//        NSDictionary* firmwareUpdateOptions = @{};
+//        
+//        [transmitter onboardWithClass:[WunderbarFirmwareUpdate class] timeout:@(kTestsWunderbarFirmwareUpdateTransmitterTimeout) options:firmwareUpdateOptions completion:^(NSError* error) {
+//            XCTAssertNil(error);
+//            
+//            [expectation fulfill];
+//        }];
+//    }];
+//    
+//    [self waitForExpectationsWithTimeout:kTestsWunderbarFirmwareUpdateTimeout handler:nil];
+//}
 
 @end
