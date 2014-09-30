@@ -102,6 +102,24 @@
                            completion:(void (^)(NSError* error))completion;
 
 /*!
+ *  @abstract Sends a blob of data to a specific device.
+ *
+ *  @param deviceID Device receiving the blob of data.
+ *  @param meaning They type of "command" being sent.
+ *  @param value The string value to send to the device.
+ *  @param completion Block indicating the result of "command" sent. If the server received the command, this block will return <code>nil</code> as its parameter.
+ *
+ *  @note That the completion block receives <code>nil</code>, it doesn't assure that the device will receive the blob of data being sent.
+ *
+ *  @see RelayrOutput
+ *  @see RelayrDevice
+ */
+- (void)sendToDeviceID:(NSString*)deviceID
+           withMeaning:(NSString*)meaning
+                 value:(NSString*)value
+            completion:(void (^)(NSError* error))completion;
+
+/*!
  *  @abstract Retrieves all the public Relayr devices entities.
  *
  *  @param completion Block indicating the result of the server query.

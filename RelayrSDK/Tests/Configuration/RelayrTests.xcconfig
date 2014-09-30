@@ -1,0 +1,8 @@
+#include "Common/Configuration/RelayrCommon.xcconfig"
+
+PRODUCT_NAME = Tests
+BUNDLE_NAME = $(PRODUCT_NAME)
+BUNDLE_IDENTIFIER = io.relayr.sdk.tests
+
+TARGET_NAME = Tests
+INFOPLIST_FILE = $(TARGET_NAME)/Configuration/RelayrTests.plist

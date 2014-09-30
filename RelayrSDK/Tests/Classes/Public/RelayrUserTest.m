@@ -3,7 +3,7 @@
 #import <Relayr/Relayr.h>       // Relayr.framework
 #import "RelayrApp_Setup.h"     // Relayr.framework (Private)
 #import "RelayrUser_Setup.h"    // Relayr.framework (Private)
-#import "TestConstants.h"       // Tests
+#import "RLATestsConstants.h"   // Tests
 #import "RelayrApp_TSetup.h"    // Tests
 
 /*!
@@ -11,12 +11,12 @@
  *
  *  @see RelayrApp
  */
-@interface TRelayrUser : XCTestCase
+@interface RelayrUserTest : XCTestCase
 @property (readonly,nonatomic) RelayrApp* app;
 @property (readonly,nonatomic) RelayrUser* user;
 @end
 
-@implementation TRelayrUser
+@implementation RelayrUserTest
 
 #pragma mark - Setup
 
@@ -29,6 +29,7 @@
     _user.uid = kTestsUserID;
     _user.name = kTestsUserName;
     _user.email = kTestsUserEmail;
+    _user.app = _app;
     [_app.users addObject:_user];
 }
 
@@ -42,7 +43,7 @@
 
 #pragma mark - Unit tests
 
-- (void)test_queryCloudForUserInfo
+- (void)testQueryCloudForUserInfo
 {
     _user.uid = nil;
     _user.name = nil;
@@ -60,7 +61,7 @@
     [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
 }
 
-- (void)test_queryCloudForPublishersAndAuthorisedApps
+- (void)testQueryCloudForPublishersAndAuthorisedApps
 {
     XCTestExpectation* expectation = [self expectationWithDescription:nil];
     
@@ -74,7 +75,7 @@
     [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
 }
 
-- (void)test_queryCloudForIoTs
+- (void)testQueryCloudForIoTs
 {
     XCTestExpectation* expectation = [self expectationWithDescription:nil];
     
@@ -88,7 +89,7 @@
     [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
 }
 
-- (void)test_registerTransmitter
+- (void)testRegisterTransmitter_deleteTransmitter
 {
     XCTestExpectation* expectation = [self expectationWithDescription:nil];
     
@@ -104,13 +105,22 @@
         }
         XCTAssertTrue(transmitterMatched);
         
-        [expectation fulfill];
+        [_user deleteTransmitter:transmitter completion:^(NSError* error) {
+            XCTAssertNil(error);
+            BOOL anotherTransmitterMatched = NO;
+            for (RelayrTransmitter* tmpTransmitter in _user.transmitters)
+            {
+                if ([tmpTransmitter.uid isEqualToString:transmitter.uid]) { anotherTransmitterMatched = YES; break; }
+            }
+            XCTAssertFalse(anotherTransmitterMatched);
+            [expectation fulfill];
+        }];
     }];
     
     [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
 }
 
-- (void)test_registerDevice
+- (void)testRegisterDevice_deleteDevice
 {
     XCTestExpectation* expectation = [self expectationWithDescription:nil];
     
@@ -120,13 +130,27 @@
         XCTAssertGreaterThan(device.uid.length, 0);
         
         BOOL deviceMatched = NO;
-        for (RelayrDevice* tmpDevice in _user.transmitters)
+        for (RelayrDevice* tmpDevice in _user.devices)
         {
             if ([tmpDevice.uid isEqualToString:device.uid]) { deviceMatched = YES; break; }
         }
         XCTAssertTrue(deviceMatched);
         
-        [expectation fulfill];
+        [_user deleteDevice:device completion:^(NSError* error) {
+            XCTAssertNil(error);
+            BOOL anotherTransmitterMatched = NO;
+            for (RelayrTransmitter* tmpDevice in _user.devices)
+            {
+                if ([tmpDevice.uid isEqualToString:device.uid]) { anotherTransmitterMatched = YES; break; }
+            }
+            XCTAssertFalse(anotherTransmitterMatched);
+            for (RelayrTransmitter* tmpDevice in _user.devices)
+            {
+                if ([tmpDevice.uid isEqualToString:device.uid]) { anotherTransmitterMatched = YES; break; }
+            }
+            XCTAssertFalse(anotherTransmitterMatched);
+            [expectation fulfill];
+        }];
     }];
     
     [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];

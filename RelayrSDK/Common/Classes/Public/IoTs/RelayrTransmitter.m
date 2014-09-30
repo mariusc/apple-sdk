@@ -1,6 +1,7 @@
 #import "RelayrTransmitter.h"       // Header
 #import "RelayrTransmitter_Setup.h" // Relayr.framework (Private)
 
+#import "RelayrUser.h"              // Relayr.framework (Public)
 #import "RelayrDevice.h"            // Relayr.framework (Public)
 #import "RelayrOnboarding.h"        // Relayr.framework (Public)
 #import "RelayrFirmwareUpdate.h"    // Relayr.framework (Public)
@@ -10,6 +11,7 @@ static NSString* const kCodingID = @"uid";
 static NSString* const kCodingSecret = @"sec";
 static NSString* const kCodingName = @"nam";
 static NSString* const kCodingOwner = @"own";
+static NSString* const kCodingUser = @"usr";
 static NSString* const kCodingDevices = @"dev";
 
 @implementation RelayrTransmitter
@@ -35,6 +37,7 @@ static NSString* const kCodingDevices = @"dev";
 {
     if (self==transmitter || _uid!=transmitter.uid) { return; }
     
+    if (transmitter.user) { _user = transmitter.user; }
     if (transmitter.name) { _name = transmitter.name; }
     if (transmitter.owner) { _owner = transmitter.owner; }
     if (transmitter.secret) { _secret = transmitter.secret; }
@@ -64,6 +67,7 @@ static NSString* const kCodingDevices = @"dev";
     {
         _name = [decoder decodeObjectForKey:kCodingName];
         _owner = [decoder decodeObjectForKey:kCodingOwner];
+        _user = [decoder decodeObjectForKey:kCodingUser];
         _secret = [decoder decodeObjectForKey:kCodingSecret];
         _devices = [decoder decodeObjectForKey:kCodingDevices];
     }
@@ -75,6 +79,7 @@ static NSString* const kCodingDevices = @"dev";
     [coder encodeObject:_uid forKey:kCodingID];
     [coder encodeObject:_name forKey:kCodingName];
     [coder encodeObject:_owner forKey:kCodingOwner];
+    [coder encodeObject:_user forKey:kCodingUser];
     [coder encodeObject:_secret forKey:kCodingSecret];
     [coder encodeObject:_devices forKey:kCodingDevices];
 }

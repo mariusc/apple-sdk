@@ -3,7 +3,7 @@
 #import <Relayr/Relayr.h>       // Relayr.framework
 #import "RelayrApp_Setup.h"     // Relayr.framework (Private)
 #import "RelayrUser_Setup.h"    // Relayr.framework (Private)
-#import "TestConstants.h"       // Tests
+#import "RLATestsConstants.h"   // Tests
 #import "RelayrApp_TSetup.h"    // Tests
 
 /*!
@@ -11,12 +11,12 @@
  *
  *  @see RelayrApp
  */
-@interface TRelayrApp : XCTestCase
+@interface RelayrAppTest : XCTestCase
 @property (readonly,nonatomic) RelayrApp* app;
 @property (readonly,nonatomic) RelayrUser* user;
 @end
 
-@implementation TRelayrApp
+@implementation RelayrAppTest
 
 #pragma mark - Setup
 
@@ -29,6 +29,7 @@
     _user.uid = kTestsUserID;
     _user.name = kTestsUserName;
     _user.email = kTestsUserEmail;
+    _user.app = _app;
     [_app.users addObject:_user];
 }
 
@@ -42,7 +43,7 @@
 
 #pragma mark - Unit tests
 
-- (void)test_queryForAppInfo
+- (void)testQueryForAppInfo
 {
     XCTestExpectation* expectation = [self expectationWithDescription:nil];
     
@@ -56,7 +57,7 @@
     [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
 }
 
-- (void)test_loggedUsers
+- (void)testLoggedUsers
 {
     RelayrApp* tmpApp = [[RelayrApp alloc] initWithID:kTestsAppID OAuthClientSecret:kTestsAppSecret redirectURI:kTestsAppRedirect];
     XCTAssertNil(tmpApp.loggedUsers);
@@ -80,13 +81,13 @@
     [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
 }
 
-- (void)test_SignOut
+- (void)testSignOut
 {
     [_app signOutUser:_user];
     XCTAssertNil([_app loggedUserWithRelayrID:_user.uid]);
 }
 
-- (void)test_keyChain
+- (void)testKeyChain
 {
     XCTAssertTrue([RelayrApp removeAppFromKeyChain:_app]);
     XCTAssertNil([RelayrApp retrieveAppFromKeyChain:kTestsAppID]);

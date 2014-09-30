@@ -286,6 +286,10 @@
 #define Web_RequestRelativePath_DevDisconnect(devID, appID) [NSString stringWithFormat:@"/devices/%@/apps/%@", devID, appID]
 #define Web_RequestResponseCode_DevDisconnect           204
 
+// Sends a blob of data to a device
+#define Web_RequestRelativePath_DevSend(devID, meaning) ((!meaning.length) ? [NSString stringWithFormat:@"/devices/%@/cmd", devID] : [NSString stringWithFormat:@"/devices/%@/cmd/%@", devID, meaning])
+#define Web_RequestResponseCode_DevSend                 200
+
 // Device's that are public
 #define Web_RequestRelativePath_DevPublic               @"/devices/public"
 #define Web_RequestResponseCode_DevPublic               200
@@ -294,7 +298,7 @@
 #define Web_RequestRelativePath_DevPublicMeaning(meaning)   [NSString stringWithFormat:@"/devices/public?meaning=%@", meaning]
 #define Web_RequestResponseCode_DevPublicMeaning            200
 
-// Subscribe to a public device (it gives PubNub credentials to anyone. It doesn't need token)
+// Subscribe to a public device (It doesn't need token)
 #define Web_RequestRelativePath_DevPublicSubcription(devID) [NSString stringWithFormat:@"/devices/%@/subscription", devID]
 #define Web_RequestResponseCode_DevPublicSubcription        200
 

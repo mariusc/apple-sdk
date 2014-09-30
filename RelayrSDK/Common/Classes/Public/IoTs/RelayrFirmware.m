@@ -1,5 +1,5 @@
-#import "RelayrFirmware.h"
-#import "RelayrFirmware_Setup.h"
+#import "RelayrFirmware.h"          // Header
+#import "RelayrFirmware_Setup.h"    // Relayr.framework (Private)
 
 @implementation RelayrFirmware
 

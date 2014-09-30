@@ -13,19 +13,20 @@
 
 #import "RLAWebService.h"               // Relayr.framework (Web)
 #import "RLAWebService+User.h"          // Relayr.framework (Web)
+#import "RLAWebService+Publisher.h"     // Relayr.framework (Web)
 #import "RLAWebService+Transmitter.h"   // Relayr.framework (Web)
 #import "RLAWebService+Device.h"        // Relayr.framework (Web)
 #import "RelayrErrors.h"                // Relayr.framework (Utilities)
-#import "RLALog.h"                      // Relayr.framework (Utilities)
 
 static NSString* const kCodingToken = @"tok";
+static NSString* const kCodingApp = @"app";
 static NSString* const kCodingID = @"uid";
 static NSString* const kCodingName = @"nam";
 static NSString* const kCodingEmail = @"ema";
 static NSString* const kCodingTransmitters = @"tra";
 static NSString* const kCodingDevices = @"dev";
 static NSString* const kCodingBookmarks = @"bok";
-static NSString* const kCodingApps = @"app";
+static NSString* const kCodingApps = @"AuthApp";
 static NSString* const kCodingPublishers = @"pub";
 
 @implementation RelayrUser
@@ -74,18 +75,18 @@ static NSString* const kCodingPublishers = @"pub";
 
 - (void)queryCloudForIoTs:(void (^)(NSError*))completion
 {
-    [RLALog debug:@"Start the queryCloudForIoT: method..."];
-    
     __weak RelayrUser* weakSelf = self;
     [_webService requestUserTransmitters:^(NSError* transmitterError, NSSet* transmitters) {
         if (transmitterError) { if (completion) { completion(transmitterError); } return; }
-        [RLALog debug:@"Transmitters received"];
         [weakSelf.webService requestUserDevices:^(NSError* deviceError, NSSet* devices) {
             if (deviceError) { if (completion) { completion(deviceError); } return ; }
-            [RLALog debug:@"Devices received"];
             [weakSelf.webService requestUserBookmarkedDevices:^(NSError* bookmarkError, NSSet* devicesBookmarked) {
                 if (bookmarkError) { if (completion) { completion(bookmarkError); } return; }
-                [RLALog debug:@"Devices bookmarked received"];
+                
+                for (RelayrTransmitter* trans in transmitters) { trans.user = weakSelf; }
+                for (RelayrDevice* dev in devices) { dev.user = weakSelf; }
+                for (RelayrDevice* dev in devicesBookmarked) { dev.user = weakSelf; }
+                
                 [weakSelf processIoTTreeWithTransmitters:transmitters devices:devices bookmarkDevices:devicesBookmarked completion:completion];
             }];
         }];
@@ -119,6 +120,20 @@ static NSString* const kCodingPublishers = @"pub";
     }];
 }
 
+- (void)deleteTransmitter:(RelayrTransmitter*)transmitter completion:(void (^)(NSError* error))completion
+{
+    if (!transmitter.uid.length) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
+    
+    __weak RelayrUser* weakSelf = self;
+    [_webService deleteTransmitter:transmitter.uid completion:^(NSError* error) {
+        if (error) { if (completion) { completion(error); } return; }
+        
+        BOOL const operationSuccessful = [weakSelf removeTransmitter:transmitter];
+        if (!completion) { return; }
+        completion((!operationSuccessful) ? RelayrErrorUnknwon : nil);
+    }];
+}
+
 - (void)registerDeviceWithModelID:(NSString*)modelID firmwareVerion:(NSString*)firmwareVersion name:(NSString*)name completion:(void (^)(NSError* error, RelayrDevice* device))completion
 {
     if (!modelID || !firmwareVersion || !name) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
@@ -133,9 +148,24 @@ static NSString* const kCodingPublishers = @"pub";
     }];
 }
 
+- (void)deleteDevice:(RelayrDevice*)device completion:(void (^)(NSError* error))completion
+{
+    if (!device.uid.length) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
+    
+    __weak RelayrUser* weakSelf = self;
+    [_webService deleteDevice:device.uid completion:^(NSError *error) {
+        if (error) { if (completion) { completion(error); } return; }
+        
+        BOOL const operationSuccessful = [weakSelf removeDevice:device];
+        if (!completion) { return; }
+        completion((!operationSuccessful) ? RelayrErrorUnknwon : nil);
+    }];
+}
+
 - (RelayrTransmitter*)addTransmitter:(RelayrTransmitter*)transmitter
 {
     if (!transmitter) { return nil; }
+    transmitter.user = self;
     
     // Devices need to be added first.
     if (transmitter.devices.count)
@@ -172,9 +202,33 @@ static NSString* const kCodingPublishers = @"pub";
     return transmitter;
 }
 
+- (BOOL)removeTransmitter:(RelayrTransmitter*)transmitter
+{
+    if (!transmitter.uid.length) { return NO; }
+    
+    RelayrTransmitter* matchedTransmitter;
+    NSString* transmitterID = transmitter.uid;
+    for (RelayrTransmitter* tmpTrans in self.transmitters)
+    {
+        if ([transmitterID isEqualToString:tmpTrans.uid]) { matchedTransmitter = tmpTrans; break; }
+    }
+    
+    if (!matchedTransmitter) { return NO; }
+    matchedTransmitter.devices = nil;
+    matchedTransmitter.user = nil;
+    
+    NSMutableSet* tmpTrans = [NSMutableSet setWithSet:self.transmitters];
+    [tmpTrans removeObject:matchedTransmitter];
+    self.transmitters = [NSSet setWithSet:tmpTrans];
+    
+    matchedTransmitter = nil;
+    return YES;
+}
+
 - (RelayrDevice*)addDevice:(RelayrDevice*)device
 {
     if (!device) { return nil; }
+    device.user = self;
     
     if (_devices)
     {
@@ -193,6 +247,50 @@ static NSString* const kCodingPublishers = @"pub";
     return device;
 }
 
+- (BOOL)removeDevice:(RelayrDevice*)device
+{
+    if (!device.uid.length) { return NO; }
+    NSString* deviceID = device.uid;
+    
+    RelayrDevice* matchedDevice;
+    for (RelayrDevice* tmpDevice in self.devices)
+    {
+        if ([deviceID isEqualToString:tmpDevice.uid]) { matchedDevice = tmpDevice; break; }
+    }
+    
+    if (!matchedDevice)
+    {
+        RelayrDevice* matchedDeviceBookmark;
+        for (RelayrDevice* tmpDevice in self.devicesBookmarked)
+        {
+            if ([deviceID isEqualToString:tmpDevice.uid]) { matchedDeviceBookmark = tmpDevice; break; }
+        }
+        
+        if (!matchedDeviceBookmark) { return NO; }
+        [matchedDeviceBookmark removeAllSubscriptions];
+        
+        NSMutableSet* tmpDevs = [NSMutableSet setWithSet:self.devicesBookmarked];
+        [tmpDevs removeObject:matchedDeviceBookmark];
+        self.devicesBookmarked = [NSSet setWithSet:tmpDevs];
+        return YES;
+    }
+    
+    [matchedDevice removeAllSubscriptions];
+    
+    NSMutableSet* tmpDevs = [NSMutableSet setWithSet:self.devices];
+    [tmpDevs removeObject:matchedDevice];
+    self.devices = [NSSet setWithSet:tmpDevs];
+    
+    if (matchedDevice.isPublic.boolValue)
+    {
+        tmpDevs = [NSMutableSet setWithSet:self.devicesBookmarked];
+        [tmpDevs removeObject:matchedDevice];
+        self.devicesBookmarked = [NSSet setWithSet:tmpDevs];
+    }
+    
+    return YES;
+}
+
 #pragma mark NSCoding
 
 - (id)initWithCoder:(NSCoder*)decoder
@@ -200,6 +298,7 @@ static NSString* const kCodingPublishers = @"pub";
     self = [self initWithToken:[decoder decodeObjectForKey:kCodingToken]];
     if (self)
     {
+        _app = [decoder decodeObjectForKey:kCodingApp];
         _uid = [decoder decodeObjectForKey:kCodingID];
         _name = [decoder decodeObjectForKey:kCodingName];
         _email = [decoder decodeObjectForKey:kCodingEmail];
@@ -215,6 +314,7 @@ static NSString* const kCodingPublishers = @"pub";
 - (void)encodeWithCoder:(NSCoder*)coder
 {
     [coder encodeObject:_token forKey:kCodingToken];
+    [coder encodeObject:_app forKey:kCodingApp];
     [coder encodeObject:_uid forKey:kCodingID];
     [coder encodeObject:_name forKey:kCodingName];
     [coder encodeObject:_email forKey:kCodingEmail];
@@ -242,7 +342,6 @@ static NSString* const kCodingPublishers = @"pub";
 {
     if (bookDevices.count)
     {   // There could be bookmark devices that are not devices owned by this user
-        [RLALog debug:@"There were bookmarked devices. Hooking them up to the tree..."];
         NSMutableSet* bookResult = [[NSMutableSet alloc] initWithCapacity:bookDevices.count];
         for (RelayrDevice* bookDevice in bookDevices)
         {
@@ -258,12 +357,10 @@ static NSString* const kCodingPublishers = @"pub";
             [bookResult addObject:selectedDevice];
         }
         bookDevices = [NSSet setWithSet:bookResult];
-        [RLALog debug:@"Bookmarked devices on tree!"];
     }
     
     if (transmitters.count == 0)
     {
-        [RLALog debug:@"There are no transmitters. Thus the tree is completed and set up."];
         _transmitters = transmitters;
         _devices = devices;
         _devicesBookmarked = bookDevices;
@@ -273,7 +370,6 @@ static NSString* const kCodingPublishers = @"pub";
     
     __block NSError* error;
     __block NSUInteger count = transmitters.count;  // Be careful with race conditions (main thread only, so far).
-    [RLALog debug:@"There are %lu transmitters", transmitters.count];
     
     __weak RelayrUser* weakSelf = self;
     void (^flagChecker)(NSError*, RelayrTransmitter*, NSSet*) = ^(NSError* connectedError, RelayrTransmitter* transmitter, NSSet* transDevices){
@@ -296,10 +392,8 @@ static NSString* const kCodingPublishers = @"pub";
         }
         
         count = count - 1;
-        [RLALog debug:@"%lu transmitter remainings...", count];
         if (count == 0)
         {
-            [RLALog debug:@"Setting up final tree..."];
             if (error) { if (completion) { completion(error); } return; }
             
             __strong RelayrUser* strongSelf = weakSelf;
@@ -308,14 +402,12 @@ static NSString* const kCodingPublishers = @"pub";
             strongSelf.transmitters = transmitters;
             strongSelf.devices = devices;
             strongSelf.devicesBookmarked = bookDevices;
-            [RLALog debug:@"Setup done!"];
             if (completion) { completion(nil); }
         }
     };
     
     for (RelayrTransmitter* transmitter in transmitters)
     {
-        [RLALog debug:@"Asking for transmitter's devices"];
         [_webService requestDevicesFromTransmitter:transmitter.uid completion:^(NSError* error, NSSet* devices) {
             flagChecker(error, transmitter, devices);
         }];

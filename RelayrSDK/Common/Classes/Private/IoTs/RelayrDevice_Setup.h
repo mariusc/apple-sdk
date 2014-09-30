@@ -1,5 +1,6 @@
 #import "RelayrDevice.h"            // Relayr.framework (Public)
 #import "RelayrDeviceModel_Setup.h" // Relayr.framework (Private)
+@class RelayrUser;                  // Relayr.framework (Public)
 
 /*!
  *  @abstract An instance of this class represents a Device. A basic relayr entity
@@ -20,6 +21,12 @@
  *  @see RelayrDevice
  */
 - (instancetype)initWithID:(NSString*)uid modelID:(NSString*)modelID;
+
+/*!
+ *  @abstract User currently "using" this transmitter.
+ *  @discussion A public device can be owned by another Relayr user, but being used by your <code>RelayrUser</code> entity.
+ */
+@property (readwrite,weak,nonatomic) RelayrUser* user;
 
 /*!
  *  @abstract Device name.

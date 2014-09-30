@@ -1,4 +1,5 @@
 @import Foundation;         // Apple
+@class RelayrApp;           // Relayr.framework (Public)
 @class RelayrTransmitter;   // Relayr.framework (Public)
 @class RelayrDevice;        // Relayr.framework (Public)
 
@@ -9,6 +10,11 @@
  *	A user is required in order to add other entities to the relayr platform.
  */
 @interface RelayrUser : NSObject <NSCoding>
+
+/*!
+ *  @abstract Relayr application that the user has signed in.
+ */
+@property (readonly,weak,nonatomic) RelayrApp* app;
 
 /*!
  *  @abstract A representation of a relayr user and their relayr application.
@@ -105,7 +111,7 @@
 - (void)queryCloudForPublishersAndAuthorisedApps:(void (^)(NSError* error))completion;
 
 /*!
- *  @abstract Creates/registers a Transmitter entity on the relayr cloud.
+ *  @abstract Creates/registers a Transmitter entity on the Relayr cloud.
  *  @discussion If this call is successful a <code>RelayrTransmitter</code> object is created and is added to the <code>transmitters</code> array.
  *
  *  @param modelID Idetifier for the newly created transmittter instance. Currently, this argument must be <code>nil</code>. 
@@ -119,6 +125,17 @@
                         firmwareVerion:(NSString*)firmwareVersion
                                   name:(NSString*)name
                             completion:(void (^)(NSError* error, RelayrTransmitter* transmitter))completion;
+
+/*!
+ *  @abstract Deletes a transmitter entity from the Relayr cloud and also from the iOS/OSX client.
+ *
+ *  @param transmitter Relayr transmitter to be deleted.
+ *  @param completion Block indicating whether the server call was successful or not. It can be <code>nil</code>
+ *
+ *  @see RelayrTransmitter
+ */
+- (void)deleteTransmitter:(RelayrTransmitter*)transmitter
+               completion:(void (^)(NSError* error))completion;
 
 /*!
  *  @abstract Creates/registers a device entity on the relayr cloud.
@@ -135,6 +152,17 @@
                    firmwareVerion:(NSString*)firmwareVersion
                              name:(NSString*)name
                        completion:(void (^)(NSError* error, RelayrDevice* device))completion;
+
+/*!
+ *  @abstract Deletes a device entity from the Relayr cloud and also from the iOS/OSX client.
+ *
+ *  @param device Relayr device to be deleted.
+ *  @param completion Block indicating whether the server call was successful or not. It can be <code>nil</code>
+ *
+ *  @see RelayrDevice
+ */
+- (void)deleteDevice:(RelayrDevice*)device
+          completion:(void (^)(NSError* error))completion;
 
 // TODO: Implement Transmitters and devices deletion and transmitter-device connection
 

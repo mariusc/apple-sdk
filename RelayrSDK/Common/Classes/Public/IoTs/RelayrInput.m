@@ -1,10 +1,24 @@
-#import "RelayrInput.h"
-#import "RelayrInput_Setup.h"
+#import "RelayrInput.h"             // Header
+#import "RelayrApp.h"               // Relayr.framework (Public)
+#import "RelayrUser.h"              // Relayr.framework (Public)
+#import "RelayrDevice.h"            // Relayr.framework (Public)
+#import "RelayrUser_Setup.h"        // Relayr.framework (Private)
+#import "RelayrInput_Setup.h"       // Relayr.framework (Private)
+#import "RLAWebService+Device.h"    // Relyar.framework (Web)
+#import "RelayrErrors.h"            // Relayr.framework (Utilities)
+#import "RLATargetAction.h"         // Relayr.framework (Utilities)
+
+#define dMaxValues   15
 
 static NSString* const kCodingMeaning = @"men";
 static NSString* const kCodingUnit = @"uni";
 static NSString* const kCodingValues = @"val";
 static NSString* const kCodingDates = @"dat";
+
+@interface RelayrInput ()
+@property (readwrite,nonatomic) NSMutableDictionary* subscribedBlocks;
+@property (readwrite,nonatomic) NSMutableDictionary* subscribedTargets;
+@end
 
 @implementation RelayrInput
 
@@ -36,12 +50,12 @@ static NSString* const kCodingDates = @"dat";
 
 - (id)value
 {
-    return _values.firstObject;
+    return _values.lastObject;
 }
 
 - (NSDate*)date
 {
-    return _dates.firstObject;
+    return _dates.lastObject;
 }
 
 - (NSArray*)historicValues
@@ -54,24 +68,99 @@ static NSString* const kCodingDates = @"dat";
     return (_dates.count) ? [NSArray arrayWithArray:_dates] : nil;
 }
 
-- (void)subscribeWithTarget:(id)target action:(SEL)action error:(BOOL (^)(NSError* error))subscriptionError
+- (void)subscribeWithBlock:(RelayrInputDataReceivedBlock)block error:(BOOL (^)(NSError* error))errorBlock
 {
-    // TODO: Fill up
+    // A retry option is not given since not all arguments are there.
+    if (!block) { if (errorBlock) { errorBlock(RelayrErrorMissingArgument); } return; }
+    
+    RelayrDevice* device = ([self.device isKindOfClass:[RelayrDevice class]]) ? (RelayrDevice*)self.device : nil;
+    if (!device) { if (errorBlock) { errorBlock(RelayrErrorTryingToUseRelayrModel); } return; }
+    
+    if (!self.subscribedBlocks) { _subscribedBlocks = [[NSMutableDictionary alloc] init]; }
+    
+    __weak RelayrInput* weakSelf = self;
+    [device.user.webService setConnectionBetweenDevice:device.uid andApp:device.user.app.uid completion:^(NSError* error, id credentials) {
+        if (error)
+        {
+            if (!errorBlock) { return; }
+            BOOL const repeat = errorBlock(error);
+            if (repeat) { [weakSelf subscribeWithBlock:block error:errorBlock]; }
+            return;
+        }
+        
+        __strong RelayrInput* strongSelf = weakSelf;
+//        if (![RLAPubNub arePubNubCredentials:credentials] || !strongSelf)
+//        {
+//            if (errorBlock) { errorBlock(RelayrErrorPubNubWrongCredentials); }
+//            return [device.user.webService deleteConnectionBetweenDevice:device.uid andApp:device.user.app.uid completion:nil];
+//        }
+        
+        strongSelf.subscribedBlocks[[block copy]] = (errorBlock) ? [errorBlock copy] : [NSNull null];
+//        [RLAPubNub subscribeToChannel:credentials[kRLAPubNubOptionsChannel] withOptions:credentials input:strongSelf callback:@selector(dataReceived:at:)];
+    }];
 }
 
-- (void)subscribeWithBlock:(void (^)(RelayrDevice* device, RelayrInput* input, BOOL* unsubscribe))block error:(BOOL (^)(NSError* error))subscriptionError
+- (void)subscribeWithTarget:(id)target action:(SEL)action error:(BOOL (^)(NSError* error))errorBlock
 {
-    // TODO: Fill up
+    RLATargetAction* pair = [[RLATargetAction alloc] initWithTarget:target action:action];
+    
+    // A retry option is not given since not all arguments are there.
+    if (!pair) { if (errorBlock) { errorBlock(RelayrErrorMissingArgument); } return; }
+    if (![target respondsToSelector:action]) { if (errorBlock) { errorBlock(RelayrErrorUnknwon); } return; }
+    
+    RelayrDevice* device = ([self.device isKindOfClass:[RelayrDevice class]]) ? (RelayrDevice*)self.device : nil;
+    if (!device) { if (errorBlock) { errorBlock(RelayrErrorTryingToUseRelayrModel); } return; }
+    
+    if (!_subscribedTargets) { _subscribedTargets = [[NSMutableDictionary alloc] init]; }
+    
+    __weak RelayrInput* weakSelf = self;
+    [device.user.webService setConnectionBetweenDevice:device.uid andApp:device.user.app.uid completion:^(NSError *error, id credentials) {
+        if (error)
+        {
+            if (!errorBlock) { return; }
+            BOOL const repeat = errorBlock(error);
+            if (repeat) { [weakSelf subscribeWithTarget:target action:action error:errorBlock]; }
+            return;
+        }
+        
+        __strong RelayrInput* strongSelf = weakSelf;
+//        if (![RLAPubNub arePubNubCredentials:credentials] || !strongSelf)
+//        {
+//            if (errorBlock) { errorBlock(RelayrErrorPubNubWrongCredentials); }
+//            return [device.user.webService deleteConnectionBetweenDevice:device.uid andApp:device.user.app.uid completion:nil];
+//        }
+        
+        strongSelf.subscribedTargets[pair] = (errorBlock) ? [errorBlock copy] : [NSNull null];
+//        [RLAPubNub subscribeToChannel:credentials[kRLAPubNubOptionsChannel] withOptions:credentials input:strongSelf callback:@selector(dataReceived:at:)];
+    }];
 }
 
 - (void)unsubscribeTarget:(id)target action:(SEL)action
 {
-    // TODO: Fill up
+    if (!target) { return; }
+    
+    RLATargetAction* matchedPair;
+    for (RLATargetAction* pair in _subscribedTargets)
+    {
+        if (pair.target==target && pair.action==action)
+        {
+            matchedPair = pair;
+            break;
+        }
+    }
+    
+    if (matchedPair) { [_subscribedTargets removeObjectForKey:matchedPair]; }
+    if (!_subscribedBlocks.count && !_subscribedTargets.count) { return [self removeAllSubscriptions]; }
 }
 
 - (void)removeAllSubscriptions
 {
-    // TODO: Fill up
+    if (_subscribedBlocks) { _subscribedBlocks = nil; }
+    if (_subscribedTargets) { _subscribedTargets = nil; }
+    
+    if (![self.device isKindOfClass:[RelayrDevice class]]) { return; }
+    RelayrDevice* device = (RelayrDevice*)self.device;
+    [device.user.webService deleteConnectionBetweenDevice:device.uid andApp:device.user.app.uid completion:nil];
 }
 
 #pragma mark NSCoding
@@ -111,7 +200,105 @@ static NSString* const kCodingDates = @"dat";
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"RelayrInput\n{\n\t Meaning: %@\n\t Unit: %@Num values: %@\n\t \n\t Date: %@\n}\n", _meaning, _unit, (_values.firstObject) ? _values.firstObject : @"?", (_dates.firstObject) ? _dates.firstObject : @"?"];
+    return [NSString stringWithFormat:@"RelayrInput\n{\n\t Meaning: %@\n\t Unit: %@Num values: %@\n\t \n\t Date: %@\n}\n", _meaning, _unit, (_values.lastObject) ? _values.lastObject : @"?", (_dates.lastObject) ? _dates.lastObject : @"?"];
+}
+
+#pragma mark - Private
+
+/*******************************************************************************
+ * Callback method when some data has arrived.
+ ******************************************************************************/
+- (void)dataReceived:(NSObject <NSCopying> *)valueOrError at:(NSDate*)date
+{
+    if (!valueOrError) { return; }
+    
+    if ([valueOrError isKindOfClass:[NSError class]])
+    {
+        NSError* error = (NSError*)valueOrError;
+        NSMutableDictionary* blocks = _subscribedBlocks;
+        NSMutableDictionary* targets = _subscribedTargets;
+        _subscribedBlocks = [[NSMutableDictionary alloc] init];
+        _subscribedTargets = [[NSMutableDictionary alloc] init];
+        
+        NSNull* null = [NSNull null];
+        __weak RelayrInput* weakInput = self;
+        
+        [blocks enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL* stop) {
+            if (obj == null) { return; }
+            BOOL const repeat = ((BOOL (^)(NSError*))obj)(error);
+            if (repeat) { [weakInput subscribeWithBlock:key error:obj]; }
+        }]; blocks = nil;
+        
+        [targets enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL* stop) {
+            if (obj == null) { return; }
+            BOOL const repeat = ((BOOL (^)(NSError*))obj)(error);
+            if (repeat)
+            {
+                RLATargetAction* pair = (RLATargetAction*)key;
+                [weakInput subscribeWithTarget:pair.target action:pair.action error:obj];
+            }
+        }]; targets = nil;
+        return;
+    }
+    
+    [_values addObject:valueOrError];
+    if (_values.count > dMaxValues) { [_values removeObjectAtIndex:0]; }
+    [_dates addObject:(date) ? date : [NSNull null]];
+    if (_dates.count > dMaxValues) { [_dates removeObjectAtIndex:0]; }
+    
+    __weak RelayrInput* weakInput = self;
+    NSMutableDictionary* tmpBlocks = [NSMutableDictionary dictionaryWithDictionary:_subscribedBlocks];
+    NSMutableDictionary* tmpTargets = [NSMutableDictionary dictionaryWithDictionary:_subscribedTargets];
+    NSMutableArray* toSubstract = [[NSMutableArray alloc] init];
+    
+    [tmpBlocks enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL* stop) {
+        BOOL unsubscribe = NO;
+        ((RelayrInputDataReceivedBlock)key)(((RelayrDevice*)weakInput.device), weakInput, &unsubscribe);
+        if (unsubscribe) { [toSubstract addObject:key]; }
+    }]; tmpBlocks = nil;
+    
+    [_subscribedBlocks removeObjectsForKeys:toSubstract];
+    [toSubstract removeAllObjects];
+    
+    [tmpTargets enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL* stop) {
+        RLATargetAction* pair = key;
+        id target = pair.target;
+        SEL action = pair.action;
+        if (!target || ![key respondsToSelector:action]) { return [toSubstract addObject:key]; }
+        [self performSelector:action onTarget:target withDevice:(RelayrDevice*)self.device input:self];
+    }]; tmpTargets = nil;
+    
+    [_subscribedTargets removeObjectsForKeys:toSubstract];
+}
+
+/*******************************************************************************
+ * It performs a selector on a given target.
+ * This method doesn't check that the arguments aren't <code>nil</code>. Be careful.
+ ******************************************************************************/
+- (void)performSelector:(SEL)action onTarget:(id)target withDevice:(RelayrDevice*)device input:(RelayrInput*)input
+{
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    
+    NSMethodSignature* msig = [target methodSignatureForSelector:action];
+    if (msig != nil)
+    {
+        NSUInteger const numArguments = msig.numberOfArguments;
+        if (numArguments == 2)
+        {
+            [target performSelector:action];
+        }
+        else if (numArguments == 3)
+        {
+            [target performSelector:action withObject:input];
+        }
+        else if (numArguments == 4)
+        {
+            [target performSelector:action withObject:device withObject:input];
+        }
+    }
+    
+    #pragma clang diagnostic pop
 }
 
 @end

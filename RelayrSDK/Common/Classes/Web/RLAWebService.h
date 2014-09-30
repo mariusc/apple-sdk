@@ -3,7 +3,7 @@
 
 /*!
  *  @abstract Web connection manager for a <code>RelayrUser</code>.
- *  @discussion An instance of this class will manage all the web connections (whether HTTP calls, PUBNUB, etc.) of a single user.
+ *  @discussion An instance of this class will manage all the web connections (whether HTTP calls, etc.) of a single user.
  *
  *  @see RelayrUser
  */

@@ -1,4 +1,5 @@
 @import Foundation;             // Apple
+@class RelayrUser;              // Relayr.framework (Public)
 @protocol RelayrOnboarding;     // Relayr.framework (Public)
 @protocol RelayrFirmwareUpdate; // Relayr.framework (Public)
 
@@ -7,6 +8,12 @@
  *  @discussion A transmitter contrary to a device does not gather data but is only used to relay the data from the devices to the relayr platform. The transmitter is also used to authenticate the different devices that transmit data via it.
  */
 @interface RelayrTransmitter : NSObject <NSCoding>
+
+/*!
+ *  @abstract User currently "using" this transmitter.
+ *  @discussion A public device can be owned by another Relayr user, but being used by your <code>RelayrUser</code> entity.
+ */
+@property (readonly,weak,nonatomic) RelayrUser* user;
 
 /*!
  *  @abstract A Unique idenfier for a <code>RelayrTransmitter</code> instance.

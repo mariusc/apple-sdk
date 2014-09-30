@@ -1,4 +1,0 @@
-#include "Common/Configuration/Common.xcconfig"
-
-TARGET_NAME = OSXRelayr
-INFOPLIST_FILE = $(TARGET_NAME)/Configuration/Info.plist

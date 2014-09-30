@@ -1,7 +1,8 @@
 @import Foundation;             // Apple
 #import "RelayrDeviceModel.h"   // Relayr.framework (Public)
+@class RelayrUser;              // Relayr.framework (Public)
 @class RelayrFirmware;          // Relayr.framework (Public)
-@class RelayrInput;             // Relayr.framework (Public)
+#import "RelayrInput.h"         // Relayr.framework (Public)
 @protocol RelayrOnboarding;     // Relayr.framework (Public)
 @protocol RelayrFirmwareUpdate; // Relayr.framework (Public)
 
@@ -12,6 +13,12 @@
  *	Examples would be a thermometer, a gyroscope or an infrared sensor.
  */
 @interface RelayrDevice : RelayrDeviceModel <NSCoding>
+
+/*!
+ *  @abstract User currently "using" this transmitter.
+ *  @discussion A public device can be owned by another Relayr user, but being used by your <code>RelayrUser</code> entity.
+ */
+@property (readonly,weak,nonatomic) RelayrUser* user;
 
 /*!
  *  @abstract A unique idenfier of the <code>RelayrDevice</code>'s instance.
@@ -89,6 +96,24 @@
 #pragma mark Subscription
 
 /*!
+ *  @abstract Subscribes a block to the data sent from the <code>RelayrDevice</code>.
+ *  @discussion Regardless of how the device is connected (Web/Cloud, Bluetooth, etc.),
+ *	The action is called as soon as the data is available.
+ *
+ *  @param block This block will be executed everytime data is available. The block contains three parameters:
+ *      - <code>device</code>. The device producing the reading.
+ *      - <code>input</code>. The reading value received.
+ *      - <code>unsubscribe</code>. A Boolean variable, that when set to <code>NO</code>, will stop the subscription.
+ *  @param errorBlock A Block executed every time an error occurr. The error can be because the subscription could not be completed, or because the subscription is stopped by external factor. If this block is defined, a boolean must be returned, indicating if a subscription retry should be attempted.
+ *
+ *  @note If the method doesn't provide the block argument, the <code>errorBlock</code> won't give the option to retry to subscribe.
+ *
+ *  @see RelayrInput
+ */
+- (void)subscribeToAllInputsWithBlock:(RelayrInputDataReceivedBlock)block
+                                error:(BOOL (^)(NSError* error))errorBlock;
+
+/*!
  *  @abstract Subscribes the target object to all data (all readings) sent from the <code>RelayrDevice</code>.
  *  @discussion Regardless of how the device is connected (Web/Cloud, Bluetooth, etc.), 
  *	The action is called as soon as the data is available.
@@ -97,31 +122,15 @@
  *  @param action The method to be called. It can have two modes:
  *      - No parameters.
  *      - One parameter. The parameter must be a <code>RelayrInput</code> object, otherwise this method will return a subscription error.
- *  @param subscriptionError A Block executed if the subscription cannot be performed (it can be <code>nil</code>. 
- *	If this block is defined, a boolean must be returned, indicating if a subscription retry should be attempted.
+ *  @param errorBlock A Block executed every time an error occurr. The error can be because the subscription could not be completed, or because the subscription is stopped by external factor. If this block is defined, a boolean must be returned, indicating if a subscription retry should be attempted.
+ *
+ *  @note If the method doesn't provide the target or the target cannot perform the action, the <code>errorBlock</code> won't give the option to retry to subscribe.
  *
  *  @see RelayrInput
  */
 - (void)subscribeToAllInputsWithTarget:(id)target
                                 action:(SEL)action
-                                 error:(BOOL (^)(NSError* error))subscriptionError;
-
-/*!
- *  @abstract Subscribes a block to the data sent from the <code>RelayrDevice</code>.
- *  @discussion Regardless of how the device is connected (Web/Cloud, Bluetooth, etc.), 
- *	The action is called as soon as the data is available.
- *
- *  @param block This block will be executed everytime data is available. The block contains three parameters:
- *      - <code>device</code>. The device producing the reading.
- *      - <code>input</code>. The reading value received.
- *      - <code>unsubscribe</code>. A Boolean variable, that when set to <code>NO</code>, will stop the subscription.
- *  @param subscriptionError A Block executed if the subscription cannot be performed (it can be <code>nil</code>. 
- *	If this block is defined, a boolean must be returned, indicating if a subscription retry should be attempted.
- *
- *  @see RelayrInput
- */
-- (void)subscribeToAllInputsWithBlock:(void (^)(RelayrDevice* device, RelayrInput* input, BOOL* unsubscribe))block
-                                error:(BOOL (^)(NSError* error))subscriptionError;
+                                 error:(BOOL (^)(NSError* error))errorBlock;
 
 /*!
  *  @abstract Unsubscribes the specific action from the target object.

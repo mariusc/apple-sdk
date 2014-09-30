@@ -19,6 +19,11 @@
 - (instancetype)initWithToken:(NSString*)token;
 
 /*!
+ *  @abstract Relayr application that the user has signed in.
+ */
+@property (readwrite,weak,nonatomic) RelayrApp* app;
+
+/*!
  *  @abstract This is the central connection with the Relayr.framework web module.
  *  @discussion It is never <code>nil</code>. When an instance of <code>RelayrUser</code> is created, this property is setup to a valid web service.
  */
@@ -85,6 +90,17 @@
 - (RelayrTransmitter*)addTransmitter:(RelayrTransmitter*)transmitter;
 
 /*!
+ *  @abstract Removes a transmitter in the internal tree.
+ *  @discussion This method doesn't make any connection to the server; it is purely local.
+ *
+ *  @param transmitter Transmitter to add to the user
+ *	@return Boolean communicating whether the operation was successful or not.
+ *
+ *  @see RelayrTransmitter
+ */
+- (BOOL)removeTransmitter:(RelayrTransmitter*)transmitter;
+
+/*!
  *  @abstract Adds a device to the devices own by the user.
  *  @discussion If a device with the same uid is already there, no device is added, but the previous device is updated with the info of the new device.
  *
@@ -94,5 +110,16 @@
  *  @see RelayrDevice
  */
 - (RelayrDevice*)addDevice:(RelayrDevice*)device;
+
+/*!
+ *  @abstract Removes a device in the internal tree.
+ *  @discussion This method doesn't make nay connection to the server; it is purely local.
+ *
+ *  @param device <code>RelayrDevice</code> entity to remove locally.
+ *	@return Boolean communicating whether the operation was succesfull or not.
+ *
+ *  @see RelayrDevice
+ */
+- (BOOL)removeDevice:(RelayrDevice*)device;
 
 @end

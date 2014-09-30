@@ -175,6 +175,7 @@ static NSString* const kCodingUsers = @"usr";
             
             RelayrUser* serverUser = [[RelayrUser alloc] initWithToken:token];
             if (!serverUser) { if (completion) { completion(RelayrErrorMissingExpectedValue,nil); } return; }
+            serverUser.app = self;
             
             // If the user wasn't logged, retrieve the basic information.
             [serverUser queryCloudForUserInfo:^(NSError *error, NSString* previousName, NSString* previousEmail) {
@@ -184,6 +185,7 @@ static NSString* const kCodingUsers = @"usr";
                 RelayrUser* localUser = [strongSelf loggedUserWithRelayrID:serverUser.uid];
                 if (localUser)
                 {
+                    localUser.app = serverUser.app;
                     localUser.name = serverUser.name;
                     localUser.email = serverUser.email;
                     if (completion) { completion(nil, localUser); }

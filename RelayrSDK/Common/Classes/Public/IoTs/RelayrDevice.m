@@ -1,11 +1,11 @@
 #import "RelayrDevice.h"            // Header
+#import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
 
 #import "RelayrUser.h"              // Relayr.framework (Public)
 #import "RelayrFirmware.h"          // Relayr.framework (Public)
 #import "RelayrInput.h"             // Relayr.framework (Public)
 #import "RelayrOnboarding.h"        // Relayr.framework (Public)
 #import "RelayrFirmwareUpdate.h"    // Relayr.framework (Public)
-#import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
 #import "RelayrInput_Setup.h"       // Relayr.framework (Private)
 #import "RelayrFirmware_Setup.h"    // Relayr.framework (Private)
 #import "RLAWebService.h"           // Relayr.framework (Web)
@@ -17,6 +17,7 @@
 static NSString* const kCodingID = @"uid";
 static NSString* const kCodingName = @"nam";
 static NSString* const kCodingOwner = @"own";
+static NSString* const kCodingUser = @"usr";
 static NSString* const kCodingPublic = @"isP";
 static NSString* const kCodingFirmware = @"fir";
 static NSString* const kCodingSecret = @"sec";
@@ -50,6 +51,7 @@ static NSString* const kCodingSecret = @"sec";
     [super setWith:device];
     if (device.name) { _name = device.name; }
     if (device.owner) { _owner = device.owner; }
+    if (device.user) { _user = device.user; }
     if (device.isPublic) { _isPublic = device.isPublic; }
     if (device.firmware) { [_firmware setWith:device.firmware]; }
     if (device.secret) { _secret = device.secret; }
@@ -69,24 +71,31 @@ static NSString* const kCodingSecret = @"sec";
 
 #pragma mark Subscription
 
-- (void)subscribeToAllInputsWithTarget:(id)target action:(SEL)action error:(BOOL (^)(NSError* error))subscriptionError
+- (void)subscribeToAllInputsWithTarget:(id)target action:(SEL)action error:(BOOL (^)(NSError* error))errorBlock
 {
-    // TODO: Fill up
+    if (!target) { if (errorBlock) { errorBlock(RelayrErrorMissingArgument); } return; }
+    if (![target respondsToSelector:action]) { if (errorBlock) { errorBlock(RelayrErrorUnknwon); } return; }
+    
+    for (RelayrInput* input in self.inputs) { [input subscribeWithTarget:target action:action error:errorBlock]; }
 }
 
-- (void)subscribeToAllInputsWithBlock:(void (^)(RelayrDevice* device, RelayrInput* input, BOOL* unsubscribe))block error:(BOOL (^)(NSError* error))subscriptionError
+- (void)subscribeToAllInputsWithBlock:(RelayrInputDataReceivedBlock)block error:(BOOL (^)(NSError* error))errorBlock
 {
-    // TODO: Fill up
+    if (!block) { if (errorBlock) { errorBlock(RelayrErrorMissingArgument); } return; }
+    
+    for (RelayrInput* input in self.inputs) { [input subscribeWithBlock:block error:errorBlock]; }
 }
 
 - (void)unsubscribeTarget:(id)target action:(SEL)action
 {
-    // TODO: Fill up
+    if (!target || ![target respondsToSelector:action]) { return; }
+    
+    for (RelayrInput* input in self.inputs) { [input unsubscribeTarget:target action:action]; }
 }
 
 - (void)removeAllSubscriptions
 {
-    // TODO: Fill up
+    for (RelayrInput* input in self.inputs) { [input removeAllSubscriptions]; }
 }
 
 #pragma mark NSCoding
@@ -96,6 +105,7 @@ static NSString* const kCodingSecret = @"sec";
     self = [super initWithCoder:decoder];
     if (self)
     {
+        _user = [decoder decodeObjectForKey:kCodingUser];
         _uid = [decoder decodeObjectForKey:kCodingID];
         _name = [decoder decodeObjectForKey:kCodingName];
         _owner = [decoder decodeObjectForKey:kCodingOwner];
@@ -109,6 +119,7 @@ static NSString* const kCodingSecret = @"sec";
 - (void)encodeWithCoder:(NSCoder*)coder
 {
     [super encodeWithCoder:coder];
+    [coder encodeObject:_user forKey:kCodingUser];
     [coder encodeObject:_uid forKey:kCodingID];
     [coder encodeObject:_name forKey:kCodingName];
     [coder encodeObject:_owner forKey:kCodingOwner];

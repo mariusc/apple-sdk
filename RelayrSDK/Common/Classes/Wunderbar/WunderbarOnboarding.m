@@ -5,6 +5,7 @@
 #import "RLALog.h"                  // Relayr.framework (Utilities)
 #import "CPlatforms.h"              // Relayr.framework (Utilities)
 #import "Wunderbar.h"               // Relayr.framework (Wunderbar)
+#import "WunderbarErrors.h"         // Relayr.framework (Wunderbar)
 #import "WunderbarConstants.h"      // Relayr.framework (Wunderbar)
 
 #if defined(OS_APPLE_IOS) || defined(OS_APPLE_IOS_SIMULATOR)
@@ -43,7 +44,7 @@ NSString* const kWunderbarOnboardingOptionsWifiPassword = @"wifiPass";
 + (void)launchOnboardingProcessForTransmitter:(RelayrTransmitter*)transmitter timeout:(NSNumber*)timeout options:(NSDictionary*)options completion:(void (^)(NSError* error))completion
 {
     NSTimeInterval const timeInterval = (!timeout) ? Wunderbar_transmitter_setupTimeout : timeout.doubleValue;
-    if (!timeInterval <= 0.0) { if (completion) { completion(RelayrErrorMissingExpectedValue); } return; }
+    if (!timeInterval <= 0.0) { if (completion) { completion(WunderbarErrorTimeoutTooLow); } return; }
     
     WunderbarOnboarding* onboarding = [[WunderbarOnboarding alloc] initForTransmitter:transmitter withOptions:options completion:completion];
     if (!onboarding) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
@@ -57,7 +58,7 @@ NSString* const kWunderbarOnboardingOptionsWifiPassword = @"wifiPass";
 + (void)launchOnboardingProcessForDevice:(RelayrDevice*)device timeout:(NSNumber*)timeout options:(NSDictionary*)options completion:(void (^)(NSError* error))completion
 {
     NSTimeInterval const timeInterval = (!timeout) ? Wunderbar_device_setupTimeout : timeout.doubleValue;
-    if (!timeInterval <= 0.0) { if (completion) { completion(RelayrErrorMissingExpectedValue); } return; }
+    if (!timeInterval <= 0.0) { if (completion) { completion(WunderbarErrorTimeoutTooLow); } return; }
     
     WunderbarOnboarding* onboarding = [[WunderbarOnboarding alloc] initForDevice:device withOptions:options completion:completion];
     if (!onboarding) { if (completion) { completion(RelayrErrorMissingArgument); } return; }

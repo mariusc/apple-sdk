@@ -1,28 +1,21 @@
-@import Cocoa;              // Apple
-@import XCTest;             // Apple
-#import <Relayr/Relayr.h>   // Relayr.framework
-#import "TestConstants.h"   // Tests
+@import Cocoa;                  // Apple
+@import XCTest;                 // Apple
+#import <Relayr/Relayr.h>       // Relayr.framework
+#import "RLATestsConstants.h"   // Tests
 
 /*!
  *  @abstract Test the high level methods of <code>RelayrCloud</code> static class.
  *
  *  @see RelayrCloud
  */
-@interface TRelayrCloud : XCTestCase
+@interface RelayrCloudTest : XCTestCase
 @end
 
-@implementation TRelayrCloud
-
-#pragma mark - Setup
-
-- (void)setUp
-{
-    [super setUp];
-}
+@implementation RelayrCloudTest
 
 #pragma mark - Unit tests
 
-- (void)test_isReachable
+- (void)testIsReachable
 {
     XCTestExpectation* expectation = [self expectationWithDescription:nil];
     
@@ -35,7 +28,7 @@
     [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
 }
 
-- (void)test_isUserWithEmailRegistered
+- (void)testIsUserWithEmailRegistered
 {
     XCTestExpectation* expectation = [self expectationWithDescription:nil];
     
