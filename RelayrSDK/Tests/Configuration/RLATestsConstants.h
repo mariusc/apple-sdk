@@ -21,8 +21,8 @@
 #define kTestsDeviceModel           @"ecf6cf94-cb07-43ac-a85e-dccf26b48c86"
 #define kTestsDeviceFirmwVr         @"1.0.0"
 
-#define kTestsWunderbarOnboardingTransmitterTimeout     40
-#define kTestsWunderbarOnboardingDeviceTimeout          3
+#define kTestsWunderbarOnboardingTransmitterTimeout     12
+#define kTestsWunderbarOnboardingDeviceTimeout          8
 #define kTestsWunderbarOnboardingTimeout                (kTestsWunderbarOnboardingTransmitterTimeout + 6*kTestsWunderbarOnboardingDeviceTimeout)
 #define kTestsWunderbarOnboardingOptionsWifiSSID        @"wunderbar-only"
 #define kTestsWunderbarOnboardingOptionsWifiPassword    @"turkeybuzzards"

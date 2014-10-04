@@ -51,27 +51,36 @@
 
 - (void)testOnboardWunderbar
 {
-    XCTestExpectation* expectation = [self expectationWithDescription:nil];
+    XCTestExpectation* transmitterExpectation = [self expectationWithDescription:nil];
     
     __strong RelayrUser* user = _user;
     [_user queryCloudForIoTs:^(NSError* error) {
         XCTAssertNil(error);
         
+        // Select the one you want.
         RelayrTransmitter* transmitter = user.transmitters.anyObject;
         XCTAssertNotNil(transmitter.uid);
+        
         NSSet* devices = transmitter.devices;
         XCTAssertGreaterThanOrEqual(devices.count, 6);
         
         NSDictionary* onboardTransmitterOptions = @{
-            kWunderbarOnboardingOptionsWifiSSID     : kTestsWunderbarOnboardingOptionsWifiSSID,
-            kWunderbarOnboardingOptionsWifiPassword : kTestsWunderbarOnboardingOptionsWifiPassword
+            kWunderbarOnboardingOptionsTransmitterWifiSSID     : kTestsWunderbarOnboardingOptionsWifiSSID,
+            kWunderbarOnboardingOptionsTransmitterWifiPassword : kTestsWunderbarOnboardingOptionsWifiPassword
         };
         
         [transmitter onboardWithClass:[WunderbarOnboarding class] timeout:@(kTestsWunderbarOnboardingTransmitterTimeout) options:onboardTransmitterOptions completion:^(NSError* error) {
             XCTAssertNil(error);
             
-            [expectation fulfill];
+            [transmitterExpectation fulfill];
         }];
+        
+        for (RelayrDevice* device in devices)
+        {
+            [device onboardWithClass:[WunderbarOnboarding class] timeout:@(kTestsWunderbarOnboardingDeviceTimeout) options:nil completion:^(NSError *error) {
+                XCTAssertNil(error);
+            }];
+        }
     }];
     
     [self waitForExpectationsWithTimeout:kTestsWunderbarOnboardingTimeout handler:nil];

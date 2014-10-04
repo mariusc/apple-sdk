@@ -90,4 +90,12 @@
  */
 + (RelayrDevice*)infraredDeviceFromWunderbar:(RelayrTransmitter*)transmitter;
 
+/*!
+ *  @abstract Returns the BLE advertisement local name for a specific Wunderbar device/sensor.
+ *
+ *  @param device The targeted Wunderbar device.
+ *	@return String with the BLE advertisement local name.
+ */
++ (NSString*)advertisementLocalNameForWunderbarDevice:(RelayrDevice*)device;
+
 @end

@@ -91,4 +91,38 @@
     return nil;
 }
 
++ (NSString*)advertisementLocalNameForWunderbarDevice:(RelayrDevice*)device
+{
+    NSString* modelID = device.modelID;
+    if (!modelID) { return nil; }
+    NSString* result;
+    
+    if ( [modelID isEqualToString:Wunderbar_devicemodel_gyroscope] )
+    {
+        result = Wunderbar_deviceAdvertisement_gyroscope;
+    }
+    else if ( [modelID isEqualToString:Wunderbar_devicemodel_light] )
+    {
+        result = Wunderbar_deviceAdvertisement_light;
+    }
+    else if ( [modelID isEqualToString:Wunderbar_devicemodel_microphone] )
+    {
+        result = Wunderbar_deviceAdvertisement_microphone;
+    }
+    else if ( [modelID isEqualToString:Wunderbar_devicemodel_thermometer] )
+    {
+        result = Wunderbar_deviceAdvertisement_thermometer;
+    }
+    else if ( [modelID isEqualToString:Wunderbar_devicemodel_infrared] )
+    {
+        result = Wunderbar_deviceAdvertisement_infrared;
+    }
+    else if ( [modelID isEqualToString:Wunderbar_devicemodel_bridge] )
+    {
+        result = Wunderbar_deviceAdvertisement_bridge;
+    }
+    
+    return result;
+}
+
 @end

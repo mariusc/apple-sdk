@@ -2,13 +2,14 @@
 
 #pragma mark - Wunderbar onboarding options
 
-FOUNDATION_EXPORT NSString* const kWunderbarOnboardingOptionsWifiSSID;
-FOUNDATION_EXPORT NSString* const kWunderbarOnboardingOptionsWifiPassword;
+// For transmitter
+FOUNDATION_EXPORT NSString* const kWunderbarOnboardingOptionsTransmitterWifiSSID;
+FOUNDATION_EXPORT NSString* const kWunderbarOnboardingOptionsTransmitterWifiPassword;
 
-#pragma mark - Peripheral advertisement
-
-#define Wunderbar_MQTTServer                            @"mqtt.relayr.io"
-#define Wunderbar_peripheralAdvertisement_localName     @"WunderbarApp"
+// For devices
+FOUNDATION_EXPORT NSString* const kWunderbarOnboardingOptionsDeviceConnectionType;
+FOUNDATION_EXPORT NSString* const kWunderbarOnboardingOptionsDeviceConnectionTypeBLE;
+FOUNDATION_EXPORT NSString* const kWunderbarOnboardingOptionsDeviceConnectionTypeCloud;
 
 #pragma mark - Wunderbar requests
 
@@ -55,28 +56,47 @@ FOUNDATION_EXPORT NSString* const kWunderbarOnboardingOptionsWifiPassword;
 #define Wunderbar_transmitter_setupCharacteristic_wunderbarURL_length           20
 
 #define Wunderbar_device_setupTimeout                       10
-#define Wunderbar_device_setupService                       @"2001"
-#define Wunderbar_device_setupCharacteristic_sensorID           @"2010"
-#define Wunderbar_device_setupCharacteristic_passKey            @"2018"
-#define Wunderbar_device_setupCharacteristic_mimFlag            @"2019"
-#define Wunderbar_device_cloudService                       @"2000"
-#define Wunderbar_device_cloudCharacteristic_sensorID           @"2010"
-#define Wunderbar_device_cloudCharacteristic_beaconFrequency    @"2011"
-#define Wunderbar_device_cloudCharacteristic_frequency          @"2012"
-#define Wunderbar_device_cloudCharacteristic_LEDState           @"2013"
-#define Wunderbar_device_cloudCharacteristic_threshold          @"2014"
-#define Wunderbar_device_cloudCharacteristic_config             @"2015"
-#define Wunderbar_device_cloudCharacteristic_dataRead           @"2016"
-#define Wunderbar_device_cloudCharacteristic_dataWrite          @"2017"
-#define Wunderbar_device_directService                      @"2002"
-#define Wunderbar_device_directCharacteristic_sensorID          @"2010"
-#define Wunderbar_device_directCharacteristic_beaconFrequency   @"2011"
-#define Wunderbar_device_directCharacteristic_frequency         @"2012"
-#define Wunderbar_device_directCharacteristic_LEDState          @"2013"
-#define Wunderbar_device_directCharacteristic_threshold         @"2014"
-#define Wunderbar_device_directCharacteristic_config            @"2015"
-#define Wunderbar_device_directCharacteristic_dataRead          @"2016"
-#define Wunderbar_device_directCharacteristic_dataWrite         @"2017"
+#define Wunderbar_device_setupTimeoutForScanningProportion  0.3
+#define Wunderbar_device_setupTimeoutForDisconnectingDevice 0.2
+#define Wunderbar_device_setupService                               @"2001"
+#define Wunderbar_device_setupCharacteristic_sensorID                   @"2010"
+#define Wunderbar_device_setupCharacteristic_passKey                    @"2018"
+#define Wunderbar_device_setupCharacteristic_mimFlag                    @"2019"
+#define Wunderbar_device_cloudService                               @"2000"
+#define Wunderbar_device_cloudCharacteristic_sensorID                   @"2010"
+#define Wunderbar_device_cloudCharacteristic_beaconFrequency            @"2011"
+#define Wunderbar_device_cloudCharacteristic_frequency                  @"2012"
+#define Wunderbar_device_cloudCharacteristic_LEDState                   @"2013"
+#define Wunderbar_device_cloudCharacteristic_threshold                  @"2014"
+#define Wunderbar_device_cloudCharacteristic_config                     @"2015"
+#define Wunderbar_device_cloudCharacteristic_dataRead                   @"2016"
+#define Wunderbar_device_cloudCharacteristic_dataWrite                  @"2017"
+#define Wunderbar_device_directService                              @"2002"
+#define Wunderbar_device_directCharacteristic_sensorID                  @"2010"
+#define Wunderbar_device_directCharacteristic_beaconFrequency           @"2011"
+#define Wunderbar_device_directCharacteristic_frequency                 @"2012"
+#define Wunderbar_device_directCharacteristic_LEDState                  @"2013"
+#define Wunderbar_device_directCharacteristic_threshold                 @"2014"
+#define Wunderbar_device_directCharacteristic_config                    @"2015"
+#define Wunderbar_device_directCharacteristic_dataRead                  @"2016"
+#define Wunderbar_device_directCharacteristic_dataWrite                 @"2017"
+
+#define Wunderbar_device_setupCharacteristic_wunderbarID_length                 16
+#define Wunderbar_device_setupCharacteristic_passkey_length                     7
+#define Wunderbar_device_setupCharacteristic_MiMFlag_length                     1
+
+#pragma mark Advertisement
+
+#define Wunderbar_appleAdvertisement_MQTTServer         @"mqtt.relayr.io"
+#define Wunderbar_appleAdvertisement_localName          @"WunderbarApp"
+
+#define Wunderbar_deviceAdvertisement_manufacturer      @"Relayr"
+#define Wunderbar_deviceAdvertisement_gyroscope         @"WunderbarGYRO"
+#define Wunderbar_deviceAdvertisement_light             @"WunderbarLIGHT"
+#define Wunderbar_deviceAdvertisement_microphone        @"WunderbarMIC"
+#define Wunderbar_deviceAdvertisement_thermometer       @"WunderbarHTU"
+#define Wunderbar_deviceAdvertisement_infrared          @"WunderbarIR"
+#define Wunderbar_deviceAdvertisement_bridge            @"WunderbarBRIDG"
 
 #pragma mark - Firmware update process
 
