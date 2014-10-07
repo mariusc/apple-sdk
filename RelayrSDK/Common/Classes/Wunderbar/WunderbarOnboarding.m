@@ -132,11 +132,11 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
     
     CBCharacteristic* characteristicTargetted = request.characteristic;
     CBUUID* serviceTargettedUUID = characteristicTargetted.service.UUID;
-    if ( ![_peripheralManagerService.UUID isEqualTo:serviceTargettedUUID] ) { return; }
+    if ( ![_peripheralManagerService.UUID isEqual:serviceTargettedUUID] ) { return; }
     
     NSData* dataToSend;
     CBUUID* characteristicTargettedUUID = characteristicTargetted.UUID;
-    if ([characteristicTargettedUUID isEqualTo:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_htuGyroLightPasskey]])
+    if ([characteristicTargettedUUID isEqual:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_htuGyroLightPasskey]])
     {
         // Size: 19 bytes (6 + 6 + 6 + 1 byte of flag).
         // Description: Contains the passkeys for the HTU, GYRO, and LIGHT sensors, in ASCII format, and an update mask. The update mask is a bit mask of three update flags: one for each passkey. The lowest three bits of the value determine which passkey should be updated.
@@ -147,7 +147,7 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
         htuGyroLightPasskey[Wunderbar_transmitter_setupCharacteristic_htuGyroLightPasskey_length - 1] = INT8_C(0x07);
         dataToSend = [NSData dataWithBytes:htuGyroLightPasskey length:Wunderbar_transmitter_setupCharacteristic_htuGyroLightPasskey_length];
     }
-    else if ([characteristicTargettedUUID isEqualTo:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_micBridIRPasskey]])
+    else if ([characteristicTargettedUUID isEqual:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_micBridIRPasskey]])
     {
         // Size: 19 bytes  (6 + 6 + 6 + 1 byte of flag).
         // Description: Contains the passkeys for the MICROPHONE, BRIDGE, and IR sensors, in ASCII format, and an update mask. Like the HTU_GYRO_LIGHT passkey the update mask is a bit mask of three update flags.
@@ -158,7 +158,7 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
         micBridIRPasskey[Wunderbar_transmitter_setupCharacteristic_micBridIRPasskey_length - 1] = INT8_C(0x07);
         dataToSend = [NSData dataWithBytes:micBridIRPasskey length:Wunderbar_transmitter_setupCharacteristic_micBridIRPasskey_length];
     }
-    else if ([characteristicTargettedUUID isEqualTo:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wifiSSID]])
+    else if ([characteristicTargettedUUID isEqual:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wifiSSID]])
     {
         // Size: 20 bytes (max character: 19 including NULL character + 1 byte of flag).
         // Description: Contains the Wifi SSID in ASCII format and an update flag. The value must be 20 characters long and finish with the update flag, therefore it is padded with zeros until it is the appropriate length.
@@ -167,7 +167,7 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
         wifiSSID[Wunderbar_transmitter_setupCharacteristic_wifiSSID_length - 1] = INT8_C(0x01);
         dataToSend = [NSData dataWithBytes:wifiSSID length:Wunderbar_transmitter_setupCharacteristic_wifiSSID_length];
     }
-    else if ([characteristicTargettedUUID isEqualTo:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wifiPasskey]])
+    else if ([characteristicTargettedUUID isEqual:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wifiPasskey]])
     {
         // Size: 20 bytes (max character: 19 + 1 byte of flag).
         // Description: Contains the Wifi password in ASCII format and an update flag. The value must be 20 bytes long and finish with the update flag, therefore it is also padded like the SSID.
@@ -176,7 +176,7 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
         wifiPassword[Wunderbar_transmitter_setupCharacteristic_wifiPasskey_length - 1] = INT8_C(0x01);
         dataToSend = [NSData dataWithBytes:wifiPassword length:Wunderbar_transmitter_setupCharacteristic_wifiPasskey_length];
     }
-    else if ([characteristicTargettedUUID isEqualTo:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wunderbarID]])
+    else if ([characteristicTargettedUUID isEqual:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wunderbarID]])
     {
         // Size: 17 bytes (16 without NULL character + 1 byte of flag).
         // Description: Contains the (short) UUID of the WunderBar and an update flag.
@@ -185,7 +185,7 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
         [wunderbarID appendBytes:flag length:1];
         dataToSend = [NSData dataWithData:wunderbarID];
     }
-    else if ([characteristicTargettedUUID isEqualTo:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wunderbarSecurity]])
+    else if ([characteristicTargettedUUID isEqual:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wunderbarSecurity]])
     {
         // Size: 13 bytes (12 without NULL character + 1 byte of flag).
         // Description: Contains the secret to connect a particular Wunderbar to MQTT.
@@ -194,7 +194,7 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
         wunderbarSecurity[Wunderbar_transmitter_setupCharacteristic_wunderbarSecurity_length - 1] = INT8_C(0x01);
         dataToSend = [NSData dataWithBytes:wunderbarSecurity length:Wunderbar_transmitter_setupCharacteristic_wunderbarSecurity_length];
     }
-    else if ([characteristicTargettedUUID isEqualTo:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wunderbarURL]])
+    else if ([characteristicTargettedUUID isEqual:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wunderbarURL]])
     {
         // Size: 20 bytes (max characters: 19 including NULL character + 1 byte of flag).
         // Description: Contains the url of the MQTT server.
@@ -267,9 +267,9 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
     if (!advertisementName || !RSSI || ![advertisementName isEqualToString:_options[kWunderbarOnboardingOptionsDeviceLocalName]]) { return; }
     
     CBUUID* searchedServiceUUID = [CBUUID UUIDWithString:Wunderbar_device_setupService];
-    for (CBUUID* serviceUUID in advertisementData[CBAdvertisementDataServiceUUIDsKey])  // TODO: Check if this returns CBUUIDs
+    for (CBUUID* serviceUUID in advertisementData[CBAdvertisementDataServiceUUIDsKey])
     {
-        if ([serviceUUID isEqualTo:searchedServiceUUID])    // TODO: Check if this comparison is right
+        if ([serviceUUID isEqual:searchedServiceUUID])
         {
             NSMutableDictionary* peripheralsDetected = ((NSTimer*)_timer.userInfo).userInfo;
             peripheralsDetected[RSSI] = peripheral;
@@ -302,7 +302,7 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
     CBUUID* searchedServiceUUID = [CBUUID UUIDWithString:Wunderbar_device_setupService];
     for (CBService* service in _peripheralSelected.services)
     {
-        if ([service.UUID isEqualTo:searchedServiceUUID])
+        if ([service.UUID isEqual:searchedServiceUUID])
         {
             searchedService = service;
             break;
@@ -324,9 +324,9 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
     
     for (CBCharacteristic* characteristic in service.characteristics)
     {
-        if ([characteristic.UUID isEqualTo:deviceIDCharacteristic]) { isCharacteristicForDeviceID = YES; }
-        else if ([characteristic.UUID isEqualTo:passkeyCharacteristic]) { isCharacteristicForPasskey = YES; }
-        else if ([characteristic.UUID isEqualTo:mimflagCharacteristic]) { isCharacteristicForMiMFlag = YES; }
+        if ([characteristic.UUID isEqual:deviceIDCharacteristic]) { isCharacteristicForDeviceID = YES; }
+        else if ([characteristic.UUID isEqual:passkeyCharacteristic]) { isCharacteristicForPasskey = YES; }
+        else if ([characteristic.UUID isEqual:mimflagCharacteristic]) { isCharacteristicForMiMFlag = YES; }
     }
     
     if (!isCharacteristicForDeviceID || !isCharacteristicForPasskey || !isCharacteristicForMiMFlag) { [WunderbarOnboarding stopOnboarding:self withError:WunderbarErrorNoSetupCharacteristicDetected]; }
@@ -461,18 +461,18 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
         dataToSend = [WunderbarOnboarding transformRelayrID:_device.uid toBinaryWithMaximumLength:Wunderbar_device_setupCharacteristic_wunderbarID_length];
         selectedCharacteristic = [self selectCharacteristicWithUUID:deviceIDCharacteristicUUID ofServiceUUID:serviceUUID inPeripheral:_peripheralSelected];
     }
-    else if ([previousCharacteristicUUID isEqualTo:deviceIDCharacteristicUUID])
+    else if ([previousCharacteristicUUID isEqual:deviceIDCharacteristicUUID])
     {   // Write then, the passkey
         dataToSend = [_device.secret dataUsingEncoding:NSASCIIStringEncoding];
         selectedCharacteristic = [self selectCharacteristicWithUUID:devicePassCharacteristicUUID ofServiceUUID:serviceUUID inPeripheral:_peripheralSelected];
     }
-    else if ([previousCharacteristicUUID isEqualTo:devicePassCharacteristicUUID])
+    else if ([previousCharacteristicUUID isEqual:devicePassCharacteristicUUID])
     {   // Write then the "Man in the middle flag"
         uint8_t const flag[Wunderbar_device_setupCharacteristic_MiMFlag_length] = { UINT8_C(1) };
         dataToSend = [NSData dataWithBytes:&flag length:Wunderbar_device_setupCharacteristic_MiMFlag_length];
         selectedCharacteristic = [self selectCharacteristicWithUUID:deviceFlagCharacteristicUUID ofServiceUUID:serviceUUID inPeripheral:_peripheralSelected];
     }
-    else if ([previousCharacteristicUUID isEqualTo:deviceFlagCharacteristicUUID])
+    else if ([previousCharacteristicUUID isEqual:deviceFlagCharacteristicUUID])
     {   // When everything is writen, call the "stopOnboarding.." methods (it will close the connection).
         printf("\n\nDevice with local name: %s has been sucessfully onboarded\n\n", [(_options[kWunderbarOnboardingOptionsDeviceLocalName]) cStringUsingEncoding:NSUTF8StringEncoding]);
         return [WunderbarOnboarding stopOnboarding:self withError:nil];
@@ -492,7 +492,7 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
     CBService* selectedService;
     for (CBService* service in peripheral.services)
     {
-        if ([service.UUID isEqualTo:serviceUUID]) { selectedService = service; break; }
+        if ([service.UUID isEqual:serviceUUID]) { selectedService = service; break; }
     }
     
     if (!selectedService) { return nil; }
@@ -500,7 +500,7 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
     CBCharacteristic* selectedCharacteristic;
     for (CBCharacteristic* characteristic in selectedService.characteristics)
     {
-        if ([characteristic.UUID isEqualTo:characteristicUUI]) { selectedCharacteristic = characteristic; break; }
+        if ([characteristic.UUID isEqual:characteristicUUI]) { selectedCharacteristic = characteristic; break; }
     }
     
     return selectedCharacteristic;
