@@ -51,7 +51,7 @@
 
 - (void)testOnboardWunderbar
 {
-    XCTestExpectation* transmitterExpectation = [self expectationWithDescription:nil];
+    XCTestExpectation* onboardExpectation = [self expectationWithDescription:nil];
     
     __strong RelayrUser* user = _user;
     [_user queryCloudForIoTs:^(NSError* error) {
@@ -72,15 +72,18 @@
         [transmitter onboardWithClass:[WunderbarOnboarding class] timeout:@(kTestsWunderbarOnboardingTransmitterTimeout) options:onboardTransmitterOptions completion:^(NSError* error) {
             XCTAssertNil(error);
             
-            [transmitterExpectation fulfill];
+            __block NSUInteger numNonOnboardedSensors = 6;
+            
+            for (RelayrDevice* device in devices)
+            {
+                [device onboardWithClass:[WunderbarOnboarding class] timeout:@(kTestsWunderbarOnboardingDeviceTimeout) options:nil completion:^(NSError* error) {
+                    XCTAssertNil(error);
+                    
+                    numNonOnboardedSensors -= 1;
+                    if (numNonOnboardedSensors == 0) { [onboardExpectation fulfill]; }
+                }];
+            }
         }];
-        
-        for (RelayrDevice* device in devices)
-        {
-            [device onboardWithClass:[WunderbarOnboarding class] timeout:@(kTestsWunderbarOnboardingDeviceTimeout) options:nil completion:^(NSError *error) {
-                XCTAssertNil(error);
-            }];
-        }
     }];
     
     [self waitForExpectationsWithTimeout:kTestsWunderbarOnboardingTimeout handler:nil];

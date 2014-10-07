@@ -24,8 +24,8 @@
 #define kTestsWunderbarOnboardingTransmitterTimeout     12
 #define kTestsWunderbarOnboardingDeviceTimeout          8
 #define kTestsWunderbarOnboardingTimeout                (kTestsWunderbarOnboardingTransmitterTimeout + 6*kTestsWunderbarOnboardingDeviceTimeout)
-#define kTestsWunderbarOnboardingOptionsWifiSSID        @"wunderbar-only"
-#define kTestsWunderbarOnboardingOptionsWifiPassword    @"turkeybuzzards"
+#define kTestsWunderbarOnboardingOptionsWifiSSID        @"relayr"
+#define kTestsWunderbarOnboardingOptionsWifiPassword    @"wearsimaspants"
 
 #define kTestsWunderbarFirmwareUpdateTransmitterTimeout 3
 #define kTestsWunderbarFirmwareUpdateDeviceTimeout      3

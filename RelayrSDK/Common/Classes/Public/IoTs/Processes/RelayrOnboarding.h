@@ -23,7 +23,10 @@
  *
  *  @see RelayrTransmitter
  */
-+ (void)launchOnboardingProcessForTransmitter:(RelayrTransmitter*)transmitter timeout:(NSNumber*)timeout options:(NSDictionary*)options completion:(void (^)(NSError* error))completion;
++ (void)launchOnboardingProcessForTransmitter:(RelayrTransmitter*)transmitter
+                                      timeout:(NSNumber*)timeout
+                                      options:(NSDictionary*)options
+                                   completion:(void (^)(NSError* error))completion;
 
 @required
 /*!
@@ -41,6 +44,8 @@
  *
  *  @see RelayrDevice
  */
-+ (void)launchOnboardingProcessForDevice:(RelayrDevice*)device timeout:(NSNumber*)timeout options:(NSDictionary*)options completion:(void (^)(NSError* error))completion;
++ (void)launchOnboardingProcessForDevice:(RelayrDevice*)device
+                                 timeout:(NSNumber*)timeout options:(NSDictionary*)options
+                              completion:(void (^)(NSError* error))completion;
 
 @end
