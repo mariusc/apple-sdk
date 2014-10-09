@@ -1,4 +1,4 @@
-#import "RelayrApp.h"       // Header
+#import <Relayr/RelayrApp.h>       // Header
 
 /*!
  *  @abstract Represents a relayr Application which allows interaction with the relayr Cloud.

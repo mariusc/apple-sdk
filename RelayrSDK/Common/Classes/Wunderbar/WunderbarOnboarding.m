@@ -443,7 +443,7 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
 {
     if (error) { [WunderbarOnboarding stopOnboarding:self withError:error]; }
     
-    [NSTimer scheduledTimerWithTimeInterval:Wunderbar_device_setupTimeoutForDisconnectingDevice target:[NSBlockOperation blockOperationWithBlock:^{
+    [NSTimer scheduledTimerWithTimeInterval:Wunderbar_device_setupTimeoutForWritingAnotherDeviceCharacteristic target:[NSBlockOperation blockOperationWithBlock:^{
         [self setupWunderbarDeviceWithPreviouslySetupCharacteristicUUID:characteristic.UUID];
     }] selector:@selector(main) userInfo:nil repeats:NO];
 }
@@ -540,13 +540,6 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
     
     if (completion) { completion(error); }
 }
-
-/*
- @property (strong,nonatomic) NSTimer* timer;
- @property (strong,nonatomic) RelayrDevice* device;
- @property (strong,nonatomic) CBCentralManager* centralManager;
- @property (strong,nonatomic) CBPeripheral* peripheralSelected;
- */
 
 /*******************************************************************************
  * It selects a BLE characteristics of a specific service from a specific device.

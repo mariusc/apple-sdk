@@ -1,4 +1,4 @@
-#import "RelayrUser.h"          // Header
+#import <Relayr/RelayrUser.h>          // Header
 @class RLAWebService;           // Relayr.framework (Web)
 
 /*!

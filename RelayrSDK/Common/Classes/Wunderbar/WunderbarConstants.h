@@ -57,7 +57,7 @@ FOUNDATION_EXPORT NSString* const kWunderbarOnboardingOptionsDeviceConnectionTyp
 
 #define Wunderbar_device_setupTimeout                       10
 #define Wunderbar_device_setupTimeoutForScanningProportion  0.3
-#define Wunderbar_device_setupTimeoutForDisconnectingDevice 0.2
+#define Wunderbar_device_setupTimeoutForWritingAnotherDeviceCharacteristic      0.3
 #define Wunderbar_device_setupService                               @"2001"
 #define Wunderbar_device_setupCharacteristic_sensorID                   @"2010"
 #define Wunderbar_device_setupCharacteristic_passKey                    @"2018"
