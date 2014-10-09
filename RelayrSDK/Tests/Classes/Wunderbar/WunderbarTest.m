@@ -69,24 +69,44 @@
             kWunderbarOnboardingOptionsTransmitterWifiPassword : kTestsWunderbarOnboardingOptionsWifiPassword
         };
         
+        printf("\nStart onboarding  Master Module:\n");
         [transmitter onboardWithClass:[WunderbarOnboarding class] timeout:@(kTestsWunderbarOnboardingTransmitterTimeout) options:onboardTransmitterOptions completion:^(NSError* error) {
             XCTAssertNil(error);
             
             __block NSUInteger numNonOnboardedSensors = 6;
+            void (^checkForCompletion)(void) = ^{
+                if (--numNonOnboardedSensors == 0)
+                {
+                    printf("\nOnboarding process finished!!\n\n");
+                    [onboardExpectation fulfill];
+                }
+                else
+                {
+                    printf("Device onboarded. %lu devices to go.\n", (unsigned long)numNonOnboardedSensors);
+                }
+            };
             
+            printf("\nStart onboarding Devices:\n");
             for (RelayrDevice* device in devices)
             {
-                [device onboardWithClass:[WunderbarOnboarding class] timeout:@(kTestsWunderbarOnboardingDeviceTimeout) options:nil completion:^(NSError* error) {
-                    XCTAssertNil(error);
-                    
-                    numNonOnboardedSensors -= 1;
-                    if (numNonOnboardedSensors == 0) { [onboardExpectation fulfill]; }
-                }];
+                [self onboardDevice:device completion:checkForCompletion];
             }
         }];
     }];
     
     [self waitForExpectationsWithTimeout:kTestsWunderbarOnboardingTimeout handler:nil];
+}
+
+- (void)onboardDevice:(RelayrDevice*)device completion:(void (^)(void))completion
+{
+    [device onboardWithClass:[WunderbarOnboarding class] timeout:@(kTestsWunderbarOnboardingDeviceTimeout) options:nil completion:^(NSError* error) {
+        if (error)
+        {
+            printf("Problem onboarding device. Retrying...\n");
+            [self onboardDevice:device completion:completion];
+        }
+        completion();
+    }];
 }
 
 //- (void)testUpdateFirmwareWunderbar

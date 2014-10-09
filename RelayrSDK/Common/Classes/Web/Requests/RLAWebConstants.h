@@ -17,7 +17,7 @@
 
 // Relayr Applications
 #define Web_RespondKey_AppID                @"id"
-#define Web_RespondKey_AppID_               @"app"      // TODO: Tell the server guys about the inconsistency on  User: authorised apps
+#define Web_RespondKey_AppID_               @"app"
 #define Web_RespondKey_AppName              @"name"
 #define Web_RespondKey_AppDescription       @"description"
 #define Web_RespondKey_AppPublisher         @"publisher"

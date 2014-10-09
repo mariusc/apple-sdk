@@ -70,7 +70,7 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
     WunderbarOnboarding* onboarding = [[WunderbarOnboarding alloc] initForDevice:device withOptions:options completion:completion];
     if (!onboarding) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
     
-    NSTimer* scanningTimer = [NSTimer scheduledTimerWithTimeInterval:timeScanning target:onboarding selector:@selector(scanningTimeOver:) userInfo:[NSMutableDictionary dictionary] repeats:NO];
+    NSTimer* scanningTimer = [NSTimer scheduledTimerWithTimeInterval:timeScanning target:onboarding selector:@selector(scanningTimeExpired:) userInfo:[NSMutableDictionary dictionary] repeats:NO];
     
     // You must send this message from the thread on which the timer was installed
     onboarding.timer = [NSTimer scheduledTimerWithTimeInterval:onboardingTimeout target:[NSBlockOperation blockOperationWithBlock:^{
@@ -78,9 +78,28 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
     }] selector:@selector(main) userInfo:scanningTimer repeats:NO];
 }
 
-#pragma mark CBPeripheralManagerDelegate
+#pragma mark - Private methods
 
-// TODO: Restore state for the peripheral manager
+#pragma mark Peripheral role methods
+
+/*******************************************************************************
+ * It creates an onboarding process for a wunderbar transmitter.
+ ******************************************************************************/
+- (instancetype)initForTransmitter:(RelayrTransmitter*)transmitter withOptions:(NSDictionary*)options completion:(void (^)(NSError* error))completion
+{
+    if (!transmitter.uid.length || !options.count || ![Wunderbar isWunderbar:transmitter] || !options[kWunderbarOnboardingOptionsTransmitterWifiSSID] || !options[kWunderbarOnboardingOptionsTransmitterWifiPassword]) { return nil; }
+    
+    self = [super init];
+    if (self)
+    {
+        _peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil options:@{ CBPeripheralManagerOptionShowPowerAlertKey : @YES/*, CBPeripheralManagerOptionRestoreIdentifierKey : <#Identifier#>*/ }];
+        _transmitter = transmitter;
+        _completion = completion;
+        _options = options;
+    }
+    return self;
+}
+
 //- (void)peripheralManager:(CBPeripheralManager*)peripheral willRestoreState:(NSDictionary*)dict
 //{
 //    dict[CBPeripheralManagerRestoredStateAdvertisementDataKey];
@@ -109,6 +128,35 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
         case CBPeripheralManagerStateUnknown:
             [WunderbarOnboarding stopOnboarding:self withError:RelayrErrorBLEProblemUnknown];
             break;
+    }
+}
+
+/*******************************************************************************
+ * This method creates all the services and characteristics needed for a correct <code>RelayrTransmitter</code> setup.
+ * Once the services and characteristics are created, the peripheral manager will start advertising.
+ ******************************************************************************/
+- (void)startAdvertisingToSetupTransmitterWith:(CBPeripheralManager*)peripheralManager
+{
+    CBMutableService* service = [[CBMutableService alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupService] primary:YES];
+    service.characteristics = @[
+        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_htuGyroLightPasskey] properties:CBCharacteristicPropertyRead value:nil permissions:CBAttributePermissionsReadable],
+        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_micBridIRPasskey] properties:CBCharacteristicPropertyRead value:nil permissions:CBAttributePermissionsReadable],
+        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wifiSSID] properties:CBCharacteristicPropertyRead value:nil permissions:CBAttributePermissionsReadable],
+        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wifiPasskey] properties:CBCharacteristicPropertyRead value:nil permissions:CBAttributePermissionsReadable],
+        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wunderbarID] properties:CBCharacteristicPropertyRead value:nil permissions:CBAttributePermissionsReadable],
+        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wunderbarSecurity] properties:CBCharacteristicPropertyRead value:nil permissions:CBAttributePermissionsReadable],
+        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wunderbarURL] properties:CBCharacteristicPropertyRead value:nil permissions:CBAttributePermissionsReadable]
+    ];
+    
+    [peripheralManager addService:service];
+    
+    if (self.peripheralManager)
+    {
+        [peripheralManager startAdvertising:@{
+            CBAdvertisementDataLocalNameKey     : Wunderbar_appleAdvertisement_localName,
+            CBAdvertisementDataServiceUUIDsKey  : @[service.UUID],
+            CBAdvertisementDataIsConnectable    : @YES
+        }];
     }
 }
 
@@ -229,18 +277,40 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
     for (CBATTRequest* request in requests) { [peripheralManager respondToRequest:request withResult:CBATTErrorRequestNotSupported]; }
 }
 
-#pragma mark CBCentralManagerDelegate
+#pragma mark Central role methods
 
-//- (void)centralManager:(CBCentralManager*)central willRestoreState:(NSDictionary*)dict
-//{
-//}
+/*******************************************************************************
+ * It creates an onboarding process for a wunderbar device (sensor).
+ ******************************************************************************/
+- (instancetype)initForDevice:(RelayrDevice*)device withOptions:(NSDictionary*)options completion:(void (^)(NSError* error))completion
+{
+    NSString* localName = [Wunderbar advertisementLocalNameForWunderbarDevice:device];
+    if (!device.uid.length || !localName) { return nil; }
+    
+    self = [super init];
+    if (self)
+    {   // CBCentralManagerOptionRestoreIdentifierKey : @"<#identifier#>"
+        _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil options:@{ CBCentralManagerOptionShowPowerAlertKey: @YES }];
+        _device = device;
+        _completion = completion;
+        
+        NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithDictionary:options];
+        dict[kWunderbarOnboardingOptionsDeviceLocalName] = localName;
+        _options = [[NSDictionary alloc] initWithDictionary:dict];
+    }
+    return self;
+}
 
+/*******************************************************************************
+ * It initialises the <code>CBCentralManager</code>.
+ * If BLE is not supported by the current system or the problem is unknown, the onboarding process is prontly terminated. In any other case, the method will wait.
+ ******************************************************************************/
 - (void)centralManagerDidUpdateState:(CBCentralManager*)centralManager
 {
     switch (centralManager.state) {
         case CBCentralManagerStatePoweredOn:
         {
-            [centralManager scanForPeripheralsWithServices:nil options:@{ CBCentralManagerScanOptionAllowDuplicatesKey : @NO, }];
+            [centralManager scanForPeripheralsWithServices:nil options:@{ CBCentralManagerScanOptionAllowDuplicatesKey : @NO }];
             break;
         }
         case CBCentralManagerStatePoweredOff:
@@ -261,6 +331,10 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
     }
 }
 
+/*******************************************************************************
+ * Everytime a peripheral is discover this delegate method is called.
+ * The method will take the peripheral and store it strongly in a dictionary with the RSSI value as its key.
+ ******************************************************************************/
 - (void)centralManager:(CBCentralManager*)centralManager didDiscoverPeripheral:(CBPeripheral*)peripheral advertisementData:(NSDictionary*)advertisementData RSSI:(NSNumber*)RSSI
 {
     NSString* advertisementName = advertisementData[CBAdvertisementDataLocalNameKey];
@@ -276,6 +350,37 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
             return;
         }
     }
+}
+
+/*******************************************************************************
+ * This method is called once the scanning period has expired.
+ * It will look at the RSSI values and choose the <code>CBPeripheral</code> with higher RSSI. The others will be deleted (not stored strongly).
+ ******************************************************************************/
+- (void)scanningTimeExpired:(NSTimer*)scanningTimer
+{
+    [_centralManager stopScan];
+    
+    NSMutableDictionary* peripheralsDetected = scanningTimer.userInfo;
+    if (!peripheralsDetected.count) { return [WunderbarOnboarding stopOnboarding:self withError:WunderbarErrorNoDevicesDetected]; }
+    
+    __block NSNumber* rssi;
+    [peripheralsDetected enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        if (!rssi)
+        {
+            rssi = key;
+            _peripheralSelected = obj;
+        }
+        else if ([rssi compare:key] == NSOrderedAscending)
+        {
+            rssi = key;
+            _peripheralSelected = obj;
+        }
+    }];
+    
+    [peripheralsDetected removeAllObjects];
+    if (!_peripheralSelected) { return [WunderbarOnboarding stopOnboarding:self withError:WunderbarErrorNoDevicesDetected]; }
+    
+    [_centralManager connectPeripheral:_peripheralSelected options:nil];
 }
 
 - (void)centralManager:(CBCentralManager*)centralManager didFailToConnectPeripheral:(CBPeripheral*)peripheral error:(NSError*)error
@@ -343,106 +448,6 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
     }] selector:@selector(main) userInfo:nil repeats:NO];
 }
 
-#pragma mark - Private methods
-
-/*******************************************************************************
- * It creates an onboarding process for a wunderbar transmitter.
- ******************************************************************************/
-- (instancetype)initForTransmitter:(RelayrTransmitter*)transmitter withOptions:(NSDictionary*)options completion:(void (^)(NSError* error))completion
-{
-    if (!transmitter.uid.length || !options.count || ![Wunderbar isWunderbar:transmitter] || !options[kWunderbarOnboardingOptionsTransmitterWifiSSID] || !options[kWunderbarOnboardingOptionsTransmitterWifiPassword]) { return nil; }
-    
-    self = [super init];
-    if (self)
-    {
-        _peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil options:@{ CBPeripheralManagerOptionShowPowerAlertKey : @YES/*, CBPeripheralManagerOptionRestoreIdentifierKey : <#Identifier#>*/ }];
-        _transmitter = transmitter;
-        _completion = completion;
-        _options = options;
-    }
-    return self;
-}
-
-/*******************************************************************************
- * It creates an onboarding process for a wunderbar device (sensor).
- ******************************************************************************/
-- (instancetype)initForDevice:(RelayrDevice*)device withOptions:(NSDictionary*)options completion:(void (^)(NSError* error))completion
-{
-    NSString* localName = [Wunderbar advertisementLocalNameForWunderbarDevice:device];
-    if (!device.uid.length || !localName) { return nil; }
-    
-    self = [super init];
-    if (self)
-    {
-        _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil options:@{ CBCentralManagerOptionShowPowerAlertKey: @YES, /*CBCentralManagerOptionRestoreIdentifierKey : @"<#identifier#>"*/ }];
-        _device = device;
-        _completion = completion;
-        
-        NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithDictionary:options];
-        dict[kWunderbarOnboardingOptionsDeviceLocalName] = localName;
-        _options = [[NSDictionary alloc] initWithDictionary:dict];
-    }
-    return self;
-}
-
-/*******************************************************************************
- * This method creates all the services and characteristics needed for a correct <code>RelayrTransmitter</code> setup.
- * Once the services and characteristics are created, the peripheral manager will start advertising.
- ******************************************************************************/
-- (void)startAdvertisingToSetupTransmitterWith:(CBPeripheralManager*)peripheralManager
-{
-    CBMutableService* service = [[CBMutableService alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupService] primary:YES];
-    service.characteristics = @[
-        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_htuGyroLightPasskey] properties:CBCharacteristicPropertyRead value:nil permissions:CBAttributePermissionsReadable],
-        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_micBridIRPasskey] properties:CBCharacteristicPropertyRead value:nil permissions:CBAttributePermissionsReadable],
-        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wifiSSID] properties:CBCharacteristicPropertyRead value:nil permissions:CBAttributePermissionsReadable],
-        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wifiPasskey] properties:CBCharacteristicPropertyRead value:nil permissions:CBAttributePermissionsReadable],
-        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wunderbarID] properties:CBCharacteristicPropertyRead value:nil permissions:CBAttributePermissionsReadable],
-        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wunderbarSecurity] properties:CBCharacteristicPropertyRead value:nil permissions:CBAttributePermissionsReadable],
-        [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:Wunderbar_transmitter_setupCharacteristic_wunderbarURL] properties:CBCharacteristicPropertyRead value:nil permissions:CBAttributePermissionsReadable]
-    ];
-    
-    [peripheralManager addService:service];
-
-    if (self.peripheralManager)
-    {
-        [peripheralManager startAdvertising:@{
-                CBAdvertisementDataLocalNameKey     : Wunderbar_appleAdvertisement_localName,
-                CBAdvertisementDataServiceUUIDsKey  : @[service.UUID],
-                CBAdvertisementDataIsConnectable    : @YES
-        }];
-    }
-}
-
-/*******************************************************************************
- * This method is called once the scanning period has expired.
- * The method will look at the
- ******************************************************************************/
-- (void)scanningTimeOver:(NSTimer*)scanningTimer
-{
-    [_centralManager stopScan];
-    
-    NSMutableDictionary* peripheralsDetected = scanningTimer.userInfo;
-    if (!peripheralsDetected.count) { return [WunderbarOnboarding stopOnboarding:self withError:WunderbarErrorNoDevicesDetected]; }
-    
-    __block NSNumber* rssi;
-    [peripheralsDetected enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        if (!rssi)
-        {
-            rssi = key;
-            _peripheralSelected = obj;
-        }
-        else if ([rssi compare:key] == NSOrderedAscending)
-        {
-            rssi = key;
-            _peripheralSelected = obj;
-        }
-    }];
-    
-    if (!_peripheralSelected) { return [WunderbarOnboarding stopOnboarding:self withError:WunderbarErrorNoDevicesDetected]; }
-    [_centralManager connectPeripheral:_peripheralSelected options:nil];
-}
-
 /*******************************************************************************
  * This methods writes gets and writes the setup values for the specific Wunderbar device/sensor.
  ******************************************************************************/
@@ -474,13 +479,74 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
     }
     else if ([previousCharacteristicUUID isEqual:deviceFlagCharacteristicUUID])
     {   // When everything is writen, call the "stopOnboarding.." methods (it will close the connection).
-        printf("\n\nDevice with local name: %s has been sucessfully onboarded\n\n", [(_options[kWunderbarOnboardingOptionsDeviceLocalName]) cStringUsingEncoding:NSUTF8StringEncoding]);
+        //printf("\n\nDevice with local name: %s has been sucessfully onboarded\n\n", [(_options[kWunderbarOnboardingOptionsDeviceLocalName]) cStringUsingEncoding:NSUTF8StringEncoding]);
         return [WunderbarOnboarding stopOnboarding:self withError:nil];
     }
     
     if (!selectedCharacteristic || !dataToSend) { return [WunderbarOnboarding stopOnboarding:self withError:RelayrErrorBLEProblemUnknown]; }
     [_peripheralSelected writeValue:dataToSend forCharacteristic:selectedCharacteristic type:CBCharacteristicWriteWithResponse];
 }
+
+#pragma mark Overall used methods
+
+/*******************************************************************************
+ * It stop the onboarding process passed and execute the completion block with the passed error.
+ * If <code>error</code> is <code>nil</code>, the completion block will be executed as if it were successful.
+ ******************************************************************************/
++ (void)stopOnboarding:(WunderbarOnboarding*)onboardingProcess withError:(NSError*)error
+{
+    if (!onboardingProcess) { return; }
+    
+    void (^completion)(NSError* error) = onboardingProcess.completion;
+    onboardingProcess.completion = nil;
+    onboardingProcess.options = nil;
+    
+    if (onboardingProcess.timer)
+    {
+        id timerUserInfo = onboardingProcess.timer.userInfo;
+        if ([timerUserInfo isKindOfClass:[NSTimer class]])
+        {
+            NSTimer* scanningTimer = (NSTimer*)timerUserInfo;
+            if ([scanningTimer isValid]) { [(NSTimer*)scanningTimer invalidate]; }
+        }
+        
+        if ([onboardingProcess.timer isValid]) { [onboardingProcess.timer invalidate]; }
+        onboardingProcess.timer = nil;
+    }
+    
+    onboardingProcess.transmitter = nil;
+    if (onboardingProcess.peripheralManager)
+    {
+        if ([onboardingProcess.peripheralManager isAdvertising]) { [onboardingProcess.peripheralManager stopAdvertising]; }
+        [onboardingProcess.peripheralManager removeAllServices];
+        onboardingProcess.peripheralManager = nil;
+    }
+    onboardingProcess.peripheralManagerService = nil;
+    onboardingProcess.peripheralManagerCharacteristicsRead = nil;
+    
+    onboardingProcess.device = nil;
+    if (onboardingProcess.centralManager)
+    {
+        [onboardingProcess.centralManager stopScan];
+        if (onboardingProcess.peripheralSelected)
+        {
+            onboardingProcess.peripheralSelected.delegate = nil;
+            [onboardingProcess.centralManager cancelPeripheralConnection:onboardingProcess.peripheralSelected];
+            onboardingProcess.peripheralSelected = nil;
+        }
+        onboardingProcess.centralManager.delegate = nil;
+        onboardingProcess.centralManager = nil;
+    }
+    
+    if (completion) { completion(error); }
+}
+
+/*
+ @property (strong,nonatomic) NSTimer* timer;
+ @property (strong,nonatomic) RelayrDevice* device;
+ @property (strong,nonatomic) CBCentralManager* centralManager;
+ @property (strong,nonatomic) CBPeripheral* peripheralSelected;
+ */
 
 /*******************************************************************************
  * It selects a BLE characteristics of a specific service from a specific device.
@@ -528,51 +594,6 @@ NSString* const kWunderbarOnboardingOptionsDeviceLocalName           = @"localNa
     }
     
     return [NSData dataWithBytes:result length:result_length];
-}
-
-/*******************************************************************************
- * It stop the onboarding process passed and execute the completion block with the passed error.
- * If <code>error</code> is <code>nil</code>, the completion block will be executed as if it were successful.
- ******************************************************************************/
-+ (void)stopOnboarding:(WunderbarOnboarding*)onboardingProcess withError:(NSError*)error
-{
-    if (!onboardingProcess) { return; }
-    
-    void (^completion)(NSError* error) = onboardingProcess.completion;
-    onboardingProcess.completion = nil;
-    onboardingProcess.options = nil;
-    if (onboardingProcess.timer)
-    {
-        id userInfo = onboardingProcess.timer.userInfo;
-        if ([userInfo isKindOfClass:[NSTimer class]] && [(NSTimer*)userInfo isValid]) { [(NSTimer*)userInfo invalidate]; }
-        
-        if ([onboardingProcess.timer isValid]) { [onboardingProcess.timer invalidate]; }
-        onboardingProcess.timer = nil;
-    }
-    
-    onboardingProcess.transmitter = nil;
-    if (onboardingProcess.peripheralManager)
-    {
-        if ([onboardingProcess.peripheralManager isAdvertising]) { [onboardingProcess.peripheralManager stopAdvertising]; }
-        [onboardingProcess.peripheralManager removeAllServices];
-        onboardingProcess.peripheralManager = nil;
-    }
-    onboardingProcess.peripheralManagerService = nil;
-    onboardingProcess.peripheralManagerCharacteristicsRead = nil;
-    
-    onboardingProcess.device = nil;
-    if (onboardingProcess.centralManager)
-    {
-        [onboardingProcess.centralManager stopScan];
-        if (onboardingProcess.peripheralSelected)
-        {
-            [onboardingProcess.centralManager cancelPeripheralConnection:onboardingProcess.peripheralSelected];
-            onboardingProcess.peripheralSelected = nil;
-        }
-        onboardingProcess.centralManager = nil;
-    }
-    
-    if (completion) { completion(error); }
 }
 
 @end
