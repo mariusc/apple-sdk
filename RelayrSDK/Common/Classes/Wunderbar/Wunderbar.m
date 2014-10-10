@@ -13,10 +13,10 @@
     if (numDevices < 6) { return NO; }
     
     if ( ![Wunderbar humidityTemperatureDeviceFromWunderbar:transmitter] ||
-         ![Wunderbar gyroscopeDeviceFromWunderbar:transmitter] ||
-         ![Wunderbar lighProximityDeviceFromWunderbar:transmitter] ||
-         ![Wunderbar microphoneDeviceFromWunderbar:transmitter] ||
-         ![Wunderbar bridgeDeviceFromWunderbar:transmitter] ||
+         ![Wunderbar gyroscopeDeviceFromWunderbar:transmitter]           ||
+         ![Wunderbar lighProximityDeviceFromWunderbar:transmitter]       ||
+         ![Wunderbar microphoneDeviceFromWunderbar:transmitter]          ||
+         ![Wunderbar bridgeDeviceFromWunderbar:transmitter]              ||
          ![Wunderbar infraredDeviceFromWunderbar:transmitter] ) { return NO; }
     
     return YES;
@@ -27,11 +27,11 @@
     NSString* modelID = device.modelID;
     if (!modelID) { return NO; }
     
-    if ( [modelID isEqualToString:Wunderbar_devicemodel_gyroscope] ||
-         [modelID isEqualToString:Wunderbar_devicemodel_light] ||
-         [modelID isEqualToString:Wunderbar_devicemodel_microphone] ||
+    if ( [modelID isEqualToString:Wunderbar_devicemodel_gyroscope]   ||
+         [modelID isEqualToString:Wunderbar_devicemodel_light]       ||
+         [modelID isEqualToString:Wunderbar_devicemodel_microphone]  ||
          [modelID isEqualToString:Wunderbar_devicemodel_thermometer] ||
-         [modelID isEqualToString:Wunderbar_devicemodel_bridge] ||
+         [modelID isEqualToString:Wunderbar_devicemodel_bridge]      ||
          [modelID isEqualToString:Wunderbar_devicemodel_infrared] ) { return YES; }
     
     return NO;
@@ -89,6 +89,40 @@
         if ([device.modelID isEqualToString:Wunderbar_devicemodel_infrared]) { return device; }
     }
     return nil;
+}
+
++ (NSString*)advertisementLocalNameForWunderbarDevice:(RelayrDevice*)device
+{
+    NSString* modelID = device.modelID;
+    if (!modelID) { return nil; }
+    NSString* result;
+    
+    if ( [modelID isEqualToString:Wunderbar_devicemodel_gyroscope] )
+    {
+        result = Wunderbar_deviceAdvertisement_gyroscope;
+    }
+    else if ( [modelID isEqualToString:Wunderbar_devicemodel_light] )
+    {
+        result = Wunderbar_deviceAdvertisement_light;
+    }
+    else if ( [modelID isEqualToString:Wunderbar_devicemodel_microphone] )
+    {
+        result = Wunderbar_deviceAdvertisement_microphone;
+    }
+    else if ( [modelID isEqualToString:Wunderbar_devicemodel_thermometer] )
+    {
+        result = Wunderbar_deviceAdvertisement_thermometer;
+    }
+    else if ( [modelID isEqualToString:Wunderbar_devicemodel_infrared] )
+    {
+        result = Wunderbar_deviceAdvertisement_infrared;
+    }
+    else if ( [modelID isEqualToString:Wunderbar_devicemodel_bridge] )
+    {
+        result = Wunderbar_deviceAdvertisement_bridge;
+    }
+    
+    return result;
 }
 
 @end

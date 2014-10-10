@@ -897,7 +897,6 @@
 				62B0B37619D097B100AD59BF /* WunderbarConstants.h in Headers */,
 				629666E019D0169B003C99D9 /* WunderbarOnboarding.h in Headers */,
 				62B0B37A19D0985C00AD59BF /* WunderbarFirmwareUpdate.h in Headers */,
-				62F1350819D54DA900DF93A7 /* RelayrOutput_Setup.h in Headers */,
 				62B0B3A119D1B01600AD59BF /* RelayrUser+Wunderbar.h in Headers */,
 				62B0B3A719D1B16F00AD59BF /* RLAWebService+Wunderbar.h in Headers */,
 				6250E19319B51566003932AA /* RelayrApp_Setup.h in Headers */,
@@ -909,6 +908,7 @@
 				62FDB16819BEF2DD00AE2A64 /* RelayrFirmware_Setup.h in Headers */,
 				6254F80719CACA62006C836F /* RelayrFirmwareModel_Setup.h in Headers */,
 				62FDB16B19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */,
+				62F1350819D54DA900DF93A7 /* RelayrOutput_Setup.h in Headers */,
 				62D0907219C0729900999142 /* RelayrConnection_Setup.h in Headers */,
 				623F324D19A731B100F774EB /* RLAWebService.h in Headers */,
 				6285F36119C1AA410097B299 /* RLAWebService+Cloud.h in Headers */,
@@ -959,7 +959,6 @@
 				62B0B37719D097B100AD59BF /* WunderbarConstants.h in Headers */,
 				629666E119D0169B003C99D9 /* WunderbarOnboarding.h in Headers */,
 				62B0B37B19D0985C00AD59BF /* WunderbarFirmwareUpdate.h in Headers */,
-				62F1350919D54DA900DF93A7 /* RelayrOutput_Setup.h in Headers */,
 				62B0B3A219D1B01600AD59BF /* RelayrUser+Wunderbar.h in Headers */,
 				62B0B3A819D1B16F00AD59BF /* RLAWebService+Wunderbar.h in Headers */,
 				6203381F19D06BA50088CB1D /* RelayrErrors.h in Headers */,
@@ -971,6 +970,7 @@
 				62FDB16919BEF2DD00AE2A64 /* RelayrFirmware_Setup.h in Headers */,
 				6254F80819CACA62006C836F /* RelayrFirmwareModel_Setup.h in Headers */,
 				62FDB16C19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */,
+				62F1350919D54DA900DF93A7 /* RelayrOutput_Setup.h in Headers */,
 				62D0907319C0729900999142 /* RelayrConnection_Setup.h in Headers */,
 				623F326A19A7873100F774EB /* RLAWebService.h in Headers */,
 				6285F36219C1AA410097B299 /* RLAWebService+Cloud.h in Headers */,
@@ -1007,7 +1007,6 @@
 				6252F0AF199C2465002ECE4D /* Frameworks */,
 				6252F0B0199C2465002ECE4D /* Headers */,
 				6252F0B1199C2465002ECE4D /* Resources */,
-				627252AA19ACB772001265EB /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1026,6 +1025,7 @@
 				6252F0E1199C2AFA002ECE4D /* Frameworks */,
 				6252F0E2199C2AFA002ECE4D /* Headers */,
 				6252F0E3199C2AFA002ECE4D /* Resources */,
+				6271B90A19E687360076C1DD /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1118,7 +1118,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		627252AA19ACB772001265EB /* ShellScript */ = {
+		6271B90A19E687360076C1DD /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1263,7 +1263,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6252F0D8199C24AD002ECE4D /* RelayrIOS.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1295,14 +1294,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1311,7 +1304,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6252F0D8199C24AD002ECE4D /* RelayrIOS.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1339,13 +1331,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1355,7 +1342,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6252F0D8199C24AD002ECE4D /* RelayrIOS.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1383,13 +1369,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1399,7 +1380,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6252F103199C2BFC002ECE4D /* RelayrOSX.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1436,12 +1416,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1450,7 +1426,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6252F103199C2BFC002ECE4D /* RelayrOSX.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1482,11 +1457,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1495,7 +1467,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6252F103199C2BFC002ECE4D /* RelayrOSX.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1527,11 +1498,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Distribution;
