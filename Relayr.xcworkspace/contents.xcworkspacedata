@@ -4,7 +4,4 @@
    <FileRef
       location = "group:RelayrSDK/RelayrSDK.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:Onboarding/Onboarding.xcodeproj">
-   </FileRef>
 </Workspace>
