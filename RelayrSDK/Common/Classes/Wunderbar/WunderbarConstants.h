@@ -35,7 +35,7 @@ FOUNDATION_EXPORT NSString* const kWunderbarOnboardingOptionsDeviceConnectionTyp
 
 #pragma mark - Onboarding process
 
-#define Wunderbar_transmitter_setupTimeout                  10
+#define Wunderbar_transmitter_setupTimeout                  15
 #define Wunderbar_transmitter_setupService                  @"2000"
 #define Wunderbar_transmitter_setupServiceCharacteristics   7
 #define Wunderbar_transmitter_setupServiceCharacteristicsReadTime       0.2
@@ -57,7 +57,7 @@ FOUNDATION_EXPORT NSString* const kWunderbarOnboardingOptionsDeviceConnectionTyp
 
 #define Wunderbar_device_setupTimeout                       10
 #define Wunderbar_device_setupTimeoutForScanningProportion  0.3
-#define Wunderbar_device_setupTimeoutForWritingAnotherDeviceCharacteristic      0.3
+#define Wunderbar_device_setupTimeoutForWritingAnotherDeviceCharacteristic      0.35
 #define Wunderbar_device_setupService                               @"2001"
 #define Wunderbar_device_setupCharacteristic_sensorID                   @"2010"
 #define Wunderbar_device_setupCharacteristic_passKey                    @"2018"
