@@ -17,11 +17,9 @@ Getting Started
 
 The framework can be obtained by:
 
-* downloading the binary `.framework` file for iOS or OSX (this will be updated once the code to generate "multiplatform" frameworks is implemented on the project) :)
+- Downloading this repository
 
-*or*
-
-* generating the binary `.framework` file from this Xcode project. Just select the platform you want from the project's targets and click *build* (⌘+B).
+- Generating the binary `.framework` file from this Xcode project. Just select the platform you want from the project's         targets and click *build* (⌘+B).
 
   ![Generating the framework file](./README/Assets/BuildProcess01.gif)
 
