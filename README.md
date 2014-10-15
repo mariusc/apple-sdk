@@ -17,7 +17,7 @@ Getting Started
 
 The framework can be obtained by:
 
-* downloading the binary `.framework` file for [iOS](./bin/iOS/Relayr.framework) or [OSX](./bin/OSX/Relayr.framework) (this will be updated with the latest binary);
+* downloading the binary `.framework` file for iOS or OSX (this will be updated once the code to generate "multiplatform" frameworks is implemented on the project) :)
 
 *or*
 
