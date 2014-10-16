@@ -19,6 +19,7 @@ typedef void(^RelayrInputDataReceivedBlock)(RelayrDevice* device, RelayrInput* i
 /*!
  *  @abstract The source of the input/reading.
  *  @discussion This property will never be <code>nil</code>.
+ *      Although describe as <code>RelayrDeviceModel</code>, this object might be a full <code>RelayrDevice</code> if the input is associated with a full-fledge <code>RelayrDevice</code>.
  */
 @property (readonly,weak,nonatomic) RelayrDeviceModel* device;
 
