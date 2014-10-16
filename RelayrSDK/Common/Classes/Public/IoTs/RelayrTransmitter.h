@@ -23,9 +23,17 @@
 
 /*!
  *  @abstract Transmitter name.
- *  @discussion It can be updated or query from the server.
  */
 @property (readonly,nonatomic) NSString* name;
+
+/*!
+ *  @abstract It changes the transmitter's name and push it to the server.
+ *  @discussion If the server is not reachable or there was any problem, and error will be returned in the completion block;
+ *
+ *  @param name New name to identify this transmitter with.
+ *  @param completion Block returning the success or not of the operation.
+ */
+- (void)setNameWith:(NSString*)name completion:(void (^)(NSError* error, NSString* previousName))completion;
 
 /*!
  *  @abstract The owner ID of the specific transmitter, a relayr user.

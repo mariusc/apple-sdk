@@ -1,11 +1,14 @@
-#import "RelayrTransmitter.h"       // Header
-#import "RelayrTransmitter_Setup.h" // Relayr.framework (Private)
+#import "RelayrTransmitter.h"           // Header
 
-#import "RelayrUser.h"              // Relayr.framework (Public)
-#import "RelayrDevice.h"            // Relayr.framework (Public)
-#import "RelayrOnboarding.h"        // Relayr.framework (Public)
-#import "RelayrFirmwareUpdate.h"    // Relayr.framework (Public)
-#import "RelayrErrors.h"            // Relayr.framework (Utilities)
+#import "RelayrUser.h"                  // Relayr.framework (Public)
+#import "RelayrDevice.h"                // Relayr.framework (Public)
+#import "RelayrOnboarding.h"            // Relayr.framework (Public)
+#import "RelayrFirmwareUpdate.h"        // Relayr.framework (Public)
+#import "RelayrTransmitter_Setup.h"     // Relayr.framework (Private)
+#import "RelayrUser_Setup.h"            // Relayr.framework (Private)
+#import "RelayrErrors.h"                // Relayr.framework (Utilities)
+
+#import "RLAWebService+Transmitter.h"   // Relayr.framework (Web)
 
 static NSString* const kCodingID = @"uid";
 static NSString* const kCodingSecret = @"sec";
@@ -42,6 +45,20 @@ static NSString* const kCodingDevices = @"dev";
     if (transmitter.owner) { _owner = transmitter.owner; }
     if (transmitter.secret) { _secret = transmitter.secret; }
     if (transmitter.devices) { _devices = transmitter.devices; }
+}
+
+- (void)setNameWith:(NSString*)name completion:(void (^)(NSError*, NSString*))completion
+{
+    if (!name.length) { if (completion) { completion(RelayrErrorMissingArgument, _name); } return; }
+    
+    __weak RelayrTransmitter* weakSelf = self;
+    [_user.webService setTransmitter:self.uid withName:name completion:(!completion) ? nil : ^(NSError* error) {
+        if (error) { return completion(error, weakSelf.name); }
+        
+        NSString* previousName = weakSelf.name;
+        weakSelf.name = name;
+        completion(nil, previousName);
+    }];
 }
 
 #pragma mark Processes

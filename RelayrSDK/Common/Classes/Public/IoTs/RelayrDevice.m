@@ -8,8 +8,6 @@
 #import "RelayrFirmwareUpdate.h"    // Relayr.framework (Public)
 #import "RelayrInput_Setup.h"       // Relayr.framework (Private)
 #import "RelayrFirmware_Setup.h"    // Relayr.framework (Private)
-#import "RLAWebService.h"           // Relayr.framework (Web)
-#import "RLAWebService+Device.h"    // Relayr.framework (Web)
 #import "RelayrErrors.h"            // Relayr.framework (Utilities)
 #import "RLALog.h"                  // Relayr.framework (Utilities)
 
