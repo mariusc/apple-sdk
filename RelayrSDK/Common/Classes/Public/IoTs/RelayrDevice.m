@@ -6,8 +6,11 @@
 #import "RelayrInput.h"             // Relayr.framework (Public)
 #import "RelayrOnboarding.h"        // Relayr.framework (Public)
 #import "RelayrFirmwareUpdate.h"    // Relayr.framework (Public)
+#import "RelayrUser_Setup.h"        // Relayr.framework (Private)
 #import "RelayrInput_Setup.h"       // Relayr.framework (Private)
 #import "RelayrFirmware_Setup.h"    // Relayr.framework (Private)
+#import "RLAWebService.h"           // Relayr.framework (Web)
+#import "RLAWebService+Device.h"    // Relayr.framework (Web)
 #import "RelayrErrors.h"            // Relayr.framework (Utilities)
 #import "RLALog.h"                  // Relayr.framework (Utilities)
 
@@ -53,6 +56,20 @@ static NSString* const kCodingSecret = @"sec";
     if (device.isPublic) { _isPublic = device.isPublic; }
     if (device.firmware) { [_firmware setWith:device.firmware]; }
     if (device.secret) { _secret = device.secret; }
+}
+
+- (void)setNameWith:(NSString*)name completion:(void (^)(NSError*, NSString*))completion
+{
+    if (!name.length) { if (completion) { completion(RelayrErrorMissingArgument, _name); } return; }
+    
+    __weak RelayrDevice* weakSelf = self;
+    [_user.webService setDevice:_uid name:name modelID:nil isPublic:nil description:nil completion:(!completion) ? nil : ^(NSError* error, RelayrDevice* device) {
+        NSString* previousName = weakSelf.name;
+        if (error) { return completion(error, previousName); }
+        
+        weakSelf.name = name;
+        completion(nil, previousName);
+    }];
 }
 
 #pragma mark Processes

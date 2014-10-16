@@ -157,6 +157,7 @@
 		62B64D7819EFF4C700DCD7AA /* RLAIdentifierGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D7519EFF4C700DCD7AA /* RLAIdentifierGenerator.h */; };
 		62B64D7919EFF4C700DCD7AA /* RLAIdentifierGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D7619EFF4C700DCD7AA /* RLAIdentifierGenerator.m */; };
 		62B64D7A19EFF4C700DCD7AA /* RLAIdentifierGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D7619EFF4C700DCD7AA /* RLAIdentifierGenerator.m */; };
+		62B64D7C19F00BAB00DCD7AA /* RelayrDeviceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D7B19F00BAB00DCD7AA /* RelayrDeviceTest.m */; };
 		62C50A6119CAB8CB0078907A /* RelayrDeviceModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 62C50A5F19CAB8CB0078907A /* RelayrDeviceModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		62C50A6219CAB8CB0078907A /* RelayrDeviceModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 62C50A5F19CAB8CB0078907A /* RelayrDeviceModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		62C50A6319CAB8CB0078907A /* RelayrDeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 62C50A6019CAB8CB0078907A /* RelayrDeviceModel.m */; };
@@ -294,6 +295,7 @@
 		62B64D7219EFDF6100DCD7AA /* RLAMQTTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAMQTTConstants.h; sourceTree = "<group>"; };
 		62B64D7519EFF4C700DCD7AA /* RLAIdentifierGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAIdentifierGenerator.h; sourceTree = "<group>"; };
 		62B64D7619EFF4C700DCD7AA /* RLAIdentifierGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAIdentifierGenerator.m; sourceTree = "<group>"; };
+		62B64D7B19F00BAB00DCD7AA /* RelayrDeviceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RelayrDeviceTest.m; path = Tests/Classes/Public/IoTs/RelayrDeviceTest.m; sourceTree = SOURCE_ROOT; };
 		62C50A5F19CAB8CB0078907A /* RelayrDeviceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrDeviceModel.h; sourceTree = "<group>"; };
 		62C50A6019CAB8CB0078907A /* RelayrDeviceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrDeviceModel.m; sourceTree = "<group>"; };
 		62C50A6519CAB9150078907A /* RelayrFirmwareModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrFirmwareModel.h; sourceTree = "<group>"; };
@@ -638,6 +640,7 @@
 			isa = PBXGroup;
 			children = (
 				62D606C019D9888C00A9BFA2 /* RelayrTransmitterTest.m */,
+				62B64D7B19F00BAB00DCD7AA /* RelayrDeviceTest.m */,
 			);
 			path = IoTs;
 			sourceTree = "<group>";
@@ -1270,6 +1273,7 @@
 				620B737E19D9826100B77EE2 /* RelayrPublisherTest.m in Sources */,
 				62D606C119D9888C00A9BFA2 /* RelayrTransmitterTest.m in Sources */,
 				6212444919D990060000EDE8 /* WunderbarTest.m in Sources */,
+				62B64D7C19F00BAB00DCD7AA /* RelayrDeviceTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

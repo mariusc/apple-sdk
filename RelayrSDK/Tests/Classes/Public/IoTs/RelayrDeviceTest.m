@@ -11,12 +11,12 @@
  *
  *  @see RelayrTransmitter
  */
-@interface RelayrTransmitterTest : XCTestCase
+@interface RelayrDeviceTest : XCTestCase
 @property (readonly,nonatomic) RelayrApp* app;
 @property (readonly,nonatomic) RelayrUser* user;
 @end
 
-@implementation RelayrTransmitterTest
+@implementation RelayrDeviceTest
 
 #pragma mark - Setup
 
@@ -43,30 +43,6 @@
 
 #pragma mark - Unit tests
 
-- (void)testTransmitterInstance
-{
-    XCTestExpectation* expectation = [self expectationWithDescription:nil];
-    
-    __weak RelayrUser* user = _user;
-    [_user queryCloudForIoTs:^(NSError* error) {
-        XCTAssertNil(error);
-        
-        NSSet* transmitters = user.transmitters;
-        XCTAssertGreaterThan(transmitters.count, 0);
-        
-        RelayrTransmitter* trans = transmitters.anyObject;
-        XCTAssertGreaterThan(trans.uid.length, 1);
-        XCTAssertGreaterThan(trans.name.length, 1);
-        XCTAssertGreaterThan(trans.owner.length, 1);
-        XCTAssertGreaterThan(trans.secret.length, 1);
-        XCTAssertGreaterThanOrEqual(trans.devices.count, 6);
-        
-        [expectation fulfill];
-    }];
-    
-    [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
-}
-
 - (void)testSetName
 {
     XCTestExpectation* expectation = [self expectationWithDescription:nil];
@@ -78,17 +54,20 @@
         RelayrTransmitter* transmitter = user.transmitters.anyObject;
         XCTAssertNotNil(transmitter);
         
-        NSString* pastName = transmitter.name;
+        RelayrDevice* device = transmitter.devices.anyObject;
+        XCTAssertNotNil(device);
+        
+        NSString* pastName = device.name;
         XCTAssertNotNil(pastName);
         
-        __weak RelayrTransmitter* weakTransmitter = transmitter;
-        [transmitter setNameWith:kTestsTransmitterName completion:^(NSError* error, NSString* previousName) {
+        __weak RelayrDevice* weakDevice = device;
+        [device setNameWith:kTestsDeviceName completion:^(NSError* error, NSString* previousName) {
             XCTAssertNil(error);
             XCTAssertNotNil(previousName);
             XCTAssertTrue([previousName isEqualToString:pastName]);
-            XCTAssertTrue([weakTransmitter.name isEqualToString:kTestsTransmitterName]);
+            XCTAssertTrue([weakDevice.name isEqualToString:kTestsDeviceName]);
             
-            [weakTransmitter setNameWith:pastName completion:^(NSError* error, NSString* previousName) {
+            [weakDevice setNameWith:pastName completion:^(NSError* error, NSString* previousName) {
                 XCTAssertNil(error);
                 [expectation fulfill];
             }];

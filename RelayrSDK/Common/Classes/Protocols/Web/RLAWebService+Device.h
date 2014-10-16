@@ -35,7 +35,7 @@
 
 /*!
  *  @abstract Updates one or more Relayr application attributes.
- *  @discussion All arguments of this call, except <code>deviceID</code>, are optional.
+ *  @discussion All arguments of this call, except <code>deviceID</code>, are optional. Thus, you may choose to just change the name of the device and pass all the other parameters as <code>nil</code>.
  *
  *  @param deviceID Unique identifier within the Relayr Cloud for the device.
  *  @param futureModelID The Relayr unique identifier for the device model.

@@ -32,6 +32,15 @@
 @property (readonly,nonatomic) NSString* name;
 
 /*!
+ *  @abstract It changes the device's name and push it to the server.
+ *  @discussion If the server is not reachable or there was any problem, and error will be returned in the completion block and the name won't be changed;
+ *
+ *  @param name New name to identify this device with.
+ *  @param completion Block indicating the result of the server push.
+ */
+- (void)setNameWith:(NSString*)name completion:(void (^)(NSError* error, NSString* previousName))completion;
+
+/*!
  *  @abstract The Id of the owner of the Device.
  *  @discussion A relayr User Id.
  */
