@@ -1,6 +1,7 @@
-#import "RLAMQTTService.h"      // Header
-#import "RelayrUser.h"          // Relayr.framework (Public)
-#import "RLAMQTTConstants.h"    // Relayr.framework (MQTT)
+#import "RLAMQTTService.h"          // Header
+#import "RelayrUser.h"              // Relayr.framework (Public)
+#import "RLAMQTTConstants.h"        // Relayr.framework (MQTT)
+#import "RLAIdentifierGenerator.h"  // Relayr.framework (Utilities)
 
 @implementation RLAMQTTService
 
@@ -21,6 +22,8 @@
     {
         _hostString = dRLAMQTT_Host;
         _port = [NSNumber numberWithUnsignedInteger:dRLAMQTT_PortUnencripted];
+        
+        NSString* tmp = [RLAIdentifierGenerator generateIDFromUserID:user.uid withMaximumRandomNumber:dRLAMQTT_ClientIDMaxRandomNum];
     }
     return self;
 }

@@ -237,16 +237,16 @@
 		6250E18A19B50A0D003932AA /* RelayrPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrPublisher.m; sourceTree = "<group>"; };
 		6250E18F19B50AAD003932AA /* RelayrPublisher_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrPublisher_Setup.h; sourceTree = "<group>"; };
 		6250E19219B51566003932AA /* RelayrApp_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrApp_Setup.h; sourceTree = "<group>"; };
-		6252ABDC19C4C27E00A53221 /* RelayrTests.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = RelayrTests.xcconfig; path = Tests/Configuration/RelayrTests.xcconfig; sourceTree = SOURCE_ROOT; };
+		6252ABDC19C4C27E00A53221 /* Relayr_Tests.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Relayr_Tests.xcconfig; path = Tests/Configuration/Relayr_Tests.xcconfig; sourceTree = SOURCE_ROOT; };
 		6252F0B3199C2465002ECE4D /* Relayr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Relayr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6252F0D1199C2492002ECE4D /* RelayrCommon.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = RelayrCommon.xcconfig; sourceTree = "<group>"; };
+		6252F0D1199C2492002ECE4D /* Relayr_Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Common.xcconfig; sourceTree = "<group>"; };
 		6252F0D5199C24AD002ECE4D /* Relayr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Relayr.h; sourceTree = "<group>"; };
 		6252F0D7199C24AD002ECE4D /* RelayrIOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = RelayrIOS.plist; sourceTree = "<group>"; };
-		6252F0D8199C24AD002ECE4D /* RelayrIOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = RelayrIOS.xcconfig; sourceTree = "<group>"; };
+		6252F0D8199C24AD002ECE4D /* Relayr_iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS.xcconfig; sourceTree = "<group>"; };
 		6252F0E5199C2AFA002ECE4D /* Relayr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Relayr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6252F100199C2BFC002ECE4D /* Relayr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Relayr.h; sourceTree = "<group>"; };
 		6252F102199C2BFC002ECE4D /* RelayrOSX.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = RelayrOSX.plist; sourceTree = "<group>"; };
-		6252F103199C2BFC002ECE4D /* RelayrOSX.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = RelayrOSX.xcconfig; sourceTree = "<group>"; };
+		6252F103199C2BFC002ECE4D /* Relayr_OSX.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_OSX.xcconfig; sourceTree = "<group>"; };
 		6254F80319CAC673006C836F /* RelayrDeviceModel_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrDeviceModel_Setup.h; sourceTree = "<group>"; };
 		6254F80619CACA62006C836F /* RelayrFirmwareModel_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrFirmwareModel_Setup.h; sourceTree = "<group>"; };
 		62732D4019C05A24000E9545 /* RelayrConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrConnection.h; sourceTree = "<group>"; };
@@ -546,7 +546,7 @@
 		6252F0D0199C2492002ECE4D /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				6252F0D1199C2492002ECE4D /* RelayrCommon.xcconfig */,
+				6252F0D1199C2492002ECE4D /* Relayr_Common.xcconfig */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -578,7 +578,7 @@
 		6252F0D6199C24AD002ECE4D /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				6252F0D8199C24AD002ECE4D /* RelayrIOS.xcconfig */,
+				6252F0D8199C24AD002ECE4D /* Relayr_iOS.xcconfig */,
 				6252F0D7199C24AD002ECE4D /* RelayrIOS.plist */,
 			);
 			path = Configuration;
@@ -621,7 +621,7 @@
 		6252F101199C2BFC002ECE4D /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				6252F103199C2BFC002ECE4D /* RelayrOSX.xcconfig */,
+				6252F103199C2BFC002ECE4D /* Relayr_OSX.xcconfig */,
 				6252F102199C2BFC002ECE4D /* RelayrOSX.plist */,
 			);
 			path = Configuration;
@@ -889,7 +889,7 @@
 			isa = PBXGroup;
 			children = (
 				62E41FD119C35DF1008459B7 /* RelayrTests.plist */,
-				6252ABDC19C4C27E00A53221 /* RelayrTests.xcconfig */,
+				6252ABDC19C4C27E00A53221 /* Relayr_Tests.xcconfig */,
 				6212444A19D9902F0000EDE8 /* RLATestsConstants.h */,
 			);
 			name = Configuration;
@@ -1311,7 +1311,7 @@
 		};
 		6252F0C5199C2465002ECE4D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F0D8199C24AD002ECE4D /* RelayrIOS.xcconfig */;
+			baseConfigurationReference = 6252F0D8199C24AD002ECE4D /* Relayr_iOS.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1353,7 +1353,7 @@
 		};
 		6252F0C6199C2465002ECE4D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F0D8199C24AD002ECE4D /* RelayrIOS.xcconfig */;
+			baseConfigurationReference = 6252F0D8199C24AD002ECE4D /* Relayr_iOS.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1392,7 +1392,7 @@
 		};
 		6252F0C7199C2465002ECE4D /* Distribution */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F0D8199C24AD002ECE4D /* RelayrIOS.xcconfig */;
+			baseConfigurationReference = 6252F0D8199C24AD002ECE4D /* Relayr_iOS.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1431,7 +1431,7 @@
 		};
 		6252F0F6199C2AFB002ECE4D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F103199C2BFC002ECE4D /* RelayrOSX.xcconfig */;
+			baseConfigurationReference = 6252F103199C2BFC002ECE4D /* Relayr_OSX.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1477,7 +1477,7 @@
 		};
 		6252F0F7199C2AFB002ECE4D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F103199C2BFC002ECE4D /* RelayrOSX.xcconfig */;
+			baseConfigurationReference = 6252F103199C2BFC002ECE4D /* Relayr_OSX.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1518,7 +1518,7 @@
 		};
 		6252F0F8199C2AFB002ECE4D /* Distribution */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F103199C2BFC002ECE4D /* RelayrOSX.xcconfig */;
+			baseConfigurationReference = 6252F103199C2BFC002ECE4D /* Relayr_OSX.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1560,9 +1560,8 @@
 		};
 		62E41FC819C35B90008459B7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252ABDC19C4C27E00A53221 /* RelayrTests.xcconfig */;
+			baseConfigurationReference = 6252ABDC19C4C27E00A53221 /* Relayr_Tests.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1606,9 +1605,8 @@
 		};
 		62E41FC919C35B90008459B7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252ABDC19C4C27E00A53221 /* RelayrTests.xcconfig */;
+			baseConfigurationReference = 6252ABDC19C4C27E00A53221 /* Relayr_Tests.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1646,9 +1644,8 @@
 		};
 		62E41FCA19C35B90008459B7 /* Distribution */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252ABDC19C4C27E00A53221 /* RelayrTests.xcconfig */;
+			baseConfigurationReference = 6252ABDC19C4C27E00A53221 /* Relayr_Tests.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1693,7 +1690,7 @@
 		};
 		62F6E71819EBD641004AAA4A /* Ad Hoc */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F0D8199C24AD002ECE4D /* RelayrIOS.xcconfig */;
+			baseConfigurationReference = 6252F0D8199C24AD002ECE4D /* Relayr_iOS.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1732,7 +1729,7 @@
 		};
 		62F6E71919EBD641004AAA4A /* Ad Hoc */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F103199C2BFC002ECE4D /* RelayrOSX.xcconfig */;
+			baseConfigurationReference = 6252F103199C2BFC002ECE4D /* Relayr_OSX.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1774,9 +1771,8 @@
 		};
 		62F6E71A19EBD641004AAA4A /* Ad Hoc */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252ABDC19C4C27E00A53221 /* RelayrTests.xcconfig */;
+			baseConfigurationReference = 6252ABDC19C4C27E00A53221 /* Relayr_Tests.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;

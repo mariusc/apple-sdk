@@ -27,7 +27,7 @@
     #if defined(OS_APPLE_IOS) || defined (OS_APPLE_IOS_SIMULATOR)
     result = [UIDevice currentDevice].identifierForVendor.UUIDString;
     #elif defined(OS_APPLE_OSX)
-    result = nil;
+    result = nil;       // TODO: Find a method for the Mac. https://devforums.apple.com/thread/250731
     #endif
     
     return result;

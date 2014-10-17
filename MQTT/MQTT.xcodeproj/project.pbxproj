@@ -1,0 +1,286 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		62753E5619F112770012BBE9 /* MQTT.m in Sources */ = {isa = PBXBuildFile; fileRef = 62753E5519F112770012BBE9 /* MQTT.m */; };
+		62753E5719F112820012BBE9 /* MQTT.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62753E5419F112770012BBE9 /* MQTT.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		62753E3219F10C690012BBE9 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				62753E5719F112820012BBE9 /* MQTT.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		62753E3419F10C690012BBE9 /* libMQTT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMQTT.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		62753E4C19F10D640012BBE9 /* MQTT_Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MQTT_Common.xcconfig; sourceTree = "<group>"; };
+		62753E5319F111FE0012BBE9 /* MQTT_iOS.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = MQTT_iOS.xcconfig; sourceTree = "<group>"; };
+		62753E5419F112770012BBE9 /* MQTT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTT.h; sourceTree = "<group>"; };
+		62753E5519F112770012BBE9 /* MQTT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MQTT.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		62753E3119F10C690012BBE9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		62753E2419F10B910012BBE9 = {
+			isa = PBXGroup;
+			children = (
+				62753E2B19F10C490012BBE9 /* Common */,
+				62753E5019F111FE0012BBE9 /* iOS */,
+				62753E3519F10C690012BBE9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		62753E2B19F10C490012BBE9 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				62753E2C19F10C490012BBE9 /* Classes */,
+				62753E2F19F10C490012BBE9 /* Configuration */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		62753E2C19F10C490012BBE9 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		62753E2F19F10C490012BBE9 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				62753E4C19F10D640012BBE9 /* MQTT_Common.xcconfig */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		62753E3519F10C690012BBE9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				62753E3419F10C690012BBE9 /* libMQTT.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		62753E5019F111FE0012BBE9 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				62753E5119F111FE0012BBE9 /* Classes */,
+				62753E5219F111FE0012BBE9 /* Configuration */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		62753E5119F111FE0012BBE9 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				62753E5419F112770012BBE9 /* MQTT.h */,
+				62753E5519F112770012BBE9 /* MQTT.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		62753E5219F111FE0012BBE9 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				62753E5319F111FE0012BBE9 /* MQTT_iOS.xcconfig */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		62753E3319F10C690012BBE9 /* MQTT_iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 62753E4319F10C690012BBE9 /* Build configuration list for PBXNativeTarget "MQTT_iOS" */;
+			buildPhases = (
+				62753E3019F10C690012BBE9 /* Sources */,
+				62753E3119F10C690012BBE9 /* Frameworks */,
+				62753E3219F10C690012BBE9 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MQTT_iOS;
+			productName = MQTT;
+			productReference = 62753E3419F10C690012BBE9 /* libMQTT.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		62753E2519F10B910012BBE9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0600;
+				TargetAttributes = {
+					62753E3319F10C690012BBE9 = {
+						CreatedOnToolsVersion = 6.0.1;
+					};
+				};
+			};
+			buildConfigurationList = 62753E2819F10B910012BBE9 /* Build configuration list for PBXProject "MQTT" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 62753E2419F10B910012BBE9;
+			productRefGroup = 62753E3519F10C690012BBE9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				62753E3319F10C690012BBE9 /* MQTT_iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		62753E3019F10C690012BBE9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				62753E5619F112770012BBE9 /* MQTT.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		62753E2919F10B910012BBE9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		62753E2A19F10B910012BBE9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		62753E4419F10C690012BBE9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 62753E5319F111FE0012BBE9 /* MQTT_iOS.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "-ObjC";
+			};
+			name = Debug;
+		};
+		62753E4519F10C690012BBE9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 62753E5319F111FE0012BBE9 /* MQTT_iOS.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		62753E2819F10B910012BBE9 /* Build configuration list for PBXProject "MQTT" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				62753E2919F10B910012BBE9 /* Debug */,
+				62753E2A19F10B910012BBE9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		62753E4319F10C690012BBE9 /* Build configuration list for PBXNativeTarget "MQTT_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				62753E4419F10C690012BBE9 /* Debug */,
+				62753E4519F10C690012BBE9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 62753E2519F10B910012BBE9 /* Project object */;
+}
