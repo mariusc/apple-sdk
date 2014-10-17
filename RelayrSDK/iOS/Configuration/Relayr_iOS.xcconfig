@@ -1,7 +1,7 @@
 #include "Common/Configuration/Relayr_Common.xcconfig"
 
-TARGET_NAME = iOSRelayr
-INFOPLIST_FILE = $(SRCROOT)/$(TARGET_NAME)/Configuration/RelayrIOS.plist
+TARGET_NAME = Relayr_iOS
+INFOPLIST_FILE = $(SRCROOT)/iOS/Configuration/RelayrIOS.plist
 
 SDKROOT = iphoneos
 SUPPORTED_PLATFORMS = iphoneos iphonesimulator

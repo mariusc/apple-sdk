@@ -209,7 +209,7 @@
 			containerPortal = 6252F0A7199C243D002ECE4D /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 6252F0E4199C2AFA002ECE4D;
-			remoteInfo = OSXRelayr;
+			remoteInfo = Relayr_OSX;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -318,7 +318,7 @@
 		62E04C3219A15520001FEDCD /* RLANetworkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLANetworkInfo.m; sourceTree = "<group>"; };
 		62E04C3619A158DF001FEDCD /* RLAKeyChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAKeyChain.h; sourceTree = "<group>"; };
 		62E04C3719A158DF001FEDCD /* RLAKeyChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAKeyChain.m; sourceTree = "<group>"; };
-		62E41FC219C35B90008459B7 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		62E41FC219C35B90008459B7 /* Relayr.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Relayr.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		62E41FD119C35DF1008459B7 /* RelayrTests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = RelayrTests.plist; sourceTree = "<group>"; };
 		62E87DD419AB2AAA00728AC6 /* CDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDebug.h; sourceTree = "<group>"; };
 		62E87DD519AB2AAA00728AC6 /* CMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMacros.h; sourceTree = "<group>"; };
@@ -479,8 +479,8 @@
 			isa = PBXGroup;
 			children = (
 				6252F0CC199C2492002ECE4D /* Common */,
-				6252F0B5199C2465002ECE4D /* iOSRelayr */,
-				6252F0E6199C2AFB002ECE4D /* OSXRelayr */,
+				6252F0B5199C2465002ECE4D /* iOS */,
+				6252F0E6199C2AFB002ECE4D /* OSX */,
 				62E41FC319C35B90008459B7 /* Tests */,
 				6252F0B4199C2465002ECE4D /* Products */,
 			);
@@ -491,19 +491,19 @@
 			children = (
 				6252F0B3199C2465002ECE4D /* Relayr.framework */,
 				6252F0E5199C2AFA002ECE4D /* Relayr.framework */,
-				62E41FC219C35B90008459B7 /* Tests.xctest */,
+				62E41FC219C35B90008459B7 /* Relayr.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		6252F0B5199C2465002ECE4D /* iOSRelayr */ = {
+		6252F0B5199C2465002ECE4D /* iOS */ = {
 			isa = PBXGroup;
 			children = (
 				6252F0D2199C24AD002ECE4D /* Assets */,
 				6252F0D4199C24AD002ECE4D /* Classes */,
 				6252F0D6199C24AD002ECE4D /* Configuration */,
 			);
-			path = iOSRelayr;
+			path = iOS;
 			sourceTree = "<group>";
 		};
 		6252F0CC199C2492002ECE4D /* Common */ = {
@@ -584,14 +584,14 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
-		6252F0E6199C2AFB002ECE4D /* OSXRelayr */ = {
+		6252F0E6199C2AFB002ECE4D /* OSX */ = {
 			isa = PBXGroup;
 			children = (
 				6252F0FD199C2BFC002ECE4D /* Assets */,
 				6252F0FF199C2BFC002ECE4D /* Classes */,
 				6252F101199C2BFC002ECE4D /* Configuration */,
 			);
-			path = OSXRelayr;
+			path = OSX;
 			sourceTree = "<group>";
 		};
 		6252F0FD199C2BFC002ECE4D /* Assets */ = {
@@ -651,7 +651,7 @@
 				6285F37819C1AF8E0097B299 /* Views */,
 			);
 			name = Web;
-			path = "../../../../Apple-SDK/RelayrSDK/iOSRelayr/Classes/Web";
+			path = "../../../../Apple-SDK/RelayrSDK/iOS/Classes/Web";
 			sourceTree = "<group>";
 		};
 		6285F37819C1AF8E0097B299 /* Views */ = {
@@ -669,7 +669,7 @@
 				6285F37E19C1B2700097B299 /* Views */,
 			);
 			name = Web;
-			path = "../../../../Apple-SDK/RelayrSDK/OSXRelayr/Classes/Web";
+			path = "../../../../Apple-SDK/RelayrSDK/OSX/Classes/Web";
 			sourceTree = "<group>";
 		};
 		6285F37E19C1B2700097B299 /* Views */ = {
@@ -1044,9 +1044,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		6252F0B2199C2465002ECE4D /* iOSRelayr */ = {
+		6252F0B2199C2465002ECE4D /* Relayr_iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6252F0C4199C2465002ECE4D /* Build configuration list for PBXNativeTarget "iOSRelayr" */;
+			buildConfigurationList = 6252F0C4199C2465002ECE4D /* Build configuration list for PBXNativeTarget "Relayr_iOS" */;
 			buildPhases = (
 				6252F0AE199C2465002ECE4D /* Sources */,
 				6252F0AF199C2465002ECE4D /* Frameworks */,
@@ -1057,14 +1057,14 @@
 			);
 			dependencies = (
 			);
-			name = iOSRelayr;
-			productName = iOSRelayr;
+			name = Relayr_iOS;
+			productName = Relayr;
 			productReference = 6252F0B3199C2465002ECE4D /* Relayr.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		6252F0E4199C2AFA002ECE4D /* OSXRelayr */ = {
+		6252F0E4199C2AFA002ECE4D /* Relayr_OSX */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6252F0F5199C2AFB002ECE4D /* Build configuration list for PBXNativeTarget "OSXRelayr" */;
+			buildConfigurationList = 6252F0F5199C2AFB002ECE4D /* Build configuration list for PBXNativeTarget "Relayr_OSX" */;
 			buildPhases = (
 				6252F0E0199C2AFA002ECE4D /* Sources */,
 				6252F0E1199C2AFA002ECE4D /* Frameworks */,
@@ -1076,14 +1076,14 @@
 			);
 			dependencies = (
 			);
-			name = OSXRelayr;
-			productName = OSXRelayr;
+			name = Relayr_OSX;
+			productName = Relayr;
 			productReference = 6252F0E5199C2AFA002ECE4D /* Relayr.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		62E41FC119C35B90008459B7 /* Tests */ = {
+		62E41FC119C35B90008459B7 /* Relayr_Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 62E41FCB19C35B90008459B7 /* Build configuration list for PBXNativeTarget "Tests" */;
+			buildConfigurationList = 62E41FCB19C35B90008459B7 /* Build configuration list for PBXNativeTarget "Relayr_Tests" */;
 			buildPhases = (
 				62E41FBE19C35B90008459B7 /* Sources */,
 				62E41FBF19C35B90008459B7 /* Frameworks */,
@@ -1094,9 +1094,9 @@
 			dependencies = (
 				6202C05419D451700023AEC7 /* PBXTargetDependency */,
 			);
-			name = Tests;
+			name = Relayr_Tests;
 			productName = Tests;
-			productReference = 62E41FC219C35B90008459B7 /* Tests.xctest */;
+			productReference = 62E41FC219C35B90008459B7 /* Relayr.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -1131,9 +1131,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6252F0B2199C2465002ECE4D /* iOSRelayr */,
-				6252F0E4199C2AFA002ECE4D /* OSXRelayr */,
-				62E41FC119C35B90008459B7 /* Tests */,
+				6252F0B2199C2465002ECE4D /* Relayr_iOS */,
+				6252F0E4199C2AFA002ECE4D /* Relayr_OSX */,
+				62E41FC119C35B90008459B7 /* Relayr_Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -1282,7 +1282,7 @@
 /* Begin PBXTargetDependency section */
 		6202C05419D451700023AEC7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 6252F0E4199C2AFA002ECE4D /* OSXRelayr */;
+			target = 6252F0E4199C2AFA002ECE4D /* Relayr_OSX */;
 			targetProxy = 6202C05319D451700023AEC7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1822,7 +1822,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6252F0C4199C2465002ECE4D /* Build configuration list for PBXNativeTarget "iOSRelayr" */ = {
+		6252F0C4199C2465002ECE4D /* Build configuration list for PBXNativeTarget "Relayr_iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6252F0C5199C2465002ECE4D /* Debug */,
@@ -1833,7 +1833,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6252F0F5199C2AFB002ECE4D /* Build configuration list for PBXNativeTarget "OSXRelayr" */ = {
+		6252F0F5199C2AFB002ECE4D /* Build configuration list for PBXNativeTarget "Relayr_OSX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6252F0F6199C2AFB002ECE4D /* Debug */,
@@ -1844,7 +1844,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		62E41FCB19C35B90008459B7 /* Build configuration list for PBXNativeTarget "Tests" */ = {
+		62E41FCB19C35B90008459B7 /* Build configuration list for PBXNativeTarget "Relayr_Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				62E41FC819C35B90008459B7 /* Debug */,
