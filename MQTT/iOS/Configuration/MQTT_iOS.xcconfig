@@ -1,7 +1,5 @@
 #include "Common/Configuration/MQTT_Common.xcconfig"
 
-TARGET_NAME = iOS_MQTT
-
 SDKROOT = iphoneos
 SUPPORTED_PLATFORMS = iphoneos iphonesimulator
 

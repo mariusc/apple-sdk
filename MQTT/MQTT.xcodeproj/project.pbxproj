@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		62753E5619F112770012BBE9 /* MQTT.m in Sources */ = {isa = PBXBuildFile; fileRef = 62753E5519F112770012BBE9 /* MQTT.m */; };
 		62753E5719F112820012BBE9 /* MQTT.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62753E5419F112770012BBE9 /* MQTT.h */; };
+		62D711D219F11F4D00A72F40 /* MQTT.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D711D019F11F4D00A72F40 /* MQTT.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		62D711D319F11F4D00A72F40 /* MQTT.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D711D119F11F4D00A72F40 /* MQTT.m */; };
+		62D711D819F1224800A72F40 /* MQTT_Tests.plist in Resources */ = {isa = PBXBuildFile; fileRef = 62D711D719F1224800A72F40 /* MQTT_Tests.plist */; };
+		62D711DA19F1227E00A72F40 /* MQTT_Tests.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 62D711D919F1227E00A72F40 /* MQTT_Tests.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,10 +34,31 @@
 		62753E5319F111FE0012BBE9 /* MQTT_iOS.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = MQTT_iOS.xcconfig; sourceTree = "<group>"; };
 		62753E5419F112770012BBE9 /* MQTT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTT.h; sourceTree = "<group>"; };
 		62753E5519F112770012BBE9 /* MQTT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MQTT.m; sourceTree = "<group>"; };
+		62D711B619F11E5C00A72F40 /* libMQTT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMQTT.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		62D711C019F11E5C00A72F40 /* MQTT.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MQTT.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		62D711D019F11F4D00A72F40 /* MQTT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTT.h; sourceTree = "<group>"; };
+		62D711D119F11F4D00A72F40 /* MQTT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MQTT.m; sourceTree = "<group>"; };
+		62D711D419F11FCD00A72F40 /* MQTT_OSX.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = MQTT_OSX.xcconfig; sourceTree = "<group>"; };
+		62D711D719F1224800A72F40 /* MQTT_Tests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MQTT_Tests.plist; sourceTree = "<group>"; };
+		62D711D919F1227E00A72F40 /* MQTT_Tests.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = MQTT_Tests.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		62753E3119F10C690012BBE9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		62D711B319F11E5C00A72F40 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		62D711BD19F11E5C00A72F40 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -48,6 +73,8 @@
 			children = (
 				62753E2B19F10C490012BBE9 /* Common */,
 				62753E5019F111FE0012BBE9 /* iOS */,
+				62D711B719F11E5C00A72F40 /* OSX */,
+				62D711C119F11E5C00A72F40 /* Tests */,
 				62753E3519F10C690012BBE9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -80,6 +107,8 @@
 			isa = PBXGroup;
 			children = (
 				62753E3419F10C690012BBE9 /* libMQTT.a */,
+				62D711B619F11E5C00A72F40 /* libMQTT.a */,
+				62D711C019F11E5C00A72F40 /* MQTT.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -110,7 +139,69 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
+		62D711B719F11E5C00A72F40 /* OSX */ = {
+			isa = PBXGroup;
+			children = (
+				62D711CA19F11ED700A72F40 /* Classes */,
+				62D711CD19F11ED700A72F40 /* Configuration */,
+			);
+			path = OSX;
+			sourceTree = "<group>";
+		};
+		62D711C119F11E5C00A72F40 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				62D711D519F1224800A72F40 /* Classes */,
+				62D711D619F1224800A72F40 /* Configuration */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		62D711CA19F11ED700A72F40 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				62D711D019F11F4D00A72F40 /* MQTT.h */,
+				62D711D119F11F4D00A72F40 /* MQTT.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		62D711CD19F11ED700A72F40 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				62D711D419F11FCD00A72F40 /* MQTT_OSX.xcconfig */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		62D711D519F1224800A72F40 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		62D711D619F1224800A72F40 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				62D711D719F1224800A72F40 /* MQTT_Tests.plist */,
+				62D711D919F1227E00A72F40 /* MQTT_Tests.xcconfig */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		62D711B419F11E5C00A72F40 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				62D711D219F11F4D00A72F40 /* MQTT.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		62753E3319F10C690012BBE9 /* MQTT_iOS */ = {
@@ -130,6 +221,40 @@
 			productReference = 62753E3419F10C690012BBE9 /* libMQTT.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		62D711B519F11E5C00A72F40 /* MQTT_OSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 62D711C819F11E5C00A72F40 /* Build configuration list for PBXNativeTarget "MQTT_OSX" */;
+			buildPhases = (
+				62D711B219F11E5C00A72F40 /* Sources */,
+				62D711B319F11E5C00A72F40 /* Frameworks */,
+				62D711B419F11E5C00A72F40 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MQTT_OSX;
+			productName = MQTT_OSX;
+			productReference = 62D711B619F11E5C00A72F40 /* libMQTT.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		62D711BF19F11E5C00A72F40 /* MQTT_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 62D711C919F11E5C00A72F40 /* Build configuration list for PBXNativeTarget "MQTT_Tests" */;
+			buildPhases = (
+				62D711BC19F11E5C00A72F40 /* Sources */,
+				62D711BD19F11E5C00A72F40 /* Frameworks */,
+				62D711BE19F11E5C00A72F40 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MQTT_Tests;
+			productName = MQTT_Tests;
+			productReference = 62D711C019F11E5C00A72F40 /* MQTT.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -139,6 +264,12 @@
 				LastUpgradeCheck = 0600;
 				TargetAttributes = {
 					62753E3319F10C690012BBE9 = {
+						CreatedOnToolsVersion = 6.0.1;
+					};
+					62D711B519F11E5C00A72F40 = {
+						CreatedOnToolsVersion = 6.0.1;
+					};
+					62D711BF19F11E5C00A72F40 = {
 						CreatedOnToolsVersion = 6.0.1;
 					};
 				};
@@ -156,9 +287,23 @@
 			projectRoot = "";
 			targets = (
 				62753E3319F10C690012BBE9 /* MQTT_iOS */,
+				62D711B519F11E5C00A72F40 /* MQTT_OSX */,
+				62D711BF19F11E5C00A72F40 /* MQTT_Tests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		62D711BE19F11E5C00A72F40 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				62D711DA19F1227E00A72F40 /* MQTT_Tests.xcconfig in Resources */,
+				62D711D819F1224800A72F40 /* MQTT_Tests.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		62753E3019F10C690012BBE9 /* Sources */ = {
@@ -166,6 +311,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				62753E5619F112770012BBE9 /* MQTT.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		62D711B219F11E5C00A72F40 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				62D711D319F11F4D00A72F40 /* MQTT.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		62D711BC19F11E5C00A72F40 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,7 +348,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 62753E5319F111FE0012BBE9 /* MQTT_iOS.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -228,7 +387,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 62753E5319F111FE0012BBE9 /* MQTT_iOS.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -259,6 +417,160 @@
 			};
 			name = Release;
 		};
+		62D711C419F11E5C00A72F40 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 62D711D419F11FCD00A72F40 /* MQTT_OSX.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
+			};
+			name = Debug;
+		};
+		62D711C519F11E5C00A72F40 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 62D711D419F11FCD00A72F40 /* MQTT_OSX.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+			};
+			name = Release;
+		};
+		62D711C619F11E5C00A72F40 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 62D711D919F1227E00A72F40 /* MQTT_Tests.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+			};
+			name = Debug;
+		};
+		62D711C719F11E5C00A72F40 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 62D711D919F1227E00A72F40 /* MQTT_Tests.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -276,6 +588,24 @@
 			buildConfigurations = (
 				62753E4419F10C690012BBE9 /* Debug */,
 				62753E4519F10C690012BBE9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		62D711C819F11E5C00A72F40 /* Build configuration list for PBXNativeTarget "MQTT_OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				62D711C419F11E5C00A72F40 /* Debug */,
+				62D711C519F11E5C00A72F40 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		62D711C919F11E5C00A72F40 /* Build configuration list for PBXNativeTarget "MQTT_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				62D711C619F11E5C00A72F40 /* Debug */,
+				62D711C719F11E5C00A72F40 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

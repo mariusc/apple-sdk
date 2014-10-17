@@ -4,5 +4,6 @@ PRODUCT_NAME = Relayr
 BUNDLE_NAME = $(PRODUCT_NAME)
 BUNDLE_IDENTIFIER = io.relayr.sdk.tests
 
-TARGET_NAME = Tests
-INFOPLIST_FILE = $(TARGET_NAME)/Configuration/RelayrTests.plist
+INFOPLIST_FILE = Tests/Configuration/Relayr_Tests.plist
+
+SDKROOT = macosx

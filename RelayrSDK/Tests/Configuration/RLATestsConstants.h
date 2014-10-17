@@ -2,30 +2,30 @@
 
 #define kTestsTimeout               4
 
-#define kTestsAppID                 @"e411147f-4098-4a8e-a976-b6fe32d52f81"
-#define kTestsAppSecret             @"PuuF8IBldAHM4LxRdP95HyWUIGNBYD5O"
-#define kTestsAppRedirect           @"https://relayr.io"
+#define kTestsAppID                 @""
+#define kTestsAppSecret             @""
+#define kTestsAppRedirect           @""
 #define kTestsAppName               @""
 #define kTestsAppDescription        @""
 
-#define kTestsUserToken             @"Nincqe90rw8zFSk6Dw1r7WFIJD0iJ-d3"
-#define kTestsUserID                @"0d3d5e69-735e-4dea-a6ed-fd6e6ce2c8d0"
-#define kTestsUserName              @"Roberto"
-#define kTestsUserEmail             @"roberto@relayr.de"
+#define kTestsUserToken             @""
+#define kTestsUserID                @""
+#define kTestsUserName              @""
+#define kTestsUserEmail             @""
 
-#define kTestsTransmitterName       @"AppleTest Transmitter"
+#define kTestsTransmitterName       @""
 #define kTestsTransmitterModel      nil
-#define kTestsTransmitterFirmVr     @"1.0.0"
+#define kTestsTransmitterFirmVr     @""
 
-#define kTestsDeviceName            @"AppleTest Device"
-#define kTestsDeviceModel           @"ecf6cf94-cb07-43ac-a85e-dccf26b48c86"
-#define kTestsDeviceFirmwVr         @"1.0.0"
+#define kTestsDeviceName            @""
+#define kTestsDeviceModel           @""
+#define kTestsDeviceFirmwVr         @""
 
 #define kTestsWunderbarOnboardingTransmitterTimeout     12
 #define kTestsWunderbarOnboardingDeviceTimeout          8
 #define kTestsWunderbarOnboardingTimeout                (kTestsWunderbarOnboardingTransmitterTimeout + 6*kTestsWunderbarOnboardingDeviceTimeout)
-#define kTestsWunderbarOnboardingOptionsWifiSSID        @"relayr"
-#define kTestsWunderbarOnboardingOptionsWifiPassword    @"wearsimaspants"
+#define kTestsWunderbarOnboardingOptionsWifiSSID        @""
+#define kTestsWunderbarOnboardingOptionsWifiPassword    @""
 
 #define kTestsWunderbarFirmwareUpdateTransmitterTimeout 6
 #define kTestsWunderbarFirmwareUpdateDeviceTimeout      3

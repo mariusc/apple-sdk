@@ -241,11 +241,11 @@
 		6252F0B3199C2465002ECE4D /* Relayr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Relayr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6252F0D1199C2492002ECE4D /* Relayr_Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Common.xcconfig; sourceTree = "<group>"; };
 		6252F0D5199C24AD002ECE4D /* Relayr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Relayr.h; sourceTree = "<group>"; };
-		6252F0D7199C24AD002ECE4D /* RelayrIOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = RelayrIOS.plist; sourceTree = "<group>"; };
+		6252F0D7199C24AD002ECE4D /* Relayr_iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Relayr_iOS.plist; sourceTree = "<group>"; };
 		6252F0D8199C24AD002ECE4D /* Relayr_iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS.xcconfig; sourceTree = "<group>"; };
 		6252F0E5199C2AFA002ECE4D /* Relayr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Relayr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6252F100199C2BFC002ECE4D /* Relayr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Relayr.h; sourceTree = "<group>"; };
-		6252F102199C2BFC002ECE4D /* RelayrOSX.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = RelayrOSX.plist; sourceTree = "<group>"; };
+		6252F102199C2BFC002ECE4D /* Relayr_OSX.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Relayr_OSX.plist; sourceTree = "<group>"; };
 		6252F103199C2BFC002ECE4D /* Relayr_OSX.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_OSX.xcconfig; sourceTree = "<group>"; };
 		6254F80319CAC673006C836F /* RelayrDeviceModel_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrDeviceModel_Setup.h; sourceTree = "<group>"; };
 		6254F80619CACA62006C836F /* RelayrFirmwareModel_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrFirmwareModel_Setup.h; sourceTree = "<group>"; };
@@ -319,7 +319,7 @@
 		62E04C3619A158DF001FEDCD /* RLAKeyChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAKeyChain.h; sourceTree = "<group>"; };
 		62E04C3719A158DF001FEDCD /* RLAKeyChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAKeyChain.m; sourceTree = "<group>"; };
 		62E41FC219C35B90008459B7 /* Relayr.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Relayr.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		62E41FD119C35DF1008459B7 /* RelayrTests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = RelayrTests.plist; sourceTree = "<group>"; };
+		62E41FD119C35DF1008459B7 /* Relayr_Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Relayr_Tests.plist; sourceTree = "<group>"; };
 		62E87DD419AB2AAA00728AC6 /* CDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDebug.h; sourceTree = "<group>"; };
 		62E87DD519AB2AAA00728AC6 /* CMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMacros.h; sourceTree = "<group>"; };
 		62E87DD619AB2AAA00728AC6 /* CMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMath.h; sourceTree = "<group>"; };
@@ -579,7 +579,7 @@
 			isa = PBXGroup;
 			children = (
 				6252F0D8199C24AD002ECE4D /* Relayr_iOS.xcconfig */,
-				6252F0D7199C24AD002ECE4D /* RelayrIOS.plist */,
+				6252F0D7199C24AD002ECE4D /* Relayr_iOS.plist */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -622,7 +622,7 @@
 			isa = PBXGroup;
 			children = (
 				6252F103199C2BFC002ECE4D /* Relayr_OSX.xcconfig */,
-				6252F102199C2BFC002ECE4D /* RelayrOSX.plist */,
+				6252F102199C2BFC002ECE4D /* Relayr_OSX.plist */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -888,7 +888,7 @@
 		62E41FCE19C35DA2008459B7 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				62E41FD119C35DF1008459B7 /* RelayrTests.plist */,
+				62E41FD119C35DF1008459B7 /* Relayr_Tests.plist */,
 				6252ABDC19C4C27E00A53221 /* Relayr_Tests.xcconfig */,
 				6212444A19D9902F0000EDE8 /* RLATestsConstants.h */,
 			);
@@ -1599,7 +1599,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -1638,7 +1637,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -1677,7 +1675,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = macosx;
 			};
 			name = Distribution;
 		};
@@ -1804,7 +1801,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = macosx;
 			};
 			name = "Ad Hoc";
 		};

@@ -1,7 +1,6 @@
 #include "Common/Configuration/Relayr_Common.xcconfig"
 
-TARGET_NAME = Relayr_OSX
-INFOPLIST_FILE = $(SRCROOT)/OSX/Configuration/RelayrOSX.plist
+INFOPLIST_FILE = $(SRCROOT)/OSX/Configuration/Relayr_OSX.plist
 
 SDKROOT = macosx
 SUPPORTED_PLATFORMS = macosx
