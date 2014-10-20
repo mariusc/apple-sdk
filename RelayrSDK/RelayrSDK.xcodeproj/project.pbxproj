@@ -85,6 +85,8 @@
 		6298AF3719D5F2250097E956 /* RLATargetAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 6298AF3419D5F2250097E956 /* RLATargetAction.h */; };
 		6298AF3819D5F2250097E956 /* RLATargetAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 6298AF3519D5F2250097E956 /* RLATargetAction.m */; };
 		6298AF3919D5F2250097E956 /* RLATargetAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 6298AF3519D5F2250097E956 /* RLATargetAction.m */; };
+		6299E0B619F2E788004A9A70 /* libMQTT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6299E0AF19F2E766004A9A70 /* libMQTT.a */; };
+		6299E0B919F2E797004A9A70 /* libMQTT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6299E0AF19F2E766004A9A70 /* libMQTT.a */; };
 		62B0B37619D097B100AD59BF /* WunderbarConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B0B37519D097B100AD59BF /* WunderbarConstants.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		62B0B37719D097B100AD59BF /* WunderbarConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B0B37519D097B100AD59BF /* WunderbarConstants.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		62B0B37A19D0985C00AD59BF /* WunderbarFirmwareUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B0B37819D0985C00AD59BF /* WunderbarFirmwareUpdate.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -211,6 +213,41 @@
 			remoteGlobalIDString = 6252F0E4199C2AFA002ECE4D;
 			remoteInfo = Relayr_OSX;
 		};
+		6299E0AE19F2E766004A9A70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 62753E3419F10C690012BBE9;
+			remoteInfo = MQTT_iOS;
+		};
+		6299E0B019F2E766004A9A70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 62D711B619F11E5C00A72F40;
+			remoteInfo = MQTT_OSX;
+		};
+		6299E0B219F2E766004A9A70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 62D711C019F11E5C00A72F40;
+			remoteInfo = MQTT_Tests;
+		};
+		6299E0B419F2E774004A9A70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 62753E3319F10C690012BBE9;
+			remoteInfo = MQTT_iOS;
+		};
+		6299E0B719F2E78F004A9A70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 62D711B519F11E5C00A72F40;
+			remoteInfo = MQTT_OSX;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -259,6 +296,7 @@
 		629666DF19D0169B003C99D9 /* WunderbarOnboarding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WunderbarOnboarding.m; sourceTree = "<group>"; };
 		6298AF3419D5F2250097E956 /* RLATargetAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLATargetAction.h; sourceTree = "<group>"; };
 		6298AF3519D5F2250097E956 /* RLATargetAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLATargetAction.m; sourceTree = "<group>"; };
+		6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MQTT.xcodeproj; path = ../MQTT/MQTT.xcodeproj; sourceTree = "<group>"; };
 		62B0B37519D097B100AD59BF /* WunderbarConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WunderbarConstants.h; sourceTree = "<group>"; };
 		62B0B37819D0985C00AD59BF /* WunderbarFirmwareUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WunderbarFirmwareUpdate.h; sourceTree = "<group>"; };
 		62B0B37919D0985C00AD59BF /* WunderbarFirmwareUpdate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WunderbarFirmwareUpdate.m; sourceTree = "<group>"; };
@@ -336,6 +374,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6299E0B619F2E788004A9A70 /* libMQTT.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,6 +382,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6299E0B919F2E797004A9A70 /* libMQTT.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -482,6 +522,7 @@
 				6252F0B5199C2465002ECE4D /* iOS */,
 				6252F0E6199C2AFB002ECE4D /* OSX */,
 				62E41FC319C35B90008459B7 /* Tests */,
+				6299E09819F2E700004A9A70 /* Frameworks */,
 				6252F0B4199C2465002ECE4D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -718,6 +759,24 @@
 				6298AF3519D5F2250097E956 /* RLATargetAction.m */,
 			);
 			path = TargetAction;
+			sourceTree = "<group>";
+		};
+		6299E09819F2E700004A9A70 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6299E0A919F2E766004A9A70 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6299E0AF19F2E766004A9A70 /* libMQTT.a */,
+				6299E0B119F2E766004A9A70 /* libMQTT.a */,
+				6299E0B319F2E766004A9A70 /* MQTT.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		62B64D2819EFC1E100DCD7AA /* Protocols */ = {
@@ -1056,6 +1115,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				6299E0B519F2E774004A9A70 /* PBXTargetDependency */,
 			);
 			name = Relayr_iOS;
 			productName = Relayr;
@@ -1075,6 +1135,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				6299E0B819F2E78F004A9A70 /* PBXTargetDependency */,
 			);
 			name = Relayr_OSX;
 			productName = Relayr;
@@ -1129,6 +1190,12 @@
 			mainGroup = 6252F0A6199C243D002ECE4D;
 			productRefGroup = 6252F0B4199C2465002ECE4D /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 6299E0A919F2E766004A9A70 /* Products */;
+					ProjectRef = 6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				6252F0B2199C2465002ECE4D /* Relayr_iOS */,
@@ -1137,6 +1204,30 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		6299E0AF19F2E766004A9A70 /* libMQTT.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMQTT.a;
+			remoteRef = 6299E0AE19F2E766004A9A70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		6299E0B119F2E766004A9A70 /* libMQTT.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMQTT.a;
+			remoteRef = 6299E0B019F2E766004A9A70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		6299E0B319F2E766004A9A70 /* MQTT.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MQTT.xctest;
+			remoteRef = 6299E0B219F2E766004A9A70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		6252F0B1199C2465002ECE4D /* Resources */ = {
@@ -1284,6 +1375,16 @@
 			isa = PBXTargetDependency;
 			target = 6252F0E4199C2AFA002ECE4D /* Relayr_OSX */;
 			targetProxy = 6202C05319D451700023AEC7 /* PBXContainerItemProxy */;
+		};
+		6299E0B519F2E774004A9A70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MQTT_iOS;
+			targetProxy = 6299E0B419F2E774004A9A70 /* PBXContainerItemProxy */;
+		};
+		6299E0B819F2E78F004A9A70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MQTT_OSX;
+			targetProxy = 6299E0B719F2E78F004A9A70 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

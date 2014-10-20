@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "62D711B519F11E5C00A72F40"
-               BuildableName = "libMQTT_OSX.a"
+               BuildableName = "libMQTT.a"
                BlueprintName = "MQTT_OSX"
                ReferencedContainer = "container:MQTT.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "62D711B519F11E5C00A72F40"
-            BuildableName = "libMQTT_OSX.a"
+            BuildableName = "libMQTT.a"
             BlueprintName = "MQTT_OSX"
             ReferencedContainer = "container:MQTT.xcodeproj">
          </BuildableReference>
@@ -61,7 +61,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "62D711B519F11E5C00A72F40"
-            BuildableName = "libMQTT_OSX.a"
+            BuildableName = "libMQTT.a"
             BlueprintName = "MQTT_OSX"
             ReferencedContainer = "container:MQTT.xcodeproj">
          </BuildableReference>

@@ -7,12 +7,68 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		62753E5619F112770012BBE9 /* MQTT.m in Sources */ = {isa = PBXBuildFile; fileRef = 62753E5519F112770012BBE9 /* MQTT.m */; };
-		62753E5719F112820012BBE9 /* MQTT.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62753E5419F112770012BBE9 /* MQTT.h */; };
-		62D711D219F11F4D00A72F40 /* MQTT.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D711D019F11F4D00A72F40 /* MQTT.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62D711D319F11F4D00A72F40 /* MQTT.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D711D119F11F4D00A72F40 /* MQTT.m */; };
-		62D711D819F1224800A72F40 /* MQTT_Tests.plist in Resources */ = {isa = PBXBuildFile; fileRef = 62D711D719F1224800A72F40 /* MQTT_Tests.plist */; };
-		62D711DA19F1227E00A72F40 /* MQTT_Tests.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 62D711D919F1227E00A72F40 /* MQTT_Tests.xcconfig */; };
+		6299E04F19F2D75C004A9A70 /* Clients.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E02119F2D75C004A9A70 /* Clients.c */; };
+		6299E05019F2D75C004A9A70 /* Clients.h in Headers */ = {isa = PBXBuildFile; fileRef = 6299E02219F2D75C004A9A70 /* Clients.h */; };
+		6299E05119F2D75C004A9A70 /* Messages.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E02319F2D75C004A9A70 /* Messages.c */; };
+		6299E05219F2D75C004A9A70 /* Messages.h in Headers */ = {isa = PBXBuildFile; fileRef = 6299E02419F2D75C004A9A70 /* Messages.h */; };
+		6299E05319F2D75C004A9A70 /* MQTTAsync.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E02619F2D75C004A9A70 /* MQTTAsync.c */; };
+		6299E05419F2D75C004A9A70 /* MQTTAsync.h in Headers */ = {isa = PBXBuildFile; fileRef = 6299E02719F2D75C004A9A70 /* MQTTAsync.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6299E05619F2D75C004A9A70 /* MQTTClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 6299E02919F2D75C004A9A70 /* MQTTClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6299E05719F2D75C004A9A70 /* MQTTClientPersistence.h in Headers */ = {isa = PBXBuildFile; fileRef = 6299E02A19F2D75C004A9A70 /* MQTTClientPersistence.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6299E05819F2D75C004A9A70 /* MQTTPacket.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E02B19F2D75C004A9A70 /* MQTTPacket.c */; };
+		6299E05919F2D75C004A9A70 /* MQTTPacket.h in Headers */ = {isa = PBXBuildFile; fileRef = 6299E02C19F2D75C004A9A70 /* MQTTPacket.h */; };
+		6299E05A19F2D75C004A9A70 /* MQTTPacketOut.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E02D19F2D75C004A9A70 /* MQTTPacketOut.c */; };
+		6299E05B19F2D75C004A9A70 /* MQTTPacketOut.h in Headers */ = {isa = PBXBuildFile; fileRef = 6299E02E19F2D75C004A9A70 /* MQTTPacketOut.h */; };
+		6299E05C19F2D75C004A9A70 /* MQTTPersistence.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E02F19F2D75C004A9A70 /* MQTTPersistence.c */; };
+		6299E05D19F2D75C004A9A70 /* MQTTPersistence.h in Headers */ = {isa = PBXBuildFile; fileRef = 6299E03019F2D75C004A9A70 /* MQTTPersistence.h */; };
+		6299E05E19F2D75C004A9A70 /* MQTTPersistenceDefault.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E03119F2D75C004A9A70 /* MQTTPersistenceDefault.c */; };
+		6299E05F19F2D75C004A9A70 /* MQTTPersistenceDefault.h in Headers */ = {isa = PBXBuildFile; fileRef = 6299E03219F2D75C004A9A70 /* MQTTPersistenceDefault.h */; };
+		6299E06019F2D75C004A9A70 /* MQTTProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 6299E03319F2D75C004A9A70 /* MQTTProtocol.h */; };
+		6299E06119F2D75C004A9A70 /* MQTTProtocolClient.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E03419F2D75C004A9A70 /* MQTTProtocolClient.c */; };
+		6299E06219F2D75C004A9A70 /* MQTTProtocolClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 6299E03519F2D75C004A9A70 /* MQTTProtocolClient.h */; };
+		6299E06319F2D75C004A9A70 /* MQTTProtocolOut.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E03619F2D75C004A9A70 /* MQTTProtocolOut.c */; };
+		6299E06419F2D75C004A9A70 /* MQTTProtocolOut.h in Headers */ = {isa = PBXBuildFile; fileRef = 6299E03719F2D75C004A9A70 /* MQTTProtocolOut.h */; };
+		6299E06619F2D75C004A9A70 /* Heap.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E03A19F2D75C004A9A70 /* Heap.c */; };
+		6299E06719F2D75C004A9A70 /* Heap.h in Headers */ = {isa = PBXBuildFile; fileRef = 6299E03B19F2D75C004A9A70 /* Heap.h */; };
+		6299E06819F2D75C004A9A70 /* LinkedList.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E03C19F2D75C004A9A70 /* LinkedList.c */; };
+		6299E06919F2D75C004A9A70 /* LinkedList.h in Headers */ = {isa = PBXBuildFile; fileRef = 6299E03D19F2D75C004A9A70 /* LinkedList.h */; };
+		6299E06A19F2D75C004A9A70 /* Log.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E03E19F2D75C004A9A70 /* Log.c */; };
+		6299E06B19F2D75C004A9A70 /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = 6299E03F19F2D75C004A9A70 /* Log.h */; };
+		6299E06C19F2D75C004A9A70 /* StackTrace.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E04019F2D75C004A9A70 /* StackTrace.c */; };
+		6299E06D19F2D75C004A9A70 /* StackTrace.h in Headers */ = {isa = PBXBuildFile; fileRef = 6299E04119F2D75C004A9A70 /* StackTrace.h */; };
+		6299E06E19F2D75C004A9A70 /* Thread.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E04219F2D75C004A9A70 /* Thread.c */; };
+		6299E06F19F2D75C004A9A70 /* Thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 6299E04319F2D75C004A9A70 /* Thread.h */; };
+		6299E07019F2D75C004A9A70 /* Tree.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E04419F2D75C004A9A70 /* Tree.c */; };
+		6299E07119F2D75C004A9A70 /* Tree.h in Headers */ = {isa = PBXBuildFile; fileRef = 6299E04519F2D75C004A9A70 /* Tree.h */; };
+		6299E07219F2D75C004A9A70 /* utf-8.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E04619F2D75C004A9A70 /* utf-8.c */; };
+		6299E07319F2D75C004A9A70 /* utf-8.h in Headers */ = {isa = PBXBuildFile; fileRef = 6299E04719F2D75C004A9A70 /* utf-8.h */; };
+		6299E07419F2D75C004A9A70 /* Socket.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E04919F2D75C004A9A70 /* Socket.c */; };
+		6299E07519F2D75C004A9A70 /* Socket.h in Headers */ = {isa = PBXBuildFile; fileRef = 6299E04A19F2D75C004A9A70 /* Socket.h */; };
+		6299E07619F2D75C004A9A70 /* SocketBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E04B19F2D75C004A9A70 /* SocketBuffer.c */; };
+		6299E07719F2D75C004A9A70 /* SocketBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6299E04C19F2D75C004A9A70 /* SocketBuffer.h */; };
+		6299E08019F2E419004A9A70 /* libpthread.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6299E07E19F2E415004A9A70 /* libpthread.dylib */; };
+		6299E08219F2E49D004A9A70 /* libpthread.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6299E08119F2E49D004A9A70 /* libpthread.dylib */; };
+		6299E08319F2E4DA004A9A70 /* MQTTAsync.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6299E02719F2D75C004A9A70 /* MQTTAsync.h */; };
+		6299E08419F2E4E4004A9A70 /* MQTTClient.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6299E02919F2D75C004A9A70 /* MQTTClient.h */; };
+		6299E08519F2E4E7004A9A70 /* MQTTClientPersistence.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6299E02A19F2D75C004A9A70 /* MQTTClientPersistence.h */; };
+		6299E08619F2E541004A9A70 /* MQTTAsync.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E02619F2D75C004A9A70 /* MQTTAsync.c */; };
+		6299E08719F2E541004A9A70 /* MQTTPacket.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E02B19F2D75C004A9A70 /* MQTTPacket.c */; };
+		6299E08819F2E541004A9A70 /* MQTTPacketOut.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E02D19F2D75C004A9A70 /* MQTTPacketOut.c */; };
+		6299E08919F2E541004A9A70 /* MQTTPersistence.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E02F19F2D75C004A9A70 /* MQTTPersistence.c */; };
+		6299E08A19F2E541004A9A70 /* MQTTPersistenceDefault.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E03119F2D75C004A9A70 /* MQTTPersistenceDefault.c */; };
+		6299E08B19F2E541004A9A70 /* MQTTProtocolClient.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E03419F2D75C004A9A70 /* MQTTProtocolClient.c */; };
+		6299E08C19F2E541004A9A70 /* MQTTProtocolOut.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E03619F2D75C004A9A70 /* MQTTProtocolOut.c */; };
+		6299E08D19F2E541004A9A70 /* Clients.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E02119F2D75C004A9A70 /* Clients.c */; };
+		6299E08E19F2E541004A9A70 /* Messages.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E02319F2D75C004A9A70 /* Messages.c */; };
+		6299E08F19F2E541004A9A70 /* Heap.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E03A19F2D75C004A9A70 /* Heap.c */; };
+		6299E09019F2E541004A9A70 /* LinkedList.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E03C19F2D75C004A9A70 /* LinkedList.c */; };
+		6299E09119F2E541004A9A70 /* Log.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E03E19F2D75C004A9A70 /* Log.c */; };
+		6299E09219F2E541004A9A70 /* StackTrace.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E04019F2D75C004A9A70 /* StackTrace.c */; };
+		6299E09319F2E541004A9A70 /* Thread.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E04219F2D75C004A9A70 /* Thread.c */; };
+		6299E09419F2E541004A9A70 /* Tree.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E04419F2D75C004A9A70 /* Tree.c */; };
+		6299E09519F2E541004A9A70 /* utf-8.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E04619F2D75C004A9A70 /* utf-8.c */; };
+		6299E09619F2E541004A9A70 /* Socket.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E04919F2D75C004A9A70 /* Socket.c */; };
+		6299E09719F2E541004A9A70 /* SocketBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E04B19F2D75C004A9A70 /* SocketBuffer.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -22,18 +78,67 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				62753E5719F112820012BBE9 /* MQTT.h in CopyFiles */,
+				6299E08319F2E4DA004A9A70 /* MQTTAsync.h in CopyFiles */,
+				6299E08419F2E4E4004A9A70 /* MQTTClient.h in CopyFiles */,
+				6299E08519F2E4E7004A9A70 /* MQTTClientPersistence.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		62475DDB19F42B4D00827F9C /* samples_publish.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = samples_publish.c; sourceTree = "<group>"; };
+		62475DDC19F42B8100827F9C /* samples_subscribe.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = samples_subscribe.c; sourceTree = "<group>"; };
+		62475DDD19F4366100827F9C /* samples_tracing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = samples_tracing.h; sourceTree = "<group>"; };
 		62753E3419F10C690012BBE9 /* libMQTT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMQTT.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		62753E4C19F10D640012BBE9 /* MQTT_Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MQTT_Common.xcconfig; sourceTree = "<group>"; };
 		62753E5319F111FE0012BBE9 /* MQTT_iOS.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = MQTT_iOS.xcconfig; sourceTree = "<group>"; };
 		62753E5419F112770012BBE9 /* MQTT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTT.h; sourceTree = "<group>"; };
 		62753E5519F112770012BBE9 /* MQTT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MQTT.m; sourceTree = "<group>"; };
+		6299E02119F2D75C004A9A70 /* Clients.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Clients.c; sourceTree = "<group>"; };
+		6299E02219F2D75C004A9A70 /* Clients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Clients.h; sourceTree = "<group>"; };
+		6299E02319F2D75C004A9A70 /* Messages.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Messages.c; sourceTree = "<group>"; };
+		6299E02419F2D75C004A9A70 /* Messages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Messages.h; sourceTree = "<group>"; };
+		6299E02619F2D75C004A9A70 /* MQTTAsync.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = MQTTAsync.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		6299E02719F2D75C004A9A70 /* MQTTAsync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MQTTAsync.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		6299E02819F2D75C004A9A70 /* MQTTClient.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MQTTClient.c; sourceTree = "<group>"; };
+		6299E02919F2D75C004A9A70 /* MQTTClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTClient.h; sourceTree = "<group>"; };
+		6299E02A19F2D75C004A9A70 /* MQTTClientPersistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTClientPersistence.h; sourceTree = "<group>"; };
+		6299E02B19F2D75C004A9A70 /* MQTTPacket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MQTTPacket.c; sourceTree = "<group>"; };
+		6299E02C19F2D75C004A9A70 /* MQTTPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTPacket.h; sourceTree = "<group>"; };
+		6299E02D19F2D75C004A9A70 /* MQTTPacketOut.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MQTTPacketOut.c; sourceTree = "<group>"; };
+		6299E02E19F2D75C004A9A70 /* MQTTPacketOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTPacketOut.h; sourceTree = "<group>"; };
+		6299E02F19F2D75C004A9A70 /* MQTTPersistence.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MQTTPersistence.c; sourceTree = "<group>"; };
+		6299E03019F2D75C004A9A70 /* MQTTPersistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTPersistence.h; sourceTree = "<group>"; };
+		6299E03119F2D75C004A9A70 /* MQTTPersistenceDefault.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MQTTPersistenceDefault.c; sourceTree = "<group>"; };
+		6299E03219F2D75C004A9A70 /* MQTTPersistenceDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTPersistenceDefault.h; sourceTree = "<group>"; };
+		6299E03319F2D75C004A9A70 /* MQTTProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTProtocol.h; sourceTree = "<group>"; };
+		6299E03419F2D75C004A9A70 /* MQTTProtocolClient.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MQTTProtocolClient.c; sourceTree = "<group>"; };
+		6299E03519F2D75C004A9A70 /* MQTTProtocolClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTProtocolClient.h; sourceTree = "<group>"; };
+		6299E03619F2D75C004A9A70 /* MQTTProtocolOut.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MQTTProtocolOut.c; sourceTree = "<group>"; };
+		6299E03719F2D75C004A9A70 /* MQTTProtocolOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTProtocolOut.h; sourceTree = "<group>"; };
+		6299E03A19F2D75C004A9A70 /* Heap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Heap.c; sourceTree = "<group>"; };
+		6299E03B19F2D75C004A9A70 /* Heap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Heap.h; sourceTree = "<group>"; };
+		6299E03C19F2D75C004A9A70 /* LinkedList.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = LinkedList.c; sourceTree = "<group>"; };
+		6299E03D19F2D75C004A9A70 /* LinkedList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedList.h; sourceTree = "<group>"; };
+		6299E03E19F2D75C004A9A70 /* Log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Log.c; sourceTree = "<group>"; };
+		6299E03F19F2D75C004A9A70 /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
+		6299E04019F2D75C004A9A70 /* StackTrace.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = StackTrace.c; sourceTree = "<group>"; };
+		6299E04119F2D75C004A9A70 /* StackTrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StackTrace.h; sourceTree = "<group>"; };
+		6299E04219F2D75C004A9A70 /* Thread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Thread.c; sourceTree = "<group>"; };
+		6299E04319F2D75C004A9A70 /* Thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Thread.h; sourceTree = "<group>"; };
+		6299E04419F2D75C004A9A70 /* Tree.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Tree.c; sourceTree = "<group>"; };
+		6299E04519F2D75C004A9A70 /* Tree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tree.h; sourceTree = "<group>"; };
+		6299E04619F2D75C004A9A70 /* utf-8.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "utf-8.c"; sourceTree = "<group>"; };
+		6299E04719F2D75C004A9A70 /* utf-8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "utf-8.h"; sourceTree = "<group>"; };
+		6299E04919F2D75C004A9A70 /* Socket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Socket.c; sourceTree = "<group>"; };
+		6299E04A19F2D75C004A9A70 /* Socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Socket.h; sourceTree = "<group>"; };
+		6299E04B19F2D75C004A9A70 /* SocketBuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SocketBuffer.c; sourceTree = "<group>"; };
+		6299E04C19F2D75C004A9A70 /* SocketBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketBuffer.h; sourceTree = "<group>"; };
+		6299E04D19F2D75C004A9A70 /* SSLSocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SSLSocket.c; sourceTree = "<group>"; };
+		6299E04E19F2D75C004A9A70 /* SSLSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSLSocket.h; sourceTree = "<group>"; };
+		6299E07E19F2E415004A9A70 /* libpthread.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpthread.dylib; path = usr/lib/libpthread.dylib; sourceTree = SDKROOT; };
+		6299E08119F2E49D004A9A70 /* libpthread.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpthread.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/usr/lib/libpthread.dylib; sourceTree = DEVELOPER_DIR; };
 		62D711B619F11E5C00A72F40 /* libMQTT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMQTT.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		62D711C019F11E5C00A72F40 /* MQTT.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MQTT.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		62D711D019F11F4D00A72F40 /* MQTT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTT.h; sourceTree = "<group>"; };
@@ -48,6 +153,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6299E08219F2E49D004A9A70 /* libpthread.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,6 +161,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6299E08019F2E419004A9A70 /* libpthread.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +175,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		62475DDA19F42B2800827F9C /* Samples */ = {
+			isa = PBXGroup;
+			children = (
+				62475DDB19F42B4D00827F9C /* samples_publish.c */,
+				62475DDC19F42B8100827F9C /* samples_subscribe.c */,
+				62475DDD19F4366100827F9C /* samples_tracing.h */,
+			);
+			path = Samples;
+			sourceTree = "<group>";
+		};
 		62753E2419F10B910012BBE9 = {
 			isa = PBXGroup;
 			children = (
@@ -75,6 +192,7 @@
 				62753E5019F111FE0012BBE9 /* iOS */,
 				62D711B719F11E5C00A72F40 /* OSX */,
 				62D711C119F11E5C00A72F40 /* Tests */,
+				6299E07D19F2E404004A9A70 /* Frameworks */,
 				62753E3519F10C690012BBE9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -91,6 +209,11 @@
 		62753E2C19F10C490012BBE9 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				6299E02519F2D75C004A9A70 /* Public */,
+				6299E02019F2D75C004A9A70 /* Private */,
+				6299E03919F2D75C004A9A70 /* Utilities */,
+				6299E04819F2D75C004A9A70 /* Web */,
+				62475DDA19F42B2800827F9C /* Samples */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -137,6 +260,85 @@
 				62753E5319F111FE0012BBE9 /* MQTT_iOS.xcconfig */,
 			);
 			path = Configuration;
+			sourceTree = "<group>";
+		};
+		6299E02019F2D75C004A9A70 /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				6299E02219F2D75C004A9A70 /* Clients.h */,
+				6299E02119F2D75C004A9A70 /* Clients.c */,
+				6299E02419F2D75C004A9A70 /* Messages.h */,
+				6299E02319F2D75C004A9A70 /* Messages.c */,
+			);
+			path = Private;
+			sourceTree = "<group>";
+		};
+		6299E02519F2D75C004A9A70 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				6299E02719F2D75C004A9A70 /* MQTTAsync.h */,
+				6299E02619F2D75C004A9A70 /* MQTTAsync.c */,
+				6299E02919F2D75C004A9A70 /* MQTTClient.h */,
+				6299E02819F2D75C004A9A70 /* MQTTClient.c */,
+				6299E02A19F2D75C004A9A70 /* MQTTClientPersistence.h */,
+				6299E02C19F2D75C004A9A70 /* MQTTPacket.h */,
+				6299E02B19F2D75C004A9A70 /* MQTTPacket.c */,
+				6299E02E19F2D75C004A9A70 /* MQTTPacketOut.h */,
+				6299E02D19F2D75C004A9A70 /* MQTTPacketOut.c */,
+				6299E03019F2D75C004A9A70 /* MQTTPersistence.h */,
+				6299E02F19F2D75C004A9A70 /* MQTTPersistence.c */,
+				6299E03219F2D75C004A9A70 /* MQTTPersistenceDefault.h */,
+				6299E03119F2D75C004A9A70 /* MQTTPersistenceDefault.c */,
+				6299E03319F2D75C004A9A70 /* MQTTProtocol.h */,
+				6299E03519F2D75C004A9A70 /* MQTTProtocolClient.h */,
+				6299E03419F2D75C004A9A70 /* MQTTProtocolClient.c */,
+				6299E03719F2D75C004A9A70 /* MQTTProtocolOut.h */,
+				6299E03619F2D75C004A9A70 /* MQTTProtocolOut.c */,
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
+		6299E03919F2D75C004A9A70 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				6299E03B19F2D75C004A9A70 /* Heap.h */,
+				6299E03A19F2D75C004A9A70 /* Heap.c */,
+				6299E03D19F2D75C004A9A70 /* LinkedList.h */,
+				6299E03C19F2D75C004A9A70 /* LinkedList.c */,
+				6299E03F19F2D75C004A9A70 /* Log.h */,
+				6299E03E19F2D75C004A9A70 /* Log.c */,
+				6299E04119F2D75C004A9A70 /* StackTrace.h */,
+				6299E04019F2D75C004A9A70 /* StackTrace.c */,
+				6299E04319F2D75C004A9A70 /* Thread.h */,
+				6299E04219F2D75C004A9A70 /* Thread.c */,
+				6299E04519F2D75C004A9A70 /* Tree.h */,
+				6299E04419F2D75C004A9A70 /* Tree.c */,
+				6299E04719F2D75C004A9A70 /* utf-8.h */,
+				6299E04619F2D75C004A9A70 /* utf-8.c */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		6299E04819F2D75C004A9A70 /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				6299E04A19F2D75C004A9A70 /* Socket.h */,
+				6299E04919F2D75C004A9A70 /* Socket.c */,
+				6299E04C19F2D75C004A9A70 /* SocketBuffer.h */,
+				6299E04B19F2D75C004A9A70 /* SocketBuffer.c */,
+				6299E04E19F2D75C004A9A70 /* SSLSocket.h */,
+				6299E04D19F2D75C004A9A70 /* SSLSocket.c */,
+			);
+			path = Web;
+			sourceTree = "<group>";
+		};
+		6299E07D19F2E404004A9A70 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6299E08119F2E49D004A9A70 /* libpthread.dylib */,
+				6299E07E19F2E415004A9A70 /* libpthread.dylib */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		62D711B719F11E5C00A72F40 /* OSX */ = {
@@ -197,7 +399,27 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62D711D219F11F4D00A72F40 /* MQTT.h in Headers */,
+				6299E05419F2D75C004A9A70 /* MQTTAsync.h in Headers */,
+				6299E05619F2D75C004A9A70 /* MQTTClient.h in Headers */,
+				6299E05719F2D75C004A9A70 /* MQTTClientPersistence.h in Headers */,
+				6299E06019F2D75C004A9A70 /* MQTTProtocol.h in Headers */,
+				6299E06419F2D75C004A9A70 /* MQTTProtocolOut.h in Headers */,
+				6299E06219F2D75C004A9A70 /* MQTTProtocolClient.h in Headers */,
+				6299E05919F2D75C004A9A70 /* MQTTPacket.h in Headers */,
+				6299E05B19F2D75C004A9A70 /* MQTTPacketOut.h in Headers */,
+				6299E05D19F2D75C004A9A70 /* MQTTPersistence.h in Headers */,
+				6299E05F19F2D75C004A9A70 /* MQTTPersistenceDefault.h in Headers */,
+				6299E05019F2D75C004A9A70 /* Clients.h in Headers */,
+				6299E05219F2D75C004A9A70 /* Messages.h in Headers */,
+				6299E07519F2D75C004A9A70 /* Socket.h in Headers */,
+				6299E07719F2D75C004A9A70 /* SocketBuffer.h in Headers */,
+				6299E06F19F2D75C004A9A70 /* Thread.h in Headers */,
+				6299E06D19F2D75C004A9A70 /* StackTrace.h in Headers */,
+				6299E06919F2D75C004A9A70 /* LinkedList.h in Headers */,
+				6299E07119F2D75C004A9A70 /* Tree.h in Headers */,
+				6299E07319F2D75C004A9A70 /* utf-8.h in Headers */,
+				6299E06719F2D75C004A9A70 /* Heap.h in Headers */,
+				6299E06B19F2D75C004A9A70 /* Log.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,8 +520,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62D711DA19F1227E00A72F40 /* MQTT_Tests.xcconfig in Resources */,
-				62D711D819F1224800A72F40 /* MQTT_Tests.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,7 +530,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62753E5619F112770012BBE9 /* MQTT.m in Sources */,
+				6299E08619F2E541004A9A70 /* MQTTAsync.c in Sources */,
+				6299E08719F2E541004A9A70 /* MQTTPacket.c in Sources */,
+				6299E08819F2E541004A9A70 /* MQTTPacketOut.c in Sources */,
+				6299E08919F2E541004A9A70 /* MQTTPersistence.c in Sources */,
+				6299E08A19F2E541004A9A70 /* MQTTPersistenceDefault.c in Sources */,
+				6299E08B19F2E541004A9A70 /* MQTTProtocolClient.c in Sources */,
+				6299E08C19F2E541004A9A70 /* MQTTProtocolOut.c in Sources */,
+				6299E08D19F2E541004A9A70 /* Clients.c in Sources */,
+				6299E08E19F2E541004A9A70 /* Messages.c in Sources */,
+				6299E08F19F2E541004A9A70 /* Heap.c in Sources */,
+				6299E09019F2E541004A9A70 /* LinkedList.c in Sources */,
+				6299E09119F2E541004A9A70 /* Log.c in Sources */,
+				6299E09219F2E541004A9A70 /* StackTrace.c in Sources */,
+				6299E09319F2E541004A9A70 /* Thread.c in Sources */,
+				6299E09419F2E541004A9A70 /* Tree.c in Sources */,
+				6299E09519F2E541004A9A70 /* utf-8.c in Sources */,
+				6299E09619F2E541004A9A70 /* Socket.c in Sources */,
+				6299E09719F2E541004A9A70 /* SocketBuffer.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,7 +555,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62D711D319F11F4D00A72F40 /* MQTT.m in Sources */,
+				6299E05319F2D75C004A9A70 /* MQTTAsync.c in Sources */,
+				6299E06119F2D75C004A9A70 /* MQTTProtocolClient.c in Sources */,
+				6299E06319F2D75C004A9A70 /* MQTTProtocolOut.c in Sources */,
+				6299E05819F2D75C004A9A70 /* MQTTPacket.c in Sources */,
+				6299E05A19F2D75C004A9A70 /* MQTTPacketOut.c in Sources */,
+				6299E05C19F2D75C004A9A70 /* MQTTPersistence.c in Sources */,
+				6299E05E19F2D75C004A9A70 /* MQTTPersistenceDefault.c in Sources */,
+				6299E04F19F2D75C004A9A70 /* Clients.c in Sources */,
+				6299E05119F2D75C004A9A70 /* Messages.c in Sources */,
+				6299E07419F2D75C004A9A70 /* Socket.c in Sources */,
+				6299E07619F2D75C004A9A70 /* SocketBuffer.c in Sources */,
+				6299E06E19F2D75C004A9A70 /* Thread.c in Sources */,
+				6299E06C19F2D75C004A9A70 /* StackTrace.c in Sources */,
+				6299E06619F2D75C004A9A70 /* Heap.c in Sources */,
+				6299E06819F2D75C004A9A70 /* LinkedList.c in Sources */,
+				6299E06A19F2D75C004A9A70 /* Log.c in Sources */,
+				6299E07019F2D75C004A9A70 /* Tree.c in Sources */,
+				6299E07219F2D75C004A9A70 /* utf-8.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

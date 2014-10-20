@@ -13,3 +13,10 @@ DEPLOYMENT_LOCATION = YES
 //DEPLOYMENT_POSTPROCESSING = NO
 DSTROOT = $(PROJECT_DIR)/../bin/$(CONFIGURATION)
 ALWAYS_SEARCH_USER_PATHS = NO
+
+OTHER_CFLAGS=-DUSE_NAMED_SEMAPHORES -DNOSIGPIPE -DNO_PERSISTENCE -Wno-deprecated-declarations -fvisibility=hidden -fomit-frame-pointer
+// -DOPENSSL
+// -DMQTT_ASYNC
+// -static
+// libtool
+// lipo -create lib.armv7 lib.i386 -output name.output

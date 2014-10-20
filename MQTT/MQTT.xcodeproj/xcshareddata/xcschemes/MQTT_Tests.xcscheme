@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "62D711BF19F11E5C00A72F40"
-               BuildableName = "MQTT_Tests.xctest"
+               BuildableName = "MQTT.xctest"
                BlueprintName = "MQTT_Tests"
                ReferencedContainer = "container:MQTT.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "62D711BF19F11E5C00A72F40"
-               BuildableName = "MQTT_Tests.xctest"
+               BuildableName = "MQTT.xctest"
                BlueprintName = "MQTT_Tests"
                ReferencedContainer = "container:MQTT.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "62D711BF19F11E5C00A72F40"
-            BuildableName = "MQTT_Tests.xctest"
+            BuildableName = "MQTT.xctest"
             BlueprintName = "MQTT_Tests"
             ReferencedContainer = "container:MQTT.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "62D711BF19F11E5C00A72F40"
-            BuildableName = "MQTT_Tests.xctest"
+            BuildableName = "MQTT.xctest"
             BlueprintName = "MQTT_Tests"
             ReferencedContainer = "container:MQTT.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "62D711BF19F11E5C00A72F40"
-            BuildableName = "MQTT_Tests.xctest"
+            BuildableName = "MQTT.xctest"
             BlueprintName = "MQTT_Tests"
             ReferencedContainer = "container:MQTT.xcodeproj">
          </BuildableReference>
