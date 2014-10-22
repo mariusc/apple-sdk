@@ -1,3 +1,7 @@
+/*!
+ *  @abstract Functions dealing with the MQTT protocol exchanges.
+ *  @discussion Some other related functions are in the MQTTProtocolClient module.
+ */
 #pragma once
 
 #include "LinkedList.h"

@@ -85,7 +85,6 @@
 		6298AF3719D5F2250097E956 /* RLATargetAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 6298AF3419D5F2250097E956 /* RLATargetAction.h */; };
 		6298AF3819D5F2250097E956 /* RLATargetAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 6298AF3519D5F2250097E956 /* RLATargetAction.m */; };
 		6298AF3919D5F2250097E956 /* RLATargetAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 6298AF3519D5F2250097E956 /* RLATargetAction.m */; };
-		6299E0B619F2E788004A9A70 /* libMQTT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6299E0AF19F2E766004A9A70 /* libMQTT.a */; };
 		6299E0B919F2E797004A9A70 /* libMQTT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6299E0AF19F2E766004A9A70 /* libMQTT.a */; };
 		62B0B37619D097B100AD59BF /* WunderbarConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B0B37519D097B100AD59BF /* WunderbarConstants.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		62B0B37719D097B100AD59BF /* WunderbarConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B0B37519D097B100AD59BF /* WunderbarConstants.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -199,6 +198,7 @@
 		62E87DE219AB2AAA00728AC6 /* CPlatforms_endianness.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E87DD819AB2AAA00728AC6 /* CPlatforms_endianness.h */; };
 		62F1350819D54DA900DF93A7 /* RelayrOutput_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62F1350719D54DA900DF93A7 /* RelayrOutput_Setup.h */; };
 		62F1350919D54DA900DF93A7 /* RelayrOutput_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62F1350719D54DA900DF93A7 /* RelayrOutput_Setup.h */; };
+		62FB5D9E19F8033E0050C811 /* libMQTT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6299E0AF19F2E766004A9A70 /* libMQTT.a */; };
 		62FDB16819BEF2DD00AE2A64 /* RelayrFirmware_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62FDB16719BEF2DD00AE2A64 /* RelayrFirmware_Setup.h */; };
 		62FDB16919BEF2DD00AE2A64 /* RelayrFirmware_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62FDB16719BEF2DD00AE2A64 /* RelayrFirmware_Setup.h */; };
 		62FDB16B19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62FDB16A19BF050400AE2A64 /* RelayrInput_Setup.h */; };
@@ -234,19 +234,19 @@
 			remoteGlobalIDString = 62D711C019F11E5C00A72F40;
 			remoteInfo = MQTT_Tests;
 		};
-		6299E0B419F2E774004A9A70 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 62753E3319F10C690012BBE9;
-			remoteInfo = MQTT_iOS;
-		};
 		6299E0B719F2E78F004A9A70 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 62D711B519F11E5C00A72F40;
 			remoteInfo = MQTT_OSX;
+		};
+		62FB5D9C19F803350050C811 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 62753E3319F10C690012BBE9;
+			remoteInfo = MQTT_iOS;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -374,7 +374,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6299E0B619F2E788004A9A70 /* libMQTT.a in Frameworks */,
+				62FB5D9E19F8033E0050C811 /* libMQTT.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1115,7 +1115,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				6299E0B519F2E774004A9A70 /* PBXTargetDependency */,
+				62FB5D9D19F803350050C811 /* PBXTargetDependency */,
 			);
 			name = Relayr_iOS;
 			productName = Relayr;
@@ -1376,15 +1376,15 @@
 			target = 6252F0E4199C2AFA002ECE4D /* Relayr_OSX */;
 			targetProxy = 6202C05319D451700023AEC7 /* PBXContainerItemProxy */;
 		};
-		6299E0B519F2E774004A9A70 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MQTT_iOS;
-			targetProxy = 6299E0B419F2E774004A9A70 /* PBXContainerItemProxy */;
-		};
 		6299E0B819F2E78F004A9A70 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = MQTT_OSX;
 			targetProxy = 6299E0B719F2E78F004A9A70 /* PBXContainerItemProxy */;
+		};
+		62FB5D9D19F803350050C811 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MQTT_iOS;
+			targetProxy = 62FB5D9C19F803350050C811 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
