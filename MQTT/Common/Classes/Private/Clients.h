@@ -110,7 +110,7 @@ typedef struct
     #endif
 } Clients;
 
-#pragma mark Comparison functions
+#pragma mark Public API
 
 /*!
  *  @abstract List callback function for comparing clients by clientid

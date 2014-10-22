@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "62E41FC119C35B90008459B7"
-               BuildableName = "Relayr.xctest"
-               BlueprintName = "Relayr_Tests"
-               ReferencedContainer = "container:RelayrSDK.xcodeproj">
+               BlueprintIdentifier = "62CBFBF819F5A502007E84C2"
+               BuildableName = "libcbasics.a"
+               BlueprintName = "CBasics_OSX"
+               ReferencedContainer = "container:CBasics.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -26,18 +26,9 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
-      buildConfiguration = "Release">
+      buildConfiguration = "Debug">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "62E41FC119C35B90008459B7"
-            BuildableName = "Relayr.xctest"
-            BlueprintName = "Relayr_Tests"
-            ReferencedContainer = "container:RelayrSDK.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -51,10 +42,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "62E41FC119C35B90008459B7"
-            BuildableName = "Relayr.xctest"
-            BlueprintName = "Relayr_Tests"
-            ReferencedContainer = "container:RelayrSDK.xcodeproj">
+            BlueprintIdentifier = "62CBFBF819F5A502007E84C2"
+            BuildableName = "libcbasics.a"
+            BlueprintName = "CBasics_OSX"
+            ReferencedContainer = "container:CBasics.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -69,10 +60,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "62E41FC119C35B90008459B7"
-            BuildableName = "Relayr.xctest"
-            BlueprintName = "Relayr_Tests"
-            ReferencedContainer = "container:RelayrSDK.xcodeproj">
+            BlueprintIdentifier = "62CBFBF819F5A502007E84C2"
+            BuildableName = "libcbasics.a"
+            BlueprintName = "CBasics_OSX"
+            ReferencedContainer = "container:CBasics.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

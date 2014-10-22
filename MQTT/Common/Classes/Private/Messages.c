@@ -1,18 +1,12 @@
-/**
- * @file
- * \brief Trace messages
- *
- */
+#include "Messages.h"   // Header
+#include "Log.h"        // MQTT (Utilities)
 
-#include "Messages.h"
-#include "Log.h"
+#include <stdio.h>      // C Standard
+#include <stdlib.h>     // C Standard
+#include <memory.h>     // C Standard
+#include <string.h>     // C Standard
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <memory.h>
-#include <string.h>
-
-#include "Heap.h"
+#include "Heap.h"       // MQTT (Utilities)
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 
@@ -69,19 +63,15 @@ static char* trace_message_list[] =
 	"Storing unsent QoS 0 message", /* 12 */
 };
 
-/**
- * Get a log message by its index
- * @param index the integer index
- * @param log_level the log level, used to determine which message list to use
- * @return the message format string
- */
 char* Messages_get(int index, int log_level)
 {
 	char* msg = NULL;
 
-	if (log_level == TRACE_PROTOCOL)
+    if (log_level == TRACE_PROTOCOL) {
 		msg = (index >= 0 && index < ARRAY_SIZE(protocol_message_list)) ? protocol_message_list[index] : NULL;
-	else
+    } else {
 		msg = (index >= 0 && index < ARRAY_SIZE(trace_message_list)) ? trace_message_list[index] : NULL;
+    }
+    
 	return msg;
 }

@@ -1,10 +1,10 @@
 #include "Socket.h"         // Header
-#include "Log.h"
-#include "SocketBuffer.h"
-#include "Messages.h"
-#include "StackTrace.h"
+#include "Log.h"            // MQTT (Utilities)
+#include "SocketBuffer.h"   // MQTT (Web)
+#include "Messages.h"       // MQTT (Private)
+#include "StackTrace.h"     // MQTT (Utilities)
 #if defined(OPENSSL)
-#include "SSLSocket.h"
+#include "SSLSocket.h"      // OpenSSL
 #endif
 
 #include <stdlib.h>         // C Standard
@@ -12,7 +12,7 @@
 #include <signal.h>         // C Standard
 #include <ctype.h>          // C Standard
 
-#include "Heap.h"
+#include "Heap.h"           // MQTT (Utilities)
 
 #pragma mark - Private prototypes
 
@@ -21,8 +21,7 @@ int Socket_setnonblocking(int sock);
 int isReady(int socket, fd_set* read_set, fd_set* write_set);
 int Socket_error(char* aString, int sock);
 char* Socket_getaddrname(struct sockaddr* sa, int sock);
-int Socket_writev(int socket, iobuf* iovecs, int count, unsigned long* bytes);
-int Socket_writev(int socket, iobuf* iovecs, int count, unsigned long* bytes);
+int Socket_writev(int socket, iobuf* iovecs, int count, size_t* bytes);
 int Socket_continueWrites(fd_set* pwset);
 int Socket_continueWrite(int socket);
 int Socket_close_only(int socket);
@@ -214,10 +213,12 @@ exit:
 
 int Socket_putdatas(int socket, char* buf0, size_t buf0len, int count, char** buffers, size_t* buflens, int* frees)
 {
-    unsigned long bytes = 0L;
+    size_t bytes = 0L;
+    size_t total = buf0len;
+    
     iobuf iovecs[5];
     int frees1[5];
-    int rc = TCPSOCKET_INTERRUPTED, i, total = buf0len;
+    int rc = TCPSOCKET_INTERRUPTED;
     
     FUNC_ENTRY;
     if (!Socket_noPendingWrites(socket))
@@ -227,13 +228,12 @@ int Socket_putdatas(int socket, char* buf0, size_t buf0len, int count, char** bu
         goto exit;
     }
     
-    for (i = 0; i < count; i++)
-        total += buflens[i];
+    for (int i = 0; i < count; i++) { total += buflens[i]; }
     
     iovecs[0].iov_base = buf0;
     iovecs[0].iov_len = buf0len;
     frees1[0] = 1;
-    for (i = 0; i < count; i++)
+    for (int i = 0; i < count; i++)
     {
         iovecs[i+1].iov_base = buffers[i];
         iovecs[i+1].iov_len = buflens[i];
@@ -270,18 +270,18 @@ void Socket_close(int socket)
     FUNC_ENTRY;
     Socket_close_only(socket);
     FD_CLR(socket, &(s.rset_saved));
-    if (FD_ISSET(socket, &(s.pending_wset)))
-        FD_CLR(socket, &(s.pending_wset));
-    if (s.cur_clientsds != NULL && *(int*)(s.cur_clientsds->content) == socket)
-        s.cur_clientsds = s.cur_clientsds->next;
+    if (FD_ISSET(socket, &(s.pending_wset))) { FD_CLR(socket, &(s.pending_wset)); }
+    if (s.cur_clientsds != NULL && *(int*)(s.cur_clientsds->content) == socket) { s.cur_clientsds = s.cur_clientsds->next; }
     ListRemoveItem(s.connect_pending, &socket, intcompare);
     ListRemoveItem(s.write_pending, &socket, intcompare);
     SocketBuffer_cleanup(socket);
     
-    if (ListRemoveItem(s.clientsds, &socket, intcompare))
+    if (ListRemoveItem(s.clientsds, &socket, intcompare)) {
         Log(TRACE_MIN, -1, "Removed socket %d", socket);
-    else
+    } else {
         Log(LOG_ERROR, -1, "Failed to remove socket %d", socket);
+    }
+    
     if (socket + 1 >= s.maxfdp1)
     {
         /* now we have to reset s.maxfdp1 */
@@ -311,8 +311,7 @@ int Socket_new(char* addr, int port, int* sock)
     FUNC_ENTRY;
     *sock = -1;
     
-    if (addr[0] == '[')
-        ++addr;
+    if (addr[0] == '[') { ++addr; }
     
     if ((rc = getaddrinfo(addr, NULL, &hints, &result)) == 0)
     {
@@ -557,21 +556,20 @@ char* Socket_getaddrname(struct sockaddr* sa, int sock)
  *  @param bytes number of bytes actually written returned
  *  @return completion code, especially TCPSOCKET_INTERRUPTED
  */
-int Socket_writev(int socket, iobuf* iovecs, int count, unsigned long* bytes)
+int Socket_writev(int socket, iobuf* iovecs, int count, size_t* bytes)
 {
     int rc;
     
     FUNC_ENTRY;
     *bytes = 0L;
-    rc = writev(socket, iovecs, count);
+    rc = (int)writev(socket, iovecs, count);
     if (rc == SOCKET_ERROR)
     {
         int err = Socket_error("writev - putdatas", socket);
-        if (err == EWOULDBLOCK || err == EAGAIN)
-            rc = TCPSOCKET_INTERRUPTED;
+        if (err == EWOULDBLOCK || err == EAGAIN) { rc = TCPSOCKET_INTERRUPTED; }
     }
-    else
-        *bytes = rc;
+    else { *bytes = rc; }
+    
     FUNC_EXIT_RC(rc);
     return rc;
 }
@@ -622,7 +620,7 @@ int Socket_continueWrite(int socket)
 {
     int rc = 0;
     pending_writes* pw;
-    unsigned long curbuflen = 0L, /* cumulative total of buffer lengths */
+    size_t curbuflen = 0L, /* cumulative total of buffer lengths */
     bytes;
     int curbuf = -1, i;
     iobuf iovecs1[5];
@@ -649,7 +647,7 @@ int Socket_continueWrite(int socket)
         else if (pw->bytes < curbuflen + pw->iovecs[i].iov_len)
         { /* if previously written length is in the middle of the buffer we are currently looking at,
            add some of the buffer */
-            int offset = pw->bytes - curbuflen;
+            long offset = pw->bytes - curbuflen;
             iovecs1[++curbuf].iov_len = pw->iovecs[i].iov_len - offset;
             iovecs1[curbuf].iov_base = pw->iovecs[i].iov_base + offset;
             break;

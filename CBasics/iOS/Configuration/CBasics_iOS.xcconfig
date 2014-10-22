@@ -1,0 +1,7 @@
+#include "Common/Configuration/CBasics_Common.xcconfig"
+
+SDKROOT = iphoneos
+SUPPORTED_PLATFORMS = iphoneos iphonesimulator
+
+INSTALL_PATH = /iOS
+SKIP_INSTALL = NO

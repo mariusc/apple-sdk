@@ -1,43 +1,50 @@
+/*!
+ *  @abstract Socket related functions.
+ *  @discussion Some other related functions are in the SocketBuffer module.
+ */
 #pragma once
 
-#include <sys/types.h>
+#include <sys/types.h>      // POSIX
 
 #define INVALID_SOCKET SOCKET_ERROR
-#include <sys/socket.h>     // Unix (System)
-#include <sys/param.h>      // Unix (System)
-#include <sys/time.h>       // Unix (System)
-#include <sys/select.h>     // Unix (System)
+#include <sys/socket.h>     // POSIX
+#include <sys/param.h>      // POSIX
+#include <sys/time.h>       // POSIX
+#include <sys/select.h>     // POSIX
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <arpa/inet.h>
 #include <netdb.h>
-#include <stdio.h>
+#include <stdio.h>          // C Standard
 #include <unistd.h>
-#include <errno.h>
+#include <errno.h>          // C Standard
 #include <fcntl.h>
 #include <unistd.h>
-#include <sys/uio.h>
+#include <sys/uio.h>        // POSIX
+#include "LinkedList.h"     // MQTT (Utilities)
 
-/** socket operation completed successfully */
+#pragma mark Definitions
+
+// Socket operation completed successfully.
 #define TCPSOCKET_COMPLETE 0
+
 #if !defined(SOCKET_ERROR)
-	/** error in socket operation */
+	// Error in socket operation.
 	#define SOCKET_ERROR -1
 #endif
-/** must be the same as SOCKETBUFFER_INTERRUPTED */
+
+// Must be the same as SOCKETBUFFER_INTERRUPTED.
 #define TCPSOCKET_INTERRUPTED -22
 #define SSL_FATAL -3
 
 #if !defined(INET6_ADDRSTRLEN)
-#define INET6_ADDRSTRLEN 46 /** only needed for gcc/cygwin on windows */
+    #define INET6_ADDRSTRLEN 46     // Only needed for gcc/cygwin on windows.
 #endif
 
 
 #if !defined(max)
-#define max(A,B) ( (A) > (B) ? (A):(B))
+    #define max(A,B) ( (A) > (B) ? (A):(B))
 #endif
-
-#include "LinkedList.h"     // MQTT (Utilities)
 
 /**
  *  @abstract Structure to hold all socket data for the module
@@ -62,6 +69,10 @@ typedef struct
 	List* write_pending;
 	fd_set pending_wset;
 } Sockets;
+
+typedef void Socket_writeComplete(int socket);
+
+#pragma mark Public API
 
 /*!
  *  @abstract Initialize the socket module.
@@ -157,5 +168,4 @@ void Socket_addPendingWrite(int socket);
  */
 void Socket_clearPendingWrite(int socket);
 
-typedef void Socket_writeComplete(int socket);
 void Socket_setWriteCompleteCallback(Socket_writeComplete*);

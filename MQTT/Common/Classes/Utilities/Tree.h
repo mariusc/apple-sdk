@@ -4,6 +4,8 @@
  */
 #pragma once
 
+#include <stdlib.h>     // C Standard
+
 /*!
  *  @abstract Structure to hold all data for one list element
  *
@@ -17,7 +19,7 @@ typedef struct NodeStruct
     struct NodeStruct* parent;
     struct NodeStruct* child[2];
 	void* content;
-	int size;
+	size_t size;
 	unsigned int red : 1;
 } Node;
 
@@ -41,23 +43,36 @@ typedef struct
     
     int indexes;
     int count;
-    int size;
+    size_t size;
 	unsigned int heap_tracking : 1;
 	unsigned int allow_duplicates : 1;
 } Tree;
 
-
+/*!
+ *  @abstract Allocates and initializes a new tree structure.
+ *
+ *  @return a pointer to the new tree structure.
+ */
 Tree* TreeInitialize(int(*compare)(void*, void*, int));
+
 void TreeInitializeNoMalloc(Tree* aTree, int(*compare)(void*, void*, int));
+
 void TreeAddIndex(Tree* aTree, int(*compare)(void*, void*, int));
 
-void* TreeAdd(Tree* aTree, void* content, int size);
+void* TreeAdd(Tree* aTree, void* content, size_t size);
 
 void* TreeRemove(Tree* aTree, void* content);
 
 void* TreeRemoveKey(Tree* aTree, void* key);
+
 void* TreeRemoveKeyIndex(Tree* aTree, void* key, int index);
 
+/*!
+ *  @abstract Remove an item from a tree.
+ *
+ *  @param aTree the list to which the item is to be added.
+ *  @param curnode the list item content itself.
+ */
 void* TreeRemoveNodeIndex(Tree* aTree, Node* aNode, int index);
 
 void TreeFree(Tree* aTree);
@@ -66,6 +81,8 @@ Node* TreeFind(Tree* aTree, void* key);
 Node* TreeFindIndex(Tree* aTree, void* key, int index);
 
 Node* TreeNextElement(Tree* aTree, Node* curnode);
+
+#pragma mark Comparison functions
 
 int TreeIntCompare(void* a, void* b, int);
 int TreePtrCompare(void* a, void* b, int);

@@ -25,11 +25,12 @@ typedef struct
 
 typedef struct
 {
-	int socket, total, count;
+	int socket, count;
     #if defined(OPENSSL)
 	SSL* ssl;
     #endif
-	unsigned long bytes;
+	size_t bytes;
+    size_t total;
 	iobuf iovecs[5];
 	int frees[5];
 } pending_writes;
@@ -39,6 +40,8 @@ typedef struct
 	#define SOCKET_ERROR -1
 #endif
 #define SOCKETBUFFER_INTERRUPTED -22 /* must be the same value as TCPSOCKET_INTERRUPTED */
+
+#pragma mark Public API
 
 /*!
  *  @abstract Initialize the socketBuffer module
@@ -103,16 +106,16 @@ void SocketBuffer_queueChar(int socket, char c);
 /*!
  *  @abstrac A socket write was interrupted so store the remaining data
  *
- *  @param socket the socket for which the write was interrupted
- *  @param count the number of iovec buffers
- *  @param iovecs buffer array
- *  @param total total data length to be written
- *  @param bytes actual data length that was written
+ *  @param socket The socket for which the write was interrupted
+ *  @param count The number of iovec buffers
+ *  @param iovecs Buffer array
+ *  @param total Total data length to be written
+ *  @param bytes Actual data length that was written
  */
 #if defined(OPENSSL)
-void SocketBuffer_pendingWrite(int socket, SSL* ssl, int count, iobuf* iovecs, int* frees, int total, int bytes);
+void SocketBuffer_pendingWrite(int socket, SSL* ssl, int count, iobuf* iovecs, int* frees, size_t total, size_t bytes);
 #else
-void SocketBuffer_pendingWrite(int socket, int count, iobuf* iovecs, int* frees, int total, int bytes);
+void SocketBuffer_pendingWrite(int socket, int count, iobuf* iovecs, int* frees, size_t total, size_t bytes);
 #endif
 
 /*!

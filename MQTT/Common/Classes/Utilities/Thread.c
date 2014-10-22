@@ -1,76 +1,40 @@
-/*******************************************************************************
- * Copyright (c) 2009, 2014 IBM Corp.
- *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * and Eclipse Distribution License v1.0 which accompany this distribution. 
- *
- * The Eclipse Public License is available at 
- *    http://www.eclipse.org/legal/epl-v10.html
- * and the Eclipse Distribution License is available at 
- *   http://www.eclipse.org/org/documents/edl-v10.php.
- *
- * Contributors:
- *    Ian Craggs - initial implementation
- *    Ian Craggs, Allan Stockdill-Mander - async client updates
- *    Ian Craggs - bug #415042 - start Linux thread as disconnected
- *    Ian Craggs - fix for bug #420851
- *******************************************************************************/
-
-/**
- * @file
- * \brief Threading related functions
- *
- * Used to create platform independent threading functions
- */
-
-
-#include "Thread.h"
-#if defined(THREAD_UNIT_TESTS)
-#define NOSTACKTRACE
-#endif
-#include "StackTrace.h"
+#include "Thread.h"         // Header
+#include "StackTrace.h"     // MQTT (Utilities)
 
 #undef malloc
 #undef realloc
 #undef free
 
-#include <errno.h>
-#include <unistd.h>
-#include <sys/time.h>
+#include <errno.h>          // POSIX
+#include <unistd.h>         // POSIX
+#include <sys/time.h>       // POSIX
 #include <fcntl.h>
-#include <stdio.h>
-#include <sys/stat.h>
-#include <limits.h>
+#include <stdio.h>          // C Standard
+#include <sys/stat.h>       // POSIX
+#include <limits.h>         // C Standard
 #include <memory.h>
-#include <stdlib.h>
+#include <stdlib.h>         // C Standard
 
-/**
- * Start a new thread
- * @param fn the function to run, must be of the correct signature
- * @param parameter pointer to the function parameter, can be NULL
- * @return the new thread
- */
-thread_type Thread_start(thread_fn fn, void* parameter)
+#if defined(USE_NAMED_SEMAPHORES)
+
+#pragma mark - Definitions
+
+#define MAX_NAMED_SEMAPHORES 10
+
+static struct
 {
-	thread_type thread = 0;
-	pthread_attr_t attr;
+    sem_type sem;
+    char name[NAME_MAX-4];
+} named_semaphores[MAX_NAMED_SEMAPHORES];
 
-	FUNC_ENTRY;
-	pthread_attr_init(&attr);
-	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
-	if (pthread_create(&thread, &attr, fn, parameter) != 0)
-		thread = 0;
-	pthread_attr_destroy(&attr);
-	FUNC_EXIT;
-	return thread;
-}
+#pragma mark - Variables
 
+static int named_semaphore_count = 0;
 
-/**
- * Create a new mutex
- * @return the new mutex
- */
+#endif
+
+#pragma mark - Public API
+
 mutex_type Thread_create_mutex()
 {
 	mutex_type mutex = NULL;
@@ -83,12 +47,6 @@ mutex_type Thread_create_mutex()
 	return mutex;
 }
 
-/**
- * @abstract Lock a mutex which has already been created, block until ready
- *
- * @param mutex the mutex
- * @return completion code, 0 is success
- */
 int Thread_lock_mutex(mutex_type mutex)
 {
 	int rc = -1;
@@ -98,12 +56,6 @@ int Thread_lock_mutex(mutex_type mutex)
 	return rc;
 }
 
-
-/**
- * Unlock a mutex which has already been locked
- * @param mutex the mutex
- * @return completion code, 0 is success
- */
 int Thread_unlock_mutex(mutex_type mutex)
 {
 	int rc = -1;
@@ -114,11 +66,6 @@ int Thread_unlock_mutex(mutex_type mutex)
 	return rc;
 }
 
-
-/**
- * Destroy a mutex which has already been created
- * @param mutex the mutex
- */
 void Thread_destroy_mutex(mutex_type mutex)
 {
 	int rc = 0;
@@ -129,35 +76,6 @@ void Thread_destroy_mutex(mutex_type mutex)
 	FUNC_EXIT_RC(rc);
 }
 
-
-/**
- * Get the thread id of the thread from which this function is called
- * @return thread id, type varying according to OS
- */
-thread_id_type Thread_getid()
-{
-    return pthread_self();
-}
-
-
-#if defined(USE_NAMED_SEMAPHORES)
-#define MAX_NAMED_SEMAPHORES 10
-
-static int named_semaphore_count = 0;
-
-static struct 
-{
-	sem_type sem;
-	char name[NAME_MAX-4];
-} named_semaphores[MAX_NAMED_SEMAPHORES];
- 
-#endif
-
-
-/**
- * Create a new semaphore
- * @return the new condition variable
- */
 sem_type Thread_create_sem()
 {
 	sem_type sem = NULL;
@@ -193,30 +111,21 @@ sem_type Thread_create_sem()
 	return sem;
 }
 
-
-/**
- * Wait for a semaphore to be posted, or timeout.
- * @param sem the semaphore
- * @param timeout the maximum time to wait, in milliseconds
- * @return completion code
- */
 int Thread_wait_sem(sem_type sem, int timeout)
 {
-/* sem_timedwait is the obvious call to use, but seemed not to work on the Viper,
- * so I've used trywait in a loop instead. Ian Craggs 23/7/2010
- */
+    // sem_timedwait is the obvious call to use, but seemed not to work on the Viper, so I've used trywait in a loop instead.
 	int rc = -1;
-#define USE_TRYWAIT
-#if defined(USE_TRYWAIT)
+    #define USE_TRYWAIT
+    #if defined(USE_TRYWAIT)
 	int i = 0;
 	int interval = 10000; /* 10000 microseconds: 10 milliseconds */
 	int count = (1000 * timeout) / interval; /* how many intervals in timeout period */
-#else
+    #else
 	struct timespec ts;
-#endif
+    #endif
 
 	FUNC_ENTRY;
-	#if defined(USE_TRYWAIT)
+        #if defined(USE_TRYWAIT)
 		while (++i < count && (rc = sem_trywait(sem)) != 0)
 		{
 			if (rc == -1 && ((rc = errno) != EAGAIN))
@@ -226,24 +135,18 @@ int Thread_wait_sem(sem_type sem, int timeout)
 			}
 			usleep(interval); /* microseconds - .1 of a second */
 		}
-	#else
+        #else
 		if (clock_gettime(CLOCK_REALTIME, &ts) != -1)
 		{
 			ts.tv_sec += timeout;
 			rc = sem_timedwait(sem, &ts);
 		}
-	#endif
+        #endif
 
  	FUNC_EXIT_RC(rc);
  	return rc;
 }
 
-
-/**
- * Check to see if a semaphore has been posted, without waiting.
- * @param sem the semaphore
- * @return 0 (false) or 1 (true)
- */
 int Thread_check_sem(sem_type sem)
 {
 	int semval = -1;
@@ -251,12 +154,6 @@ int Thread_check_sem(sem_type sem)
 	return semval > 0;
 }
 
-
-/**
- * Post a semaphore
- * @param sem the semaphore
- * @return completion code
- */
 int Thread_post_sem(sem_type sem)
 {
 	int rc = 0;
@@ -268,11 +165,6 @@ int Thread_post_sem(sem_type sem)
   return rc;
 }
 
-
-/**
- * Destroy a semaphore which has already been created
- * @param sem the semaphore
- */
 int Thread_destroy_sem(sem_type sem)
 {
 	int rc = 0;
@@ -299,10 +191,6 @@ int Thread_destroy_sem(sem_type sem)
 	return rc;
 }
 
-/**
- * Create a new condition variable
- * @return the condition variable struct
- */
 cond_type Thread_create_cond()
 {
 	cond_type condvar = NULL;
@@ -317,10 +205,6 @@ cond_type Thread_create_cond()
 	return condvar;
 }
 
-/**
- * Signal a condition variable
- * @return completion code
- */
 int Thread_signal_cond(cond_type condvar)
 {
 	int rc = 0;
@@ -332,10 +216,6 @@ int Thread_signal_cond(cond_type condvar)
 	return rc;
 }
 
-/**
- * Wait with a timeout (seconds) for condition variable
- * @return completion code
- */
 int Thread_wait_cond(cond_type condvar, int timeout)
 {
 	FUNC_ENTRY;
@@ -356,10 +236,6 @@ int Thread_wait_cond(cond_type condvar, int timeout)
 	return rc;
 }
 
-/**
- * Destroy a condition variable
- * @return completion code
- */
 int Thread_destroy_cond(cond_type condvar)
 {
 	int rc = 0;
@@ -371,63 +247,22 @@ int Thread_destroy_cond(cond_type condvar)
 	return rc;
 }
 
-#if defined(THREAD_UNIT_TESTS)
-
-#include <stdio.h>
-
-thread_return_type secondary(void* n)
+thread_type Thread_start(thread_fn fn, void* parameter)
 {
-	int rc = 0;
-
-	/*
-	cond_type cond = n;
-
-	printf("Secondary thread about to wait\n");
-	rc = Thread_wait_cond(cond);
-	printf("Secondary thread returned from wait %d\n", rc);*/
-
-	sem_type sem = n;
-
-	printf("Secondary thread about to wait\n");
-	rc = Thread_wait_sem(sem);
-	printf("Secondary thread returned from wait %d\n", rc);
-
-	printf("Secondary thread about to wait\n");
-	rc = Thread_wait_sem(sem);
-	printf("Secondary thread returned from wait %d\n", rc);
-	printf("Secondary check sem %d\n", Thread_check_sem(sem));
-
-	return 0;
+    thread_type thread = 0;
+    pthread_attr_t attr;
+    
+    FUNC_ENTRY;
+    pthread_attr_init(&attr);
+    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+    if (pthread_create(&thread, &attr, fn, parameter) != 0)
+        thread = 0;
+    pthread_attr_destroy(&attr);
+    FUNC_EXIT;
+    return thread;
 }
 
-
-int main(int argc, char *argv[])
+thread_id_type Thread_getid()
 {
-	int rc = 0;
-
-	sem_type sem = Thread_create_sem();
-
-	printf("check sem %d\n", Thread_check_sem(sem));
-
-	printf("post secondary\n");
-	rc = Thread_post_sem(sem);
-	printf("posted secondary %d\n", rc);
-
-	printf("check sem %d\n", Thread_check_sem(sem));
-
-	printf("Starting secondary thread\n");
-	Thread_start(secondary, (void*)sem);
-
-	sleep(3);
-	printf("check sem %d\n", Thread_check_sem(sem));
-
-	printf("post secondary\n");
-	rc = Thread_post_sem(sem);
-	printf("posted secondary %d\n", rc);
-
-	sleep(3);
-
-	printf("Main thread ending\n");
+    return pthread_self();
 }
-
-#endif

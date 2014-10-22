@@ -1,8 +1,10 @@
 #pragma once
 
-#include <stdio.h>
-#include "Log.h"
-#include "Thread.h"
+#include <stdio.h>      // C Standard
+#include "Log.h"        // MQTT (Utilities)
+#include "Thread.h"     // MQTT (Utilities)
+
+#pragma mark Public API
 
 #if defined(NOSTACKTRACE)
 #define FUNC_ENTRY
@@ -31,7 +33,9 @@
 #endif
 
 void StackTrace_entry(char const* name, int line, int trace);
-void StackTrace_exit(char const* name, int line, void const* return_value, int trace);
 
 void StackTrace_printStack(FILE* dest);
+
 char* StackTrace_get(thread_id_type);
+
+void StackTrace_exit(char const* name, int line, void const* return_value, int trace);

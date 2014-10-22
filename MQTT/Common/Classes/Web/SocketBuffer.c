@@ -187,17 +187,14 @@ void SocketBuffer_queueChar(int socket, char c)
 }
 
 #if defined(OPENSSL)
-void SocketBuffer_pendingWrite(int socket, SSL* ssl, int count, iobuf* iovecs, int* frees, int total, int bytes)
+void SocketBuffer_pendingWrite(int socket, SSL* ssl, int count, iobuf* iovecs, int* frees, size_t total, size_t bytes)
 #else
-void SocketBuffer_pendingWrite(int socket, int count, iobuf* iovecs, int* frees, int total, int bytes)
+void SocketBuffer_pendingWrite(int socket, int count, iobuf* iovecs, int* frees, size_t total, size_t bytes)
 #endif
 {
-    int i = 0;
-    pending_writes* pw = NULL;
-    
     FUNC_ENTRY;
     /* store the buffers until the whole packet is written */
-    pw = malloc(sizeof(pending_writes));
+    pending_writes* pw = malloc(sizeof(pending_writes));
     pw->socket = socket;
 #if defined(OPENSSL)
     pw->ssl = ssl;
@@ -205,7 +202,7 @@ void SocketBuffer_pendingWrite(int socket, int count, iobuf* iovecs, int* frees,
     pw->bytes = bytes;
     pw->total = total;
     pw->count = count;
-    for (i = 0; i < count; i++)
+    for (int i = 0; i < count; i++)
     {
         pw->iovecs[i] = iovecs[i];
         pw->frees[i] = frees[i];
