@@ -32,9 +32,9 @@ typedef struct
 typedef struct
 {
 	char* topic;
-	int topiclen;
+	size_t topiclen;
 	char* payload;
-	int payloadlen;
+	size_t payloadlen;
 	int refcount;
 } Publications;
 
@@ -49,7 +49,7 @@ typedef struct
 	Publications *publish;
 	time_t lastTouch;		// Used for retry and expiry.
 	char nextMessageType;	// PUBREC, PUBREL, PUBCOMP
-	int len;				// Length of the whole structure+data
+	size_t len;				// Length of the whole structure+data
 } Messages;
 
 /*!

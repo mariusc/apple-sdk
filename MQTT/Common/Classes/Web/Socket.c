@@ -168,12 +168,13 @@ exit:
     return rc;
 }
 
-char* Socket_getdata(int socket, int bytes, int* actual_len)
+char* Socket_getdata(int socket, size_t bytes, size_t* actual_len)
 {
     int rc;
-    char* buf;
     
     FUNC_ENTRY;
+    char* buf;
+    
     if (bytes == 0)
     {
         buf = SocketBuffer_complete(socket);
@@ -200,7 +201,9 @@ char* Socket_getdata(int socket, int bytes, int* actual_len)
         *actual_len += rc;
     
     if (*actual_len == bytes)
+    {
         SocketBuffer_complete(socket);
+    }
     else /* we didn't read the whole packet */
     {
         SocketBuffer_interrupted(socket, *actual_len);

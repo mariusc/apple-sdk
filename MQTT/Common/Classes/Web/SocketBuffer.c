@@ -61,7 +61,7 @@ void SocketBuffer_cleanup(int socket)
     FUNC_EXIT;
 }
 
-char* SocketBuffer_getQueuedData(int socket, int bytes, int* actual_len)
+char* SocketBuffer_getQueuedData(int socket, size_t bytes, size_t* actual_len)
 {
     socket_queue* queue = NULL;
     
@@ -85,8 +85,7 @@ char* SocketBuffer_getQueuedData(int socket, int bytes, int* actual_len)
             free(queue->buf);
             queue->buf = newmem;
         }
-        else
-            queue->buf = realloc(queue->buf, bytes);
+        else { queue->buf = realloc(queue->buf, bytes); }
         queue->buflen = bytes;
     }
     
@@ -121,13 +120,15 @@ exit:
     return rc;  /* there was no queued char if rc is SOCKETBUFFER_INTERRUPTED*/
 }
 
-void SocketBuffer_interrupted(int socket, int actual_len)
+void SocketBuffer_interrupted(int socket, size_t actual_len)
 {
     socket_queue* queue = NULL;
     
     FUNC_ENTRY;
     if (ListFindItem(queues, &socket, socketcompare))
+    {
         queue = (socket_queue*)(queues->current->content);
+    }
     else /* new saved queue */
     {
         queue = def_queue;

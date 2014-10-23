@@ -1,8 +1,8 @@
 #pragma once
 
-#include "LinkedList.h"
-#include "MQTTPacket.h"
-#include "Clients.h"
+#include "LinkedList.h"     // MQTT (Utilities)
+#include "MQTTPacket.h"     // MQTT (Public)
+#include "Clients.h"        // MQTT (Private)
 
 #define MAX_MSG_ID 65535
 #define MAX_CLIENTID_LEN 65535
@@ -22,4 +22,4 @@ typedef struct
 	List pending_writes; /* for qos 0 writes not complete */
 } MQTTProtocol;
 
-#include "MQTTProtocolOut.h"
+#include "MQTTProtocolOut.h"    // MQTT (Public)

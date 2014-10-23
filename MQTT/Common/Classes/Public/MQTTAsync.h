@@ -55,10 +55,10 @@
  */
 #pragma once
 
-#include <stdio.h>
+#include <stdio.h>                      // C Standard
 
 #if !defined(NO_PERSISTENCE)
-    #include "MQTTClientPersistence.h"
+    #include "MQTTClientPersistence.h"  // MQTT (Public)
 #endif
 
 #pragma mark Definitions

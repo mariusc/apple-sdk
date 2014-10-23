@@ -95,6 +95,7 @@ int Socket_getReadySocket(int more_work, struct timeval *tp);
 
 /*!
  *  @abstract Reads one byte from a socket
+ *
  *  @param socket the socket to read from
  *  @param c the character read, returned
  *  @return completion code
@@ -102,12 +103,13 @@ int Socket_getReadySocket(int more_work, struct timeval *tp);
 int Socket_getch(int socket, char* c);
 /*!
  *  @abstract Attempts to read a number of bytes from a socket, non-blocking. If a previous read did not finish, then retrieve that data.
+ *
  *  @param socket the socket to read from.
  *  @param bytes the number of bytes to read.
  *  @param actual_len the actual number of bytes read.
  *  @return completion code.
  */
-char* Socket_getdata(int socket, int bytes, int* actual_len);
+char* Socket_getdata(int socket, size_t bytes, size_t* actual_len);
 
 /*!
  *  @abstract Attempts to write a series of buffers to a socket in *one* system call so that they are sent as one packet.

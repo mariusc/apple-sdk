@@ -18,8 +18,8 @@ typedef struct
 	int socket;
 	int index, headerlen;
 	char fixed_header[5];	// Header plus up to 4 length bytes
-    int buflen; 			// Total length of the buffer
-    int datalen; 			// current length of data in buf
+    size_t buflen; 			// Total length of the buffer
+    size_t datalen; 		// current length of data in buf
 	char* buf;
 } socket_queue;
 
@@ -68,7 +68,7 @@ void SocketBuffer_cleanup(int socket);
  *  @param actual_len the actual length returned
  *  @return the actual data
  */
-char* SocketBuffer_getQueuedData(int socket, int bytes, int* actual_len);
+char* SocketBuffer_getQueuedData(int socket, size_t bytes, size_t* actual_len);
 
 /*!
  *  @abstract Get any queued character for a specific socket
@@ -85,7 +85,7 @@ int SocketBuffer_getQueuedChar(int socket, char* c);
  *  @param socket the socket to get queued data for
  *  @param actual_len the actual length of data that was read
  */
-void SocketBuffer_interrupted(int socket, int actual_len);
+void SocketBuffer_interrupted(int socket, size_t actual_len);
 
 /*!
  *  @abstract A socket read has now completed so we can get rid of the queue
