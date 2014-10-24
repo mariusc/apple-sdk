@@ -1,5 +1,6 @@
 #import "RLAWebService.h"           // Header
-#import "RLAWebConstants.h"         // Relayr.framework (Web)
+#import "RelayrUser.h"              // Relayr.framework (Public)
+#import "RLAWebConstants.h"         // Relayr.framework (Protocols/Web)
 
 @implementation RLAWebService
 
@@ -13,7 +14,7 @@
 
 - (instancetype)initWithUser:(RelayrUser*)user
 {
-    if (!user) { return nil; }
+    if (!user.uid) { return nil; }
     
     self = [super init];
     if (self)

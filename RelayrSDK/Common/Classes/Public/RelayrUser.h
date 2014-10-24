@@ -164,6 +164,4 @@
 - (void)deleteDevice:(RelayrDevice*)device
           completion:(void (^)(NSError* error))completion;
 
-// TODO: Implement Transmitters and devices deletion and transmitter-device connection
-
 @end

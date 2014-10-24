@@ -8,7 +8,7 @@
 #import "RelayrUser_Setup.h"            // Relayr.framework (Private)
 #import "RelayrErrors.h"                // Relayr.framework (Utilities)
 
-#import "RLAWebService+Transmitter.h"   // Relayr.framework (Web)
+#import "RLAWebService+Transmitter.h"   // Relayr.framework (Protocols/Web)
 
 static NSString* const kCodingID = @"uid";
 static NSString* const kCodingSecret = @"sec";

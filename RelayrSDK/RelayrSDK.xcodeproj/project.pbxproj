@@ -36,6 +36,12 @@
 		622E7EA919CF829400948558 /* RelayrOnboarding.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EA719CF829400948558 /* RelayrOnboarding.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		622E7EAB19CF834500948558 /* RelayrFirmwareUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EAA19CF834500948558 /* RelayrFirmwareUpdate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		622E7EAC19CF834500948558 /* RelayrFirmwareUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EAA19CF834500948558 /* RelayrFirmwareUpdate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		623A744919FA91A50048F47B /* RLABLEService.h in Headers */ = {isa = PBXBuildFile; fileRef = 623A744719FA91A50048F47B /* RLABLEService.h */; };
+		623A744A19FA91A50048F47B /* RLABLEService.h in Headers */ = {isa = PBXBuildFile; fileRef = 623A744719FA91A50048F47B /* RLABLEService.h */; };
+		623A744B19FA91A50048F47B /* RLABLEService.m in Sources */ = {isa = PBXBuildFile; fileRef = 623A744819FA91A50048F47B /* RLABLEService.m */; };
+		623A744C19FA91A50048F47B /* RLABLEService.m in Sources */ = {isa = PBXBuildFile; fileRef = 623A744819FA91A50048F47B /* RLABLEService.m */; };
+		623A744E19FAA8C50048F47B /* RLAService.h in Headers */ = {isa = PBXBuildFile; fileRef = 623A744D19FAA8C50048F47B /* RLAService.h */; };
+		623A744F19FAA8C50048F47B /* RLAService.h in Headers */ = {isa = PBXBuildFile; fileRef = 623A744D19FAA8C50048F47B /* RLAService.h */; };
 		623F325819A786B700F774EB /* RelayrCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D1718719A62D63009BBED1 /* RelayrCloud.m */; };
 		623F325919A786BA00F774EB /* RelayrCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D1718619A62D63009BBED1 /* RelayrCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		623F325A19A786BC00F774EB /* RelayrApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D1718B19A62E8D009BBED1 /* RelayrApp.m */; };
@@ -270,6 +276,9 @@
 		622CB00319BCB07200F686B3 /* RelayrOutput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrOutput.m; sourceTree = "<group>"; };
 		622E7EA719CF829400948558 /* RelayrOnboarding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrOnboarding.h; sourceTree = "<group>"; };
 		622E7EAA19CF834500948558 /* RelayrFirmwareUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrFirmwareUpdate.h; sourceTree = "<group>"; };
+		623A744719FA91A50048F47B /* RLABLEService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABLEService.h; sourceTree = "<group>"; };
+		623A744819FA91A50048F47B /* RLABLEService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABLEService.m; sourceTree = "<group>"; };
+		623A744D19FAA8C50048F47B /* RLAService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAService.h; sourceTree = "<group>"; };
 		6250E18919B50A0D003932AA /* RelayrPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrPublisher.h; sourceTree = "<group>"; };
 		6250E18A19B50A0D003932AA /* RelayrPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrPublisher.m; sourceTree = "<group>"; };
 		6250E18F19B50AAD003932AA /* RelayrPublisher_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrPublisher_Setup.h; sourceTree = "<group>"; };
@@ -513,6 +522,15 @@
 				622E7EAA19CF834500948558 /* RelayrFirmwareUpdate.h */,
 			);
 			path = Processes;
+			sourceTree = "<group>";
+		};
+		623A744019FA8EAD0048F47B /* BLE */ = {
+			isa = PBXGroup;
+			children = (
+				623A744719FA91A50048F47B /* RLABLEService.h */,
+				623A744819FA91A50048F47B /* RLABLEService.m */,
+			);
+			path = BLE;
 			sourceTree = "<group>";
 		};
 		6252F0A6199C243D002ECE4D = {
@@ -782,8 +800,10 @@
 		62B64D2819EFC1E100DCD7AA /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				62B64D2919EFC1E100DCD7AA /* MQTT */,
+				623A744D19FAA8C50048F47B /* RLAService.h */,
 				62B64D2A19EFC1E100DCD7AA /* Web */,
+				62B64D2919EFC1E100DCD7AA /* MQTT */,
+				623A744019FA8EAD0048F47B /* BLE */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1005,6 +1025,7 @@
 				62D73C9F19B718C8006F417D /* RelayrDevice_Setup.h in Headers */,
 				6254F80419CAC673006C836F /* RelayrDeviceModel_Setup.h in Headers */,
 				62FDB16819BEF2DD00AE2A64 /* RelayrFirmware_Setup.h in Headers */,
+				623A744919FA91A50048F47B /* RLABLEService.h in Headers */,
 				6254F80719CACA62006C836F /* RelayrFirmwareModel_Setup.h in Headers */,
 				62FDB16B19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */,
 				62F1350819D54DA900DF93A7 /* RelayrOutput_Setup.h in Headers */,
@@ -1015,6 +1036,7 @@
 				62B64D4C19EFC1E100DCD7AA /* RLAWebService+Cloud.h in Headers */,
 				62B64D4819EFC1E100DCD7AA /* RLAWebService+App.h in Headers */,
 				62B64D6019EFC1E100DCD7AA /* RLAWebService+User.h in Headers */,
+				623A744E19FAA8C50048F47B /* RLAService.h in Headers */,
 				62B64D5819EFC1E100DCD7AA /* RLAWebService+Publisher.h in Headers */,
 				62B64D5C19EFC1E100DCD7AA /* RLAWebService+Transmitter.h in Headers */,
 				62B64D5019EFC1E100DCD7AA /* RLAWebService+Device.h in Headers */,
@@ -1070,6 +1092,7 @@
 				62D73CA019B718C8006F417D /* RelayrDevice_Setup.h in Headers */,
 				6254F80519CAC673006C836F /* RelayrDeviceModel_Setup.h in Headers */,
 				62FDB16919BEF2DD00AE2A64 /* RelayrFirmware_Setup.h in Headers */,
+				623A744A19FA91A50048F47B /* RLABLEService.h in Headers */,
 				6254F80819CACA62006C836F /* RelayrFirmwareModel_Setup.h in Headers */,
 				62FDB16C19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */,
 				62F1350919D54DA900DF93A7 /* RelayrOutput_Setup.h in Headers */,
@@ -1080,6 +1103,7 @@
 				62B64D4D19EFC1E100DCD7AA /* RLAWebService+Cloud.h in Headers */,
 				62B64D4919EFC1E100DCD7AA /* RLAWebService+App.h in Headers */,
 				62B64D6119EFC1E100DCD7AA /* RLAWebService+User.h in Headers */,
+				623A744F19FAA8C50048F47B /* RLAService.h in Headers */,
 				62B64D5919EFC1E100DCD7AA /* RLAWebService+Publisher.h in Headers */,
 				62B64D5D19EFC1E100DCD7AA /* RLAWebService+Transmitter.h in Headers */,
 				62B64D5119EFC1E100DCD7AA /* RLAWebService+Device.h in Headers */,
@@ -1166,7 +1190,7 @@
 		6252F0A7199C243D002ECE4D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0610;
 				TargetAttributes = {
 					6252F0B2199C2465002ECE4D = {
 						CreatedOnToolsVersion = 6.0;
@@ -1292,6 +1316,7 @@
 				6298AF3819D5F2250097E956 /* RLATargetAction.m in Sources */,
 				62B64D4E19EFC1E100DCD7AA /* RLAWebService+Cloud.m in Sources */,
 				62B64D4A19EFC1E100DCD7AA /* RLAWebService+App.m in Sources */,
+				623A744B19FA91A50048F47B /* RLABLEService.m in Sources */,
 				62B64D6219EFC1E100DCD7AA /* RLAWebService+User.m in Sources */,
 				62B64D5A19EFC1E100DCD7AA /* RLAWebService+Publisher.m in Sources */,
 				62B64D7019EFC48D00DCD7AA /* RLAMQTTService.m in Sources */,
@@ -1334,6 +1359,7 @@
 				62B64D4F19EFC1E100DCD7AA /* RLAWebService+Cloud.m in Sources */,
 				62B64D4B19EFC1E100DCD7AA /* RLAWebService+App.m in Sources */,
 				62B64D6319EFC1E100DCD7AA /* RLAWebService+User.m in Sources */,
+				623A744C19FA91A50048F47B /* RLABLEService.m in Sources */,
 				62B64D5B19EFC1E100DCD7AA /* RLAWebService+Publisher.m in Sources */,
 				62B64D5F19EFC1E100DCD7AA /* RLAWebService+Transmitter.m in Sources */,
 				62B64D7119EFC48D00DCD7AA /* RLAMQTTService.m in Sources */,
@@ -1393,6 +1419,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};

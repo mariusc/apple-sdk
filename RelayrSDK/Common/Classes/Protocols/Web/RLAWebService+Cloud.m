@@ -1,7 +1,7 @@
 #import "RLAWebService+Cloud.h"     // Header
-#import "RLAWebRequest.h"           // Relayr.framework (Web)
-#import "RLAWebConstants.h"         // Relayr.framework (Web)
-#import "RLAWebOAuthController.h"   // Relayr.framework (Web)
+#import "RLAWebRequest.h"           // Relayr.framework (Protocols/Web)
+#import "RLAWebConstants.h"         // Relayr.framework (Protocols/Web)
+#import "RLAWebOAuthController.h"   // Relayr.framework (Protocols/Web)
 #import "RelayrErrors.h"                // Relayr.framework (Utilities)
 
 @implementation RLAWebService (Cloud)

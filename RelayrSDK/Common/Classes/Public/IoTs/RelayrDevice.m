@@ -4,16 +4,17 @@
 #import "RelayrUser.h"              // Relayr.framework (Public)
 #import "RelayrFirmware.h"          // Relayr.framework (Public)
 #import "RelayrInput.h"             // Relayr.framework (Public)
+#import "RelayrConnection.h"        // Relayr.framework (Public)
 #import "RelayrOnboarding.h"        // Relayr.framework (Public)
 #import "RelayrFirmwareUpdate.h"    // Relayr.framework (Public)
 #import "RelayrUser_Setup.h"        // Relayr.framework (Private)
 #import "RelayrInput_Setup.h"       // Relayr.framework (Private)
+#import "RelayrConnection_Setup.h"  // Relayr.framework (Private)
 #import "RelayrFirmware_Setup.h"    // Relayr.framework (Private)
-#import "RLAWebService.h"           // Relayr.framework (Web)
-#import "RLAWebService+Device.h"    // Relayr.framework (Web)
+#import "RLAWebService.h"           // Relayr.framework (Protocols/Web)
+#import "RLAWebService+Device.h"    // Relayr.framework (Protocols/Web)
 #import "RelayrErrors.h"            // Relayr.framework (Utilities)
 #import "RLALog.h"                  // Relayr.framework (Utilities)
-
 
 static NSString* const kCodingID = @"uid";
 static NSString* const kCodingName = @"nam";
@@ -41,6 +42,7 @@ static NSString* const kCodingSecret = @"sec";
     if (self)
     {
         _uid = uid;
+        _connection = [[RelayrConnection alloc] initWithDevice:self];
     }
     return self;
 }
@@ -127,6 +129,7 @@ static NSString* const kCodingSecret = @"sec";
         _isPublic = [decoder decodeObjectForKey:kCodingPublic];
         _firmware = [decoder decodeObjectForKey:kCodingFirmware];
         _secret = [decoder decodeObjectForKey:kCodingSecret];
+        _connection = [[RelayrConnection alloc] initWithDevice:self];
     }
     return self;
 }

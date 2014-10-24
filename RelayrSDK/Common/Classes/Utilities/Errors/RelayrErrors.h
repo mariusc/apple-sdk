@@ -25,6 +25,7 @@ FOUNDATION_EXPORT NSString* const kRelayrErrorStringFile;
  *  @constant kRelayrErrorCodeUserStoppedProcess Process was stopped by the user.
  *  @constant kRelayrErrorCodeWrongRelayrUser The passed user doesn't have authorization enough to ask for the request.
  *  @constant kRelayrErrorCodeTryingToUseRelayrModel A RelayrModel is being used as if it was a <code>RelayrDevice</code> or <code>RelayrTransmitter</code>
+ *  @constant kRelayrErrorCodeNoConnectionPossible A connection to a specific device/transmitter was not possible.
  *  @constant kRelayrErrorCodeTimeoutExpired The timeout expired before the process was completed.
  *  @constant kRelayrErrorCodeBLEModulePoweredOff The Bluetooth Low Energy module is powered off.
  *  @constant kRelayrErrorCodeBLEModuleUnauthorized There is not authorization for using the Bluetooth Low Energy module.
@@ -43,7 +44,8 @@ typedef NS_ENUM(NSInteger, RelayrErrorCode) {
     kRelayrErrorCodeUserStoppedProcess      = 8,
     kRelayrErrorCodeWrongRelayrUser         = 9,
     kRelayrErrorCodeTryingToUseRelayrModel  = 10,
-    kRelayrErrorCodeTimeoutExpired          = 11,
+    kRelayrErrorCodeNoConnectionPossible    = 11,
+    kRelayrErrorCodeTimeoutExpired          = 19,
     kRelayrErrorCodeBLEModulePoweredOff     = 20,
     kRelayrErrorCodeBLEModuleUnauthorized   = 21,
     kRelayrErrorCodeBLEUnsupported          = 22,
@@ -68,6 +70,8 @@ typedef NS_ENUM(NSInteger, RelayrErrorCode) {
 #define dRelayrErrorMessageUserStoppedProcess       NSLocalizedStringFromTable(@"The user has stopped the current process.", kRelayrErrorStringFile, @"It happens when an user has canceled somehow the current process.")
 #define dRelayrErrorMessageWrongRelayrUser          NSLocalizedStringFromTable(@"The user passed or selected is not a valid Relayr user.", kRelayrErrorStringFile, @"It occurs when trying to perform operations on an invalid Relayr user.")
 #define dRelayrErrorMessageTryingToUseRelayrModel   NSLocalizedStringFromTable(@"A Relayr Model is trying to be used as a full Relayr Object.", kRelayrErrorStringFile, @"It occurs when a Relayr Model is used as it was the Relayr Object is intend to define.")
+
+#define dRelayrErrorMessageNoConnectionPossible     NSLocalizedStringFromTable(@"A connection to a specific device or transmitter was not possible.", kRelayrErrorStringFile, @"It occurs when a trying to access device's data.")
 #define dRelayrErrorMessageTimeoutExpired           NSLocalizedStringFromTable(@"The timeout to perform a certain task has expired.", kRelayrErrorStringFile, @"It happens when the the time ellapsed given to a specific task has been completed without the task been able to be completelly performed.")
 #define dRelayrErrorMessageBLEModulePowerOff        NSLocalizedStringFromTable(@"The BLE module is powered off.", kRelayrErrorStringFile, @"It appears when trying to use the BLE module and the user has it powered off.")
 #define dRelayrErrorMessageBLEModuleUnauthorized    NSLocalizedStringFromTable(@"The application is not authorised to use the BLE module.", kRelayrErrorStringFile, @"It happens when the application tries to use the Bluetooth module and the user has actively unathorise the application.")
@@ -87,6 +91,7 @@ typedef NS_ENUM(NSInteger, RelayrErrorCode) {
 #define RelayrErrorUserStoppedProcess       [RelayrErrors errorWithCode:kRelayrErrorCodeUserStoppedProcess localizedDescription:dRelayrErrorMessageUserStoppedProcess userInfo:RelayrErrorUserInfoLocal]
 #define RelayrErrorWrongRelayrUser          [RelayrErrors errorWithCode:kRelayrErrorCodeWrongRelayrUser localizedDescription:dRelayrErrorMessageWrongRelayrUser userInfo:RelayrErrorUserInfoLocal]
 #define RelayrErrorTryingToUseRelayrModel   [RelayrErrors errorWithCode:kRelayrErrorCodeTryingToUseRelayrModel localizedDescription:dRelayrErrorMessageTryingToUseRelayrModel userInfo:RelayrErrorUserInfoLocal]
+#define RelayrErrorNoConnectionPossible     [RelayrErrors errorWithCode:kRelayrErrorCodeNoConnectionPossible localizedDescription:dRelayrErrorMessageNoConnectionPossible userInfo:RelayrErrorUserInfoLocal]
 #define RelayrErrorTimeoutExpired           [RelayrErrors errorWithCode:kRelayrErrorCodeTimeoutExpired localizedDescription:dRelayrErrorMessageTimeoutExpired userInfo:RelayrErrorUserInfoLocal]
 #define RelayrErrorBLEModulePowerOff        [RelayrErrors errorWithCode:kRelayrErrorCodeBLEModulePoweredOff localizedDescription:dRelayrErrorMessageBLEModulePowerOff userInfo:RelayrErrorUserInfoLocal]
 #define RelayrErrorBLEModuleUnauthorized    [RelayrErrors errorWithCode:kRelayrErrorCodeBLEModuleUnauthorized localizedDescription:dRelayrErrorMessageBLEModuleUnauthorized userInfo:RelayrErrorUserInfoLocal]

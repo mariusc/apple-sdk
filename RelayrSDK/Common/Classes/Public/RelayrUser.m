@@ -11,11 +11,14 @@
 #import "RelayrTransmitter_Setup.h"     // Relayr.framework (Private)
 #import "RelayrDevice_Setup.h"          // Relayr.framework (Private)
 
-#import "RLAWebService.h"               // Relayr.framework (Web)
-#import "RLAWebService+User.h"          // Relayr.framework (Web)
-#import "RLAWebService+Publisher.h"     // Relayr.framework (Web)
-#import "RLAWebService+Transmitter.h"   // Relayr.framework (Web)
-#import "RLAWebService+Device.h"        // Relayr.framework (Web)
+#import "RLAWebService.h"               // Relayr.framework (Protocols/Web)
+#import "RLAWebService+User.h"          // Relayr.framework (Protocols/Web)
+#import "RLAWebService+Publisher.h"     // Relayr.framework (Protocols/Web)
+#import "RLAWebService+Transmitter.h"   // Relayr.framework (Protocols/Web)
+#import "RLAWebService+Device.h"        // Relayr.framework (Protocols/Web)
+#import "RLAMQTTService.h"              // Relayr.framework (Protocols/MQTT)
+#import "RLABLEService.h"               // Relayr.framework (Protocols/BLE)
+
 #import "RelayrErrors.h"                // Relayr.framework (Utilities)
 
 static NSString* const kCodingToken = @"tok";
@@ -48,6 +51,8 @@ static NSString* const kCodingPublishers = @"pub";
     {
         _token = token;
         _webService = [[RLAWebService alloc] initWithUser:self];
+        _mqttService = [[RLAMQTTService alloc] initWithUser:self];
+        _bleService = [[RLABLEService alloc] initWithUser:self];
     }
     return self;
 }

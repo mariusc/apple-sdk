@@ -4,7 +4,8 @@
 #import "RelayrDevice.h"            // Relayr.framework (Public)
 #import "RelayrUser_Setup.h"        // Relayr.framework (Private)
 #import "RelayrInput_Setup.h"       // Relayr.framework (Private)
-#import "RLAWebService+Device.h"    // Relyar.framework (Web)
+#import "RLAService.h"              // Relayr.framework (Protocols)
+#import "RLAWebService+Device.h"    // Relyar.framework (Protocols/Web)
 #import "RelayrErrors.h"            // Relayr.framework (Utilities)
 #import "RLATargetAction.h"         // Relayr.framework (Utilities)
 
@@ -78,8 +79,16 @@ static NSString* const kCodingDates = @"dat";
     
     if (!self.subscribedBlocks) { _subscribedBlocks = [[NSMutableDictionary alloc] init]; }
     
+    id <RLAService> service = [self selectServiceForCurrentConnection];
+    if (!service)
+    {
+        // ???: Do we give possibility of retry?
+        if (errorBlock) { errorBlock(RelayrErrorNoConnectionPossible); }
+        return;
+    }
+    
     __weak RelayrInput* weakSelf = self;
-    [device.user.webService setConnectionBetweenDevice:device.uid andApp:device.user.app.uid completion:^(NSError* error, id credentials) {
+    [service subscribeToDataFromDevice:device completion:^(NSError *error) {
         if (error)
         {
             if (!errorBlock) { return; }
@@ -87,16 +96,11 @@ static NSString* const kCodingDates = @"dat";
             if (repeat) { [weakSelf subscribeWithBlock:block error:errorBlock]; }
             return;
         }
-        
-        __strong RelayrInput* strongSelf = weakSelf;
-//        if (![RLAPubNub arePubNubCredentials:credentials] || !strongSelf)
-//        {
-//            if (errorBlock) { errorBlock(RelayrErrorPubNubWrongCredentials); }
-//            return [device.user.webService deleteConnectionBetweenDevice:device.uid andApp:device.user.app.uid completion:nil];
-//        }
-        
-        strongSelf.subscribedBlocks[[block copy]] = (errorBlock) ? [errorBlock copy] : [NSNull null];
-//        [RLAPubNub subscribeToChannel:credentials[kRLAPubNubOptionsChannel] withOptions:credentials input:strongSelf callback:@selector(dataReceived:at:)];
+        else
+        {
+            RelayrInput* strongSelf = weakSelf;
+            strongSelf.subscribedBlocks[[block copy]] = (errorBlock) ? [errorBlock copy] : [NSNull null];
+        }
     }];
 }
 
@@ -113,26 +117,27 @@ static NSString* const kCodingDates = @"dat";
     
     if (!_subscribedTargets) { _subscribedTargets = [[NSMutableDictionary alloc] init]; }
     
-    __weak RelayrInput* weakSelf = self;
-    [device.user.webService setConnectionBetweenDevice:device.uid andApp:device.user.app.uid completion:^(NSError *error, id credentials) {
-        if (error)
-        {
-            if (!errorBlock) { return; }
-            BOOL const repeat = errorBlock(error);
-            if (repeat) { [weakSelf subscribeWithTarget:target action:action error:errorBlock]; }
-            return;
-        }
-        
-        __strong RelayrInput* strongSelf = weakSelf;
-//        if (![RLAPubNub arePubNubCredentials:credentials] || !strongSelf)
+    // TODO: Implement!!!!
+//    __weak RelayrInput* weakSelf = self;
+//    [device.user.webService setConnectionBetweenDevice:device.uid andApp:device.user.app.uid completion:^(NSError *error, id credentials) {
+//        if (error)
 //        {
-//            if (errorBlock) { errorBlock(RelayrErrorPubNubWrongCredentials); }
-//            return [device.user.webService deleteConnectionBetweenDevice:device.uid andApp:device.user.app.uid completion:nil];
+//            if (!errorBlock) { return; }
+//            BOOL const repeat = errorBlock(error);
+//            if (repeat) { [weakSelf subscribeWithTarget:target action:action error:errorBlock]; }
+//            return;
 //        }
-        
-        strongSelf.subscribedTargets[pair] = (errorBlock) ? [errorBlock copy] : [NSNull null];
-//        [RLAPubNub subscribeToChannel:credentials[kRLAPubNubOptionsChannel] withOptions:credentials input:strongSelf callback:@selector(dataReceived:at:)];
-    }];
+//        
+//        __strong RelayrInput* strongSelf = weakSelf;
+////        if (![RLAPubNub arePubNubCredentials:credentials] || !strongSelf)
+////        {
+////            if (errorBlock) { errorBlock(RelayrErrorPubNubWrongCredentials); }
+////            return [device.user.webService deleteConnectionBetweenDevice:device.uid andApp:device.user.app.uid completion:nil];
+////        }
+//        
+//        strongSelf.subscribedTargets[pair] = (errorBlock) ? [errorBlock copy] : [NSNull null];
+////        [RLAPubNub subscribeToChannel:credentials[kRLAPubNubOptionsChannel] withOptions:credentials input:strongSelf callback:@selector(dataReceived:at:)];
+//    }];
 }
 
 - (void)unsubscribeTarget:(id)target action:(SEL)action
@@ -299,6 +304,16 @@ static NSString* const kCodingDates = @"dat";
     }
     
     #pragma clang diagnostic pop
+}
+
+/*******************************************************************************
+ * <#abstract#>
+ * <#discussion#>
+ ******************************************************************************/
+- (id <RLAService>)selectServiceForCurrentConnection
+{
+    // TODO: Implement!!!
+    return nil;
 }
 
 @end

@@ -2,6 +2,7 @@
 #import "RelayrDeviceModel.h"   // Relayr.framework (Public)
 @class RelayrUser;              // Relayr.framework (Public)
 @class RelayrFirmware;          // Relayr.framework (Public)
+@class RelayrConnection;        // Relayr.framework (Public)
 #import "RelayrInput.h"         // Relayr.framework (Public)
 @protocol RelayrOnboarding;     // Relayr.framework (Public)
 @protocol RelayrFirmwareUpdate; // Relayr.framework (Public)
@@ -38,7 +39,8 @@
  *  @param name New name to identify this device with.
  *  @param completion Block indicating the result of the server push.
  */
-- (void)setNameWith:(NSString*)name completion:(void (^)(NSError* error, NSString* previousName))completion;
+- (void)setNameWith:(NSString*)name
+         completion:(void (^)(NSError* error, NSString* previousName))completion;
 
 /*!
  *  @abstract The Id of the owner of the Device.
@@ -63,6 +65,13 @@
  *  @discussion Could be seen as the Device's password.
  */
 @property (readonly,nonatomic) NSString* secret;
+
+/*!
+ *  @abstract It represents the connection from where all the data is coming.
+ *  @discussion Abstraction of the connection between the system running the SDK and the source of the data. Thus, if you are connecting directly to a specific device (through BLE, NFC, etc.), this object will specify it. However, if the data is coming from the Relayr Cloud the connection will be of type <i>cloud</i>. The actual connection between the device and the cloud is not specified by this object.
+ *      This object is never <code>nil</code>.
+ */
+@property (readonly,nonatomic) RelayrConnection* connection;
 
 #pragma mark Processes
 
@@ -155,7 +164,8 @@
  *
  *  @see RelayrInput
  */
-- (void)unsubscribeTarget:(id)target action:(SEL)action;
+- (void)unsubscribeTarget:(id)target
+                   action:(SEL)action;
 
 /*!
  *  @abstract Removes all subscriptions for the device.

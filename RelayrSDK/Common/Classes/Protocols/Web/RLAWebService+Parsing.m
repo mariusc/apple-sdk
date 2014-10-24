@@ -18,7 +18,7 @@
 #import "RelayrFirmware_Setup.h"        // Relayr.framework (Private)
 #import "RelayrFirmwareModel_Setup.h"   // Relayr.framework (Private)
 #import "RelayrInput_Setup.h"           // Relayr.framework (Private)
-#import "RLAWebConstants.h"             // Relayr.framework (Web)
+#import "RLAWebConstants.h"             // Relayr.framework (Protocols/Web)
 
 @implementation RLAWebService (Parsing)
 

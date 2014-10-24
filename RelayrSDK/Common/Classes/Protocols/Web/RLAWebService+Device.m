@@ -1,10 +1,10 @@
 #import "RLAWebService+Device.h"    // Header
-#import "RLAWebService+Parsing.h"   // Relayr.framework (Web)
+#import "RLAWebService+Parsing.h"   // Relayr.framework (Protocols/Web)
 
 #import "RelayrUser.h"              // Relayr.framework (Public)
 #import "RelayrDeviceModel.h"       // Relayr.framework (Public)
-#import "RLAWebRequest.h"           // Relayr.framework (Web)
-#import "RLAWebConstants.h"         // Relayr.framework (Web)
+#import "RLAWebRequest.h"           // Relayr.framework (Protocols/Web)
+#import "RLAWebConstants.h"         // Relayr.framework (Protocols/Web)
 #import "RelayrErrors.h"                // Relayr.framework (Utilities)
 
 @implementation RLAWebService (Device)

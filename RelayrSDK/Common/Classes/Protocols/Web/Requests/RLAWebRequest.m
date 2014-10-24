@@ -1,7 +1,7 @@
 #import "RLAWebRequest.h"       // Header
-#import "RLAWebConstants.h"     // Relayr.framework (Web)
+#import "RLAWebConstants.h"     // Relayr.framework (Protocols/Web)
 #import "RLALog.h"              // Relayr.framework (Utilities)
-#import "RelayrErrors.h"            // Relayr.framework (Utilities)
+#import "RelayrErrors.h"        // Relayr.framework (Utilities)
 
 // WebRequests methods
 NSString* const kRLAWebRequestModeCOPY      = @"COPY";
@@ -14,8 +14,8 @@ NSString* const kRLAWebRequestModePOST      = @"POST";
 NSString* const kRLAWebRequestModePUT       = @"PUT";
 
 // UserAgent WebRequest header
-// TODO: Look for a way to import WEBREQUEST_USERAGENT. It is not working at the moment.
-// NSString* kRLAWebRequestUserAgent;
+NSString* kRLAWebRequestUserAgent;
+#define BUILDVARIABLE_USERAGENT  "##WEBREQUEST_USERAGENT##"
 
 @implementation RLAWebRequest
 
@@ -23,7 +23,7 @@ NSString* const kRLAWebRequestModePUT       = @"PUT";
 
 + (void)initialize
 {
-    //kRLAWebRequestUserAgent = [[NSProcessInfo processInfo].environment objectForKey:@"WEBREQUEST_USERAGENT"];
+    kRLAWebRequestUserAgent = [NSString stringWithCString:BUILDVARIABLE_USERAGENT encoding:NSUTF8StringEncoding];
 }
 
 - (instancetype)initWithHost:(NSString*)hostString

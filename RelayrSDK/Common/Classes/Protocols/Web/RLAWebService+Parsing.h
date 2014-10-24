@@ -1,4 +1,4 @@
-#import "RLAWebService.h"       // Relayr.framework (Web)
+#import "RLAWebService.h"       // Relayr.framework (Protocols/Web)
 @class RelayrApp;               // Relayr.framework (Public)
 @class RelayrUser;              // Relayr.framework (Public)
 @class RelayrPublisher;         // Relayr.framework (Public)

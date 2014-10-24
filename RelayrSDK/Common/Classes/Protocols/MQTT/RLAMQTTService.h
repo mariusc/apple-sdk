@@ -1,5 +1,6 @@
-@import Foundation;
-@class RelayrUser;
+@import Foundation;     // Apple
+@class RelayrUser;      // Relayr.framework (Public)
+#import "RLAService.h"  // Relayr.framework (Protocols)
 
 /*!
  *  @abstract MQTT connection manager for a <code>RelayrUser</code>.
@@ -7,7 +8,7 @@
  *
  *  @see RelayrUser
  */
-@interface RLAMQTTService : NSObject
+@interface RLAMQTTService : NSObject <RLAService>
 
 /*!
  *  @abstract It is initialised with a <code>RelayrUser</code> and its corresponding <code>RLAWebService</code>.

@@ -1,5 +1,7 @@
-#import <Relayr/RelayrUser.h>          // Header
-@class RLAWebService;           // Relayr.framework (Web)
+#import <Relayr/RelayrUser.h>   // Header
+@class RLAWebService;           // Relayr.framework (Protocols/Web)
+@class RLAMQTTService;          // Relayr.framework (Protocols/MQTT)
+@class RLABLEService;           // Relayr.framework (Protocols/BLE)
 
 /*!
  *  @abstract The very basic entity in the relayr platform is the user.
@@ -28,6 +30,18 @@
  *  @discussion It is never <code>nil</code>. When an instance of <code>RelayrUser</code> is created, this property is setup to a valid web service.
  */
 @property (readonly,nonatomic) RLAWebService* webService;
+
+/*!
+ *  @abstract This is the central connection with the Relayr.framework MQTT module.
+ *  @discussion It is never <code>nil</code>. When an instance of <code>RelayrUser</code> is created, this property is setup to a valid MQTT service.
+ */
+@property (readonly,nonatomic) RLAMQTTService* mqttService;
+
+/*!
+ *  @abstract This is the central connection with the Relayr.framework BLE module.
+ *  @discussion It is never <code>nil</code>. When an instance of <code>RelayrUser</code> is created, this property is setup to a valid BLE service.
+ */
+@property (readonly,nonatomic) RLABLEService* bleService;
 
 /*!
  *  @abstract A unique idenfier of a <code>RelayrUser</code> instance.

@@ -2210,10 +2210,10 @@ thread_return_type MQTTAsync_receiveThread(void* n)
                 if (rc)
                 {
                     ListRemove(m->c->messageQueue, qe);
-#if !defined(NO_PERSISTENCE)
+                    #if !defined(NO_PERSISTENCE)
                     if (m->c->persistence)
                         MQTTPersistence_unpersistQueueEntry(m->c, (MQTTPersistence_qEntry*)qe);
-#endif
+                    #endif
                 }
                 else
                     Log(TRACE_MIN, -1, "False returned from messageArrived for client %s, message remains on queue",
