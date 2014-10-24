@@ -144,7 +144,7 @@ typedef struct
 {
 	char struct_id[4];
 	int struct_version;
-	int payloadlen;
+	size_t payloadlen;
 	void* payload;
 	int qos;
 	int retained;
@@ -267,6 +267,194 @@ typedef struct
 
 #define MQTTAsync_responseOptions_initializer { {'M', 'Q', 'T', 'R'}, 0, NULL, NULL, 0, 0 }
 
+/**
+ * MQTTAsync_willOptions defines the MQTT "Last Will and Testament" (LWT) settings for
+ * the client. In the event that a client unexpectedly loses its connection to
+ * the server, the server publishes the LWT message to the LWT topic on
+ * behalf of the client. This allows other clients (subscribed to the LWT topic)
+ * to be made aware that the client has disconnected. To enable the LWT
+ * function for a specific client, a valid pointer to an MQTTAsync_willOptions
+ * structure is passed in the MQTTAsync_connectOptions structure used in the
+ * MQTTAsync_connect() call that connects the client to the server. The pointer
+ * to MQTTAsync_willOptions can be set to NULL if the LWT function is not
+ * required.
+ */
+typedef struct
+{
+    /** The eyecatcher for this structure.  must be MQTW. */
+    const char struct_id[4];
+    /** The version number of this structure.  Must be 0 */
+    int struct_version;
+    /** The LWT topic to which the LWT message will be published. */
+    const char* topicName;
+    /** The LWT payload. */
+    const char* message;
+    /**
+     * The retained flag for the LWT message (see MQTTAsync_message.retained).
+     */
+    int retained;
+    /**
+     * The quality of service setting for the LWT message (see
+     * MQTTAsync_message.qos and @ref qos).
+     */
+    int qos;
+} MQTTAsync_willOptions;
+
+#define MQTTAsync_willOptions_initializer { {'M', 'Q', 'T', 'W'}, 0, NULL, NULL, 0, 0 }
+
+/**
+ * MQTTAsync_sslProperties defines the settings to establish an SSL/TLS connection using the
+ * OpenSSL library. It covers the following scenarios:
+ * - Server authentication: The client needs the digital certificate of the server. It is included
+ *   in a store containting trusted material (also known as "trust store").
+ * - Mutual authentication: Both client and server are authenticated during the SSL handshake. In
+ *   addition to the digital certificate of the server in a trust store, the client will need its own
+ *   digital certificate and the private key used to sign its digital certificate stored in a "key store".
+ * - Anonymous connection: Both client and server do not get authenticated and no credentials are needed
+ *   to establish an SSL connection. Note that this scenario is not fully secure since it is subject to
+ *   man-in-the-middle attacks.
+ */
+typedef struct
+{
+    /** The eyecatcher for this structure.  Must be MQTS */
+    const char struct_id[4];
+    /** The version number of this structure.  Must be 0 */
+    int struct_version;
+    
+    /** The file in PEM format containing the public digital certificates trusted by the client. */
+    const char* trustStore;
+    
+    /** The file in PEM format containing the public certificate chain of the client. It may also include
+     * the client's private key.
+     */
+    const char* keyStore;
+    
+    /** If not included in the sslKeyStore, this setting points to the file in PEM format containing
+     * the client's private key.
+     */
+    const char* privateKey;
+    /** The password to load the client's privateKey if encrypted. */
+    const char* privateKeyPassword;
+    
+    /**
+     * The list of cipher suites that the client will present to the server during the SSL handshake. For a
+     * full explanation of the cipher list format, please see the OpenSSL on-line documentation:
+     * http://www.openssl.org/docs/apps/ciphers.html#CIPHER_LIST_FORMAT
+     * If this setting is ommitted, its default value will be "ALL", that is, all the cipher suites -excluding
+     * those offering no encryption- will be considered.
+     * This setting can be used to set an SSL anonymous connection ("aNULL" string value, for instance).
+     */
+    const char* enabledCipherSuites;
+    
+    /** True/False option to enable verification of the server certificate **/
+    int enableServerCertAuth;
+    
+} MQTTAsync_SSLOptions;
+
+#define MQTTAsync_SSLOptions_initializer { {'M', 'Q', 'T', 'S'}, 0, NULL, NULL, NULL, NULL, NULL, 1 }
+
+/*!
+ *  @abstract MQTTAsync_connectOptions defines several settings that control the way the client connects to an MQTT server.  Default values are set in MQTTAsync_connectOptions_initializer.
+ *
+ *  @field struct_id The eyecatcher for this structure. Must be MQTC.
+ *  @field struct_version The version number of this structure.  Must be 0, 1 or 2.
+ *      0 signifies no SSL options and no serverURIs
+ *      1 signifies no serverURIs
+ *      2 signifies no MQTTVersion
+ *  @field keepAliveInterval The "keep alive" interval, measured in seconds, defines the maximum time that should pass without communication between the client and the server. The client will ensure that at least one message travels across the network within each keep alive period.  In the absence of a data-related message during the time period, the client sends a very small MQTT "ping" message, which the server will acknowledge. The keep alive interval enables the client to detect when the server is no longer available without having to wait for the long TCP/IP timeout. Set to 0 if you do not want any keep alive processing.
+ *  @field cleansession This is a boolean value. The cleansession setting controls the behaviour of both the client and the server at connection and disconnection time. The client and server both maintain session state information. This information is used to ensure "at least once" and "exactly once" delivery, and "exactly once" receipt of messages. Session state also includes subscriptions created by an MQTT client. You can choose to maintain or discard state information between sessions.
+ *      When cleansession is true, the state information is discarded at connect and disconnect. Setting cleansession to false keeps the state information. When you connect an MQTT client application with MQTTAsync_connect(), the client identifies the connection using the client identifier and the address of the server. The server checks whether session information for this client has been saved from a previous connection to the server. If a previous session still exists, and cleansession=true, then the previous session information at the client and server is cleared. If cleansession=false, the previous session is resumed. If no previous session exists, a new session is started.
+ *  @field maxInflight This controls how many messages can be in-flight simultaneously.
+ *  @field will This is a pointer to an MQTTAsync_willOptions structure. If your application does not make use of the Last Will and Testament feature, set this pointer to NULL.
+ *  @field username MQTT servers that support the MQTT v3.1 protocol provide authentication and authorisation by user name and password. This is the user name parameter.
+ *  @field password MQTT servers that support the MQTT v3.1 protocol provide authentication and authorisation by user name and password. This is the password parameter.
+ *  @field connectTimeout The time interval in seconds to allow a connect to complete.
+ *  @field retryInterval The time interval in seconds.
+ *  @field ssl This is a pointer to an MQTTAsync_SSLOptions structure. If your application does not make use of SSL, set this pointer to NULL.
+ *  @field onSuccess A pointer to a callback function to be called if the connect successfully completes.  Can be set to NULL, in which case no indication of successful completion will be received.
+ *  @field onFailure A pointer to a callback function to be called if the connect fails. Can be set to NULL, in which case no indication of unsuccessful completion will be received.
+ *  @field context A pointer to any application-specific context. The the <i>context</i> pointer is passed to success or failure callback functions to provide access to the context information in the callback.
+ *  @field serverURIcount The number of entries in the serverURIs array.
+ *  @field serverURIs An array of null-terminated strings specifying the servers to which the client will connect. Each string takes the form <i>protocol://host:port</i>. <i>protocol</i> must be <i>tcp</i> or <i>ssl</i>. For <i>host</i>, you can specify either an IP address or a domain name. For instance, to connect to a server running on the local machines with the default MQTT port, specify <i>tcp://localhost:1883</i>.
+ *  @field MQTTVersion Sets the version of MQTT to be used on the connect.
+ *      MQTTVERSION_DEFAULT (0) = default: start with 3.1.1, and if that fails, fall back to 3.1
+ *      MQTTVERSION_3_1 (3) = only try version 3.1
+ *      MQTTVERSION_3_1_1 (4) = only try version 3.1.1
+ */
+typedef struct
+{
+    const char struct_id[4];
+    int struct_version;
+    int keepAliveInterval;
+    int cleansession;
+    int maxInflight;
+    MQTTAsync_willOptions* will;
+    const char* username;
+    const char* password;
+    int connectTimeout;
+    int retryInterval;
+    MQTTAsync_SSLOptions* ssl;
+    MQTTAsync_onSuccess* onSuccess;
+    MQTTAsync_onFailure* onFailure;
+    void* context;
+    int serverURIcount;
+    char* const* serverURIs;
+    int MQTTVersion;
+} MQTTAsync_connectOptions;
+
+
+#define MQTTAsync_connectOptions_initializer { {'M', 'Q', 'T', 'C'}, 3, 60, 1, 10, NULL, NULL, NULL, 30, 0, NULL, NULL, NULL, NULL, 0, NULL, 0}
+
+typedef struct
+{
+    /** The eyecatcher for this structure. Must be MQTD. */
+    const char struct_id[4];
+    /** The version number of this structure.  Must be 0 or 1.  0 signifies no SSL options */
+    int struct_version;
+    /**
+     * The client delays disconnection for up to this time (in
+     * milliseconds) in order to allow in-flight message transfers to complete.
+     */
+    int timeout;
+    /**
+     * A pointer to a callback function to be called if the disconnect successfully
+     * completes.  Can be set to NULL, in which case no indication of successful
+     * completion will be received.
+     */
+    MQTTAsync_onSuccess* onSuccess;
+    /**
+     * A pointer to a callback function to be called if the disconnect fails.
+     * Can be set to NULL, in which case no indication of unsuccessful
+     * completion will be received.
+     */
+    MQTTAsync_onFailure* onFailure;
+    /**
+     * A pointer to any application-specific context. The
+     * the <i>context</i> pointer is passed to success or failure callback functions to
+     * provide access to the context information in the callback.
+     */
+    void* context;
+} MQTTAsync_disconnectOptions;
+
+#define MQTTAsync_disconnectOptions_initializer { {'M', 'Q', 'T', 'D'}, 0, 0, NULL, NULL, NULL }
+
+enum MQTTASYNC_TRACE_LEVELS
+{
+    MQTTASYNC_TRACE_MAXIMUM = 1,
+    MQTTASYNC_TRACE_MEDIUM,
+    MQTTASYNC_TRACE_MINIMUM,
+    MQTTASYNC_TRACE_PROTOCOL,
+    MQTTASYNC_TRACE_ERROR,
+    MQTTASYNC_TRACE_SEVERE,
+    MQTTASYNC_TRACE_FATAL,
+};
+
+typedef struct
+{
+    const char* name;
+    const char* value;
+} MQTTAsync_nameValue;
+
 #pragma mark Public API
 
 /*!
@@ -304,144 +492,6 @@ __attribute__( (visibility("default")) );
 int MQTTAsync_setCallbacks(MQTTAsync handle, void* context, MQTTAsync_connectionLost* cl, MQTTAsync_messageArrived* ma, MQTTAsync_deliveryComplete* dc) __attribute__( (visibility("default")) );
 
 /**
- * MQTTAsync_willOptions defines the MQTT "Last Will and Testament" (LWT) settings for
- * the client. In the event that a client unexpectedly loses its connection to
- * the server, the server publishes the LWT message to the LWT topic on
- * behalf of the client. This allows other clients (subscribed to the LWT topic)
- * to be made aware that the client has disconnected. To enable the LWT
- * function for a specific client, a valid pointer to an MQTTAsync_willOptions
- * structure is passed in the MQTTAsync_connectOptions structure used in the
- * MQTTAsync_connect() call that connects the client to the server. The pointer
- * to MQTTAsync_willOptions can be set to NULL if the LWT function is not
- * required.
- */
-typedef struct
-{
-	/** The eyecatcher for this structure.  must be MQTW. */
-	const char struct_id[4];
-	/** The version number of this structure.  Must be 0 */
-	int struct_version;
-	/** The LWT topic to which the LWT message will be published. */
-	const char* topicName;
-	/** The LWT payload. */
-	const char* message;
-	/**
-      * The retained flag for the LWT message (see MQTTAsync_message.retained).
-      */
-	int retained;
-	/**
-      * The quality of service setting for the LWT message (see
-      * MQTTAsync_message.qos and @ref qos).
-      */
-	int qos;
-} MQTTAsync_willOptions;
-
-#define MQTTAsync_willOptions_initializer { {'M', 'Q', 'T', 'W'}, 0, NULL, NULL, 0, 0 }
-
-/**
-* MQTTAsync_sslProperties defines the settings to establish an SSL/TLS connection using the
-* OpenSSL library. It covers the following scenarios:
-* - Server authentication: The client needs the digital certificate of the server. It is included
-*   in a store containting trusted material (also known as "trust store").
-* - Mutual authentication: Both client and server are authenticated during the SSL handshake. In
-*   addition to the digital certificate of the server in a trust store, the client will need its own
-*   digital certificate and the private key used to sign its digital certificate stored in a "key store".
-* - Anonymous connection: Both client and server do not get authenticated and no credentials are needed
-*   to establish an SSL connection. Note that this scenario is not fully secure since it is subject to
-*   man-in-the-middle attacks.
-*/
-typedef struct
-{
-	/** The eyecatcher for this structure.  Must be MQTS */
-	const char struct_id[4];
-	/** The version number of this structure.  Must be 0 */
-	int struct_version;
-
-	/** The file in PEM format containing the public digital certificates trusted by the client. */
-	const char* trustStore;
-
-	/** The file in PEM format containing the public certificate chain of the client. It may also include
-	* the client's private key.
-	*/
-	const char* keyStore;
-
-	/** If not included in the sslKeyStore, this setting points to the file in PEM format containing
-	* the client's private key.
-	*/
-	const char* privateKey;
-	/** The password to load the client's privateKey if encrypted. */
-	const char* privateKeyPassword;
-
-	/**
-	* The list of cipher suites that the client will present to the server during the SSL handshake. For a
-	* full explanation of the cipher list format, please see the OpenSSL on-line documentation:
-	* http://www.openssl.org/docs/apps/ciphers.html#CIPHER_LIST_FORMAT
-	* If this setting is ommitted, its default value will be "ALL", that is, all the cipher suites -excluding
-	* those offering no encryption- will be considered.
-	* This setting can be used to set an SSL anonymous connection ("aNULL" string value, for instance).
-	*/
-	const char* enabledCipherSuites;
-
-    /** True/False option to enable verification of the server certificate **/
-    int enableServerCertAuth;
-
-} MQTTAsync_SSLOptions;
-
-#define MQTTAsync_SSLOptions_initializer { {'M', 'Q', 'T', 'S'}, 0, NULL, NULL, NULL, NULL, NULL, 1 }
-
-/*!
- *  @abstract MQTTAsync_connectOptions defines several settings that control the way the client connects to an MQTT server.  Default values are set in MQTTAsync_connectOptions_initializer.
- *
- *  @field struct_id The eyecatcher for this structure. Must be MQTC.
- *  @field struct_version The version number of this structure.  Must be 0, 1 or 2.
- *      0 signifies no SSL options and no serverURIs
- *      1 signifies no serverURIs
- *      2 signifies no MQTTVersion
- *  @field keepAliveInterval The "keep alive" interval, measured in seconds, defines the maximum time that should pass without communication between the client and the server. The client will ensure that at least one message travels across the network within each keep alive period.  In the absence of a data-related message during the time period, the client sends a very small MQTT "ping" message, which the server will acknowledge. The keep alive interval enables the client to detect when the server is no longer available without having to wait for the long TCP/IP timeout. Set to 0 if you do not want any keep alive processing.
- *  @field cleansession This is a boolean value. The cleansession setting controls the behaviour of both the client and the server at connection and disconnection time. The client and server both maintain session state information. This information is used to ensure "at least once" and "exactly once" delivery, and "exactly once" receipt of messages. Session state also includes subscriptions created by an MQTT client. You can choose to maintain or discard state information between sessions.
- *      When cleansession is true, the state information is discarded at connect and disconnect. Setting cleansession to false keeps the state information. When you connect an MQTT client application with MQTTAsync_connect(), the client identifies the connection using the client identifier and the address of the server. The server checks whether session information for this client has been saved from a previous connection to the server. If a previous session still exists, and cleansession=true, then the previous session information at the client and server is cleared. If cleansession=false, the previous session is resumed. If no previous session exists, a new session is started.
- *  @field maxInflight This controls how many messages can be in-flight simultaneously.
- *  @field will This is a pointer to an MQTTAsync_willOptions structure. If your application does not make use of the Last Will and Testament feature, set this pointer to NULL.
- *  @field username MQTT servers that support the MQTT v3.1 protocol provide authentication and authorisation by user name and password. This is the user name parameter.
- *  @field password MQTT servers that support the MQTT v3.1 protocol provide authentication and authorisation by user name and password. This is the password parameter.
- *  @field connectTimeout The time interval in seconds to allow a connect to complete.
- *  @field retryInterval The time interval in seconds.
- *  @field ssl This is a pointer to an MQTTAsync_SSLOptions structure. If your application does not make use of SSL, set this pointer to NULL.
- *  @field onSuccess A pointer to a callback function to be called if the connect successfully completes.  Can be set to NULL, in which case no indication of successful completion will be received.
- *  @field onFailure A pointer to a callback function to be called if the connect fails. Can be set to NULL, in which case no indication of unsuccessful completion will be received.
- *  @field context A pointer to any application-specific context. The the <i>context</i> pointer is passed to success or failure callback functions to provide access to the context information in the callback.
- *  @field serverURIcount The number of entries in the serverURIs array.
- *  @field serverURIs An array of null-terminated strings specifying the servers to which the client will connect. Each string takes the form <i>protocol://host:port</i>. <i>protocol</i> must be <i>tcp</i> or <i>ssl</i>. For <i>host</i>, you can specify either an IP address or a domain name. For instance, to connect to a server running on the local machines with the default MQTT port, specify <i>tcp://localhost:1883</i>.
- *  @field MQTTVersion Sets the version of MQTT to be used on the connect.
- *      MQTTVERSION_DEFAULT (0) = default: start with 3.1.1, and if that fails, fall back to 3.1
- *      MQTTVERSION_3_1 (3) = only try version 3.1
- *      MQTTVERSION_3_1_1 (4) = only try version 3.1.1
- */
-typedef struct
-{
-	const char struct_id[4];
-	int struct_version;
-	int keepAliveInterval;
-	int cleansession;
-	int maxInflight;
-	MQTTAsync_willOptions* will;
-	const char* username;
-	const char* password;
-	int connectTimeout;
-	int retryInterval;
-	MQTTAsync_SSLOptions* ssl;
-	MQTTAsync_onSuccess* onSuccess;
-	MQTTAsync_onFailure* onFailure;
-	void* context;
-	int serverURIcount;
-	char* const* serverURIs;
-	int MQTTVersion;
-} MQTTAsync_connectOptions;
-
-
-#define MQTTAsync_connectOptions_initializer { {'M', 'Q', 'T', 'C'}, 3, 60, 1, 10, NULL, NULL, NULL, 30, 0, NULL, NULL, NULL, NULL, 0, NULL, 0}
-
-/**
   * This function attempts to connect a previously-created client (see
   * MQTTAsync_create()) to an MQTT server using the specified options. If you
   * want to enable asynchronous message and status notifications, you must call
@@ -464,61 +514,6 @@ typedef struct
 int MQTTAsync_connect(MQTTAsync handle, const MQTTAsync_connectOptions* options) __attribute__( (visibility("default")) );
 
 
-typedef struct
-{
-	/** The eyecatcher for this structure. Must be MQTD. */
-	const char struct_id[4];
-	/** The version number of this structure.  Must be 0 or 1.  0 signifies no SSL options */
-	int struct_version;
-	/**
-      * The client delays disconnection for up to this time (in
-      * milliseconds) in order to allow in-flight message transfers to complete.
-      */
-	int timeout;
-	/**
-    * A pointer to a callback function to be called if the disconnect successfully
-    * completes.  Can be set to NULL, in which case no indication of successful
-    * completion will be received.
-    */
-	MQTTAsync_onSuccess* onSuccess;
-	/**
-    * A pointer to a callback function to be called if the disconnect fails.
-    * Can be set to NULL, in which case no indication of unsuccessful
-    * completion will be received.
-    */
-	MQTTAsync_onFailure* onFailure;
-	/**
-	* A pointer to any application-specific context. The
-    * the <i>context</i> pointer is passed to success or failure callback functions to
-    * provide access to the context information in the callback.
-    */
-	void* context;
-} MQTTAsync_disconnectOptions;
-
-#define MQTTAsync_disconnectOptions_initializer { {'M', 'Q', 'T', 'D'}, 0, 0, NULL, NULL, NULL }
-
-
-/**
-  * This function attempts to disconnect the client from the MQTT
-  * server. In order to allow the client time to complete handling of messages
-  * that are in-flight when this function is called, a timeout period is
-  * specified. When the timeout period has expired, the client disconnects even
-  * if there are still outstanding message acknowledgements.
-  * The next time the client connects to the same server, any QoS 1 or 2
-  * messages which have not completed will be retried depending on the
-  * cleansession settings for both the previous and the new connection (see
-  * MQTTAsync_connectOptions.cleansession and MQTTAsync_connect()).
-  * @param handle A valid client handle from a successful call to
-  * MQTTAsync_create().
-  * @param options The client delays disconnection for up to this time (in
-  * milliseconds) in order to allow in-flight message transfers to complete.
-  * @return MQTTCODE_SUCCESS if the client successfully disconnects from
-  * the server. An error code is returned if the client was unable to disconnect
-  * from the server
-  */
-int MQTTAsync_disconnect(MQTTAsync handle, const MQTTAsync_disconnectOptions* options) __attribute__( (visibility("default")) );
-
-
 /**
   * This function allows the client application to test whether or not a
   * client is currently connected to the MQTT server.
@@ -527,6 +522,26 @@ int MQTTAsync_disconnect(MQTTAsync handle, const MQTTAsync_disconnectOptions* op
   * @return Boolean true if the client is connected, otherwise false.
   */
 int MQTTAsync_isConnected(MQTTAsync handle) __attribute__( (visibility("default")) );
+
+/**
+ * This function attempts to disconnect the client from the MQTT
+ * server. In order to allow the client time to complete handling of messages
+ * that are in-flight when this function is called, a timeout period is
+ * specified. When the timeout period has expired, the client disconnects even
+ * if there are still outstanding message acknowledgements.
+ * The next time the client connects to the same server, any QoS 1 or 2
+ * messages which have not completed will be retried depending on the
+ * cleansession settings for both the previous and the new connection (see
+ * MQTTAsync_connectOptions.cleansession and MQTTAsync_connect()).
+ * @param handle A valid client handle from a successful call to
+ * MQTTAsync_create().
+ * @param options The client delays disconnection for up to this time (in
+ * milliseconds) in order to allow in-flight message transfers to complete.
+ * @return MQTTCODE_SUCCESS if the client successfully disconnects from
+ * the server. An error code is returned if the client was unable to disconnect
+ * from the server
+ */
+int MQTTAsync_disconnect(MQTTAsync handle, const MQTTAsync_disconnectOptions* options) __attribute__( (visibility("default")) );
 
 
 /**
@@ -612,7 +627,7 @@ int MQTTAsync_unsubscribeMany(MQTTAsync handle, int count, char* const* topic, M
   * @return MQTTCODE_SUCCESS if the message is accepted for publication.
   * An error code is returned if there was a problem accepting the message.
   */
-int MQTTAsync_send(MQTTAsync handle, const char* destinationName, int payloadlen, void* payload, int qos, int retained, MQTTAsync_responseOptions* response) __attribute__( (visibility("default")) );
+int MQTTAsync_send(MQTTAsync handle, char const* destinationName, size_t payloadlen, void* payload, int qos, int retained, MQTTAsync_responseOptions* response) __attribute__( (visibility("default")) );
 
 
 /**
@@ -630,7 +645,7 @@ int MQTTAsync_send(MQTTAsync handle, const char* destinationName, int payloadlen
   * @return MQTTCODE_SUCCESS if the message is accepted for publication.
   * An error code is returned if there was a problem accepting the message.
   */
-int MQTTAsync_sendMessage(MQTTAsync handle, const char* destinationName, const MQTTAsync_message* msg, MQTTAsync_responseOptions* response) __attribute__( (visibility("default")) );
+int MQTTAsync_sendMessage(MQTTAsync handle, char const* destinationName, MQTTAsync_message const* msg, MQTTAsync_responseOptions* response) __attribute__( (visibility("default")) );
 
 
 /**
@@ -690,20 +705,6 @@ void MQTTAsync_free(void* ptr) __attribute__( (visibility("default")) );
   */
 void MQTTAsync_destroy(MQTTAsync* handle) __attribute__( (visibility("default")) );
 
-
-
-enum MQTTASYNC_TRACE_LEVELS
-{
-	MQTTASYNC_TRACE_MAXIMUM = 1,
-	MQTTASYNC_TRACE_MEDIUM,
-	MQTTASYNC_TRACE_MINIMUM,
-	MQTTASYNC_TRACE_PROTOCOL,
-	MQTTASYNC_TRACE_ERROR,
-	MQTTASYNC_TRACE_SEVERE,
-	MQTTASYNC_TRACE_FATAL,
-};
-
-
 /**
   * This function sets the level of trace information which will be
   * returned in the trace callback.
@@ -729,13 +730,6 @@ typedef void MQTTAsync_traceCallback(enum MQTTASYNC_TRACE_LEVELS level, char* me
   * @param callback a pointer to the function which will handle the trace information
   */
 void MQTTAsync_setTraceCallback(MQTTAsync_traceCallback* callback) __attribute__( (visibility("default")) );
-
-
-typedef struct
-{
-	const char* name;
-	const char* value;
-} MQTTAsync_nameValue;
 
 /**
   * This function returns version information about the library.

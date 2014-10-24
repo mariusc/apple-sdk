@@ -67,7 +67,6 @@
 		6299E09519F2E541004A9A70 /* utf-8.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E04619F2D75C004A9A70 /* utf-8.c */; };
 		6299E09619F2E541004A9A70 /* Socket.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E04919F2D75C004A9A70 /* Socket.c */; };
 		6299E09719F2E541004A9A70 /* SocketBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E04B19F2D75C004A9A70 /* SocketBuffer.c */; };
-		62FB5D9919F802E60050C811 /* libpthread.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6299E07E19F2E415004A9A70 /* libpthread.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -136,8 +135,6 @@
 		6299E04C19F2D75C004A9A70 /* SocketBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketBuffer.h; sourceTree = "<group>"; };
 		6299E04D19F2D75C004A9A70 /* SSLSocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SSLSocket.c; sourceTree = "<group>"; };
 		6299E04E19F2D75C004A9A70 /* SSLSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSLSocket.h; sourceTree = "<group>"; };
-		6299E07E19F2E415004A9A70 /* libpthread.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpthread.dylib; path = usr/lib/libpthread.dylib; sourceTree = SDKROOT; };
-		6299E08119F2E49D004A9A70 /* libpthread.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpthread.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/usr/lib/libpthread.dylib; sourceTree = DEVELOPER_DIR; };
 		62D711B619F11E5C00A72F40 /* libMQTT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMQTT.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		62D711C019F11E5C00A72F40 /* MQTT.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MQTT.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		62D711D019F11F4D00A72F40 /* MQTT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTT.h; sourceTree = "<group>"; };
@@ -145,7 +142,6 @@
 		62D711D419F11FCD00A72F40 /* MQTT_OSX.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = MQTT_OSX.xcconfig; sourceTree = "<group>"; };
 		62D711D719F1224800A72F40 /* MQTT_Tests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MQTT_Tests.plist; sourceTree = "<group>"; };
 		62D711D919F1227E00A72F40 /* MQTT_Tests.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = MQTT_Tests.xcconfig; sourceTree = "<group>"; };
-		62FB5D9A19F802EF0050C811 /* libpthread.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpthread.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/usr/lib/libpthread.dylib; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,7 +156,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62FB5D9919F802E60050C811 /* libpthread.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,9 +329,6 @@
 		6299E07D19F2E404004A9A70 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				62FB5D9A19F802EF0050C811 /* libpthread.dylib */,
-				6299E08119F2E49D004A9A70 /* libpthread.dylib */,
-				6299E07E19F2E415004A9A70 /* libpthread.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
