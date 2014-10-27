@@ -111,7 +111,7 @@
     deviceModel.modelName = jsonDict[Web_RespondKey_ModelName];
     deviceModel.manufacturer = jsonDict[Web_RespondKey_ModelManufacturer];
     deviceModel.inputs = [RLAWebService parseDeviceReadingsFromJSONArray:jsonDict[Web_RespondKey_ModelReadings] ofDevice:deviceModel];
-    //device.outputs = [RLAWebService parseDeviceWritingsFromJSONArray:dict[<#name#>];
+    //device.outputs = [RLAWebService parseDeviceWritingsFromJSONArray:dict[<#name#>];  // TODO: Do the outputs
     
     NSDictionary* availableFirms = jsonDict[Web_RespondKey_ModelFirmwares];
     if (availableFirms)
@@ -151,20 +151,24 @@
     }
     else { firModel = firmware; }
     
+    /*  // TODO: Look at the configurations
     NSDictionary* configuration = jsonDict[Web_RespondKey_FirmwareConfiguration];
-    NSDictionary* defaultValue = configuration[Web_RespondKey_DefaultValues];
     
+    NSDictionary* defaultValue = configuration[Web_RespondKey_DefaultValues];
     NSDictionary* properties = ((NSDictionary*)configuration[Web_RespondKey_FirmwareSchema])[JSONSchema_Keyword_Properties];
-    NSUInteger const numProperties = properties.count;
-    if (numProperties && numProperties==defaultValue.count)
+    NSMutableDictionary* firmProperties = [[NSMutableDictionary alloc] initWithCapacity:configuration.count];
+    
+    if (properties.count==defaultValue.count)
     {
-        NSMutableDictionary* firmProperties = [[NSMutableDictionary alloc] initWithCapacity:configuration.count];
         [properties enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
             NSString* confKey = key;
             id confValue = [RLAWebService objectFromJSONSchemaWithType:((NSDictionary*)obj)[JSONSchema_Keyword_Type] withDefaultValue:defaultValue[confKey]];
             if (confValue) { firmProperties[key] = confValue; }
         }];
+        
+        firModel.configuration = firmProperties;
     }
+     */
     
     return firModel;
 }

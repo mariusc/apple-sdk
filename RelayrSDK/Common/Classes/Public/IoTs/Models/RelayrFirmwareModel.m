@@ -27,6 +27,8 @@ static NSString* const kCodingConfiguration = @"con";
 
 - (void)setWith:(RelayrFirmwareModel*)firmwareModel
 {
+    if (!firmwareModel || self==firmwareModel || ![_version isEqualToString:firmwareModel.version]) { return; }
+    
     if (firmwareModel.version) { _version = firmwareModel.version; }
     if (firmwareModel.configuration) { _configuration = (NSMutableDictionary*)firmwareModel.configuration; }
 }

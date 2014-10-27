@@ -111,7 +111,19 @@
                         options:(NSDictionary*)options
                      completion:(void (^)(NSError* error))completion;
 
-#pragma mark Subscription
+#pragma mark Subscriptions
+
+/*!
+ *  @abstract Virtual property that indicates whether there are ongoing subscriptions (connections, inputs, etc.).
+ *  @discussion Every time this property is called, a calculation is made to check if there are subscriptions running.
+ */
+@property (readonly,nonatomic) BOOL hasOngoingSubscriptions;
+
+/*!
+ *  @abstract Virtual property that indicates whether there are ongoing input subscriptions.
+ *  @discussion Every time this property is called, a calculation is made to check if there are input subscriptions running.
+ */
+@property (readonly,nonatomic) BOOL hasOngoingInputSubscriptions;
 
 /*!
  *  @abstract Subscribes a block to the data sent from the <code>RelayrDevice</code>.
@@ -131,7 +143,7 @@
  *  @see RelayrInput
  */
 - (void)subscribeToAllInputsWithBlock:(RelayrInputDataReceivedBlock)block
-                                error:(BOOL (^)(NSError* error))errorBlock;
+                                error:(RelayrInputErrorReceivedBlock)errorBlock;
 
 /*!
  *  @abstract Subscribes the target object to all data (all readings) sent from the <code>RelayrDevice</code>.
@@ -152,20 +164,7 @@
  */
 - (void)subscribeToAllInputsWithTarget:(id)target
                                 action:(SEL)action
-                                 error:(BOOL (^)(NSError* error))errorBlock;
-
-/*!
- *  @abstract Unsubscribes the specific action from the target object.
- *  @discussion If a target object has more than one subscription with different actions, 
- *	this unsubscribe method only affects the actions being passed.
- *
- *  @param target The object where the subscription is being sent to.
- *  @param action The action being executed on the target each time readings arrives.
- *
- *  @see RelayrInput
- */
-- (void)unsubscribeTarget:(id)target
-                   action:(SEL)action;
+                                 error:(RelayrInputErrorReceivedBlock)errorBlock;
 
 /*!
  *  @abstract Removes all subscriptions for the device.

@@ -70,6 +70,14 @@ typedef NS_ENUM(NSUInteger, RelayrConnectionState) {
  */
 @property (readonly,nonatomic) RelayrConnectionState state;
 
+#pragma mark Subscriptions
+
+/*!
+ *  @abstract Virtual property that indicates whether there are ongoing subscriptions for this connection channel.
+ *  @discussion Every time this property is called, a calculation is made to check if there are subscriptions running.
+ */
+@property (readonly,nonatomic) BOOL hasOngoingSubscriptions;
+
 /*!
  *  @abstract Subscribes to the state change of the connection.
  *  @discussion Within this method, it is possible to query for the connection type.
@@ -83,7 +91,7 @@ typedef NS_ENUM(NSUInteger, RelayrConnectionState) {
  */
 - (void)subscribeToStateChangesWithTarget:(id)target
                                    action:(SEL)action
-                                    error:(BOOL (^)(NSError* error))subscriptionError;
+                                    error:(void (^)(NSError* error))subscriptionError;
 
 /*!
  *  @abstract Subscribes the block to the state changes of this connection.
@@ -98,7 +106,7 @@ typedef NS_ENUM(NSUInteger, RelayrConnectionState) {
  *	If this block is defined, a boolean must be returned, indicating if a subscription retry should be attempted. 
  */
 - (void)subscribeToStateChangesWithBlock:(void (^)(RelayrConnection* connection, RelayrConnectionState currentState, RelayrConnectionState previousState, BOOL* unsubscribe))block
-                                   error:(BOOL (^)(NSError* error))subscriptionError;
+                                   error:(void (^)(NSError* error))subscriptionError;
 
 /*!
  *  @abstract Unsubscribes the specific action from the target object.

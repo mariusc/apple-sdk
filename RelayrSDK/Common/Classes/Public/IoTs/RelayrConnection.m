@@ -13,6 +13,33 @@
     return nil;
 }
 
+- (BOOL)hasOngoingSubscriptions
+{
+    return NO;  // TODO:
+}
+
+- (void)subscribeToStateChangesWithTarget:(id)target action:(SEL)action error:(void (^)(NSError* error))subscriptionError
+{
+    // TODO: Fill up
+}
+
+- (void)subscribeToStateChangesWithBlock:(void (^)(RelayrConnection* connection, RelayrConnectionState currentState, RelayrConnectionState previousState, BOOL* unsubscribe))block error:(void (^)(NSError* error))subscriptionError
+{
+    // TODO: Fill up
+}
+
+- (void)unsubscribeTarget:(id)target action:(SEL)action
+{
+    // TODO: Fill up
+}
+
+- (void)removeAllSubscriptions
+{
+    // TODO: Fill up
+}
+
+#pragma mark Setup extension
+
 - (instancetype)initWithDevice:(RelayrDevice*)device
 {
     if (!device.uid) { return nil; }
@@ -28,24 +55,11 @@
     return self;
 }
 
-- (void)subscribeToStateChangesWithTarget:(id)target action:(SEL)action error:(BOOL (^)(NSError* error))subscriptionError
+- (void)setWith:(RelayrConnection*)connection
 {
-    // TODO: Fill up
-}
-
-- (void)subscribeToStateChangesWithBlock:(void (^)(RelayrConnection* connection, RelayrConnectionState currentState, RelayrConnectionState previousState, BOOL* unsubscribe))block error:(BOOL (^)(NSError* error))subscriptionError
-{
-    // TODO: Fill up
-}
-
-- (void)unsubscribeTarget:(id)target action:(SEL)action
-{
-    // TODO: Fill up
-}
-
-- (void)removeAllSubscriptions
-{
-    // TODO: Fill up
+    if (!connection || self==connection) { return; }
+    
+    // TODO:
 }
 
 #pragma mark NSObject

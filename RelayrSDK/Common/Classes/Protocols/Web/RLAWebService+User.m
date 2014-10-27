@@ -103,7 +103,7 @@
             RelayrApp* app = [RLAWebService parseAppFromJSONDictionary:dict];
             if (app) { [result addObject:app]; }
         }
-        return completion(nil, [NSSet setWithSet:result]);
+        return completion(nil, [NSSet setWithSet:result]);  // The result must not be nil
     }];
 }
 
@@ -139,7 +139,7 @@
             if (pub) { [result addObject:pub]; }
         }
         
-        completion(nil, [NSSet setWithSet:result]);
+        completion(nil, [NSSet setWithSet:result]); // The result must not be nil
     }];
 }
 
@@ -160,7 +160,7 @@
             RelayrTransmitter* transmitter = [RLAWebService parseTransmitterFromJSONDictionary:dict];
             if (transmitter) { [result addObject:transmitter]; }
         }
-        return completion(nil, [NSSet setWithSet:result]);
+        return completion(nil, [NSSet setWithSet:result]);  // The result must not be nil
     }];
 }
 
@@ -181,7 +181,7 @@
             RelayrDevice* device = [RLAWebService parseDeviceFromJSONDictionary:dict];
             if (device) { [result addObject:device]; }
         }
-        return completion(nil, [NSSet setWithSet:result]);
+        return completion(nil, [NSSet setWithSet:result]);  // The result must not be nil
     }];
 }
 
@@ -204,7 +204,7 @@
             if (device) { [result addObject:device]; }
         }
         
-        return completion(nil, [NSSet setWithSet:result]);
+        return completion(nil, [NSSet setWithSet:result]);  // The result must not be nil
     }];
 }
 

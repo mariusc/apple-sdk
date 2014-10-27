@@ -192,6 +192,10 @@
 		62D73C9D19B70CAB006F417D /* RelayrTransmitter_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D73C9B19B70CAB006F417D /* RelayrTransmitter_Setup.h */; };
 		62D73C9F19B718C8006F417D /* RelayrDevice_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D73C9E19B718C8006F417D /* RelayrDevice_Setup.h */; };
 		62D73CA019B718C8006F417D /* RelayrDevice_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D73C9E19B718C8006F417D /* RelayrDevice_Setup.h */; };
+		62E0F32919FB8E2C0038E17A /* RLAServiceSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E0F32719FB8E2C0038E17A /* RLAServiceSelector.h */; };
+		62E0F32A19FB8E2C0038E17A /* RLAServiceSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E0F32719FB8E2C0038E17A /* RLAServiceSelector.h */; };
+		62E0F32B19FB8E2C0038E17A /* RLAServiceSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E0F32819FB8E2C0038E17A /* RLAServiceSelector.m */; };
+		62E0F32C19FB8E2C0038E17A /* RLAServiceSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E0F32819FB8E2C0038E17A /* RLAServiceSelector.m */; };
 		62E87DD919AB2AAA00728AC6 /* CDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E87DD419AB2AAA00728AC6 /* CDebug.h */; };
 		62E87DDA19AB2AAA00728AC6 /* CDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E87DD419AB2AAA00728AC6 /* CDebug.h */; };
 		62E87DDB19AB2AAA00728AC6 /* CMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E87DD519AB2AAA00728AC6 /* CMacros.h */; };
@@ -365,6 +369,8 @@
 		62E04C3219A15520001FEDCD /* RLANetworkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLANetworkInfo.m; sourceTree = "<group>"; };
 		62E04C3619A158DF001FEDCD /* RLAKeyChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAKeyChain.h; sourceTree = "<group>"; };
 		62E04C3719A158DF001FEDCD /* RLAKeyChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAKeyChain.m; sourceTree = "<group>"; };
+		62E0F32719FB8E2C0038E17A /* RLAServiceSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAServiceSelector.h; sourceTree = "<group>"; };
+		62E0F32819FB8E2C0038E17A /* RLAServiceSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAServiceSelector.m; sourceTree = "<group>"; };
 		62E41FC219C35B90008459B7 /* Relayr.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Relayr.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		62E41FD119C35DF1008459B7 /* Relayr_Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Relayr_Tests.plist; sourceTree = "<group>"; };
 		62E87DD419AB2AAA00728AC6 /* CDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDebug.h; sourceTree = "<group>"; };
@@ -801,6 +807,8 @@
 			isa = PBXGroup;
 			children = (
 				623A744D19FAA8C50048F47B /* RLAService.h */,
+				62E0F32719FB8E2C0038E17A /* RLAServiceSelector.h */,
+				62E0F32819FB8E2C0038E17A /* RLAServiceSelector.m */,
 				62B64D2A19EFC1E100DCD7AA /* Web */,
 				62B64D2919EFC1E100DCD7AA /* MQTT */,
 				623A744019FA8EAD0048F47B /* BLE */,
@@ -1027,6 +1035,7 @@
 				62FDB16819BEF2DD00AE2A64 /* RelayrFirmware_Setup.h in Headers */,
 				623A744919FA91A50048F47B /* RLABLEService.h in Headers */,
 				6254F80719CACA62006C836F /* RelayrFirmwareModel_Setup.h in Headers */,
+				62E0F32919FB8E2C0038E17A /* RLAServiceSelector.h in Headers */,
 				62FDB16B19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */,
 				62F1350819D54DA900DF93A7 /* RelayrOutput_Setup.h in Headers */,
 				62D0907219C0729900999142 /* RelayrConnection_Setup.h in Headers */,
@@ -1094,6 +1103,7 @@
 				62FDB16919BEF2DD00AE2A64 /* RelayrFirmware_Setup.h in Headers */,
 				623A744A19FA91A50048F47B /* RLABLEService.h in Headers */,
 				6254F80819CACA62006C836F /* RelayrFirmwareModel_Setup.h in Headers */,
+				62E0F32A19FB8E2C0038E17A /* RLAServiceSelector.h in Headers */,
 				62FDB16C19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */,
 				62F1350919D54DA900DF93A7 /* RelayrOutput_Setup.h in Headers */,
 				62D0907319C0729900999142 /* RelayrConnection_Setup.h in Headers */,
@@ -1331,6 +1341,7 @@
 				626F614219A506E4006EB510 /* RLAKeyChain.m in Sources */,
 				62B64D6619EFC1E100DCD7AA /* RLAWebService.m in Sources */,
 				621F3E5119A4FBAF004E3156 /* RLALog.m in Sources */,
+				62E0F32B19FB8E2C0038E17A /* RLAServiceSelector.m in Sources */,
 				629666E219D0169B003C99D9 /* WunderbarOnboarding.m in Sources */,
 				62B0B37C19D0985C00AD59BF /* WunderbarFirmwareUpdate.m in Sources */,
 				62B0B38219D0B77400AD59BF /* Wunderbar.m in Sources */,
@@ -1374,6 +1385,7 @@
 				62B64D6719EFC1E100DCD7AA /* RLAWebService.m in Sources */,
 				623F326319A7870000F774EB /* RLALog.m in Sources */,
 				6298AF3919D5F2250097E956 /* RLATargetAction.m in Sources */,
+				62E0F32C19FB8E2C0038E17A /* RLAServiceSelector.m in Sources */,
 				62B0B38319D0B77400AD59BF /* Wunderbar.m in Sources */,
 				629666E319D0169B003C99D9 /* WunderbarOnboarding.m in Sources */,
 				62B0B37D19D0985C00AD59BF /* WunderbarFirmwareUpdate.m in Sources */,

@@ -23,6 +23,7 @@
         
         RelayrTransmitter* result = [self addTransmitter:transmitter];
         if (!completion) { return; }
+        
         return (result) ? completion(nil, result) : completion(RelayrErrorMissingExpectedValue, nil);
     }];
 }

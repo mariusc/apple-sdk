@@ -31,12 +31,17 @@
 
 #pragma mark RLAService protocol
 
+- (void)queryDataFromDevice:(RelayrDevice*)device completion:(void (^)(NSError* error, id value, NSDate * date))completion
+{
+    
+}
+
 - (void)subscribeToDataFromDevice:(RelayrDevice*)device completion:(void (^)(NSError* error))completion
 {
     
 }
 
-- (void)queryDataFromDevice:(RelayrDevice*)device completion:(void (^)(NSError* error, id value, NSDate * date))completion
+- (void)unsubscribeToDataFromDevice:(RelayrDevice*)device
 {
     
 }

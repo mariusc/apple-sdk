@@ -4,9 +4,20 @@
 @import Foundation;         // Apple
 
 /*!
- *  @abstract Block executed when an input received data.
+ *  @abstract Block executed when an input receive data.
+ *
+ *  @param device <code>RelayrDevice</code> which is sending the information.
+ *  @param input <code>RelayrInput</code> specifying the meaning and value of the data that just arrived.
+ *  @param unsubscribe Boolean pointer that can be set to <code>YES</code> if you want the block to not be executed anymore.
  */
-typedef void(^RelayrInputDataReceivedBlock)(RelayrDevice* device, RelayrInput* input, BOOL* unsubscribe);
+typedef void (^RelayrInputDataReceivedBlock)(RelayrDevice* device, RelayrInput* input, BOOL* unsubscribe);
+
+/*!
+ *  @abstract Block executed when an input receive an error.
+ *
+ *  @param error <code>NSError</code> describing the specific error.
+ */
+typedef void (^RelayrInputErrorReceivedBlock)(NSError* error);
 
 /*!
  *  @abstract References the type of reading a relayr Device (sensor) can collect.
@@ -63,21 +74,16 @@ typedef void(^RelayrInputDataReceivedBlock)(RelayrDevice* device, RelayrInput* i
 
 /*!
  *  @abstract Subscribes a block to the data sent from the <code>RelayrDevice</code>.
- *  @discussion Regardless of how the device is connected (Web/Cloud, Bluetooth, etc.), the block is called as soon as the data is available.
+ *  @discussion Regardless of how the device is connected (Cloud, Direct connection, etc.), the block is called as soon as the data is available.
  *
  *  @param block This block will be executed everytime data is available. The block contains three parameters:
  *      - <code>device</code>. The device producing the reading.
  *      - <code>input</code>. The reading value received.
  *      - <code>unsubscribe</code>. A Boolean variable, that when set to <code>NO</code>, will stop the subscription.
- *  @param errorBlock A Block executed every time an error occurs. 
- *	The error could be received because the subscription could not be completed, 
- *	or because the subscription is stopped by an external factor. 
- *	If this block is defined, a boolean must be returned, indicating whether a subscription retry should be attempted.
- *
- *  @note If the method doesn't provide the block argument, the <code>errorBlock</code> won't give the option to retry to subscribe.
+ *  @param errorBlock A Block executed every time an error occurs. The error could be received because the subscription could not be completed, or because the subscription is stopped by an external factor.
  */
 - (void)subscribeWithBlock:(RelayrInputDataReceivedBlock)block
-                     error:(BOOL (^)(NSError* error))errorBlock;
+                     error:(RelayrInputErrorReceivedBlock)errorBlock;
 
 /*!
  *  @abstract Subscribes the target object to a specific input of a <code>RelayrDevice</code> instance.
@@ -89,16 +95,12 @@ typedef void(^RelayrInputDataReceivedBlock)(RelayrDevice* device, RelayrInput* i
  *      - One parameter. The parameter must be a <code>RelayrInput</code> object, or the program will crash.
  *      - Two parameters. The first one is a <code>RelayrDevice</code> object, and the second is a <code>RelayrInput</code> object.
  *  @param errorBlock A Block executed every time an error occurs. The error could be received because the subscription could not be completed, 
- *	or because the subscription is stopped by an external factor. 
- *	If this block is defined, a boolean must be returned, indicating whether a subscription retry should be attempted.
- *
- *  @note If the method doesn't provide the target or the target cannot perform the action, the <code>errorBlock</code> won't give the option to retry to subscribe.
- *
+ *	or because the subscription is stopped by an external factor.
  *  @warning The action selector should not return anything. If the method does return something, this will cause memory leaks.
  */
 - (void)subscribeWithTarget:(id)target
                      action:(SEL)action
-                      error:(BOOL (^)(NSError* error))errorBlock;
+                      error:(RelayrInputErrorReceivedBlock)errorBlock;
 
 /*!
  *  @abstract Unsubscribes the specific action from the target object.

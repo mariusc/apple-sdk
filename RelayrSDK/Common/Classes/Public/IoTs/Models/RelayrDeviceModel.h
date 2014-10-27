@@ -31,9 +31,9 @@
 /*!
  *  @abstract Returns an array of all possible readings the device can collect.
  *  @discussion Each item in this array is an object of type <code>RelayrInput</code>. 
- *	Each input represents a different kind of reading. 
- *	That is, a <code>RelayrDevice</code> can have a luminosity sensor and a gyroscope; 
- *	Therefore, this array would have two different inputs.
+ *      Each input represents a different kind of reading.
+ *      That is, a <code>RelayrDevice</code> can have a luminosity sensor and a gyroscope;
+ *      Therefore, this array would have two different inputs.
  *
  *  @see RelayrInput
  */

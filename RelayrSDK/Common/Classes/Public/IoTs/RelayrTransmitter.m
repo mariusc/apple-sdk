@@ -27,26 +27,6 @@ static NSString* const kCodingDevices = @"dev";
     return nil;
 }
 
-- (instancetype)initWithID:(NSString*)uid
-{
-    if (uid.length==0) { return nil; }
-    
-    self = [super init];
-    if (self) { _uid = uid; }
-    return self;
-}
-
-- (void)setWith:(RelayrTransmitter*)transmitter
-{
-    if (self==transmitter || _uid!=transmitter.uid) { return; }
-    
-    if (transmitter.user) { _user = transmitter.user; }
-    if (transmitter.name) { _name = transmitter.name; }
-    if (transmitter.owner) { _owner = transmitter.owner; }
-    if (transmitter.secret) { _secret = transmitter.secret; }
-    if (transmitter.devices) { _devices = transmitter.devices; }
-}
-
 - (void)setNameWith:(NSString*)name completion:(void (^)(NSError*, NSString*))completion
 {
     if (!name.length) { if (completion) { completion(RelayrErrorMissingArgument, _name); } return; }
@@ -59,6 +39,27 @@ static NSString* const kCodingDevices = @"dev";
         weakSelf.name = name;
         completion(nil, previousName);
     }];
+}
+
+#pragma mark Setup extension
+
+- (instancetype)initWithID:(NSString*)uid
+{
+    if (uid.length==0) { return nil; }
+    
+    self = [super init];
+    if (self) { _uid = uid; }
+    return self;
+}
+
+- (void)setWith:(RelayrTransmitter*)transmitter
+{
+    if (self==transmitter || ![_uid isEqualToString:transmitter.uid]) { return; }
+    
+    if (transmitter.name) { _name = transmitter.name; }
+    if (transmitter.owner) { _owner = transmitter.owner; }
+    if (transmitter.secret) { _secret = transmitter.secret; }
+    if (transmitter.devices) { _devices = transmitter.devices; }
 }
 
 #pragma mark Processes

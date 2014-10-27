@@ -33,7 +33,8 @@
  *  @param name New name to identify this transmitter with.
  *  @param completion Block indicating the result of the server push.
  */
-- (void)setNameWith:(NSString*)name completion:(void (^)(NSError* error, NSString* previousName))completion;
+- (void)setNameWith:(NSString*)name
+         completion:(void (^)(NSError* error, NSString* previousName))completion;
 
 /*!
  *  @abstract The owner ID of the specific transmitter, a relayr user.

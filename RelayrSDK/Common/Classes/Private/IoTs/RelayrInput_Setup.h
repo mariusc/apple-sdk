@@ -32,4 +32,33 @@
  */
 @property (readwrite,nonatomic) NSMutableArray* dates;
 
+/*!
+ *  @abstract Sets the instance where this object is being called for, with the properties of the object being passed as arguments.
+ *  @discussion The properties being passed as the arguments are considered new and thus have a higher priority.
+ *
+ *  @param input The newly <code>RelayrInput</code> instance.
+ */
+- (void)setWith:(RelayrInput*)input;
+
+/*!
+ *  @abstract Dictionary containing all the subscription blocks.
+ *  @discussion The dictionary contains as keys the subscription block, and as values the error blocks.
+ */
+@property (readwrite,nonatomic) NSMutableDictionary* subscribedBlocks;
+
+/*!
+ *  @abstract Dictionary containing all the subscription pairs (target-action).
+ *  @discussion The dictionary contains as keys the RLATargetAction objects, and as values the error blocks.
+ */
+@property (readwrite,nonatomic) NSMutableDictionary* subscribedTargets;
+
+/*!
+ *  @abstract This method is called everytime a value (or error) is received from any of the data source services (MQTT, BLE, etc.).
+ *  @discussion The <code>valueOrError</code> parameter can be an <code>NSError</code> or any other value. If this parameter is not an error, then a date must be given or the method won't perform any work.
+ *
+ *  @param valueOrError Object defining the value received or the error occurred.
+ *  @param date <code>NSDate</code> with the date of arrival of the value received.
+ */
+- (void)valueReceived:(NSObject <NSCopying> *)valueOrError at:(NSDate*)date;
+
 @end
