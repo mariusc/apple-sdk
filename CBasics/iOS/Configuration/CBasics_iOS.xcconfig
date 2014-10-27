@@ -1,7 +1,4 @@
-#include "Common/Configuration/CBasics_Common.xcconfig"
-
-SDKROOT = iphoneos
+SDKROOT = iphoneos                  // iOS SDK
+IPHONEOS_DEPLOYMENT_TARGET = 8.0    // The earliest iOS version the product is to run onto
 SUPPORTED_PLATFORMS = iphoneos iphonesimulator
-
-INSTALL_PATH = /iOS
-SKIP_INSTALL = NO
+TARGETED_DEVICE_FAMILY = 1,2        // For iPhones and iPads

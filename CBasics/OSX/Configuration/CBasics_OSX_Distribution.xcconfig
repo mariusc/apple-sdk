@@ -1,0 +1,2 @@
+#include "Common/Configuration/CBasics_Distribution.xcconfig"
+#include "OSX/Configuration/CBasics_OSX.xcconfig"

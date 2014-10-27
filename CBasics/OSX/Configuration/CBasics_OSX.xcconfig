@@ -1,8 +1,3 @@
-#include "Common/Configuration/CBasics_Common.xcconfig"
-
 SDKROOT = macosx
 SUPPORTED_PLATFORMS = macosx
 MACOSX_DEPLOYMENT_TARGET = 10.9
-
-INSTALL_PATH = /OSX
-SKIP_INSTALL = NO

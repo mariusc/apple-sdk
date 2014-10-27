@@ -4,6 +4,9 @@
 #import "RLAIdentifierGenerator.h"  // Relayr.framework (Utilities)
 
 @implementation RLAMQTTService
+{
+    
+}
 
 #pragma mark - Public API
 

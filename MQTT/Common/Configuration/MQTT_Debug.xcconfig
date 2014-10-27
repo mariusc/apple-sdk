@@ -1,0 +1,6 @@
+#include "Common/Configuration/MQTT.xcconfig"
+
+ONLY_ACTIVE_ARCH = YES
+DEPLOYMENT_POSTPROCESSING = NO
+
+GCC_OPTIMIZATION_LEVEL = 0

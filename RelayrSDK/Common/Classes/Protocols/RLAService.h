@@ -1,10 +1,9 @@
 @import Foundation;     // Apple
 @class RelayrDevice;    // Relayr.framework (Public)
 
-// !!!: The services should check if there are inputs blocks or targetsActions hearing the data. If not, unsubscribe themselves.
-
 /*!
  *  @abstract All Relayr SDK services must implement the classes listed on this protocol.
+ *  @discussion Services will check if the devices subscribed are still <i>living</i> and whehter the have subscription blocks.
  */
 @protocol RLAService <NSObject>
 

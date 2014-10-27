@@ -100,11 +100,7 @@ static NSString* const kCodingSecret = @"sec";
 
 - (BOOL)hasOngoingInputSubscriptions
 {
-    for (RelayrInput* input in self.inputs)
-    {
-        if (input.subscribedBlocks.count || input.subscribedTargets.count) { return YES; }
-    }
-    
+    for (RelayrInput* input in self.inputs) { if (input.subscribedBlocks.count || input.subscribedTargets.count) { return YES; } }
     return NO;
 }
 
