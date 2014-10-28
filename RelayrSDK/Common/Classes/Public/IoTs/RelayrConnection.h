@@ -2,16 +2,29 @@
 @class RelayrDevice;    // Relayr.framework (Public)
 
 /*!
- *  @abstract The type of connection between a Device either a transmitter, a MAC, a mobile device etc.
+ *  @abstract The type of connection between a device and the system running the SDK.
  *
- *  @constant RelayrConnectionTypeCloud The device is connected via the relayr Cloud.
- *  @constant RelayrConnectionTypeBluetooth The device is connected via Bluetooth.
- *  @constant RelayrConnectionTypeUnknown The device is connected via an unknown channel or not connected at all.
+ *  @constant RelayrConnectionTypeCloud The device's data is coming via the relayr Cloud.
+ *  @constant RelayrConnectionTypeDirect The device's data is coming through a direct connection.
+ *  @constant RelayrConnectionTypeUnknown The device's data is not being received or the source is unknown.
  */
 typedef NS_ENUM(NSUInteger, RelayrConnectionType) {
     RelayrConnectionTypeUnknown,
     RelayrConnectionTypeCloud,
-    RelayrConnectionTypeBluetooth
+    RelayrConnectionTypeDirect
+};
+
+/*!
+ *  @abstract The protocol being used by the connection between the system running the SDK and the device's data source.
+ *
+ *  @constant RelayrConnectionProtocolMQTT The protocol used is MQTT.
+ *  @constant RelayrConnectionProtocolBLE The protocol used is Bluetooth Low Energy.
+ *  @constant RelayrConnectionProtocolUnknown The protocol is unknown.
+ */
+typedef NS_ENUM(NSUInteger, RelayrConnectionProtocol) {
+    RelayrConnectionProtocolUnknwon,
+    RelayrConnectionProtocolMQTT,
+    RelayrConnectionProtocolBLE
 };
 
 /*!
@@ -43,14 +56,27 @@ typedef NS_ENUM(NSUInteger, RelayrConnectionState) {
 @property (readonly,weak,nonatomic) RelayrDevice* device;
 
 /*!
- *  @abstract The connection technology used.
+ *  @abstract Whether the connection is through the cloud or is directly performed with the device.
  */
 @property (readonly,nonatomic) RelayrConnectionType type;
 
 /*!
- *  @abstract The connection state of the current connection type.
+ *  @abstract Protocol being used by the connection between the device's data source and the system running the SDK.
+ */
+@property (readonly,nonatomic) RelayrConnectionProtocol protocol;
+
+/*!
+ *  @abstract The state of the current connection type.
  */
 @property (readonly,nonatomic) RelayrConnectionState state;
+
+#pragma mark Subscriptions
+
+/*!
+ *  @abstract Virtual property that indicates whether there are ongoing subscriptions for this connection channel.
+ *  @discussion Every time this property is called, a calculation is made to check if there are subscriptions running.
+ */
+@property (readonly,nonatomic) BOOL hasOngoingSubscriptions;
 
 /*!
  *  @abstract Subscribes to the state change of the connection.
@@ -63,7 +89,9 @@ typedef NS_ENUM(NSUInteger, RelayrConnectionState) {
  *  @param subscriptionError A Block executed if the subscription cannot be performed (it can be <code>nil</code>. 
  *	If this block is defined, a boolean must be returned, indicating if a subscription retry should be attempted.
  */
-- (void)subscribeToStateChangesWithTarget:(id)target action:(SEL)action error:(BOOL (^)(NSError* error))subscriptionError;
+- (void)subscribeToStateChangesWithTarget:(id)target
+                                   action:(SEL)action
+                                    error:(void (^)(NSError* error))subscriptionError;
 
 /*!
  *  @abstract Subscribes the block to the state changes of this connection.
@@ -77,7 +105,8 @@ typedef NS_ENUM(NSUInteger, RelayrConnectionState) {
  *	@param subscriptionError A Block executed if the subscription cannot be performed (it can be <code>nil</code>. 
  *	If this block is defined, a boolean must be returned, indicating if a subscription retry should be attempted. 
  */
-- (void)subscribeToStateChangesWithBlock:(void (^)(RelayrConnection* connection, RelayrConnectionState currentState, RelayrConnectionState previousState, BOOL* unsubscribe))block error:(BOOL (^)(NSError* error))subscriptionError;
+- (void)subscribeToStateChangesWithBlock:(void (^)(RelayrConnection* connection, RelayrConnectionState currentState, RelayrConnectionState previousState, BOOL* unsubscribe))block
+                                   error:(void (^)(NSError* error))subscriptionError;
 
 /*!
  *  @abstract Unsubscribes the specific action from the target object.
@@ -87,7 +116,8 @@ typedef NS_ENUM(NSUInteger, RelayrConnectionState) {
  *  @param target The object where the subscription is being sent to.
  *  @param action The action being executed on the target each time information arrives.
  */
-- (void)unsubscribeTarget:(id)target action:(SEL)action;
+- (void)unsubscribeTarget:(id)target
+                   action:(SEL)action;
 
 /*!
  *  @abstract Removes all subscriptions for this connection.

@@ -4,4 +4,10 @@
    <FileRef
       location = "group:RelayrSDK/RelayrSDK.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:MQTT/MQTT.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:CBasics/CBasics.xcodeproj">
+   </FileRef>
 </Workspace>

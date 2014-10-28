@@ -49,7 +49,7 @@
     
     __weak RelayrUser* user = _user;
     [_user queryCloudForIoTs:^(NSError* error) {
-        XCTAssertNil(nil);
+        XCTAssertNil(error);
         
         NSSet* transmitters = user.transmitters;
         XCTAssertGreaterThan(transmitters.count, 0);
@@ -62,6 +62,37 @@
         XCTAssertGreaterThanOrEqual(trans.devices.count, 6);
         
         [expectation fulfill];
+    }];
+    
+    [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
+}
+
+- (void)testSetName
+{
+    XCTestExpectation* expectation = [self expectationWithDescription:nil];
+    
+    __weak RelayrUser* user = _user;
+    [_user queryCloudForIoTs:^(NSError* error) {
+        XCTAssertNil(error);
+        
+        RelayrTransmitter* transmitter = user.transmitters.anyObject;
+        XCTAssertNotNil(transmitter);
+        
+        NSString* pastName = transmitter.name;
+        XCTAssertNotNil(pastName);
+        
+        __weak RelayrTransmitter* weakTransmitter = transmitter;
+        [transmitter setNameWith:kTestsTransmitterName completion:^(NSError* error, NSString* previousName) {
+            XCTAssertNil(error);
+            XCTAssertNotNil(previousName);
+            XCTAssertTrue([previousName isEqualToString:pastName]);
+            XCTAssertTrue([weakTransmitter.name isEqualToString:kTestsTransmitterName]);
+            
+            [weakTransmitter setNameWith:pastName completion:^(NSError* error, NSString* previousName) {
+                XCTAssertNil(error);
+                [expectation fulfill];
+            }];
+        }];
     }];
     
     [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];

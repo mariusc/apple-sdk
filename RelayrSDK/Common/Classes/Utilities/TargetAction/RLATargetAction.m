@@ -10,7 +10,7 @@
     return nil;
 }
 
-- (instancetype)initWithTarget:(__weak NSObject*)target action:(SEL)action
+- (instancetype)initWithTarget:(NSObject*)target action:(SEL)action
 {
     if (!target || ![target respondsToSelector:action]) { return nil; }
     

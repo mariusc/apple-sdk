@@ -2,6 +2,7 @@
 #import "RelayrDeviceModel.h"   // Relayr.framework (Public)
 @class RelayrUser;              // Relayr.framework (Public)
 @class RelayrFirmware;          // Relayr.framework (Public)
+@class RelayrConnection;        // Relayr.framework (Public)
 #import "RelayrInput.h"         // Relayr.framework (Public)
 @protocol RelayrOnboarding;     // Relayr.framework (Public)
 @protocol RelayrFirmwareUpdate; // Relayr.framework (Public)
@@ -32,6 +33,16 @@
 @property (readonly,nonatomic) NSString* name;
 
 /*!
+ *  @abstract It changes the device's name and push it to the server.
+ *  @discussion If the server is not reachable or there was any problem, and error will be returned in the completion block and the name won't be changed;
+ *
+ *  @param name New name to identify this device with.
+ *  @param completion Block indicating the result of the server push.
+ */
+- (void)setNameWith:(NSString*)name
+         completion:(void (^)(NSError* error, NSString* previousName))completion;
+
+/*!
  *  @abstract The Id of the owner of the Device.
  *  @discussion A relayr User Id.
  */
@@ -54,6 +65,13 @@
  *  @discussion Could be seen as the Device's password.
  */
 @property (readonly,nonatomic) NSString* secret;
+
+/*!
+ *  @abstract It represents the connection from where all the data is coming.
+ *  @discussion Abstraction of the connection between the system running the SDK and the source of the data. Thus, if you are connecting directly to a specific device (through BLE, NFC, etc.), this object will specify it. However, if the data is coming from the Relayr Cloud the connection will be of type <i>cloud</i>. The actual connection between the device and the cloud is not specified by this object.
+ *      This object is never <code>nil</code>.
+ */
+@property (readonly,nonatomic) RelayrConnection* connection;
 
 #pragma mark Processes
 
@@ -93,7 +111,19 @@
                         options:(NSDictionary*)options
                      completion:(void (^)(NSError* error))completion;
 
-#pragma mark Subscription
+#pragma mark Subscriptions
+
+/*!
+ *  @abstract Virtual property that indicates whether there are ongoing subscriptions (connections, inputs, etc.).
+ *  @discussion Every time this property is called, a calculation is made to check if there are subscriptions running.
+ */
+@property (readonly,nonatomic) BOOL hasOngoingSubscriptions;
+
+/*!
+ *  @abstract Virtual property that indicates whether there are ongoing input subscriptions.
+ *  @discussion Every time this property is called, a calculation is made to check if there are input subscriptions running.
+ */
+@property (readonly,nonatomic) BOOL hasOngoingInputSubscriptions;
 
 /*!
  *  @abstract Subscribes a block to the data sent from the <code>RelayrDevice</code>.
@@ -113,7 +143,7 @@
  *  @see RelayrInput
  */
 - (void)subscribeToAllInputsWithBlock:(RelayrInputDataReceivedBlock)block
-                                error:(BOOL (^)(NSError* error))errorBlock;
+                                error:(RelayrInputErrorReceivedBlock)errorBlock;
 
 /*!
  *  @abstract Subscribes the target object to all data (all readings) sent from the <code>RelayrDevice</code>.
@@ -134,19 +164,7 @@
  */
 - (void)subscribeToAllInputsWithTarget:(id)target
                                 action:(SEL)action
-                                 error:(BOOL (^)(NSError* error))errorBlock;
-
-/*!
- *  @abstract Unsubscribes the specific action from the target object.
- *  @discussion If a target object has more than one subscription with different actions, 
- *	this unsubscribe method only affects the actions being passed.
- *
- *  @param target The object where the subscription is being sent to.
- *  @param action The action being executed on the target each time readings arrives.
- *
- *  @see RelayrInput
- */
-- (void)unsubscribeTarget:(id)target action:(SEL)action;
+                                 error:(RelayrInputErrorReceivedBlock)errorBlock;
 
 /*!
  *  @abstract Removes all subscriptions for the device.

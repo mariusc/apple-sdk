@@ -1,5 +1,7 @@
-#import <Relayr/RelayrUser.h>          // Header
-@class RLAWebService;           // Relayr.framework (Web)
+#import <Relayr/RelayrUser.h>   // Header
+@class RLAWebService;           // Relayr.framework (Protocols/Web)
+@class RLAMQTTService;          // Relayr.framework (Protocols/MQTT)
+@class RLABLEService;           // Relayr.framework (Protocols/BLE)
 
 /*!
  *  @abstract The very basic entity in the relayr platform is the user.
@@ -28,6 +30,18 @@
  *  @discussion It is never <code>nil</code>. When an instance of <code>RelayrUser</code> is created, this property is setup to a valid web service.
  */
 @property (readonly,nonatomic) RLAWebService* webService;
+
+/*!
+ *  @abstract This is the central connection with the Relayr.framework MQTT module.
+ *  @discussion It is never <code>nil</code>. When an instance of <code>RelayrUser</code> is created, this property is setup to a valid MQTT service.
+ */
+@property (readonly,nonatomic) RLAMQTTService* mqttService;
+
+/*!
+ *  @abstract This is the central connection with the Relayr.framework BLE module.
+ *  @discussion It is never <code>nil</code>. When an instance of <code>RelayrUser</code> is created, this property is setup to a valid BLE service.
+ */
+@property (readonly,nonatomic) RLABLEService* bleService;
 
 /*!
  *  @abstract A unique idenfier of a <code>RelayrUser</code> instance.
@@ -79,7 +93,7 @@
 @property (readwrite,nonatomic) NSSet* devicesBookmarked;
 
 /*!
- *  @abstract Adds a transmitter to the transmitters own by the user.
+ *  @abstract Adds a transmitter to the transmitters own by the user (and all the devices children of that transmitter).
  *  @discussion If a transmitter with the same uid is already there, no transmitter is added, but the previous transmitter is updated with the info of the new transmitter.
  *
  *  @param transmitter Transmitter to add to the user.
@@ -94,11 +108,10 @@
  *  @discussion This method doesn't make any connection to the server; it is purely local.
  *
  *  @param transmitter Transmitter to add to the user
- *	@return Boolean communicating whether the operation was successful or not.
  *
  *  @see RelayrTransmitter
  */
-- (BOOL)removeTransmitter:(RelayrTransmitter*)transmitter;
+- (void)removeTransmitter:(RelayrTransmitter*)transmitter;
 
 /*!
  *  @abstract Adds a device to the devices own by the user.
@@ -113,13 +126,12 @@
 
 /*!
  *  @abstract Removes a device in the internal tree.
- *  @discussion This method doesn't make nay connection to the server; it is purely local.
+ *  @discussion This method doesn't make any connection to the server; it is purely local.
  *
  *  @param device <code>RelayrDevice</code> entity to remove locally.
- *	@return Boolean communicating whether the operation was succesfull or not.
  *
  *  @see RelayrDevice
  */
-- (BOOL)removeDevice:(RelayrDevice*)device;
+- (void)removeDevice:(RelayrDevice*)device;
 
 @end

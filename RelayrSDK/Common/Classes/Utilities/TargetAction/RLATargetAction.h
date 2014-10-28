@@ -14,7 +14,7 @@
  *  @param action The action that will be executed on the <code>target</code>.
  *	@return Fully initialised object or <code>nil</code>.
  */
-- (instancetype)initWithTarget:(__weak NSObject*)target action:(SEL)action;
+- (instancetype)initWithTarget:(NSObject*)target action:(SEL)action;
 
 /*!
  *  @abstract The target that will receive the action.

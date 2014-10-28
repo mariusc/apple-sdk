@@ -1,0 +1,9 @@
+#include "Common/Configuration/MQTT_Common.xcconfig"
+
+PRODUCT_NAME = MQTT
+BUNDLE_NAME = $(PRODUCT_NAME)
+BUNDLE_IDENTIFIER = io.relayr.mqtt.tests
+
+INFOPLIST_FILE = Tests/Configuration/MQTT_Tests.plist
+
+SDKROOT = macosx

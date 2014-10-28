@@ -1,0 +1,9 @@
+#include "Common/Configuration/Relayr.xcconfig"
+
+PRODUCT_NAME = Relayr
+BUNDLE_NAME = $(PRODUCT_NAME)
+BUNDLE_IDENTIFIER = io.relayr.sdk.tests
+
+INFOPLIST_FILE = Tests/Configuration/Relayr_Tests.plist
+
+SDKROOT = macosx

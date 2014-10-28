@@ -4,15 +4,20 @@
 #import "RelayrUser.h"              // Relayr.framework (Public)
 #import "RelayrFirmware.h"          // Relayr.framework (Public)
 #import "RelayrInput.h"             // Relayr.framework (Public)
+#import "RelayrConnection.h"        // Relayr.framework (Public)
 #import "RelayrOnboarding.h"        // Relayr.framework (Public)
 #import "RelayrFirmwareUpdate.h"    // Relayr.framework (Public)
+#import "RelayrUser_Setup.h"        // Relayr.framework (Private)
 #import "RelayrInput_Setup.h"       // Relayr.framework (Private)
+#import "RelayrConnection_Setup.h"  // Relayr.framework (Private)
 #import "RelayrFirmware_Setup.h"    // Relayr.framework (Private)
-#import "RLAWebService.h"           // Relayr.framework (Web)
-#import "RLAWebService+Device.h"    // Relayr.framework (Web)
+#import "RLAService.h"              // Relayr.framework (Protocols)
+#import "RLAServiceSelector.h"      // Relayr.framework (Protocols)
+#import "RLAWebService.h"           // Relayr.framework (Protocols/Web)
+#import "RLAWebService+Device.h"    // Relayr.framework (Protocols/Web)
 #import "RelayrErrors.h"            // Relayr.framework (Utilities)
+#import "RLATargetAction.h"         // Relayr.framework (Utilities)
 #import "RLALog.h"                  // Relayr.framework (Utilities)
-
 
 static NSString* const kCodingID = @"uid";
 static NSString* const kCodingName = @"nam";
@@ -32,6 +37,22 @@ static NSString* const kCodingSecret = @"sec";
     return nil;
 }
 
+- (void)setNameWith:(NSString*)name completion:(void (^)(NSError*, NSString*))completion
+{
+    if (!name.length) { if (completion) { completion(RelayrErrorMissingArgument, _name); } return; }
+    
+    __weak RelayrDevice* weakSelf = self;
+    [_user.webService setDevice:_uid name:name modelID:nil isPublic:nil description:nil completion:(!completion) ? nil : ^(NSError* error, RelayrDevice* device) {
+        NSString* previousName = weakSelf.name;
+        if (error) { return completion(error, previousName); }
+        
+        weakSelf.name = name;
+        completion(nil, previousName);
+    }];
+}
+
+#pragma mark Setup extension
+
 - (instancetype)initWithID:(NSString*)uid modelID:(NSString*)modelID
 {
     if ( !uid.length || !modelID.length ) { return nil; }
@@ -40,21 +61,22 @@ static NSString* const kCodingSecret = @"sec";
     if (self)
     {
         _uid = uid;
+        _connection = [[RelayrConnection alloc] initWithDevice:self];
     }
     return self;
 }
 
 - (void)setWith:(RelayrDevice*)device
 {
-    if (self==device || _uid != device.uid) { return; }
+    if (self==device || ![_uid isEqualToString:device.uid]) { return; }
     
     [super setWith:device];
     if (device.name) { _name = device.name; }
     if (device.owner) { _owner = device.owner; }
-    if (device.user) { _user = device.user; }
     if (device.isPublic) { _isPublic = device.isPublic; }
-    if (device.firmware) { [_firmware setWith:device.firmware]; }
     if (device.secret) { _secret = device.secret; }
+    [_firmware setWith:device.firmware];
+    [_connection setWith:device.connection];
 }
 
 #pragma mark Processes
@@ -71,30 +93,33 @@ static NSString* const kCodingSecret = @"sec";
 
 #pragma mark Subscription
 
-- (void)subscribeToAllInputsWithTarget:(id)target action:(SEL)action error:(BOOL (^)(NSError* error))errorBlock
+- (BOOL)hasOngoingSubscriptions
 {
-    if (!target) { if (errorBlock) { errorBlock(RelayrErrorMissingArgument); } return; }
-    if (![target respondsToSelector:action]) { if (errorBlock) { errorBlock(RelayrErrorUnknwon); } return; }
-    
-    for (RelayrInput* input in self.inputs) { [input subscribeWithTarget:target action:action error:errorBlock]; }
+    return _connection.hasOngoingSubscriptions || self.hasOngoingInputSubscriptions;
 }
 
-- (void)subscribeToAllInputsWithBlock:(RelayrInputDataReceivedBlock)block error:(BOOL (^)(NSError* error))errorBlock
+- (BOOL)hasOngoingInputSubscriptions
+{
+    for (RelayrInput* input in self.inputs) { if (input.subscribedBlocks.count || input.subscribedTargets.count) { return YES; } }
+    return NO;
+}
+
+- (void)subscribeToAllInputsWithBlock:(RelayrInputDataReceivedBlock)block error:(RelayrInputErrorReceivedBlock)errorBlock
 {
     if (!block) { if (errorBlock) { errorBlock(RelayrErrorMissingArgument); } return; }
-    
     for (RelayrInput* input in self.inputs) { [input subscribeWithBlock:block error:errorBlock]; }
 }
 
-- (void)unsubscribeTarget:(id)target action:(SEL)action
+- (void)subscribeToAllInputsWithTarget:(id)target action:(SEL)action error:(RelayrInputErrorReceivedBlock)errorBlock
 {
-    if (!target || ![target respondsToSelector:action]) { return; }
-    
-    for (RelayrInput* input in self.inputs) { [input unsubscribeTarget:target action:action]; }
+    RLATargetAction* pair = [[RLATargetAction alloc] initWithTarget:target action:action];
+    if (!pair) { if (errorBlock) { errorBlock(RelayrErrorMissingArgument); } return; }
+    for (RelayrInput* input in self.inputs) { [input subscribeWithTarget:target action:action error:errorBlock]; }
 }
 
 - (void)removeAllSubscriptions
 {
+    [_connection removeAllSubscriptions];
     for (RelayrInput* input in self.inputs) { [input removeAllSubscriptions]; }
 }
 
@@ -112,6 +137,7 @@ static NSString* const kCodingSecret = @"sec";
         _isPublic = [decoder decodeObjectForKey:kCodingPublic];
         _firmware = [decoder decodeObjectForKey:kCodingFirmware];
         _secret = [decoder decodeObjectForKey:kCodingSecret];
+        _connection = [[RelayrConnection alloc] initWithDevice:self];
     }
     return self;
 }

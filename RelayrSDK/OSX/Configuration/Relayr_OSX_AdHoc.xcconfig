@@ -1,0 +1,2 @@
+#include "Common/Configuration/Relayr_AdHoc.xcconfig"
+#include "OSX/Configuration/Relayr_OSX.xcconfig"

@@ -6,7 +6,7 @@
 #import "RelayrDeviceModel.h"       // Relayr.framework (Public)
 #import "RelayrUser_Setup.h"        // Relayr.framework (Public)
 #import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
-#import "RLAWebService+Device.h"    // Relayr.framework (Web)
+#import "RLAWebService+Device.h"    // Relayr.framework (Protocols/Web)
 #import "RelayrErrors.h"            // Relayr.framework (Utilities)
 
 static NSString* const kCodingMeaning = @"men";

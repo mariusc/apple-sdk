@@ -36,10 +36,12 @@
 		622E7EA919CF829400948558 /* RelayrOnboarding.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EA719CF829400948558 /* RelayrOnboarding.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		622E7EAB19CF834500948558 /* RelayrFirmwareUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EAA19CF834500948558 /* RelayrFirmwareUpdate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		622E7EAC19CF834500948558 /* RelayrFirmwareUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EAA19CF834500948558 /* RelayrFirmwareUpdate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		623F324D19A731B100F774EB /* RLAWebService.h in Headers */ = {isa = PBXBuildFile; fileRef = 623F324B19A731B100F774EB /* RLAWebService.h */; };
-		623F324E19A731B100F774EB /* RLAWebService.m in Sources */ = {isa = PBXBuildFile; fileRef = 623F324C19A731B100F774EB /* RLAWebService.m */; };
-		623F325619A74C3600F774EB /* RLAWebRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 623F325419A74C3600F774EB /* RLAWebRequest.h */; };
-		623F325719A74C3600F774EB /* RLAWebRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 623F325519A74C3600F774EB /* RLAWebRequest.m */; };
+		623A744919FA91A50048F47B /* RLABLEService.h in Headers */ = {isa = PBXBuildFile; fileRef = 623A744719FA91A50048F47B /* RLABLEService.h */; };
+		623A744A19FA91A50048F47B /* RLABLEService.h in Headers */ = {isa = PBXBuildFile; fileRef = 623A744719FA91A50048F47B /* RLABLEService.h */; };
+		623A744B19FA91A50048F47B /* RLABLEService.m in Sources */ = {isa = PBXBuildFile; fileRef = 623A744819FA91A50048F47B /* RLABLEService.m */; };
+		623A744C19FA91A50048F47B /* RLABLEService.m in Sources */ = {isa = PBXBuildFile; fileRef = 623A744819FA91A50048F47B /* RLABLEService.m */; };
+		623A744E19FAA8C50048F47B /* RLAService.h in Headers */ = {isa = PBXBuildFile; fileRef = 623A744D19FAA8C50048F47B /* RLAService.h */; };
+		623A744F19FAA8C50048F47B /* RLAService.h in Headers */ = {isa = PBXBuildFile; fileRef = 623A744D19FAA8C50048F47B /* RLAService.h */; };
 		623F325819A786B700F774EB /* RelayrCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D1718719A62D63009BBED1 /* RelayrCloud.m */; };
 		623F325919A786BA00F774EB /* RelayrCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D1718619A62D63009BBED1 /* RelayrCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		623F325A19A786BC00F774EB /* RelayrApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D1718B19A62E8D009BBED1 /* RelayrApp.m */; };
@@ -47,16 +49,12 @@
 		623F325C19A786C600F774EB /* RelayrUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D1719619A65C98009BBED1 /* RelayrUser.m */; };
 		623F325D19A786CE00F774EB /* RelayrDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D1719A19A65CCC009BBED1 /* RelayrDevice.m */; };
 		623F325E19A786D000F774EB /* RelayrTransmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D1719E19A65D3B009BBED1 /* RelayrTransmitter.m */; };
-		623F325F19A786D800F774EB /* RLAWebService.m in Sources */ = {isa = PBXBuildFile; fileRef = 623F324C19A731B100F774EB /* RLAWebService.m */; };
-		623F326019A786DB00F774EB /* RLAWebRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 623F325519A74C3600F774EB /* RLAWebRequest.m */; };
 		623F326319A7870000F774EB /* RLALog.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A6AD2199CCD170004F9FD /* RLALog.m */; };
 		623F326419A7870D00F774EB /* RLAKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C3719A158DF001FEDCD /* RLAKeyChain.m */; };
 		623F326519A7871000F774EB /* RLANetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C3219A15520001FEDCD /* RLANetworkInfo.m */; };
 		623F326619A7871F00F774EB /* RelayrUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D1719519A65C98009BBED1 /* RelayrUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		623F326719A7872400F774EB /* RelayrTransmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D1719D19A65D3B009BBED1 /* RelayrTransmitter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		623F326819A7872700F774EB /* RelayrDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D1719919A65CCC009BBED1 /* RelayrDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		623F326A19A7873100F774EB /* RLAWebService.h in Headers */ = {isa = PBXBuildFile; fileRef = 623F324B19A731B100F774EB /* RLAWebService.h */; };
-		623F326B19A7873300F774EB /* RLAWebRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 623F325419A74C3600F774EB /* RLAWebRequest.h */; };
 		623F326D19A7873A00F774EB /* RLALog.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6AD1199CCD170004F9FD /* RLALog.h */; };
 		623F326E19A7873D00F774EB /* RLAKeyChain.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C3619A158DF001FEDCD /* RLAKeyChain.h */; };
 		623F326F19A7874200F774EB /* RLANetworkInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C3119A15520001FEDCD /* RLANetworkInfo.h */; };
@@ -74,47 +72,13 @@
 		6254F80519CAC673006C836F /* RelayrDeviceModel_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 6254F80319CAC673006C836F /* RelayrDeviceModel_Setup.h */; };
 		6254F80719CACA62006C836F /* RelayrFirmwareModel_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 6254F80619CACA62006C836F /* RelayrFirmwareModel_Setup.h */; };
 		6254F80819CACA62006C836F /* RelayrFirmwareModel_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 6254F80619CACA62006C836F /* RelayrFirmwareModel_Setup.h */; };
-		6259257E19C88D5400EC1735 /* RLAWebService+Parsing.h in Headers */ = {isa = PBXBuildFile; fileRef = 6259257C19C88D5400EC1735 /* RLAWebService+Parsing.h */; };
-		6259257F19C88D5400EC1735 /* RLAWebService+Parsing.h in Headers */ = {isa = PBXBuildFile; fileRef = 6259257C19C88D5400EC1735 /* RLAWebService+Parsing.h */; };
-		6259258019C88D5400EC1735 /* RLAWebService+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 6259257D19C88D5400EC1735 /* RLAWebService+Parsing.m */; };
-		6259258119C88D5400EC1735 /* RLAWebService+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 6259257D19C88D5400EC1735 /* RLAWebService+Parsing.m */; };
 		626F614019A4FFAF006EB510 /* RLALog.h in Headers */ = {isa = PBXBuildFile; fileRef = 621A6AD1199CCD170004F9FD /* RLALog.h */; };
 		626F614219A506E4006EB510 /* RLAKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E04C3719A158DF001FEDCD /* RLAKeyChain.m */; };
 		626F614319A506E8006EB510 /* RLAKeyChain.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E04C3619A158DF001FEDCD /* RLAKeyChain.h */; };
-		6272529719AC7B89001265EB /* RLAWebConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 6272529619AC7B38001265EB /* RLAWebConstants.h */; };
-		6272529819AC7B91001265EB /* RLAWebConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 6272529619AC7B38001265EB /* RLAWebConstants.h */; };
-		6272529B19AC8573001265EB /* RLAWebOAuthController.h in Headers */ = {isa = PBXBuildFile; fileRef = 6272529919AC8573001265EB /* RLAWebOAuthController.h */; };
-		6272529C19AC8573001265EB /* RLAWebOAuthController.h in Headers */ = {isa = PBXBuildFile; fileRef = 6272529919AC8573001265EB /* RLAWebOAuthController.h */; };
-		6272529D19AC8573001265EB /* RLAWebOAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6272529A19AC8573001265EB /* RLAWebOAuthController.m */; };
-		6272529E19AC8573001265EB /* RLAWebOAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6272529A19AC8573001265EB /* RLAWebOAuthController.m */; };
 		62732D4219C05A24000E9545 /* RelayrConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 62732D4019C05A24000E9545 /* RelayrConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		62732D4319C05A24000E9545 /* RelayrConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 62732D4019C05A24000E9545 /* RelayrConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		62732D4419C05A24000E9545 /* RelayrConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 62732D4119C05A24000E9545 /* RelayrConnection.m */; };
 		62732D4519C05A24000E9545 /* RelayrConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 62732D4119C05A24000E9545 /* RelayrConnection.m */; };
-		6285F34F19C1A92D0097B299 /* RLAWebService+User.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F34D19C1A92D0097B299 /* RLAWebService+User.h */; };
-		6285F35019C1A92D0097B299 /* RLAWebService+User.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F34D19C1A92D0097B299 /* RLAWebService+User.h */; };
-		6285F35119C1A92D0097B299 /* RLAWebService+User.m in Sources */ = {isa = PBXBuildFile; fileRef = 6285F34E19C1A92D0097B299 /* RLAWebService+User.m */; };
-		6285F35219C1A92D0097B299 /* RLAWebService+User.m in Sources */ = {isa = PBXBuildFile; fileRef = 6285F34E19C1A92D0097B299 /* RLAWebService+User.m */; };
-		6285F35519C1A98B0097B299 /* RLAWebService+App.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F35319C1A98B0097B299 /* RLAWebService+App.h */; };
-		6285F35619C1A98B0097B299 /* RLAWebService+App.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F35319C1A98B0097B299 /* RLAWebService+App.h */; };
-		6285F35719C1A98B0097B299 /* RLAWebService+App.m in Sources */ = {isa = PBXBuildFile; fileRef = 6285F35419C1A98B0097B299 /* RLAWebService+App.m */; };
-		6285F35819C1A98B0097B299 /* RLAWebService+App.m in Sources */ = {isa = PBXBuildFile; fileRef = 6285F35419C1A98B0097B299 /* RLAWebService+App.m */; };
-		6285F36119C1AA410097B299 /* RLAWebService+Cloud.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F35F19C1AA410097B299 /* RLAWebService+Cloud.h */; };
-		6285F36219C1AA410097B299 /* RLAWebService+Cloud.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F35F19C1AA410097B299 /* RLAWebService+Cloud.h */; };
-		6285F36319C1AA410097B299 /* RLAWebService+Cloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 6285F36019C1AA410097B299 /* RLAWebService+Cloud.m */; };
-		6285F36419C1AA410097B299 /* RLAWebService+Cloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 6285F36019C1AA410097B299 /* RLAWebService+Cloud.m */; };
-		6285F36719C1AA850097B299 /* RLAWebService+Publisher.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F36519C1AA850097B299 /* RLAWebService+Publisher.h */; };
-		6285F36819C1AA850097B299 /* RLAWebService+Publisher.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F36519C1AA850097B299 /* RLAWebService+Publisher.h */; };
-		6285F36919C1AA850097B299 /* RLAWebService+Publisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 6285F36619C1AA850097B299 /* RLAWebService+Publisher.m */; };
-		6285F36A19C1AA850097B299 /* RLAWebService+Publisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 6285F36619C1AA850097B299 /* RLAWebService+Publisher.m */; };
-		6285F36D19C1AAA70097B299 /* RLAWebService+Transmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F36B19C1AAA70097B299 /* RLAWebService+Transmitter.h */; };
-		6285F36E19C1AAA70097B299 /* RLAWebService+Transmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F36B19C1AAA70097B299 /* RLAWebService+Transmitter.h */; };
-		6285F36F19C1AAA70097B299 /* RLAWebService+Transmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6285F36C19C1AAA70097B299 /* RLAWebService+Transmitter.m */; };
-		6285F37019C1AAA70097B299 /* RLAWebService+Transmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6285F36C19C1AAA70097B299 /* RLAWebService+Transmitter.m */; };
-		6285F37319C1AABA0097B299 /* RLAWebService+Device.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F37119C1AABA0097B299 /* RLAWebService+Device.h */; };
-		6285F37419C1AABA0097B299 /* RLAWebService+Device.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F37119C1AABA0097B299 /* RLAWebService+Device.h */; };
-		6285F37519C1AABA0097B299 /* RLAWebService+Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 6285F37219C1AABA0097B299 /* RLAWebService+Device.m */; };
-		6285F37619C1AABA0097B299 /* RLAWebService+Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 6285F37219C1AABA0097B299 /* RLAWebService+Device.m */; };
 		6285F37B19C1AF8E0097B299 /* RLAWebOAuthControllerIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F37919C1AF8E0097B299 /* RLAWebOAuthControllerIOS.h */; };
 		6285F37C19C1AF8E0097B299 /* RLAWebOAuthControllerIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 6285F37A19C1AF8E0097B299 /* RLAWebOAuthControllerIOS.m */; };
 		6285F38119C1B2700097B299 /* RLAWebOAuthControllerOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F37F19C1B2700097B299 /* RLAWebOAuthControllerOSX.h */; };
@@ -127,6 +91,7 @@
 		6298AF3719D5F2250097E956 /* RLATargetAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 6298AF3419D5F2250097E956 /* RLATargetAction.h */; };
 		6298AF3819D5F2250097E956 /* RLATargetAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 6298AF3519D5F2250097E956 /* RLATargetAction.m */; };
 		6298AF3919D5F2250097E956 /* RLATargetAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 6298AF3519D5F2250097E956 /* RLATargetAction.m */; };
+		6299E0B919F2E797004A9A70 /* libMQTT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6299E0AF19F2E766004A9A70 /* libMQTT.a */; };
 		62B0B37619D097B100AD59BF /* WunderbarConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B0B37519D097B100AD59BF /* WunderbarConstants.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		62B0B37719D097B100AD59BF /* WunderbarConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B0B37519D097B100AD59BF /* WunderbarConstants.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		62B0B37A19D0985C00AD59BF /* WunderbarFirmwareUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B0B37819D0985C00AD59BF /* WunderbarFirmwareUpdate.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -147,6 +112,59 @@
 		62B0B3AA19D1B16F00AD59BF /* RLAWebService+Wunderbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B0B3A619D1B16F00AD59BF /* RLAWebService+Wunderbar.m */; };
 		62B3BA2319D9A3DD009EB055 /* WunderbarErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B3BA2219D9A3DD009EB055 /* WunderbarErrors.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		62B3BA2419D9A3DD009EB055 /* WunderbarErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B3BA2219D9A3DD009EB055 /* WunderbarErrors.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		62B64D4219EFC1E100DCD7AA /* RLAWebConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D2C19EFC1E100DCD7AA /* RLAWebConstants.h */; };
+		62B64D4319EFC1E100DCD7AA /* RLAWebConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D2C19EFC1E100DCD7AA /* RLAWebConstants.h */; };
+		62B64D4419EFC1E100DCD7AA /* RLAWebRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D2D19EFC1E100DCD7AA /* RLAWebRequest.h */; };
+		62B64D4519EFC1E100DCD7AA /* RLAWebRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D2D19EFC1E100DCD7AA /* RLAWebRequest.h */; };
+		62B64D4619EFC1E100DCD7AA /* RLAWebRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D2E19EFC1E100DCD7AA /* RLAWebRequest.m */; };
+		62B64D4719EFC1E100DCD7AA /* RLAWebRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D2E19EFC1E100DCD7AA /* RLAWebRequest.m */; };
+		62B64D4819EFC1E100DCD7AA /* RLAWebService+App.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D2F19EFC1E100DCD7AA /* RLAWebService+App.h */; };
+		62B64D4919EFC1E100DCD7AA /* RLAWebService+App.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D2F19EFC1E100DCD7AA /* RLAWebService+App.h */; };
+		62B64D4A19EFC1E100DCD7AA /* RLAWebService+App.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D3019EFC1E100DCD7AA /* RLAWebService+App.m */; };
+		62B64D4B19EFC1E100DCD7AA /* RLAWebService+App.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D3019EFC1E100DCD7AA /* RLAWebService+App.m */; };
+		62B64D4C19EFC1E100DCD7AA /* RLAWebService+Cloud.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D3119EFC1E100DCD7AA /* RLAWebService+Cloud.h */; };
+		62B64D4D19EFC1E100DCD7AA /* RLAWebService+Cloud.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D3119EFC1E100DCD7AA /* RLAWebService+Cloud.h */; };
+		62B64D4E19EFC1E100DCD7AA /* RLAWebService+Cloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D3219EFC1E100DCD7AA /* RLAWebService+Cloud.m */; };
+		62B64D4F19EFC1E100DCD7AA /* RLAWebService+Cloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D3219EFC1E100DCD7AA /* RLAWebService+Cloud.m */; };
+		62B64D5019EFC1E100DCD7AA /* RLAWebService+Device.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D3319EFC1E100DCD7AA /* RLAWebService+Device.h */; };
+		62B64D5119EFC1E100DCD7AA /* RLAWebService+Device.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D3319EFC1E100DCD7AA /* RLAWebService+Device.h */; };
+		62B64D5219EFC1E100DCD7AA /* RLAWebService+Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D3419EFC1E100DCD7AA /* RLAWebService+Device.m */; };
+		62B64D5319EFC1E100DCD7AA /* RLAWebService+Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D3419EFC1E100DCD7AA /* RLAWebService+Device.m */; };
+		62B64D5419EFC1E100DCD7AA /* RLAWebService+Parsing.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D3519EFC1E100DCD7AA /* RLAWebService+Parsing.h */; };
+		62B64D5519EFC1E100DCD7AA /* RLAWebService+Parsing.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D3519EFC1E100DCD7AA /* RLAWebService+Parsing.h */; };
+		62B64D5619EFC1E100DCD7AA /* RLAWebService+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D3619EFC1E100DCD7AA /* RLAWebService+Parsing.m */; };
+		62B64D5719EFC1E100DCD7AA /* RLAWebService+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D3619EFC1E100DCD7AA /* RLAWebService+Parsing.m */; };
+		62B64D5819EFC1E100DCD7AA /* RLAWebService+Publisher.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D3719EFC1E100DCD7AA /* RLAWebService+Publisher.h */; };
+		62B64D5919EFC1E100DCD7AA /* RLAWebService+Publisher.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D3719EFC1E100DCD7AA /* RLAWebService+Publisher.h */; };
+		62B64D5A19EFC1E100DCD7AA /* RLAWebService+Publisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D3819EFC1E100DCD7AA /* RLAWebService+Publisher.m */; };
+		62B64D5B19EFC1E100DCD7AA /* RLAWebService+Publisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D3819EFC1E100DCD7AA /* RLAWebService+Publisher.m */; };
+		62B64D5C19EFC1E100DCD7AA /* RLAWebService+Transmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D3919EFC1E100DCD7AA /* RLAWebService+Transmitter.h */; };
+		62B64D5D19EFC1E100DCD7AA /* RLAWebService+Transmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D3919EFC1E100DCD7AA /* RLAWebService+Transmitter.h */; };
+		62B64D5E19EFC1E100DCD7AA /* RLAWebService+Transmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D3A19EFC1E100DCD7AA /* RLAWebService+Transmitter.m */; };
+		62B64D5F19EFC1E100DCD7AA /* RLAWebService+Transmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D3A19EFC1E100DCD7AA /* RLAWebService+Transmitter.m */; };
+		62B64D6019EFC1E100DCD7AA /* RLAWebService+User.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D3B19EFC1E100DCD7AA /* RLAWebService+User.h */; };
+		62B64D6119EFC1E100DCD7AA /* RLAWebService+User.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D3B19EFC1E100DCD7AA /* RLAWebService+User.h */; };
+		62B64D6219EFC1E100DCD7AA /* RLAWebService+User.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D3C19EFC1E100DCD7AA /* RLAWebService+User.m */; };
+		62B64D6319EFC1E100DCD7AA /* RLAWebService+User.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D3C19EFC1E100DCD7AA /* RLAWebService+User.m */; };
+		62B64D6419EFC1E100DCD7AA /* RLAWebService.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D3D19EFC1E100DCD7AA /* RLAWebService.h */; };
+		62B64D6519EFC1E100DCD7AA /* RLAWebService.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D3D19EFC1E100DCD7AA /* RLAWebService.h */; };
+		62B64D6619EFC1E100DCD7AA /* RLAWebService.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D3E19EFC1E100DCD7AA /* RLAWebService.m */; };
+		62B64D6719EFC1E100DCD7AA /* RLAWebService.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D3E19EFC1E100DCD7AA /* RLAWebService.m */; };
+		62B64D6819EFC1E100DCD7AA /* RLAWebOAuthController.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D4019EFC1E100DCD7AA /* RLAWebOAuthController.h */; };
+		62B64D6919EFC1E100DCD7AA /* RLAWebOAuthController.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D4019EFC1E100DCD7AA /* RLAWebOAuthController.h */; };
+		62B64D6A19EFC1E100DCD7AA /* RLAWebOAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D4119EFC1E100DCD7AA /* RLAWebOAuthController.m */; };
+		62B64D6B19EFC1E100DCD7AA /* RLAWebOAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D4119EFC1E100DCD7AA /* RLAWebOAuthController.m */; };
+		62B64D6E19EFC48D00DCD7AA /* RLAMQTTService.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D6C19EFC48D00DCD7AA /* RLAMQTTService.h */; };
+		62B64D6F19EFC48D00DCD7AA /* RLAMQTTService.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D6C19EFC48D00DCD7AA /* RLAMQTTService.h */; };
+		62B64D7019EFC48D00DCD7AA /* RLAMQTTService.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D6D19EFC48D00DCD7AA /* RLAMQTTService.m */; };
+		62B64D7119EFC48D00DCD7AA /* RLAMQTTService.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D6D19EFC48D00DCD7AA /* RLAMQTTService.m */; };
+		62B64D7319EFDF6100DCD7AA /* RLAMQTTConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D7219EFDF6100DCD7AA /* RLAMQTTConstants.h */; };
+		62B64D7419EFDF6100DCD7AA /* RLAMQTTConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D7219EFDF6100DCD7AA /* RLAMQTTConstants.h */; };
+		62B64D7719EFF4C700DCD7AA /* RLAIdentifierGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D7519EFF4C700DCD7AA /* RLAIdentifierGenerator.h */; };
+		62B64D7819EFF4C700DCD7AA /* RLAIdentifierGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B64D7519EFF4C700DCD7AA /* RLAIdentifierGenerator.h */; };
+		62B64D7919EFF4C700DCD7AA /* RLAIdentifierGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D7619EFF4C700DCD7AA /* RLAIdentifierGenerator.m */; };
+		62B64D7A19EFF4C700DCD7AA /* RLAIdentifierGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D7619EFF4C700DCD7AA /* RLAIdentifierGenerator.m */; };
+		62B64D7C19F00BAB00DCD7AA /* RelayrDeviceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 62B64D7B19F00BAB00DCD7AA /* RelayrDeviceTest.m */; };
 		62C50A6119CAB8CB0078907A /* RelayrDeviceModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 62C50A5F19CAB8CB0078907A /* RelayrDeviceModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		62C50A6219CAB8CB0078907A /* RelayrDeviceModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 62C50A5F19CAB8CB0078907A /* RelayrDeviceModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		62C50A6319CAB8CB0078907A /* RelayrDeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 62C50A6019CAB8CB0078907A /* RelayrDeviceModel.m */; };
@@ -174,6 +192,10 @@
 		62D73C9D19B70CAB006F417D /* RelayrTransmitter_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D73C9B19B70CAB006F417D /* RelayrTransmitter_Setup.h */; };
 		62D73C9F19B718C8006F417D /* RelayrDevice_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D73C9E19B718C8006F417D /* RelayrDevice_Setup.h */; };
 		62D73CA019B718C8006F417D /* RelayrDevice_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D73C9E19B718C8006F417D /* RelayrDevice_Setup.h */; };
+		62E0F32919FB8E2C0038E17A /* RLAServiceSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E0F32719FB8E2C0038E17A /* RLAServiceSelector.h */; };
+		62E0F32A19FB8E2C0038E17A /* RLAServiceSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E0F32719FB8E2C0038E17A /* RLAServiceSelector.h */; };
+		62E0F32B19FB8E2C0038E17A /* RLAServiceSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E0F32819FB8E2C0038E17A /* RLAServiceSelector.m */; };
+		62E0F32C19FB8E2C0038E17A /* RLAServiceSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E0F32819FB8E2C0038E17A /* RLAServiceSelector.m */; };
 		62E87DD919AB2AAA00728AC6 /* CDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E87DD419AB2AAA00728AC6 /* CDebug.h */; };
 		62E87DDA19AB2AAA00728AC6 /* CDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E87DD419AB2AAA00728AC6 /* CDebug.h */; };
 		62E87DDB19AB2AAA00728AC6 /* CMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E87DD519AB2AAA00728AC6 /* CMacros.h */; };
@@ -186,6 +208,7 @@
 		62E87DE219AB2AAA00728AC6 /* CPlatforms_endianness.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E87DD819AB2AAA00728AC6 /* CPlatforms_endianness.h */; };
 		62F1350819D54DA900DF93A7 /* RelayrOutput_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62F1350719D54DA900DF93A7 /* RelayrOutput_Setup.h */; };
 		62F1350919D54DA900DF93A7 /* RelayrOutput_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62F1350719D54DA900DF93A7 /* RelayrOutput_Setup.h */; };
+		62FB5D9E19F8033E0050C811 /* libMQTT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6299E0AF19F2E766004A9A70 /* libMQTT.a */; };
 		62FDB16819BEF2DD00AE2A64 /* RelayrFirmware_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62FDB16719BEF2DD00AE2A64 /* RelayrFirmware_Setup.h */; };
 		62FDB16919BEF2DD00AE2A64 /* RelayrFirmware_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62FDB16719BEF2DD00AE2A64 /* RelayrFirmware_Setup.h */; };
 		62FDB16B19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62FDB16A19BF050400AE2A64 /* RelayrInput_Setup.h */; };
@@ -198,7 +221,42 @@
 			containerPortal = 6252F0A7199C243D002ECE4D /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 6252F0E4199C2AFA002ECE4D;
-			remoteInfo = OSXRelayr;
+			remoteInfo = Relayr_OSX;
+		};
+		6299E0AE19F2E766004A9A70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 62753E3419F10C690012BBE9;
+			remoteInfo = MQTT_iOS;
+		};
+		6299E0B019F2E766004A9A70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 62D711B619F11E5C00A72F40;
+			remoteInfo = MQTT_OSX;
+		};
+		6299E0B219F2E766004A9A70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 62D711C019F11E5C00A72F40;
+			remoteInfo = MQTT_Tests;
+		};
+		6299E0B719F2E78F004A9A70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 62D711B519F11E5C00A72F40;
+			remoteInfo = MQTT_OSX;
+		};
+		62FB5D9C19F803350050C811 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 62753E3319F10C690012BBE9;
+			remoteInfo = MQTT_iOS;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -222,45 +280,27 @@
 		622CB00319BCB07200F686B3 /* RelayrOutput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrOutput.m; sourceTree = "<group>"; };
 		622E7EA719CF829400948558 /* RelayrOnboarding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrOnboarding.h; sourceTree = "<group>"; };
 		622E7EAA19CF834500948558 /* RelayrFirmwareUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrFirmwareUpdate.h; sourceTree = "<group>"; };
-		623F324B19A731B100F774EB /* RLAWebService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebService.h; sourceTree = "<group>"; };
-		623F324C19A731B100F774EB /* RLAWebService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebService.m; sourceTree = "<group>"; };
-		623F325419A74C3600F774EB /* RLAWebRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebRequest.h; sourceTree = "<group>"; };
-		623F325519A74C3600F774EB /* RLAWebRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebRequest.m; sourceTree = "<group>"; };
+		623A744719FA91A50048F47B /* RLABLEService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABLEService.h; sourceTree = "<group>"; };
+		623A744819FA91A50048F47B /* RLABLEService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABLEService.m; sourceTree = "<group>"; };
+		623A744D19FAA8C50048F47B /* RLAService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAService.h; sourceTree = "<group>"; };
 		6250E18919B50A0D003932AA /* RelayrPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrPublisher.h; sourceTree = "<group>"; };
 		6250E18A19B50A0D003932AA /* RelayrPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrPublisher.m; sourceTree = "<group>"; };
 		6250E18F19B50AAD003932AA /* RelayrPublisher_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrPublisher_Setup.h; sourceTree = "<group>"; };
 		6250E19219B51566003932AA /* RelayrApp_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrApp_Setup.h; sourceTree = "<group>"; };
-		6252ABDC19C4C27E00A53221 /* RelayrTests.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = RelayrTests.xcconfig; path = Tests/Configuration/RelayrTests.xcconfig; sourceTree = SOURCE_ROOT; };
+		6252ABDC19C4C27E00A53221 /* Relayr_Tests.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Relayr_Tests.xcconfig; path = Tests/Configuration/Relayr_Tests.xcconfig; sourceTree = SOURCE_ROOT; };
 		6252F0B3199C2465002ECE4D /* Relayr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Relayr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6252F0D1199C2492002ECE4D /* RelayrCommon.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = RelayrCommon.xcconfig; sourceTree = "<group>"; };
+		6252F0D1199C2492002ECE4D /* Relayr.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr.xcconfig; sourceTree = "<group>"; };
 		6252F0D5199C24AD002ECE4D /* Relayr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Relayr.h; sourceTree = "<group>"; };
-		6252F0D7199C24AD002ECE4D /* RelayrIOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = RelayrIOS.plist; sourceTree = "<group>"; };
-		6252F0D8199C24AD002ECE4D /* RelayrIOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = RelayrIOS.xcconfig; sourceTree = "<group>"; };
+		6252F0D7199C24AD002ECE4D /* Relayr_iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Relayr_iOS.plist; sourceTree = "<group>"; };
+		6252F0D8199C24AD002ECE4D /* Relayr_iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS.xcconfig; sourceTree = "<group>"; };
 		6252F0E5199C2AFA002ECE4D /* Relayr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Relayr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6252F100199C2BFC002ECE4D /* Relayr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Relayr.h; sourceTree = "<group>"; };
-		6252F102199C2BFC002ECE4D /* RelayrOSX.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = RelayrOSX.plist; sourceTree = "<group>"; };
-		6252F103199C2BFC002ECE4D /* RelayrOSX.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = RelayrOSX.xcconfig; sourceTree = "<group>"; };
+		6252F102199C2BFC002ECE4D /* Relayr_OSX.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Relayr_OSX.plist; sourceTree = "<group>"; };
+		6252F103199C2BFC002ECE4D /* Relayr_OSX.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_OSX.xcconfig; sourceTree = "<group>"; };
 		6254F80319CAC673006C836F /* RelayrDeviceModel_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrDeviceModel_Setup.h; sourceTree = "<group>"; };
 		6254F80619CACA62006C836F /* RelayrFirmwareModel_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrFirmwareModel_Setup.h; sourceTree = "<group>"; };
-		6259257C19C88D5400EC1735 /* RLAWebService+Parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLAWebService+Parsing.h"; sourceTree = "<group>"; };
-		6259257D19C88D5400EC1735 /* RLAWebService+Parsing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLAWebService+Parsing.m"; sourceTree = "<group>"; };
-		6272529619AC7B38001265EB /* RLAWebConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RLAWebConstants.h; sourceTree = "<group>"; };
-		6272529919AC8573001265EB /* RLAWebOAuthController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebOAuthController.h; sourceTree = "<group>"; };
-		6272529A19AC8573001265EB /* RLAWebOAuthController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebOAuthController.m; sourceTree = "<group>"; };
 		62732D4019C05A24000E9545 /* RelayrConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrConnection.h; sourceTree = "<group>"; };
 		62732D4119C05A24000E9545 /* RelayrConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrConnection.m; sourceTree = "<group>"; };
-		6285F34D19C1A92D0097B299 /* RLAWebService+User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLAWebService+User.h"; sourceTree = "<group>"; };
-		6285F34E19C1A92D0097B299 /* RLAWebService+User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLAWebService+User.m"; sourceTree = "<group>"; };
-		6285F35319C1A98B0097B299 /* RLAWebService+App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLAWebService+App.h"; sourceTree = "<group>"; };
-		6285F35419C1A98B0097B299 /* RLAWebService+App.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLAWebService+App.m"; sourceTree = "<group>"; };
-		6285F35F19C1AA410097B299 /* RLAWebService+Cloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLAWebService+Cloud.h"; sourceTree = "<group>"; };
-		6285F36019C1AA410097B299 /* RLAWebService+Cloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLAWebService+Cloud.m"; sourceTree = "<group>"; };
-		6285F36519C1AA850097B299 /* RLAWebService+Publisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLAWebService+Publisher.h"; sourceTree = "<group>"; };
-		6285F36619C1AA850097B299 /* RLAWebService+Publisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLAWebService+Publisher.m"; sourceTree = "<group>"; };
-		6285F36B19C1AAA70097B299 /* RLAWebService+Transmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLAWebService+Transmitter.h"; sourceTree = "<group>"; };
-		6285F36C19C1AAA70097B299 /* RLAWebService+Transmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLAWebService+Transmitter.m"; sourceTree = "<group>"; };
-		6285F37119C1AABA0097B299 /* RLAWebService+Device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLAWebService+Device.h"; sourceTree = "<group>"; };
-		6285F37219C1AABA0097B299 /* RLAWebService+Device.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLAWebService+Device.m"; sourceTree = "<group>"; };
 		6285F37919C1AF8E0097B299 /* RLAWebOAuthControllerIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebOAuthControllerIOS.h; sourceTree = "<group>"; };
 		6285F37A19C1AF8E0097B299 /* RLAWebOAuthControllerIOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebOAuthControllerIOS.m; sourceTree = "<group>"; };
 		6285F37F19C1B2700097B299 /* RLAWebOAuthControllerOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebOAuthControllerOSX.h; sourceTree = "<group>"; };
@@ -269,6 +309,7 @@
 		629666DF19D0169B003C99D9 /* WunderbarOnboarding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WunderbarOnboarding.m; sourceTree = "<group>"; };
 		6298AF3419D5F2250097E956 /* RLATargetAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLATargetAction.h; sourceTree = "<group>"; };
 		6298AF3519D5F2250097E956 /* RLATargetAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLATargetAction.m; sourceTree = "<group>"; };
+		6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MQTT.xcodeproj; path = ../MQTT/MQTT.xcodeproj; sourceTree = "<group>"; };
 		62B0B37519D097B100AD59BF /* WunderbarConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WunderbarConstants.h; sourceTree = "<group>"; };
 		62B0B37819D0985C00AD59BF /* WunderbarFirmwareUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WunderbarFirmwareUpdate.h; sourceTree = "<group>"; };
 		62B0B37919D0985C00AD59BF /* WunderbarFirmwareUpdate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WunderbarFirmwareUpdate.m; sourceTree = "<group>"; };
@@ -279,6 +320,33 @@
 		62B0B3A519D1B16F00AD59BF /* RLAWebService+Wunderbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLAWebService+Wunderbar.h"; sourceTree = "<group>"; };
 		62B0B3A619D1B16F00AD59BF /* RLAWebService+Wunderbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLAWebService+Wunderbar.m"; sourceTree = "<group>"; };
 		62B3BA2219D9A3DD009EB055 /* WunderbarErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WunderbarErrors.h; sourceTree = "<group>"; };
+		62B64D2C19EFC1E100DCD7AA /* RLAWebConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebConstants.h; sourceTree = "<group>"; };
+		62B64D2D19EFC1E100DCD7AA /* RLAWebRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebRequest.h; sourceTree = "<group>"; };
+		62B64D2E19EFC1E100DCD7AA /* RLAWebRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebRequest.m; sourceTree = "<group>"; };
+		62B64D2F19EFC1E100DCD7AA /* RLAWebService+App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLAWebService+App.h"; sourceTree = "<group>"; };
+		62B64D3019EFC1E100DCD7AA /* RLAWebService+App.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLAWebService+App.m"; sourceTree = "<group>"; };
+		62B64D3119EFC1E100DCD7AA /* RLAWebService+Cloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLAWebService+Cloud.h"; sourceTree = "<group>"; };
+		62B64D3219EFC1E100DCD7AA /* RLAWebService+Cloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLAWebService+Cloud.m"; sourceTree = "<group>"; };
+		62B64D3319EFC1E100DCD7AA /* RLAWebService+Device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLAWebService+Device.h"; sourceTree = "<group>"; };
+		62B64D3419EFC1E100DCD7AA /* RLAWebService+Device.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLAWebService+Device.m"; sourceTree = "<group>"; };
+		62B64D3519EFC1E100DCD7AA /* RLAWebService+Parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLAWebService+Parsing.h"; sourceTree = "<group>"; };
+		62B64D3619EFC1E100DCD7AA /* RLAWebService+Parsing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLAWebService+Parsing.m"; sourceTree = "<group>"; };
+		62B64D3719EFC1E100DCD7AA /* RLAWebService+Publisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLAWebService+Publisher.h"; sourceTree = "<group>"; };
+		62B64D3819EFC1E100DCD7AA /* RLAWebService+Publisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLAWebService+Publisher.m"; sourceTree = "<group>"; };
+		62B64D3919EFC1E100DCD7AA /* RLAWebService+Transmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLAWebService+Transmitter.h"; sourceTree = "<group>"; };
+		62B64D3A19EFC1E100DCD7AA /* RLAWebService+Transmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLAWebService+Transmitter.m"; sourceTree = "<group>"; };
+		62B64D3B19EFC1E100DCD7AA /* RLAWebService+User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLAWebService+User.h"; sourceTree = "<group>"; };
+		62B64D3C19EFC1E100DCD7AA /* RLAWebService+User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLAWebService+User.m"; sourceTree = "<group>"; };
+		62B64D3D19EFC1E100DCD7AA /* RLAWebService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebService.h; sourceTree = "<group>"; };
+		62B64D3E19EFC1E100DCD7AA /* RLAWebService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebService.m; sourceTree = "<group>"; };
+		62B64D4019EFC1E100DCD7AA /* RLAWebOAuthController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebOAuthController.h; sourceTree = "<group>"; };
+		62B64D4119EFC1E100DCD7AA /* RLAWebOAuthController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebOAuthController.m; sourceTree = "<group>"; };
+		62B64D6C19EFC48D00DCD7AA /* RLAMQTTService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAMQTTService.h; sourceTree = "<group>"; };
+		62B64D6D19EFC48D00DCD7AA /* RLAMQTTService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAMQTTService.m; sourceTree = "<group>"; };
+		62B64D7219EFDF6100DCD7AA /* RLAMQTTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAMQTTConstants.h; sourceTree = "<group>"; };
+		62B64D7519EFF4C700DCD7AA /* RLAIdentifierGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAIdentifierGenerator.h; sourceTree = "<group>"; };
+		62B64D7619EFF4C700DCD7AA /* RLAIdentifierGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAIdentifierGenerator.m; sourceTree = "<group>"; };
+		62B64D7B19F00BAB00DCD7AA /* RelayrDeviceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RelayrDeviceTest.m; path = Tests/Classes/Public/IoTs/RelayrDeviceTest.m; sourceTree = SOURCE_ROOT; };
 		62C50A5F19CAB8CB0078907A /* RelayrDeviceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrDeviceModel.h; sourceTree = "<group>"; };
 		62C50A6019CAB8CB0078907A /* RelayrDeviceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrDeviceModel.m; sourceTree = "<group>"; };
 		62C50A6519CAB9150078907A /* RelayrFirmwareModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrFirmwareModel.h; sourceTree = "<group>"; };
@@ -301,8 +369,10 @@
 		62E04C3219A15520001FEDCD /* RLANetworkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLANetworkInfo.m; sourceTree = "<group>"; };
 		62E04C3619A158DF001FEDCD /* RLAKeyChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAKeyChain.h; sourceTree = "<group>"; };
 		62E04C3719A158DF001FEDCD /* RLAKeyChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAKeyChain.m; sourceTree = "<group>"; };
-		62E41FC219C35B90008459B7 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		62E41FD119C35DF1008459B7 /* RelayrTests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = RelayrTests.plist; sourceTree = "<group>"; };
+		62E0F32719FB8E2C0038E17A /* RLAServiceSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAServiceSelector.h; sourceTree = "<group>"; };
+		62E0F32819FB8E2C0038E17A /* RLAServiceSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAServiceSelector.m; sourceTree = "<group>"; };
+		62E41FC219C35B90008459B7 /* Relayr.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Relayr.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		62E41FD119C35DF1008459B7 /* Relayr_Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Relayr_Tests.plist; sourceTree = "<group>"; };
 		62E87DD419AB2AAA00728AC6 /* CDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDebug.h; sourceTree = "<group>"; };
 		62E87DD519AB2AAA00728AC6 /* CMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMacros.h; sourceTree = "<group>"; };
 		62E87DD619AB2AAA00728AC6 /* CMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMath.h; sourceTree = "<group>"; };
@@ -310,6 +380,21 @@
 		62E87DD819AB2AAA00728AC6 /* CPlatforms_endianness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPlatforms_endianness.h; sourceTree = "<group>"; };
 		62F1350719D54DA900DF93A7 /* RelayrOutput_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrOutput_Setup.h; sourceTree = "<group>"; };
 		62F9A6C119D47CCB0064942D /* RelayrApp_TSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RelayrApp_TSetup.h; path = Tests/Classes/Private/RelayrApp_TSetup.h; sourceTree = SOURCE_ROOT; };
+		62FD686219FFAAA400BC5431 /* Relayr_AdHoc.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_AdHoc.xcconfig; sourceTree = "<group>"; };
+		62FD686319FFAAA400BC5431 /* Relayr_Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Debug.xcconfig; sourceTree = "<group>"; };
+		62FD686419FFAAA400BC5431 /* Relayr_Distribution.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Distribution.xcconfig; sourceTree = "<group>"; };
+		62FD686519FFAAA400BC5431 /* Relayr_Experimental.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Experimental.xcconfig; sourceTree = "<group>"; };
+		62FD686619FFAAA400BC5431 /* Relayr_Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Release.xcconfig; sourceTree = "<group>"; };
+		62FD686719FFAAE500BC5431 /* Relayr_iOS_AdHoc.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS_AdHoc.xcconfig; sourceTree = "<group>"; };
+		62FD686819FFAAE500BC5431 /* Relayr_iOS_Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS_Debug.xcconfig; sourceTree = "<group>"; };
+		62FD686919FFAAE500BC5431 /* Relayr_iOS_Distribution.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS_Distribution.xcconfig; sourceTree = "<group>"; };
+		62FD686A19FFAAE500BC5431 /* Relayr_iOS_Experimental.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS_Experimental.xcconfig; sourceTree = "<group>"; };
+		62FD686B19FFAAE500BC5431 /* Relayr_iOS_Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS_Release.xcconfig; sourceTree = "<group>"; };
+		62FD686C19FFAB1C00BC5431 /* Relayr_OSX_AdHoc.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_OSX_AdHoc.xcconfig; sourceTree = "<group>"; };
+		62FD686D19FFAB1C00BC5431 /* Relayr_OSX_Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_OSX_Debug.xcconfig; sourceTree = "<group>"; };
+		62FD686E19FFAB1C00BC5431 /* Relayr_OSX_Distribution.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_OSX_Distribution.xcconfig; sourceTree = "<group>"; };
+		62FD686F19FFAB1C00BC5431 /* Relayr_OSX_Experimental.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_OSX_Experimental.xcconfig; sourceTree = "<group>"; };
+		62FD687019FFAB1C00BC5431 /* Relayr_OSX_Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_OSX_Release.xcconfig; sourceTree = "<group>"; };
 		62FDB16719BEF2DD00AE2A64 /* RelayrFirmware_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrFirmware_Setup.h; sourceTree = "<group>"; };
 		62FDB16A19BF050400AE2A64 /* RelayrInput_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrInput_Setup.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -319,6 +404,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62FB5D9E19F8033E0050C811 /* libMQTT.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,6 +412,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6299E0B919F2E797004A9A70 /* libMQTT.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,48 +545,23 @@
 			path = Processes;
 			sourceTree = "<group>";
 		};
-		623F324A19A7317700F774EB /* Web */ = {
+		623A744019FA8EAD0048F47B /* BLE */ = {
 			isa = PBXGroup;
 			children = (
-				623F324B19A731B100F774EB /* RLAWebService.h */,
-				623F324C19A731B100F774EB /* RLAWebService.m */,
-				6285F35F19C1AA410097B299 /* RLAWebService+Cloud.h */,
-				6285F36019C1AA410097B299 /* RLAWebService+Cloud.m */,
-				6285F35319C1A98B0097B299 /* RLAWebService+App.h */,
-				6285F35419C1A98B0097B299 /* RLAWebService+App.m */,
-				6285F34D19C1A92D0097B299 /* RLAWebService+User.h */,
-				6285F34E19C1A92D0097B299 /* RLAWebService+User.m */,
-				6285F36519C1AA850097B299 /* RLAWebService+Publisher.h */,
-				6285F36619C1AA850097B299 /* RLAWebService+Publisher.m */,
-				6285F36B19C1AAA70097B299 /* RLAWebService+Transmitter.h */,
-				6285F36C19C1AAA70097B299 /* RLAWebService+Transmitter.m */,
-				6285F37119C1AABA0097B299 /* RLAWebService+Device.h */,
-				6285F37219C1AABA0097B299 /* RLAWebService+Device.m */,
-				6259257C19C88D5400EC1735 /* RLAWebService+Parsing.h */,
-				6259257D19C88D5400EC1735 /* RLAWebService+Parsing.m */,
-				623F325319A74C1400F774EB /* Requests */,
-				62E87DE319AB311C00728AC6 /* Views */,
+				623A744719FA91A50048F47B /* RLABLEService.h */,
+				623A744819FA91A50048F47B /* RLABLEService.m */,
 			);
-			path = Web;
-			sourceTree = "<group>";
-		};
-		623F325319A74C1400F774EB /* Requests */ = {
-			isa = PBXGroup;
-			children = (
-				6272529619AC7B38001265EB /* RLAWebConstants.h */,
-				623F325419A74C3600F774EB /* RLAWebRequest.h */,
-				623F325519A74C3600F774EB /* RLAWebRequest.m */,
-			);
-			path = Requests;
+			path = BLE;
 			sourceTree = "<group>";
 		};
 		6252F0A6199C243D002ECE4D = {
 			isa = PBXGroup;
 			children = (
 				6252F0CC199C2492002ECE4D /* Common */,
-				6252F0B5199C2465002ECE4D /* iOSRelayr */,
-				6252F0E6199C2AFB002ECE4D /* OSXRelayr */,
+				6252F0B5199C2465002ECE4D /* iOS */,
+				6252F0E6199C2AFB002ECE4D /* OSX */,
 				62E41FC319C35B90008459B7 /* Tests */,
+				6299E09819F2E700004A9A70 /* Frameworks */,
 				6252F0B4199C2465002ECE4D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -509,19 +571,19 @@
 			children = (
 				6252F0B3199C2465002ECE4D /* Relayr.framework */,
 				6252F0E5199C2AFA002ECE4D /* Relayr.framework */,
-				62E41FC219C35B90008459B7 /* Tests.xctest */,
+				62E41FC219C35B90008459B7 /* Relayr.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		6252F0B5199C2465002ECE4D /* iOSRelayr */ = {
+		6252F0B5199C2465002ECE4D /* iOS */ = {
 			isa = PBXGroup;
 			children = (
 				6252F0D2199C24AD002ECE4D /* Assets */,
 				6252F0D4199C24AD002ECE4D /* Classes */,
 				6252F0D6199C24AD002ECE4D /* Configuration */,
 			);
-			path = iOSRelayr;
+			path = iOS;
 			sourceTree = "<group>";
 		};
 		6252F0CC199C2492002ECE4D /* Common */ = {
@@ -554,7 +616,7 @@
 			children = (
 				62E04C3A19A15CD6001FEDCD /* Public */,
 				622BA3BA19ABDC0500FD5C24 /* Private */,
-				623F324A19A7317700F774EB /* Web */,
+				62B64D2819EFC1E100DCD7AA /* Protocols */,
 				621A6AB7199CC6D00004F9FD /* Utilities */,
 				629666DD19D01683003C99D9 /* Wunderbar */,
 			);
@@ -564,7 +626,12 @@
 		6252F0D0199C2492002ECE4D /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				6252F0D1199C2492002ECE4D /* RelayrCommon.xcconfig */,
+				6252F0D1199C2492002ECE4D /* Relayr.xcconfig */,
+				62FD686319FFAAA400BC5431 /* Relayr_Debug.xcconfig */,
+				62FD686619FFAAA400BC5431 /* Relayr_Release.xcconfig */,
+				62FD686419FFAAA400BC5431 /* Relayr_Distribution.xcconfig */,
+				62FD686219FFAAA400BC5431 /* Relayr_AdHoc.xcconfig */,
+				62FD686519FFAAA400BC5431 /* Relayr_Experimental.xcconfig */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -596,20 +663,25 @@
 		6252F0D6199C24AD002ECE4D /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				6252F0D8199C24AD002ECE4D /* RelayrIOS.xcconfig */,
-				6252F0D7199C24AD002ECE4D /* RelayrIOS.plist */,
+				6252F0D7199C24AD002ECE4D /* Relayr_iOS.plist */,
+				6252F0D8199C24AD002ECE4D /* Relayr_iOS.xcconfig */,
+				62FD686819FFAAE500BC5431 /* Relayr_iOS_Debug.xcconfig */,
+				62FD686B19FFAAE500BC5431 /* Relayr_iOS_Release.xcconfig */,
+				62FD686919FFAAE500BC5431 /* Relayr_iOS_Distribution.xcconfig */,
+				62FD686719FFAAE500BC5431 /* Relayr_iOS_AdHoc.xcconfig */,
+				62FD686A19FFAAE500BC5431 /* Relayr_iOS_Experimental.xcconfig */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
 		};
-		6252F0E6199C2AFB002ECE4D /* OSXRelayr */ = {
+		6252F0E6199C2AFB002ECE4D /* OSX */ = {
 			isa = PBXGroup;
 			children = (
 				6252F0FD199C2BFC002ECE4D /* Assets */,
 				6252F0FF199C2BFC002ECE4D /* Classes */,
 				6252F101199C2BFC002ECE4D /* Configuration */,
 			);
-			path = OSXRelayr;
+			path = OSX;
 			sourceTree = "<group>";
 		};
 		6252F0FD199C2BFC002ECE4D /* Assets */ = {
@@ -639,8 +711,13 @@
 		6252F101199C2BFC002ECE4D /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				6252F103199C2BFC002ECE4D /* RelayrOSX.xcconfig */,
-				6252F102199C2BFC002ECE4D /* RelayrOSX.plist */,
+				6252F102199C2BFC002ECE4D /* Relayr_OSX.plist */,
+				6252F103199C2BFC002ECE4D /* Relayr_OSX.xcconfig */,
+				62FD686D19FFAB1C00BC5431 /* Relayr_OSX_Debug.xcconfig */,
+				62FD687019FFAB1C00BC5431 /* Relayr_OSX_Release.xcconfig */,
+				62FD686E19FFAB1C00BC5431 /* Relayr_OSX_Distribution.xcconfig */,
+				62FD686C19FFAB1C00BC5431 /* Relayr_OSX_AdHoc.xcconfig */,
+				62FD686F19FFAB1C00BC5431 /* Relayr_OSX_Experimental.xcconfig */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -658,6 +735,7 @@
 			isa = PBXGroup;
 			children = (
 				62D606C019D9888C00A9BFA2 /* RelayrTransmitterTest.m */,
+				62B64D7B19F00BAB00DCD7AA /* RelayrDeviceTest.m */,
 			);
 			path = IoTs;
 			sourceTree = "<group>";
@@ -668,7 +746,7 @@
 				6285F37819C1AF8E0097B299 /* Views */,
 			);
 			name = Web;
-			path = "../../../../Apple-SDK/RelayrSDK/iOSRelayr/Classes/Web";
+			path = "../../../../Apple-SDK/RelayrSDK/iOS/Classes/Web";
 			sourceTree = "<group>";
 		};
 		6285F37819C1AF8E0097B299 /* Views */ = {
@@ -686,7 +764,7 @@
 				6285F37E19C1B2700097B299 /* Views */,
 			);
 			name = Web;
-			path = "../../../../Apple-SDK/RelayrSDK/OSXRelayr/Classes/Web";
+			path = "../../../../Apple-SDK/RelayrSDK/OSX/Classes/Web";
 			sourceTree = "<group>";
 		};
 		6285F37E19C1B2700097B299 /* Views */ = {
@@ -735,6 +813,91 @@
 				6298AF3519D5F2250097E956 /* RLATargetAction.m */,
 			);
 			path = TargetAction;
+			sourceTree = "<group>";
+		};
+		6299E09819F2E700004A9A70 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6299E0A919F2E766004A9A70 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6299E0AF19F2E766004A9A70 /* libMQTT.a */,
+				6299E0B119F2E766004A9A70 /* libMQTT.a */,
+				6299E0B319F2E766004A9A70 /* MQTT.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		62B64D2819EFC1E100DCD7AA /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				623A744D19FAA8C50048F47B /* RLAService.h */,
+				62E0F32719FB8E2C0038E17A /* RLAServiceSelector.h */,
+				62E0F32819FB8E2C0038E17A /* RLAServiceSelector.m */,
+				62B64D2A19EFC1E100DCD7AA /* Web */,
+				62B64D2919EFC1E100DCD7AA /* MQTT */,
+				623A744019FA8EAD0048F47B /* BLE */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		62B64D2919EFC1E100DCD7AA /* MQTT */ = {
+			isa = PBXGroup;
+			children = (
+				62B64D6C19EFC48D00DCD7AA /* RLAMQTTService.h */,
+				62B64D6D19EFC48D00DCD7AA /* RLAMQTTService.m */,
+				62B64D7219EFDF6100DCD7AA /* RLAMQTTConstants.h */,
+			);
+			path = MQTT;
+			sourceTree = "<group>";
+		};
+		62B64D2A19EFC1E100DCD7AA /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				62B64D3D19EFC1E100DCD7AA /* RLAWebService.h */,
+				62B64D3E19EFC1E100DCD7AA /* RLAWebService.m */,
+				62B64D3119EFC1E100DCD7AA /* RLAWebService+Cloud.h */,
+				62B64D3219EFC1E100DCD7AA /* RLAWebService+Cloud.m */,
+				62B64D2F19EFC1E100DCD7AA /* RLAWebService+App.h */,
+				62B64D3019EFC1E100DCD7AA /* RLAWebService+App.m */,
+				62B64D3B19EFC1E100DCD7AA /* RLAWebService+User.h */,
+				62B64D3C19EFC1E100DCD7AA /* RLAWebService+User.m */,
+				62B64D3719EFC1E100DCD7AA /* RLAWebService+Publisher.h */,
+				62B64D3819EFC1E100DCD7AA /* RLAWebService+Publisher.m */,
+				62B64D3919EFC1E100DCD7AA /* RLAWebService+Transmitter.h */,
+				62B64D3A19EFC1E100DCD7AA /* RLAWebService+Transmitter.m */,
+				62B64D3319EFC1E100DCD7AA /* RLAWebService+Device.h */,
+				62B64D3419EFC1E100DCD7AA /* RLAWebService+Device.m */,
+				62B64D3519EFC1E100DCD7AA /* RLAWebService+Parsing.h */,
+				62B64D3619EFC1E100DCD7AA /* RLAWebService+Parsing.m */,
+				62B64D2B19EFC1E100DCD7AA /* Requests */,
+				62B64D3F19EFC1E100DCD7AA /* Views */,
+			);
+			path = Web;
+			sourceTree = "<group>";
+		};
+		62B64D2B19EFC1E100DCD7AA /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				62B64D2C19EFC1E100DCD7AA /* RLAWebConstants.h */,
+				62B64D2D19EFC1E100DCD7AA /* RLAWebRequest.h */,
+				62B64D2E19EFC1E100DCD7AA /* RLAWebRequest.m */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
+		62B64D3F19EFC1E100DCD7AA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				62B64D4019EFC1E100DCD7AA /* RLAWebOAuthController.h */,
+				62B64D4119EFC1E100DCD7AA /* RLAWebOAuthController.m */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		62D1719419A65C98009BBED1 /* IoTs */ = {
@@ -786,6 +949,8 @@
 			children = (
 				62E04C3619A158DF001FEDCD /* RLAKeyChain.h */,
 				62E04C3719A158DF001FEDCD /* RLAKeyChain.m */,
+				62B64D7519EFF4C700DCD7AA /* RLAIdentifierGenerator.h */,
+				62B64D7619EFF4C700DCD7AA /* RLAIdentifierGenerator.m */,
 			);
 			path = Security;
 			sourceTree = "<group>";
@@ -840,8 +1005,8 @@
 		62E41FCE19C35DA2008459B7 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				62E41FD119C35DF1008459B7 /* RelayrTests.plist */,
-				6252ABDC19C4C27E00A53221 /* RelayrTests.xcconfig */,
+				62E41FD119C35DF1008459B7 /* Relayr_Tests.plist */,
+				6252ABDC19C4C27E00A53221 /* Relayr_Tests.xcconfig */,
 				6212444A19D9902F0000EDE8 /* RLATestsConstants.h */,
 			);
 			name = Configuration;
@@ -858,15 +1023,6 @@
 				62E87DD819AB2AAA00728AC6 /* CPlatforms_endianness.h */,
 			);
 			path = CBasics;
-			sourceTree = "<group>";
-		};
-		62E87DE319AB311C00728AC6 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				6272529919AC8573001265EB /* RLAWebOAuthController.h */,
-				6272529A19AC8573001265EB /* RLAWebOAuthController.m */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -910,22 +1066,28 @@
 				62FDB16B19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */,
 				62F1350819D54DA900DF93A7 /* RelayrOutput_Setup.h in Headers */,
 				62D0907219C0729900999142 /* RelayrConnection_Setup.h in Headers */,
-				623F324D19A731B100F774EB /* RLAWebService.h in Headers */,
-				6285F36119C1AA410097B299 /* RLAWebService+Cloud.h in Headers */,
-				6285F35519C1A98B0097B299 /* RLAWebService+App.h in Headers */,
-				6285F34F19C1A92D0097B299 /* RLAWebService+User.h in Headers */,
-				6285F36719C1AA850097B299 /* RLAWebService+Publisher.h in Headers */,
-				6285F36D19C1AAA70097B299 /* RLAWebService+Transmitter.h in Headers */,
-				6285F37319C1AABA0097B299 /* RLAWebService+Device.h in Headers */,
-				6259257E19C88D5400EC1735 /* RLAWebService+Parsing.h in Headers */,
-				6272529819AC7B91001265EB /* RLAWebConstants.h in Headers */,
-				623F325619A74C3600F774EB /* RLAWebRequest.h in Headers */,
-				6272529B19AC8573001265EB /* RLAWebOAuthController.h in Headers */,
+				623A744E19FAA8C50048F47B /* RLAService.h in Headers */,
+				62E0F32919FB8E2C0038E17A /* RLAServiceSelector.h in Headers */,
+				62B64D6419EFC1E100DCD7AA /* RLAWebService.h in Headers */,
+				62B64D4C19EFC1E100DCD7AA /* RLAWebService+Cloud.h in Headers */,
+				62B64D4819EFC1E100DCD7AA /* RLAWebService+App.h in Headers */,
+				62B64D6019EFC1E100DCD7AA /* RLAWebService+User.h in Headers */,
+				62B64D5819EFC1E100DCD7AA /* RLAWebService+Publisher.h in Headers */,
+				62B64D5C19EFC1E100DCD7AA /* RLAWebService+Transmitter.h in Headers */,
+				62B64D5019EFC1E100DCD7AA /* RLAWebService+Device.h in Headers */,
+				62B64D5419EFC1E100DCD7AA /* RLAWebService+Parsing.h in Headers */,
+				62B64D4219EFC1E100DCD7AA /* RLAWebConstants.h in Headers */,
+				62B64D4419EFC1E100DCD7AA /* RLAWebRequest.h in Headers */,
+				62B64D6819EFC1E100DCD7AA /* RLAWebOAuthController.h in Headers */,
 				6285F37B19C1AF8E0097B299 /* RLAWebOAuthControllerIOS.h in Headers */,
-				626F614019A4FFAF006EB510 /* RLALog.h in Headers */,
-				626F614319A506E8006EB510 /* RLAKeyChain.h in Headers */,
+				62B64D6E19EFC48D00DCD7AA /* RLAMQTTService.h in Headers */,
+				62B64D7319EFDF6100DCD7AA /* RLAMQTTConstants.h in Headers */,
+				623A744919FA91A50048F47B /* RLABLEService.h in Headers */,
 				62D1718519A603A3009BBED1 /* RLANetworkInfo.h in Headers */,
+				626F614319A506E8006EB510 /* RLAKeyChain.h in Headers */,
 				6298AF3619D5F2250097E956 /* RLATargetAction.h in Headers */,
+				62B64D7719EFF4C700DCD7AA /* RLAIdentifierGenerator.h in Headers */,
+				626F614019A4FFAF006EB510 /* RLALog.h in Headers */,
 				62E87DDF19AB2AAA00728AC6 /* CPlatforms.h in Headers */,
 				62E87DE119AB2AAA00728AC6 /* CPlatforms_endianness.h in Headers */,
 				62E87DDB19AB2AAA00728AC6 /* CMacros.h in Headers */,
@@ -972,22 +1134,28 @@
 				62FDB16C19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */,
 				62F1350919D54DA900DF93A7 /* RelayrOutput_Setup.h in Headers */,
 				62D0907319C0729900999142 /* RelayrConnection_Setup.h in Headers */,
-				623F326A19A7873100F774EB /* RLAWebService.h in Headers */,
-				6285F36219C1AA410097B299 /* RLAWebService+Cloud.h in Headers */,
-				6285F35619C1A98B0097B299 /* RLAWebService+App.h in Headers */,
-				6285F35019C1A92D0097B299 /* RLAWebService+User.h in Headers */,
-				6285F36819C1AA850097B299 /* RLAWebService+Publisher.h in Headers */,
-				6285F36E19C1AAA70097B299 /* RLAWebService+Transmitter.h in Headers */,
-				6285F37419C1AABA0097B299 /* RLAWebService+Device.h in Headers */,
-				6259257F19C88D5400EC1735 /* RLAWebService+Parsing.h in Headers */,
-				6272529719AC7B89001265EB /* RLAWebConstants.h in Headers */,
-				623F326B19A7873300F774EB /* RLAWebRequest.h in Headers */,
-				6272529C19AC8573001265EB /* RLAWebOAuthController.h in Headers */,
+				623A744F19FAA8C50048F47B /* RLAService.h in Headers */,
+				62E0F32A19FB8E2C0038E17A /* RLAServiceSelector.h in Headers */,
+				62B64D6519EFC1E100DCD7AA /* RLAWebService.h in Headers */,
+				62B64D4D19EFC1E100DCD7AA /* RLAWebService+Cloud.h in Headers */,
+				62B64D4919EFC1E100DCD7AA /* RLAWebService+App.h in Headers */,
+				62B64D6119EFC1E100DCD7AA /* RLAWebService+User.h in Headers */,
+				62B64D5919EFC1E100DCD7AA /* RLAWebService+Publisher.h in Headers */,
+				62B64D5D19EFC1E100DCD7AA /* RLAWebService+Transmitter.h in Headers */,
+				62B64D5119EFC1E100DCD7AA /* RLAWebService+Device.h in Headers */,
+				62B64D5519EFC1E100DCD7AA /* RLAWebService+Parsing.h in Headers */,
+				62B64D4319EFC1E100DCD7AA /* RLAWebConstants.h in Headers */,
+				62B64D4519EFC1E100DCD7AA /* RLAWebRequest.h in Headers */,
+				62B64D6919EFC1E100DCD7AA /* RLAWebOAuthController.h in Headers */,
 				6285F38119C1B2700097B299 /* RLAWebOAuthControllerOSX.h in Headers */,
+				62B64D6F19EFC48D00DCD7AA /* RLAMQTTService.h in Headers */,
+				62B64D7419EFDF6100DCD7AA /* RLAMQTTConstants.h in Headers */,
+				623A744A19FA91A50048F47B /* RLABLEService.h in Headers */,
 				623F326F19A7874200F774EB /* RLANetworkInfo.h in Headers */,
-				623F326D19A7873A00F774EB /* RLALog.h in Headers */,
 				623F326E19A7873D00F774EB /* RLAKeyChain.h in Headers */,
 				6298AF3719D5F2250097E956 /* RLATargetAction.h in Headers */,
+				62B64D7819EFF4C700DCD7AA /* RLAIdentifierGenerator.h in Headers */,
+				623F326D19A7873A00F774EB /* RLALog.h in Headers */,
 				62E87DE019AB2AAA00728AC6 /* CPlatforms.h in Headers */,
 				62E87DE219AB2AAA00728AC6 /* CPlatforms_endianness.h in Headers */,
 				62E87DDC19AB2AAA00728AC6 /* CMacros.h in Headers */,
@@ -999,9 +1167,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		6252F0B2199C2465002ECE4D /* iOSRelayr */ = {
+		6252F0B2199C2465002ECE4D /* Relayr_iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6252F0C4199C2465002ECE4D /* Build configuration list for PBXNativeTarget "iOSRelayr" */;
+			buildConfigurationList = 6252F0C4199C2465002ECE4D /* Build configuration list for PBXNativeTarget "Relayr_iOS" */;
 			buildPhases = (
 				6252F0AE199C2465002ECE4D /* Sources */,
 				6252F0AF199C2465002ECE4D /* Frameworks */,
@@ -1011,15 +1179,16 @@
 			buildRules = (
 			);
 			dependencies = (
+				62FB5D9D19F803350050C811 /* PBXTargetDependency */,
 			);
-			name = iOSRelayr;
-			productName = iOSRelayr;
+			name = Relayr_iOS;
+			productName = Relayr;
 			productReference = 6252F0B3199C2465002ECE4D /* Relayr.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		6252F0E4199C2AFA002ECE4D /* OSXRelayr */ = {
+		6252F0E4199C2AFA002ECE4D /* Relayr_OSX */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6252F0F5199C2AFB002ECE4D /* Build configuration list for PBXNativeTarget "OSXRelayr" */;
+			buildConfigurationList = 6252F0F5199C2AFB002ECE4D /* Build configuration list for PBXNativeTarget "Relayr_OSX" */;
 			buildPhases = (
 				6252F0E0199C2AFA002ECE4D /* Sources */,
 				6252F0E1199C2AFA002ECE4D /* Frameworks */,
@@ -1030,15 +1199,16 @@
 			buildRules = (
 			);
 			dependencies = (
+				6299E0B819F2E78F004A9A70 /* PBXTargetDependency */,
 			);
-			name = OSXRelayr;
-			productName = OSXRelayr;
+			name = Relayr_OSX;
+			productName = Relayr;
 			productReference = 6252F0E5199C2AFA002ECE4D /* Relayr.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		62E41FC119C35B90008459B7 /* Tests */ = {
+		62E41FC119C35B90008459B7 /* Relayr_Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 62E41FCB19C35B90008459B7 /* Build configuration list for PBXNativeTarget "Tests" */;
+			buildConfigurationList = 62E41FCB19C35B90008459B7 /* Build configuration list for PBXNativeTarget "Relayr_Tests" */;
 			buildPhases = (
 				62E41FBE19C35B90008459B7 /* Sources */,
 				62E41FBF19C35B90008459B7 /* Frameworks */,
@@ -1049,9 +1219,9 @@
 			dependencies = (
 				6202C05419D451700023AEC7 /* PBXTargetDependency */,
 			);
-			name = Tests;
+			name = Relayr_Tests;
 			productName = Tests;
-			productReference = 62E41FC219C35B90008459B7 /* Tests.xctest */;
+			productReference = 62E41FC219C35B90008459B7 /* Relayr.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -1060,7 +1230,7 @@
 		6252F0A7199C243D002ECE4D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0610;
 				TargetAttributes = {
 					6252F0B2199C2465002ECE4D = {
 						CreatedOnToolsVersion = 6.0;
@@ -1084,14 +1254,44 @@
 			mainGroup = 6252F0A6199C243D002ECE4D;
 			productRefGroup = 6252F0B4199C2465002ECE4D /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 6299E0A919F2E766004A9A70 /* Products */;
+					ProjectRef = 6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
-				6252F0B2199C2465002ECE4D /* iOSRelayr */,
-				6252F0E4199C2AFA002ECE4D /* OSXRelayr */,
-				62E41FC119C35B90008459B7 /* Tests */,
+				6252F0B2199C2465002ECE4D /* Relayr_iOS */,
+				6252F0E4199C2AFA002ECE4D /* Relayr_OSX */,
+				62E41FC119C35B90008459B7 /* Relayr_Tests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		6299E0AF19F2E766004A9A70 /* libMQTT.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMQTT.a;
+			remoteRef = 6299E0AE19F2E766004A9A70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		6299E0B119F2E766004A9A70 /* libMQTT.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMQTT.a;
+			remoteRef = 6299E0B019F2E766004A9A70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		6299E0B319F2E766004A9A70 /* MQTT.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MQTT.xctest;
+			remoteRef = 6299E0B219F2E766004A9A70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		6252F0B1199C2465002ECE4D /* Resources */ = {
@@ -1141,6 +1341,7 @@
 				62D1718919A62D63009BBED1 /* RelayrCloud.m in Sources */,
 				62D1718D19A62E8D009BBED1 /* RelayrApp.m in Sources */,
 				62D1719819A65C98009BBED1 /* RelayrUser.m in Sources */,
+				62B0B3A319D1B01600AD59BF /* RelayrUser+Wunderbar.m in Sources */,
 				6250E18D19B50A0D003932AA /* RelayrPublisher.m in Sources */,
 				62D171A019A65D3B009BBED1 /* RelayrTransmitter.m in Sources */,
 				62D1719C19A65CCC009BBED1 /* RelayrDevice.m in Sources */,
@@ -1151,26 +1352,29 @@
 				622CB00619BCB07200F686B3 /* RelayrOutput.m in Sources */,
 				62732D4419C05A24000E9545 /* RelayrConnection.m in Sources */,
 				6203382019D06BA50088CB1D /* RelayrErrors.m in Sources */,
-				623F324E19A731B100F774EB /* RLAWebService.m in Sources */,
-				6285F36319C1AA410097B299 /* RLAWebService+Cloud.m in Sources */,
-				6285F35719C1A98B0097B299 /* RLAWebService+App.m in Sources */,
-				6285F35119C1A92D0097B299 /* RLAWebService+User.m in Sources */,
-				6285F36919C1AA850097B299 /* RLAWebService+Publisher.m in Sources */,
-				6285F36F19C1AAA70097B299 /* RLAWebService+Transmitter.m in Sources */,
-				6285F37519C1AABA0097B299 /* RLAWebService+Device.m in Sources */,
-				6259258019C88D5400EC1735 /* RLAWebService+Parsing.m in Sources */,
-				623F325719A74C3600F774EB /* RLAWebRequest.m in Sources */,
-				6272529D19AC8573001265EB /* RLAWebOAuthController.m in Sources */,
+				62E0F32B19FB8E2C0038E17A /* RLAServiceSelector.m in Sources */,
+				62B64D6619EFC1E100DCD7AA /* RLAWebService.m in Sources */,
+				62B64D4E19EFC1E100DCD7AA /* RLAWebService+Cloud.m in Sources */,
+				62B64D4A19EFC1E100DCD7AA /* RLAWebService+App.m in Sources */,
+				62B64D6219EFC1E100DCD7AA /* RLAWebService+User.m in Sources */,
+				62B64D5A19EFC1E100DCD7AA /* RLAWebService+Publisher.m in Sources */,
+				62B64D5E19EFC1E100DCD7AA /* RLAWebService+Transmitter.m in Sources */,
+				62B64D5219EFC1E100DCD7AA /* RLAWebService+Device.m in Sources */,
+				62B64D5619EFC1E100DCD7AA /* RLAWebService+Parsing.m in Sources */,
+				62B0B3A919D1B16F00AD59BF /* RLAWebService+Wunderbar.m in Sources */,
+				62B64D4619EFC1E100DCD7AA /* RLAWebRequest.m in Sources */,
+				62B64D6A19EFC1E100DCD7AA /* RLAWebOAuthController.m in Sources */,
 				6285F37C19C1AF8E0097B299 /* RLAWebOAuthControllerIOS.m in Sources */,
+				62B64D7019EFC48D00DCD7AA /* RLAMQTTService.m in Sources */,
+				623A744B19FA91A50048F47B /* RLABLEService.m in Sources */,
 				62D1718419A6039F009BBED1 /* RLANetworkInfo.m in Sources */,
+				6298AF3819D5F2250097E956 /* RLATargetAction.m in Sources */,
 				626F614219A506E4006EB510 /* RLAKeyChain.m in Sources */,
+				62B64D7919EFF4C700DCD7AA /* RLAIdentifierGenerator.m in Sources */,
 				621F3E5119A4FBAF004E3156 /* RLALog.m in Sources */,
 				629666E219D0169B003C99D9 /* WunderbarOnboarding.m in Sources */,
 				62B0B37C19D0985C00AD59BF /* WunderbarFirmwareUpdate.m in Sources */,
 				62B0B38219D0B77400AD59BF /* Wunderbar.m in Sources */,
-				62B0B3A319D1B01600AD59BF /* RelayrUser+Wunderbar.m in Sources */,
-				6298AF3819D5F2250097E956 /* RLATargetAction.m in Sources */,
-				62B0B3A919D1B16F00AD59BF /* RLAWebService+Wunderbar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1181,6 +1385,7 @@
 				623F325819A786B700F774EB /* RelayrCloud.m in Sources */,
 				623F325A19A786BC00F774EB /* RelayrApp.m in Sources */,
 				623F325C19A786C600F774EB /* RelayrUser.m in Sources */,
+				62B0B3A419D1B01600AD59BF /* RelayrUser+Wunderbar.m in Sources */,
 				6250E18E19B50A0D003932AA /* RelayrPublisher.m in Sources */,
 				623F325E19A786D000F774EB /* RelayrTransmitter.m in Sources */,
 				623F325D19A786CE00F774EB /* RelayrDevice.m in Sources */,
@@ -1191,26 +1396,29 @@
 				622CB00719BCB07200F686B3 /* RelayrOutput.m in Sources */,
 				62732D4519C05A24000E9545 /* RelayrConnection.m in Sources */,
 				6203382119D06BA50088CB1D /* RelayrErrors.m in Sources */,
-				623F325F19A786D800F774EB /* RLAWebService.m in Sources */,
-				6285F36419C1AA410097B299 /* RLAWebService+Cloud.m in Sources */,
-				6285F35819C1A98B0097B299 /* RLAWebService+App.m in Sources */,
-				6285F35219C1A92D0097B299 /* RLAWebService+User.m in Sources */,
-				6285F36A19C1AA850097B299 /* RLAWebService+Publisher.m in Sources */,
-				6285F37019C1AAA70097B299 /* RLAWebService+Transmitter.m in Sources */,
-				6285F37619C1AABA0097B299 /* RLAWebService+Device.m in Sources */,
-				6259258119C88D5400EC1735 /* RLAWebService+Parsing.m in Sources */,
-				623F326019A786DB00F774EB /* RLAWebRequest.m in Sources */,
-				6272529E19AC8573001265EB /* RLAWebOAuthController.m in Sources */,
+				62E0F32C19FB8E2C0038E17A /* RLAServiceSelector.m in Sources */,
+				62B64D6719EFC1E100DCD7AA /* RLAWebService.m in Sources */,
+				62B64D4F19EFC1E100DCD7AA /* RLAWebService+Cloud.m in Sources */,
+				62B64D4B19EFC1E100DCD7AA /* RLAWebService+App.m in Sources */,
+				62B64D6319EFC1E100DCD7AA /* RLAWebService+User.m in Sources */,
+				62B64D5B19EFC1E100DCD7AA /* RLAWebService+Publisher.m in Sources */,
+				62B64D5F19EFC1E100DCD7AA /* RLAWebService+Transmitter.m in Sources */,
+				62B64D5319EFC1E100DCD7AA /* RLAWebService+Device.m in Sources */,
+				62B64D5719EFC1E100DCD7AA /* RLAWebService+Parsing.m in Sources */,
+				62B0B3AA19D1B16F00AD59BF /* RLAWebService+Wunderbar.m in Sources */,
+				62B64D4719EFC1E100DCD7AA /* RLAWebRequest.m in Sources */,
+				62B64D6B19EFC1E100DCD7AA /* RLAWebOAuthController.m in Sources */,
 				6285F38219C1B2700097B299 /* RLAWebOAuthControllerOSX.m in Sources */,
+				62B64D7119EFC48D00DCD7AA /* RLAMQTTService.m in Sources */,
+				623A744C19FA91A50048F47B /* RLABLEService.m in Sources */,
 				623F326519A7871000F774EB /* RLANetworkInfo.m in Sources */,
 				623F326419A7870D00F774EB /* RLAKeyChain.m in Sources */,
+				6298AF3919D5F2250097E956 /* RLATargetAction.m in Sources */,
 				623F326319A7870000F774EB /* RLALog.m in Sources */,
+				62B64D7A19EFF4C700DCD7AA /* RLAIdentifierGenerator.m in Sources */,
 				62B0B38319D0B77400AD59BF /* Wunderbar.m in Sources */,
 				629666E319D0169B003C99D9 /* WunderbarOnboarding.m in Sources */,
 				62B0B37D19D0985C00AD59BF /* WunderbarFirmwareUpdate.m in Sources */,
-				62B0B3A419D1B01600AD59BF /* RelayrUser+Wunderbar.m in Sources */,
-				6298AF3919D5F2250097E956 /* RLATargetAction.m in Sources */,
-				62B0B3AA19D1B16F00AD59BF /* RLAWebService+Wunderbar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1224,6 +1432,7 @@
 				620B737E19D9826100B77EE2 /* RelayrPublisherTest.m in Sources */,
 				62D606C119D9888C00A9BFA2 /* RelayrTransmitterTest.m in Sources */,
 				6212444919D990060000EDE8 /* WunderbarTest.m in Sources */,
+				62B64D7C19F00BAB00DCD7AA /* RelayrDeviceTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1232,8 +1441,18 @@
 /* Begin PBXTargetDependency section */
 		6202C05419D451700023AEC7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 6252F0E4199C2AFA002ECE4D /* OSXRelayr */;
+			target = 6252F0E4199C2AFA002ECE4D /* Relayr_OSX */;
 			targetProxy = 6202C05319D451700023AEC7 /* PBXContainerItemProxy */;
+		};
+		6299E0B819F2E78F004A9A70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MQTT_OSX;
+			targetProxy = 6299E0B719F2E78F004A9A70 /* PBXContainerItemProxy */;
+		};
+		62FB5D9D19F803350050C811 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MQTT_iOS;
+			targetProxy = 62FB5D9C19F803350050C811 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1242,6 +1461,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
@@ -1261,7 +1481,7 @@
 		};
 		6252F0C5199C2465002ECE4D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F0D8199C24AD002ECE4D /* RelayrIOS.xcconfig */;
+			baseConfigurationReference = 62FD686819FFAAE500BC5431 /* Relayr_iOS_Debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1282,8 +1502,6 @@
 				DEFINES_MODULE = YES;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = c11;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1303,7 +1521,7 @@
 		};
 		6252F0C6199C2465002ECE4D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F0D8199C24AD002ECE4D /* RelayrIOS.xcconfig */;
+			baseConfigurationReference = 62FD686B19FFAAE500BC5431 /* Relayr_iOS_Release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1325,7 +1543,6 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1342,7 +1559,7 @@
 		};
 		6252F0C7199C2465002ECE4D /* Distribution */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F0D8199C24AD002ECE4D /* RelayrIOS.xcconfig */;
+			baseConfigurationReference = 62FD686919FFAAE500BC5431 /* Relayr_iOS_Distribution.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1364,7 +1581,6 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1381,7 +1597,7 @@
 		};
 		6252F0F6199C2AFB002ECE4D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F103199C2BFC002ECE4D /* RelayrOSX.xcconfig */;
+			baseConfigurationReference = 62FD686D19FFAB1C00BC5431 /* Relayr_OSX_Debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1405,14 +1621,11 @@
 					"$(inherited)",
 					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
 				);
-				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1427,7 +1640,7 @@
 		};
 		6252F0F7199C2AFB002ECE4D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F103199C2BFC002ECE4D /* RelayrOSX.xcconfig */;
+			baseConfigurationReference = 62FD687019FFAB1C00BC5431 /* Relayr_OSX_Release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1453,7 +1666,6 @@
 					"$(inherited)",
 					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
 				);
-				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1468,7 +1680,7 @@
 		};
 		6252F0F8199C2AFB002ECE4D /* Distribution */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F103199C2BFC002ECE4D /* RelayrOSX.xcconfig */;
+			baseConfigurationReference = 62FD686E19FFAB1C00BC5431 /* Relayr_OSX_Distribution.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1494,7 +1706,6 @@
 					"$(inherited)",
 					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
 				);
-				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1510,9 +1721,8 @@
 		};
 		62E41FC819C35B90008459B7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252ABDC19C4C27E00A53221 /* RelayrTests.xcconfig */;
+			baseConfigurationReference = 6252ABDC19C4C27E00A53221 /* Relayr_Tests.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1550,15 +1760,13 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
 		62E41FC919C35B90008459B7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252ABDC19C4C27E00A53221 /* RelayrTests.xcconfig */;
+			baseConfigurationReference = 6252ABDC19C4C27E00A53221 /* Relayr_Tests.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1590,15 +1798,13 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = macosx;
 			};
 			name = Release;
 		};
 		62E41FCA19C35B90008459B7 /* Distribution */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252ABDC19C4C27E00A53221 /* RelayrTests.xcconfig */;
+			baseConfigurationReference = 6252ABDC19C4C27E00A53221 /* Relayr_Tests.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1630,7 +1836,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = macosx;
 			};
 			name = Distribution;
 		};
@@ -1643,7 +1848,7 @@
 		};
 		62F6E71819EBD641004AAA4A /* Ad Hoc */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F0D8199C24AD002ECE4D /* RelayrIOS.xcconfig */;
+			baseConfigurationReference = 62FD686719FFAAE500BC5431 /* Relayr_iOS_AdHoc.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1665,7 +1870,6 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1682,7 +1886,7 @@
 		};
 		62F6E71919EBD641004AAA4A /* Ad Hoc */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F103199C2BFC002ECE4D /* RelayrOSX.xcconfig */;
+			baseConfigurationReference = 62FD686C19FFAB1C00BC5431 /* Relayr_OSX_AdHoc.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1708,7 +1912,6 @@
 					"$(inherited)",
 					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
 				);
-				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1724,9 +1927,8 @@
 		};
 		62F6E71A19EBD641004AAA4A /* Ad Hoc */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252ABDC19C4C27E00A53221 /* RelayrTests.xcconfig */;
+			baseConfigurationReference = 6252ABDC19C4C27E00A53221 /* Relayr_Tests.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1758,7 +1960,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = macosx;
 			};
 			name = "Ad Hoc";
 		};
@@ -1776,7 +1977,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6252F0C4199C2465002ECE4D /* Build configuration list for PBXNativeTarget "iOSRelayr" */ = {
+		6252F0C4199C2465002ECE4D /* Build configuration list for PBXNativeTarget "Relayr_iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6252F0C5199C2465002ECE4D /* Debug */,
@@ -1787,7 +1988,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6252F0F5199C2AFB002ECE4D /* Build configuration list for PBXNativeTarget "OSXRelayr" */ = {
+		6252F0F5199C2AFB002ECE4D /* Build configuration list for PBXNativeTarget "Relayr_OSX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6252F0F6199C2AFB002ECE4D /* Debug */,
@@ -1798,7 +1999,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		62E41FCB19C35B90008459B7 /* Build configuration list for PBXNativeTarget "Tests" */ = {
+		62E41FCB19C35B90008459B7 /* Build configuration list for PBXNativeTarget "Relayr_Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				62E41FC819C35B90008459B7 /* Debug */,

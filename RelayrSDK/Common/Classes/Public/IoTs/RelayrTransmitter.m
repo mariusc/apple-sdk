@@ -1,11 +1,14 @@
-#import "RelayrTransmitter.h"       // Header
-#import "RelayrTransmitter_Setup.h" // Relayr.framework (Private)
+#import "RelayrTransmitter.h"           // Header
 
-#import "RelayrUser.h"              // Relayr.framework (Public)
-#import "RelayrDevice.h"            // Relayr.framework (Public)
-#import "RelayrOnboarding.h"        // Relayr.framework (Public)
-#import "RelayrFirmwareUpdate.h"    // Relayr.framework (Public)
-#import "RelayrErrors.h"            // Relayr.framework (Utilities)
+#import "RelayrUser.h"                  // Relayr.framework (Public)
+#import "RelayrDevice.h"                // Relayr.framework (Public)
+#import "RelayrOnboarding.h"            // Relayr.framework (Public)
+#import "RelayrFirmwareUpdate.h"        // Relayr.framework (Public)
+#import "RelayrTransmitter_Setup.h"     // Relayr.framework (Private)
+#import "RelayrUser_Setup.h"            // Relayr.framework (Private)
+#import "RelayrErrors.h"                // Relayr.framework (Utilities)
+
+#import "RLAWebService+Transmitter.h"   // Relayr.framework (Protocols/Web)
 
 static NSString* const kCodingID = @"uid";
 static NSString* const kCodingSecret = @"sec";
@@ -24,6 +27,22 @@ static NSString* const kCodingDevices = @"dev";
     return nil;
 }
 
+- (void)setNameWith:(NSString*)name completion:(void (^)(NSError*, NSString*))completion
+{
+    if (!name.length) { if (completion) { completion(RelayrErrorMissingArgument, _name); } return; }
+    
+    __weak RelayrTransmitter* weakSelf = self;
+    [_user.webService setTransmitter:self.uid withName:name completion:(!completion) ? nil : ^(NSError* error) {
+        if (error) { return completion(error, weakSelf.name); }
+        
+        NSString* previousName = weakSelf.name;
+        weakSelf.name = name;
+        completion(nil, previousName);
+    }];
+}
+
+#pragma mark Setup extension
+
 - (instancetype)initWithID:(NSString*)uid
 {
     if (uid.length==0) { return nil; }
@@ -35,9 +54,8 @@ static NSString* const kCodingDevices = @"dev";
 
 - (void)setWith:(RelayrTransmitter*)transmitter
 {
-    if (self==transmitter || _uid!=transmitter.uid) { return; }
+    if (self==transmitter || ![_uid isEqualToString:transmitter.uid]) { return; }
     
-    if (transmitter.user) { _user = transmitter.user; }
     if (transmitter.name) { _name = transmitter.name; }
     if (transmitter.owner) { _owner = transmitter.owner; }
     if (transmitter.secret) { _secret = transmitter.secret; }

@@ -2,8 +2,8 @@
 #import "RelayrUser.h"              // Relayr.framework (Public)
 #import "RelayrTransmitter.h"       // Relayr.framework (Public)
 #import "RelayrTransmitter_Setup.h" // Relayr.framework (Private)
-#import "RLAWebService+Parsing.h"   // Relayr.framework (Web)
-#import "RLAWebRequest.h"           // Relayr.framework (Web)
+#import "RLAWebService+Parsing.h"   // Relayr.framework (Protocols/Web)
+#import "RLAWebRequest.h"           // Relayr.framework (Protocols/Web)
 #import "RelayrErrors.h"            // Relayr.framework (Utilities)
 #import "WunderbarConstants.h"      // Relayr.framework (Wunderbar)
 

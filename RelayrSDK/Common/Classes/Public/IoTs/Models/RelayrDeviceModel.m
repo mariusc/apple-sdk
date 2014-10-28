@@ -1,5 +1,10 @@
 #import "RelayrDeviceModel.h"       // Header
+#import "RelayrDevice.h"            // Relayr.framework (Public)
+#import "RelayrInput.h"             // Relayr.framework (Public)
 #import "RelayrDeviceModel_Setup.h" // Relayr.framework (Private)
+#import "RelayrInput_Setup.h"       // Relayr.framework (Private)
+#import "RLAService.h"              // Relayr.framework (Private)
+#import "RLAServiceSelector.h"      // Relayr.framework (Private)
 
 static NSString* const kCodingModelID = @"mID";
 static NSString* const kCodingModelName = @"mNa";
@@ -24,15 +29,17 @@ static NSString* const kCodingOutputs = @"out";
     return self;
 }
 
+#pragma mark Setup extension
+
 - (void)setWith:(RelayrDeviceModel*)deviceModel
 {
-    if (self==deviceModel || _modelID != deviceModel.modelID) { return; }
+    if (self==deviceModel || ![_modelID isEqualToString:deviceModel.modelID]) { return; }
     
     if (deviceModel.modelName) { _modelName = deviceModel.modelName; }
     if (deviceModel.manufacturer) { _manufacturer = deviceModel.manufacturer; }
     if (deviceModel.firmwaresAvailable) { [self replaceAvailableFirmwares:(NSMutableArray*)deviceModel.firmwaresAvailable]; }
-    if (deviceModel.inputs) { [self replaceInputs:deviceModel.inputs]; }
-    if (deviceModel.outputs) { [self replaceOutputs:deviceModel.outputs]; }
+    [self replaceInputs:deviceModel.inputs];
+    [self replaceOutputs:deviceModel.outputs];
 }
 
 #pragma mark NSCoding
@@ -70,7 +77,31 @@ static NSString* const kCodingOutputs = @"out";
 
 - (void)replaceInputs:(NSSet*)inputs
 {
-    // TODO: Fill up
+    if (inputs)
+    {
+        NSMutableSet* result = [NSMutableSet setWithCapacity:inputs.count];
+        for (RelayrInput* nInput in inputs)
+        {
+            RelayrInput* matchedInput = nInput;
+            for (RelayrInput* pInput in _inputs)
+            {
+                if ([pInput.meaning isEqualToString:nInput.meaning]) { matchedInput = pInput; [matchedInput setWith:nInput]; break; }
+            }
+            [result addObject:matchedInput];
+        }
+        _inputs = [NSSet setWithSet:result];
+    }
+    else { _inputs = inputs; }
+    
+    if ([self isMemberOfClass:[RelayrDevice class]])
+    {
+        RelayrDevice* device = (RelayrDevice*)self;
+        if (!device.hasOngoingSubscriptions)
+        {
+            id <RLAService> service = [RLAServiceSelector serviceCurrentlyInUseByDevice:device];
+            if (service) { [service unsubscribeToDataFromDevice:device]; }
+        }
+    }
 }
 
 - (void)replaceOutputs:(NSSet*)outputs
