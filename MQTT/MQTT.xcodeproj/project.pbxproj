@@ -125,7 +125,7 @@
 		6299E04C19F2D75C004A9A70 /* SocketBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketBuffer.h; sourceTree = "<group>"; };
 		6299E04D19F2D75C004A9A70 /* SSLSocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SSLSocket.c; sourceTree = "<group>"; };
 		6299E04E19F2D75C004A9A70 /* SSLSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSLSocket.h; sourceTree = "<group>"; };
-		62D711B619F11E5C00A72F40 /* lib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = lib.a; path = libMQTT.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		62D711B619F11E5C00A72F40 /* libMQTT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMQTT.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		62D711C019F11E5C00A72F40 /* MQTT.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MQTT.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		62D711D019F11F4D00A72F40 /* MQTT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTT.h; sourceTree = "<group>"; };
 		62D711D119F11F4D00A72F40 /* MQTT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MQTT.m; sourceTree = "<group>"; };
@@ -234,7 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				62753E3419F10C690012BBE9 /* libMQTT.a */,
-				62D711B619F11E5C00A72F40 /* lib.a */,
+				62D711B619F11E5C00A72F40 /* libMQTT.a */,
 				62D711C019F11E5C00A72F40 /* MQTT.xctest */,
 			);
 			name = Products;
@@ -479,7 +479,7 @@
 			);
 			name = MQTT_OSX;
 			productName = MQTT_OSX;
-			productReference = 62D711B619F11E5C00A72F40 /* lib.a */;
+			productReference = 62D711B619F11E5C00A72F40 /* libMQTT.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		62D711BF19F11E5C00A72F40 /* MQTT_Tests */ = {

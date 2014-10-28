@@ -1,4 +1,4 @@
-#include "Common/Configuration/Relayr_Common.xcconfig"
+#include "Common/Configuration/Relayr.xcconfig"
 
 PRODUCT_NAME = Relayr
 BUNDLE_NAME = $(PRODUCT_NAME)

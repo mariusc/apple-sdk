@@ -1,11 +1,6 @@
-#include "Common/Configuration/Relayr_Common.xcconfig"
-
-INFOPLIST_FILE = $(SRCROOT)/iOS/Configuration/Relayr_iOS.plist
-
 SDKROOT = iphoneos
-SUPPORTED_PLATFORMS = iphoneos iphonesimulator
 IPHONEOS_DEPLOYMENT_TARGET = 8.0
+SUPPORTED_PLATFORMS = iphoneos iphonesimulator
 TARGETED_DEVICE_FAMILY = 1,2
 
-INSTALL_PATH = /iOS
-SKIP_INSTALL = NO
+INFOPLIST_FILE = $(SRCROOT)/iOS/Configuration/Relayr_iOS.plist

@@ -1,10 +1,5 @@
-#include "Common/Configuration/Relayr_Common.xcconfig"
-
-INFOPLIST_FILE = $(SRCROOT)/OSX/Configuration/Relayr_OSX.plist
-
 SDKROOT = macosx
 SUPPORTED_PLATFORMS = macosx
 MACOSX_DEPLOYMENT_TARGET = 10.9
 
-INSTALL_PATH = /OSX
-SKIP_INSTALL = NO
+INFOPLIST_FILE = $(SRCROOT)/OSX/Configuration/Relayr_OSX.plist

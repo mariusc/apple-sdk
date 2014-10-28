@@ -289,7 +289,7 @@
 		6250E19219B51566003932AA /* RelayrApp_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrApp_Setup.h; sourceTree = "<group>"; };
 		6252ABDC19C4C27E00A53221 /* Relayr_Tests.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Relayr_Tests.xcconfig; path = Tests/Configuration/Relayr_Tests.xcconfig; sourceTree = SOURCE_ROOT; };
 		6252F0B3199C2465002ECE4D /* Relayr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Relayr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6252F0D1199C2492002ECE4D /* Relayr_Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Common.xcconfig; sourceTree = "<group>"; };
+		6252F0D1199C2492002ECE4D /* Relayr.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr.xcconfig; sourceTree = "<group>"; };
 		6252F0D5199C24AD002ECE4D /* Relayr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Relayr.h; sourceTree = "<group>"; };
 		6252F0D7199C24AD002ECE4D /* Relayr_iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Relayr_iOS.plist; sourceTree = "<group>"; };
 		6252F0D8199C24AD002ECE4D /* Relayr_iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS.xcconfig; sourceTree = "<group>"; };
@@ -380,6 +380,21 @@
 		62E87DD819AB2AAA00728AC6 /* CPlatforms_endianness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPlatforms_endianness.h; sourceTree = "<group>"; };
 		62F1350719D54DA900DF93A7 /* RelayrOutput_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrOutput_Setup.h; sourceTree = "<group>"; };
 		62F9A6C119D47CCB0064942D /* RelayrApp_TSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RelayrApp_TSetup.h; path = Tests/Classes/Private/RelayrApp_TSetup.h; sourceTree = SOURCE_ROOT; };
+		62FD686219FFAAA400BC5431 /* Relayr_AdHoc.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_AdHoc.xcconfig; sourceTree = "<group>"; };
+		62FD686319FFAAA400BC5431 /* Relayr_Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Debug.xcconfig; sourceTree = "<group>"; };
+		62FD686419FFAAA400BC5431 /* Relayr_Distribution.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Distribution.xcconfig; sourceTree = "<group>"; };
+		62FD686519FFAAA400BC5431 /* Relayr_Experimental.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Experimental.xcconfig; sourceTree = "<group>"; };
+		62FD686619FFAAA400BC5431 /* Relayr_Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Release.xcconfig; sourceTree = "<group>"; };
+		62FD686719FFAAE500BC5431 /* Relayr_iOS_AdHoc.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS_AdHoc.xcconfig; sourceTree = "<group>"; };
+		62FD686819FFAAE500BC5431 /* Relayr_iOS_Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS_Debug.xcconfig; sourceTree = "<group>"; };
+		62FD686919FFAAE500BC5431 /* Relayr_iOS_Distribution.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS_Distribution.xcconfig; sourceTree = "<group>"; };
+		62FD686A19FFAAE500BC5431 /* Relayr_iOS_Experimental.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS_Experimental.xcconfig; sourceTree = "<group>"; };
+		62FD686B19FFAAE500BC5431 /* Relayr_iOS_Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS_Release.xcconfig; sourceTree = "<group>"; };
+		62FD686C19FFAB1C00BC5431 /* Relayr_OSX_AdHoc.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_OSX_AdHoc.xcconfig; sourceTree = "<group>"; };
+		62FD686D19FFAB1C00BC5431 /* Relayr_OSX_Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_OSX_Debug.xcconfig; sourceTree = "<group>"; };
+		62FD686E19FFAB1C00BC5431 /* Relayr_OSX_Distribution.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_OSX_Distribution.xcconfig; sourceTree = "<group>"; };
+		62FD686F19FFAB1C00BC5431 /* Relayr_OSX_Experimental.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_OSX_Experimental.xcconfig; sourceTree = "<group>"; };
+		62FD687019FFAB1C00BC5431 /* Relayr_OSX_Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_OSX_Release.xcconfig; sourceTree = "<group>"; };
 		62FDB16719BEF2DD00AE2A64 /* RelayrFirmware_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrFirmware_Setup.h; sourceTree = "<group>"; };
 		62FDB16A19BF050400AE2A64 /* RelayrInput_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrInput_Setup.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -611,7 +626,12 @@
 		6252F0D0199C2492002ECE4D /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				6252F0D1199C2492002ECE4D /* Relayr_Common.xcconfig */,
+				6252F0D1199C2492002ECE4D /* Relayr.xcconfig */,
+				62FD686319FFAAA400BC5431 /* Relayr_Debug.xcconfig */,
+				62FD686619FFAAA400BC5431 /* Relayr_Release.xcconfig */,
+				62FD686419FFAAA400BC5431 /* Relayr_Distribution.xcconfig */,
+				62FD686219FFAAA400BC5431 /* Relayr_AdHoc.xcconfig */,
+				62FD686519FFAAA400BC5431 /* Relayr_Experimental.xcconfig */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -643,8 +663,13 @@
 		6252F0D6199C24AD002ECE4D /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				6252F0D8199C24AD002ECE4D /* Relayr_iOS.xcconfig */,
 				6252F0D7199C24AD002ECE4D /* Relayr_iOS.plist */,
+				6252F0D8199C24AD002ECE4D /* Relayr_iOS.xcconfig */,
+				62FD686819FFAAE500BC5431 /* Relayr_iOS_Debug.xcconfig */,
+				62FD686B19FFAAE500BC5431 /* Relayr_iOS_Release.xcconfig */,
+				62FD686919FFAAE500BC5431 /* Relayr_iOS_Distribution.xcconfig */,
+				62FD686719FFAAE500BC5431 /* Relayr_iOS_AdHoc.xcconfig */,
+				62FD686A19FFAAE500BC5431 /* Relayr_iOS_Experimental.xcconfig */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -686,8 +711,13 @@
 		6252F101199C2BFC002ECE4D /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				6252F103199C2BFC002ECE4D /* Relayr_OSX.xcconfig */,
 				6252F102199C2BFC002ECE4D /* Relayr_OSX.plist */,
+				6252F103199C2BFC002ECE4D /* Relayr_OSX.xcconfig */,
+				62FD686D19FFAB1C00BC5431 /* Relayr_OSX_Debug.xcconfig */,
+				62FD687019FFAB1C00BC5431 /* Relayr_OSX_Release.xcconfig */,
+				62FD686E19FFAB1C00BC5431 /* Relayr_OSX_Distribution.xcconfig */,
+				62FD686C19FFAB1C00BC5431 /* Relayr_OSX_AdHoc.xcconfig */,
+				62FD686F19FFAB1C00BC5431 /* Relayr_OSX_Experimental.xcconfig */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -1451,7 +1481,7 @@
 		};
 		6252F0C5199C2465002ECE4D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F0D8199C24AD002ECE4D /* Relayr_iOS.xcconfig */;
+			baseConfigurationReference = 62FD686819FFAAE500BC5431 /* Relayr_iOS_Debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1472,8 +1502,6 @@
 				DEFINES_MODULE = YES;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = c11;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1493,7 +1521,7 @@
 		};
 		6252F0C6199C2465002ECE4D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F0D8199C24AD002ECE4D /* Relayr_iOS.xcconfig */;
+			baseConfigurationReference = 62FD686B19FFAAE500BC5431 /* Relayr_iOS_Release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1515,7 +1543,6 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1532,7 +1559,7 @@
 		};
 		6252F0C7199C2465002ECE4D /* Distribution */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F0D8199C24AD002ECE4D /* Relayr_iOS.xcconfig */;
+			baseConfigurationReference = 62FD686919FFAAE500BC5431 /* Relayr_iOS_Distribution.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1554,7 +1581,6 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1571,7 +1597,7 @@
 		};
 		6252F0F6199C2AFB002ECE4D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F103199C2BFC002ECE4D /* Relayr_OSX.xcconfig */;
+			baseConfigurationReference = 62FD686D19FFAB1C00BC5431 /* Relayr_OSX_Debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1595,14 +1621,11 @@
 					"$(inherited)",
 					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
 				);
-				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1617,7 +1640,7 @@
 		};
 		6252F0F7199C2AFB002ECE4D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F103199C2BFC002ECE4D /* Relayr_OSX.xcconfig */;
+			baseConfigurationReference = 62FD687019FFAB1C00BC5431 /* Relayr_OSX_Release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1643,7 +1666,6 @@
 					"$(inherited)",
 					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
 				);
-				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1658,7 +1680,7 @@
 		};
 		6252F0F8199C2AFB002ECE4D /* Distribution */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F103199C2BFC002ECE4D /* Relayr_OSX.xcconfig */;
+			baseConfigurationReference = 62FD686E19FFAB1C00BC5431 /* Relayr_OSX_Distribution.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1684,7 +1706,6 @@
 					"$(inherited)",
 					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
 				);
-				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1827,7 +1848,7 @@
 		};
 		62F6E71819EBD641004AAA4A /* Ad Hoc */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F0D8199C24AD002ECE4D /* Relayr_iOS.xcconfig */;
+			baseConfigurationReference = 62FD686719FFAAE500BC5431 /* Relayr_iOS_AdHoc.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1849,7 +1870,6 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1866,7 +1886,7 @@
 		};
 		62F6E71919EBD641004AAA4A /* Ad Hoc */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6252F103199C2BFC002ECE4D /* Relayr_OSX.xcconfig */;
+			baseConfigurationReference = 62FD686C19FFAB1C00BC5431 /* Relayr_OSX_AdHoc.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1892,7 +1912,6 @@
 					"$(inherited)",
 					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
 				);
-				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
