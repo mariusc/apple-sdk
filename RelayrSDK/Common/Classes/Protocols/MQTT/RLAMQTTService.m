@@ -3,6 +3,8 @@
 #import "RLAMQTTConstants.h"        // Relayr.framework (Protocols/MQTT)
 #import "RLAIdentifierGenerator.h"  // Relayr.framework (Utilities)
 
+#import <MQTT/MQTTAsync.h>
+
 @implementation RLAMQTTService
 {
     
