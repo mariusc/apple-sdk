@@ -42,21 +42,6 @@ static NSString* const kCodingPublishers = @"pub";
     return nil;
 }
 
--(instancetype)initWithToken:(NSString*)token
-{
-    if (!token.length) { return nil; }
-    
-    self = [super init];
-    if (self)
-    {
-        _token = token;
-        _webService = [[RLAWebService alloc] initWithUser:self];
-        _mqttService = [[RLAMQTTService alloc] initWithUser:self];
-        _bleService = [[RLABLEService alloc] initWithUser:self];
-    }
-    return self;
-}
-
 - (void)queryCloudForUserInfo:(void (^)(NSError* error, NSString* previousName, NSString* previousEmail))completion
 {
     __weak RelayrUser* weakSelf = self;
@@ -64,8 +49,12 @@ static NSString* const kCodingPublishers = @"pub";
         if (error) { if (completion) { completion(error, nil, nil); } return; }
         if (!uid.length) { if (completion) { completion(RelayrErrorWrongRelayrUser, nil, nil); } return; }
         
-        __strong RelayrUser* strongSelf = weakSelf;
-        if (!strongSelf.uid) { strongSelf.uid = uid; }
+        RelayrUser* strongSelf = weakSelf;
+        if (!strongSelf.uid)
+        {
+            strongSelf.uid = uid;
+            [strongSelf setupServices];
+        }
         else if ( ![strongSelf.uid isEqualToString:uid] )
         {
             if (completion) { completion(RelayrErrorWrongRelayrUser, nil, nil); }
@@ -186,6 +175,19 @@ static NSString* const kCodingPublishers = @"pub";
 }
 
 #pragma mark Setup extension
+
+-(instancetype)initWithToken:(NSString*)token
+{
+    if (!token.length) { return nil; }
+    
+    self = [super init];
+    if (self)
+    {
+        _token = token;
+        _webService = [[RLAWebService alloc] initWithUser:self];
+    }
+    return self;
+}
 
 - (RelayrTransmitter*)addTransmitter:(RelayrTransmitter*)transmitter
 {
@@ -341,6 +343,8 @@ static NSString* const kCodingPublishers = @"pub";
         _uid = [decoder decodeObjectForKey:kCodingID];
         _name = [decoder decodeObjectForKey:kCodingName];
         _email = [decoder decodeObjectForKey:kCodingEmail];
+        
+        [self setupServices];
         _transmitters = [decoder decodeObjectForKey:kCodingTransmitters];
         _devices = [decoder decodeObjectForKey:kCodingDevices];
         _devicesBookmarked = [decoder decodeObjectForKey:kCodingDevices];
@@ -372,6 +376,16 @@ static NSString* const kCodingPublishers = @"pub";
 }
 
 #pragma mark - Private methods
+
+- (BOOL)setupServices
+{
+    if (!_uid.length) { return NO; }
+    
+    _mqttService = [[RLAMQTTService alloc] initWithUser:self];
+    _bleService = [[RLABLEService alloc] initWithUser:self];
+    
+    return YES;
+}
 
 /*******************************************************************************
  * It sets the user's IoTs with the server query. The transmitters set brings the devices of transmitters, although these devices are not the same object as the devices set.
@@ -446,6 +460,7 @@ static NSString* const kCodingPublishers = @"pub";
             matchedDevice.user = user;
             [result addObject:matchedDevice];
         }
+        transmitter.user = user;
         transmitter.devices = [NSSet setWithSet:result];
     }
     
@@ -470,6 +485,7 @@ static NSString* const kCodingPublishers = @"pub";
     _devices = devices;
     _devicesBookmarked = bookDevices;
     _transmitters = transmitters;
+    if (completion) { completion(nil); }
 }
 
 /*******************************************************************************

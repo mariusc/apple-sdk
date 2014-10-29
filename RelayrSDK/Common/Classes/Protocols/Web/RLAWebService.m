@@ -14,7 +14,7 @@
 
 - (instancetype)initWithUser:(RelayrUser*)user
 {
-    if (!user.uid) { return nil; }
+    if (!user.token.length) { return nil; }
     
     self = [super init];
     if (self)

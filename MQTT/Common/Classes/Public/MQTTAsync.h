@@ -717,7 +717,7 @@ void MQTTAsync_setTraceLevel(enum MQTTASYNC_TRACE_LEVELS level) __attribute__( (
   * This is a callback function prototype which must be implemented if you want
   * to receive trace information.
   * @param level the trace level of the message returned
-  * @param meesage the trace message.  This is a pointer to a static buffer which
+  * @param message the trace message.  This is a pointer to a static buffer which
   * will be overwritten on each call.  You must copy the data if you want to keep
   * it for later.
   */
