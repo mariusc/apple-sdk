@@ -19,7 +19,7 @@
  *  If OS_APPLE is defined, one (and only one) of these must be defined, the rest are not defined:
  *          OS_APPLE_IOS            - Generated code will run on an iOS device
  *          OS_APPLE_OSX            - Generated code will run on a mac
- *          OS_APPLE_IOS_SIMULATOR  - Generated code will run on the iOS simulator
+ *          OS_APPLE_SIMULATOR      - Generated code will run on the iOS simulator
  */
 #if defined(__APPLE__)
 
@@ -29,7 +29,7 @@
     #if TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR
         #define OS_APPLE_IOS
     #elif TARGET_OS_IPHONE && TARGET_IPHONE_SIMULATOR
-        #define OS_APPLE_IOS_SIMULATOR
+        #define OS_APPLE_SIMULATOR
     #elif TARGET_OS_MAC && !TARGET_OS_IPHONE
         #define OS_APPLE_OSX
     #else

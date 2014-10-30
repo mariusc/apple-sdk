@@ -41,8 +41,7 @@ void SocketBuffer_terminate(void)
     ListEmpty(&writes);
     
     FUNC_ENTRY;
-    while (ListNextElement(queues, &cur))
-        free(((socket_queue*)(cur->content))->buf);
+    while (ListNextElement(queues, &cur)) { free(((socket_queue*)(cur->content))->buf); }
     ListFree(queues);
     SocketBuffer_freeDefQ();
     FUNC_EXIT;
@@ -197,9 +196,9 @@ void SocketBuffer_pendingWrite(int socket, int count, iobuf* iovecs, int* frees,
     /* store the buffers until the whole packet is written */
     pending_writes* pw = malloc(sizeof(pending_writes));
     pw->socket = socket;
-#if defined(OPENSSL)
+    #if defined(OPENSSL)
     pw->ssl = ssl;
-#endif
+    #endif
     pw->bytes = bytes;
     pw->total = total;
     pw->count = count;

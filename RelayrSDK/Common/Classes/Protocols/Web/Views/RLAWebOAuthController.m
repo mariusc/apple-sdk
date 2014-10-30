@@ -1,7 +1,7 @@
 #import "RLAWebOAuthController.h"       // Header
 #import "RLAWebConstants.h"             // Relayr.framework (Protocols/Web)
-#import "RelayrErrors.h"                    // Relayr.framework (Utilities)
-#import "CPlatforms.h"                  // Relayr.framework (Utilities)
+#import "RelayrErrors.h"                // Relayr.framework (Utilities)
+#import <CBasics/CPlatforms.h>          // Relayr.framework (Utilities)
 
 #if defined(OS_APPLE_IOS) || defined (OS_APPLE_IOS_SIMULATOR)
 #import "RLAWebOAuthControllerIOS.h"    // Relayr.framework (Protocols/Web)

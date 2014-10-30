@@ -1,8 +1,8 @@
 #pragma once
 
-#include <errno.h>
-#include <stdio.h>
-#include <string.h>
+#include <errno.h>      // C Standard
+#include <stdio.h>      // C Standard
+#include <string.h>     // C Standard
 
 #pragma mark - Debug logging macros
 
@@ -10,13 +10,13 @@
 #if defined(NDEBUG)
     #define debug(msj, ...)
 #else
-    #define debug(msj, ...)     fprintf(stderr, "[DEBUG] %s:%d\n   |---- " msj "\n", __FILE__, __LINE__, ##__VA_ARGS__)
+    #define debug(msj, ...)     fprintf(stderr, "[DEBUG] %s:%d\n  |---- " msj "\n", __FILE__, __LINE__, ##__VA_ARGS__)
 #endif
 
 #pragma mark - Error/Warning/Info logging only macros
 
 #define clean_errno()           (errno == 0 ? "None" : strerror(errno))
-#define log_err(msj, ...)       fprintf(stderr, "[ERROR] %s:%d\n   |---- errno: %s\n   |---- " msj "\n", __FILE__, __LINE__, clean_errno(), ##__VA_ARGS__)
+#define log_err(msj, ...)       fprintf(stderr, "[ERROR] %s:%d\n  |---- errno: %s\n   |---- " msj "\n", __FILE__, __LINE__, clean_errno(), ##__VA_ARGS__)
 #define log_warn(msj, ...)      fprintf(stderr, "[WARN] %s:%d\n   |---- errno: %s\n   |---- " msj "\n", __FILE__, __LINE__, clean_errno(), ##__VA_ARGS__)
 #define log_info(msj, ...)      fprintf(stderr, "[INFO] %s:%d\n   |----  " msj "\n", __FILE__, __LINE__, ##__VA_ARGS__)
 

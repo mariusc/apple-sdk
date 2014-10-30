@@ -1,6 +1,7 @@
 @import Foundation;     // Apple
 @class RelayrUser;      // Relayr.framework (Public)
 #import "RLAService.h"  // Relayr.framework (Protocols)
+#import "RelayrConnection.h"
 
 /*!
  *  @abstract MQTT connection manager for a <code>RelayrUser</code>.
@@ -36,5 +37,10 @@
  *  @discussion It cannot be <code>nil</code>.
  */
 @property (readonly,nonatomic) NSNumber* port;
+
+/*!
+ *  @abstract The state of the MQTT connection.
+ */
+@property (readonly,nonatomic) RelayrConnectionState connectionState;
 
 @end

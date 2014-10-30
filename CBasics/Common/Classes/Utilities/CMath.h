@@ -67,3 +67,10 @@
 
 #define cmath_fequal(num_a, num_b)  ( fabs((num_a) - (num_b)) < FLT_EPSILON )
 #define cmath_fequal_to_zero(num)   ( fabs(num) < FLT_EPSILON )
+
+#pragma mark - Math functions
+
+//struct CMathTasks
+//{
+//    
+//};

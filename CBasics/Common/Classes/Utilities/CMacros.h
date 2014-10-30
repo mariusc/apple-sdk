@@ -1,8 +1,5 @@
 #pragma once
 
-
-
-
 #pragma mark - Memory related macros
 
 /*!
@@ -17,9 +14,6 @@
  */
 #undef allocate
 #define allocate(TYPE)  malloc( sizeof(TYPE) )
-
-
-
 
 #pragma mark - Likely/unlike optimizations
 
@@ -38,9 +32,6 @@
  *          To enable to likely/unlikely optimizations, you must set the -freorder-blocks flag when compiling the code (that flag is enable in -O2, but disable on -OS).
  */
 #define unlikely(x)	__builtin_expect(!!(x),0)
-
-
-
 
 #pragma mark - Verification macros
 
@@ -100,10 +91,6 @@
  * @param goto_label Label indicating the branching path that will be executed if the assertions are not true.
  */
 #define verify4(assertA, assertB, assertC, assertD, goto_label) if ( unlikely(unlikely(unlikely(unlikely(!(assertA)) || unlikely(!(assertB))) || unlikely(!(assertC))) || unlikely((!assertD))) ) { goto goto_label; }
-
-
-
-
 
 #pragma mark - Stringify and token concatenation
 

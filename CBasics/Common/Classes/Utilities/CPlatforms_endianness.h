@@ -1,7 +1,7 @@
 #pragma once
 
-#include "cbasics/CPlatforms.h"
-#include <stddef.h>
+#include "CPlatforms.h" // CBasics (Utilities)
+#include <stddef.h>     // C Standard
 
 /*!
  * @brief It defines the little endian macro, which will be an integer compile time value.

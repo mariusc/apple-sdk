@@ -7,10 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		62A083D019F650AC00E4B96D /* CString.c in Sources */ = {isa = PBXBuildFile; fileRef = 62A083CE19F650AC00E4B96D /* CString.c */; };
-		62A083D119F650AC00E4B96D /* CString.c in Sources */ = {isa = PBXBuildFile; fileRef = 62A083CE19F650AC00E4B96D /* CString.c */; };
-		62A083D219F650AC00E4B96D /* CString.h in Headers */ = {isa = PBXBuildFile; fileRef = 62A083CF19F650AC00E4B96D /* CString.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62A083D419F6514600E4B96D /* CString.h in Headers */ = {isa = PBXBuildFile; fileRef = 62A083CF19F650AC00E4B96D /* CString.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		62CF59AE1A029D3200D16DF1 /* CBasics.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59A41A029D3200D16DF1 /* CBasics.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		62CF59AF1A029D3200D16DF1 /* CBasics.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59A41A029D3200D16DF1 /* CBasics.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		62CF59B01A029D3200D16DF1 /* CString.c in Sources */ = {isa = PBXBuildFile; fileRef = 62CF59A61A029D3200D16DF1 /* CString.c */; };
+		62CF59B11A029D3200D16DF1 /* CString.c in Sources */ = {isa = PBXBuildFile; fileRef = 62CF59A61A029D3200D16DF1 /* CString.c */; };
+		62CF59B21A029D3200D16DF1 /* CString.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59A71A029D3200D16DF1 /* CString.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		62CF59B31A029D3200D16DF1 /* CString.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59A71A029D3200D16DF1 /* CString.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		62CF59B41A029D3200D16DF1 /* CMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59A91A029D3200D16DF1 /* CMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		62CF59B51A029D3200D16DF1 /* CMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59A91A029D3200D16DF1 /* CMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		62CF59B61A029D3200D16DF1 /* CMath.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59AA1A029D3200D16DF1 /* CMath.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		62CF59B71A029D3200D16DF1 /* CMath.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59AA1A029D3200D16DF1 /* CMath.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		62CF59B81A029D3200D16DF1 /* CPlatforms.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59AB1A029D3200D16DF1 /* CPlatforms.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		62CF59B91A029D3200D16DF1 /* CPlatforms.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59AB1A029D3200D16DF1 /* CPlatforms.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		62CF59BA1A029D3200D16DF1 /* CPlatforms_endianness.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59AC1A029D3200D16DF1 /* CPlatforms_endianness.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		62CF59BB1A029D3200D16DF1 /* CPlatforms_endianness.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59AC1A029D3200D16DF1 /* CPlatforms_endianness.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		62CF59BC1A029D3200D16DF1 /* CTests.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59AD1A029D3200D16DF1 /* CTests.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		62CF59BD1A029D3200D16DF1 /* CTests.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59AD1A029D3200D16DF1 /* CTests.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		62CF59BF1A029DF100D16DF1 /* CDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59BE1A029DF100D16DF1 /* CDebug.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		62CF59C01A029DF100D16DF1 /* CDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59BE1A029DF100D16DF1 /* CDebug.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		62CF59C21A02AB1400D16DF1 /* CCheck.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59C11A02AB1400D16DF1 /* CCheck.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		62CF59C31A02AB1400D16DF1 /* CCheck.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59C11A02AB1400D16DF1 /* CCheck.h */; settings = {ATTRIBUTES = (Private, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,13 +41,21 @@
 		6273782919FE8C66009CDAB4 /* CBasics_iOS_AdHoc.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CBasics_iOS_AdHoc.xcconfig; sourceTree = "<group>"; };
 		6273782A19FE8C9F009CDAB4 /* CBasics_Experimental.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CBasics_Experimental.xcconfig; sourceTree = "<group>"; };
 		6273782B19FE8CBA009CDAB4 /* CBasics_iOS_Experimental.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CBasics_iOS_Experimental.xcconfig; sourceTree = "<group>"; };
-		62A083CE19F650AC00E4B96D /* CString.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CString.c; sourceTree = "<group>"; };
-		62A083CF19F650AC00E4B96D /* CString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CString.h; sourceTree = "<group>"; };
 		62CBFBE819F5A290007E84C2 /* CBasics.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CBasics.xcconfig; sourceTree = "<group>"; };
 		62CBFBEC19F5A29F007E84C2 /* CBasics_iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CBasics_iOS.xcconfig; sourceTree = "<group>"; };
 		62CBFBF019F5A29F007E84C2 /* CBasics_OSX.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CBasics_OSX.xcconfig; sourceTree = "<group>"; };
 		62CBFBF419F5A29F007E84C2 /* CBasics_Tests.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CBasics_Tests.xcconfig; sourceTree = "<group>"; };
 		62CBFBF919F5A502007E84C2 /* libcbasics.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcbasics.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		62CF59A41A029D3200D16DF1 /* CBasics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBasics.h; sourceTree = "<group>"; };
+		62CF59A61A029D3200D16DF1 /* CString.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CString.c; sourceTree = "<group>"; };
+		62CF59A71A029D3200D16DF1 /* CString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CString.h; sourceTree = "<group>"; };
+		62CF59A91A029D3200D16DF1 /* CMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMacros.h; sourceTree = "<group>"; };
+		62CF59AA1A029D3200D16DF1 /* CMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMath.h; sourceTree = "<group>"; };
+		62CF59AB1A029D3200D16DF1 /* CPlatforms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPlatforms.h; sourceTree = "<group>"; };
+		62CF59AC1A029D3200D16DF1 /* CPlatforms_endianness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPlatforms_endianness.h; sourceTree = "<group>"; };
+		62CF59AD1A029D3200D16DF1 /* CTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTests.h; sourceTree = "<group>"; };
+		62CF59BE1A029DF100D16DF1 /* CDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDebug.h; sourceTree = "<group>"; };
+		62CF59C11A02AB1400D16DF1 /* CCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCheck.h; sourceTree = "<group>"; };
 		62FDD25319FEF2C700542411 /* CBasics_OSX_Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CBasics_OSX_Debug.xcconfig; sourceTree = "<group>"; };
 		62FDD25419FEF87F00542411 /* CBasics_OSX_Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CBasics_OSX_Release.xcconfig; sourceTree = "<group>"; };
 		62FDD25519FEF89C00542411 /* CBasics_OSX_Distribution.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CBasics_OSX_Distribution.xcconfig; sourceTree = "<group>"; };
@@ -71,19 +95,10 @@
 		624FD10119F59C1B0009B3CF /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				624FD10219F59C1B0009B3CF /* Classes */,
+				62CF59A31A029D3200D16DF1 /* Classes */,
 				624FD10319F59C1B0009B3CF /* Configuration */,
 			);
 			path = Common;
-			sourceTree = "<group>";
-		};
-		624FD10219F59C1B0009B3CF /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				62A083CF19F650AC00E4B96D /* CString.h */,
-				62A083CE19F650AC00E4B96D /* CString.c */,
-			);
-			path = Classes;
 			sourceTree = "<group>";
 		};
 		624FD10319F59C1B0009B3CF /* Configuration */ = {
@@ -190,6 +205,39 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
+		62CF59A31A029D3200D16DF1 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				62CF59A41A029D3200D16DF1 /* CBasics.h */,
+				62CF59A51A029D3200D16DF1 /* Core */,
+				62CF59A81A029D3200D16DF1 /* Utilities */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		62CF59A51A029D3200D16DF1 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				62CF59A71A029D3200D16DF1 /* CString.h */,
+				62CF59A61A029D3200D16DF1 /* CString.c */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		62CF59A81A029D3200D16DF1 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				62CF59C11A02AB1400D16DF1 /* CCheck.h */,
+				62CF59BE1A029DF100D16DF1 /* CDebug.h */,
+				62CF59A91A029D3200D16DF1 /* CMacros.h */,
+				62CF59AA1A029D3200D16DF1 /* CMath.h */,
+				62CF59AB1A029D3200D16DF1 /* CPlatforms.h */,
+				62CF59AC1A029D3200D16DF1 /* CPlatforms_endianness.h */,
+				62CF59AD1A029D3200D16DF1 /* CTests.h */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -197,7 +245,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62A083D219F650AC00E4B96D /* CString.h in Headers */,
+				62CF59AF1A029D3200D16DF1 /* CBasics.h in Headers */,
+				62CF59C01A029DF100D16DF1 /* CDebug.h in Headers */,
+				62CF59B51A029D3200D16DF1 /* CMacros.h in Headers */,
+				62CF59B71A029D3200D16DF1 /* CMath.h in Headers */,
+				62CF59B91A029D3200D16DF1 /* CPlatforms.h in Headers */,
+				62CF59BB1A029D3200D16DF1 /* CPlatforms_endianness.h in Headers */,
+				62CF59B31A029D3200D16DF1 /* CString.h in Headers */,
+				62CF59C31A02AB1400D16DF1 /* CCheck.h in Headers */,
+				62CF59BD1A029D3200D16DF1 /* CTests.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,7 +261,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62A083D419F6514600E4B96D /* CString.h in Headers */,
+				62CF59AE1A029D3200D16DF1 /* CBasics.h in Headers */,
+				62CF59BF1A029DF100D16DF1 /* CDebug.h in Headers */,
+				62CF59B41A029D3200D16DF1 /* CMacros.h in Headers */,
+				62CF59B61A029D3200D16DF1 /* CMath.h in Headers */,
+				62CF59B21A029D3200D16DF1 /* CString.h in Headers */,
+				62CF59B81A029D3200D16DF1 /* CPlatforms.h in Headers */,
+				62CF59BA1A029D3200D16DF1 /* CPlatforms_endianness.h in Headers */,
+				62CF59C21A02AB1400D16DF1 /* CCheck.h in Headers */,
+				62CF59BC1A029D3200D16DF1 /* CTests.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,7 +349,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62A083D019F650AC00E4B96D /* CString.c in Sources */,
+				62CF59B01A029D3200D16DF1 /* CString.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,7 +357,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62A083D119F650AC00E4B96D /* CString.c in Sources */,
+				62CF59B11A029D3200D16DF1 /* CString.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

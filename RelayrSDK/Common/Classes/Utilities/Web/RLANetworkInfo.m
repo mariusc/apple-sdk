@@ -1,5 +1,5 @@
 #import "RLANetworkInfo.h"                  // Header
-#import "CPlatforms.h"                      // Relayr.framework (Utilities)
+#import <CBasics/CPlatforms.h>              // Relayr.framework (Utilities)
 @import SystemConfiguration.CaptiveNetwork; // Apple
 
 @implementation RLANetworkInfo

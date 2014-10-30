@@ -85,7 +85,7 @@ void Socket_outInitialize(void);
 void Socket_outTerminate(void);
 
 /*!
- *  Returns the next socket ready for communications as indicated by select
+ *  @abstract Returns the next socket ready for communications as indicated by select
  *
  *  @param more_work flag to indicate more work is waiting, and thus a timeout value of 0 should be used for the select.
  *  @param tp the timeout to be used for the select, unless overridden.

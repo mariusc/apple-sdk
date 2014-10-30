@@ -39,7 +39,8 @@ typedef NS_ENUM(NSUInteger, RelayrConnectionState) {
     RelayrConnectionStateUnknown,
     RelayrConnectionStateConnecting,
     RelayrConnectionStateConnected,
-    RelayrConnectionStateDisconnecting
+    RelayrConnectionStateDisconnecting,
+    RelayrConnectionStateDisconnected
 };
 
 /*!

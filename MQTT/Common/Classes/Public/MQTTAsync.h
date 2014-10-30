@@ -2,22 +2,21 @@
  *  @abstract Asynchronous MQTT client library for C
  *  @discussion An MQTT client application connects to MQTT-capable servers. A typical client is responsible for collecting information from a telemetry device and publishing the information to the server. It can also subscribe to topics, receive messages, and use this information to control the telemetry device.
  *
- *   <b>Using the client</b><br>
- *  Applications that use the client library typically use a similar structure:
- *  <ul>
- *      <li>Create a client object</li>
- *      <li>Set the options to connect to an MQTT server</li>
- *      <li>Set up callback functions</li>
- *      <li>Connect the client to an MQTT server</li>
- *      <li>Subscribe to any topics the client needs to receive</li>
- *      <li>Repeat until finished:</li>
+ *      <b>Using the client</b>: Applications that use the client library typically use a similar structure:
+ *      <ul>
+ *          <li>Create a client object</li>
+ *          <li>Set the options to connect to an MQTT server</li>
+ *          <li>Set up callback functions</li>
+ *          <li>Connect the client to an MQTT server</li>
+ *          <li>Subscribe to any topics the client needs to receive</li>
+ *          <li>Repeat until finished:</li>
  *          <ul>
  *              <li>Publish any messages the client needs to</li>
  *              <li>Handle any incoming messages</li>
  *          </ul>
- *      <li>Disconnect the client</li>
- *      <li>Free any memory being used by the client</li>
- *  </ul>
+ *          <li>Disconnect the client</li>
+ *          <li>Free any memory being used by the client</li>
+ *      </ul>
  *
  *  @namespace MQTT
  *
@@ -93,22 +92,22 @@ typedef enum MQTTCODE {
     MQTTCODE_NO_MORE_MSGIDS = -10
 } MQTTCode;
 
-/**
- * Default MQTT version to connect with.  Use 3.1.1 then fall back to 3.1
+/*!
+ *  @abstract Default MQTT version to connect with.  Use 3.1.1 then fall back to 3.1
  */
 #define MQTTVERSION_DEFAULT 0
-/**
- * MQTT version to connect with: 3.1
+/*!
+ *  @abstract MQTT version to connect with: 3.1
  */
-#define MQTTVERSION_3_1 3
-/**
- * MQTT version to connect with: 3.1.1
+#define MQTTVERSION_3_1     3
+/*!
+ *  @abstract MQTT version to connect with: 3.1.1
  */
-#define MQTTVERSION_3_1_1 4
-/**
- * Bad return code from subscribe, as defined in the 3.1.1 specification
+#define MQTTVERSION_3_1_1   4
+/*!
+ *  @abstract Bad return code from subscribe, as defined in the 3.1.1 specification
  */
-#define MQTT_BAD_SUBSCRIBE 0x80
+#define MQTT_BAD_SUBSCRIBE  0x80
 
 /*!
  *  @abstract A handle representing an MQTT client. A valid client handle is available following a successful call to MQTTAsync_create().
@@ -165,7 +164,7 @@ typedef struct
  *  @return This function must return a boolean value indicating whether or not the message has been safely received by the client application. Returning true indicates that the message has been successfully handled. Returning false indicates that there was a problem. In this case, the client library will reinvoke MQTTAsync_messageArrived() to attempt to deliver the message to the application again.
  *
  */
-typedef int MQTTAsync_messageArrived(void* context, char* topicName, size_t topicLen, MQTTAsync_message* message);
+typedef int MQTTAsync_messageArrived(void* context, char const* topicName, size_t topicLen, MQTTAsync_message* message);
 
 /*!
  *  @abstract Callback function for a message delivered.
@@ -183,7 +182,7 @@ typedef void MQTTAsync_deliveryComplete(void* context, MQTTAsync_token token);
  *  @param context A pointer to the <i>context</i> value originally passed to MQTTAsync_setCallbacks(), which contains any application-specific context.
  *  @param cause The reason for the disconnection. Currently, <i>cause</i> is always set to NULL.
  */
-typedef void MQTTAsync_connectionLost(void* context, char* cause);
+typedef void MQTTAsync_connectionLost(void* context, char const* cause);
 
 /*!
  *  @abstract The data returned on completion of an unsuccessful API call in the response callback onFailure.
@@ -247,7 +246,8 @@ typedef void MQTTAsync_onSuccess(void* context, MQTTAsync_successData* response)
 typedef void MQTTAsync_onFailure(void* context,  MQTTAsync_failureData* response);
 
 /*!
- *  @abstract <#Brief intro#>
+ *  @abstract Structure to define callbacks from an MQTT API call.
+ *
  *  @field struct_id The eyecatcher for this structure. Must be MQTR.
  *  @field struct_version The version number of this structure. Must be 0.
  *  @field onSuccess A pointer to a callback function to be called if the API call successfully completes. Can be set to NULL, in which case no indication of successful completion will be received.
@@ -267,86 +267,52 @@ typedef struct
 
 #define MQTTAsync_responseOptions_initializer { {'M', 'Q', 'T', 'R'}, 0, NULL, NULL, 0, 0 }
 
-/**
- * MQTTAsync_willOptions defines the MQTT "Last Will and Testament" (LWT) settings for
- * the client. In the event that a client unexpectedly loses its connection to
- * the server, the server publishes the LWT message to the LWT topic on
- * behalf of the client. This allows other clients (subscribed to the LWT topic)
- * to be made aware that the client has disconnected. To enable the LWT
- * function for a specific client, a valid pointer to an MQTTAsync_willOptions
- * structure is passed in the MQTTAsync_connectOptions structure used in the
- * MQTTAsync_connect() call that connects the client to the server. The pointer
- * to MQTTAsync_willOptions can be set to NULL if the LWT function is not
- * required.
+/*!
+ *  @abstract MQTTAsync_willOptions defines the MQTT "Last Will and Testament" (LWT) settings for the client. In the event that a client unexpectedly loses its connection to the server, the server publishes the LWT message to the LWT topic on behalf of the client. This allows other clients (subscribed to the LWT topic) to be made aware that the client has disconnected. To enable the LWT function for a specific client, a valid pointer to an MQTTAsync_willOptions structure is passed in the MQTTAsync_connectOptions structure used in the MQTTAsync_connect() call that connects the client to the server. The pointer to MQTTAsync_willOptions can be set to NULL if the LWT function is not required.
+ *
+ *  @field struct_id The eyecatcher for this structure.  must be MQTW.
+ *  @field struct_version The version number of this structure.  Must be 0.
+ *  @field topicName The LWT topic to which the LWT message will be published.
+ *  @field message The LWT payload.
+ *  @field retained The retained flag for the LWT message (see MQTTAsync_message.retained).
+ *  @field qos The quality of service setting for the LWT message (see MQTTAsync_message.qos and @ref qos).
  */
 typedef struct
 {
-    /** The eyecatcher for this structure.  must be MQTW. */
-    const char struct_id[4];
-    /** The version number of this structure.  Must be 0 */
+    char const struct_id[4];
     int struct_version;
-    /** The LWT topic to which the LWT message will be published. */
-    const char* topicName;
-    /** The LWT payload. */
-    const char* message;
-    /**
-     * The retained flag for the LWT message (see MQTTAsync_message.retained).
-     */
+    char const* topicName;
+    char const* message;
     int retained;
-    /**
-     * The quality of service setting for the LWT message (see
-     * MQTTAsync_message.qos and @ref qos).
-     */
     int qos;
 } MQTTAsync_willOptions;
 
 #define MQTTAsync_willOptions_initializer { {'M', 'Q', 'T', 'W'}, 0, NULL, NULL, 0, 0 }
 
-/**
- * MQTTAsync_sslProperties defines the settings to establish an SSL/TLS connection using the
- * OpenSSL library. It covers the following scenarios:
- * - Server authentication: The client needs the digital certificate of the server. It is included
- *   in a store containting trusted material (also known as "trust store").
- * - Mutual authentication: Both client and server are authenticated during the SSL handshake. In
- *   addition to the digital certificate of the server in a trust store, the client will need its own
- *   digital certificate and the private key used to sign its digital certificate stored in a "key store".
- * - Anonymous connection: Both client and server do not get authenticated and no credentials are needed
- *   to establish an SSL connection. Note that this scenario is not fully secure since it is subject to
- *   man-in-the-middle attacks.
+/*!
+ *  @abstract MQTTAsync_sslProperties defines the settings to establish an SSL/TLS connection using the OpenSSL library. It covers the following scenarios:
+ *      - Server authentication: The client needs the digital certificate of the server. It is included in a store containting trusted material (also known as "trust store").
+ *      - Mutual authentication: Both client and server are authenticated during the SSL handshake. In addition to the digital certificate of the server in a trust store, the client will need its own digital certificate and the private key used to sign its digital certificate stored in a "key store".
+ *      - Anonymous connection: Both client and server do not get authenticated and no credentials are needed to establish an SSL connection. Note that this scenario is not fully secure since it is subject to man-in-the-middle attacks.
+ *
+ *  @field struct_id The eyecatcher for this structure.  Must be MQTS.
+ *  @field struct_version The version number of this structure.  Must be 0.
+ *  @field trustStore The file in PEM format containing the public digital certificates trusted by the client.
+ *  @field keyStore The file in PEM format containing the public certificate chain of the client. It may also include the client's private key.
+ *  @field privateKey If not included in the sslKeyStore, this setting points to the file in PEM format containing the client's private key.
+ *  @field privateKeyPassword The password to load the client's privateKey if encrypted.
+ *  @field enabledCipherSuites The list of cipher suites that the client will present to the server during the SSL handshake. For a full explanation of the cipher list format, please see the OpenSSL on-line documentation: http://www.openssl.org/docs/apps/ciphers.html#CIPHER_LIST_FORMAT . If this setting is ommitted, its default value will be "ALL", that is, all the cipher suites -excluding those offering no encryption- will be considered. This setting can be used to set an SSL anonymous connection ("aNULL" string value, for instance).
+ *  @field enableServerCertAuth True/False option to enable verification of the server certificate
  */
 typedef struct
 {
-    /** The eyecatcher for this structure.  Must be MQTS */
     const char struct_id[4];
-    /** The version number of this structure.  Must be 0 */
     int struct_version;
-    
-    /** The file in PEM format containing the public digital certificates trusted by the client. */
     const char* trustStore;
-    
-    /** The file in PEM format containing the public certificate chain of the client. It may also include
-     * the client's private key.
-     */
     const char* keyStore;
-    
-    /** If not included in the sslKeyStore, this setting points to the file in PEM format containing
-     * the client's private key.
-     */
     const char* privateKey;
-    /** The password to load the client's privateKey if encrypted. */
     const char* privateKeyPassword;
-    
-    /**
-     * The list of cipher suites that the client will present to the server during the SSL handshake. For a
-     * full explanation of the cipher list format, please see the OpenSSL on-line documentation:
-     * http://www.openssl.org/docs/apps/ciphers.html#CIPHER_LIST_FORMAT
-     * If this setting is ommitted, its default value will be "ALL", that is, all the cipher suites -excluding
-     * those offering no encryption- will be considered.
-     * This setting can be used to set an SSL anonymous connection ("aNULL" string value, for instance).
-     */
     const char* enabledCipherSuites;
-    
-    /** True/False option to enable verification of the server certificate **/
     int enableServerCertAuth;
     
 } MQTTAsync_SSLOptions;
@@ -383,14 +349,14 @@ typedef struct
  */
 typedef struct
 {
-    const char struct_id[4];
+    char const struct_id[4];
     int struct_version;
     int keepAliveInterval;
     int cleansession;
     int maxInflight;
     MQTTAsync_willOptions* will;
-    const char* username;
-    const char* password;
+    char const* username;
+    char const* password;
     int connectTimeout;
     int retryInterval;
     MQTTAsync_SSLOptions* ssl;
@@ -405,34 +371,23 @@ typedef struct
 
 #define MQTTAsync_connectOptions_initializer { {'M', 'Q', 'T', 'C'}, 3, 60, 1, 10, NULL, NULL, NULL, 30, 0, NULL, NULL, NULL, NULL, 0, NULL, 0}
 
+/*!
+ *  @abstract Structure indicating the callbacks for disconnection.
+ *
+ *  @field struct_id The eyecatcher for this structure. Must be MQTD.
+ *  @field struct_version The version number of this structure.  Must be 0 or 1.  0 signifies no SSL options.
+ *  @field timeout The client delays disconnection for up to this time (in milliseconds) in order to allow in-flight message transfers to complete.
+ *  @field onSuccess A pointer to a callback function to be called if the disconnect successfully completes.  Can be set to NULL, in which case no indication of successful completion will be received.
+ *  @field onFailure A pointer to a callback function to be called if the disconnect fails. Can be set to NULL, in which case no indication of unsuccessful completion will be received.
+ *  @field context A pointer to any application-specific context. The the <i>context</i> pointer is passed to success or failure callback functions to provide access to the context information in the callback.
+ */
 typedef struct
 {
-    /** The eyecatcher for this structure. Must be MQTD. */
-    const char struct_id[4];
-    /** The version number of this structure.  Must be 0 or 1.  0 signifies no SSL options */
+    char const struct_id[4];
     int struct_version;
-    /**
-     * The client delays disconnection for up to this time (in
-     * milliseconds) in order to allow in-flight message transfers to complete.
-     */
     int timeout;
-    /**
-     * A pointer to a callback function to be called if the disconnect successfully
-     * completes.  Can be set to NULL, in which case no indication of successful
-     * completion will be received.
-     */
     MQTTAsync_onSuccess* onSuccess;
-    /**
-     * A pointer to a callback function to be called if the disconnect fails.
-     * Can be set to NULL, in which case no indication of unsuccessful
-     * completion will be received.
-     */
     MQTTAsync_onFailure* onFailure;
-    /**
-     * A pointer to any application-specific context. The
-     * the <i>context</i> pointer is passed to success or failure callback functions to
-     * provide access to the context information in the callback.
-     */
     void* context;
 } MQTTAsync_disconnectOptions;
 
@@ -451,8 +406,8 @@ enum MQTTASYNC_TRACE_LEVELS
 
 typedef struct
 {
-    const char* name;
-    const char* value;
+    char const* name;
+    char const* value;
 } MQTTAsync_nameValue;
 
 #pragma mark Public API
@@ -475,13 +430,13 @@ typedef struct
  *  @see MQTTAsync_destroy
  */
 MQTTCode MQTTAsync_create(MQTTAsync* handle, char const* restrict serverURI, char const* restrict clientId, int const persistence_type, void* restrict persistence_context)
-__attribute__( (visibility("default")) );
+    __attribute__( (visibility("default")) );
 
 /*!
  *  @abstract This function sets the global callback functions for a specific client.
  *  @discussion If your client application doesn't use a particular callback, set the relevant parameter to NULL. Any necessary message acknowledgements and status communications are handled in the background without any intervention from the client application.  If you do not set a messageArrived callback function, you will not be notified of the receipt of any messages as a result of a subscription.
  *
- *  @note  The MQTT client must be disconnected when this function is called.
+ *  @note The MQTT client must be disconnected when this function is called.
  *  @param handle A valid client handle from a successful call to MQTTAsync_create().
  *  @param context A pointer to any application-specific context. The the <i>context</i> pointer is passed to each of the callback functions to provide access to the context information in the callback.
  *  @param cl A pointer to an MQTTAsync_connectionLost() callback function. You can set this to NULL if your application doesn't handle disconnections.
@@ -489,252 +444,196 @@ __attribute__( (visibility("default")) );
  *  @param dc A pointer to an MQTTAsync_deliveryComplete() callback function. You can set this to NULL if you do not want to check for successful delivery.
  *  @return MQTTCODE_SUCCESS if the callbacks were correctly set, MQTTCODE_FAILURE if an error occurred.
  */
-int MQTTAsync_setCallbacks(MQTTAsync handle, void* context, MQTTAsync_connectionLost* cl, MQTTAsync_messageArrived* ma, MQTTAsync_deliveryComplete* dc) __attribute__( (visibility("default")) );
+int MQTTAsync_setCallbacks(MQTTAsync handle, void* context, MQTTAsync_connectionLost* cl, MQTTAsync_messageArrived* ma, MQTTAsync_deliveryComplete* dc)
+    __attribute__( (visibility("default")) );
 
-/**
-  * This function attempts to connect a previously-created client (see
-  * MQTTAsync_create()) to an MQTT server using the specified options. If you
-  * want to enable asynchronous message and status notifications, you must call
-  * MQTTAsync_setCallbacks() prior to MQTTAsync_connect().
-  * @param handle A valid client handle from a successful call to
-  * MQTTAsync_create().
-  * @param options A pointer to a valid MQTTAsync_connectOptions
-  * structure.
-  * @return MQTTCODE_SUCCESS if the client connect request was accepted.
-  * If the client was unable to connect to the server, an error code is
-  * returned via the onFailure callback, if set.
-  * Error codes greater than 0 are returned by the MQTT protocol:<br><br>
-  * <b>1</b>: Connection refused: Unacceptable protocol version<br>
-  * <b>2</b>: Connection refused: Identifier rejected<br>
-  * <b>3</b>: Connection refused: Server unavailable<br>
-  * <b>4</b>: Connection refused: Bad user name or password<br>
-  * <b>5</b>: Connection refused: Not authorized<br>
-  * <b>6-255</b>: Reserved for future use<br>
-  */
-int MQTTAsync_connect(MQTTAsync handle, const MQTTAsync_connectOptions* options) __attribute__( (visibility("default")) );
-
-
-/**
-  * This function allows the client application to test whether or not a
-  * client is currently connected to the MQTT server.
-  * @param handle A valid client handle from a successful call to
-  * MQTTAsync_create().
-  * @return Boolean true if the client is connected, otherwise false.
-  */
-int MQTTAsync_isConnected(MQTTAsync handle) __attribute__( (visibility("default")) );
-
-/**
- * This function attempts to disconnect the client from the MQTT
- * server. In order to allow the client time to complete handling of messages
- * that are in-flight when this function is called, a timeout period is
- * specified. When the timeout period has expired, the client disconnects even
- * if there are still outstanding message acknowledgements.
- * The next time the client connects to the same server, any QoS 1 or 2
- * messages which have not completed will be retried depending on the
- * cleansession settings for both the previous and the new connection (see
- * MQTTAsync_connectOptions.cleansession and MQTTAsync_connect()).
- * @param handle A valid client handle from a successful call to
- * MQTTAsync_create().
- * @param options The client delays disconnection for up to this time (in
- * milliseconds) in order to allow in-flight message transfers to complete.
- * @return MQTTCODE_SUCCESS if the client successfully disconnects from
- * the server. An error code is returned if the client was unable to disconnect
- * from the server
+/*!
+ *  @abstract This function attempts to connect a previously-created client (see MQTTAsync_create()) to an MQTT server using the specified options. If you want to enable asynchronous message and status notifications, you must call MQTTAsync_setCallbacks() prior to MQTTAsync_connect().
+ *
+ *  @param handle A valid client handle from a successful call to MQTTAsync_create().
+ *  @param options A pointer to a valid MQTTAsync_connectOptions structure.
+ *  @return MQTTCODE_SUCCESS if the client connect request was accepted. If the client was unable to connect to the server, an error code is returned via the onFailure callback, if set.
+ *      Error codes greater than 0 are returned by the MQTT protocol:<br><br>
+ *      <b>1</b>: Connection refused: Unacceptable protocol version<br>
+ *      <b>2</b>: Connection refused: Identifier rejected<br>
+ *      <b>3</b>: Connection refused: Server unavailable<br>
+ *      <b>4</b>: Connection refused: Bad user name or password<br>
+ *      <b>5</b>: Connection refused: Not authorized<br>
+ *      <b>6-255</b>: Reserved for future use<br>
  */
-int MQTTAsync_disconnect(MQTTAsync handle, const MQTTAsync_disconnectOptions* options) __attribute__( (visibility("default")) );
+int MQTTAsync_connect(MQTTAsync handle, MQTTAsync_connectOptions const* options)
+    __attribute__( (visibility("default")) );
+
+/*!
+ *  @abstract This function allows the client application to test whether or not a client is currently connected to the MQTT server.
+ *
+ *  @param handle A valid client handle from a successful call to MQTTAsync_create().
+ *  @return Boolean true if the client is connected, otherwise false.
+ */
+int MQTTAsync_isConnected(MQTTAsync handle)
+    __attribute__( (visibility("default")) );
+
+/*!
+ *  @abstract This function attempts to disconnect the client from the MQTT server. In order to allow the client time to complete handling of messages that are in-flight when this function is called, a timeout period is specified. When the timeout period has expired, the client disconnects even if there are still outstanding message acknowledgements.
+ *      The next time the client connects to the same server, any QoS 1 or 2 messages which have not completed will be retried depending on the cleansession settings for both the previous and the new connection (see MQTTAsync_connectOptions.cleansession and MQTTAsync_connect()).
+ *
+ *  @param handle A valid client handle from a successful call to MQTTAsync_create().
+ *  @param options The client delays disconnection for up to this time (in milliseconds) in order to allow in-flight message transfers to complete.
+ *  @return MQTTCODE_SUCCESS if the client successfully disconnects from the server. An error code is returned if the client was unable to disconnect from the server
+ */
+int MQTTAsync_disconnect(MQTTAsync handle, const MQTTAsync_disconnectOptions* options)
+    __attribute__( (visibility("default")) );
+
+/*!
+ *  @abstract This function attempts to subscribe a client to a single topic, which may contain wildcards (see @ref wildcard). This call also specifies the @ref qos requested for the subscription (see also MQTTAsync_subscribeMany()).
+ *
+ *  @param handle A valid client handle from a successful call to MQTTAsync_create().
+ *  @param topic The subscription topic, which may include wildcards.
+ *  @param qos The requested quality of service for the subscription.
+ *  @param response A pointer to a response options structure. Used to set callback functions.
+ *  @return MQTTCODE_SUCCESS if the subscription request is successful. An error code is returned if there was a problem registering the subscription.
+ */
+int MQTTAsync_subscribe(MQTTAsync handle, const char* topic, int qos, MQTTAsync_responseOptions* response)
+    __attribute__( (visibility("default")) );
+
+/*!
+ *  @abstract This function attempts to subscribe a client to a list of topics, which may contain wildcards (see @ref wildcard). This call also specifies the @ref qos requested for each topic (see also MQTTAsync_subscribe()).
+ *
+ *  @param handle A valid client handle from a successful call to MQTTAsync_create().
+ *  @param count The number of topics for which the client is requesting subscriptions.
+ *  @param topic An array (of length <i>count</i>) of pointers to topics, each of which may include wildcards.
+ *  @param qos An array (of length <i>count</i>) of @ref qos values. qos[n] is the requested QoS for topic[n].
+ *  @param response A pointer to a response options structure. Used to set callback functions.
+ *  @return MQTTCODE_SUCCESS if the subscription request is successful. An error code is returned if there was a problem registering the subscriptions.
+ */
+int MQTTAsync_subscribeMany(MQTTAsync handle, int count, char* const* topic, int* qos, MQTTAsync_responseOptions* response)
+    __attribute__( (visibility("default")) );
+
+/*!
+ *  @abstract This function attempts to remove an existing subscription made by the specified client.
+ *
+ *  @param handle A valid client handle from a successful call to MQTTAsync_create().
+ *  @param topic The topic for the subscription to be removed, which may include wildcards (see @ref wildcard).
+ *  @param response A pointer to a response options structure. Used to set callback functions.
+ *  @return MQTTCODE_SUCCESS if the subscription is removed. An error code is returned if there was a problem removing the subscription.
+ */
+int MQTTAsync_unsubscribe(MQTTAsync handle, const char* topic, MQTTAsync_responseOptions* response)
+    __attribute__( (visibility("default")) );
+
+/*!
+ *  @abstract This function attempts to remove existing subscriptions to a list of topics made by the specified client.
+ *
+ *  @param handle A valid client handle from a successful call to MQTTAsync_create().
+ *  @param count The number subscriptions to be removed.
+ *  @param topic An array (of length <i>count</i>) of pointers to the topics of the subscriptions to be removed, each of which may include wildcards.
+ *  @param response A pointer to a response options structure. Used to set callback functions.
+ *  @return MQTTCODE_SUCCESS if the subscriptions are removed. An error code is returned if there was a problem removing the subscriptions.
+ */
+int MQTTAsync_unsubscribeMany(MQTTAsync handle, int count, char* const* topic, MQTTAsync_responseOptions* response)
+    __attribute__( (visibility("default")) );
 
 
-/**
-  * This function attempts to subscribe a client to a single topic, which may
-  * contain wildcards (see @ref wildcard). This call also specifies the
-  * @ref qos requested for the subscription
-  * (see also MQTTAsync_subscribeMany()).
-  * @param handle A valid client handle from a successful call to
-  * MQTTAsync_create().
-  * @param topic The subscription topic, which may include wildcards.
-  * @param qos The requested quality of service for the subscription.
-  * @param response A pointer to a response options structure. Used to set callback functions.
-  * @return MQTTCODE_SUCCESS if the subscription request is successful.
-  * An error code is returned if there was a problem registering the
-  * subscription.
-  */
-int MQTTAsync_subscribe(MQTTAsync handle, const char* topic, int qos, MQTTAsync_responseOptions* response) __attribute__( (visibility("default")) );
+/*!
+ *  @abstract This function attempts to publish a message to a given topic (see also MQTTAsync_sendMessage()). An MQTTAsync_token is issued when this function returns successfully. If the client application needs to test for successful delivery of messages, a callback should be set (see MQTTAsync_onSuccess() and MQTTAsync_deliveryComplete()).
+ *
+ *  @param handle A valid client handle from a successful call to MQTTAsync_create().
+ *  @param destinationName The topic associated with this message.
+ *  @param payloadlen The length of the payload in bytes.
+ *  @param payload A pointer to the byte array payload of the message.
+ *  @param qos The @ref qos of the message.
+ *  @param retained The retained flag for the message.
+ *  @param response A pointer to an MQTTAsync_responseOptions structure. Used to set callback functions. This is optional and can be set to NULL.
+ *  @return MQTTCODE_SUCCESS if the message is accepted for publication. An error code is returned if there was a problem accepting the message.
+ */
+int MQTTAsync_send(MQTTAsync handle, char const* destinationName, size_t payloadlen, void* payload, int qos, int retained, MQTTAsync_responseOptions* response)
+    __attribute__( (visibility("default")) );
 
 
-/**
-  * This function attempts to subscribe a client to a list of topics, which may
-  * contain wildcards (see @ref wildcard). This call also specifies the
-  * @ref qos requested for each topic (see also MQTTAsync_subscribe()).
-  * @param handle A valid client handle from a successful call to
-  * MQTTAsync_create().
-  * @param count The number of topics for which the client is requesting
-  * subscriptions.
-  * @param topic An array (of length <i>count</i>) of pointers to
-  * topics, each of which may include wildcards.
-  * @param qos An array (of length <i>count</i>) of @ref qos
-  * values. qos[n] is the requested QoS for topic[n].
-  * @param response A pointer to a response options structure. Used to set callback functions.
-  * @return MQTTCODE_SUCCESS if the subscription request is successful.
-  * An error code is returned if there was a problem registering the
-  * subscriptions.
-  */
-int MQTTAsync_subscribeMany(MQTTAsync handle, int count, char* const* topic, int* qos, MQTTAsync_responseOptions* response) __attribute__( (visibility("default")) );
-
-/**
-  * This function attempts to remove an existing subscription made by the
-  * specified client.
-  * @param handle A valid client handle from a successful call to
-  * MQTTAsync_create().
-  * @param topic The topic for the subscription to be removed, which may
-  * include wildcards (see @ref wildcard).
-  * @param response A pointer to a response options structure. Used to set callback functions.
-  * @return MQTTCODE_SUCCESS if the subscription is removed.
-  * An error code is returned if there was a problem removing the
-  * subscription.
-  */
-int MQTTAsync_unsubscribe(MQTTAsync handle, const char* topic, MQTTAsync_responseOptions* response) __attribute__( (visibility("default")) );
-
-/**
-  * This function attempts to remove existing subscriptions to a list of topics
-  * made by the specified client.
-  * @param handle A valid client handle from a successful call to
-  * MQTTAsync_create().
-  * @param count The number subscriptions to be removed.
-  * @param topic An array (of length <i>count</i>) of pointers to the topics of
-  * the subscriptions to be removed, each of which may include wildcards.
-  * @param response A pointer to a response options structure. Used to set callback functions.
-  * @return MQTTCODE_SUCCESS if the subscriptions are removed.
-  * An error code is returned if there was a problem removing the subscriptions.
-  */
-int MQTTAsync_unsubscribeMany(MQTTAsync handle, int count, char* const* topic, MQTTAsync_responseOptions* response) __attribute__( (visibility("default")) );
+/*!
+ *  @abstract This function attempts to publish a message to a given topic (see also MQTTAsync_publish()). An MQTTAsync_token is issued when this function returns successfully. If the client application needs to test for successful delivery of messages, a callback should be set (see MQTTAsync_onSuccess() and MQTTAsync_deliveryComplete()).
+ *
+ *  @param handle A valid client handle from a successful call to MQTTAsync_create().
+ *  @param destinationName The topic associated with this message.
+ *  @param msg A pointer to a valid MQTTAsync_message structure containing the payload and attributes of the message to be published.
+ *  @param response A pointer to an MQTTAsync_responseOptions structure. Used to set callback functions.
+ *  @return MQTTCODE_SUCCESS if the message is accepted for publication. An error code is returned if there was a problem accepting the message.
+ */
+int MQTTAsync_sendMessage(MQTTAsync handle, char const* destinationName, MQTTAsync_message const* msg, MQTTAsync_responseOptions* response)
+    __attribute__( (visibility("default")) );
 
 
-/**
-  * This function attempts to publish a message to a given topic (see also
-  * MQTTAsync_sendMessage()). An MQTTAsync_token is issued when
-  * this function returns successfully. If the client application needs to
-  * test for successful delivery of messages, a callback should be set
-  * (see MQTTAsync_onSuccess() and MQTTAsync_deliveryComplete()).
-  * @param handle A valid client handle from a successful call to
-  * MQTTAsync_create().
-  * @param destinationName The topic associated with this message.
-  * @param payloadlen The length of the payload in bytes.
-  * @param payload A pointer to the byte array payload of the message.
-  * @param qos The @ref qos of the message.
-  * @param retained The retained flag for the message.
-  * @param response A pointer to an MQTTAsync_responseOptions structure. Used to set callback functions.
-  * This is optional and can be set to NULL.
-  * @return MQTTCODE_SUCCESS if the message is accepted for publication.
-  * An error code is returned if there was a problem accepting the message.
-  */
-int MQTTAsync_send(MQTTAsync handle, char const* destinationName, size_t payloadlen, void* payload, int qos, int retained, MQTTAsync_responseOptions* response) __attribute__( (visibility("default")) );
-
-
-/**
-  * This function attempts to publish a message to a given topic (see also
-  * MQTTAsync_publish()). An MQTTAsync_token is issued when
-  * this function returns successfully. If the client application needs to
-  * test for successful delivery of messages, a callback should be set
-  * (see MQTTAsync_onSuccess() and MQTTAsync_deliveryComplete()).
-  * @param handle A valid client handle from a successful call to
-  * MQTTAsync_create().
-  * @param destinationName The topic associated with this message.
-  * @param msg A pointer to a valid MQTTAsync_message structure containing
-  * the payload and attributes of the message to be published.
-  * @param response A pointer to an MQTTAsync_responseOptions structure. Used to set callback functions.
-  * @return MQTTCODE_SUCCESS if the message is accepted for publication.
-  * An error code is returned if there was a problem accepting the message.
-  */
-int MQTTAsync_sendMessage(MQTTAsync handle, char const* destinationName, MQTTAsync_message const* msg, MQTTAsync_responseOptions* response) __attribute__( (visibility("default")) );
-
-
-/**
-  * This function sets a pointer to an array of tokens for
-  * messages that are currently in-flight (pending completion).
-  *
-  * <b>Important note:</b> The memory used to hold the array of tokens is
-  * malloc()'d in this function. The client application is responsible for
-  * freeing this memory when it is no longer required.
-  * @param handle A valid client handle from a successful call to
-  * MQTTAsync_create().
-  * @param tokens The address of a pointer to an MQTTAsync_token.
-  * When the function returns successfully, the pointer is set to point to an
-  * array of tokens representing messages pending completion. The last member of
-  * the array is set to -1 to indicate there are no more tokens. If no tokens
-  * are pending, the pointer is set to NULL.
-  * @return MQTTCODE_SUCCESS if the function returns successfully.
-  * An error code is returned if there was a problem obtaining the list of
-  * pending tokens.
-  */
-int MQTTAsync_getPendingTokens(MQTTAsync handle, MQTTAsync_token **tokens) __attribute__( (visibility("default")) );
+/*!
+ *  @abstract This function sets a pointer to an array of tokens for messages that are currently in-flight (pending completion).
+ *      <b>Important note:</b> The memory used to hold the array of tokens is malloc()'d in this function. The client application is responsible for freeing this memory when it is no longer required.
+ *
+ *  @param handle A valid client handle from a successful call to MQTTAsync_create().
+ *  @param tokens The address of a pointer to an MQTTAsync_token. When the function returns successfully, the pointer is set to point to an array of tokens representing messages pending completion. The last member of the array is set to -1 to indicate there are no more tokens. If no tokens are pending, the pointer is set to NULL.
+ *  @return MQTTCODE_SUCCESS if the function returns successfully. An error code is returned if there was a problem obtaining the list of pending tokens.
+ */
+int MQTTAsync_getPendingTokens(MQTTAsync handle, MQTTAsync_token **tokens)
+    __attribute__( (visibility("default")) );
 
 #define MQTTASYNC_TRUE 1
-int MQTTAsync_isComplete(MQTTAsync handle, MQTTAsync_token dt) __attribute__( (visibility("default")) );
 
-int MQTTAsync_waitForCompletion(MQTTAsync handle, MQTTAsync_token dt, unsigned long timeout) __attribute__( (visibility("default")) );
+int MQTTAsync_isComplete(MQTTAsync handle, MQTTAsync_token dt)
+    __attribute__( (visibility("default")) );
 
-
-/**
-  * This function frees memory allocated to an MQTT message, including the
-  * additional memory allocated to the message payload. The client application
-  * calls this function when the message has been fully processed. <b>Important
-  * note:</b> This function does not free the memory allocated to a message
-  * topic string. It is the responsibility of the client application to free
-  * this memory using the MQTTAsync_free() library function.
-  * @param msg The address of a pointer to the MQTTAsync_message structure
-  * to be freed.
-  */
-void MQTTAsync_freeMessage(MQTTAsync_message** msg) __attribute__( (visibility("default")) );
-
-/**
-  * This function frees memory allocated by the MQTT C client library, especially the
-  * topic name. This is needed on Windows when the client libary and application
-  * program have been compiled with different versions of the C compiler.  It is
-  * thus good policy to always use this function when freeing any MQTT C client-
-  * allocated memory.
-  * @param ptr The pointer to the client library storage to be freed.
-  */
-void MQTTAsync_free(void* ptr) __attribute__( (visibility("default")) );
-
-/**
-  * This function frees the memory allocated to an MQTT client (see
-  * MQTTAsync_create()). It should be called when the client is no longer
-  * required.
-  * @param handle A pointer to the handle referring to the MQTTAsync
-  * structure to be freed.
-  */
-void MQTTAsync_destroy(MQTTAsync* handle) __attribute__( (visibility("default")) );
-
-/**
-  * This function sets the level of trace information which will be
-  * returned in the trace callback.
-  * @param level the trace level required
-  */
-void MQTTAsync_setTraceLevel(enum MQTTASYNC_TRACE_LEVELS level) __attribute__( (visibility("default")) );
+int MQTTAsync_waitForCompletion(MQTTAsync handle, MQTTAsync_token dt, unsigned long timeout)
+    __attribute__( (visibility("default")) );
 
 
-/**
-  * This is a callback function prototype which must be implemented if you want
-  * to receive trace information.
-  * @param level the trace level of the message returned
-  * @param message the trace message.  This is a pointer to a static buffer which
-  * will be overwritten on each call.  You must copy the data if you want to keep
-  * it for later.
-  */
+/*!
+ *  @abstract This function frees memory allocated to an MQTT message, including the additional memory allocated to the message payload. The client application calls this function when the message has been fully processed. <b>Important note:</b> This function does not free the memory allocated to a message topic string. It is the responsibility of the client application to free this memory using the MQTTAsync_free() library function.
+ *
+ *  @param msg The address of a pointer to the MQTTAsync_message structure to be freed.
+ */
+void MQTTAsync_freeMessage(MQTTAsync_message** msg)
+    __attribute__( (visibility("default")) );
+
+/*!
+ *  @abstract This function frees memory allocated by the MQTT C client library, especially the topic name. This is needed on Windows when the client libary and application program have been compiled with different versions of the C compiler.  It is thus good policy to always use this function when freeing any MQTT C client-allocated memory.
+ *
+ *  @param ptr The pointer to the client library storage to be freed.
+ */
+void MQTTAsync_free(void* ptr)
+    __attribute__( (visibility("default")) );
+
+/*!
+ *  @abstract This function frees the memory allocated to an MQTT client (see MQTTAsync_create()). It should be called when the client is no longer required.
+ *
+ *  @param handle A pointer to the handle referring to the MQTTAsync structure to be freed.
+ */
+void MQTTAsync_destroy(MQTTAsync* handle)
+    __attribute__( (visibility("default")) );
+
+/*!
+ *  @abstract This function sets the level of trace information which will be returned in the trace callback.
+ *
+ *  @param level the trace level required
+ */
+void MQTTAsync_setTraceLevel(enum MQTTASYNC_TRACE_LEVELS level)
+    __attribute__( (visibility("default")) );
+
+/*!
+ *  @abstract This is a callback function prototype which must be implemented if you want to receive trace information.
+ *
+ *  @param level the trace level of the message returned
+ *  @param message the trace message.  This is a pointer to a static buffer which will be overwritten on each call.  You must copy the data if you want to keep it for later.
+ */
 typedef void MQTTAsync_traceCallback(enum MQTTASYNC_TRACE_LEVELS level, char* message);
 
-/**
-  * This function sets the trace callback if needed.  If set to NULL,
-  * no trace information will be returned.  The default trace level is
-  * MQTTASYNC_TRACE_MINIMUM.
-  * @param callback a pointer to the function which will handle the trace information
-  */
-void MQTTAsync_setTraceCallback(MQTTAsync_traceCallback* callback) __attribute__( (visibility("default")) );
+/*!
+ *  @abstract This function sets the trace callback if needed.  If set to NULL, no trace information will be returned.  The default trace level is MQTTASYNC_TRACE_MINIMUM.
+ *
+ *  @param callback a pointer to the function which will handle the trace information
+ */
+void MQTTAsync_setTraceCallback(MQTTAsync_traceCallback* callback)
+    __attribute__( (visibility("default")) );
 
-/**
-  * This function returns version information about the library.
-  * no trace information will be returned.  The default trace level is
-  * MQTTASYNC_TRACE_MINIMUM
-  * @return an array of strings describing the library.  The last entry is a NULL pointer.
-  */
-MQTTAsync_nameValue* MQTTAsync_getVersionInfo() __attribute__( (visibility("default")) );
+/*!
+ *  @abstract This function returns version information about the library. no trace information will be returned.  The default trace level is MQTTASYNC_TRACE_MINIMUM
+ *
+ *  @return an array of strings describing the library.  The last entry is a NULL pointer.
+ */
+MQTTAsync_nameValue* MQTTAsync_getVersionInfo()
+    __attribute__( (visibility("default")) );
