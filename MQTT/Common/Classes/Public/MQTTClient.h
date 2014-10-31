@@ -21,7 +21,7 @@
  * @mainpage MQTT Client library for C
  * &copy; Copyright IBM Corp. 2009, 2014
  *
- * @brief An MQTT client library in C.
+ * @abstract An MQTT client library in C.
  *
  * These pages describe the original more synchronous API which might be
  * considered easier to use.  Some of the calls will block.  For the new

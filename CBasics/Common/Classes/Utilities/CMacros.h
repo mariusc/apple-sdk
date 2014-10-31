@@ -3,14 +3,14 @@
 #pragma mark - Memory related macros
 
 /*!
- * @brief It defines the NULL macro if the current platform doesn't define it.
+ * @abstract It defines the NULL macro if the current platform doesn't define it.
  */
 #ifndef NULL
     #define NULL    ((void*) 0)
 #endif
 
 /*!
- * @brief Convenience macro to not have to write all the time malloc( sizeof(TYPE) )
+ * @abstract Convenience macro to not have to write all the time malloc( sizeof(TYPE) )
  */
 #undef allocate
 #define allocate(TYPE)  malloc( sizeof(TYPE) )
@@ -19,7 +19,7 @@
 
 #undef likely
 /*!
- * @brief The CPU prefecthes the instructions of the if statement.
+ * @abstract The CPU prefecthes the instructions of the if statement.
  * @details Meant to be use with booleans in the following form: if (likely(a > 14)) {...}
  *          To enable to likely/unlikely optimizations, you must set the -freorder-blocks flag when compiling the code (that flag is enable in -O2, but disable on -OS).
  */
@@ -27,7 +27,7 @@
 
 #undef unlikely
 /*!
- * @brief The CPU prefetches the instructions outside the if statement (it tries to skip the if block).
+ * @abstract The CPU prefetches the instructions outside the if statement (it tries to skip the if block).
  * @details Meant to be use with booleans in the following form: if (unlikely(a<13)) {...}
  *          To enable to likely/unlikely optimizations, you must set the -freorder-blocks flag when compiling the code (that flag is enable in -O2, but disable on -OS).
  */
@@ -39,7 +39,7 @@
 
 #undef memverify
 /*!
- * @brief It verifies that the ptr to memory is different than NULL. It also expected to be not NULL, thus a "unlikely" macro is inserted.
+ * @abstract It verifies that the ptr to memory is different than NULL. It also expected to be not NULL, thus a "unlikely" macro is inserted.
  * @details If the pointer is NULL, a goto statement is fired with the name of the label passed as argument.
  * @param ptr Pointer to memory.
  * @param goto_label Label indicating the branching path that will be executed if the assertion is not true.
@@ -48,7 +48,7 @@
 
 #undef verify1
 /*!
- * @brief It verifies that the assertion passed as the first argument is true. If it is not, it jumps to the goto_label.
+ * @abstract It verifies that the assertion passed as the first argument is true. If it is not, it jumps to the goto_label.
  * @details The "verify" macro family expect that all the assertion given are always true; thus "unlikely" macros are used.
  *          Only use the "verify" macros when you are certain that the assertions are true (like memory checking). In other case you will suffer performance penalties.
  * @param assertion Expression/Value that must be evaluated to true.
@@ -58,7 +58,7 @@
 
 #undef verify2
 /*!
- * @brief It verifies that both of the assertions passed are true. If any of them (or both) are false, the program jumps to the goto_label.
+ * @abstract It verifies that both of the assertions passed are true. If any of them (or both) are false, the program jumps to the goto_label.
  * @details The "verify" macro family expect that all the assertion given are always true; thus "unlikely" macros are used.
  *          Only use the "verify" macros when you are certain that the assertions are true (like memory checking). In other case you will suffer performance penalties.
  * @param assertA Expression/value that must be evaluated to true.
@@ -69,7 +69,7 @@
 
 #undef verify3
 /*!
- * @brief It verifies that all assertions are true. If any of them (or all) are false, the program jumps to the goto_label.
+ * @abstract It verifies that all assertions are true. If any of them (or all) are false, the program jumps to the goto_label.
  * @details The "verify" macro family expect that all the assertion given are always true; thus "unlikely" macros are used.
  *          Only use the "verify" macros when you are certain that the assertions are true (like memory checking). In other case you will suffer performance penalties.
  * @param assertA Expression/value that must be evaluated to true.
@@ -81,7 +81,7 @@
 
 #undef verify4
 /*!
- * @brief It verifies that all assertions are true. If any of them (or all) are false, the program jumps to the goto_label.
+ * @abstract It verifies that all assertions are true. If any of them (or all) are false, the program jumps to the goto_label.
  * @details The "verify" macro family expect that all the assertion given are always true; thus "unlikely" macros are used.
  *          Only use the "verify" macros when you are certain that the assertions are true (like memory checking). In other case you will suffer performance penalties.
  * @param assertA Expression/value that must be evaluated to true.
@@ -96,19 +96,19 @@
 
 #undef stringify_macro_arg_name
 /*!
- * @brief It makes the text passed in the argument a valid C string.
+ * @abstract It makes the text passed in the argument a valid C string.
  * @details This works with the preprocesing operator "#". Remember that unlike normal parameter replacement, the argument of the # preprocesing operator is not macro-expanded first.
  */
 #define stringify_macro_arg_name(arg)     #arg
 
 #undef stringify_macro_arg_value
 /*!
- * @brief It will expand the argument, and then convert that into a valid C string.
+ * @abstract It will expand the argument, and then convert that into a valid C string.
  */
 #define stringify_macro_arg_value(arg) stringify_macro_arg_name(arg)
 
 #undef concatenate_tokens
 /*!
- * @brief It will concatenate two tokens into a single one.
+ * @abstract It will concatenate two tokens into a single one.
  */
 #define concatenate_tokens(token_a, token_b)    token_a ## token_b

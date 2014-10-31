@@ -1,9 +1,9 @@
-#include "CString.h"
-#include "CMacros.h"
-#include "CDebug.h"
+#include "CString.h"    // CBasics (Utilities)
+#include "CMacros.h"    // CBasics (Utilities)
+#include "CDebug.h"     // CBasics (Utilities)
 
-#include <stdlib.h>
-#include <string.h>
+#include <stdlib.h>     // C Standard
+#include <string.h>     // C Standard
 
 #pragma mark - Protoype definitions
 

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "CPlatforms.h" // CBasics (Utilities)
-#include <stddef.h>     // C Standard
+#include <CBasics/CPlatforms.h> // CBasics (Utilities)
+#include <stddef.h>             // C Standard
 
 /*!
- * @brief It defines the little endian macro, which will be an integer compile time value.
+ * @abstract It defines the little endian macro, which will be an integer compile time value.
  * @details Little-endian systems store the least significant byte in the smallest address. Thus for the string "ABCD", the char representing 'D' would be store in the lowest memory address (lets say, in memory position 0x0F30), then 'C' (0x0F31), 'B' (0x0F32), and finally 'A' (0x0F33)
  * @note Many systems define the little endian macro. Check if they define it in the correct way.
  */
@@ -17,7 +17,7 @@
 #endif
 
 /*!
- * @brief It defines the big endian macro, which will be an integer compile value.
+ * @abstract It defines the big endian macro, which will be an integer compile value.
  * @details Little-endian systems store the most significant byte in the smallest address. Thus for the string "ABCD", the char representing 'A' would be store in the lowest memory address (lets say, in memory position 0x0F30), then 'B' (0x0F31), 'C' (0x0F32), and finally 'D' (0x0F33)
  * @note Many systems define the big endian macro. Check if they define it in the correct way.
  */
@@ -30,7 +30,7 @@
 #endif
 
 /*!
- * @brief It defines the middle little-word endian macro (PDP-11 style), which will be an integer compile value.
+ * @abstract It defines the middle little-word endian macro (PDP-11 style), which will be an integer compile value.
  * @details Many systems define the big endian macro. Check if they define it in the correct way.
  */
 #if defined(PDP_ENDIAN)
@@ -42,7 +42,7 @@
 #endif
 
 /*!
- * @brief Macro defining the byte order (whether big or little endian).
+ * @abstract Macro defining the byte order (whether big or little endian).
  * @details If the byte order cannot be identified at compile time, the compiler will throw an error.
  *
  *  BYTE_ORDER can be set to
@@ -84,7 +84,7 @@
 #endif
 
 /*!
- * @brief It defines the little, big, and PDP endian string names.
+ * @abstract It defines the little, big, and PDP endian string names.
  */
 #if !defined(LITTLE_ENDIAN_NAME)
     #define LITTLE_ENDIAN_NAME	"litte endian"
@@ -99,7 +99,7 @@
 #endif
 
 /*!
- * @brief Macro defining the name of the byte order (whether big or little endian).
+ * @abstract Macro defining the name of the byte order (whether big or little endian).
  * @details If at this point BYTE_ORDER is not defined, or it is defined with a different value than expected, the compiler will throw an error.
  *
  *  BYTE_ORDER_NAME can be set to
@@ -121,7 +121,7 @@
 #endif
 
 /*!
- * @brief It checks in run-time the endiannes of the machine that it is running into.
+ * @abstract It checks in run-time the endiannes of the machine that it is running into.
  */
 static inline int byte_order_dynamic_check(void)
 {
@@ -143,7 +143,7 @@ static inline int byte_order_dynamic_check(void)
 }
 
 /*!
- * @brief It returns the string representation of the endian of the machine.
+ * @abstract It returns the string representation of the endian of the machine.
  * @details Possible values are: LITTLE_ENDIAN_NAME, BIG_ENDIAN_NAME, or NULL.
  */
 static inline char const* byte_order_name(int const byte_order)
@@ -154,7 +154,7 @@ static inline char const* byte_order_name(int const byte_order)
 }
 
 /*!
- * @brief Byte swap functions for 16, 32, and 64 bits.
+ * @abstract Byte swap functions for 16, 32, and 64 bits.
  */
 #if defined(OS_LINUX)
     #include <byteswap.h>

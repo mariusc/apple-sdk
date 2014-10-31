@@ -1,8 +1,7 @@
-#pragma once
-// For more information on pre-defined header go to: http://sourceforge.net/p/predef/wiki/Home/
+#pragma once    // For more information on pre-defined header go to: http://sourceforge.net/p/predef/wiki/Home/
 
 /*!
- * @brief Macros defining in which operating system the generated code will run.
+ * @abstract Macros defining in which operating system the generated code will run.
  * @details If the platform is not identified, the file won't compile (throwing a compile error).
  *
  *  One (and only one) of these must be defined, the rest are not defined:
@@ -63,7 +62,7 @@
 #endif
 
 /*!
- * @brief Macros defining which object format the file will compile into.
+ * @abstract Macros defining which object format the file will compile into.
  * @details If the object format is not identified, the file won't compile (throwing a compile error).
  *  The file format tells the structure of executables, object code, shared libraries, dynamically-loaded code, and core dumps.
  *
@@ -83,7 +82,7 @@
 #endif
 
 /*!
- * @brief Macros defining what compiler is being used.
+ * @abstract Macros defining what compiler is being used.
  * @details If the compiler is not identified, the file won't compile (throwing a compile error).
  *
  *  One (and only one) of these must be defined, the rest are not defined:
@@ -108,7 +107,7 @@
 #endif
 
 /*!
- * @brief Macros defining the compatibility of the compiler used to generate code.
+ * @abstract Macros defining the compatibility of the compiler used to generate code.
  * @details The compiler doesn't have to be compatible with the options here. Thus, not always this flags will be set.
  *
  *  Compatibility of the compiler used. Any or all of the followings can be defined:
@@ -128,7 +127,7 @@
 #endif
 
 /*!
- * @brief Macros defining the architecture and the ABI of the system.
+ * @abstract Macros defining the architecture and the ABI of the system.
  * @details If the architecture and ABI is not identified, the file won't compile (throwing a compile error).
  *
  *  One (and only one) of these must be defined, the rest are not defined:
