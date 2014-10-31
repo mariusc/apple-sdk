@@ -10,10 +10,25 @@
 #endif
 
 /*!
+ *  @abstract It performs a shallow copy of the passed structure.
+ *
+ *  @param STRUCT_TYPE The type of the structure to copy.
+ *  @param PTR The holder for the copied structure. It must be a pointer. It can be <code>void*</code> or <code>STRUCTURE_TYPE*</code>.
+ *  @param VALUE The actual structure to be copied. It must not be a pointer.
+ */
+#define struct_shallowCopy(STRUCT_TYPE, PTR, VALUE)     *((STRUCT_TYPE *)PTR) = VALUE
+
+/*!
  * @abstract Convenience macro to not have to write all the time malloc( sizeof(TYPE) )
  */
-#undef allocate
-#define allocate(TYPE)  malloc( sizeof(TYPE) )
+#undef mallocate
+#define mallocate(VAR)  malloc( sizeof(VAR) )
+
+/*!
+ *  @abstract It allocates the size of the passed struct in the heap and then perform a shallow copy from the passed struct to the newly created struct.
+ */
+#undef malloc_copyStruct
+#define malloc_copyStruct(STRUCT_TYPE, PTR, VALUE)  malloc( sizeof(VALUE) );   struct_shallowCopy(STRUCT_TYPE, PTR, VALUE)
 
 #pragma mark - Likely/unlike optimizations
 

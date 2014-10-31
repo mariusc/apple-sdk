@@ -2,8 +2,11 @@
 #import "RelayrUser.h"              // Relayr.framework (Public)
 #import "RLAMQTTConstants.h"        // Relayr.framework (Protocols/MQTT)
 #import "RLAIdentifierGenerator.h"  // Relayr.framework (Utilities)
+#import "RLALog.h"                  // Relayr.framework (Utilities)
 
-#import <MQTT/MQTTAsync.h>
+#import <MQTT/MQTTAsync.h>          // MQTT (Public)
+#import <CBasics/CMacros.h>         // CBasics (Utilities)
+#import <CBasics/CDebug.h>          // CBasics (Utilities)
 
 @interface RLAMQTTService ()
 @property (readwrite,nonatomic) RelayrConnectionState connectionState;
@@ -12,13 +15,14 @@
 #pragma mark - Definitions
 
 #define RLAMQTTSERVICE_NUM_CONNECTION_TRIES 2
+#define RLAMQTTSERVICE_CLIENTID             "client3"
 #define RLAMQTTSERVICE_USERNAME             "relayr"
 #define RLAMQTTSERVICE_PASSWORD             "relayr"
 
-struct RLAMQTTServiceConnectingState {
-    NSUInteger numRetries;
+typedef struct RLAMQTTServiceConnectingState {
+    NSUInteger numConnectionTries;
     void* mqttService;
-};
+} RLAMQTTServiceConnectingState;
 
 #pragma mark - Private prototypes
 
@@ -30,7 +34,7 @@ void messageDelivered(void* context, MQTTAsync_token token);
 
 @implementation RLAMQTTService
 {
-    MQTTAsync* _client;
+    MQTTAsync _client;
 }
 
 #pragma mark - Public API
@@ -48,29 +52,25 @@ void messageDelivered(void* context, MQTTAsync_token token);
     self = [super init];
     if (self)
     {
+        debug("Initializing MQTT Service...");
+        
         _user = user;
         _hostString = dRLAMQTT_Host;
         _port = [NSNumber numberWithUnsignedInteger:dRLAMQTT_PortUnencripted];
         _connectionState = RelayrConnectionStateDisconnected;
         _client = NULL;
         
-        NSString* clientIdentifier = [RLAIdentifierGenerator generateIDFromUserID:user.uid withMaximumRandomNumber:dRLAMQTT_ClientIDMaxRandomNum];
-        MQTTAsync_create(_client, [_hostString cStringUsingEncoding:NSUTF8StringEncoding], [clientIdentifier cStringUsingEncoding:NSUTF8StringEncoding], MQTTCLIENT_PERSISTENCE_NONE, NULL);
+        // NSString* clientIdentifier = [RLAIdentifierGenerator generateIDFromUserID:user.uid withMaximumRandomNumber:dRLAMQTT_ClientIDMaxRandomNum];
+        MQTTAsync_create(&_client, [_hostString cStringUsingEncoding:NSUTF8StringEncoding], RLAMQTTSERVICE_CLIENTID, MQTTCLIENT_PERSISTENCE_NONE, NULL);
         if (_client == NULL) { return nil; }
         
-        MQTTAsync_setCallbacks(*_client, (__bridge void*)self, connectionToBrokerLost, messageArrived, messageDelivered);
+        MQTTAsync_setCallbacks(_client, (__bridge void*)self, connectionToBrokerLost, messageArrived, messageDelivered);
+        MQTTCode const connectionAcceptedStatus = [self connectToBrokerWith:&(RLAMQTTServiceConnectingState){
+            .numConnectionTries = RLAMQTTSERVICE_NUM_CONNECTION_TRIES,
+            .mqttService = (__bridge void*)self
+        }];
         
-        struct RLAMQTTServiceConnectingState* connectingState = malloc(sizeof(struct RLAMQTTServiceConnectingState));
-        connectingState->numRetries = RLAMQTTSERVICE_NUM_CONNECTION_TRIES;
-        connectingState->mqttService = (__bridge void*)self;
-        MQTTCode const connectionAcceptedStatus = [self connectToBrokerWith:connectingState];
-        
-        if (connectionAcceptedStatus != MQTTCODE_SUCCESS)
-        {
-            MQTTAsync_destroy(_client);
-            _client = NULL;
-            return nil;
-        }
+        if (connectionAcceptedStatus != MQTTCODE_SUCCESS) { MQTTAsync_destroy(_client); return nil; }
     }
     return self;
 }
@@ -103,31 +103,29 @@ void messageDelivered(void* context, MQTTAsync_token token);
 
 #pragma mark - Private functionality
 
-- (MQTTCode)connectToBrokerWith:(struct RLAMQTTServiceConnectingState*)connectingState
+- (MQTTCode)connectToBrokerWith:(RLAMQTTServiceConnectingState*)connectingState
 {
-    if (connectingState==NULL || connectingState->numRetries==0)
-    {
-        free(connectingState);
-        return MQTTCODE_FAILURE;
-    }
+    if (connectingState==NULL || connectingState->numConnectionTries==0) { return MQTTCODE_FAILURE; }
+    
+    debug("Connecting to broker...");
     
     _connectionState = RelayrConnectionStateConnecting;
-    connectingState->numRetries--;
+    connectingState->numConnectionTries--;
     
     MQTTAsync_connectOptions opts = MQTTAsync_connectOptions_initializer;
     opts.keepAliveInterval = 20;
     opts.cleansession = 1;
     opts.onSuccess = connectionToBrokerSucceeded;
     opts.onFailure = connectionToBrokerFailed;
-    opts.context = connectingState;
+    opts.context = malloc_copyStruct(RLAMQTTServiceConnectingState, opts.context, *connectingState);
     opts.username = RLAMQTTSERVICE_USERNAME;
     opts.password = RLAMQTTSERVICE_PASSWORD;
-    
     MQTTCode const connectionAcceptedStatus = MQTTAsync_connect(_client, &opts);
+    
     if (connectionAcceptedStatus != MQTTCODE_SUCCESS)
     {
         _connectionState = RelayrConnectionStateDisconnected;
-        free(connectingState);
+        free(opts.context);
     }
     
     return connectionAcceptedStatus;
@@ -135,29 +133,43 @@ void messageDelivered(void* context, MQTTAsync_token token);
 
 void connectionToBrokerFailed(void* context, MQTTAsync_failureData* response)
 {
-    if (context == NULL) { return; }
-    struct RLAMQTTServiceConnectingState* connectingState = context;
+    debug("Connection to broker failed!");
     
+    RLAMQTTServiceConnectingState* connectingState = context;
     RLAMQTTService* service = (__bridge RLAMQTTService*)connectingState->mqttService;
-    if (!service) { return; }
-    service.connectionState = RelayrConnectionStateDisconnected;
     
+    service.connectionState = RelayrConnectionStateDisconnected;
     [service connectToBrokerWith:connectingState];
+    free(connectingState);
 }
 
 void connectionToBrokerSucceeded(void* context, MQTTAsync_successData* response)
 {
-    if (context == NULL) { return; }
-    struct RLAMQTTServiceConnectingState* connectingState = context;
+    debug("Connection to broker succeeded!");
     
+    RLAMQTTServiceConnectingState* connectingState = context;
     RLAMQTTService* service = (__bridge RLAMQTTService*)connectingState->mqttService;
-    if (!service) { return; }
+    
     service.connectionState = RelayrConnectionStateConnected;
+    free(connectingState);
+    
+    // Do something here
 }
 
 void connectionToBrokerLost(void* context, char const* cause)
 {
+    debug("Connection to broker lost!");
     
+    __weak RLAMQTTService* weakService = (__bridge RLAMQTTService*)context;
+    weakService.connectionState = RelayrConnectionStateDisconnected;
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        RLAMQTTService* service = weakService;  if (!service) { return; }
+        [service connectToBrokerWith:&(RLAMQTTServiceConnectingState){
+            .numConnectionTries = RLAMQTTSERVICE_NUM_CONNECTION_TRIES,
+            .mqttService = (__bridge void*)service
+        }];
+    });
 }
 
 int messageArrived(void* context, char const* topicName, size_t topicLen, MQTTAsync_message* message)

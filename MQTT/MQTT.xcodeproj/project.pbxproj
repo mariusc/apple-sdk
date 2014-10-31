@@ -77,7 +77,6 @@
 /* Begin PBXFileReference section */
 		62475DDB19F42B4D00827F9C /* samples_publish.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = samples_publish.c; sourceTree = "<group>"; };
 		62475DDC19F42B8100827F9C /* samples_subscribe.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = samples_subscribe.c; sourceTree = "<group>"; };
-		62475DDD19F4366100827F9C /* samples_tracing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = samples_tracing.h; sourceTree = "<group>"; };
 		62753E3419F10C690012BBE9 /* libMQTT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMQTT.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		62753E4C19F10D640012BBE9 /* MQTT.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MQTT.xcconfig; sourceTree = "<group>"; };
 		62753E5319F111FE0012BBE9 /* MQTT_iOS.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = MQTT_iOS.xcconfig; sourceTree = "<group>"; };
@@ -179,7 +178,6 @@
 			children = (
 				62475DDB19F42B4D00827F9C /* samples_publish.c */,
 				62475DDC19F42B8100827F9C /* samples_subscribe.c */,
-				62475DDD19F4366100827F9C /* samples_tracing.h */,
 			);
 			path = Samples;
 			sourceTree = "<group>";

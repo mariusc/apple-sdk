@@ -60,22 +60,21 @@ void onConnectFailure(void* context, MQTTAsync_failureData* response)
 void onConnect(void* context, MQTTAsync_successData* response)
 {
     MQTTAsync client = (MQTTAsync)context;
-    MQTTAsync_responseOptions opts = MQTTAsync_responseOptions_initializer;
-    MQTTAsync_message pubmsg = MQTTAsync_message_initializer;
-    int rc;
-    
     printf("Successful connection\n");
     
-    opts.onSuccess = onSend;
-    opts.context = client;
-    
+    MQTTAsync_message pubmsg = MQTTAsync_message_initializer;
     pubmsg.payload = PAYLOAD;
     pubmsg.payloadlen = strlen(PAYLOAD);
     pubmsg.qos = QOS;
     pubmsg.retained = 0;
     deliveredtoken = 0;
     
-    if ((rc = MQTTAsync_sendMessage(client, TOPIC, &pubmsg, &opts)) != MQTTCODE_SUCCESS)
+    MQTTAsync_responseOptions opts = MQTTAsync_responseOptions_initializer;
+    opts.onSuccess = onSend;
+    opts.context = client;
+    
+    int rc = MQTTAsync_sendMessage(client, TOPIC, &pubmsg, &opts);
+    if (rc != MQTTCODE_SUCCESS)
     {
         printf("Failed to start sendMessage, return code %d\n", rc);
         exit(-1);
