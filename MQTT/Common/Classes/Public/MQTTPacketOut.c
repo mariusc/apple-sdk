@@ -63,8 +63,7 @@ int MQTTPacket_send_connect(Clients* client, int MQTTVersion)
 	rc = MQTTPacket_send(&client->net, packet.header, buf, len, 1);
 	Log(LOG_PROTOCOL, 0, NULL, client->net.socket, client->clientID, client->cleansession, rc);
 exit:
-	if (rc != TCPSOCKET_INTERRUPTED)
-		free(buf);
+    if (rc != TCPSOCKET_INTERRUPTED) { free(buf); }
 	FUNC_EXIT_RC(rc);
 	return rc;
 }

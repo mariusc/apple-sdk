@@ -105,7 +105,7 @@ typedef struct
 	void* context;                  // Calling context - used when calling disconnect_internal */
 	int MQTTVersion;
     #if defined(OPENSSL)
-	MQTTClient_SSLOptions *sslopts;
+	MQTTClient_SSLOptions* sslopts;
 	SSL_SESSION* session;           // SSL session pointer for fast handhake
     #endif
 } Clients;

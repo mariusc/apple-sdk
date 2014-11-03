@@ -45,13 +45,12 @@
 
 - (void)testMQTTServiceInitialisationAndConnection
 {
-//    XCTestExpectation* expectation = [self expectationWithDescription:nil];
-    
     XCTAssertNil(_user.mqttService);
     _user.mqttService = [[RLAMQTTService alloc] initWithUser:_user];
     XCTAssertNotNil(_user.mqttService);
     
-//    [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
+    XCTestExpectation* expectation = [self expectationWithDescription:nil];
+    [self waitForExpectationsWithTimeout:20 handler:nil];
 }
 
 @end

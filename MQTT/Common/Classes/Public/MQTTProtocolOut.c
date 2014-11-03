@@ -28,10 +28,11 @@ int MQTTProtocol_connect(const char* ip_address, Clients* aClient, int MQTTVersi
     
     addr = MQTTProtocol_addressPort(ip_address, &port);
     rc = Socket_new(addr, port, &(aClient->net.socket));
-    if (rc == EINPROGRESS || rc == EWOULDBLOCK)
-        aClient->connect_state = 1; /* TCP connect called - wait for connect completion */
+    if (rc == EINPROGRESS || rc == EWOULDBLOCK) {
+        aClient->connect_state = 1; // TCP connect called - wait for connect completion
+    }
     else if (rc == 0)
-    {	/* TCP connect completed. If SSL, send SSL connect */
+    {	// TCP connect completed. If SSL, send SSL connect
         #if defined(OPENSSL)
         if (ssl)
         {
@@ -41,22 +42,22 @@ int MQTTProtocol_connect(const char* ip_address, Clients* aClient, int MQTTVersi
                 if (rc == -1)
                     aClient->connect_state = 2; /* SSL connect called - wait for completion */
             }
-            else
-                rc = SOCKET_ERROR;
+            else { rc = SOCKET_ERROR; }
         }
         #endif
         
         if (rc == 0)
         {
-            /* Now send the MQTT connect packet */
-            if ((rc = MQTTPacket_send_connect(aClient, MQTTVersion)) == 0)
-                aClient->connect_state = 3; /* MQTT Connect sent - wait for CONNACK */
-            else
+            // Now send the MQTT connect packet
+            if ((rc = MQTTPacket_send_connect(aClient, MQTTVersion)) == 0) {
+                aClient->connect_state = 3;     // MQTT Connect sent - wait for CONNACK
+            } else {
                 aClient->connect_state = 0;
+            }
         }
     }
-    if (addr != ip_address)
-        free(addr);
+    
+    if (addr != ip_address) { free(addr); }
     
     FUNC_EXIT_RC(rc);
     return rc;

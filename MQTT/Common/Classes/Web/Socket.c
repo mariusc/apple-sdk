@@ -245,12 +245,13 @@ int Socket_putdatas(int socket, char* buf0, size_t buf0len, int count, char** bu
     if ((rc = Socket_writev(socket, iovecs, count+1, &bytes)) != SOCKET_ERROR)
     {
         if (bytes == total)
+        {
             rc = TCPSOCKET_COMPLETE;
+        }
         else
         {
             int* sockmem = (int*)malloc(sizeof(int));
-            Log(TRACE_MIN, -1, "Partial write: %ld bytes of %d actually written on socket %d",
-                bytes, total, socket);
+            Log(TRACE_MIN, -1, "Partial write: %ld bytes of %d actually written on socket %d", bytes, total, socket);
             #if defined(OPENSSL)
             SocketBuffer_pendingWrite(socket, NULL, count+1, iovecs, frees1, total, bytes);
             #else
@@ -305,17 +306,17 @@ int Socket_new(char* addr, int port, int* sock)
     #if defined(AF_INET6)
     struct sockaddr_in6 address6;
     #endif
-    int rc = SOCKET_ERROR;
     sa_family_t family = AF_INET;
-    struct addrinfo *result = NULL;
-    struct addrinfo hints = {0, AF_UNSPEC, SOCK_STREAM, IPPROTO_TCP, 0, NULL, NULL, NULL};
     
     FUNC_ENTRY;
     *sock = -1;
     
     if (addr[0] == '[') { ++addr; }
     
-    if ((rc = getaddrinfo(addr, NULL, &hints, &result)) == 0)
+    struct addrinfo *result = NULL;
+    struct addrinfo hints = {0, AF_UNSPEC, SOCK_STREAM, IPPROTO_TCP, 0, NULL, NULL, NULL};
+    int rc = getaddrinfo(addr, NULL, &hints, &result);
+    if (rc == 0)
     {
         struct addrinfo* res = result;
         
@@ -347,6 +348,7 @@ int Socket_new(char* addr, int port, int* sock)
                     address.sin_port = htons(port);
                     address.sin_family = family = AF_INET;
                     address.sin_addr = ((struct sockaddr_in*)(result->ai_addr))->sin_addr;
+                    //address.sin_len = result->ai_addrlen;
                 }
                 else
                     rc = -1;
@@ -380,14 +382,20 @@ int Socket_new(char* addr, int port, int* sock)
             else
             {
                 /* this could complete immmediately, even though we are non-blocking */
-                if (family == AF_INET)
+                if (family == AF_INET) {
                     rc = connect(*sock, (struct sockaddr*)&address, sizeof(address));
+                }
                 #if defined(AF_INET6)
-                else
+                else {
                     rc = connect(*sock, (struct sockaddr*)&address6, sizeof(address6));
+                }
                 #endif
+                
                 if (rc == SOCKET_ERROR)
-                    rc = Socket_error("connect", *sock);
+                {
+                    rc = (errno == EINPROGRESS || errno == EWOULDBLOCK) ? errno : Socket_error("connect", *sock);
+                }
+                
                 if (rc == EINPROGRESS || rc == EWOULDBLOCK)
                 {
                     int* pnewSd = (int*)malloc(sizeof(int));
