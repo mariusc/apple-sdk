@@ -178,24 +178,24 @@ static NSString* const kCodingUsers = @"usr";
             serverUser.app = self;
             
             // If the user wasn't logged, retrieve the basic information.
-            [serverUser queryCloudForUserInfo:^(NSError *error, NSString* previousName, NSString* previousEmail) {
+            [serverUser queryCloudForUserInfo:^(NSError* error, NSString* previousName, NSString* previousEmail) {
                 if (error) { if (completion) { completion(error, nil); } return; }
                 
                 __strong RelayrApp* strongSelf = weakSelf;  // If the user was already logged, return that user.
-                RelayrUser* localUser = [strongSelf loggedUserWithRelayrID:serverUser.uid];
-                if (localUser)
+                RelayrUser* user = [strongSelf loggedUserWithRelayrID:serverUser.uid];
+                if (user)
                 {
-                    localUser.app = serverUser.app;
-                    localUser.name = serverUser.name;
-                    localUser.email = serverUser.email;
-                    if (completion) { completion(nil, localUser); }
-                    return;
+                    user.app = serverUser.app;
+                    user.name = serverUser.name;
+                    user.email = serverUser.email;
                 }
                 else
                 {
-                    [strongSelf.users addObject:serverUser];
-                    if (completion) { completion(nil, serverUser); }
+                    user = serverUser;
+                    [strongSelf.users addObject:user];
                 }
+                
+                if (completion) { completion(nil, user); }
             }];
         }];
     }];

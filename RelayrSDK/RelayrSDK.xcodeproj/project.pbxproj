@@ -36,6 +36,8 @@
 		622E7EA919CF829400948558 /* RelayrOnboarding.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EA719CF829400948558 /* RelayrOnboarding.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		622E7EAB19CF834500948558 /* RelayrFirmwareUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EAA19CF834500948558 /* RelayrFirmwareUpdate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		622E7EAC19CF834500948558 /* RelayrFirmwareUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EAA19CF834500948558 /* RelayrFirmwareUpdate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6239CB7B1A06A1FD00DF6832 /* RLAMQTTServiceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6239CB7A1A06A1FD00DF6832 /* RLAMQTTServiceTest.m */; };
+		6239CB7C1A07820600DF6832 /* RLAWebOAuthControllerOSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 6285F38019C1B2700097B299 /* RLAWebOAuthControllerOSX.m */; };
 		623A744919FA91A50048F47B /* RLABLEService.h in Headers */ = {isa = PBXBuildFile; fileRef = 623A744719FA91A50048F47B /* RLABLEService.h */; };
 		623A744A19FA91A50048F47B /* RLABLEService.h in Headers */ = {isa = PBXBuildFile; fileRef = 623A744719FA91A50048F47B /* RLABLEService.h */; };
 		623A744B19FA91A50048F47B /* RLABLEService.m in Sources */ = {isa = PBXBuildFile; fileRef = 623A744819FA91A50048F47B /* RLABLEService.m */; };
@@ -82,7 +84,6 @@
 		6285F37B19C1AF8E0097B299 /* RLAWebOAuthControllerIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F37919C1AF8E0097B299 /* RLAWebOAuthControllerIOS.h */; };
 		6285F37C19C1AF8E0097B299 /* RLAWebOAuthControllerIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 6285F37A19C1AF8E0097B299 /* RLAWebOAuthControllerIOS.m */; };
 		6285F38119C1B2700097B299 /* RLAWebOAuthControllerOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F37F19C1B2700097B299 /* RLAWebOAuthControllerOSX.h */; };
-		6285F38219C1B2700097B299 /* RLAWebOAuthControllerOSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 6285F38019C1B2700097B299 /* RLAWebOAuthControllerOSX.m */; };
 		629666E019D0169B003C99D9 /* WunderbarOnboarding.h in Headers */ = {isa = PBXBuildFile; fileRef = 629666DE19D0169B003C99D9 /* WunderbarOnboarding.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		629666E119D0169B003C99D9 /* WunderbarOnboarding.h in Headers */ = {isa = PBXBuildFile; fileRef = 629666DE19D0169B003C99D9 /* WunderbarOnboarding.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		629666E219D0169B003C99D9 /* WunderbarOnboarding.m in Sources */ = {isa = PBXBuildFile; fileRef = 629666DF19D0169B003C99D9 /* WunderbarOnboarding.m */; };
@@ -300,6 +301,7 @@
 		622CB00319BCB07200F686B3 /* RelayrOutput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrOutput.m; sourceTree = "<group>"; };
 		622E7EA719CF829400948558 /* RelayrOnboarding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrOnboarding.h; sourceTree = "<group>"; };
 		622E7EAA19CF834500948558 /* RelayrFirmwareUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrFirmwareUpdate.h; sourceTree = "<group>"; };
+		6239CB7A1A06A1FD00DF6832 /* RLAMQTTServiceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAMQTTServiceTest.m; sourceTree = "<group>"; };
 		623A744719FA91A50048F47B /* RLABLEService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLABLEService.h; sourceTree = "<group>"; };
 		623A744819FA91A50048F47B /* RLABLEService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLABLEService.m; sourceTree = "<group>"; };
 		623A744D19FAA8C50048F47B /* RLAService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAService.h; sourceTree = "<group>"; };
@@ -516,36 +518,6 @@
 			path = Public;
 			sourceTree = "<group>";
 		};
-		622CD0CE19C3820F003E8660 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
-		622CD0CF19C3820F003E8660 /* Web */ = {
-			isa = PBXGroup;
-			children = (
-				622CD0D019C3828A003E8660 /* Requests */,
-				622CD0D119C3828A003E8660 /* Views */,
-			);
-			path = Web;
-			sourceTree = "<group>";
-		};
-		622CD0D019C3828A003E8660 /* Requests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Requests;
-			sourceTree = "<group>";
-		};
-		622CD0D119C3828A003E8660 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		622CD0D319C382A1003E8660 /* IoTs */ = {
 			isa = PBXGroup;
 			children = (
@@ -560,6 +532,39 @@
 				622E7EAA19CF834500948558 /* RelayrFirmwareUpdate.h */,
 			);
 			path = Processes;
+			sourceTree = "<group>";
+		};
+		6239CB761A06A1C400DF6832 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				6239CB771A06A1C400DF6832 /* BLE */,
+				6239CB781A06A1C400DF6832 /* MQTT */,
+				6239CB791A06A1C400DF6832 /* Web */,
+			);
+			name = Protocols;
+			path = Tests/Classes/Protocols;
+			sourceTree = SOURCE_ROOT;
+		};
+		6239CB771A06A1C400DF6832 /* BLE */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BLE;
+			sourceTree = "<group>";
+		};
+		6239CB781A06A1C400DF6832 /* MQTT */ = {
+			isa = PBXGroup;
+			children = (
+				6239CB7A1A06A1FD00DF6832 /* RLAMQTTServiceTest.m */,
+			);
+			path = MQTT;
+			sourceTree = "<group>";
+		};
+		6239CB791A06A1C400DF6832 /* Web */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Web;
 			sourceTree = "<group>";
 		};
 		623A744019FA8EAD0048F47B /* BLE */ = {
@@ -763,7 +768,7 @@
 				6285F37819C1AF8E0097B299 /* Views */,
 			);
 			name = Web;
-			path = "../../../../Apple-SDK/RelayrSDK/iOS/Classes/Web";
+			path = "../../iOS/Classes/Web";
 			sourceTree = "<group>";
 		};
 		6285F37819C1AF8E0097B299 /* Views */ = {
@@ -781,7 +786,7 @@
 				6285F37E19C1B2700097B299 /* Views */,
 			);
 			name = Web;
-			path = "../../../../Apple-SDK/RelayrSDK/OSX/Classes/Web";
+			path = "../../OSX/Classes/Web";
 			sourceTree = "<group>";
 		};
 		6285F37E19C1B2700097B299 /* Views */ = {
@@ -1013,7 +1018,7 @@
 			children = (
 			);
 			name = Assets;
-			path = "../../../Apple-SDK/RelayrSDK/Tests/Assets";
+			path = "../Tests/Assets";
 			sourceTree = "<group>";
 		};
 		62E41FCD19C35DA2008459B7 /* Classes */ = {
@@ -1021,12 +1026,11 @@
 			children = (
 				622CD0CD19C3820F003E8660 /* Public */,
 				622CD0CC19C3820F003E8660 /* Private */,
-				622CD0CF19C3820F003E8660 /* Web */,
-				622CD0CE19C3820F003E8660 /* Utilities */,
+				6239CB761A06A1C400DF6832 /* Protocols */,
 				6212444719D990060000EDE8 /* Wunderbar */,
 			);
 			name = Classes;
-			path = "../../../Apple-SDK/RelayrSDK/Tests/Classes";
+			path = "../Tests/Classes";
 			sourceTree = "<group>";
 		};
 		62E41FCE19C35DA2008459B7 /* Configuration */ = {
@@ -1037,7 +1041,7 @@
 				6212444A19D9902F0000EDE8 /* RLATestsConstants.h */,
 			);
 			name = Configuration;
-			path = "../../../Apple-SDK/RelayrSDK/Tests/Configuration";
+			path = "../Tests/Configuration";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1433,7 +1437,7 @@
 				62B0B3AA19D1B16F00AD59BF /* RLAWebService+Wunderbar.m in Sources */,
 				62B64D4719EFC1E100DCD7AA /* RLAWebRequest.m in Sources */,
 				62B64D6B19EFC1E100DCD7AA /* RLAWebOAuthController.m in Sources */,
-				6285F38219C1B2700097B299 /* RLAWebOAuthControllerOSX.m in Sources */,
+				6239CB7C1A07820600DF6832 /* RLAWebOAuthControllerOSX.m in Sources */,
 				62B64D7119EFC48D00DCD7AA /* RLAMQTTService.m in Sources */,
 				623A744C19FA91A50048F47B /* RLABLEService.m in Sources */,
 				623F326519A7871000F774EB /* RLANetworkInfo.m in Sources */,
@@ -1456,6 +1460,7 @@
 				620B737C19D9815700B77EE2 /* RelayrUserTest.m in Sources */,
 				620B737E19D9826100B77EE2 /* RelayrPublisherTest.m in Sources */,
 				62D606C119D9888C00A9BFA2 /* RelayrTransmitterTest.m in Sources */,
+				6239CB7B1A06A1FD00DF6832 /* RLAMQTTServiceTest.m in Sources */,
 				6212444919D990060000EDE8 /* WunderbarTest.m in Sources */,
 				62B64D7C19F00BAB00DCD7AA /* RelayrDeviceTest.m in Sources */,
 			);

@@ -55,13 +55,14 @@ void messageDelivered(void* context, MQTTAsync_token token);
         debug("Initializing MQTT Service...");
         
         _user = user;
-        _hostString = dRLAMQTT_Host;
-        _port = [NSNumber numberWithUnsignedInteger:dRLAMQTT_PortUnencripted];
+        _hostString = [NSString stringWithFormat:@"%@%@", dRLAMQTT_ProtocolTCP, dRLAMQTT_Host];
+        _port = [NSNumber numberWithUnsignedInteger:dRLAMQTT_PortTCP];
         _connectionState = RelayrConnectionStateDisconnected;
         _client = NULL;
         
-        // NSString* clientIdentifier = [RLAIdentifierGenerator generateIDFromUserID:user.uid withMaximumRandomNumber:dRLAMQTT_ClientIDMaxRandomNum];
-        MQTTAsync_create(&_client, [_hostString cStringUsingEncoding:NSUTF8StringEncoding], RLAMQTTSERVICE_CLIENTID, MQTTCLIENT_PERSISTENCE_NONE, NULL);
+        NSString* serverURI = [NSString stringWithFormat:@"%@:%lu", _hostString, _port.unsignedLongValue];
+        debug("%s", [serverURI cStringUsingEncoding:NSUTF8StringEncoding]);
+        MQTTAsync_create(&_client, [serverURI cStringUsingEncoding:NSUTF8StringEncoding], RLAMQTTSERVICE_CLIENTID, MQTTCLIENT_PERSISTENCE_NONE, NULL);
         if (_client == NULL) { return nil; }
         
         MQTTAsync_setCallbacks(_client, (__bridge void*)self, connectionToBrokerLost, messageArrived, messageDelivered);
@@ -156,6 +157,13 @@ void connectionToBrokerSucceeded(void* context, MQTTAsync_successData* response)
     // Do something here
 }
 
+/*!
+ *  @abstract This method is received once the connection with the broker is lost.
+ *  @discussion This method is executed on a backgroudn thread.
+ *
+ *  @param context It refers to the <code>RLAMQTTService</code> objective-C object.
+ *  @param cause The cause of the connection failure.
+ */
 void connectionToBrokerLost(void* context, char const* cause)
 {
     debug("Connection to broker lost!");

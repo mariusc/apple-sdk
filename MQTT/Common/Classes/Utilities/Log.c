@@ -79,7 +79,7 @@ struct timeb ts, last_ts;
 static char msg_buf[512];
 
 static pthread_mutex_t log_mutex_store = PTHREAD_MUTEX_INITIALIZER;
-static mutex_type log_mutex = &log_mutex_store;
+static pthread_mutex_t* log_mutex = &log_mutex_store;
 
 #pragma mark - Private prototypes
 

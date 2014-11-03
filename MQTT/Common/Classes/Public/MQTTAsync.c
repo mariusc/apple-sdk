@@ -119,10 +119,19 @@ typedef struct
 
 #pragma mark - Variables
 
-static pthread_mutex_t mqttasync_mutex_store = PTHREAD_MUTEX_INITIALIZER;   // Mutex to access MQTTAsync variables
-static mutex_type mqttasync_mutex = &mqttasync_mutex_store;                 // Pointer to mutex
-static pthread_mutex_t mqttcommand_mutex_store = PTHREAD_MUTEX_INITIALIZER; // Mutex to access
-static mutex_type mqttcommand_mutex = &mqttcommand_mutex_store;             // Pointer to access command related functionality
+static pthread_mutex_t mqttasync_mutex_store = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t* mqttasync_mutex = &mqttasync_mutex_store;       // Pointer to mutex that reign over access of MQTTAsync variables.
+static pthread_mutex_t mqttcommand_mutex_store = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t* mqttcommand_mutex = &mqttcommand_mutex_store;   // Pointer to mutex that reign over command related functionality.
+
+static cond_type_struct send_cond_store = { PTHREAD_COND_INITIALIZER, PTHREAD_MUTEX_INITIALIZER };
+static cond_type_struct* send_cond = &send_cond_store;                  // Pointer to condition variable used in the <i>sending</i> thread.
+
+enum MQTTAsync_threadStates { STOPPED, STARTING, RUNNING, STOPPING };   // Possible thread states.
+static pthread_t sendThread_id = 0;         // Thread used to send MQTT packages
+enum MQTTAsync_threadStates sendThread_state = STOPPED;
+static pthread_t receiveThread_id = 0;      // Thread used to receive MQTT packages
+enum MQTTAsync_threadStates receiveThread_state = STOPPED;
 
 static ClientStates ClientState = { CLIENT_VERSION, NULL }; // { Version, Client list }
 ClientStates* bstate = &ClientState;        // The state of all the MQTTAsync handles in the system
@@ -130,21 +139,9 @@ static List* handles = NULL;                // All MQTTAsync handles
 static List* commands = NULL;               //
 static volatile bool initialized = false;   // Whether the MQTTAsync has been previously initialised
 
-static int tostop = 0;
-
+static int tostop = 0;  // It communicates when the user wants to stop the whole MQTT service
 extern Sockets s;
-
 MQTTProtocol state;
-
-enum MQTTAsync_threadStates { STOPPED, STARTING, RUNNING, STOPPING };
-
-enum MQTTAsync_threadStates sendThread_state = STOPPED;
-enum MQTTAsync_threadStates receiveThread_state = STOPPED;
-static thread_id_type sendThread_id = 0,
-receiveThread_id = 0;
-
-static cond_type_struct send_cond_store = { PTHREAD_COND_INITIALIZER, PTHREAD_MUTEX_INITIALIZER };
-static cond_type send_cond = &send_cond_store;
 
 #pragma mark - Private prototypes
 
@@ -155,10 +152,10 @@ void MQTTAsync_sleep(unsigned int const milliseconds);
 void MQTTAsync_closeOnly(Clients* client);
 void MQTTAsync_closeSession(Clients* client);
 int MQTTAsync_cleanSession(Clients* client);
-void MQTTAsync_stop();
 int MQTTAsync_disconnect1(MQTTAsync handle, const MQTTAsync_disconnectOptions* options, int internal);
 int MQTTAsync_disconnect_internal(MQTTAsync handle, int timeout);
 void MQTTAsync_terminate(void);
+void MQTTAsync_stop();
 
 // Connection
 int MQTTAsync_checkConn(MQTTAsync_command* command, MQTTAsyncs* client);
@@ -180,12 +177,12 @@ int MQTTAsync_deliverMessage(MQTTAsyncs* m, char const* topicName, size_t topicL
 void MQTTAsync_emptyMessageQueue(Clients* client);
 
 // Threads, mutexes, and clocks
-void MQTTAsync_lock_mutex(mutex_type amutex);
-void MQTTAsync_unlock_mutex(mutex_type amutex);
+void MQTTAsync_lock_mutex(pthread_mutex_t* amutex);
+void MQTTAsync_unlock_mutex(pthread_mutex_t* amutex);
 struct timeval MQTTAsync_start_clock(void);
 long MQTTAsync_elapsed(struct timeval start);
-thread_return_type MQTTAsync_sendThread(void* n);
-thread_return_type MQTTAsync_receiveThread(void* n);
+void* MQTTAsync_sendThread(void* n);
+void* MQTTAsync_receiveThread(void* n);
 
 // Comparison functions
 bool clientSockCompare(void const* a, void const* b);
@@ -310,52 +307,28 @@ int MQTTAsync_setCallbacks(MQTTAsync handle, void* context, MQTTAsync_connection
 
 int MQTTAsync_connect(MQTTAsync handle, MQTTAsync_connectOptions const* options)
 {
-    MQTTAsyncs* m = handle;
     int rc = MQTTCODE_SUCCESS;
-    MQTTAsync_queuedCommand* conn;
     
     FUNC_ENTRY;
-    if (options == NULL)
+    if (options == NULL) { rc = MQTTCODE_NULL_PARAMETER; goto exit; }
+    
+    if ( strncmp(options->struct_id, "MQTC", 4) != 0 || (options->struct_version != 0 && options->struct_version != 1 && options->struct_version != 2 && options->struct_version != 3) )
+    { rc = MQTTCODE_BAD_STRUCTURE; goto exit; }
+    // Check validity of will options structure
+    if (options->will)
     {
-        rc = MQTTCODE_NULL_PARAMETER;
-        goto exit;
+        if (strncmp(options->will->struct_id, "MQTW", 4) != 0 || options->will->struct_version != 0) { rc = MQTTCODE_BAD_STRUCTURE; goto exit; }
+        if (options->will->qos < 0 || options->will->qos > 2) { rc = MQTTCODE_BAD_QOS; goto exit; }
+    }
+    // Check validity of SSL options structure
+    if (options->struct_version != 0 && options->ssl)
+    {
+        if (strncmp(options->ssl->struct_id, "MQTS", 4) != 0 || options->ssl->struct_version != 0) { rc = MQTTCODE_BAD_STRUCTURE; goto exit; }
     }
     
-    if (strncmp(options->struct_id, "MQTC", 4) != 0 ||
-        (options->struct_version != 0 && options->struct_version != 1 && options->struct_version != 2 &&
-         options->struct_version != 3))
-    {
-        rc = MQTTCODE_BAD_STRUCTURE;
-        goto exit;
-    }
-    if (options->will) /* check validity of will options structure */
-    {
-        if (strncmp(options->will->struct_id, "MQTW", 4) != 0 || options->will->struct_version != 0)
-        {
-            rc = MQTTCODE_BAD_STRUCTURE;
-            goto exit;
-        }
-        if (options->will->qos < 0 || options->will->qos > 2)
-        {
-            rc = MQTTCODE_BAD_QOS;
-            goto exit;
-        }
-    }
-    if (options->struct_version != 0 && options->ssl) /* check validity of SSL options structure */
-    {
-        if (strncmp(options->ssl->struct_id, "MQTS", 4) != 0 || options->ssl->struct_version != 0)
-        {
-            rc = MQTTCODE_BAD_STRUCTURE;
-            goto exit;
-        }
-    }
-    if ((options->username && !UTF8_validateString(options->username)) ||
-        (options->password && !UTF8_validateString(options->password)))
-    {
-        rc = MQTTCODE_BAD_UTF8_STRING;
-        goto exit;
-    }
+    if ( (options->username && !UTF8_validateString(options->username)) || (options->password && !UTF8_validateString(options->password)) ) { rc = MQTTCODE_BAD_UTF8_STRING; goto exit; }
     
+    MQTTAsyncs* m = handle;
     m->connect.onSuccess = options->onSuccess;
     m->connect.onFailure = options->onFailure;
     m->connect.context = options->context;
@@ -368,6 +341,7 @@ int MQTTAsync_connect(MQTTAsync handle, MQTTAsync_connectOptions const* options)
         Thread_start(MQTTAsync_sendThread, NULL);
         MQTTAsync_unlock_mutex(mqttasync_mutex);
     }
+    
     if (receiveThread_state != STARTING && receiveThread_state != RUNNING)
     {
         MQTTAsync_lock_mutex(mqttasync_mutex);
@@ -379,11 +353,7 @@ int MQTTAsync_connect(MQTTAsync handle, MQTTAsync_connectOptions const* options)
     m->c->keepAliveInterval = options->keepAliveInterval;
     m->c->cleansession = options->cleansession;
     m->c->maxInflightMessages = options->maxInflight;
-    if (options->struct_version == 3) {
-        m->c->MQTTVersion = options->MQTTVersion;
-    } else {
-        m->c->MQTTVersion = 0;
-    }
+    m->c->MQTTVersion = (options->struct_version == 3) ? options->MQTTVersion : 0;
     
     if (m->c->will)
     {
@@ -442,7 +412,7 @@ int MQTTAsync_connect(MQTTAsync handle, MQTTAsync_connectOptions const* options)
     m->c->retryInterval = options->retryInterval;
     
     /* Add connect request to operation queue */
-    conn = malloc(sizeof(MQTTAsync_queuedCommand));
+    MQTTAsync_queuedCommand* conn = malloc(sizeof(MQTTAsync_queuedCommand));
     memset(conn, '\0', sizeof(MQTTAsync_queuedCommand));
     conn->client = m;
     if (options)
@@ -1085,28 +1055,27 @@ MQTTPacket* MQTTAsync_cycle(int* sock, unsigned long timeout, int* rc)
         tp.tv_usec = (timeout % 1000) * 1000; /* this field is microseconds! */
     }
     
-#if defined(OPENSSL)
+    #if defined(OPENSSL)
     if ((*sock = SSLSocket_getPendingRead()) == -1)
     {
-#endif
+    #endif
         /* 0 from getReadySocket indicates no work to do, -1 == error, but can happen normally */
         *sock = Socket_getReadySocket(0, &tp);
         if (!tostop && *sock == 0 && (tp.tv_sec > 0L || tp.tv_usec > 0L))
         {
             MQTTAsync_sleep(100L);
-#if 0
+            #if 0
             if (s.clientsds->count == 0)
             {
                 if (++nosockets_count == 50) /* 5 seconds with no sockets */
                     tostop = 1;
             }
-#endif
+            #endif
         }
-        else
-            nosockets_count = 0;
-#if defined(OPENSSL)
+        else { nosockets_count = 0; }
+    #if defined(OPENSSL)
     }
-#endif
+    #endif
     MQTTAsync_lock_mutex(mqttasync_mutex);
     if (*sock > 0)
     {
@@ -1592,31 +1561,24 @@ void MQTTAsync_processCommand()
     int rc = 0;
     MQTTAsync_queuedCommand* command = NULL;
     ListElement* cur_command = NULL;
-    List* ignored_clients = NULL;
     
     FUNC_ENTRY;
     MQTTAsync_lock_mutex(mqttasync_mutex);
     MQTTAsync_lock_mutex(mqttcommand_mutex);
     
-    /* only the first command in the list must be processed for any particular client, so if we skip
-     a command for a client, we must skip all following commands for that client.  Use a list of
-     ignored clients to keep track
-     */
-    ignored_clients = ListInitialize();
+    // Only the first command in the list must be processed for any particular client, so if we skip a command for a client, we must skip all following commands for that client.  Use a list of ignored clients to keep track
+    List* ignored_clients = ListInitialize();
     
-    /* don't try a command until there isn't a pending write for that client, and we are not connecting */
+    // Don't try a command until there isn't a pending write for that client, and we are not connecting
     while (ListNextElement(commands, &cur_command))
     {
         MQTTAsync_queuedCommand* cmd = (MQTTAsync_queuedCommand*)(cur_command->content);
         
-        if (ListFind(ignored_clients, cmd->client))
-            continue;
+        if (ListFind(ignored_clients, cmd->client)) { continue; }
         
-        if (cmd->command.type == CONNECT || cmd->command.type == DISCONNECT || (cmd->client->c->connected &&
-                                                                                cmd->client->c->connect_state == 0 && Socket_noPendingWrites(cmd->client->c->net.socket)))
+        if (cmd->command.type == CONNECT || cmd->command.type == DISCONNECT || (cmd->client->c->connected && cmd->client->c->connect_state == 0 && Socket_noPendingWrites(cmd->client->c->net.socket)))
         {
-            if ((cmd->command.type == PUBLISH || cmd->command.type == SUBSCRIBE || cmd->command.type == UNSUBSCRIBE) &&
-                cmd->client->c->outboundMsgs->count >= MAX_MSG_ID - 1)
+            if ((cmd->command.type == PUBLISH || cmd->command.type == SUBSCRIBE || cmd->command.type == UNSUBSCRIBE) && cmd->client->c->outboundMsgs->count >= MAX_MSG_ID - 1)
                 ; /* no more message ids available */
             else
             {
@@ -1630,9 +1592,9 @@ void MQTTAsync_processCommand()
     if (command)
     {
         ListDetach(commands, command);
-#if !defined(NO_PERSISTENCE)
+        #if !defined(NO_PERSISTENCE)
         if (command->client->c->persistence) { MQTTAsync_unpersistCommand(command); }
-#endif
+        #endif
     }
     MQTTAsync_unlock_mutex(mqttcommand_mutex);
     
@@ -1657,19 +1619,20 @@ void MQTTAsync_processCommand()
                         command->command.details.conn.MQTTVersion = 4;
                     }
                 }
-                else
-                    command->command.details.conn.currentURI++;
+                else { command->command.details.conn.currentURI++; }
                 serverURI = command->command.details.conn.serverURIs[command->command.details.conn.currentURI];
                 
                 if (strncmp(URI_TCP, serverURI, strlen(URI_TCP)) == 0)
+                {
                     serverURI += strlen(URI_TCP);
-#if defined(OPENSSL)
+                }
+                #if defined(OPENSSL)
                 else if (strncmp(URI_SSL, serverURI, strlen(URI_SSL)) == 0)
                 {
                     serverURI += strlen(URI_SSL);
                     command->client->ssl = 1;
                 }
-#endif
+                #endif
             }
             
             if (command->client->c->MQTTVersion == MQTTVERSION_DEFAULT)
@@ -1679,33 +1642,29 @@ void MQTTAsync_processCommand()
                 else if (command->command.details.conn.MQTTVersion == MQTTVERSION_3_1_1)
                     command->command.details.conn.MQTTVersion = MQTTVERSION_3_1;
             }
-            else
-                command->command.details.conn.MQTTVersion = command->client->c->MQTTVersion;
+            else { command->command.details.conn.MQTTVersion = command->client->c->MQTTVersion; }
             
             Log(TRACE_MIN, -1, "Connecting to serverURI %s with MQTT version %d", serverURI, command->command.details.conn.MQTTVersion);
-#if defined(OPENSSL)
+            #if defined(OPENSSL)
             rc = MQTTProtocol_connect(serverURI, command->client->c, command->client->ssl, command->command.details.conn.MQTTVersion);
-#else
+            #else
             rc = MQTTProtocol_connect(serverURI, command->client->c, command->command.details.conn.MQTTVersion);
-#endif
-            if (command->client->c->connect_state == 0)
-                rc = SOCKET_ERROR;
+            #endif
+            if (command->client->c->connect_state == 0) { rc = SOCKET_ERROR; }
             
             /* if the TCP connect is pending, then we must call select to determine when the connect has completed,
              which is indicated by the socket being ready *either* for reading *or* writing.  The next couple of lines
              make sure we check for writeability as well as readability, otherwise we wait around longer than we need to
              in Socket_getReadySocket() */
-            if (rc == EINPROGRESS)
-                Socket_addPendingWrite(command->client->c->net.socket);
+            if (rc == EINPROGRESS) { Socket_addPendingWrite(command->client->c->net.socket); }
         }
     }
     else if (command->command.type == SUBSCRIBE)
     {
         List* topics = ListInitialize();
         List* qoss = ListInitialize();
-        int i;
         
-        for (i = 0; i < command->command.details.sub.count; i++)
+        for (int i = 0; i < command->command.details.sub.count; i++)
         {
             ListAppend(topics, command->command.details.sub.topics[i], strlen(command->command.details.sub.topics[i]));
             ListAppend(qoss, &command->command.details.sub.qoss[i], sizeof(int));
@@ -1998,7 +1957,7 @@ int MQTTAsync_assignMsgId(MQTTAsyncs* m)
 {
     int start_msgid = m->c->msgID;
     int msgid = start_msgid;
-    thread_id_type thread_id = 0;
+    pthread_t thread_id = 0;
     int locked = 0;
     
     /* need to check: commands list and response list for a client */
@@ -2067,7 +2026,7 @@ void MQTTAsync_emptyMessageQueue(Clients* client)
  * @param mutex the mutex.
  * @return completion code, 0 is success
  */
-void MQTTAsync_lock_mutex(mutex_type mutex)
+void MQTTAsync_lock_mutex(pthread_mutex_t* mutex)
 {
     int const rc = Thread_lock_mutex(mutex);
     if (rc != 0) { Log(LOG_ERROR, 0, "Error %s locking mutex", strerror(rc)); }
@@ -2079,7 +2038,7 @@ void MQTTAsync_lock_mutex(mutex_type mutex)
  *  @param mutex the mutex.
  *  @return completion code, 0 is success.
  */
-void MQTTAsync_unlock_mutex(mutex_type mutex)
+void MQTTAsync_unlock_mutex(pthread_mutex_t* mutex)
 {
     int rc = Thread_unlock_mutex(mutex);
     if (rc != 0) { Log(LOG_ERROR, 0, "Error %s unlocking mutex", strerror(rc)); }
@@ -2106,31 +2065,31 @@ long MQTTAsync_elapsed(struct timeval start)
     return (res.tv_sec)*1000 + (res.tv_usec)/1000;
 }
 
-thread_return_type MQTTAsync_sendThread(void* n)
+void* MQTTAsync_sendThread(void* n)
 {
     FUNC_ENTRY;
     MQTTAsync_lock_mutex(mqttasync_mutex);
     sendThread_state = RUNNING;
     sendThread_id = Thread_getid();
     MQTTAsync_unlock_mutex(mqttasync_mutex);
+    
     while (!tostop)
     {
-        int rc;
-        
         while (commands->count > 0)
         {
             int before = commands->count;
             MQTTAsync_processCommand();
-            if (before == commands->count)
-                break;  /* no commands were processed, so go into a wait */
+            if (before == commands->count) { break; }  // No commands were processed, so go into a wait.
         }
-        rc =  Thread_wait_cond(send_cond, 1);
+        int rc =  Thread_wait_cond(send_cond, 1);
         if ((rc = Thread_wait_cond(send_cond, 1)) != 0 && rc != ETIMEDOUT)
+        {
             Log(LOG_ERROR, -1, "Error %d waiting for condition variable", rc);
-        
+        }
         MQTTAsync_checkTimeouts();
     }
     sendThread_state = STOPPING;
+    
     MQTTAsync_lock_mutex(mqttasync_mutex);
     sendThread_state = STOPPED;
     sendThread_id = 0;
@@ -2142,7 +2101,7 @@ thread_return_type MQTTAsync_sendThread(void* n)
 /*!
  *  @abstract This is the thread function that handles the calling of callback functions if set.
  */
-thread_return_type MQTTAsync_receiveThread(void* n)
+void* MQTTAsync_receiveThread(void* n)
 {
     long timeout = 10L; // First time in we have a small timeout.  Gets things started more quickly.
     
@@ -2152,34 +2111,32 @@ thread_return_type MQTTAsync_receiveThread(void* n)
     receiveThread_id = Thread_getid();
     while (!tostop)
     {
-        int rc = SOCKET_ERROR;
         int sock = -1;
-        MQTTAsyncs* m = NULL;
-        MQTTPacket* pack = NULL;
-        
+        int rc = SOCKET_ERROR;
         MQTTAsync_unlock_mutex(mqttasync_mutex);
-        pack = MQTTAsync_cycle(&sock, timeout, &rc);
+        MQTTPacket* pack = MQTTAsync_cycle(&sock, timeout, &rc);
         MQTTAsync_lock_mutex(mqttasync_mutex);
-        if (tostop)
-            break;
+        
+        if (tostop) { break; }
         timeout = 1000L;
         
-        if (sock == 0)
-            continue;
-        /* find client corresponding to socket */
+        if (sock == 0) { continue; }
+        
+        // Find client corresponding to socket
         if (ListFindItem(handles, &sock, clientSockCompare) == NULL)
         {
             Log(TRACE_MINIMUM, -1, "Could not find client corresponding to socket %d", sock);
-            /* Socket_close(sock); - removing socket in this case is not necessary (Bug 442400) */
             continue;
         }
-        m = (MQTTAsyncs*)(handles->current->content);
+        
+        MQTTAsyncs* m = (MQTTAsyncs*)(handles->current->content);
         if (m == NULL)
         {
             Log(LOG_ERROR, -1, "Client structure was NULL for socket %d - removing socket", sock);
             Socket_close(sock);
             continue;
         }
+        
         if (rc == SOCKET_ERROR)
         {
             Log(TRACE_MINIMUM, -1, "Error from MQTTAsync_cycle() - removing socket %d", sock);
@@ -2189,8 +2146,8 @@ thread_return_type MQTTAsync_receiveThread(void* n)
                 MQTTAsync_disconnect_internal(m, 0);
                 MQTTAsync_lock_mutex(mqttasync_mutex);
             }
-            else /* calling disconnect_internal won't have any effect if we're already disconnected */
-                MQTTAsync_closeOnly(m->c);
+            // Calling disconnect_internal won't have any effect if we're already disconnected
+            else { MQTTAsync_closeOnly(m->c); }
         }
         else
         {
@@ -2201,24 +2158,18 @@ thread_return_type MQTTAsync_receiveThread(void* n)
                 
                 if (strlen(qe->topicName) == topicLen) { topicLen = 0; }
                 
-                if (m->ma) {
-                    rc = MQTTAsync_deliverMessage(m, qe->topicName, topicLen, qe->msg);
-                } else {
-                    rc = 1;
-                }
+                rc = (m->ma) ? MQTTAsync_deliverMessage(m, qe->topicName, topicLen, qe->msg) : 1;
                 
                 if (rc)
                 {
                     ListRemove(m->c->messageQueue, qe);
-#if !defined(NO_PERSISTENCE)
-                    if (m->c->persistence)
-                        MQTTPersistence_unpersistQueueEntry(m->c, (MQTTPersistence_qEntry*)qe);
-#endif
+                    #if !defined(NO_PERSISTENCE)
+                    if (m->c->persistence) { MQTTPersistence_unpersistQueueEntry(m->c, (MQTTPersistence_qEntry*)qe); }
+                    #endif
                 }
-                else
-                    Log(TRACE_MIN, -1, "False returned from messageArrived for client %s, message remains on queue",
-                        m->c->clientID);
+                else { Log(TRACE_MIN, -1, "False returned from messageArrived for client %s, message remains on queue", m->c->clientID); }
             }
+            
             if (pack)
             {
                 if (pack->header.bits.type == CONNACK)
@@ -2359,17 +2310,16 @@ thread_return_type MQTTAsync_receiveThread(void* n)
                             break;
                         }
                     }
-                    if (!handleCalled)
-                        rc = MQTTProtocol_handleUnsubacks(pack, m->c->net.socket);
+                    if (!handleCalled) { rc = MQTTProtocol_handleUnsubacks(pack, m->c->net.socket); }
                 }
             }
         }
-    }
+    } // End: while(!tostop)
+    
     receiveThread_state = STOPPED;
     receiveThread_id = 0;
     MQTTAsync_unlock_mutex(mqttasync_mutex);
-    if (sendThread_state != STOPPED)
-        Thread_signal_cond(send_cond);
+    if (sendThread_state != STOPPED) { Thread_signal_cond(send_cond); }
     FUNC_EXIT;
     return 0;
 }
@@ -2488,8 +2438,7 @@ void MQTTProtocol_checkPendingWrites()
                 ListRemove(&(state.pending_writes), le->content); /* does NextElement itself */
                 le = state.pending_writes.current;
             }
-            else
-                ListNextElement(&(state.pending_writes), &le);
+            else { ListNextElement(&(state.pending_writes), &le); }
         }
     }
     FUNC_EXIT;

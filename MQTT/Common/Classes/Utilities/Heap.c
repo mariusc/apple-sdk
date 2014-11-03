@@ -19,7 +19,7 @@ char* Broker_recordFFDC(char* symptoms);
 #pragma mark - Variables
 
 static pthread_mutex_t heap_mutex_store = PTHREAD_MUTEX_INITIALIZER;
-static mutex_type heap_mutex = &heap_mutex_store;
+static pthread_mutex_t* heap_mutex = &heap_mutex_store;
 
 static heap_info state = {0, 0}; /**< global heap state information */
 static int eyecatcher = 0x88888888;

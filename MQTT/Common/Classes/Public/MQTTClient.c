@@ -44,9 +44,9 @@ ClientStates* bstate = &ClientState;
 MQTTProtocol state;
 
 static pthread_mutex_t mqttclient_mutex_store = PTHREAD_MUTEX_INITIALIZER;
-static mutex_type mqttclient_mutex = &mqttclient_mutex_store;
+static pthread_mutex_t* mqttclient_mutex = &mqttclient_mutex_store;
 static pthread_mutex_t socket_mutex_store = PTHREAD_MUTEX_INITIALIZER;
-static mutex_type socket_mutex = &socket_mutex_store;
+static pthread_mutex_t* socket_mutex = &socket_mutex_store;
 
 void MQTTClient_init()
 {
@@ -66,7 +66,7 @@ static List* handles = NULL;
 static time_t last;
 static int running = 0;
 static int tostop = 0;
-static thread_id_type run_id = 0;
+static pthread_t run_id = 0;
 
 MQTTPacket* MQTTClient_waitfor(MQTTClient handle, int packet_type, int* rc, long timeout);
 MQTTPacket* MQTTClient_cycle(int* sock, unsigned long timeout, int* rc);
@@ -97,11 +97,11 @@ typedef struct
 	MQTTClient_deliveryComplete* dc;
 	void* context;
 
-	sem_type connect_sem;
+	sem_t* connect_sem;
 	int rc; /* getsockopt return code in connect */
-	sem_type connack_sem;
-	sem_type suback_sem;
-	sem_type unsuback_sem;
+	sem_t* connack_sem;
+	sem_t* suback_sem;
+	sem_t* unsuback_sem;
 	MQTTPacket* pack;
 
 } MQTTClients;
@@ -352,9 +352,9 @@ int clientSockCompare(void* a, void* b)
  * Wrapper function to call connection lost on a separate thread.  A separate thread is needed to allow the
  * connectionLost function to make API calls (e.g. connect)
  * @param context a pointer to the relevant client
- * @return thread_return_type standard thread return value - not used here
+ * @return <code>void*</code> standard thread return value - not used here
  */
-thread_return_type connectionLost_call(void* context)
+void* connectionLost_call(void* context)
 {
 	MQTTClients* m = (MQTTClients*)context;
 
@@ -364,7 +364,7 @@ thread_return_type connectionLost_call(void* context)
 
 
 /* This is the thread function that handles the calling of callback functions if set */
-thread_return_type MQTTClient_run(void* n)
+void* MQTTClient_run(void* n)
 {
 	long timeout = 10L; /* first time in we have a small timeout.  Gets things started more quickly */
 

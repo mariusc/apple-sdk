@@ -85,8 +85,8 @@ static struct
 
 extern Sockets s;
 
-static ssl_mutex_type* sslLocks = NULL;
-static ssl_mutex_type sslCoreMutex;
+static pthread_mutex_t* sslLocks = NULL;
+static pthread_mutex_t sslCoreMutex;
 
 static List pending_reads = {NULL, NULL, NULL, 0, 0};
 
@@ -98,10 +98,10 @@ void SSL_CTX_info_callback(const SSL* ssl, int where, int ret);
 char* SSLSocket_get_version_string(int version);
 void SSL_CTX_msg_callback(int write_p, int version, int content_type, const void* buf, size_t len, SSL* ssl, void* arg);
 int pem_passwd_cb(char* buf, int size, int rwflag, void* userdata);
-int SSL_create_mutex(ssl_mutex_type* mutex);
-int SSL_lock_mutex(ssl_mutex_type* mutex);
-int SSL_unlock_mutex(ssl_mutex_type* mutex);
-void SSL_destroy_mutex(ssl_mutex_type* mutex);
+int SSL_create_mutex(pthread_mutex_t* mutex);
+int SSL_lock_mutex(pthread_mutex_t* mutex);
+int SSL_unlock_mutex(pthread_mutex_t* mutex);
+void SSL_destroy_mutex(pthread_mutex_t* mutex);
 
 #if (OPENSSL_VERSION_NUMBER >= 0x010000000)
 extern void SSLThread_id(CRYPTO_THREADID *id);
@@ -137,7 +137,7 @@ int SSLSocket_initialize()
     
     OpenSSL_add_all_algorithms();
     
-    lockMemSize = CRYPTO_num_locks() * sizeof(ssl_mutex_type);
+    lockMemSize = CRYPTO_num_locks() * sizeof(pthread_mutex_t);
     
     sslLocks = malloc(lockMemSize);
     if (!sslLocks)
@@ -601,7 +601,7 @@ int pem_passwd_cb(char* buf, int size, int rwflag, void* userdata)
 	return rc;
 }
 
-int SSL_create_mutex(ssl_mutex_type* mutex)
+int SSL_create_mutex(pthread_mutex_t* mutex)
 {
 	int rc = 0;
 
@@ -611,7 +611,7 @@ int SSL_create_mutex(ssl_mutex_type* mutex)
 	return rc;
 }
 
-int SSL_lock_mutex(ssl_mutex_type* mutex)
+int SSL_lock_mutex(pthread_mutex_t* mutex)
 {
 	int rc = -1;
 
@@ -622,7 +622,7 @@ int SSL_lock_mutex(ssl_mutex_type* mutex)
 	return rc;
 }
 
-int SSL_unlock_mutex(ssl_mutex_type* mutex)
+int SSL_unlock_mutex(pthread_mutex_t* mutex)
 {
 	int rc = -1;
 
@@ -633,7 +633,7 @@ int SSL_unlock_mutex(ssl_mutex_type* mutex)
 	return rc;
 }
 
-void SSL_destroy_mutex(ssl_mutex_type* mutex)
+void SSL_destroy_mutex(pthread_mutex_t* mutex)
 {
 	int rc = 0;
 

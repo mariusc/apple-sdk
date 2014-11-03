@@ -31,7 +31,7 @@ enum msgTypes
  */
 typedef union
 {
-	/*unsigned*/ char byte;	// The whole byte.
+	/*unsigned*/ char byte;     // The whole byte.
     #if defined(REVERSED)
 	struct
 	{
@@ -105,19 +105,19 @@ typedef struct
 	union
 	{
 		unsigned char all;	// all connack flags 
-#if defined(REVERSED)
+        #if defined(REVERSED)
 		struct
 		{
 			unsigned int reserved : 7;	// message type nibble 
 			uint_bool sessionPresent : 1;    // was a session found on the server? 
 		} bits;
-#else
+        #else
 		struct
 		{
 			uint_bool sessionPresent : 1;    // was a session found on the server? 
 			unsigned int reserved : 7;	// message type nibble 
 		} bits;
-#endif
+        #endif
 	} flags;	 // connack flags byte 
 	char rc; // connack return code 
 } Connack;

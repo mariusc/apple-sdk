@@ -3,20 +3,19 @@
 #import <Relayr/Relayr.h>       // Relayr.framework
 #import "RelayrApp_Setup.h"     // Relayr.framework (Private)
 #import "RelayrUser_Setup.h"    // Relayr.framework (Private)
+#import "RLAMQTTService.h"      // Relayr.framework (Protocols/MQTT)
 #import "RLATestsConstants.h"   // Tests
 #import "RelayrApp_TSetup.h"    // Tests
 
 /*!
- *  @abstract Test the high-level methods of <code>RelayrPublisher</code> objects.
- *
- *  @see RelayrApp
+ *  @abstract Test the MQTT Service.
  */
-@interface RelayrPublisherTest : XCTestCase
+@interface RLAMQTTServiceTest : XCTestCase
 @property (readonly,nonatomic) RelayrApp* app;
 @property (readonly,nonatomic) RelayrUser* user;
 @end
 
-@implementation RelayrPublisherTest
+@implementation RLAMQTTServiceTest
 
 #pragma mark - Setup
 
@@ -44,26 +43,15 @@
 
 #pragma mark - Unit tests
 
-- (void)testPublisherInstance
+- (void)testMQTTServiceInitialisationAndConnection
 {
-    XCTestExpectation* expectation = [self expectationWithDescription:nil];
+//    XCTestExpectation* expectation = [self expectationWithDescription:nil];
     
-    __weak RelayrUser* user = self.user;
-    [_user queryCloudForPublishersAndAuthorisedApps:^(NSError *error) {
-        XCTAssertNil(error);
-        XCTAssertGreaterThanOrEqual(_user.publishers.count, 1);
-        XCTAssertGreaterThanOrEqual(_user.authorisedApps.count, 1);
-        
-        RelayrPublisher* publisher = user.publishers.anyObject;
-        XCTAssertNotNil(publisher);
-        XCTAssertGreaterThan(publisher.uid.length, 0);
-        XCTAssertGreaterThan(publisher.name.length, 0);
-        XCTAssertGreaterThan(publisher.owner.length, 0);
-        //XCTAssertGreaterThan(publisher.apps.count, 0);
-        [expectation fulfill];
-    }];
+    XCTAssertNil(_user.mqttService);
+    _user.mqttService = [[RLAMQTTService alloc] initWithUser:_user];
+    XCTAssertNotNil(_user.mqttService);
     
-    [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
+//    [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
 }
 
 @end

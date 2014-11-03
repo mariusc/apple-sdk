@@ -36,6 +36,6 @@ void StackTrace_entry(char const* name, int line, int trace);
 
 void StackTrace_printStack(FILE* dest);
 
-char* StackTrace_get(thread_id_type);
+char* StackTrace_get(pthread_t);
 
 void StackTrace_exit(char const* name, int line, void const* return_value, int trace);

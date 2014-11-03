@@ -35,13 +35,13 @@
  *  @abstract This is the central connection with the Relayr.framework MQTT module.
  *  @discussion It is never <code>nil</code>. When an instance of <code>RelayrUser</code> is created, this property is setup to a valid MQTT service.
  */
-@property (readonly,nonatomic) RLAMQTTService* mqttService;
+@property (readwrite,nonatomic) RLAMQTTService* mqttService;
 
 /*!
  *  @abstract This is the central connection with the Relayr.framework BLE module.
  *  @discussion It is never <code>nil</code>. When an instance of <code>RelayrUser</code> is created, this property is setup to a valid BLE service.
  */
-@property (readonly,nonatomic) RLABLEService* bleService;
+@property (readwrite,nonatomic) RLABLEService* bleService;
 
 /*!
  *  @abstract A unique idenfier of a <code>RelayrUser</code> instance.

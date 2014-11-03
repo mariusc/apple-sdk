@@ -16,14 +16,14 @@
 
 typedef struct
 {
-	thread_id_type threadid;
+	pthread_t threadid;
 	char name[MAX_FUNCTION_NAME_LENGTH];
 	int line;
 } stackEntry;
 
 typedef struct
 {
-	thread_id_type id;
+	pthread_t id;
 	int maxdepth;
 	int current_depth;
 	stackEntry callstack[MAX_STACK_DEPTH];
@@ -36,7 +36,7 @@ static threadEntry threads[MAX_THREADS];
 static threadEntry *cur_thread = NULL;
 
 static pthread_mutex_t stack_mutex_store = PTHREAD_MUTEX_INITIALIZER;
-static mutex_type stack_mutex = &stack_mutex_store;
+static pthread_mutex_t* stack_mutex = &stack_mutex_store;
 
 #pragma mark - Private prototypes
 
@@ -104,7 +104,7 @@ void StackTrace_printStack(FILE* dest)
     if (file != stdout && file != stderr && file != NULL) { fclose(file); }
 }
 
-char* StackTrace_get(thread_id_type threadid)
+char* StackTrace_get(pthread_t threadid)
 {
     int bufsize = 256;
     char* buf = NULL;
@@ -144,7 +144,7 @@ exit:
 int setStack(int create)
 {
 	int i = -1;
-	thread_id_type curid = Thread_getid();
+	pthread_t curid = Thread_getid();
 
 	cur_thread = NULL;
 	for (i = 0; i < MAX_THREADS && i < thread_count; ++i)

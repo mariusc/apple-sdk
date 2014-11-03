@@ -53,7 +53,6 @@ static NSString* const kCodingPublishers = @"pub";
         if (!strongSelf.uid)
         {
             strongSelf.uid = uid;
-            [strongSelf setupServices];
         }
         else if ( ![strongSelf.uid isEqualToString:uid] )
         {
@@ -343,8 +342,6 @@ static NSString* const kCodingPublishers = @"pub";
         _uid = [decoder decodeObjectForKey:kCodingID];
         _name = [decoder decodeObjectForKey:kCodingName];
         _email = [decoder decodeObjectForKey:kCodingEmail];
-        
-        [self setupServices];
         _transmitters = [decoder decodeObjectForKey:kCodingTransmitters];
         _devices = [decoder decodeObjectForKey:kCodingDevices];
         _devicesBookmarked = [decoder decodeObjectForKey:kCodingDevices];
@@ -376,16 +373,6 @@ static NSString* const kCodingPublishers = @"pub";
 }
 
 #pragma mark - Private methods
-
-- (BOOL)setupServices
-{
-    if (!_uid.length) { return NO; }
-    
-    _mqttService = [[RLAMQTTService alloc] initWithUser:self];
-    _bleService = [[RLABLEService alloc] initWithUser:self];
-    
-    return YES;
-}
 
 /*******************************************************************************
  * It sets the user's IoTs with the server query. The transmitters set brings the devices of transmitters, although these devices are not the same object as the devices set.

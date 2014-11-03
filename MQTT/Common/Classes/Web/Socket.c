@@ -69,18 +69,17 @@ int Socket_getReadySocket(int more_work, struct timeval *tp)
     struct timeval timeout = one;
     
     FUNC_ENTRY;
-    if (s.clientsds->count == 0)
-        goto exit;
+    if (s.clientsds->count == 0) { goto exit; }
     
-    if (more_work)
+    if (more_work) {
         timeout = zero;
-    else if (tp)
+    } else if (tp) {
         timeout = *tp;
+    }
     
     while (s.cur_clientsds != NULL)
     {
-        if (isReady(*((int*)(s.cur_clientsds->content)), &(s.rset), &wset))
-            break;
+        if (isReady(*((int*)(s.cur_clientsds->content)), &(s.rset), &wset)) { break; }
         ListNextElement(s.clientsds, &s.cur_clientsds);
     }
     
@@ -320,7 +319,7 @@ int Socket_new(char* addr, int port, int* sock)
     {
         struct addrinfo* res = result;
         
-        /* prefer ip4 addresses */
+        // Prefer ip4 addresses
         while (res)
         {
             if (res->ai_family == AF_INET)
@@ -363,7 +362,9 @@ int Socket_new(char* addr, int port, int* sock)
     {
         *sock =	socket(family, type, 0);
         if (*sock == INVALID_SOCKET)
+        {
             rc = Socket_error("socket", *sock);
+        }
         else
         {
             #if defined(NOSIGPIPE)
