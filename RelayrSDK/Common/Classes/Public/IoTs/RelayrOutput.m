@@ -6,7 +6,7 @@
 #import "RelayrDeviceModel.h"       // Relayr.framework (Public)
 #import "RelayrUser_Setup.h"        // Relayr.framework (Public)
 #import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
-#import "RLAWebService+Device.h"    // Relayr.framework (Protocols/Web)
+#import "RLAAPIService+Device.h"    // Relayr.framework (Service/API)
 #import "RelayrErrors.h"            // Relayr.framework (Utilities)
 
 static NSString* const kCodingMeaning = @"men";
@@ -38,7 +38,7 @@ static NSString* const kCodingMeaning = @"men";
     RelayrUser* user = device.user;
     if (!user) { if (completion) { completion(RelayrErrorMissingExpectedValue); } return; }
     
-    [user.webService sendToDeviceID:device.uid withMeaning:_meaning value:value completion:completion];
+    [user.apiService sendToDeviceID:device.uid withMeaning:_meaning value:value completion:completion];
 }
 
 #pragma mark NSCoding

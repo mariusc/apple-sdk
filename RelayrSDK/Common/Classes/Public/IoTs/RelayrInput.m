@@ -4,9 +4,9 @@
 #import "RelayrDevice.h"            // Relayr.framework (Public)
 #import "RelayrUser_Setup.h"        // Relayr.framework (Private)
 #import "RelayrInput_Setup.h"       // Relayr.framework (Private)
-#import "RLAService.h"              // Relayr.framework (Protocols)
-#import "RLAServiceSelector.h"      // Relayr.framework (Protocols)
-#import "RLAWebService+Device.h"    // Relyar.framework (Protocols/Web)
+#import "RLAService.h"              // Relayr.framework (Service)
+#import "RLAServiceSelector.h"      // Relayr.framework (Service)
+#import "RLAAPIService+Device.h"    // Relyar.framework (Service/API)
 #import "RelayrErrors.h"            // Relayr.framework (Utilities)
 #import "RLATargetAction.h"         // Relayr.framework (Utilities)
 

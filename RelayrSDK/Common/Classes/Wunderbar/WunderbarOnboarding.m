@@ -8,7 +8,7 @@
 #import "WunderbarErrors.h"         // Relayr.framework (Wunderbar)
 #import "WunderbarConstants.h"      // Relayr.framework (Wunderbar)
 
-#if defined(OS_APPLE_IOS) || defined(OS_APPLE_IOS_SIMULATOR)
+#if defined(OS_APPLE_IOS) || defined(OS_APPLE_SIMULATOR)
 @import CoreBluetooth;              // Apple
 #elif defined (OS_APPLE_OSX)
 @import IOBluetooth;                // Apple

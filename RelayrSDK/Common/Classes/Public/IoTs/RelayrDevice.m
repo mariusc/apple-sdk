@@ -11,10 +11,10 @@
 #import "RelayrInput_Setup.h"       // Relayr.framework (Private)
 #import "RelayrConnection_Setup.h"  // Relayr.framework (Private)
 #import "RelayrFirmware_Setup.h"    // Relayr.framework (Private)
-#import "RLAService.h"              // Relayr.framework (Protocols)
-#import "RLAServiceSelector.h"      // Relayr.framework (Protocols)
-#import "RLAWebService.h"           // Relayr.framework (Protocols/Web)
-#import "RLAWebService+Device.h"    // Relayr.framework (Protocols/Web)
+#import "RLAService.h"              // Relayr.framework (Service)
+#import "RLAServiceSelector.h"      // Relayr.framework (Service)
+#import "RLAAPIService.h"           // Relayr.framework (Service/API)
+#import "RLAAPIService+Device.h"    // Relayr.framework (Service/API)
 #import "RelayrErrors.h"            // Relayr.framework (Utilities)
 #import "RLATargetAction.h"         // Relayr.framework (Utilities)
 #import "RLALog.h"                  // Relayr.framework (Utilities)
@@ -42,7 +42,7 @@ static NSString* const kCodingSecret = @"sec";
     if (!name.length) { if (completion) { completion(RelayrErrorMissingArgument, _name); } return; }
     
     __weak RelayrDevice* weakSelf = self;
-    [_user.webService setDevice:_uid name:name modelID:nil isPublic:nil description:nil completion:(!completion) ? nil : ^(NSError* error, RelayrDevice* device) {
+    [_user.apiService setDevice:_uid name:name modelID:nil isPublic:nil description:nil completion:(!completion) ? nil : ^(NSError* error, RelayrDevice* device) {
         NSString* previousName = weakSelf.name;
         if (error) { return completion(error, previousName); }
         

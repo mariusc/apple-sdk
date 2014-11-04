@@ -16,6 +16,9 @@ FOUNDATION_EXPORT NSString* const kWunderbarOnboardingOptionsDeviceConnectionTyp
 #define Web_RequestRelativePath_WunderbarRegistration(userID)   [NSString stringWithFormat:@"/users/%@/wunderbar", userID]
 #define Web_RequestResponseCode_WunderbarRegistration           201
 
+#define Web_RequestRelativePath_WunderbarDeletion(transID)      [NSString stringWithFormat:@"/wunderbars/%@", transID]
+#define Web_RequestResponseCode_WunderbarDeletion               204
+
 #define Web_RespondKey_WunderbarMasterModule    @"masterModule"
 #define Web_RespondKey_WunderbarGyroscope       @"gyroscope"
 #define Web_RespondKey_WunderbarLight           @"light"

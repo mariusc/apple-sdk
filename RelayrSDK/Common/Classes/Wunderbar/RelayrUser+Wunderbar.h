@@ -1,4 +1,4 @@
-#import <Relayr/RelayrUser.h>
+#import <Relayr/RelayrUser.h>   // Relayr.framework (Public)
 
 @interface RelayrUser (Wunderbar)
 
@@ -12,5 +12,16 @@
  */
 - (void)registerWunderbarWithName:(NSString*)name
                        completion:(void (^)(NSError* error, RelayrTransmitter* transmitter))completion;
+
+/*!
+ *  @abstract It deletes a transmitter entity and all their associated devices entities.
+ *
+ *  @param transmitter The transmitter to be deleted.
+ *  @param completion Block indicating whether the server registration call was successful or not. It can be <code>nil</code>.
+ *
+ *  @see RelayrTransmitter
+ */
+- (void)deleteWunderbar:(RelayrTransmitter*)transmitter
+             completion:(void (^)(NSError* error))completion;
 
 @end

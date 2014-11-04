@@ -8,7 +8,7 @@
 #import "RelayrUser_Setup.h"            // Relayr.framework (Private)
 #import "RelayrErrors.h"                // Relayr.framework (Utilities)
 
-#import "RLAWebService+Transmitter.h"   // Relayr.framework (Protocols/Web)
+#import "RLAAPIService+Transmitter.h"   // Relayr.framework (Service/API)
 
 static NSString* const kCodingID = @"uid";
 static NSString* const kCodingSecret = @"sec";
@@ -32,7 +32,7 @@ static NSString* const kCodingDevices = @"dev";
     if (!name.length) { if (completion) { completion(RelayrErrorMissingArgument, _name); } return; }
     
     __weak RelayrTransmitter* weakSelf = self;
-    [_user.webService setTransmitter:self.uid withName:name completion:(!completion) ? nil : ^(NSError* error) {
+    [_user.apiService setTransmitter:self.uid withName:name completion:(!completion) ? nil : ^(NSError* error) {
         if (error) { return completion(error, weakSelf.name); }
         
         NSString* previousName = weakSelf.name;

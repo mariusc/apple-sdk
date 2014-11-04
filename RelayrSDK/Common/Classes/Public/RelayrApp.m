@@ -4,9 +4,9 @@
 #import "RelayrCloud.h"         // Relayr.framework (Public)
 #import "RelayrUser.h"          // Relayr.framework (Public)
 #import "RelayrUser_Setup.h"    // Relayr.framework (Private)
-#import "RLAWebService.h"       // Relayr.framework (Protocols/Web)
-#import "RLAWebService+Cloud.h" // Relayr.framework (Protocols/Web)
-#import "RLAWebService+App.h"   // Relayr.framework (Protocols/Web)
+#import "RLAAPIService.h"       // Relayr.framework (Service/API)
+#import "RLAAPIService+Cloud.h" // Relayr.framework (Service/API)
+#import "RLAAPIService+App.h"   // Relayr.framework (Service/API)
 #import "RelayrErrors.h"            // Relayr.framework (Utilities)
 #import "RLALog.h"              // Relayr.framework (Utilities)
 #import "RLAKeyChain.h"         // Relayr.framework (Utilities)
@@ -75,7 +75,7 @@ static NSString* const kCodingUsers = @"usr";
     result = [[RelayrApp alloc] initWithID:appID OAuthClientSecret:clientSecret redirectURI:redirectURI];
     if (!result) { return completion(RelayrErrorMissingArgument, nil); }
     
-    [RLAWebService requestAppInfoFor:result.uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription, NSString* appPublisher) {
+    [RLAAPIService requestAppInfoFor:result.uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription, NSString* appPublisher) {
         if ( ![result.uid isEqualToString:appID] ) { return completion(RelayrErrorWebRequestFailure, nil); }
         result.name = appName;
         result.appDescription = appDescription;
@@ -131,7 +131,7 @@ static NSString* const kCodingUsers = @"usr";
     if (!user) { if (completion) { completion(RelayrErrorMissingArgument, nil, nil); } return; }
     
     __weak RelayrApp* weakSelf = self;
-    [RLAWebService requestAppInfoFor:_uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription, NSString* appPublisher) {
+    [RLAAPIService requestAppInfoFor:_uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription, NSString* appPublisher) {
         __strong RelayrApp* strongSelf = weakSelf;
         
         if ( ![strongSelf.uid isEqualToString:appID] ) { return completion(RelayrErrorWebRequestFailure, nil, nil); }
@@ -166,10 +166,10 @@ static NSString* const kCodingUsers = @"usr";
     if (!_uid.length || !_redirectURI.length || !_oauthClientSecret.length) { if (completion) { completion(RelayrErrorMissingExpectedValue, nil); } return; }
     
     __weak RelayrApp* weakSelf = self;
-    [RLAWebService requestOAuthCodeWithOAuthClientID:_uid redirectURI:_redirectURI completion:^(NSError* error, NSString* tmpCode) {
+    [RLAAPIService requestOAuthCodeWithOAuthClientID:_uid redirectURI:_redirectURI completion:^(NSError* error, NSString* tmpCode) {
         if (error) { if (completion) { completion(error, nil); } return; }
         
-        [RLAWebService requestOAuthTokenWithOAuthCode:tmpCode OAuthClientID:weakSelf.uid OAuthClientSecret:weakSelf.oauthClientSecret redirectURI:weakSelf.redirectURI completion:^(NSError* error, NSString* token) {
+        [RLAAPIService requestOAuthTokenWithOAuthCode:tmpCode OAuthClientID:weakSelf.uid OAuthClientSecret:weakSelf.oauthClientSecret redirectURI:weakSelf.redirectURI completion:^(NSError* error, NSString* token) {
             if (error) { if (completion) { completion(error, nil); } return; }
             if (!token.length) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
             

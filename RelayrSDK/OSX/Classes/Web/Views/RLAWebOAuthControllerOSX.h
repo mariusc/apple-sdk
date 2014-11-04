@@ -1,4 +1,4 @@
-#import "RLAWebOAuthController.h"   // Relayr.framework (Web)
+#import "RLAWebOAuthController.h"   // Relayr.framework (Services/API)
 @import Cocoa;                      // Apple
 @import WebKit;                     // Apple
 

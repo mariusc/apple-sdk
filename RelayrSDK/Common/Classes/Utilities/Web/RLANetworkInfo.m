@@ -16,7 +16,7 @@
 
 + (NSString*)currentNetworkSSID
 {
-#if defined(OS_APPLE_IOS) || defined (OS_APPLE_IOS_SIMULATOR)
+    #if defined(OS_APPLE_IOS) || defined (OS_APPLE_SIMULATOR)
     // Keys are the BSD- names of the network
     NSArray* networks = [RLANetworkInfo networksSSIDs];
     NSString* result;
@@ -33,10 +33,10 @@
     
     return result;
     
-#elif defined(OS_APPLE_OSX)
+    #elif defined(OS_APPLE_OSX)
     //TODO: Implement a function to discover current Wifi connection
     return nil;
-#endif
+    #endif
 }
 
 

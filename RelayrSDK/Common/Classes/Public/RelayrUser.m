@@ -11,13 +11,13 @@
 #import "RelayrTransmitter_Setup.h"     // Relayr.framework (Private)
 #import "RelayrDevice_Setup.h"          // Relayr.framework (Private)
 
-#import "RLAWebService.h"               // Relayr.framework (Protocols/Web)
-#import "RLAWebService+User.h"          // Relayr.framework (Protocols/Web)
-#import "RLAWebService+Publisher.h"     // Relayr.framework (Protocols/Web)
-#import "RLAWebService+Transmitter.h"   // Relayr.framework (Protocols/Web)
-#import "RLAWebService+Device.h"        // Relayr.framework (Protocols/Web)
-#import "RLAMQTTService.h"              // Relayr.framework (Protocols/MQTT)
-#import "RLABLEService.h"               // Relayr.framework (Protocols/BLE)
+#import "RLAAPIService.h"               // Relayr.framework (Service/API)
+#import "RLAAPIService+User.h"          // Relayr.framework (Service/API)
+#import "RLAAPIService+Publisher.h"     // Relayr.framework (Service/API)
+#import "RLAAPIService+Transmitter.h"   // Relayr.framework (Service/API)
+#import "RLAAPIService+Device.h"        // Relayr.framework (Service/API)
+#import "RLAMQTTService.h"              // Relayr.framework (Service/MQTT)
+#import "RLABLEService.h"               // Relayr.framework (Service/BLE)
 
 #import "RelayrErrors.h"                // Relayr.framework (Utilities)
 
@@ -45,7 +45,7 @@ static NSString* const kCodingPublishers = @"pub";
 - (void)queryCloudForUserInfo:(void (^)(NSError* error, NSString* previousName, NSString* previousEmail))completion
 {
     __weak RelayrUser* weakSelf = self;
-    [_webService requestUserInfo:^(NSError* error, NSString* uid, NSString* name, NSString* email) {
+    [_apiService requestUserInfo:^(NSError* error, NSString* uid, NSString* name, NSString* email) {
         if (error) { if (completion) { completion(error, nil, nil); } return; }
         if (!uid.length) { if (completion) { completion(RelayrErrorWrongRelayrUser, nil, nil); } return; }
         
@@ -69,15 +69,15 @@ static NSString* const kCodingPublishers = @"pub";
 - (void)queryCloudForIoTs:(void (^)(NSError*))completion
 {
     __weak RelayrUser* weakSelf = self;
-    [_webService requestUserTransmitters:^(NSError* transmitterError, NSSet* transmitters) {
+    [_apiService requestUserTransmitters:^(NSError* transmitterError, NSSet* transmitters) {
         if (transmitterError) { if (completion) { completion(transmitterError); } return; }
         if (!weakSelf) { return; }
         
-        [weakSelf.webService requestUserDevices:^(NSError* deviceError, NSSet* devices) {
+        [weakSelf.apiService requestUserDevices:^(NSError* deviceError, NSSet* devices) {
             if (deviceError) { if (completion) { completion(deviceError); } return ; }
             if (!weakSelf) { return; }
             
-            [weakSelf.webService requestUserBookmarkedDevices:^(NSError* bookmarkError, NSSet* devicesBookmarked) {
+            [weakSelf.apiService requestUserBookmarkedDevices:^(NSError* bookmarkError, NSSet* devicesBookmarked) {
                 if (bookmarkError) { if (completion) { completion(bookmarkError); } return; }
                 if (!weakSelf) { return; }
 
@@ -87,7 +87,7 @@ static NSString* const kCodingPublishers = @"pub";
                 __block NSError* intermediateError;
                 for (RelayrTransmitter* transmitter in transmitters)
                 {
-                    [_webService requestDevicesFromTransmitter:transmitter.uid completion:^(NSError* transmitterDevicesError, NSSet* transmitterDevices) {
+                    [_apiService requestDevicesFromTransmitter:transmitter.uid completion:^(NSError* transmitterDevicesError, NSSet* transmitterDevices) {
                         if (!intermediateError)
                         {
                             if (transmitterDevicesError) { intermediateError = transmitterDevicesError; }
@@ -109,9 +109,9 @@ static NSString* const kCodingPublishers = @"pub";
 - (void)queryCloudForPublishersAndAuthorisedApps:(void (^)(NSError* error))completion
 {
     __weak RelayrUser* weakSelf = self;
-    [_webService requestUserAuthorisedApps:^(NSError* appError, NSSet* apps) {
+    [_apiService requestUserAuthorisedApps:^(NSError* appError, NSSet* apps) {
         if (appError) { if (completion) { completion(appError); } return; }
-        [weakSelf.webService requestUserPublishers:^(NSError* publisherError, NSSet* publishers) {
+        [weakSelf.apiService requestUserPublishers:^(NSError* publisherError, NSSet* publishers) {
             if (publisherError) { if (completion) { completion(publisherError); } return; }
             [self replaceAuthorisedApps:apps];
             [self replacePublishers:publishers];
@@ -125,7 +125,7 @@ static NSString* const kCodingPublishers = @"pub";
     if (!name) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
     
     __weak RelayrUser* weakSelf = self;
-    [_webService registerTransmitterWithName:name ownerID:_uid model:modelID firmwareVersion:firmwareVersion completion:^(NSError* error, RelayrTransmitter* transmitter) {
+    [_apiService registerTransmitterWithName:name ownerID:_uid model:modelID firmwareVersion:firmwareVersion completion:^(NSError* error, RelayrTransmitter* transmitter) {
         if (error) { if (completion) { completion(error, nil); } return; }
         RelayrTransmitter* result = [weakSelf addTransmitter:transmitter];
         if (!completion) { return; }
@@ -138,7 +138,7 @@ static NSString* const kCodingPublishers = @"pub";
     if (!transmitter.uid.length) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
     
     __weak RelayrUser* weakSelf = self;
-    [_webService deleteTransmitter:transmitter.uid completion:^(NSError* error) {
+    [_apiService deleteTransmitter:transmitter.uid completion:^(NSError* error) {
         if (error) { if (completion) { completion(error); } return; }
         
         [weakSelf removeTransmitter:transmitter];
@@ -151,7 +151,7 @@ static NSString* const kCodingPublishers = @"pub";
     if (!modelID || !firmwareVersion || !name) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
     
     __weak RelayrUser* weakSelf = self;
-    [_webService registerDeviceWithName:name owner:_uid model:modelID firmwareVersion:firmwareVersion completion:^(NSError* error, RelayrDevice* device) {
+    [_apiService registerDeviceWithName:name owner:_uid model:modelID firmwareVersion:firmwareVersion completion:^(NSError* error, RelayrDevice* device) {
         if (error) { if (completion) { completion(error, nil); } return; }
         
         RelayrDevice* futureDevice = [weakSelf addDevice:device];
@@ -165,7 +165,7 @@ static NSString* const kCodingPublishers = @"pub";
     if (!device.uid.length) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
     
     __weak RelayrUser* weakSelf = self;
-    [_webService deleteDevice:device.uid completion:^(NSError *error) {
+    [_apiService deleteDevice:device.uid completion:^(NSError *error) {
         if (error) { if (completion) { completion(error); } return; }
         
         [weakSelf removeDevice:device];
@@ -183,7 +183,7 @@ static NSString* const kCodingPublishers = @"pub";
     if (self)
     {
         _token = token;
-        _webService = [[RLAWebService alloc] initWithUser:self];
+        _apiService = [[RLAAPIService alloc] initWithUser:self];
     }
     return self;
 }

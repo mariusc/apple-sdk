@@ -3,7 +3,7 @@
 #import <Relayr/Relayr.h>       // Relayr.framework
 #import "RelayrApp_Setup.h"     // Relayr.framework (Private)
 #import "RelayrUser_Setup.h"    // Relayr.framework (Private)
-#import "RLAMQTTService.h"      // Relayr.framework (Protocols/MQTT)
+#import "RLAMQTTService.h"      // Relayr.framework (Service/MQTT)
 #import "RLATestsConstants.h"   // Tests
 #import "RelayrApp_TSetup.h"    // Tests
 
