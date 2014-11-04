@@ -1519,10 +1519,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
-				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PROVISIONING_PROFILE = "";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1558,10 +1554,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
-				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "";
 				VALIDATE_PRODUCT = YES;
@@ -1598,10 +1590,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
-				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "9bf73209-5c21-4b56-ad81-e2d10094f046";
 				VALIDATE_PRODUCT = YES;
@@ -1629,10 +1617,6 @@
 				DEFINES_MODULE = YES;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
-				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1644,10 +1628,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
-				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1675,10 +1655,6 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
-				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1686,10 +1662,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
-				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1717,10 +1689,6 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
-				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1728,10 +1696,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
-				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "9bf73209-5c21-4b56-ad81-e2d10094f046";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1774,10 +1738,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
-				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "";
 				VALIDATE_PRODUCT = YES;
@@ -1807,10 +1767,6 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
-				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1818,10 +1774,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
-				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -2021,10 +1973,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
-				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "df136790-6063-4079-b36f-5372a125d4c7";
 				VALIDATE_PRODUCT = YES;
@@ -2054,10 +2002,6 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
-				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -2065,10 +2009,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/san_dehesa/Marcos/Workspace/Relayr/Apple/apple-sdk/tmp/Relayr/Build/Products/Debug",
-				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "df136790-6063-4079-b36f-5372a125d4c7";
 				VERSIONING_SYSTEM = "apple-generic";
