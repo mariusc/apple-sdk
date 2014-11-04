@@ -1,5 +1,6 @@
-@import Foundation;     // Apple
-@class RelayrUser;      // Relayr.framework (Public)
+@import Foundation;             // Apple
+@class RelayrUser;              // Relayr.framework (Public)
+#import "RelayrConnection.h"    // Relayr.framework (Public/IoTs)
 
 /*!
  *  @abstract Web connection manager for a <code>RelayrUser</code>.
@@ -11,10 +12,10 @@
 
 /*!
  *  @abstract It is initialised with a <code>RelayrUser</code> token.
- *  @discussion If <code>userToken</code> is <code>nil</code> or the token is not valid, this initialiser returns <code>nil</code>.
+ *  @discussion This initialiser can return <code>nil</code> if the data needed is not yet in the user.
  *
- *  @param user <code>RelayrUser</code> OAuth token.
- *	@return Fully initialised <code>RLAWebService</code>.
+ *  @param user <code>RelayrUser</code> that will own this service.
+ *	@return Fully initialised <code>RLAService</code> object or <code>nil</code>.
  */
 - (instancetype)initWithUser:(RelayrUser*)user;
 
@@ -23,6 +24,17 @@
  *  @discussion This object will be set at initialisation and never touched again.
  */
 @property (readonly,weak,nonatomic) RelayrUser* user;
+
+/*!
+ *  @abstract The state of the service connection.
+ */
+@property (readonly,nonatomic) RelayrConnectionState connectionState;
+
+/*!
+ *  @abstract The scope of the service connection.
+ *  @discussion For services like Bluetooth, this value will never change; however for services like API or MQTT, the value can fluctuate depending on your network (LAN, WAN, etc.).
+ */
+@property (readonly,nonatomic) RelayrConnectionScope connectionScope;
 
 /*!
  *  @abstract The base URL that will be used in every webService instance call.

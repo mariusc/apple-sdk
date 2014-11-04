@@ -37,6 +37,10 @@ void messageDelivered(void* context, MQTTAsync_token token);
     MQTTAsync _client;
 }
 
+@synthesize user = _user;
+@synthesize connectionState = _connectionState;
+@synthesize connectionScope = _connectionScope;
+
 #pragma mark - Public API
 
 - (instancetype)init
@@ -55,6 +59,8 @@ void messageDelivered(void* context, MQTTAsync_token token);
         debug("Initializing MQTT Service...");
 
         _user = user;
+        _connectionState = RelayrConnectionStateUnknown;
+        _connectionScope = RelayrConnectionScopeUnknown;
         _hostString = [NSString stringWithFormat:@"%@%@", dRLAMQTT_ProtocolTCP, dRLAMQTT_Host];
         _port = [NSNumber numberWithUnsignedInteger:dRLAMQTT_PortTCP];
         _connectionState = RelayrConnectionStateDisconnected;

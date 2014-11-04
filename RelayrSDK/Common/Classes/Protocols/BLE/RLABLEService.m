@@ -3,6 +3,10 @@
 
 @implementation RLABLEService
 
+@synthesize user = _user;
+@synthesize connectionState = _connectionState;
+@synthesize connectionScope = _connectionScope;
+
 #pragma mark - Public API
 
 - (instancetype)init
@@ -19,6 +23,8 @@
     if (self)
     {
         _user = user;
+        _connectionState = RelayrConnectionStateUnknown;
+        _connectionScope = RelayrConnectionScopeUnknown;
     }
     return self;
 }

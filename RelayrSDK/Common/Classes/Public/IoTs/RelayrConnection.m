@@ -51,6 +51,7 @@
         _type = RelayrConnectionTypeUnknown;
         _protocol = RelayrConnectionProtocolUnknwon;
         _state = RelayrConnectionStateUnknown;
+        _scope = RelayrConnectionScopeUnknown;
     }
     return self;
 }
@@ -66,7 +67,11 @@
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"RelayrConnection\n{\n\t Type:\t%@\n\t Protocol:\t%@\n\t State:\t%@\n}\n", [RelayrConnection stringRepresentationOfConnectionType:_type], [RelayrConnection stringRepresentationOfConnectionProtocol:_protocol], [RelayrConnection stringRepresentationOfConnectionState:_state]];
+    return [NSString stringWithFormat:@"RelayrConnection\n{\n\t Type:\t%@\n\t Protocol:\t%@\n\t State:\t%@\n\t Scope:\t%@\n}\n",
+            [RelayrConnection stringRepresentationOfConnectionType:_type],
+            [RelayrConnection stringRepresentationOfConnectionProtocol:_protocol],
+            [RelayrConnection stringRepresentationOfConnectionState:_state],
+            [RelayrConnection stringRepresentationOfConnectionScope:_scope]];
 }
 
 #pragma mark - Private functionality
@@ -91,6 +96,14 @@
             (state == RelayrConnectionStateConnecting)      ? @"Connecting"     :
             (state == RelayrConnectionStateConnected)       ? @"Connected"      :
             (state == RelayrConnectionStateDisconnecting)   ? @"Disconneting"   : nil;
+}
+
++ (NSString*)stringRepresentationOfConnectionScope:(RelayrConnectionScope)scope
+{
+    return  (scope == RelayrConnectionScopeUnknown) ? @"Unknown"                :
+            (scope == RelayrConnectionScopePAN)     ? @"Person Area Network"    :
+            (scope == RelayrConnectionScopeLAN)     ? @"Local Area Network"     :
+            (scope == RelayrConnectionScopeWAN)     ? @"Wide Area Network"      : nil;
 }
 
 @end

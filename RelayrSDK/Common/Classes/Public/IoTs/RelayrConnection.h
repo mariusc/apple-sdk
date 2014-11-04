@@ -1,6 +1,8 @@
 @import Foundation;     // Apple
 @class RelayrDevice;    // Relayr.framework (Public)
 
+#pragma mark - Definitions
+
 /*!
  *  @abstract The type of connection between a device and the system running the SDK.
  *
@@ -44,12 +46,30 @@ typedef NS_ENUM(NSUInteger, RelayrConnectionState) {
 };
 
 /*!
+ *  @abstract The scope of the connection.
+ *  @discussion The scope provide interesting information about the technology being used for the connection.
+ *
+ *  @constant RelayrConnectionScopeUnknown The scope is unknown at the moment.
+ *  @constant RelayrConnectionScopePAN Personal Area Network scope. Technologies included here are BLE, Zigbee, etc.
+ *  @constant RelayrConnectionScopeLAN Local Area Network scope. Technologies included here are Ethernet cable connection, WiFi connections, etc.
+ *  @constant RelayrConnectionScopeWAN Wide Area Network scope. Many of the current mobile connection technologies are included here: EDGE, 3G, LTE, etc.
+ */
+typedef NS_ENUM(NSUInteger, RelayrConnectionScope) {
+    RelayrConnectionScopeUnknown,
+    RelayrConnectionScopePAN,
+    RelayrConnectionScopeLAN,
+    RelayrConnectionScopeWAN
+};
+
+/*!
  *  @abstract Represents the type of connection between the current platform and the device or transmitter.
  *
  *  @see RelayrDevice
  *  @see RelayrTransmitter
  */
 @interface RelayrConnection : NSObject
+
+#pragma mark - Public API
 
 /*!
  *  @abstract Specifies which device the connection is associated to.
@@ -70,6 +90,11 @@ typedef NS_ENUM(NSUInteger, RelayrConnectionState) {
  *  @abstract The state of the current connection type.
  */
 @property (readonly,nonatomic) RelayrConnectionState state;
+
+/*!
+ *  @abstract The scope of the current connection.
+ */
+@property (readonly,nonatomic) RelayrConnectionScope scope;
 
 #pragma mark Subscriptions
 
