@@ -26,6 +26,7 @@
  *  @param value NSString in UTF8 format to send to the <code>RelayrDevice</code>
  *  @param completion A Block indicating whether the value was received by the server (<code>error</code> is <code>nil</code>) or not.
  */
-- (void)sendValue:(NSString*)value withCompletion:(void (^)(NSError* error))completion;
+- (void)sendValue:(NSString*)value
+   withCompletion:(void (^)(NSError* error))completion;
 
 @end

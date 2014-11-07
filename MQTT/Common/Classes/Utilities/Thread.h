@@ -1,128 +1,65 @@
-#pragma once
-
-#include <pthread.h>        // POSIX
-#include <semaphore.h>      // POSIX
-
-#pragma mark Definitions
-
-typedef struct {
-    pthread_cond_t cond;
-    pthread_mutex_t mutex;
-} cond_type_struct;
-
-typedef void* (*thread_fn)(void*);
-
-#pragma mark Public API
-
-/*!
- *  @abstract Create a new mutex
+/*******************************************************************************
+ * Copyright (c) 2009, 2014 IBM Corp.
  *
- *  @return the new mutex
- */
-pthread_mutex_t* Thread_create_mutex();
-
-/*!
- *  @abstract Lock a mutex which has already been created, block until ready
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * and Eclipse Distribution License v1.0 which accompany this distribution. 
  *
- *  @param mutex the mutex
- *  @return completion code, 0 is success
- */
-int Thread_lock_mutex(pthread_mutex_t*);
-
-/*!
- *  @abstract Unlock a mutex which has already been locked
+ * The Eclipse Public License is available at 
+ *    http://www.eclipse.org/legal/epl-v10.html
+ * and the Eclipse Distribution License is available at 
+ *   http://www.eclipse.org/org/documents/edl-v10.php.
  *
- *  @param mutex the mutex
- *  @return completion code, 0 is success
- */
-int Thread_unlock_mutex(pthread_mutex_t*);
+ * Contributors:
+ *    Ian Craggs - initial implementation
+ *    Ian Craggs, Allan Stockdill-Mander - async client updates
+ *    Ian Craggs - fix for bug #420851
+ *******************************************************************************/
 
-/*!
- *  @abstract Destroy a mutex which has already been created
- *
- * @param mutex the mutex
- */
-void Thread_destroy_mutex(pthread_mutex_t*);
+#if !defined(THREAD_H)
+#define THREAD_H
 
-/*!
- *  @abstract Create a new semaphore
- *
- * @return the new condition variable
- */
-sem_t* Thread_create_sem();
+#if defined(WIN32) || defined(WIN64)
+	#include <Windows.h>
+	#define thread_type HANDLE
+	#define thread_id_type DWORD
+	#define thread_return_type DWORD
+	#define thread_fn LPTHREAD_START_ROUTINE
+	#define mutex_type HANDLE
+	#define cond_type HANDLE
+	#define sem_type HANDLE
+#else
+	#include <pthread.h>
+	#include <semaphore.h>
+	#define thread_type pthread_t
+	#define thread_id_type pthread_t
+	#define thread_return_type void*
+	typedef thread_return_type (*thread_fn)(void*);
+	#define mutex_type pthread_mutex_t*
+	typedef struct { pthread_cond_t cond; pthread_mutex_t mutex; } cond_type_struct;
+	typedef cond_type_struct *cond_type;
+	typedef sem_t *sem_type;
 
-/*!
- *  @abstract Wait for a semaphore to be posted, or timeout.
- *
- *  @param sem The semaphore.
- *  @param timeout The maximum time to wait, in milliseconds.
- *  @return Completion code.
- */
-int Thread_wait_sem(sem_t* sem, int timeout);
+	cond_type Thread_create_cond();
+	int Thread_signal_cond(cond_type);
+	int Thread_wait_cond(cond_type condvar, int timeout);
+	int Thread_destroy_cond(cond_type);
+#endif
 
-/*!
- *  @abstract Check to see if a semaphore has been posted, without waiting.
- *
- *  @param sem the semaphore.
- *  @return 0 (false) or 1 (true).
- */
-int Thread_check_sem(sem_t* sem);
+thread_type Thread_start(thread_fn, void*);
 
-/*!
- *  @abstract Post a semaphore.
- *
- *  @param sem the semaphore.
- *  @return completion code.
- */
-int Thread_post_sem(sem_t* sem);
+mutex_type Thread_create_mutex();
+int Thread_lock_mutex(mutex_type);
+int Thread_unlock_mutex(mutex_type);
+void Thread_destroy_mutex(mutex_type);
 
-/*!
- *  @abstract Destroy a semaphore which has already been created.
- *
- *  @param sem the semaphore.
- */
-int Thread_destroy_sem(sem_t* sem);
+thread_id_type Thread_getid();
 
-/*!
- *  @abstract Create a new condition variable.
- *
- *  @return the condition variable struct.
- */
-cond_type_struct* Thread_create_cond();
+sem_type Thread_create_sem();
+int Thread_wait_sem(sem_type sem, int timeout);
+int Thread_check_sem(sem_type sem);
+int Thread_post_sem(sem_type sem);
+int Thread_destroy_sem(sem_type sem);
 
-/*!
- *  @abstract Signal a condition variable.
- *
- *  @return completion code.
- */
-int Thread_signal_cond(cond_type_struct*);
 
-/*!
- *  @abstract Wait with a timeout (seconds) for condition variable.
- *
- *  @return completion code.
- */
-int Thread_wait_cond(cond_type_struct* condvar, int timeout);
-
-/*!
- *  @abstract Destroy a condition variable.
- *
- *  @return completion code.
- */
-int Thread_destroy_cond(cond_type_struct*);
-
-/*!
- *  @abstract Start a new thread.
- *
- *  @param fn The function to run, must be of the correct signature.
- *  @param parameter Pointer to the function parameter, can be NULL.
- *  @return The new thread.
- */
-pthread_t Thread_start(thread_fn, void*);
-
-/*!
- *  @abstract Get the thread id of the thread from which this function is called
- *
- *  @return thread id, type varying according to OS
- */
-pthread_t Thread_getid();
+#endif

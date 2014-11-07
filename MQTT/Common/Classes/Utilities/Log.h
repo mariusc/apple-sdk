@@ -1,9 +1,36 @@
-/*!
- *  @abstract Logging and tracing module.
- */
-#pragma once
+/*******************************************************************************
+ * Copyright (c) 2009, 2013 IBM Corp.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * and Eclipse Distribution License v1.0 which accompany this distribution. 
+ *
+ * The Eclipse Public License is available at 
+ *    http://www.eclipse.org/legal/epl-v10.html
+ * and the Eclipse Distribution License is available at 
+ *   http://www.eclipse.org/org/documents/edl-v10.php.
+ *
+ * Contributors:
+ *    Ian Craggs - initial API and implementation and/or initial documentation
+ *    Ian Craggs - updates for the async client
+ *******************************************************************************/
 
-#pragma mark Definitions
+#if !defined(LOG_H)
+#define LOG_H
+
+/*BE
+map LOG_LEVELS
+{
+	"TRACE_MAXIMUM" 1
+	"TRACE_MEDIUM" 2
+	"TRACE_MINIMUM" 3
+	"TRACE_PROTOCOL" 4
+
+	"ERROR" 5
+	"SEVERE" 6
+	"FATAL" 7
+}
+BE*/
 
 enum LOG_LEVELS {
 	TRACE_MAXIMUM = 1,
@@ -15,12 +42,23 @@ enum LOG_LEVELS {
 	LOG_FATAL,
 } Log_levels;
 
+
+/*BE
+def trace_settings_type
+{
+   n32 map LOG_LEVELS "trace_level"
+   n32 dec "max_trace_entries"
+   n32 dec "trace_output_level"
+}
+BE*/
 typedef struct
 {
-	int trace_level;			// Trace level.
-	int max_trace_entries;		// Max no of entries in the trace buffer.
-	int trace_output_level;		// Trace level to output to destination.
+	int trace_level;			/**< trace level */
+	int max_trace_entries;		/**< max no of entries in the trace buffer */
+	int trace_output_level;		/**< trace level to output to destination */
 } trace_settings_type;
+
+extern trace_settings_type trace_settings;
 
 #define LOG_PROTOCOL TRACE_PROTOCOL
 #define TRACE_MAX TRACE_MAXIMUM
@@ -29,43 +67,18 @@ typedef struct
 
 typedef struct
 {
-    const char* name;
-    const char* value;
+	const char* name;
+	const char* value;
 } Log_nameValue;
 
-#pragma mark Variables
-
-extern trace_settings_type trace_settings;
-
-#pragma mark Public API
-
-
 int Log_initialize(Log_nameValue*);
+void Log_terminate();
 
-/*!
- *  @abstract Log a message.  If possible, all messages should be indexed by message number, and the use of the format string should be minimized or negated altogether.  If format is provided, the message number is only used as a message label.
- *
- *  @param log_level the log level of the message.
- *  @param msgno the id of the message to use if the format string is NULL.
- *  @param format the printf format string to be used if the message id does not exist.
- *  @param ... the printf inserts.
- */
-void Log(int, int, char const*, ...);
-
-/*!
- *  @abstract The reason for this function is to make trace logging as fast as possible so that the function exit/entry history can be captured by default without unduly impacting performance.  Therefore it must do as little as possible.
- *
- *  @param log_level the log level of the message
- *  @param msgno the id of the message to use if the format string is NULL
- *  @param aFormat the printf format string to be used if the message id does not exist
- *  @param ... the printf inserts
- */
-void Log_stackTrace(int, int, int, int, const char*, int, int const* restrict);
+void Log(int, int, char *, ...);
+void Log_stackTrace(int, int, int, int, const char*, int, int*);
 
 typedef void Log_traceCallback(enum LOG_LEVELS level, char* message);
-
 void Log_setTraceCallback(Log_traceCallback* callback);
-
 void Log_setTraceLevel(enum LOG_LEVELS level);
 
-void Log_terminate();
+#endif

@@ -1,11 +1,29 @@
-#pragma once
+/*******************************************************************************
+ * Copyright (c) 2009, 2014 IBM Corp.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * and Eclipse Distribution License v1.0 which accompany this distribution. 
+ *
+ * The Eclipse Public License is available at 
+ *    http://www.eclipse.org/legal/epl-v10.html
+ * and the Eclipse Distribution License is available at 
+ *   http://www.eclipse.org/org/documents/edl-v10.php.
+ *
+ * Contributors:
+ *    Ian Craggs - initial API and implementation and/or initial documentation
+ *    Ian Craggs - MQTT 3.1.1 updates
+ *******************************************************************************/
 
-#include "LinkedList.h"     // MQTT (Utilities)
-#include "MQTTPacket.h"     // MQTT (Public)
-#include "Clients.h"        // MQTT (Private)
+#if !defined(MQTTPROTOCOL_H)
+#define MQTTPROTOCOL_H
 
-#define MAX_MSG_ID          65535
-#define MAX_CLIENTID_LEN    65535
+#include "LinkedList.h"
+#include "MQTTPacket.h"
+#include "Clients.h"
+
+#define MAX_MSG_ID 65535
+#define MAX_CLIENTID_LEN 65535
 
 typedef struct
 {
@@ -19,7 +37,10 @@ typedef struct
 	List publications;
 	unsigned int msgs_received;
 	unsigned int msgs_sent;
-	List pending_writes;        // For qos 0 writes not complete
+	List pending_writes; /* for qos 0 writes not complete */
 } MQTTProtocol;
 
-#include "MQTTProtocolOut.h"    // MQTT (Public)
+
+#include "MQTTProtocolOut.h"
+
+#endif

@@ -1,30 +1,65 @@
-#include "MQTTPacketOut.h"  // Header
-#include "Log.h"            // MQTT (Utilities)
-#include "StackTrace.h"     // MQTT (Utilities)
-#include "Heap.h"           // MQTT (Utilities)
+/*******************************************************************************
+ * Copyright (c) 2009, 2014 IBM Corp.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * and Eclipse Distribution License v1.0 which accompany this distribution. 
+ *
+ * The Eclipse Public License is available at 
+ *    http://www.eclipse.org/legal/epl-v10.html
+ * and the Eclipse Distribution License is available at 
+ *   http://www.eclipse.org/org/documents/edl-v10.php.
+ *
+ * Contributors:
+ *    Ian Craggs - initial API and implementation and/or initial documentation
+ *    Ian Craggs, Allan Stockdill-Mander - SSL updates
+ *    Ian Craggs - MQTT 3.1.1 support
+ *    Rong Xiang, Ian Craggs - C++ compatibility
+ *******************************************************************************/
 
-#include <string.h>         // C Standard
-#include <stdlib.h>         // C Standard
+/**
+ * @file
+ * \brief functions to deal with reading and writing of MQTT packets from and to sockets
+ *
+ * Some other related functions are in the MQTTPacket module
+ */
 
-#pragma mark - Public API
 
+#include "MQTTPacketOut.h"
+#include "Log.h"
+#include "StackTrace.h"
+
+#include <string.h>
+#include <stdlib.h>
+
+#include "Heap.h"
+
+
+/**
+ * Send an MQTT CONNECT packet down a socket.
+ * @param client a structure from which to get all the required values
+ * @param MQTTVersion the MQTT version to connect with
+ * @return the completion code (e.g. TCPSOCKET_COMPLETE)
+ */
 int MQTTPacket_send_connect(Clients* client, int MQTTVersion)
 {
-	int rc = -1;
+	char *buf, *ptr;
+	Connect packet;
+	int rc = -1, len;
 
 	FUNC_ENTRY;
-    
-    Connect packet;
 	packet.header.byte = 0;
 	packet.header.bits.type = CONNECT;
 
-	size_t len = ((MQTTVersion == 3) ? 12 : 10) + strlen(client->clientID)+2;
-    if (client->will) { len += strlen(client->will->topic)+2 + strlen(client->will->msg)+2; }
-    if (client->username) { len += strlen(client->username)+2; }
-    if (client->password) { len += strlen(client->password)+2; }
+	len = ((MQTTVersion == 3) ? 12 : 10) + strlen(client->clientID)+2;
+	if (client->will)
+		len += strlen(client->will->topic)+2 + strlen(client->will->msg)+2;
+	if (client->username)
+		len += strlen(client->username)+2;
+	if (client->password)
+		len += strlen(client->password)+2;
 
-    char* buf = malloc(len);
-    char* ptr = buf;
+	ptr = buf = malloc(len);
 	if (MQTTVersion == 3)
 	{
 		writeUTF(&ptr, "MQIsdp");
@@ -35,7 +70,8 @@ int MQTTPacket_send_connect(Clients* client, int MQTTVersion)
 		writeUTF(&ptr, "MQTT");
 		writeChar(&ptr, (char)4);
 	}
-    else { goto exit; }
+	else
+		goto exit;
 
 	packet.flags.all = 0;
 	packet.flags.bits.cleanstart = client->cleansession;
@@ -46,8 +82,10 @@ int MQTTPacket_send_connect(Clients* client, int MQTTVersion)
 		packet.flags.bits.willRetain = client->will->retained;
 	}
 
-    if (client->username) { packet.flags.bits.username = 1; }
-    if (client->password) { packet.flags.bits.password = 1; }
+	if (client->username)
+		packet.flags.bits.username = 1;
+	if (client->password)
+		packet.flags.bits.password = 1;
 
 	writeChar(&ptr, packet.flags.all);
 	writeInt(&ptr, client->keepAliveInterval);
@@ -57,17 +95,28 @@ int MQTTPacket_send_connect(Clients* client, int MQTTVersion)
 		writeUTF(&ptr, client->will->topic);
 		writeUTF(&ptr, client->will->msg);
 	}
-    if (client->username) { writeUTF(&ptr, client->username); }
-    if (client->password) { writeUTF(&ptr, client->password); }
+	if (client->username)
+		writeUTF(&ptr, client->username);
+	if (client->password)
+		writeUTF(&ptr, client->password);
 
 	rc = MQTTPacket_send(&client->net, packet.header, buf, len, 1);
 	Log(LOG_PROTOCOL, 0, NULL, client->net.socket, client->clientID, client->cleansession, rc);
 exit:
-    if (rc != TCPSOCKET_INTERRUPTED) { free(buf); }
+	if (rc != TCPSOCKET_INTERRUPTED)
+		free(buf);
 	FUNC_EXIT_RC(rc);
 	return rc;
 }
 
+
+/**
+ * Function used in the new packets table to create connack packets.
+ * @param aHeader the MQTT header byte
+ * @param data the rest of the packet
+ * @param datalen the length of the rest of the packet
+ * @return pointer to the packet structure
+ */
 void* MQTTPacket_connack(unsigned char aHeader, char* data, size_t datalen)
 {
 	Connack* pack = malloc(sizeof(Connack));
@@ -81,6 +130,13 @@ void* MQTTPacket_connack(unsigned char aHeader, char* data, size_t datalen)
 	return pack;
 }
 
+
+/**
+ * Send an MQTT PINGREQ packet down a socket.
+ * @param socket the open socket to send the data to
+ * @param clientID the string client identifier, only used for tracing
+ * @return the completion code (e.g. TCPSOCKET_COMPLETE)
+ */
 int MQTTPacket_send_pingreq(networkHandles* net, const char* clientID)
 {
 	Header header;
@@ -96,6 +152,17 @@ int MQTTPacket_send_pingreq(networkHandles* net, const char* clientID)
 	return rc;
 }
 
+
+/**
+ * Send an MQTT subscribe packet down a socket.
+ * @param topics list of topics
+ * @param qoss list of corresponding QoSs
+ * @param msgid the MQTT message id to use
+ * @param dup boolean - whether to set the MQTT DUP flag
+ * @param socket the open socket to send the data to
+ * @param clientID the string client identifier, only used for tracing
+ * @return the completion code (e.g. TCPSOCKET_COMPLETE)
+ */
 int MQTTPacket_send_subscribe(List* topics, List* qoss, int msgid, int dup, networkHandles* net, const char* clientID)
 {
 	Header header;
@@ -131,6 +198,14 @@ int MQTTPacket_send_subscribe(List* topics, List* qoss, int msgid, int dup, netw
 	return rc;
 }
 
+
+/**
+ * Function used in the new packets table to create suback packets.
+ * @param aHeader the MQTT header byte
+ * @param data the rest of the packet
+ * @param datalen the length of the rest of the packet
+ * @return pointer to the packet structure
+ */
 void* MQTTPacket_suback(unsigned char aHeader, char* data, size_t datalen)
 {
 	Suback* pack = malloc(sizeof(Suback));
@@ -151,6 +226,16 @@ void* MQTTPacket_suback(unsigned char aHeader, char* data, size_t datalen)
 	return pack;
 }
 
+
+/**
+ * Send an MQTT unsubscribe packet down a socket.
+ * @param topics list of topics
+ * @param msgid the MQTT message id to use
+ * @param dup boolean - whether to set the MQTT DUP flag
+ * @param socket the open socket to send the data to
+ * @param clientID the string client identifier, only used for tracing
+ * @return the completion code (e.g. TCPSOCKET_COMPLETE)
+ */
 int MQTTPacket_send_unsubscribe(List* topics, int msgid, int dup, networkHandles* net, const char* clientID)
 {
 	Header header;

@@ -1,17 +1,55 @@
-#include "Clients.h"    // Header
-#include <string.h>     // C Standard
-#include <stdio.h>      // C Standard
+/*******************************************************************************
+ * Copyright (c) 2009, 2013 IBM Corp.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * and Eclipse Distribution License v1.0 which accompany this distribution. 
+ *
+ * The Eclipse Public License is available at 
+ *    http://www.eclipse.org/legal/epl-v10.html
+ * and the Eclipse Distribution License is available at 
+ *   http://www.eclipse.org/org/documents/edl-v10.php.
+ *
+ * Contributors:
+ *    Ian Craggs - initial API and implementation and/or initial documentation
+ *    Ian Craggs - add SSL support
+ *******************************************************************************/
 
-#pragma mark - Public API
+/**
+ * @file
+ * \brief functions which apply to client structures
+ * */
 
-bool clientIDCompare(void const* a, void const* b)
+
+#include "Clients.h"
+
+#include <string.h>
+#include <stdio.h>
+
+
+/**
+ * List callback function for comparing clients by clientid
+ * @param a first integer value
+ * @param b second integer value
+ * @return boolean indicating whether a and b are equal
+ */
+int clientIDCompare(void* a, void* b)
 {
 	Clients* client = (Clients*)a;
-    return (strcmp(client->clientID, (char*)b) == 0) ? true : false;
+	/*printf("comparing clientdIDs %s with %s\n", client->clientID, (char*)b);*/
+	return strcmp(client->clientID, (char*)b) == 0;
 }
 
-bool clientSocketCompare(void const* a, void const* b)
+
+/**
+ * List callback function for comparing clients by socket
+ * @param a first integer value
+ * @param b second integer value
+ * @return boolean indicating whether a and b are equal
+ */
+int clientSocketCompare(void* a, void* b)
 {
 	Clients* client = (Clients*)a;
-    return (client->net.socket == *(int*)b) ? true : false;
+	/*printf("comparing %d with %d\n", (char*)a, (char*)b); */
+	return client->net.socket == *(int*)b;
 }

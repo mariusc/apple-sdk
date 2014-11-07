@@ -1,25 +1,23 @@
-/*!
- *  @abstract Functions for checking that strings contain UTF-8 characters only
- *  @discussion See page 104 of the Unicode Standard 5.0 for the list of well formed UTF-8 byte sequences.
- */
-#pragma once
-
-#include <stdbool.h>    // C Standard
-#include <stdlib.h>     // C Standard
-
-/*!
- *  @abstract Validate a length-delimited string has only UTF-8 characters.
+/*******************************************************************************
+ * Copyright (c) 2009, 2013 IBM Corp.
  *
- *  @param len the length of the string in "data"
- *  @param data the bytes to check for valid UTF-8 characters
- *  @return 1 (true) if the string has only UTF-8 characters, 0 (false) otherwise
- */
-bool UTF8_validate(size_t const len, char const* restrict data);
-
-/*!
- *  @abstract Validate a null-terminated string has only UTF-8 characters.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * and Eclipse Distribution License v1.0 which accompany this distribution. 
  *
- *  @param string the string to check for valid UTF-8 characters.
- *  @return 1 (true) if the string has only UTF-8 characters, 0 (false) otherwise.
- */
-bool UTF8_validateString(char const* restrict string);
+ * The Eclipse Public License is available at 
+ *    http://www.eclipse.org/legal/epl-v10.html
+ * and the Eclipse Distribution License is available at 
+ *   http://www.eclipse.org/org/documents/edl-v10.php.
+ *
+ * Contributors:
+ *    Ian Craggs - initial API and implementation and/or initial documentation
+ *******************************************************************************/
+
+#if !defined(UTF8_H)
+#define UTF8_H
+
+int UTF8_validate(int len, char* data);
+int UTF8_validateString(const char* string);
+
+#endif

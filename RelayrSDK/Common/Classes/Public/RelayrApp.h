@@ -96,7 +96,8 @@ OAuthClientSecret:(NSString*)clientSecret
  *
  *  @param completion A block with the status of the request.
  */
-- (void)queryForAppInfoWithUserCredentials:(RelayrUser*)user completion:(void (^)(NSError* error, NSString* previousName, NSString* previousDescription))completion;
+- (void)queryForAppInfoWithUserCredentials:(RelayrUser*)user
+                                completion:(void (^)(NSError* error, NSString* previousName, NSString* previousDescription))completion;
 
 /*!
  *  @abstract An Array containing all logged in <code>RelayrUser</code>s.

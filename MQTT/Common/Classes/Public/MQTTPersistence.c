@@ -1,13 +1,44 @@
-#include <stdio.h>                  // C Standard
-#include <string.h>                 // C Standard
+/*******************************************************************************
+ * Copyright (c) 2009, 2013 IBM Corp.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * and Eclipse Distribution License v1.0 which accompany this distribution. 
+ *
+ * The Eclipse Public License is available at 
+ *    http://www.eclipse.org/legal/epl-v10.html
+ * and the Eclipse Distribution License is available at 
+ *   http://www.eclipse.org/org/documents/edl-v10.php.
+ *
+ * Contributors:
+ *    Ian Craggs - initial API and implementation and/or initial documentation
+ *    Ian Craggs - async client updates
+ *    Ian Craggs - fix for bug 432903 - queue persistence
+ *******************************************************************************/
 
-#include "MQTTPersistence.h"        // MQTT (Public)
-#include "MQTTPersistenceDefault.h" // MQTT (Public)
-#include "MQTTProtocolClient.h"     // MQTT (Public)
-#include "Heap.h"                   // MQTT (Utilities)
-#include "StackTrace.h"             // MQTT (Utilities)
+/**
+ * @file
+ * \brief Functions that apply to persistence operations.
+ *
+ */
 
-#pragma mark - Public API
+#include <stdio.h>
+#include <string.h>
+
+#include "MQTTPersistence.h"
+#include "MQTTPersistenceDefault.h"
+#include "MQTTProtocolClient.h"
+#include "Heap.h"
+
+
+/**
+ * Creates a ::MQTTClient_persistence structure representing a persistence implementation.
+ * @param persistence the ::MQTTClient_persistence structure.
+ * @param type the type of the persistence implementation. See ::MQTTClient_create.
+ * @param pcontext the context for this persistence implementation. See ::MQTTClient_create.
+ * @return 0 if success, #MQTTCLIENT_PERSISTENCE_ERROR otherwise.
+ */
+#include "StackTrace.h"
 
 int MQTTPersistence_create(MQTTClient_persistence** persistence, int type, void* pcontext)
 {
@@ -15,7 +46,7 @@ int MQTTPersistence_create(MQTTClient_persistence** persistence, int type, void*
 	MQTTClient_persistence* per = NULL;
 
 	FUNC_ENTRY;
-    #if !defined(NO_PERSISTENCE)
+#if !defined(NO_PERSISTENCE)
 	switch (type)
 	{
 		case MQTTCLIENT_PERSISTENCE_NONE :
@@ -56,7 +87,7 @@ int MQTTPersistence_create(MQTTClient_persistence** persistence, int type, void*
 			rc = MQTTCLIENT_PERSISTENCE_ERROR;
 			break;
 	}
-    #endif
+#endif
 
 	*persistence = per;
 
@@ -64,6 +95,13 @@ int MQTTPersistence_create(MQTTClient_persistence** persistence, int type, void*
 	return rc;
 }
 
+
+/**
+ * Open persistent store and restore any persisted messages.
+ * @param client the client as ::Clients.
+ * @param serverURI the URI of the remote end.
+ * @return 0 if success, #MQTTCLIENT_PERSISTENCE_ERROR otherwise.
+ */
 int MQTTPersistence_initialize(Clients *c, const char *serverURI)
 {
 	int rc = 0;
@@ -80,6 +118,12 @@ int MQTTPersistence_initialize(Clients *c, const char *serverURI)
 	return rc;
 }
 
+
+/**
+ * Close persistent store.
+ * @param client the client as ::Clients.
+ * @return 0 if success, #MQTTCLIENT_PERSISTENCE_ERROR otherwise.
+ */
 int MQTTPersistence_close(Clients *c)
 {
 	int rc =0;
@@ -100,6 +144,11 @@ int MQTTPersistence_close(Clients *c)
 	return rc;
 }
 
+/**
+ * Clears the persistent store.
+ * @param client the client as ::Clients.
+ * @return 0 if success, #MQTTCLIENT_PERSISTENCE_ERROR otherwise.
+ */
 int MQTTPersistence_clear(Clients *c)
 {
 	int rc = 0;
@@ -112,6 +161,13 @@ int MQTTPersistence_clear(Clients *c)
 	return rc;
 }
 
+
+/**
+ * Restores the persisted records to the outbound and inbound message queues of the
+ * client.
+ * @param client the client as ::Clients.
+ * @return 0 if success, #MQTTCLIENT_PERSISTENCE_ERROR otherwise.
+ */
 int MQTTPersistence_restore(Clients *c)
 {
 	int rc = 0;
@@ -202,6 +258,12 @@ int MQTTPersistence_restore(Clients *c)
 	return rc;
 }
 
+
+/**
+ * Returns a MQTT packet restored from persisted data.
+ * @param buffer the persisted data.
+ * @param buflen the number of bytes of the data buffer.
+ */
 void* MQTTPersistence_restorePacket(char* buffer, size_t buflen)
 {
 	void* pack = NULL;
@@ -233,6 +295,13 @@ void* MQTTPersistence_restorePacket(char* buffer, size_t buflen)
 	return pack;
 }
 
+
+/**
+ * Inserts the specified message into the list, maintaining message ID order.
+ * @param list the list to insert the message into.
+ * @param content the message to add.
+ * @param size size of the message.
+ */
 void MQTTPersistence_insertInOrder(List* list, void* content, size_t size)
 {
 	ListElement* index = NULL;
@@ -249,22 +318,43 @@ void MQTTPersistence_insertInOrder(List* list, void* content, size_t size)
 	FUNC_EXIT;
 }
 
-int MQTTPersistence_put(int socket, char* buf0, size_t buf0len, size_t count, char** buffers, size_t* buflens, int htype, int msgId, int scr )
+
+/**
+ * Adds a record to the persistent store. This function must not be called for QoS0
+ * messages.
+ * @param socket the socket of the client.
+ * @param buf0 fixed header.
+ * @param buf0len length of the fixed header.
+ * @param count number of buffers representing the variable header and/or the payload.
+ * @param buffers the buffers representing the variable header and/or the payload.
+ * @param buflens length of the buffers representing the variable header and/or the payload.
+ * @param msgId the message ID.
+ * @param scr 0 indicates message in the sending direction; 1 indicates message in the
+ * receiving direction.
+ * @return 0 if success, #MQTTCLIENT_PERSISTENCE_ERROR otherwise.
+ */
+int MQTTPersistence_put(int socket, char* buf0, size_t buf0len, int count,
+								 char** buffers, size_t* buflens, int htype, int msgId, int scr )
 {
+	int rc = 0;
 	extern ClientStates* bstate;
-    int rc = 0;
+	int nbufs, i;
+	int* lens = NULL;
+	char** bufs = NULL;
+	char *key;
+	Clients* client = NULL;
 
 	FUNC_ENTRY;
-	Clients* client = (Clients*)(ListFindItem(bstate->clients, &socket, clientSocketCompare)->content);
+	client = (Clients*)(ListFindItem(bstate->clients, &socket, clientSocketCompare)->content);
 	if (client->persistence != NULL)
 	{
-		char* key = malloc(MESSAGE_FILENAME_LENGTH + 1);
-		size_t nbufs = 1 + count;
-		size_t* lens = malloc(nbufs * sizeof(size_t));
-		char** bufs = malloc(nbufs * sizeof(char *));
+		key = malloc(MESSAGE_FILENAME_LENGTH + 1);
+		nbufs = 1 + count;
+		lens = (int *) malloc(nbufs * sizeof(int));
+		bufs = (char **)malloc(nbufs * sizeof(char *));
 		lens[0] = buf0len;
 		bufs[0] = buf0;
-		for (int i = 0; i < count; i++)
+		for (i = 0; i < count; i++)
 		{
 			lens[i+1] = buflens[i];
 			bufs[i+1] = buffers[i];
@@ -278,12 +368,8 @@ int MQTTPersistence_put(int socket, char* buf0, size_t buf0len, size_t count, ch
 			if (htype == PUBREL)  /* PUBREL */
 				sprintf(key, "%s%d", PERSISTENCE_PUBREL, msgId);
 		}
-        
-        
-		if ( scr == 1 )
-        {   // receiving PUBLISH QoS2
-            sprintf(key, "%s%d", PERSISTENCE_PUBLISH_RECEIVED, msgId);
-        }
+		if ( scr == 1 )  /* receiving PUBLISH QoS2 */
+			sprintf(key, "%s%d", PERSISTENCE_PUBLISH_RECEIVED, msgId);
 
 		rc = client->persistence->pput(client->phandle, key, nbufs, bufs, lens);
 
@@ -296,6 +382,16 @@ int MQTTPersistence_put(int socket, char* buf0, size_t buf0len, size_t count, ch
 	return rc;
 }
 
+
+/**
+ * Deletes a record from the persistent store.
+ * @param client the client as ::Clients.
+ * @param type the type of the persisted record: #PERSISTENCE_PUBLISH_SENT, #PERSISTENCE_PUBREL
+ * or #PERSISTENCE_PUBLISH_RECEIVED.
+ * @param qos the qos field of the message.
+ * @param msgId the message ID.
+ * @return 0 if success, #MQTTCLIENT_PERSISTENCE_ERROR otherwise.
+ */
 int MQTTPersistence_remove(Clients* c, char *type, int qos, int msgId)
 {
 	int rc = 0;
@@ -323,6 +419,12 @@ int MQTTPersistence_remove(Clients* c, char *type, int qos, int msgId)
 	return rc;
 }
 
+
+/**
+ * Checks whether the message IDs wrapped by looking for the largest gap between two consecutive
+ * message IDs in the outboundMsgs queue.
+ * @param client the client as ::Clients.
+ */
 void MQTTPersistence_wrapMsgID(Clients *client)
 {
 	ListElement* wrapel = NULL;
@@ -364,7 +466,6 @@ void MQTTPersistence_wrapMsgID(Clients *client)
 
 
 #if !defined(NO_PERSISTENCE)
-
 int MQTTPersistence_unpersistQueueEntry(Clients* client, MQTTPersistence_qEntry* qe)
 {
 	int rc = 0;
@@ -491,6 +592,12 @@ void MQTTPersistence_insertInSeqOrder(List* list, MQTTPersistence_qEntry* qEntry
 	FUNC_EXIT;
 }
 
+
+/**
+ * Restores a queue of messages from persistence to memory
+ * @param c the client as ::Clients - the client object to restore the messages to
+ * @return return code, 0 if successful
+ */
 int MQTTPersistence_restoreMessageQueue(Clients* c)
 {
 	int rc = 0;

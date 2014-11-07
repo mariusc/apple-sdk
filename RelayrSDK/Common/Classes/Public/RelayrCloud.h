@@ -24,6 +24,7 @@
  *
  *  @see RelayrUser
  */
-+ (void)isUserWithEmail:(NSString*)email registered:(void (^)(NSError* error, NSNumber* isUserRegistered))completion;
++ (void)isUserWithEmail:(NSString*)email
+             registered:(void (^)(NSError* error, NSNumber* isUserRegistered))completion;
 
 @end

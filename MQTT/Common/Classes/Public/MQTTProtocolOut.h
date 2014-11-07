@@ -1,76 +1,44 @@
-/*!
- *  @abstract Functions dealing with the MQTT protocol exchanges.
- *  @discussion Some other related functions are in the MQTTProtocolClient module.
- */
-#pragma once
+/*******************************************************************************
+ * Copyright (c) 2009, 2014 IBM Corp.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * and Eclipse Distribution License v1.0 which accompany this distribution. 
+ *
+ * The Eclipse Public License is available at 
+ *    http://www.eclipse.org/legal/epl-v10.html
+ * and the Eclipse Distribution License is available at 
+ *   http://www.eclipse.org/org/documents/edl-v10.php.
+ *
+ * Contributors:
+ *    Ian Craggs - initial API and implementation and/or initial documentation
+ *    Ian Craggs, Allan Stockdill-Mander - SSL updates
+ *    Ian Craggs - MQTT 3.1.1 support
+ *******************************************************************************/
 
-#include "LinkedList.h"         // MQTT (Utilities)
-#include "MQTTPacket.h"         // MQTT (Public)
-#include "Clients.h"            // MQTT (Private)
-#include "Log.h"                // MQTT (Utilities)
-#include "Messages.h"           // MQTT (Private)
-#include "MQTTProtocol.h"       // MQTT (Public)
-#include "MQTTProtocolClient.h" // MQTT (Public)
+#if !defined(MQTTPROTOCOLOUT_H)
+#define MQTTPROTOCOLOUT_H
+
+#include "LinkedList.h"
+#include "MQTTPacket.h"
+#include "Clients.h"
+#include "Log.h"
+#include "Messages.h"
+#include "MQTTProtocol.h"
+#include "MQTTProtocolClient.h"
 
 #define DEFAULT_PORT 1883
 
-/*!
- *  @abstract MQTT outgoing connect processing for a client.
- *
- *  @param ip_address the TCP address:port to connect to.
- *  @param aClient a structure with all MQTT data needed.
- *  @param int ssl.
- *  @param int MQTTVersion the MQTT version to connect with (3 or 4).
- *  @return return code.
- */
+void MQTTProtocol_reconnect(const char* ip_address, Clients* client);
 #if defined(OPENSSL)
 int MQTTProtocol_connect(const char* ip_address, Clients* acClients, int ssl, int MQTTVersion);
 #else
 int MQTTProtocol_connect(const char* ip_address, Clients* acClients, int MQTTVersion);
 #endif
-
-/*!
- *  @abstract Process an incoming pingresp packet for a socket.
- *
- *  @param pack pointer to the publish packet.
- *  @param sock the socket on which the packet was received.
- *  @return completion code.
- */
 int MQTTProtocol_handlePingresps(void* pack, int sock);
-
-/*!
- *  @abstract MQTT outgoing subscribe processing for a client.
- *
- *  @param client the client structure.
- *  @param topics list of topics.
- *  @param qoss corresponding list of QoSs.
- *  @return completion code.
- */
 int MQTTProtocol_subscribe(Clients* client, List* topics, List* qoss, int msgID);
-
-/*!
- *  @abstract Process an incoming suback packet for a socket.
- *
- *  @param pack pointer to the publish packet
- *  @param sock the socket on which the packet was received
- *  @return completion code
- */
 int MQTTProtocol_handleSubacks(void* pack, int sock);
-
-/*!
- *  @abstract MQTT outgoing unsubscribe processing for a client.
- *
- *  @param client the client structure.
- *  @param topics list of topics.
- *  @return completion code.
- */
 int MQTTProtocol_unsubscribe(Clients* client, List* topics, int msgID);
-
-/*!
- *  @abstract Process an incoming unsuback packet for a socket.
- *
- *  @param pack pointer to the publish packet.
- *  @param sock the socket on which the packet was received.
- *  @return completion code.
- */
 int MQTTProtocol_handleUnsubacks(void* pack, int sock);
+
+#endif

@@ -1,12 +1,35 @@
-#include "Messages.h"   // Header
-#include "Log.h"        // MQTT (Utilities)
+/*******************************************************************************
+ * Copyright (c) 2009, 2013 IBM Corp.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * and Eclipse Distribution License v1.0 which accompany this distribution. 
+ *
+ * The Eclipse Public License is available at 
+ *    http://www.eclipse.org/legal/epl-v10.html
+ * and the Eclipse Distribution License is available at 
+ *   http://www.eclipse.org/org/documents/edl-v10.php.
+ *
+ * Contributors:
+ *    Ian Craggs - initial API and implementation and/or initial documentation
+ *******************************************************************************/
 
-#include <stdio.h>      // C Standard
-#include <stdlib.h>     // C Standard
-#include <memory.h>     // C Standard
-#include <string.h>     // C Standard
+/**
+ * @file
+ * \brief Trace messages
+ *
+ */
 
-#include "Heap.h"       // MQTT (Utilities)
+
+#include "Messages.h"
+#include "Log.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <memory.h>
+#include <string.h>
+
+#include "Heap.h"
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 
@@ -63,15 +86,20 @@ static char* trace_message_list[] =
 	"Storing unsent QoS 0 message", /* 12 */
 };
 
+/**
+ * Get a log message by its index
+ * @param index the integer index
+ * @param log_level the log level, used to determine which message list to use
+ * @return the message format string
+ */
 char* Messages_get(int index, int log_level)
 {
 	char* msg = NULL;
 
-    if (log_level == TRACE_PROTOCOL) {
+	if (log_level == TRACE_PROTOCOL)
 		msg = (index >= 0 && index < ARRAY_SIZE(protocol_message_list)) ? protocol_message_list[index] : NULL;
-    } else {
+	else
 		msg = (index >= 0 && index < ARRAY_SIZE(trace_message_list)) ? trace_message_list[index] : NULL;
-    }
-    
 	return msg;
 }
+

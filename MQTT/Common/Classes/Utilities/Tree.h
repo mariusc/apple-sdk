@@ -1,78 +1,102 @@
-/*!
- *  @abstract Functions which apply to tree structures.
- *  @discussion These trees can hold data of any sort, pointed to by the content pointer of the Node structure.
- */
-#pragma once
-
-#include <stdlib.h>     // C Standard
-
-/*!
- *  @abstract Structure to hold all data for one list element
+/*******************************************************************************
+ * Copyright (c) 2009, 2013 IBM Corp.
  *
- *  @field parent Pointer to parent tree node, in case we need it
- *  @field child Pointer to child tree nodes (0 = left, 1 = right)
- *  @field content Pointer to element content.
- *  @field size Size of content.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * and Eclipse Distribution License v1.0 which accompany this distribution. 
+ *
+ * The Eclipse Public License is available at 
+ *    http://www.eclipse.org/legal/epl-v10.html
+ * and the Eclipse Distribution License is available at 
+ *   http://www.eclipse.org/org/documents/edl-v10.php.
+ *
+ * Contributors:
+ *    Ian Craggs - initial implementation and documentation
+ *******************************************************************************/
+
+
+#if !defined(TREE_H)
+#define TREE_H
+
+/*BE
+defm defTree(T) // macro to define a tree
+
+def T concat Node
+{
+	n32 ptr T concat Node "parent"
+	n32 ptr T concat Node "left"
+	n32 ptr T concat Node "right"
+	n32 ptr T id2str(T)
+	n32 suppress "size"
+}
+
+
+def T concat Tree
+{
+	struct
+	{
+		n32 ptr T concat Node suppress "root"
+		n32 ptr DATA suppress "compare"
+	} 
+	struct
+	{
+		n32 ptr T concat Node suppress "root"
+		n32 ptr DATA suppress "compare"
+	} 
+	n32 dec "count"
+	n32 dec suppress "size"
+}
+
+endm
+
+defTree(INT)
+defTree(STRING)
+defTree(TMP)
+
+BE*/
+
+/**
+ * Structure to hold all data for one list element
  */
 typedef struct NodeStruct
 {
-    struct NodeStruct* parent;
-    struct NodeStruct* child[2];
-	void* content;
-	size_t size;
+	struct NodeStruct *parent,   /**< pointer to parent tree node, in case we need it */
+					  *child[2]; /**< pointers to child tree nodes 0 = left, 1 = right */
+	void* content;				 /**< pointer to element content */
+	int size;					 /**< size of content */
 	unsigned int red : 1;
 } Node;
 
-/*!
- *  @abstract Structure to hold all data for one tree
- *
- *  @field index <#description#>
- *  @field indexes Number of indexes into tree.
- *  @field count Number of iterms.
- *  @field size Heap storage used.
- *  @field heap_tracking Switch on heap tracking for this tree.
- *  @field allow_duplicates Switch to allow duplicate entries.
+
+/**
+ * Structure to hold all data for one tree
  */
 typedef struct
 {
 	struct
 	{
-		Node* root;                         // Root node pointer.
-		int (*compare)(void*, void*, int);  // Comparison function.
+		Node *root;	/**< root node pointer */
+		int (*compare)(void*, void*, int); /**< comparison function */
 	} index[2];
-    
-    int indexes;
-    int count;
-    size_t size;
-	unsigned int heap_tracking : 1;
-	unsigned int allow_duplicates : 1;
+	int indexes, /**< no of indexes into tree */
+		count,  /**< no of items */
+		size;  /**< heap storage used */
+	unsigned int heap_tracking : 1; /**< switch on heap tracking for this tree? */
+	unsigned int allow_duplicates : 1; /**< switch to allow duplicate entries */
 } Tree;
 
-/*!
- *  @abstract Allocates and initializes a new tree structure.
- *
- *  @return a pointer to the new tree structure.
- */
+
 Tree* TreeInitialize(int(*compare)(void*, void*, int));
-
 void TreeInitializeNoMalloc(Tree* aTree, int(*compare)(void*, void*, int));
-
 void TreeAddIndex(Tree* aTree, int(*compare)(void*, void*, int));
 
-void* TreeAdd(Tree* aTree, void* content, size_t size);
+void* TreeAdd(Tree* aTree, void* content, int size);
 
 void* TreeRemove(Tree* aTree, void* content);
 
 void* TreeRemoveKey(Tree* aTree, void* key);
-
 void* TreeRemoveKeyIndex(Tree* aTree, void* key, int index);
 
-/*!
- *  @abstract Remove an item from a tree.
- *
- *  @param aTree the list to which the item is to be added.
- *  @param curnode the list item content itself.
- */
 void* TreeRemoveNodeIndex(Tree* aTree, Node* aNode, int index);
 
 void TreeFree(Tree* aTree);
@@ -82,8 +106,8 @@ Node* TreeFindIndex(Tree* aTree, void* key, int index);
 
 Node* TreeNextElement(Tree* aTree, Node* curnode);
 
-#pragma mark Comparison functions
-
 int TreeIntCompare(void* a, void* b, int);
 int TreePtrCompare(void* a, void* b, int);
 int TreeStringCompare(void* a, void* b, int);
+
+#endif
