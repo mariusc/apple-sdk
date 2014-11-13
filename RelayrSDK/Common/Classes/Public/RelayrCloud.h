@@ -1,4 +1,5 @@
 @import Foundation;     // Apple
+@class RelayrUser;      // Relayr.framework (Public)
 
 /*!
  *  @abstract This class object represents the relayr <a href="https://developer.relayr.io/documents/Welcome/Platform">Cloud Platform</a> (it does not accept instantiation).
@@ -26,5 +27,36 @@
  */
 + (void)isUserWithEmail:(NSString*)email
              registered:(void (^)(NSError* error, NSNumber* isUserRegistered))completion;
+
+/*!
+ *  @abstract It sends a log message to the Relayr Cloud on behalf of a Relayr User.
+ *  @discussion Logging messages allows you to have information about how your application is running. You can log anything you want and later on check your adminastrator page and have statistical data from your application usage, or any other interesting metric.
+ *
+ *  @param message <code>NSString</code> with a looging message of your choosing. The string can be anything except <code>nil</code> or an empty string..
+ *  @param user Fully setup <code>RelayrUser</code>. If this parameter is <code>nil</code> or the user was logged in unproperly, this method won't perform any job.
+ *  @return Boolean indicating whether the message has been accepted to be sent by the server or not.
+ */
++ (BOOL)logMessage:(NSString*)message onBehalfOfUser:(RelayrUser*)user;
+
+/*!
+ *  @abstract It returns a <code>NSString</code> identifying the Relayr SDK version and machine.
+ *  @discussion It is typically use for adding in an HTTP header.
+ */
++ (NSString*)userAgentString;
+
+/*!
+ *  @abstract It returns the version number of the Relayr SDK you are currently using.
+ */
++ (NSString*)sdkVersionNumber;
+
+/*!
+ *  @abstract It returns a <code>NSString</code> with the Operating system name (and version number) currently running on the SDK.
+ */
++ (NSString*)operatingSystem;
+
+/*!
+ *  @abstract It returns a <code>NSString</code> with the platform name or architecture currently running on the SDK.
+ */
++ (NSString*)platform;
 
 @end

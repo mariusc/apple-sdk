@@ -33,12 +33,16 @@ typedef NS_ENUM(NSUInteger, RelayrConnectionProtocol) {
  *  @abstract The state of the connection.
  *
  *  @constant RelayrConnectionStateUnknonw The state of the connection is unknown.
+ *  @constant RelayrConnectionStateUnsupported The machine running the SDK does not support this connection.
+ *  @constant RelayrConnectionStateUnauthorized The OS is not authorizing the SDK to use this connection.
  *  @constant RelayrConnectionStateConnecting The connection is being established.
  *  @constant RelayrConnectionStateConnected The connection is on and functions as expected.
  *  @constant RelayrConnectionStateDisconnecting The connection is being disabled.
  */
 typedef NS_ENUM(NSUInteger, RelayrConnectionState) {
     RelayrConnectionStateUnknown,
+    RelayrConnectionStateUnsupported,
+    RelayrConnectionStateUnauthorized,
     RelayrConnectionStateConnecting,
     RelayrConnectionStateConnected,
     RelayrConnectionStateDisconnecting,

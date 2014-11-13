@@ -10,6 +10,8 @@
  */
 @interface RelayrApp : NSObject
 
+#pragma mark Lifecycle
+
 /*!
  *  @abstract Retrieves an applicationID from the relayr server or creates one and queries the server for its authenticity.
  *
@@ -49,6 +51,8 @@ OAuthClientSecret:(NSString*)clientSecret
  *	@return If the object is successfully removed or not found, <code>YES</code> is returned. If the remove operation could not be performed, the method will return <code>NO</code>.
  */
 + (BOOL)removeAppFromKeyChain:(RelayrApp*)app;
+
+#pragma mark Characteristics
 
 /*!
  *  @abstract The relayr application ID.
@@ -98,6 +102,8 @@ OAuthClientSecret:(NSString*)clientSecret
  */
 - (void)queryForAppInfoWithUserCredentials:(RelayrUser*)user
                                 completion:(void (^)(NSError* error, NSString* previousName, NSString* previousDescription))completion;
+
+#pragma mark Users
 
 /*!
  *  @abstract An Array containing all logged in <code>RelayrUser</code>s.

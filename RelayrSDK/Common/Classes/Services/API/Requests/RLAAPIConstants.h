@@ -96,6 +96,9 @@
 #define Web_RequestResponseCode_OAuthToken              200
 #define Web_RequestResponseKey_OAuthToken_AccessToken   @"access_token"
 
+// Logging
+#define Web_RequestRelativePath_Logging                 @"/client/log"
+
 #pragma mark RLAAPIService+App
 
 // All Relayr's apps

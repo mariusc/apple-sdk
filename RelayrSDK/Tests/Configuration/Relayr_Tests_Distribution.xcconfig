@@ -1,0 +1,2 @@
+#include "Common/Configuration/Relayr_Distribution.xcconfig"
+#include "Tests/Configuration/Relayr_Tests.xcconfig"

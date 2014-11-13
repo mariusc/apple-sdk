@@ -7,12 +7,12 @@
 
 #pragma mark - Definitions
 
-#define ADDRESS     "ssl://dev-mqtt.relayr.io:8883"
-#define CLIENTID    "manolete"
-#define USERNAME    "ba28efec-3cb0-46ad-b2db-04ea314ae436"
-#define PASSWORD    "geyKCOj33JI6"
-#define TOPIC_PUB   "/v1/a3b7157d-c704-4dfd-b077-99b2ae7019f0/data"
-#define TOPIC_SUB   "/v1/a3b7157d-c704-4dfd-b077-99b2ae7019f0/data"
+#define ADDRESS     "ssl://mqtt.relayr.io:8883"
+#define CLIENTID    ""
+#define USERNAME    ""
+#define PASSWORD    ""
+#define TOPIC_PUB   ""
+#define TOPIC_SUB   ""
 #define QOS         1
 #define TIMEOUT     10000L
 
@@ -199,31 +199,17 @@ void onSubscribe(void* context, MQTTAsync_successData* response)
     printf("Subscription succeeded!\n\n");
 }
 
-static unsigned int messagedArrived = 10;
-
-int msgarrvd(void* context, char* topicName, int topicLen, MQTTAsync_message *message)
+int msgarrvd(void* context, char* topicName, int topicLen, MQTTAsync_message* message)
 {
-    --messagedArrived;
     printf("Message arrived withtopic: %s and message: \n", topicName);
     
     char* payloadptr = message->payload;
     for(int i=0; i<message->payloadlen; i++) { putchar(*payloadptr++); }
     putchar('\n');
+    putchar('\n');
     
     MQTTAsync_freeMessage(&message);
     MQTTAsync_free(topicName);
-    
-    if (messagedArrived == 0)
-    {
-        MQTTAsync client = (MQTTAsync)context;
-        
-        MQTTAsync_disconnectOptions disconnect_opts = MQTTAsync_disconnectOptions_initializer;
-        disconnect_opts.timeout = 1;
-        disconnect_opts.onSuccess = onDisconnect;
-        disconnect_opts.onFailure = onDisconnectFailure;
-        disconnect_opts.context = client;
-        MQTTAsync_disconnect(client, &disconnect_opts);
-    }
     return 1;
 }
 

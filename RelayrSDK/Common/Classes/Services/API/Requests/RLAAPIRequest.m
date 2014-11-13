@@ -15,16 +15,15 @@ NSString* const kRLAAPIRequestModePUT       = @"PUT";
 
 // UserAgent WebRequest header
 NSString* kRLAAPIRequestUserAgent;
-#define BUILDVARIABLE_USERAGENT  "##WEBREQUEST_USERAGENT##"
 
 @implementation RLAAPIRequest
 
 #pragma mark - Public API
 
-+ (void)initialize
-{
-    kRLAAPIRequestUserAgent = [NSString stringWithCString:BUILDVARIABLE_USERAGENT encoding:NSUTF8StringEncoding];
-}
+//+ (void)initialize
+//{
+//    kRLAAPIRequestUserAgent = [NSString stringWithCString:BUILDVARIABLE_USERAGENT encoding:NSUTF8StringEncoding];
+//}
 
 - (instancetype)initWithHost:(NSString*)hostString
 {
@@ -36,7 +35,6 @@ NSString* kRLAAPIRequestUserAgent;
     self = [self init];
     if (self)
     {
-        //[[NSProcessInfo processInfo].environment objectForKey:@"WEBREQUEST_USERAGENT"];
         _hostString = hostString;
         _timeout = timeout;
         _oauthToken = token;
@@ -44,7 +42,7 @@ NSString* kRLAAPIRequestUserAgent;
     return self;
 }
 
-- (BOOL)executeInHTTPMode:(NSString *)mode completion:(void (^)(NSError* error, NSNumber* responseCode, NSData* data))completion
+- (BOOL)executeInHTTPMode:(NSString*)mode completion:(void (^)(NSError* error, NSNumber* responseCode, NSData* data))completion
 {
     if (!mode) { return NO; }
 
@@ -52,12 +50,14 @@ NSString* kRLAAPIRequestUserAgent;
     if (!url) { return NO; }
 
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
+    if (!request) { return NO; }
+    
     request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
     request.HTTPMethod = mode;
     request.timeoutInterval = (_timeout) ? _timeout.doubleValue : dRLAAPIRequest_Timeout;
+    request.HTTPShouldUsePipelining = YES;
     // FIX ME: Resolve the problem
     //[request setValue:kRLAAPIRequestUserAgent forHTTPHeaderField:dRLAAPIRequest_HeaderField_UserAgent];
-    if (!request) { return NO; }
 
     if (_oauthToken)
     {

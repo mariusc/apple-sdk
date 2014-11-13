@@ -21,8 +21,8 @@
 /*!
  * @abstract Convenience macro to not have to write all the time malloc( sizeof(TYPE) )
  */
-#undef mallocate
-#define mallocate(VAR)  malloc( sizeof(VAR) )
+#undef malloc_sizeof
+#define malloc_sizeof(VAR)  malloc( sizeof(VAR) )
 
 /*!
  *  @abstract It allocates the size of the passed struct in the heap and then perform a shallow copy from the passed struct to the newly created struct.
