@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		622635D71A14B2EA00BE0183 /* SSLSocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E04D19F2D75C004A9A70 /* SSLSocket.c */; };
 		623E4FE41A0A92E6002D9EFD /* SSLSocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E04D19F2D75C004A9A70 /* SSLSocket.c */; };
 		623E4FE51A0A92EE002D9EFD /* SSLSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 6299E04E19F2D75C004A9A70 /* SSLSocket.h */; };
 		6299E04F19F2D75C004A9A70 /* Clients.c in Sources */ = {isa = PBXBuildFile; fileRef = 6299E02119F2D75C004A9A70 /* Clients.c */; };
@@ -769,6 +770,9 @@
 				6299E08C19F2E541004A9A70 /* MQTTProtocolOut.c in Sources */,
 				6299E08D19F2E541004A9A70 /* Clients.c in Sources */,
 				6299E08E19F2E541004A9A70 /* Messages.c in Sources */,
+				6299E09619F2E541004A9A70 /* Socket.c in Sources */,
+				6299E09719F2E541004A9A70 /* SocketBuffer.c in Sources */,
+				622635D71A14B2EA00BE0183 /* SSLSocket.c in Sources */,
 				6299E08F19F2E541004A9A70 /* Heap.c in Sources */,
 				6299E09019F2E541004A9A70 /* LinkedList.c in Sources */,
 				6299E09119F2E541004A9A70 /* Log.c in Sources */,
@@ -776,8 +780,6 @@
 				6299E09319F2E541004A9A70 /* Thread.c in Sources */,
 				6299E09419F2E541004A9A70 /* Tree.c in Sources */,
 				6299E09519F2E541004A9A70 /* utf-8.c in Sources */,
-				6299E09619F2E541004A9A70 /* Socket.c in Sources */,
-				6299E09719F2E541004A9A70 /* SocketBuffer.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -803,13 +805,13 @@
 				6299E04F19F2D75C004A9A70 /* Clients.c in Sources */,
 				6299E05119F2D75C004A9A70 /* Messages.c in Sources */,
 				6299E07419F2D75C004A9A70 /* Socket.c in Sources */,
-				623E4FE41A0A92E6002D9EFD /* SSLSocket.c in Sources */,
 				6299E07619F2D75C004A9A70 /* SocketBuffer.c in Sources */,
-				6299E06E19F2D75C004A9A70 /* Thread.c in Sources */,
-				6299E06C19F2D75C004A9A70 /* StackTrace.c in Sources */,
+				623E4FE41A0A92E6002D9EFD /* SSLSocket.c in Sources */,
 				6299E06619F2D75C004A9A70 /* Heap.c in Sources */,
 				6299E06819F2D75C004A9A70 /* LinkedList.c in Sources */,
 				6299E06A19F2D75C004A9A70 /* Log.c in Sources */,
+				6299E06C19F2D75C004A9A70 /* StackTrace.c in Sources */,
+				6299E06E19F2D75C004A9A70 /* Thread.c in Sources */,
 				6299E07019F2D75C004A9A70 /* Tree.c in Sources */,
 				6299E07219F2D75C004A9A70 /* utf-8.c in Sources */,
 			);
