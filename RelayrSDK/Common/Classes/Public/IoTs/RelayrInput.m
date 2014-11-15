@@ -2,12 +2,13 @@
 #import "RelayrApp.h"               // Relayr.framework (Public)
 #import "RelayrUser.h"              // Relayr.framework (Public)
 #import "RelayrDevice.h"            // Relayr.framework (Public)
+#import "RelayrErrors.h"            // Relayr.framework (Public)
 #import "RelayrUser_Setup.h"        // Relayr.framework (Private)
+#import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
 #import "RelayrInput_Setup.h"       // Relayr.framework (Private)
 #import "RLAService.h"              // Relayr.framework (Service)
 #import "RLAServiceSelector.h"      // Relayr.framework (Service)
 #import "RLAAPIService+Device.h"    // Relyar.framework (Service/API)
-#import "RelayrErrors.h"            // Relayr.framework (Utilities)
 #import "RLATargetAction.h"         // Relayr.framework (Utilities)
 
 #define dMaxValues   15
@@ -128,30 +129,31 @@ static NSString* const kCodingDates = @"dat";
 
 - (void)unsubscribeTarget:(id)target action:(SEL)action
 {
-    if (!target) { return; }
+    if (!target || _subscribedTargets.count) { return; }
     
     RLATargetAction* matchedPair;
     for (RLATargetAction* pair in _subscribedTargets)
     {
         if (pair.target==target && pair.action==action) { matchedPair = pair; break; }
     }
-    
     if (matchedPair) { [_subscribedTargets removeObjectForKey:matchedPair]; }
-    if (!_subscribedBlocks.count && !_subscribedTargets.count) { return [self removeAllSubscriptions]; }
+    
+    if ([self.device isKindOfClass:[RelayrDevice class]] && !_subscribedBlocks.count && !_subscribedTargets.count)
+    {
+        [((RelayrDevice*)self) unsubscribeToCurrentServiceIfNecessary];
+    }
 }
 
 - (void)removeAllSubscriptions
 {
-    if (_subscribedBlocks) { _subscribedBlocks = nil; }
-    if (_subscribedTargets) { _subscribedTargets = nil; }
+    if (!_subscribedBlocks.count && !_subscribedTargets.count) { return; }
+
+    _subscribedBlocks = nil;
+    _subscribedTargets = nil;
     
-    if (![self.device isKindOfClass:[RelayrDevice class]]) { return; }
-    RelayrDevice* device = (RelayrDevice*)self.device;
-    
-    if (!device.hasOngoingInputSubscriptions)
+    if ([self.device isKindOfClass:[RelayrDevice class]])
     {
-        id <RLAService> service = [RLAServiceSelector serviceCurrentlyInUseByDevice:device];
-        if (service) { [service unsubscribeToDataFromDevice:device]; }
+        [((RelayrDevice*)self) unsubscribeToCurrentServiceIfNecessary];
     }
 }
 
@@ -166,17 +168,18 @@ static NSString* const kCodingDates = @"dat";
     {
         _meaning = meaning;
         _unit = unit;
-        _values = [[NSMutableArray alloc] init];
-        _dates = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
 - (void)setWith:(RelayrInput*)input
 {
-    if (![input.meaning isEqualToString:_meaning]) { return; }
+    // If the input's meaning and units are the same, no further work is needed.
+    if ([_meaning isEqualToString:input.meaning] && [_unit isEqualToString:input.unit]) { return; }
     
-    // TODO: What happens when the unit changes??
+    // If the input's meaning or unit has changed, previous values will not be right. Thus, delete everything stored previously.
+    [_values removeAllObjects];
+    [_dates removeAllObjects];
 }
 
 - (void)valueReceived:(NSObject <NSCopying> *)valueOrError at:(NSDate*)date
@@ -208,10 +211,13 @@ static NSString* const kCodingDates = @"dat";
     // If there is no date, do not allow the value to be stored.
     if (!date) { return; }
     
+    if (!_values) { _values = [[NSMutableArray alloc] init]; }
+    else if (_values.count > dMaxValues) { [_values removeObjectAtIndex:0]; }
     [_values addObject:valueOrError];
-    if (_values.count > dMaxValues) { [_values removeObjectAtIndex:0]; }
-    [_dates addObject:(date) ? date : [NSNull null]];
-    if (_dates.count > dMaxValues) { [_dates removeObjectAtIndex:0]; }
+    
+    if (!_dates) { _dates = [[NSMutableArray alloc] init]; }
+    else if (_dates.count > dMaxValues) { [_dates removeObjectAtIndex:0]; }
+    [_dates addObject:date];
     
     __weak RelayrInput* weakInput = self;
     NSMutableDictionary* tmpBlocks = [NSMutableDictionary dictionaryWithDictionary:_subscribedBlocks];
@@ -249,7 +255,7 @@ static NSString* const kCodingDates = @"dat";
         NSMutableArray* tmpDates = [decoder decodeObjectForKey:kCodingDates];
         
         NSUInteger const numValues = tmpValues.count;
-        if ( numValues > 0 && numValues == tmpDates.count )
+        if (numValues && numValues==tmpDates.count)
         {
             _values = tmpValues;
             _dates = tmpDates;
@@ -264,7 +270,7 @@ static NSString* const kCodingDates = @"dat";
     [coder encodeObject:_unit forKey:kCodingUnit];
     
     NSUInteger const numValues = _values.count;
-    if ( numValues && numValues == _dates.count )
+    if (numValues && numValues==_dates.count)
     {
         [coder encodeObject:_values forKey:kCodingValues];
         [coder encodeObject:_dates forKey:kCodingDates];
@@ -275,7 +281,7 @@ static NSString* const kCodingDates = @"dat";
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"RelayrInput\n{\n\t Meaning: %@\n\t Unit: %@Num values: %@\n\t \n\t Date: %@\n}\n", _meaning, _unit, (_values.lastObject) ? _values.lastObject : @"?", (_dates.lastObject) ? _dates.lastObject : @"?"];
+    return [NSString stringWithFormat:@"RelayrInput\n{\n\t Meaning: %@\n\t Unit: %@\n\t Num values: %@\n\t Date: %@\n}\n", _meaning, _unit, (_values.lastObject) ? _values.lastObject : @"?", (_dates.lastObject) ? _dates.lastObject : @"?"];
 }
 
 #pragma mark - Private

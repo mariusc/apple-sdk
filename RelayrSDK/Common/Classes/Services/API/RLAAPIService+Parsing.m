@@ -111,7 +111,7 @@
     deviceModel.modelName = jsonDict[dRLAAPI_DeviceModel_RespondKey_Name];
     deviceModel.manufacturer = jsonDict[dRLAAPI_DeviceModel_RespondKey_Manufacturer];
     deviceModel.inputs = [RLAAPIService parseDeviceReadingsFromJSONArray:jsonDict[dRLAAPI_DeviceModel_RespondKey_Readings] ofDevice:deviceModel];
-    //device.outputs = [RLAAPIService parseDeviceWritingsFromJSONArray:dict[<#name#>];  // TODO: Do the outputs
+    //device.outputs = [RLAAPIService parseDeviceWritingsFromJSONArray:dict[<#name#>];
 
     NSDictionary* availableFirms = jsonDict[dRLAAPI_DeviceModel_RespondKey_Firmware];
     if (availableFirms)

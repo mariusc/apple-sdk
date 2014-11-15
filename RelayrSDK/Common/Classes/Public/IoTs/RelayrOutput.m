@@ -4,10 +4,10 @@
 #import "RelayrUser.h"              // Relayr.framework (Public)
 #import "RelayrDevice.h"            // Relayr.framework (Public)
 #import "RelayrDeviceModel.h"       // Relayr.framework (Public)
-#import "RelayrUser_Setup.h"        // Relayr.framework (Public)
+#import "RelayrErrors.h"            // Relayr.framework (Public)
+#import "RelayrUser_Setup.h"        // Relayr.framework (Private)
 #import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
 #import "RLAAPIService+Device.h"    // Relayr.framework (Service/API)
-#import "RelayrErrors.h"            // Relayr.framework (Utilities)
 
 static NSString* const kCodingMeaning = @"men";
 
@@ -17,18 +17,7 @@ static NSString* const kCodingMeaning = @"men";
 
 - (instancetype)init
 {
-    [self doesNotRecognizeSelector:_cmd];
-    return nil;
-}
-
-- (instancetype)initWithMeaning:(NSString*)meaning
-{
-    self = [super init];
-    if (self)
-    {
-        _meaning = meaning;
-    }
-    return self;
+    [self doesNotRecognizeSelector:_cmd]; return nil;
 }
 
 - (void)sendValue:(NSString*)value withCompletion:(void (^)(NSError*))completion
@@ -39,6 +28,18 @@ static NSString* const kCodingMeaning = @"men";
     if (!user) { if (completion) { completion(RelayrErrorMissingExpectedValue); } return; }
     
     [user.apiService sendToDeviceID:device.uid withMeaning:_meaning value:value completion:completion];
+}
+
+#pragma mark Setup extension
+
+- (instancetype)initWithMeaning:(NSString*)meaning
+{
+    self = [super init];
+    if (self)
+    {
+        _meaning = meaning;
+    }
+    return self;
 }
 
 #pragma mark NSCoding

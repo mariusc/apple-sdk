@@ -7,6 +7,8 @@
 #import "RLATestsConstants.h"   // Tests
 #import "RelayrApp_TSetup.h"    // Tests
 
+#import "RLAServiceSelector.h"  // FIXME: Delete
+
 /*!
  *  @abstract Test the MQTT Service.
  */
@@ -58,8 +60,13 @@
             if (!gyroscope) { return; }
             NSLog(@"%@", gyroscope);
             
+            for (RelayrInput* input in gyroscope.inputs) { NSLog(@"%@", input); }
             
-            [expectation fulfill];
+            [RLAServiceSelector selectServiceForDevice:gyroscope completion:^(NSError* error, id<RLAService> service) {
+                XCTAssertNil(error);
+                XCTAssertNotNil(service);
+                
+            }];
         }];
     }];
     
