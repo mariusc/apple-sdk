@@ -2,6 +2,7 @@
 #import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
 
 #import "RelayrUser.h"              // Relayr.framework (Public)
+#import "RelayrTransmitter.h"       // Relyar.framework (Public)
 #import "RelayrFirmware.h"          // Relayr.framework (Public)
 #import "RelayrInput.h"             // Relayr.framework (Public)
 #import "RelayrConnection.h"        // Relayr.framework (Public)
@@ -34,6 +35,16 @@ static NSString* const kCodingSecret = @"sec";
 - (instancetype)init
 {
     [self doesNotRecognizeSelector:_cmd];
+    return nil;
+}
+
+- (RelayrTransmitter*)transmitter
+{
+    for (RelayrTransmitter* transmitter in _user.transmitters)
+    {
+        for (RelayrDevice* device in transmitter.devices) { if (device==self) { return transmitter; } }
+    }
+    
     return nil;
 }
 
@@ -158,7 +169,7 @@ static NSString* const kCodingSecret = @"sec";
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"RelayrDevice\n{\n\t Relayr ID: %@\n\t Name: %@\n\t Owner: %@\n\t Firmware version: %@\n\t MQTT secret: %@\n}\n", _uid, _name, (_owner) ? _owner : @"?", (_firmware.version) ? _firmware.version : @"?", _secret];
+    return [NSString stringWithFormat:@"RelayrDevice\n{\n\t Relayr ID: %@\n\t Name: %@\n\t Owner: %@\n\t Firmware version: %@\n\t MQTT secret: %@\n\t Model ID: %@\n\t Model name: %@\n\t Manufacturer: %@\n\t Num firmwares available: %lu\n\t Num inputs: %lu\n\t Num outputs: %lu\n}\n", _uid, _name, (_owner) ? _owner : @"?", (_firmware.version) ? _firmware.version : @"?", _secret, self.modelID, self.modelName, self.manufacturer, (unsigned long)self.firmwaresAvailable.count, (unsigned long)self.inputs.count, (unsigned long)self.outputs.count];
 }
 
 @end

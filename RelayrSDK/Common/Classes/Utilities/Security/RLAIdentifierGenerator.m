@@ -33,4 +33,12 @@
     return result;
 }
 
++ (NSString*)randomIDWithMaximumRandomNumber:(NSUInteger)max
+{
+    if (max == 0) { return nil; }
+    
+    unsigned long const randomNumber = arc4random() % ((unsigned)max + 1);
+    return [NSString stringWithFormat:@"%lu", randomNumber];
+}
+
 @end

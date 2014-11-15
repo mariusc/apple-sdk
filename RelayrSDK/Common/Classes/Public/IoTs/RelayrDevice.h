@@ -1,6 +1,7 @@
 @import Foundation;             // Apple
 #import "RelayrDeviceModel.h"   // Relayr.framework (Public)
 @class RelayrUser;              // Relayr.framework (Public)
+@class RelayrTransmitter;       // Relayr.framework (Public)
 @class RelayrFirmware;          // Relayr.framework (Public)
 @class RelayrConnection;        // Relayr.framework (Public)
 #import "RelayrInput.h"         // Relayr.framework (Public)
@@ -16,10 +17,18 @@
 @interface RelayrDevice : RelayrDeviceModel <NSCoding>
 
 /*!
- *  @abstract User currently "using" this transmitter.
+ *  @abstract User currently "using" this device.
  *  @discussion A public device can be owned by another Relayr user, but being used by your <code>RelayrUser</code> entity.
  */
 @property (readonly,weak,nonatomic) RelayrUser* user;
+
+/*!
+ *  @abstract The transmitter that this device is linked with.
+ *  @discussion Be aware that using this property implies a deep search on the IoT tree. Only use it when necessary.
+ *
+ *  @return A fully initialised transmitter or <code>nil</code>.
+ */
+@property (readonly,weak,nonatomic) RelayrTransmitter* transmitter;
 
 /*!
  *  @abstract A unique idenfier of the <code>RelayrDevice</code>'s instance.
@@ -167,7 +176,7 @@
                                  error:(RelayrInputErrorReceivedBlock)errorBlock;
 
 /*!
- *  @abstract Removes all subscriptions for the device.
+ *  @abstract Removes all subscriptions for the device (including inputs and connection subscriptions).
  *  @discussion All subscriptions, whether blocks or target objects are removed.
  */
 - (void)removeAllSubscriptions;

@@ -45,11 +45,24 @@
 
 - (void)testMQTTServiceInitialisationAndConnection
 {
-    XCTAssertNil(_user.mqttService);
-    _user.mqttService = [[RLAMQTTService alloc] initWithUser:_user];
-    XCTAssertNotNil(_user.mqttService);
-    
     XCTestExpectation* expectation = [self expectationWithDescription:nil];
+    
+    [_user queryCloudForUserInfo:^(NSError* error, NSString* previousName, NSString* previousEmail) {
+        XCTAssertNil(error);
+        [_user queryCloudForIoTs:^(NSError* error) {
+            XCTAssertNil(error);
+            
+            RelayrDevice* gyroscope;
+            for (RelayrDevice* device in _user.devices) { if ([device.modelID isEqualToString:@"173c44b5-334e-493f-8eb8-82c8cc65d29f"]) { gyroscope = device; break; } }
+            
+            if (!gyroscope) { return; }
+            NSLog(@"%@", gyroscope);
+            
+            
+            [expectation fulfill];
+        }];
+    }];
+    
     [self waitForExpectationsWithTimeout:20 handler:nil];
 }
 

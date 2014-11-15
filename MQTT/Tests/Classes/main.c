@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
     MQTTAsync client;
     int status = MQTTAsync_create(&client, ADDRESS, CLIENTID, MQTTCLIENT_PERSISTENCE_NONE, NULL);
     if (status != MQTTASYNC_SUCCESS) { printf("Not able to create an MQTTAsync object.\n"); exit(-1); }
-    MQTTAsync_setCallbacks(client, NULL, connlost, msgarrvd, NULL);
+    MQTTAsync_setCallbacks(client, client, connlost, msgarrvd, NULL);
     
     status = connectMQTT(client);
     if (status != MQTTASYNC_SUCCESS) { printf("MQTTAsync object not accepted for connection with code: %d.\n", status); goto salida; }

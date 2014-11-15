@@ -1,6 +1,7 @@
 #import "RLAAPIService.h"           // Header
 #import "RelayrCloud.h"             // Relayr.framework (Public)
 #import "RelayrUser.h"              // Relayr.framework (Public)
+#import "RelayrErrors.h"            // Relayr.framework (Public)
 #import "RLAAPIConstants.h"         // Relayr.framework (Service/API)
 
 // WebRequests methods
@@ -77,6 +78,25 @@ NSString* const kRLAAPIRequestModePUT       = @"PUT";
     if (authorizationToken.length) { [request setValue:dRLAAPIRequest_HeaderValue_Authorization(authorizationToken) forHTTPHeaderField:dRLAAPIRequest_HeaderField_Authorization]; }
     
     return request;
+}
+
++ (NSError*)internetErrorForConnectionState:(RelayrConnectionState)connectionState
+{
+    switch (connectionState) {
+        case RelayrConnectionStateConnecting:
+        case RelayrConnectionStateConnected:
+            return nil;
+        case RelayrConnectionStateUnknown:
+            return RelayrErrorInternetProblemUnknwon;
+        case RelayrConnectionStateUnauthorized:
+            return RelayrErrorInternetUnauthorized;
+        case RelayrConnectionStateUnsupported:
+            return RelayrErrorInternetUnsupported;
+        case RelayrConnectionStateDisconnecting:
+            return RelayrErrorInternetResetting;
+        default:
+            return RelayrErrorInternetProblemUnknwon;
+    }
 }
 
 @end

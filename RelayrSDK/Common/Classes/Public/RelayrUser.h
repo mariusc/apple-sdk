@@ -53,6 +53,16 @@
 @property (readonly,nonatomic) NSString* email;
 
 /*!
+ *  @abstract It sets a user's email to a new value.
+ *  @discussion This method tries to push to the server the new email, it it is not successful, the local name is not changed.
+ *
+ *  @param email The new email for the user.
+ *  @param completion Block indicating the result of the server push.
+ */
+- (void)setEmail:(NSString*)email
+      completion:(void (^)(NSError* error, NSString* previousEmail))completion;
+
+/*!
  *  @abstract Relayr applications installed the specific <code>RelayrUser</code> instace.
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  *      If <code>nil</code>, the authorised apps are unknown. If it is an empty set, there are no authorised apps.

@@ -93,6 +93,8 @@
 + (NSString*)stringRepresentationOfConnectionState:(RelayrConnectionState)state
 {
     return  (state == RelayrConnectionStateUnknown)         ? @"Unknown"        :
+            (state == RelayrConnectionStateUnsupported)     ? @"Unsupported"    :
+            (state == RelayrConnectionStateUnauthorized)    ? @"Unauthorized"   :
             (state == RelayrConnectionStateConnecting)      ? @"Connecting"     :
             (state == RelayrConnectionStateConnected)       ? @"Connected"      :
             (state == RelayrConnectionStateDisconnecting)   ? @"Disconneting"   : nil;

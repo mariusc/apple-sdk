@@ -19,7 +19,7 @@
  *  @see RLAService
  */
 + (void)selectServiceForDevice:(RelayrDevice*)device
-                    completion:(void (^)(id <RLAService> service))completion;
+                    completion:(void (^)(NSError* error, id <RLAService> service))completion;
 
 /*!
  *  @abstract It returns the service providing the information of the passed object.

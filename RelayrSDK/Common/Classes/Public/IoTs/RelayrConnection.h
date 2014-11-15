@@ -30,6 +30,22 @@ typedef NS_ENUM(NSUInteger, RelayrConnectionProtocol) {
 };
 
 /*!
+ *  @abstract The scope of the connection.
+ *  @discussion The scope provide interesting information about the technology being used for the connection.
+ *
+ *  @constant RelayrConnectionScopeUnknown The scope is unknown at the moment.
+ *  @constant RelayrConnectionScopePAN Personal Area Network scope. Technologies included here are BLE, Zigbee, etc.
+ *  @constant RelayrConnectionScopeLAN Local Area Network scope. Technologies included here are Ethernet cable connection, WiFi connections, etc.
+ *  @constant RelayrConnectionScopeWAN Wide Area Network scope. Many of the current mobile connection technologies are included here: EDGE, 3G, LTE, etc.
+ */
+typedef NS_ENUM(NSUInteger, RelayrConnectionScope) {
+    RelayrConnectionScopeUnknown,
+    RelayrConnectionScopePAN,
+    RelayrConnectionScopeLAN,
+    RelayrConnectionScopeWAN
+};
+
+/*!
  *  @abstract The state of the connection.
  *
  *  @constant RelayrConnectionStateUnknonw The state of the connection is unknown.
@@ -47,22 +63,6 @@ typedef NS_ENUM(NSUInteger, RelayrConnectionState) {
     RelayrConnectionStateConnected,
     RelayrConnectionStateDisconnecting,
     RelayrConnectionStateDisconnected
-};
-
-/*!
- *  @abstract The scope of the connection.
- *  @discussion The scope provide interesting information about the technology being used for the connection.
- *
- *  @constant RelayrConnectionScopeUnknown The scope is unknown at the moment.
- *  @constant RelayrConnectionScopePAN Personal Area Network scope. Technologies included here are BLE, Zigbee, etc.
- *  @constant RelayrConnectionScopeLAN Local Area Network scope. Technologies included here are Ethernet cable connection, WiFi connections, etc.
- *  @constant RelayrConnectionScopeWAN Wide Area Network scope. Many of the current mobile connection technologies are included here: EDGE, 3G, LTE, etc.
- */
-typedef NS_ENUM(NSUInteger, RelayrConnectionScope) {
-    RelayrConnectionScopeUnknown,
-    RelayrConnectionScopePAN,
-    RelayrConnectionScopeLAN,
-    RelayrConnectionScopeWAN
 };
 
 /*!
@@ -109,6 +109,21 @@ typedef NS_ENUM(NSUInteger, RelayrConnectionScope) {
 @property (readonly,nonatomic) BOOL hasOngoingSubscriptions;
 
 /*!
+ *  @abstract Subscribes the block to the state changes of this connection.
+ *  @discussion The block will be executed each time the connection state changes.
+ *
+ *  @param block This block will be executed each time data is available. The block contains three parameters:
+ *      - <code>connection</code>. The connection abstraction object.
+ *      - <code>currentState</code>. The current state of the connection.
+ *      - <code>previousState</code>. The previous state of the connection.
+ *      - <code>unsubscribe</code>. A Boolean parameter, that when set to <code>NO</code>, will stop the subscription.
+ *	@param subscriptionError A Block executed if the subscription cannot be performed (it can be <code>nil</code>.
+ *	If this block is defined, a boolean must be returned, indicating if a subscription retry should be attempted.
+ */
+- (void)subscribeToStateChangesWithBlock:(void (^)(RelayrConnection* connection, RelayrConnectionState currentState, RelayrConnectionState previousState, BOOL* unsubscribe))block
+                                   error:(void (^)(NSError* error))subscriptionError;
+
+/*!
  *  @abstract Subscribes to the state change of the connection.
  *  @discussion Within this method, it is possible to query for the connection type.
  *
@@ -122,21 +137,6 @@ typedef NS_ENUM(NSUInteger, RelayrConnectionScope) {
 - (void)subscribeToStateChangesWithTarget:(id)target
                                    action:(SEL)action
                                     error:(void (^)(NSError* error))subscriptionError;
-
-/*!
- *  @abstract Subscribes the block to the state changes of this connection.
- *  @discussion The block will be executed each time the connection state changes.
- *
- *  @param block This block will be executed each time data is available. The block contains three parameters:
- *      - <code>connection</code>. The connection abstraction object.
- *      - <code>currentState</code>. The current state of the connection.
- *      - <code>previousState</code>. The previous state of the connection.
- *      - <code>unsubscribe</code>. A Boolean parameter, that when set to <code>NO</code>, will stop the subscription.
- *	@param subscriptionError A Block executed if the subscription cannot be performed (it can be <code>nil</code>. 
- *	If this block is defined, a boolean must be returned, indicating if a subscription retry should be attempted. 
- */
-- (void)subscribeToStateChangesWithBlock:(void (^)(RelayrConnection* connection, RelayrConnectionState currentState, RelayrConnectionState previousState, BOOL* unsubscribe))block
-                                   error:(void (^)(NSError* error))subscriptionError;
 
 /*!
  *  @abstract Unsubscribes the specific action from the target object.

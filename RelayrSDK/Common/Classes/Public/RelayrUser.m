@@ -4,22 +4,17 @@
 #import "RelayrTransmitter.h"           // Relayr.framework (Public)
 #import "RelayrDevice.h"                // Relayr.framework (Public)
 #import "RelayrPublisher.h"             // Relayr.framework (Public)
-
+#import "RelayrErrors.h"                // Relayr.framework (Public)
 #import "RelayrApp_Setup.h"             // Relayr.framework (Private)
 #import "RelayrUser_Setup.h"            // Relayr.framework (Private)
 #import "RelayrPublisher_Setup.h"       // Relayr.framework (Private)
 #import "RelayrTransmitter_Setup.h"     // Relayr.framework (Private)
 #import "RelayrDevice_Setup.h"          // Relayr.framework (Private)
-
 #import "RLAAPIService.h"               // Relayr.framework (Service/API)
 #import "RLAAPIService+User.h"          // Relayr.framework (Service/API)
 #import "RLAAPIService+Publisher.h"     // Relayr.framework (Service/API)
 #import "RLAAPIService+Transmitter.h"   // Relayr.framework (Service/API)
 #import "RLAAPIService+Device.h"        // Relayr.framework (Service/API)
-#import "RLAMQTTService.h"              // Relayr.framework (Service/MQTT)
-#import "RLABLEService.h"               // Relayr.framework (Service/BLE)
-
-#import "RelayrErrors.h"                // Relayr.framework (Utilities)
 
 static NSString* const kCodingToken = @"tok";
 static NSString* const kCodingApp = @"app";
@@ -40,6 +35,32 @@ static NSString* const kCodingPublishers = @"pub";
 {
     [self doesNotRecognizeSelector:_cmd];
     return nil;
+}
+
+- (void)setNameWith:(NSString *)name completion:(void (^)(NSError* error, NSString* previousName))completion
+{
+    __weak RelayrUser* weakSelf = self;
+    [_apiService setUserName:name email:nil completion:^(NSError* error) {
+        if (error) { if (completion) { completion(error, nil); } return; }
+        
+        __strong RelayrUser* strongSelf = weakSelf;
+        NSString* pName = strongSelf.name;
+        strongSelf.name = name;
+        if (completion) { completion(nil, pName); }
+    }];
+}
+
+- (void)setEmail:(NSString*)email completion:(void (^)(NSError* error, NSString* previousEmail))completion
+{
+    __weak RelayrUser* weakSelf = self;
+    [_apiService setUserName:nil email:email completion:^(NSError *error) {
+        if (error) { if (completion) { completion(error, nil); } return; }
+        
+        __strong RelayrUser* strongSelf = weakSelf;
+        NSString* pEmail = strongSelf.email;
+        strongSelf.email = email;
+        if (completion) { completion(nil, pEmail); }
+    }];
 }
 
 - (void)queryCloudForUserInfo:(void (^)(NSError* error, NSString* previousName, NSString* previousEmail))completion

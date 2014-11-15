@@ -28,8 +28,7 @@ static NSString* const kCodingDates = @"dat";
 
 - (instancetype)init
 {
-    [self doesNotRecognizeSelector:_cmd];
-    return nil;
+    [self doesNotRecognizeSelector:_cmd]; return nil;
 }
 
 - (id)value
@@ -70,8 +69,9 @@ static NSString* const kCodingDates = @"dat";
     // If this line is reached, there were no previous subscription...
     __weak RelayrDevice* weakDevice = device;
     __weak RelayrInput* weakInput = self;
-    [RLAServiceSelector selectServiceForDevice:device completion:^(id<RLAService> service) {
-        if (!service) { if (errorBlock) { errorBlock(RelayrErrorNoConnectionPossible); } return; }
+    [RLAServiceSelector selectServiceForDevice:device completion:^(NSError* error, id<RLAService> service) {
+        if (error) { if (errorBlock) { errorBlock(error); } return; }
+        if (!service) { if (errorBlock) { errorBlock(RelayrErrorNoServiceAvailable); } return; }
         
         [service subscribeToDataFromDevice:weakDevice completion:^(NSError* error) {
             if (error) { if (errorBlock) { errorBlock(error); } return; }
@@ -107,8 +107,9 @@ static NSString* const kCodingDates = @"dat";
     // If this line is reached, there was no previous subscription...
     __weak RelayrDevice* weakDevice = device;
     __weak RelayrInput* weakInput = self;
-    [RLAServiceSelector selectServiceForDevice:device completion:^(id<RLAService> service) {
-        if (!service) { if (errorBlock) { errorBlock(RelayrErrorNoConnectionPossible); } return; }
+    [RLAServiceSelector selectServiceForDevice:device completion:^(NSError* error, id<RLAService> service) {
+        if (error) { if (errorBlock) { errorBlock(error); } return; }
+        if (!service) { if (errorBlock) { errorBlock(RelayrErrorNoServiceAvailable); } return; }
         
         [service subscribeToDataFromDevice:weakDevice completion:^(NSError* error) {
             if (error) { if (errorBlock) { errorBlock(error); } return; }
@@ -132,11 +133,7 @@ static NSString* const kCodingDates = @"dat";
     RLATargetAction* matchedPair;
     for (RLATargetAction* pair in _subscribedTargets)
     {
-        if (pair.target==target && pair.action==action)
-        {
-            matchedPair = pair;
-            break;
-        }
+        if (pair.target==target && pair.action==action) { matchedPair = pair; break; }
     }
     
     if (matchedPair) { [_subscribedTargets removeObjectForKey:matchedPair]; }
@@ -205,7 +202,6 @@ static NSString* const kCodingDates = @"dat";
         [targets enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL* stop) {
             if (obj != null) { ((RelayrInputErrorReceivedBlock)obj)(error); }
         }]; targets = nil;
-        
         return;
     }
     

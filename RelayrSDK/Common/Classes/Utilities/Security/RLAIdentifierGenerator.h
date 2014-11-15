@@ -26,4 +26,11 @@
  */
 + (NSString*)identifierForVendor;
 
+/*!
+ *  @abstract It generates a <code>NSString</code> with a random number between 0 and the maximum random number given.
+ *
+ *  @return <code>NSString</code> with a random generated number.
+ */
++ (NSString*)randomIDWithMaximumRandomNumber:(NSUInteger)max;
+
 @end

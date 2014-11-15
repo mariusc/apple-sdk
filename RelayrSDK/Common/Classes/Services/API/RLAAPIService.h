@@ -79,4 +79,10 @@ FOUNDATION_EXPORT NSString* const kRLAAPIRequestModePUT;
  */
 + (NSMutableURLRequest*)requestForURL:(NSURL*)absoluteURL HTTPMethod:(NSString*)httpMode authorizationToken:(NSString*)authorizationToken;
 
+/*!
+ *  @abstract A <code>NSError</code> object is returned with the characteristics of the passed <code>RelayrConnectionState</code>
+ *  @discussion The <i>connected</i> and <i>connecting</i> states, return <code>nil</code>.
+ */
++ (NSError*)internetErrorForConnectionState:(RelayrConnectionState)connectionState;
+
 @end
