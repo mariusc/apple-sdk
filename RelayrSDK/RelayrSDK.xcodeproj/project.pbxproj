@@ -37,7 +37,6 @@
 		622E7EAB19CF834500948558 /* RelayrFirmwareUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EAA19CF834500948558 /* RelayrFirmwareUpdate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		622E7EAC19CF834500948558 /* RelayrFirmwareUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 622E7EAA19CF834500948558 /* RelayrFirmwareUpdate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6239CB7B1A06A1FD00DF6832 /* RLAMQTTServiceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6239CB7A1A06A1FD00DF6832 /* RLAMQTTServiceTest.m */; };
-		6239CB7C1A07820600DF6832 /* RLAWebOAuthControllerOSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 6285F38019C1B2700097B299 /* RLAWebOAuthControllerOSX.m */; };
 		623F325819A786B700F774EB /* RelayrCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D1718719A62D63009BBED1 /* RelayrCloud.m */; };
 		623F325919A786BA00F774EB /* RelayrCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D1718619A62D63009BBED1 /* RelayrCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		623F325A19A786BC00F774EB /* RelayrApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D1718B19A62E8D009BBED1 /* RelayrApp.m */; };
@@ -75,9 +74,6 @@
 		62732D4319C05A24000E9545 /* RelayrConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 62732D4019C05A24000E9545 /* RelayrConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		62732D4419C05A24000E9545 /* RelayrConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 62732D4119C05A24000E9545 /* RelayrConnection.m */; };
 		62732D4519C05A24000E9545 /* RelayrConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 62732D4119C05A24000E9545 /* RelayrConnection.m */; };
-		6285F37B19C1AF8E0097B299 /* RLAWebOAuthControllerIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F37919C1AF8E0097B299 /* RLAWebOAuthControllerIOS.h */; };
-		6285F37C19C1AF8E0097B299 /* RLAWebOAuthControllerIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 6285F37A19C1AF8E0097B299 /* RLAWebOAuthControllerIOS.m */; };
-		6285F38119C1B2700097B299 /* RLAWebOAuthControllerOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 6285F37F19C1B2700097B299 /* RLAWebOAuthControllerOSX.h */; };
 		629666E019D0169B003C99D9 /* WunderbarOnboarding.h in Headers */ = {isa = PBXBuildFile; fileRef = 629666DE19D0169B003C99D9 /* WunderbarOnboarding.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		629666E119D0169B003C99D9 /* WunderbarOnboarding.h in Headers */ = {isa = PBXBuildFile; fileRef = 629666DE19D0169B003C99D9 /* WunderbarOnboarding.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		629666E219D0169B003C99D9 /* WunderbarOnboarding.m in Sources */ = {isa = PBXBuildFile; fileRef = 629666DF19D0169B003C99D9 /* WunderbarOnboarding.m */; };
@@ -87,12 +83,12 @@
 		6298AF3819D5F2250097E956 /* RLATargetAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 6298AF3519D5F2250097E956 /* RLATargetAction.m */; };
 		6298AF3919D5F2250097E956 /* RLATargetAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 6298AF3519D5F2250097E956 /* RLATargetAction.m */; };
 		6299E0B919F2E797004A9A70 /* libMQTT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6299E0AF19F2E766004A9A70 /* libMQTT.a */; };
-		62AAA5C81A08EC0600113F6D /* RLAAPIConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 62AAA5A81A08EC0600113F6D /* RLAAPIConstants.h */; };
-		62AAA5C91A08EC0600113F6D /* RLAAPIConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 62AAA5A81A08EC0600113F6D /* RLAAPIConstants.h */; };
-		62AAA5CA1A08EC0600113F6D /* RLAAPIRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 62AAA5A91A08EC0600113F6D /* RLAAPIRequest.h */; };
-		62AAA5CB1A08EC0600113F6D /* RLAAPIRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 62AAA5A91A08EC0600113F6D /* RLAAPIRequest.h */; };
-		62AAA5CC1A08EC0600113F6D /* RLAAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AAA5AA1A08EC0600113F6D /* RLAAPIRequest.m */; };
-		62AAA5CD1A08EC0600113F6D /* RLAAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AAA5AA1A08EC0600113F6D /* RLAAPIRequest.m */; };
+		629D6CB31A16CD230047F8EC /* RLAAPIConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 629D6CB21A16CD230047F8EC /* RLAAPIConstants.h */; };
+		629D6CB41A16CD230047F8EC /* RLAAPIConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 629D6CB21A16CD230047F8EC /* RLAAPIConstants.h */; };
+		629D6CBB1A16CE480047F8EC /* RLAWebOAuthControllerIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 629D6CB91A16CE480047F8EC /* RLAWebOAuthControllerIOS.h */; };
+		629D6CBD1A16CE480047F8EC /* RLAWebOAuthControllerIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 629D6CBA1A16CE480047F8EC /* RLAWebOAuthControllerIOS.m */; };
+		629D6CC51A16CE760047F8EC /* RLAWebOAuthControllerOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 629D6CC31A16CE760047F8EC /* RLAWebOAuthControllerOSX.h */; };
+		629D6CC61A16CE760047F8EC /* RLAWebOAuthControllerOSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 629D6CC41A16CE760047F8EC /* RLAWebOAuthControllerOSX.m */; };
 		62AAA5CE1A08EC0600113F6D /* RLAAPIService+App.h in Headers */ = {isa = PBXBuildFile; fileRef = 62AAA5AB1A08EC0600113F6D /* RLAAPIService+App.h */; };
 		62AAA5CF1A08EC0600113F6D /* RLAAPIService+App.h in Headers */ = {isa = PBXBuildFile; fileRef = 62AAA5AB1A08EC0600113F6D /* RLAAPIService+App.h */; };
 		62AAA5D01A08EC0600113F6D /* RLAAPIService+App.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AAA5AC1A08EC0600113F6D /* RLAAPIService+App.m */; };
@@ -327,10 +323,6 @@
 		6254F80619CACA62006C836F /* RelayrFirmwareModel_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrFirmwareModel_Setup.h; sourceTree = "<group>"; };
 		62732D4019C05A24000E9545 /* RelayrConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrConnection.h; sourceTree = "<group>"; };
 		62732D4119C05A24000E9545 /* RelayrConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrConnection.m; sourceTree = "<group>"; };
-		6285F37919C1AF8E0097B299 /* RLAWebOAuthControllerIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebOAuthControllerIOS.h; sourceTree = "<group>"; };
-		6285F37A19C1AF8E0097B299 /* RLAWebOAuthControllerIOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebOAuthControllerIOS.m; sourceTree = "<group>"; };
-		6285F37F19C1B2700097B299 /* RLAWebOAuthControllerOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebOAuthControllerOSX.h; sourceTree = "<group>"; };
-		6285F38019C1B2700097B299 /* RLAWebOAuthControllerOSX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebOAuthControllerOSX.m; sourceTree = "<group>"; };
 		6291E96E1A13B2EB00750607 /* Relayr_Tests_AdHoc.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Tests_AdHoc.xcconfig; sourceTree = "<group>"; };
 		6291E96F1A13B2EB00750607 /* Relayr_Tests_Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Tests_Debug.xcconfig; sourceTree = "<group>"; };
 		6291E9701A13B2EB00750607 /* Relayr_Tests_Distribution.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Tests_Distribution.xcconfig; sourceTree = "<group>"; };
@@ -346,9 +338,11 @@
 		6298AF3419D5F2250097E956 /* RLATargetAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLATargetAction.h; sourceTree = "<group>"; };
 		6298AF3519D5F2250097E956 /* RLATargetAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLATargetAction.m; sourceTree = "<group>"; };
 		6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MQTT.xcodeproj; path = ../MQTT/MQTT.xcodeproj; sourceTree = "<group>"; };
-		62AAA5A81A08EC0600113F6D /* RLAAPIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAAPIConstants.h; sourceTree = "<group>"; };
-		62AAA5A91A08EC0600113F6D /* RLAAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAAPIRequest.h; sourceTree = "<group>"; };
-		62AAA5AA1A08EC0600113F6D /* RLAAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAAPIRequest.m; sourceTree = "<group>"; };
+		629D6CB21A16CD230047F8EC /* RLAAPIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAAPIConstants.h; sourceTree = "<group>"; };
+		629D6CB91A16CE480047F8EC /* RLAWebOAuthControllerIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebOAuthControllerIOS.h; sourceTree = "<group>"; };
+		629D6CBA1A16CE480047F8EC /* RLAWebOAuthControllerIOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebOAuthControllerIOS.m; sourceTree = "<group>"; };
+		629D6CC31A16CE760047F8EC /* RLAWebOAuthControllerOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWebOAuthControllerOSX.h; sourceTree = "<group>"; };
+		629D6CC41A16CE760047F8EC /* RLAWebOAuthControllerOSX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWebOAuthControllerOSX.m; sourceTree = "<group>"; };
 		62AAA5AB1A08EC0600113F6D /* RLAAPIService+App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLAAPIService+App.h"; sourceTree = "<group>"; };
 		62AAA5AC1A08EC0600113F6D /* RLAAPIService+App.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLAAPIService+App.m"; sourceTree = "<group>"; };
 		62AAA5AD1A08EC0600113F6D /* RLAAPIService+Cloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLAAPIService+Cloud.h"; sourceTree = "<group>"; };
@@ -664,7 +658,7 @@
 			isa = PBXGroup;
 			children = (
 				6252F0D5199C24AD002ECE4D /* Relayr.h */,
-				6285F37719C1AF8E0097B299 /* Web */,
+				629D6CB71A16CE480047F8EC /* Services */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -696,7 +690,7 @@
 			isa = PBXGroup;
 			children = (
 				6252F100199C2BFC002ECE4D /* Relayr.h */,
-				6285F37D19C1B2700097B299 /* Web */,
+				629D6CC11A16CE760047F8EC /* Services */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -731,42 +725,6 @@
 				62B64D7B19F00BAB00DCD7AA /* RelayrDeviceTest.m */,
 			);
 			path = IoTs;
-			sourceTree = "<group>";
-		};
-		6285F37719C1AF8E0097B299 /* Web */ = {
-			isa = PBXGroup;
-			children = (
-				6285F37819C1AF8E0097B299 /* Views */,
-			);
-			name = Web;
-			path = ../../iOS/Classes/Web;
-			sourceTree = "<group>";
-		};
-		6285F37819C1AF8E0097B299 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				6285F37919C1AF8E0097B299 /* RLAWebOAuthControllerIOS.h */,
-				6285F37A19C1AF8E0097B299 /* RLAWebOAuthControllerIOS.m */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		6285F37D19C1B2700097B299 /* Web */ = {
-			isa = PBXGroup;
-			children = (
-				6285F37E19C1B2700097B299 /* Views */,
-			);
-			name = Web;
-			path = ../../OSX/Classes/Web;
-			sourceTree = "<group>";
-		};
-		6285F37E19C1B2700097B299 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				6285F37F19C1B2700097B299 /* RLAWebOAuthControllerOSX.h */,
-				6285F38019C1B2700097B299 /* RLAWebOAuthControllerOSX.m */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		6292F24419C99F9A00087F3B /* Models */ = {
@@ -828,6 +786,40 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		629D6CB71A16CE480047F8EC /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				629D6CB81A16CE480047F8EC /* API */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		629D6CB81A16CE480047F8EC /* API */ = {
+			isa = PBXGroup;
+			children = (
+				629D6CB91A16CE480047F8EC /* RLAWebOAuthControllerIOS.h */,
+				629D6CBA1A16CE480047F8EC /* RLAWebOAuthControllerIOS.m */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		629D6CC11A16CE760047F8EC /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				629D6CC21A16CE760047F8EC /* API */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		629D6CC21A16CE760047F8EC /* API */ = {
+			isa = PBXGroup;
+			children = (
+				629D6CC31A16CE760047F8EC /* RLAWebOAuthControllerOSX.h */,
+				629D6CC41A16CE760047F8EC /* RLAWebOAuthControllerOSX.m */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		62AAA5A51A08EC0600113F6D /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -844,36 +836,26 @@
 		62AAA5A61A08EC0600113F6D /* API */ = {
 			isa = PBXGroup;
 			children = (
-				62AAA5A71A08EC0600113F6D /* Requests */,
 				62AAA5B91A08EC0600113F6D /* RLAAPIService.h */,
 				62AAA5BA1A08EC0600113F6D /* RLAAPIService.m */,
-				62AAA5AB1A08EC0600113F6D /* RLAAPIService+App.h */,
-				62AAA5AC1A08EC0600113F6D /* RLAAPIService+App.m */,
 				62AAA5AD1A08EC0600113F6D /* RLAAPIService+Cloud.h */,
 				62AAA5AE1A08EC0600113F6D /* RLAAPIService+Cloud.m */,
-				62AAA5AF1A08EC0600113F6D /* RLAAPIService+Device.h */,
-				62AAA5B01A08EC0600113F6D /* RLAAPIService+Device.m */,
-				62AAA5B11A08EC0600113F6D /* RLAAPIService+Parsing.h */,
-				62AAA5B21A08EC0600113F6D /* RLAAPIService+Parsing.m */,
+				62AAA5AB1A08EC0600113F6D /* RLAAPIService+App.h */,
+				62AAA5AC1A08EC0600113F6D /* RLAAPIService+App.m */,
+				62AAA5B71A08EC0600113F6D /* RLAAPIService+User.h */,
+				62AAA5B81A08EC0600113F6D /* RLAAPIService+User.m */,
 				62AAA5B31A08EC0600113F6D /* RLAAPIService+Publisher.h */,
 				62AAA5B41A08EC0600113F6D /* RLAAPIService+Publisher.m */,
 				62AAA5B51A08EC0600113F6D /* RLAAPIService+Transmitter.h */,
 				62AAA5B61A08EC0600113F6D /* RLAAPIService+Transmitter.m */,
-				62AAA5B71A08EC0600113F6D /* RLAAPIService+User.h */,
-				62AAA5B81A08EC0600113F6D /* RLAAPIService+User.m */,
+				62AAA5AF1A08EC0600113F6D /* RLAAPIService+Device.h */,
+				62AAA5B01A08EC0600113F6D /* RLAAPIService+Device.m */,
+				62AAA5B11A08EC0600113F6D /* RLAAPIService+Parsing.h */,
+				62AAA5B21A08EC0600113F6D /* RLAAPIService+Parsing.m */,
+				629D6CB21A16CD230047F8EC /* RLAAPIConstants.h */,
 				62AAA5BB1A08EC0600113F6D /* Views */,
 			);
 			path = API;
-			sourceTree = "<group>";
-		};
-		62AAA5A71A08EC0600113F6D /* Requests */ = {
-			isa = PBXGroup;
-			children = (
-				62AAA5A81A08EC0600113F6D /* RLAAPIConstants.h */,
-				62AAA5A91A08EC0600113F6D /* RLAAPIRequest.h */,
-				62AAA5AA1A08EC0600113F6D /* RLAAPIRequest.m */,
-			);
-			path = Requests;
 			sourceTree = "<group>";
 		};
 		62AAA5BB1A08EC0600113F6D /* Views */ = {
@@ -1037,36 +1019,24 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62AAA5D61A08EC0600113F6D /* RLAAPIService+Device.h in Headers */,
 				6252F0DF199C24E2002ECE4D /* Relayr.h in Headers */,
 				62D1718819A62D63009BBED1 /* RelayrCloud.h in Headers */,
-				62AAA5E21A08EC0600113F6D /* RLAAPIService+Transmitter.h in Headers */,
 				62D1718C19A62E8D009BBED1 /* RelayrApp.h in Headers */,
 				62D1719719A65C98009BBED1 /* RelayrUser.h in Headers */,
 				6250E18B19B50A0D003932AA /* RelayrPublisher.h in Headers */,
 				62D1719F19A65D3B009BBED1 /* RelayrTransmitter.h in Headers */,
 				62D1719B19A65CCC009BBED1 /* RelayrDevice.h in Headers */,
-				62AAA5EA1A08EC0600113F6D /* RLAAPIService.h in Headers */,
 				62C50A6119CAB8CB0078907A /* RelayrDeviceModel.h in Headers */,
 				622CAFF819BCB02100F686B3 /* RelayrFirmware.h in Headers */,
 				62C50A6719CAB9150078907A /* RelayrFirmwareModel.h in Headers */,
-				62AAA5E61A08EC0600113F6D /* RLAAPIService+User.h in Headers */,
-				62AAA5DE1A08EC0600113F6D /* RLAAPIService+Publisher.h in Headers */,
 				622CAFFE19BCB04B00F686B3 /* RelayrInput.h in Headers */,
-				62AAA5F21A08EC0600113F6D /* RLABLEService.h in Headers */,
 				622CB00419BCB07200F686B3 /* RelayrOutput.h in Headers */,
 				62732D4219C05A24000E9545 /* RelayrConnection.h in Headers */,
 				622E7EA819CF829400948558 /* RelayrOnboarding.h in Headers */,
 				622E7EAB19CF834500948558 /* RelayrFirmwareUpdate.h in Headers */,
-				62AAA5F61A08EC0600113F6D /* RLAMQTTConstants.h in Headers */,
-				62AAA5DA1A08EC0600113F6D /* RLAAPIService+Parsing.h in Headers */,
-				62AAA5D21A08EC0600113F6D /* RLAAPIService+Cloud.h in Headers */,
 				6203381E19D06BA50088CB1D /* RelayrErrors.h in Headers */,
 				62B0B38019D0B77400AD59BF /* Wunderbar.h in Headers */,
 				62B3BA2319D9A3DD009EB055 /* WunderbarErrors.h in Headers */,
-				62AAA5FE1A08EC0600113F6D /* RLAServiceSelector.h in Headers */,
-				62AAA5FC1A08EC0600113F6D /* RLAService.h in Headers */,
-				62AAA5CE1A08EC0600113F6D /* RLAAPIService+App.h in Headers */,
 				62B0B37619D097B100AD59BF /* WunderbarConstants.h in Headers */,
 				629666E019D0169B003C99D9 /* WunderbarOnboarding.h in Headers */,
 				62B0B37A19D0985C00AD59BF /* WunderbarFirmwareUpdate.h in Headers */,
@@ -1078,20 +1048,31 @@
 				62D73C9C19B70CAB006F417D /* RelayrTransmitter_Setup.h in Headers */,
 				62D73C9F19B718C8006F417D /* RelayrDevice_Setup.h in Headers */,
 				6254F80419CAC673006C836F /* RelayrDeviceModel_Setup.h in Headers */,
+				62FDB16B19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */,
 				62FDB16819BEF2DD00AE2A64 /* RelayrFirmware_Setup.h in Headers */,
 				6254F80719CACA62006C836F /* RelayrFirmwareModel_Setup.h in Headers */,
-				62FDB16B19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */,
 				62F1350819D54DA900DF93A7 /* RelayrOutput_Setup.h in Headers */,
-				62AAA5CA1A08EC0600113F6D /* RLAAPIRequest.h in Headers */,
 				62D0907219C0729900999142 /* RelayrConnection_Setup.h in Headers */,
-				6285F37B19C1AF8E0097B299 /* RLAWebOAuthControllerIOS.h in Headers */,
+				62AAA5FE1A08EC0600113F6D /* RLAServiceSelector.h in Headers */,
+				62AAA5FC1A08EC0600113F6D /* RLAService.h in Headers */,
+				62AAA5EA1A08EC0600113F6D /* RLAAPIService.h in Headers */,
+				62AAA5D21A08EC0600113F6D /* RLAAPIService+Cloud.h in Headers */,
+				62AAA5CE1A08EC0600113F6D /* RLAAPIService+App.h in Headers */,
+				62AAA5E61A08EC0600113F6D /* RLAAPIService+User.h in Headers */,
+				62AAA5DE1A08EC0600113F6D /* RLAAPIService+Publisher.h in Headers */,
+				62AAA5E21A08EC0600113F6D /* RLAAPIService+Transmitter.h in Headers */,
+				62AAA5D61A08EC0600113F6D /* RLAAPIService+Device.h in Headers */,
+				62AAA5DA1A08EC0600113F6D /* RLAAPIService+Parsing.h in Headers */,
+				629D6CBB1A16CE480047F8EC /* RLAWebOAuthControllerIOS.h in Headers */,
+				62AAA5EE1A08EC0600113F6D /* RLAWebOAuthController.h in Headers */,
+				629D6CB31A16CD230047F8EC /* RLAAPIConstants.h in Headers */,
+				62AAA5F21A08EC0600113F6D /* RLABLEService.h in Headers */,
+				62AAA5F81A08EC0600113F6D /* RLAMQTTService.h in Headers */,
+				62AAA5F61A08EC0600113F6D /* RLAMQTTConstants.h in Headers */,
+				62B64D7719EFF4C700DCD7AA /* RLAIdentifierGenerator.h in Headers */,
 				62D1718519A603A3009BBED1 /* RLANetworkInfo.h in Headers */,
 				626F614319A506E8006EB510 /* RLAKeyChain.h in Headers */,
-				62AAA5C81A08EC0600113F6D /* RLAAPIConstants.h in Headers */,
-				62AAA5EE1A08EC0600113F6D /* RLAWebOAuthController.h in Headers */,
-				62AAA5F81A08EC0600113F6D /* RLAMQTTService.h in Headers */,
 				6298AF3619D5F2250097E956 /* RLATargetAction.h in Headers */,
-				62B64D7719EFF4C700DCD7AA /* RLAIdentifierGenerator.h in Headers */,
 				626F614019A4FFAF006EB510 /* RLALog.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1107,35 +1088,18 @@
 				6250E18C19B50A0D003932AA /* RelayrPublisher.h in Headers */,
 				623F326719A7872400F774EB /* RelayrTransmitter.h in Headers */,
 				623F326819A7872700F774EB /* RelayrDevice.h in Headers */,
-				62AAA5EB1A08EC0600113F6D /* RLAAPIService.h in Headers */,
 				62C50A6219CAB8CB0078907A /* RelayrDeviceModel.h in Headers */,
 				622CAFF919BCB02100F686B3 /* RelayrFirmware.h in Headers */,
 				62C50A6819CAB9150078907A /* RelayrFirmwareModel.h in Headers */,
 				622CAFFF19BCB04B00F686B3 /* RelayrInput.h in Headers */,
-				62AAA5F31A08EC0600113F6D /* RLABLEService.h in Headers */,
 				622CB00519BCB07200F686B3 /* RelayrOutput.h in Headers */,
 				62732D4319C05A24000E9545 /* RelayrConnection.h in Headers */,
 				622E7EA919CF829400948558 /* RelayrOnboarding.h in Headers */,
-				62AAA5F71A08EC0600113F6D /* RLAMQTTConstants.h in Headers */,
-				62AAA5DB1A08EC0600113F6D /* RLAAPIService+Parsing.h in Headers */,
-				62AAA5D31A08EC0600113F6D /* RLAAPIService+Cloud.h in Headers */,
 				622E7EAC19CF834500948558 /* RelayrFirmwareUpdate.h in Headers */,
 				6250E19419B51566003932AA /* RelayrApp_Setup.h in Headers */,
 				62B0B38119D0B77400AD59BF /* Wunderbar.h in Headers */,
 				62B3BA2419D9A3DD009EB055 /* WunderbarErrors.h in Headers */,
-				62AAA5E31A08EC0600113F6D /* RLAAPIService+Transmitter.h in Headers */,
-				62AAA5FF1A08EC0600113F6D /* RLAServiceSelector.h in Headers */,
-				62AAA5D71A08EC0600113F6D /* RLAAPIService+Device.h in Headers */,
-				62AAA5FD1A08EC0600113F6D /* RLAService.h in Headers */,
-				62AAA5CF1A08EC0600113F6D /* RLAAPIService+App.h in Headers */,
 				62B0B37719D097B100AD59BF /* WunderbarConstants.h in Headers */,
-				62AAA5E71A08EC0600113F6D /* RLAAPIService+User.h in Headers */,
-				62AAA5DF1A08EC0600113F6D /* RLAAPIService+Publisher.h in Headers */,
-				629666E119D0169B003C99D9 /* WunderbarOnboarding.h in Headers */,
-				62B0B37B19D0985C00AD59BF /* WunderbarFirmwareUpdate.h in Headers */,
-				62B0B3A219D1B01600AD59BF /* RelayrUser+Wunderbar.h in Headers */,
-				62B0B3A819D1B16F00AD59BF /* RLAAPIService+Wunderbar.h in Headers */,
-				6203381F19D06BA50088CB1D /* RelayrErrors.h in Headers */,
 				622BA3BD19ABDC2800FD5C24 /* RelayrUser_Setup.h in Headers */,
 				6250E19119B50AAD003932AA /* RelayrPublisher_Setup.h in Headers */,
 				62D73C9D19B70CAB006F417D /* RelayrTransmitter_Setup.h in Headers */,
@@ -1145,16 +1109,32 @@
 				6254F80819CACA62006C836F /* RelayrFirmwareModel_Setup.h in Headers */,
 				62FDB16C19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */,
 				62F1350919D54DA900DF93A7 /* RelayrOutput_Setup.h in Headers */,
-				62AAA5CB1A08EC0600113F6D /* RLAAPIRequest.h in Headers */,
-				62AAA5C91A08EC0600113F6D /* RLAAPIConstants.h in Headers */,
-				62AAA5EF1A08EC0600113F6D /* RLAWebOAuthController.h in Headers */,
 				62D0907319C0729900999142 /* RelayrConnection_Setup.h in Headers */,
-				6285F38119C1B2700097B299 /* RLAWebOAuthControllerOSX.h in Headers */,
+				62AAA5E71A08EC0600113F6D /* RLAAPIService+User.h in Headers */,
+				62AAA5DF1A08EC0600113F6D /* RLAAPIService+Publisher.h in Headers */,
+				629666E119D0169B003C99D9 /* WunderbarOnboarding.h in Headers */,
+				62B0B37B19D0985C00AD59BF /* WunderbarFirmwareUpdate.h in Headers */,
+				62B0B3A219D1B01600AD59BF /* RelayrUser+Wunderbar.h in Headers */,
+				629D6CB41A16CD230047F8EC /* RLAAPIConstants.h in Headers */,
+				62B0B3A819D1B16F00AD59BF /* RLAAPIService+Wunderbar.h in Headers */,
+				6203381F19D06BA50088CB1D /* RelayrErrors.h in Headers */,
+				62AAA5EB1A08EC0600113F6D /* RLAAPIService.h in Headers */,
+				62AAA5F31A08EC0600113F6D /* RLABLEService.h in Headers */,
+				62AAA5D71A08EC0600113F6D /* RLAAPIService+Device.h in Headers */,
+				62AAA5FD1A08EC0600113F6D /* RLAService.h in Headers */,
+				62AAA5CF1A08EC0600113F6D /* RLAAPIService+App.h in Headers */,
+				629D6CC51A16CE760047F8EC /* RLAWebOAuthControllerOSX.h in Headers */,
+				62AAA5F71A08EC0600113F6D /* RLAMQTTConstants.h in Headers */,
+				62AAA5DB1A08EC0600113F6D /* RLAAPIService+Parsing.h in Headers */,
+				62AAA5D31A08EC0600113F6D /* RLAAPIService+Cloud.h in Headers */,
+				62AAA5FF1A08EC0600113F6D /* RLAServiceSelector.h in Headers */,
+				62AAA5E31A08EC0600113F6D /* RLAAPIService+Transmitter.h in Headers */,
+				62AAA5EF1A08EC0600113F6D /* RLAWebOAuthController.h in Headers */,
 				623F326F19A7874200F774EB /* RLANetworkInfo.h in Headers */,
 				623F326E19A7873D00F774EB /* RLAKeyChain.h in Headers */,
 				62AAA5F91A08EC0600113F6D /* RLAMQTTService.h in Headers */,
-				6298AF3719D5F2250097E956 /* RLATargetAction.h in Headers */,
 				62B64D7819EFF4C700DCD7AA /* RLAIdentifierGenerator.h in Headers */,
+				6298AF3719D5F2250097E956 /* RLATargetAction.h in Headers */,
 				623F326D19A7873A00F774EB /* RLALog.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1362,41 +1342,40 @@
 			files = (
 				62D1718919A62D63009BBED1 /* RelayrCloud.m in Sources */,
 				62D1718D19A62E8D009BBED1 /* RelayrApp.m in Sources */,
-				62AAA5CC1A08EC0600113F6D /* RLAAPIRequest.m in Sources */,
-				62AAA5E81A08EC0600113F6D /* RLAAPIService+User.m in Sources */,
 				62D1719819A65C98009BBED1 /* RelayrUser.m in Sources */,
-				62AAA5D01A08EC0600113F6D /* RLAAPIService+App.m in Sources */,
-				62B0B3A319D1B01600AD59BF /* RelayrUser+Wunderbar.m in Sources */,
 				6250E18D19B50A0D003932AA /* RelayrPublisher.m in Sources */,
-				62AAA5EC1A08EC0600113F6D /* RLAAPIService.m in Sources */,
-				62AAA5FA1A08EC0600113F6D /* RLAMQTTService.m in Sources */,
 				62D171A019A65D3B009BBED1 /* RelayrTransmitter.m in Sources */,
 				62D1719C19A65CCC009BBED1 /* RelayrDevice.m in Sources */,
 				62C50A6319CAB8CB0078907A /* RelayrDeviceModel.m in Sources */,
-				62AAA5F01A08EC0600113F6D /* RLAWebOAuthController.m in Sources */,
 				622CAFFA19BCB02100F686B3 /* RelayrFirmware.m in Sources */,
-				62AAA5D41A08EC0600113F6D /* RLAAPIService+Cloud.m in Sources */,
 				62C50A6919CAB9150078907A /* RelayrFirmwareModel.m in Sources */,
 				622CB00019BCB04B00F686B3 /* RelayrInput.m in Sources */,
-				62AAA5F41A08EC0600113F6D /* RLABLEService.m in Sources */,
 				622CB00619BCB07200F686B3 /* RelayrOutput.m in Sources */,
 				62732D4419C05A24000E9545 /* RelayrConnection.m in Sources */,
 				6203382019D06BA50088CB1D /* RelayrErrors.m in Sources */,
-				62B0B3A919D1B16F00AD59BF /* RLAAPIService+Wunderbar.m in Sources */,
-				62AAA5DC1A08EC0600113F6D /* RLAAPIService+Parsing.m in Sources */,
+				62AAA6001A08EC0600113F6D /* RLAServiceSelector.m in Sources */,
+				62AAA5EC1A08EC0600113F6D /* RLAAPIService.m in Sources */,
+				62AAA5D01A08EC0600113F6D /* RLAAPIService+App.m in Sources */,
+				62AAA5D41A08EC0600113F6D /* RLAAPIService+Cloud.m in Sources */,
+				62AAA5E81A08EC0600113F6D /* RLAAPIService+User.m in Sources */,
 				62AAA5E01A08EC0600113F6D /* RLAAPIService+Publisher.m in Sources */,
-				6285F37C19C1AF8E0097B299 /* RLAWebOAuthControllerIOS.m in Sources */,
-				62D1718419A6039F009BBED1 /* RLANetworkInfo.m in Sources */,
 				62AAA5E41A08EC0600113F6D /* RLAAPIService+Transmitter.m in Sources */,
+				62AAA5D81A08EC0600113F6D /* RLAAPIService+Device.m in Sources */,
+				62AAA5DC1A08EC0600113F6D /* RLAAPIService+Parsing.m in Sources */,
+				62AAA5F01A08EC0600113F6D /* RLAWebOAuthController.m in Sources */,
+				629D6CBD1A16CE480047F8EC /* RLAWebOAuthControllerIOS.m in Sources */,
+				62AAA5F41A08EC0600113F6D /* RLABLEService.m in Sources */,
+				62AAA5FA1A08EC0600113F6D /* RLAMQTTService.m in Sources */,
+				62B64D7919EFF4C700DCD7AA /* RLAIdentifierGenerator.m in Sources */,
+				62D1718419A6039F009BBED1 /* RLANetworkInfo.m in Sources */,
 				6298AF3819D5F2250097E956 /* RLATargetAction.m in Sources */,
 				626F614219A506E4006EB510 /* RLAKeyChain.m in Sources */,
-				62AAA5D81A08EC0600113F6D /* RLAAPIService+Device.m in Sources */,
-				62B64D7919EFF4C700DCD7AA /* RLAIdentifierGenerator.m in Sources */,
 				621F3E5119A4FBAF004E3156 /* RLALog.m in Sources */,
-				62AAA6001A08EC0600113F6D /* RLAServiceSelector.m in Sources */,
+				62B0B38219D0B77400AD59BF /* Wunderbar.m in Sources */,
 				629666E219D0169B003C99D9 /* WunderbarOnboarding.m in Sources */,
 				62B0B37C19D0985C00AD59BF /* WunderbarFirmwareUpdate.m in Sources */,
-				62B0B38219D0B77400AD59BF /* Wunderbar.m in Sources */,
+				62B0B3A319D1B01600AD59BF /* RelayrUser+Wunderbar.m in Sources */,
+				62B0B3A919D1B16F00AD59BF /* RLAAPIService+Wunderbar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1406,41 +1385,40 @@
 			files = (
 				623F325819A786B700F774EB /* RelayrCloud.m in Sources */,
 				623F325A19A786BC00F774EB /* RelayrApp.m in Sources */,
-				62AAA5CD1A08EC0600113F6D /* RLAAPIRequest.m in Sources */,
-				62AAA5E91A08EC0600113F6D /* RLAAPIService+User.m in Sources */,
 				623F325C19A786C600F774EB /* RelayrUser.m in Sources */,
-				62AAA5D11A08EC0600113F6D /* RLAAPIService+App.m in Sources */,
-				62B0B3A419D1B01600AD59BF /* RelayrUser+Wunderbar.m in Sources */,
 				6250E18E19B50A0D003932AA /* RelayrPublisher.m in Sources */,
-				62AAA5ED1A08EC0600113F6D /* RLAAPIService.m in Sources */,
-				62AAA5FB1A08EC0600113F6D /* RLAMQTTService.m in Sources */,
 				623F325E19A786D000F774EB /* RelayrTransmitter.m in Sources */,
 				623F325D19A786CE00F774EB /* RelayrDevice.m in Sources */,
 				62C50A6419CAB8CB0078907A /* RelayrDeviceModel.m in Sources */,
-				62AAA5F11A08EC0600113F6D /* RLAWebOAuthController.m in Sources */,
 				622CAFFB19BCB02100F686B3 /* RelayrFirmware.m in Sources */,
-				62AAA5D51A08EC0600113F6D /* RLAAPIService+Cloud.m in Sources */,
 				62C50A6A19CAB9150078907A /* RelayrFirmwareModel.m in Sources */,
 				622CB00119BCB04B00F686B3 /* RelayrInput.m in Sources */,
-				62AAA5F51A08EC0600113F6D /* RLABLEService.m in Sources */,
 				622CB00719BCB07200F686B3 /* RelayrOutput.m in Sources */,
 				62732D4519C05A24000E9545 /* RelayrConnection.m in Sources */,
 				6203382119D06BA50088CB1D /* RelayrErrors.m in Sources */,
-				62B0B3AA19D1B16F00AD59BF /* RLAAPIService+Wunderbar.m in Sources */,
-				62AAA5DD1A08EC0600113F6D /* RLAAPIService+Parsing.m in Sources */,
+				62AAA6011A08EC0600113F6D /* RLAServiceSelector.m in Sources */,
+				62AAA5ED1A08EC0600113F6D /* RLAAPIService.m in Sources */,
+				62AAA5D51A08EC0600113F6D /* RLAAPIService+Cloud.m in Sources */,
+				62AAA5D11A08EC0600113F6D /* RLAAPIService+App.m in Sources */,
+				62AAA5E91A08EC0600113F6D /* RLAAPIService+User.m in Sources */,
 				62AAA5E11A08EC0600113F6D /* RLAAPIService+Publisher.m in Sources */,
-				6239CB7C1A07820600DF6832 /* RLAWebOAuthControllerOSX.m in Sources */,
-				623F326519A7871000F774EB /* RLANetworkInfo.m in Sources */,
+				62AAA5D91A08EC0600113F6D /* RLAAPIService+Device.m in Sources */,
 				62AAA5E51A08EC0600113F6D /* RLAAPIService+Transmitter.m in Sources */,
+				62AAA5DD1A08EC0600113F6D /* RLAAPIService+Parsing.m in Sources */,
+				62AAA5F11A08EC0600113F6D /* RLAWebOAuthController.m in Sources */,
+				629D6CC61A16CE760047F8EC /* RLAWebOAuthControllerOSX.m in Sources */,
+				62AAA5FB1A08EC0600113F6D /* RLAMQTTService.m in Sources */,
+				62AAA5F51A08EC0600113F6D /* RLABLEService.m in Sources */,
+				623F326519A7871000F774EB /* RLANetworkInfo.m in Sources */,
 				623F326419A7870D00F774EB /* RLAKeyChain.m in Sources */,
 				6298AF3919D5F2250097E956 /* RLATargetAction.m in Sources */,
-				62AAA5D91A08EC0600113F6D /* RLAAPIService+Device.m in Sources */,
 				623F326319A7870000F774EB /* RLALog.m in Sources */,
 				62B64D7A19EFF4C700DCD7AA /* RLAIdentifierGenerator.m in Sources */,
-				62AAA6011A08EC0600113F6D /* RLAServiceSelector.m in Sources */,
 				62B0B38319D0B77400AD59BF /* Wunderbar.m in Sources */,
 				629666E319D0169B003C99D9 /* WunderbarOnboarding.m in Sources */,
 				62B0B37D19D0985C00AD59BF /* WunderbarFirmwareUpdate.m in Sources */,
+				62B0B3A419D1B01600AD59BF /* RelayrUser+Wunderbar.m in Sources */,
+				62B0B3AA19D1B16F00AD59BF /* RLAAPIService+Wunderbar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1453,9 +1431,9 @@
 				620B737C19D9815700B77EE2 /* RelayrUserTest.m in Sources */,
 				620B737E19D9826100B77EE2 /* RelayrPublisherTest.m in Sources */,
 				62D606C119D9888C00A9BFA2 /* RelayrTransmitterTest.m in Sources */,
+				62B64D7C19F00BAB00DCD7AA /* RelayrDeviceTest.m in Sources */,
 				6239CB7B1A06A1FD00DF6832 /* RLAMQTTServiceTest.m in Sources */,
 				6212444919D990060000EDE8 /* WunderbarTest.m in Sources */,
-				62B64D7C19F00BAB00DCD7AA /* RelayrDeviceTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,7 +7,7 @@
 #import "RLAAPIService.h"       // Relayr.framework (Service/API)
 #import "RLAAPIService+Cloud.h" // Relayr.framework (Service/API)
 #import "RLAAPIService+App.h"   // Relayr.framework (Service/API)
-#import "RelayrErrors.h"            // Relayr.framework (Utilities)
+#import "RelayrErrors.h"        // Relayr.framework (Utilities)
 #import "RLALog.h"              // Relayr.framework (Utilities)
 #import "RLAKeyChain.h"         // Relayr.framework (Utilities)
 
@@ -62,6 +62,51 @@ static NSString* const kCodingUsers = @"usr";
         _users = [NSMutableArray array];
     }
     return self;
+}
+
+- (void)setName:(NSString*)name withUserCredentials:(RelayrUser*)user completion:(void (^)(NSError* error, NSString* previousName))completion
+{
+    if (!name.length || !user.token.length) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
+    
+    __weak RelayrApp* weakApp = self;
+    [user.apiService setApp:self.uid name:name description:nil redirectURI:nil completion:^(NSError* error, RelayrApp* app) {
+        if (error) { if (completion) { completion(error, nil); } return; }
+        
+        __strong RelayrApp* strongApp = weakApp;
+        NSString* pName = strongApp.name;
+        strongApp.name = app.name;
+        if (completion) { completion(nil, pName); }
+    }];
+}
+
+- (void)setDescription:(NSString*)description withUserCredentials:(RelayrUser*)user completion:(void (^)(NSError* error, NSString* previousDescription))completion
+{
+    if (!user.token.length) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
+    
+    __weak RelayrApp* weakApp = self;
+    [user.apiService setApp:self.uid name:nil description:description redirectURI:nil completion:^(NSError* error, RelayrApp* app) {
+        if (error) { if (completion) { completion(error, nil); } return; }
+        
+        __strong RelayrApp* strongApp = weakApp;
+        NSString* pDescription = strongApp.appDescription;
+        strongApp.appDescription = app.description;
+        if (completion) { completion(nil, pDescription); }
+    }];
+}
+
+- (void)queryForAppInfoWithUserCredentials:(RelayrUser*)user completion:(void (^)(NSError*, NSString*, NSString*))completion
+{
+    if (!user) { if (completion) { completion(RelayrErrorMissingArgument, nil, nil); } return; }
+    
+    __weak RelayrApp* weakSelf = self;
+    [RLAAPIService requestAppInfoFor:_uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription, NSString* appPublisher) {
+        __strong RelayrApp* strongSelf = weakSelf;
+        
+        if ( ![strongSelf.uid isEqualToString:appID] ) { return completion(RelayrErrorWebRequestFailure, nil, nil); }
+        NSString* pName = strongSelf.name, * pDesc = strongSelf.description;
+        strongSelf.name = appName; strongSelf.appDescription = appDescription;
+        completion(nil, pName, pDesc);
+    }];
 }
 
 + (void)appWithID:(NSString*)appID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI completion:(void (^)(NSError*, RelayrApp*))completion
@@ -124,21 +169,6 @@ static NSString* const kCodingUsers = @"usr";
         else { [RLAKeyChain setObject:storedApps forKey:kRelayrAppStorageKey]; }
     }
     return YES;
-}
-
-- (void)queryForAppInfoWithUserCredentials:(RelayrUser*)user completion:(void (^)(NSError*, NSString*, NSString*))completion
-{
-    if (!user) { if (completion) { completion(RelayrErrorMissingArgument, nil, nil); } return; }
-    
-    __weak RelayrApp* weakSelf = self;
-    [RLAAPIService requestAppInfoFor:_uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription, NSString* appPublisher) {
-        __strong RelayrApp* strongSelf = weakSelf;
-        
-        if ( ![strongSelf.uid isEqualToString:appID] ) { return completion(RelayrErrorWebRequestFailure, nil, nil); }
-        NSString* pName = strongSelf.name, * pDesc = strongSelf.description;
-        strongSelf.name = appName; strongSelf.appDescription = appDescription;
-        completion(nil, pName, pDesc);
-    }];
 }
 
 - (NSArray*)loggedUsers

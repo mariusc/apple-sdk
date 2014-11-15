@@ -1,73 +1,74 @@
 #import "RLAAPIService+App.h"       // Header
-#import "RLAAPIService+Parsing.h"   // Relayr.framework (Service/API)
 
 #import "RelayrApp.h"               // Relayr.framework (Public)
 #import "RelayrUser.h"              // Relayr.framework (Public)
-#import "RLAAPIRequest.h"           // Relayr.framework (Service/API)
 #import "RLAAPIConstants.h"         // Relayr.framework (Service/API)
-#import "RelayrErrors.h"                // Relayr.framework (Utilities)
+#import "RLAAPIService+Parsing.h"   // Relayr.framework (Service/API)
+#import "RelayrErrors.h"            // Relayr.framework (Utilities)
 
 @implementation RLAAPIService (App)
 
 #pragma mark - Public API
 
-+ (void)requestAppInfoFor:(NSString*)appID completion:(void (^)(NSError* error, NSString* appID, NSString* appName, NSString* appDescription, NSString* appPublisher))completion
++ (void)requestAllRelayrApps:(void (^)(NSError* error, NSSet* apps))completion
 {
     if (!completion) { return; }
-    if (!appID.length) { return completion(RelayrErrorMissingArgument, nil, nil, nil, nil); }
-
-    RLAAPIRequest* request = [[RLAAPIRequest alloc] initWithHost:Web_Host];
-    if (!request) { return completion(RelayrErrorWebRequestFailure, nil, nil, nil, nil); }
-    request.relativePath = Web_RequestRelativePath_AppInfo(appID);
-
-    [request executeInHTTPMode:kRLAAPIRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
-        NSDictionary* json = processRequest(Web_RequestResponseCode_AppInfo, nil, nil, nil, nil);
-
-        completion(nil, json[Web_RespondKey_AppID], json[Web_RespondKey_AppName], json[Web_RespondKey_AppDescription], json[Web_RespondKey_AppPublisher]);
-    }];
-}
-
-- (void)requestAllRelayrApps:(void (^)(NSError* error, NSSet* apps))completion
-{
-    if (!completion) { return; }
-
-    RLAAPIRequest* request = [[RLAAPIRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
+    
+    NSURL* absoluteURL = [RLAAPIService buildAbsoluteURLFromHost:dRLAAPI_Host relativeString:dRLAAPI_Apps_RelativePath];
+    NSMutableURLRequest* request = [RLAAPIService requestForURL:absoluteURL HTTPMethod:kRLAAPIRequestModeGET authorizationToken:nil];
     if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
-    request.relativePath = Web_RequestRelativePath_Apps;
-
-    [request executeInHTTPMode:kRLAAPIRequestModeGET completion:^(NSError *error, NSNumber *responseCode, NSData *data) {
-        NSArray* json = processRequest(Web_RequestResponseCode_Apps, nil);
-
+    
+    NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
+        NSArray* json = RLAAPI_processHTTPresponse(dRLAAPI_Apps_ResponseCode, nil);
+        
         NSMutableSet* result = [[NSMutableSet alloc] initWithCapacity:json.count];
-        for (NSDictionary* dict in json)
-        {
-            RelayrApp* app = [RLAAPIService parseAppFromJSONDictionary:dict];
-            if (app) { [result addObject:app]; }
-        }
-
+        for (NSDictionary* dict in json) { RelayrApp* app = [RLAAPIService parseAppFromJSONDictionary:dict]; if (app) { [result addObject:app]; } }
         return completion(nil, [NSSet setWithSet:result]);
     }];
+    [task resume];
 }
 
 - (void)registerAppWithName:(NSString*)appName description:(NSString*)appDescription publisher:(NSString*)publisher redirectURI:(NSString*)redirectURI completion:(void (^)(NSError* error, RelayrApp* app))completion
 {
     if (!appName.length || !publisher.length) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
-
-    RLAAPIRequest* request = [[RLAAPIRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
+    
+    NSMutableDictionary* body = [NSMutableDictionary dictionaryWithDictionary:@{ dRLAAPI_App_RequestKey_Name : appName, dRLAAPI_App_RequestKey_Publisher : publisher }];
+    if (appDescription.length) { body[dRLAAPI_App_RequestKey_Description] = appDescription; }
+    if (redirectURI.length) { body[dRLAAPI_App_RequestKey_RedirectURI] = redirectURI; }
+    
+    NSError* serializationError;
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:body options:kNilOptions error:&serializationError];
+    if (serializationError) { if (completion) { completion(serializationError, nil); } return; }
+    
+    NSURL* absoluteURL = [RLAAPIService buildAbsoluteURLFromHost:self.hostString relativeString:dRLAAPI_AppRegistration_RelativePath];
+    NSMutableURLRequest* request = [RLAAPIService requestForURL:absoluteURL HTTPMethod:kRLAAPIRequestModePOST authorizationToken:self.user.token];
     if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure, nil); } return; }
-    request.relativePath = Web_RequestRelativePath_AppRegistration;
-
-    NSMutableDictionary* body = [NSMutableDictionary dictionaryWithDictionary:@{ Web_RequestBodyKey_AppName : appName, Web_RequestBodyKey_AppPublisher : publisher }];
-    if (appDescription.length) { body[Web_RequestBodyKey_AppDescription] = appDescription; }
-    if (redirectURI.length) { body[Web_RequestBodyKey_AppRedirectURI] = redirectURI; }
-    request.body = [NSDictionary dictionaryWithDictionary:body];
-
-    [request executeInHTTPMode:kRLAAPIRequestModePOST completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
-        NSDictionary* json = processRequest(Web_RequestResponseCode_AppRegistration, nil);
-
+    [request setValue:dRLAAPIRequest_HeaderValue_ContentType_JSON forHTTPHeaderField:dRLAAPIRequest_HeaderField_ContentType];
+    request.HTTPBody = jsonData;
+    
+    NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
+        NSDictionary* json = RLAAPI_processHTTPresponse(dRLAAPI_AppRegistration_ResponseCode, nil);
+        
         RelayrApp* result = [RLAAPIService parseAppFromJSONDictionary:json];
-        return (!result) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, result);
+        if (completion) { return (!result) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, result); }
     }];
+    [task resume];
+}
+
++ (void)requestAppInfoFor:(NSString*)appID completion:(void (^)(NSError* error, NSString* appID, NSString* appName, NSString* appDescription, NSString* appPublisher))completion
+{
+    if (!completion) { return; }
+    if (!appID.length) { return completion(RelayrErrorMissingArgument, nil, nil, nil, nil); }
+    
+    NSURL* absoluteURL = [RLAAPIService buildAbsoluteURLFromHost:dRLAAPI_Host relativeString:dRLAAPI_AppInfo_RelativePath(appID)];
+    NSMutableURLRequest* request = [RLAAPIService requestForURL:absoluteURL HTTPMethod:kRLAAPIRequestModeGET authorizationToken:nil];
+    if (!request) { return completion(RelayrErrorWebRequestFailure, nil, nil, nil, nil); }
+    
+    NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
+        NSDictionary* json = RLAAPI_processHTTPresponse(dRLAAPI_AppInfo_ResponseCode, nil, nil, nil, nil);
+        completion(nil, json[dRLAAPI_App_RespondKey_ID], json[dRLAAPI_App_RespondKey_Name], json[dRLAAPI_App_RespondKey_Description], json[dRLAAPI_App_RespondKey_Publisher]);
+    }];
+    [task resume];
 }
 
 - (void)requestApp:(NSString*)appID completion:(void (^)(NSError* error, RelayrApp* app))completion
@@ -75,82 +76,90 @@
     if (!completion) { return; }
     if (!appID.length) { return completion(RelayrErrorMissingArgument, nil); }
 
-    RLAAPIRequest* request = [[RLAAPIRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
-    if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
-    request.relativePath = Web_RequestRelativePath_AppInfoExtended(appID);
-
-    [request executeInHTTPMode:kRLAAPIRequestModeGET completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
-        NSDictionary* json = processRequest(Web_RequestResponseCode_AppInfo, nil);
-
+    NSURL* absoluteURL = [RLAAPIService buildAbsoluteURLFromHost:self.hostString relativeString:dRLAAPI_AppInfoExt_RelativePath(appID)];
+    NSMutableURLRequest* request = [RLAAPIService requestForURL:absoluteURL HTTPMethod:kRLAAPIRequestModeGET authorizationToken:self.user.token];
+    if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure, nil); } return; }
+    
+    NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
+        NSDictionary* json = RLAAPI_processHTTPresponse(dRLAAPI_AppInfoExt_ResponseCode, nil);
+        
         RelayrApp* result = [RLAAPIService parseAppFromJSONDictionary:json];
         return (!result) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, result);
     }];
+    [task resume];
 }
 
 - (void)setApp:(NSString*)appID name:(NSString*)appName description:(NSString*)appDescription redirectURI:(NSString*)redirectURI completion:(void (^)(NSError* error, RelayrApp* app))completion
 {
     if (!appID.length) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
-
-    NSMutableDictionary* tmpDict = [[NSMutableDictionary alloc] init];
-    if (appName.length) { tmpDict[Web_RequestBodyKey_AppName] = appName; }
-    if (appDescription.length) { tmpDict[Web_RequestBodyKey_AppDescription] = appDescription; }
-    if (redirectURI.length) { tmpDict[Web_RequestBodyKey_AppRedirectURI] = redirectURI; }
-    if (!tmpDict.count) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
-
-    RLAAPIRequest* request = [[RLAAPIRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
-    if (!request) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
-    request.relativePath = Web_RequestRelativePath_AppInfoSet(appID);
-    request.body = [NSDictionary dictionaryWithDictionary:tmpDict];
-
-    [request executeInHTTPMode:kRLAAPIRequestModePATCH completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
-        NSDictionary* json = processRequest(Web_RequestResponseCode_AppInfoSet, nil);
-
+    
+    NSMutableDictionary* body = [[NSMutableDictionary alloc] init];
+    if (appName.length) { body[dRLAAPI_App_RequestKey_Name] = appName; }
+    if (appDescription) { body[dRLAAPI_App_RequestKey_Description] = appDescription; }
+    if (redirectURI.length) { body[dRLAAPI_App_RequestKey_RedirectURI] = redirectURI; }
+    if (!body.count) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
+    
+    NSError* serializationError;
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:body options:kNilOptions error:&serializationError];
+    if (serializationError) { if (completion) { completion(serializationError, nil); } return; }
+    
+    NSURL* absoluteURL = [RLAAPIService buildAbsoluteURLFromHost:self.hostString relativeString:dRLAAPI_AppInfoSet_RelativePath(appID)];
+    NSMutableURLRequest* request = [RLAAPIService requestForURL:absoluteURL HTTPMethod:kRLAAPIRequestModePATCH authorizationToken:self.user.token];
+    if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure, nil); } return; }
+    [request setValue:dRLAAPIRequest_HeaderValue_ContentType_JSON forHTTPHeaderField:dRLAAPIRequest_HeaderField_ContentType];
+    request.HTTPBody = jsonData;
+    
+    NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSDictionary* json = RLAAPI_processHTTPresponse(dRLAAPI_AppInfoSet_ResponseCode, nil);
+        
         RelayrApp* result = [RLAAPIService parseAppFromJSONDictionary:json];
-        return (!result) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, result);
+        if (completion) { return (!result) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, result); }
     }];
+    [task resume];
 }
 
 - (void)setConnectionBetweenApp:(NSString*)appID andDevice:(NSString*)deviceID completion:(void (^)(NSError* error, id credentials))completion
 {
-    if (!completion) { return; }
-    if (!deviceID.length || !appID.length) { return completion(RelayrErrorMissingArgument, nil); }
+    if (!deviceID.length || !appID.length) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
+    
+    NSURL* absoluteURL = [RLAAPIService buildAbsoluteURLFromHost:self.hostString relativeString:dRLAAPI_AppConnection_RelativePath(appID, deviceID)];
+    NSMutableURLRequest* request = [RLAAPIService requestForURL:absoluteURL HTTPMethod:kRLAAPIRequestModePOST authorizationToken:self.user.token];
+    if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure, nil); } return; }
 
-    RLAAPIRequest* request = [[RLAAPIRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
-    if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
-    request.relativePath = Web_RequestRelativePath_AppConnection(appID, deviceID);
-
-    [request executeInHTTPMode:kRLAAPIRequestModePOST completion:^(NSError* error, NSNumber* responseCode, NSData* data) {
-        NSDictionary* json = processRequest(Web_RequestResponseCode_AppConnection, nil);
-        return completion(nil, json);
+    NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
+        NSDictionary* json = RLAAPI_processHTTPresponse(dRLAAPI_AppConnection_ResponseCode, nil);
+        if (completion) { completion(nil, json); }
     }];
+    [task resume];
 }
 
 - (void)deleteConnectionBetweenApp:(NSString*)appID andDevice:(NSString*)deviceID completion:(void (^)(NSError* error))completion
 {
     if (!appID.length || !deviceID.length) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
-
-    RLAAPIRequest* request = [[RLAAPIRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
+    
+    NSURL* absoluteURL = [RLAAPIService buildAbsoluteURLFromHost:self.hostString relativeString:dRLAAPI_AppDisconn_RelativePath(appID, deviceID)];
+    NSMutableURLRequest* request = [RLAAPIService requestForURL:absoluteURL HTTPMethod:kRLAAPIRequestModeDELETE authorizationToken:self.user.token];
     if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure); } return; }
-    request.relativePath = Web_RequestRelativePath_AppDisconnect(appID, deviceID);
 
-    [request executeInHTTPMode:kRLAAPIRequestModeDELETE completion:(!completion) ? nil : ^(NSError *error, NSNumber *responseCode, NSData *data) {
+    NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:(!completion) ? nil : ^(NSData* data, NSURLResponse* response, NSError* error) {
         if (error) { return completion(error); }
-        return (responseCode.unsignedIntegerValue != Web_RequestResponseCode_AppDisconnect) ? completion(RelayrErrorWebRequestFailure) : completion(nil);
+        return completion( (((NSHTTPURLResponse*)response).statusCode != dRLAAPI_AppDisconn_ResponseCode) ? RelayrErrorWebRequestFailure : nil );
     }];
+    [task resume];
 }
 
 - (void)deleteApp:(NSString*)appID completion:(void (^)(NSError* error))completion
 {
     if (!appID.length) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
 
-    RLAAPIRequest* request = [[RLAAPIRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
+    NSURL* absoluteURL = [RLAAPIService buildAbsoluteURLFromHost:self.hostString relativeString:dRLAAPI_AppDeletion_RelativePath(appID)];
+    NSMutableURLRequest* request = [RLAAPIService requestForURL:absoluteURL HTTPMethod:kRLAAPIRequestModeDELETE authorizationToken:self.user.token];
     if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure); } return; }
-    request.relativePath = Web_RequestRelativePath_AppDeletion(appID);
-
-    [request executeInHTTPMode:kRLAAPIRequestModeDELETE completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
+    
+    NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:(!completion) ? nil : ^(NSData* data, NSURLResponse* response, NSError* error) {
         if (error) { return completion(error); }
-        return completion( (responseCode.unsignedIntegerValue != Web_RequestResponseCode_AppDeletion) ? RelayrErrorWebRequestFailure : nil);
+        return completion( (((NSHTTPURLResponse*)response).statusCode != dRLAAPI_AppDeletion_ResponseCode) ? RelayrErrorWebRequestFailure : nil);
     }];
-}
+    [task resume];}
 
 @end

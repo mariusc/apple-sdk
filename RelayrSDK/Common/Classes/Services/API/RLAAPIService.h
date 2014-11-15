@@ -2,6 +2,19 @@
 @class RelayrUser;              // Relayr.framework (Public)
 #import "RelayrConnection.h"    // Relayr.framework (Public/IoTs)
 
+// Retrieval methods ("safe" methods)
+FOUNDATION_EXPORT NSString* const kRLAAPIRequestModeGET;
+FOUNDATION_EXPORT NSString* const kRLAAPIRequestModeHEAD;
+
+// Modifying methods ("unsafe" methods)
+FOUNDATION_EXPORT NSString* const kRLAAPIRequestModeCOPY;
+FOUNDATION_EXPORT NSString* const kRLAAPIRequestModeDELETE;
+FOUNDATION_EXPORT NSString* const kRLAAPIRequestModeOPTIONS;
+FOUNDATION_EXPORT NSString* const kRLAAPIRequestModePATCH;
+FOUNDATION_EXPORT NSString* const kRLAAPIRequestModePOST;
+FOUNDATION_EXPORT NSString* const kRLAAPIRequestModePUT;
+/* For more info: http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html */
+
 /*!
  *  @abstract Web connection manager for a <code>RelayrUser</code>.
  *  @discussion An instance of this class will manage all the web connections (whether HTTP calls, etc.) of a single user.
@@ -41,5 +54,29 @@
  *  @discussion It cannot be <code>nil</code>. If <code>nil</code> is passed, the default Relayr host is used.
  */
 @property (strong,nonatomic) NSString* hostString;
+
+/*!
+ *  @abstract <code>NSURLSession</code> use for routing all API calls.
+ */
+@property (readonly,nonatomic) NSURLSession* session;
+
+/*!
+ *  @abstract It builds an URL path from a host string and a relative string.
+ *  @discussion Any of the paths can be "nil" or empty and the final absolute string will still be correctly built.
+ *
+ *  @param hostString Base path of the absolute URL.
+ *  @param relativePath Relative path of the absolute URL.
+ */
++ (NSURL*)buildAbsoluteURLFromHost:(NSString*)hostString relativeString:(NSString*)relativePath;
+
+/*!
+ *  @abstract It returns a default set <code>NSMutableURL</code> that you can later on modify.
+ *  @discussion This mutable URL Request is an ephimeral request, with HTTP Pipelining set on. If the parameters passed are not valid, <code>nil</code> is returned.
+ *
+ *  @param absoluteURL Address where the request will be sent.
+ *  @param httpMode The HTTP request Mode. Whether GET, POST, etc.
+ *  @param authorizationToken OAuth token embedded on the URL request. You don't need to pass this value is a request is being performed that doesn't need authorization.
+ */
++ (NSMutableURLRequest*)requestForURL:(NSURL*)absoluteURL HTTPMethod:(NSString*)httpMode authorizationToken:(NSString*)authorizationToken;
 
 @end

@@ -1,9 +1,10 @@
 #import "RLAAPIService+Wunderbar.h" // Header
+
 #import "RelayrUser.h"              // Relayr.framework (Public)
 #import "RelayrTransmitter.h"       // Relayr.framework (Public)
 #import "RelayrTransmitter_Setup.h" // Relayr.framework (Private)
+#import "RLAAPIConstants.h"         // Relayr.framework (Service/API)
 #import "RLAAPIService+Parsing.h"   // Relayr.framework (Service/API)
-#import "RLAAPIRequest.h"           // Relayr.framework (Service/API)
 #import "RelayrErrors.h"            // Relayr.framework (Utilities)
 #import "WunderbarConstants.h"      // Relayr.framework (Wunderbar)
 
@@ -13,28 +14,30 @@
 
 - (void)registerWunderbar:(void (^)(NSError* error, RelayrTransmitter* transmitter))completion
 {
-    RLAAPIRequest* request = [[RLAAPIRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
+    NSURL* absoluteURL = [RLAAPIService buildAbsoluteURLFromHost:self.hostString relativeString:Web_RequestRelativePath_WunderbarRegistration(self.user.uid)];
+    NSMutableURLRequest* request = [RLAAPIService requestForURL:absoluteURL HTTPMethod:kRLAAPIRequestModePOST authorizationToken:self.user.token];
     if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure, nil); } return; }
-    request.relativePath = Web_RequestRelativePath_WunderbarRegistration(self.user.uid);
     
-    [request executeInHTTPMode:kRLAAPIRequestModePOST completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
-        NSDictionary* json = processRequest(Web_RequestResponseCode_WunderbarRegistration, nil);
+    NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:(!completion) ? nil : ^(NSData* data, NSURLResponse* response, NSError* error) {
+        NSDictionary* json = RLAAPI_processHTTPresponse(Web_RequestResponseCode_WunderbarRegistration, nil);
         
         RelayrTransmitter* result = [RLAAPIService parseWunderbarFromJSONDictionary:json];
         return (!result) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, result);
     }];
+    [task resume];
 }
 
 - (void)deleteWunder:(RelayrTransmitter*)trasnmitter completion:(void (^)(NSError* error))completion
 {
-    RLAAPIRequest* request = [[RLAAPIRequest alloc] initWithHost:self.hostString timeout:nil oauthToken:self.user.token];
+    NSURL* absoluteURL = [RLAAPIService buildAbsoluteURLFromHost:self.hostString relativeString:Web_RequestRelativePath_WunderbarDeletion(trasnmitter.uid)];
+    NSMutableURLRequest* request = [RLAAPIService requestForURL:absoluteURL HTTPMethod:kRLAAPIRequestModeDELETE authorizationToken:self.user.token];
     if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure); } return; }
-    request.relativePath = Web_RequestRelativePath_WunderbarDeletion(trasnmitter.uid);
     
-    [request executeInHTTPMode:kRLAAPIRequestModeDELETE completion:(!completion) ? nil : ^(NSError* error, NSNumber* responseCode, NSData* data) {
+    NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:(!completion) ? nil : ^(NSData* data, NSURLResponse* response, NSError* error) {
         if (error) { return completion(error); }
-        return (responseCode.unsignedIntegerValue != Web_RequestResponseCode_WunderbarDeletion) ? completion(RelayrErrorWebRequestFailure) : completion(nil);
+        return completion( (((NSHTTPURLResponse*)response).statusCode != Web_RequestResponseCode_WunderbarDeletion) ? RelayrErrorWebRequestFailure : nil );
     }];
+    [task resume];
 }
 
 #pragma mark - Private methods

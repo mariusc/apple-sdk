@@ -8,6 +8,8 @@
  */
 @interface RelayrCloud : NSObject
 
+#pragma mark Cloud information
+
 /*!
  *  @abstract Checks if the relayr cloud platform is reachable and whether the service is up or not.
  *  @discussion The Relayr cloud may be unreachable for various reasons such as no internet connection, inability to resolve DNS, temporary unavailability of the relayr service. 
@@ -29,6 +31,16 @@
              registered:(void (^)(NSError* error, NSNumber* isUserRegistered))completion;
 
 /*!
+ *  @abstract It returns an array with all public Relayr Applications in the Relayr Cloud.
+ *  @discussion Be careful, since this array can be very long. The info returned is not very extended, though.
+ *
+ *  @param completion Block indicating the result of the query. If there is no error, an <code>NSSet</code> will be returned with all the public Relayr Applications (a short info of them, that is).
+ */
++ (void)queryForAllRelayrPublicApps:(void (^)(NSError* error, NSSet* apps))completion;
+
+#pragma mark Logging system
+
+/*!
  *  @abstract It sends a log message to the Relayr Cloud on behalf of a Relayr User.
  *  @discussion Logging messages allows you to have information about how your application is running. You can log anything you want and later on check your adminastrator page and have statistical data from your application usage, or any other interesting metric.
  *
@@ -37,6 +49,8 @@
  *  @return Boolean indicating whether the message has been accepted to be sent by the server or not.
  */
 + (BOOL)logMessage:(NSString*)message onBehalfOfUser:(RelayrUser*)user;
+
+#pragma mark System information
 
 /*!
  *  @abstract It returns a <code>NSString</code> identifying the Relayr SDK version and machine.

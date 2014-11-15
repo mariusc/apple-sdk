@@ -2,14 +2,13 @@
 #import "RelayrUser.h"          // Relayr.framework (Public)
 #import "RLAAPIService.h"       // Relayr.framework (Service/API)
 #import "RLAAPIService+Cloud.h" // Relayr.framework (Service/API)
+#import "RLAAPIService+App.h"   // Relayr.framework (Service/API)
 #import "RLAAPIService+User.h"  // Relayr.framework (Service/API)
-#import "RLAAPIRequest.h"       // Relayr.framework (Service/API)
 #import "RLAAPIConstants.h"     // Relayr.framework (Service/API)
 #import "RelayrErrors.h"        // Relayr.framework (Utilities)
 #import "RLALog.h"              // Relayr.framework (Utilities)
 #import <CBasics/CPlatforms.h>  // CBasics
-#import <CBasics/CMacros.h>     // CBasics
-#import <sys/sysctl.h>          // POSIX
+#import <sys/sysctl.h>          // BSD
 
 static NSString* const kRelayrCloud_LoggingSession_ID           = @"io.relayr.sdk.RelayrCloud.logginURLSession";
 static NSString* const kRelayrCloud_LoggingSession_timestamp    = @"timestamp";
@@ -43,6 +42,12 @@ static NSString* const kRelayrCloud_LoggingSession_connection   = @"connection";
     [RLAAPIService isUserWithEmail:email registeredInRelayrCloud:completion];
 }
 
++ (void)queryForAllRelayrPublicApps:(void (^)(NSError* error, NSSet* apps))completion
+{
+    if (!completion) { return [RLALog debug:RelayrErrorMissingArgument.localizedDescription]; }
+    [RLAAPIService requestAllRelayrApps:completion];
+}
+
 + (BOOL)logMessage:(NSString*)message onBehalfOfUser:(RelayrUser*)user
 {
     if (!message.length || !user.token.length) { return NO; }
@@ -51,20 +56,21 @@ static NSString* const kRelayrCloud_LoggingSession_connection   = @"connection";
         kRelayrCloud_LoggingSession_timestamp   : [[RelayrCloud sharedLoggingDateFormatter] stringFromDate:[NSDate date]],
         kRelayrCloud_LoggingSession_message     : message
     }];
-    NSLog(@"Array: %@", jsonArray);
     
     NSError* serializationError;
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:jsonArray options:kNilOptions error:&serializationError];
     if (serializationError || !jsonData) { return NO; }
     
-    NSURL* endPoint = [NSURL URLWithString:[Web_Host stringByAppendingString:Web_RequestRelativePath_Logging]];
+    NSURL* endPoint = [NSURL URLWithString:[dRLAAPI_Host stringByAppendingString:dRLAAPI_CloudLogging_RelativePath]];
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:endPoint];
     request.HTTPShouldUsePipelining = YES;
+    request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
     request.HTTPMethod = kRLAAPIRequestModePOST;
+    request.HTTPBody = jsonData;
     [request setValue:dRLAAPIRequest_HeaderValue_Authorization(user.token) forHTTPHeaderField:dRLAAPIRequest_HeaderField_Authorization];
     
-    NSURLSessionUploadTask* uploadTask = [[RelayrCloud sharedLoggingURLSession] uploadTaskWithRequest:request fromData:jsonData];
-    [uploadTask resume];
+    NSURLSessionDataTask* task = [[RelayrCloud sharedLoggingURLSession] dataTaskWithRequest:request];
+    [task resume];
     return YES;
 }
 
@@ -152,7 +158,7 @@ static NSString* const kRelayrCloud_LoggingSession_connection   = @"connection";
     
     static dispatch_once_t logginSessionToken;
     dispatch_once(&logginSessionToken, ^{
-        NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+        NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:kRelayrCloud_LoggingSession_ID];
         sessionConfiguration.HTTPCookieAcceptPolicy = NSHTTPCookieAcceptPolicyNever;
         sessionConfiguration.HTTPCookieStorage = nil;
         sessionConfiguration.HTTPShouldSetCookies = NO;

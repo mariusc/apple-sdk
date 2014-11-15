@@ -8,11 +8,11 @@
 #pragma mark - Definitions
 
 #define ADDRESS     "ssl://mqtt.relayr.io:8883"
-#define CLIENTID    ""
-#define USERNAME    ""
-#define PASSWORD    ""
-#define TOPIC_PUB   ""
-#define TOPIC_SUB   ""
+#define CLIENTID    "manolete"
+#define USERNAME    "99a1cfd0-5282-40ce-a73c-ed9ca7c2f01b"
+#define PASSWORD    "GZNxt38J75Qu"
+#define TOPIC_PUB   "/v1/e2744ce1-4f1b-47ed-aac1-6454d9097409/data"
+#define TOPIC_SUB   "/v1/e2744ce1-4f1b-47ed-aac1-6454d9097409/+"
 #define QOS         1
 #define TIMEOUT     10000L
 

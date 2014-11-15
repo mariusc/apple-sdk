@@ -9,29 +9,20 @@
 @interface RLAAPIService (App)
 
 /*!
- *  @abstract It queries the Relayr Cloud for information of a Relayr application.
- *  @discussion There are two API call for retrieving Relayr Application information. This one is the more limited. You don't need authorization and all information retrieved is very basic.
- *
- *  @param completion Block indicating the result of the server query.
- */
-+ (void)requestAppInfoFor:(NSString*)appID
-               completion:(void (^)(NSError* error, NSString* appID, NSString* appName, NSString* appDescription, NSString* appPublisher))completion;
-
-/*!
  *  @abstract Retrieves all application within the Relayr cloud.
  *
  *  @param completion Block indicating the result of the server query.
  *
  *  @see RelayrApp
  */
-- (void)requestAllRelayrApps:(void (^)(NSError* error, NSSet* apps))completion;
++ (void)requestAllRelayrApps:(void (^)(NSError* error, NSSet* apps))completion;
 
 /*!
  *  @abstract Adds a new application to the Relayr cloud.
  *
  *  @param appName The name of the Relayr Application.
  *  @param appDescription An optional description of what the app does.
- *  @param publisher The Relayr publisher entity future owner of this Relayr application.
+ *  @param publisher The Relayr publisher entity future owner of this Relayr applicatºion.
  *  @param redirectURI Security mechanism to certified from where the messages are coming from.
  *  @param completion Block indicating the result of the server query.
  *
@@ -44,7 +35,17 @@
                  completion:(void (^)(NSError* error, RelayrApp* app))completion;
 
 /*!
+ *  @abstract It queries the Relayr Cloud for information of a Relayr application.
+ *  @discussion There are two API call for retrieving Relayr Application information. This one is the more limited. You don't need authorization and all information retrieved is very basic.
+ *
+ *  @param completion Block indicating the result of the server query.
+ */
++ (void)requestAppInfoFor:(NSString*)appID
+               completion:(void (^)(NSError* error, NSString* appID, NSString* appName, NSString* appDescription, NSString* appPublisher))completion;
+
+/*!
  *  @abstract Retrieves information about a specific publisher's Relayr application.
+ *  @discussion This request needs the token of a Relayr user. It provides more information that the static class call.
  *
  *  @param appID The Relayr unique identifier for the searched for Application.
  *  @param completion Block indicating the result of the server query.

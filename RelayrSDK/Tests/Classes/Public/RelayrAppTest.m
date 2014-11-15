@@ -58,6 +58,32 @@
     [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
 }
 
+- (void)testSetName
+{
+    XCTestExpectation* expectation = [self expectationWithDescription:nil];
+
+    [_app setName:kTestsAppName withUserCredentials:_user completion:^(NSError* error, NSString* previousName) {
+        XCTAssertNil(error);
+        XCTAssertNotNil(_app.name);
+        [expectation fulfill];
+    }];
+    
+    [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
+}
+
+- (void)testSetDescription
+{
+    XCTestExpectation* expectation = [self expectationWithDescription:nil];
+    
+    [_app setDescription:kTestsAppDescription withUserCredentials:_user completion:^(NSError* error, NSString* previousDescription) {
+        XCTAssertNil(error);
+        XCTAssertNotNil(_app.appDescription);
+        [expectation fulfill];
+    }];
+    
+    [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
+}
+
 - (void)testLoggedUsers
 {
     RelayrApp* tmpApp = [[RelayrApp alloc] initWithID:kTestsAppID OAuthClientSecret:kTestsAppSecret redirectURI:kTestsAppRedirect];

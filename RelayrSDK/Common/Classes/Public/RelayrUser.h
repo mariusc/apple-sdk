@@ -36,6 +36,16 @@
 @property (readonly,nonatomic) NSString* name;
 
 /*!
+ *  @abstract It sets a user name to a new value.
+ *  @discussion This method tries to push to the server the new name, if it is not successful, the local name is not changed.
+ *
+ *  @param name The new name for the user.
+ *  @param completion Block indicating the result of the server push.
+ */
+- (void)setNameWith:(NSString*)name
+         completion:(void (^)(NSError* error, NSString* previousName))completion;
+
+/*!
  *  @abstract Relayr user email for a specific <code>RelayrUser</code> instace.
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  *      If <code>nil</code>, the email is unknown. If it is an empty string, the email is not set in the server.

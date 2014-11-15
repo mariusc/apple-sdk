@@ -23,7 +23,7 @@
 {
     if (!clientID || !redirectURI) { return nil; }
 
-    NSURL* hostURL = [NSURL URLWithString:Web_Host];
+    NSURL* hostURL = [NSURL URLWithString:dRLAAPI_Host];
     NSURL* absoluteURL = [NSURL URLWithString:dRLAWebOAuthController_CodeRequestURL(clientID, redirectURI) relativeToURL:hostURL];
     NSURLRequest* request = [NSURLRequest requestWithURL:absoluteURL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:dRLAWebOAuthController_Timeout];
 

@@ -44,6 +44,19 @@
     [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
 }
 
+- (void)testQueryForAllRelayrPublicApps
+{
+    XCTestExpectation* expectation = [self expectationWithDescription:nil];
+    
+    [RelayrCloud queryForAllRelayrPublicApps:^(NSError* error, NSSet* apps) {
+        XCTAssertNil(error);
+        XCTAssertNotNil(apps);
+        [expectation fulfill];
+    }];
+    
+    [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
+}
+
 - (void)testLogMessage
 {
     RelayrApp* app = [[RelayrApp alloc] initWithID:kTestsAppID OAuthClientSecret:kTestsAppSecret redirectURI:kTestsAppRedirect];
@@ -54,8 +67,16 @@
     user.app = app;
     [app.users addObject:user];
     
-    BOOL messageAccepted = [RelayrCloud logMessage:@"SDK Tests: log message" onBehalfOfUser:user];
+    XCTestExpectation* expectation = [self expectationWithDescription:nil];
+    
+    BOOL messageAccepted = [RelayrCloud logMessage:@"SDK Tests: log message..." onBehalfOfUser:user];
     XCTAssertTrue(messageAccepted);
+    
+    [NSTimer scheduledTimerWithTimeInterval:0.5*kTestsTimeout target:[NSBlockOperation blockOperationWithBlock:^{
+        [expectation fulfill];
+    }] selector:@selector(main) userInfo:nil repeats:NO];
+    
+    [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
 }
 
 @end

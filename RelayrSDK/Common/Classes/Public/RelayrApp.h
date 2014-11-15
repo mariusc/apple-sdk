@@ -10,6 +10,80 @@
  */
 @interface RelayrApp : NSObject
 
+#pragma mark Characteristics
+
+/*!
+ *  @abstract The relayr application ID.
+ */
+@property (readonly,nonatomic) NSString* uid;
+
+/*!
+ *  @abstract The relayr application name.
+ *  @discussion This value should first be retrieved asynchronously, from the relayr server. 
+ *	If the server is not queried, this property is <code>nil</code>.
+ */
+@property (readonly,nonatomic) NSString* name;
+
+/*!
+ *  @abstract It changes the Relayr application's name and push it to the server.
+ *  @discussion If the server is not reachable or there was any problem, an error will be returned in the completion block and the name won't be changed;
+ *
+ *  @param name New name to identify this application with.
+ *  @param user To set up an application's name, you need to provide a user with the appropriate credentials for the setup.
+ *  @param completion Block indicating the result of the server push.
+ */
+- (void)setName:(NSString*)name
+withUserCredentials:(RelayrUser*)user
+         completion:(void (^)(NSError* error, NSString* previousName))completion;
+
+/*!
+ *  @abstract The relayr application description.
+ *  @discussion This value should first be retrieved asynchronously, from the relayr server. If the server is not queried, this property is <code>nil</code>.
+ */
+@property (readonly,nonatomic) NSString* appDescription;
+
+/*!
+ *  @abstract It changes the Relayr application's description and push it to the server.
+ *  @discussion If the server is not reachable or there was any problem, and error will be returned in the completion block and the name won't be changed;
+ *
+ *  @param description New description string given to the application.
+ *  @param user To set up an application's name, you need to provide a user with the appropriate credentials for the setup.
+ *  @param completion Block indicating the result of the server push.
+ */
+- (void)setDescription:(NSString*)description
+   withUserCredentials:(RelayrUser*)user
+                completion:(void (^)(NSError* error, NSString* previousDescription))completion;
+
+/*!
+ *  @abstract The Id of the app's Publisher.
+ *  @discussion This value should first be retrieved asynchronously, from the relayr server. 
+ *	If the server is not queried, this property is <code>nil</code>.
+ */
+@property (readonly,nonatomic) NSString* publisherID;
+
+/*!
+ *  @abstract OAuth client (app) secret.
+ */
+@property (readonly,nonatomic) NSString* oauthClientSecret;
+
+/*!
+ *  @abstract The OAuth redirect URI.
+ *  @discussion The URI of the page where the user is redirected upon successful login. The URI must include the protocol used e.g. 'http'. 
+ *	The redirect URI is set when an application is registered on the relayr Platform. 
+ *	@see <a href="https://developer.relayr.io/documents/Authorization/OAuthAndRelayr">The OAuth on relayr section on the Develooper Dashboard.</a>
+ */
+@property (readonly,nonatomic) NSString* redirectURI;
+
+/*!
+ *  @abstract Queries the server for missing application properties. A User with credentials is required to retrieve this information.
+ *  @discussion The method is called asynchronously. 
+ *	If the request is successful, old values will be written as block arguments, and new ones will be set in the <code>RelayrApp</code> instance.
+ *
+ *  @param completion A block with the status of the request.
+ */
+- (void)queryForAppInfoWithUserCredentials:(RelayrUser*)user
+                                completion:(void (^)(NSError* error, NSString* previousName, NSString* previousDescription))completion;
+
 #pragma mark Lifecycle
 
 /*!
@@ -51,57 +125,6 @@ OAuthClientSecret:(NSString*)clientSecret
  *	@return If the object is successfully removed or not found, <code>YES</code> is returned. If the remove operation could not be performed, the method will return <code>NO</code>.
  */
 + (BOOL)removeAppFromKeyChain:(RelayrApp*)app;
-
-#pragma mark Characteristics
-
-/*!
- *  @abstract The relayr application ID.
- */
-@property (readonly,nonatomic) NSString* uid;
-
-/*!
- *  @abstract The relayr application name.
- *  @discussion This value should first be retrieved asynchronously, from the relayr server. 
- *	If the server is not queried, this property is <code>nil</code>.
- */
-@property (readonly,nonatomic) NSString* name;
-
-/*!
- *  @abstract The relayr application description.
- *  @discussion This value should first be retrieved asynchronously, from the relayr server. 
- *	If the server is not queried, this property is <code>nil</code>.
- */
-@property (readonly,nonatomic) NSString* appDescription;
-
-/*!
- *  @abstract The Id of the app's Publisher.
- *  @discussion This value should first be retrieved asynchronously, from the relayr server. 
- *	If the server is not queried, this property is <code>nil</code>.
- */
-@property (readonly,nonatomic) NSString* publisherID;
-
-/*!
- *  @abstract OAuth client (app) secret.
- */
-@property (readonly,nonatomic) NSString* oauthClientSecret;
-
-/*!
- *  @abstract The OAuth redirect URI.
- *  @discussion The URI of the page where the user is redirected upon successful login. The URI must include the protocol used e.g. 'http'. 
- *	The redirect URI is set when an application is registered on the relayr Platform. 
- *	@see <a href="https://developer.relayr.io/documents/Authorization/OAuthAndRelayr">The OAuth on relayr section on the Develooper Dashboard.</a>
- */
-@property (readonly,nonatomic) NSString* redirectURI;
-
-/*!
- *  @abstract Queries the server for missing application properties. A User with credentials is required to retrieve this information.
- *  @discussion The method is called asynchronously. 
- *	If the request is successful, old values will be written as block arguments, and new ones will be set in the <code>RelayrApp</code> instance.
- *
- *  @param completion A block with the status of the request.
- */
-- (void)queryForAppInfoWithUserCredentials:(RelayrUser*)user
-                                completion:(void (^)(NSError* error, NSString* previousName, NSString* previousDescription))completion;
 
 #pragma mark Users
 
