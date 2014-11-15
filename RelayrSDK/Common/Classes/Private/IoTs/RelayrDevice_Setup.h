@@ -66,4 +66,9 @@
  */
 - (void)setWith:(RelayrDevice*)device;
 
+/*!
+ *  @abstract This method checks if the receiving device is in any service. If so, it checks whether the service is really being in used by the device. If not, it the device is unsubscribe to the service.
+ */
+- (void)unsubscribeToCurrentServiceIfNecessary;
+
 @end

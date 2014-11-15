@@ -77,31 +77,28 @@ static NSString* const kCodingOutputs = @"out";
 
 - (void)replaceInputs:(NSSet*)inputs
 {
-    if (inputs)
-    {
-        NSMutableSet* result = [NSMutableSet setWithCapacity:inputs.count];
-        for (RelayrInput* nInput in inputs)
-        {
-            RelayrInput* matchedInput = nInput;
-            for (RelayrInput* pInput in _inputs)
-            {
-                if ([pInput.meaning isEqualToString:nInput.meaning]) { matchedInput = pInput; [matchedInput setWith:nInput]; break; }
-            }
-            [result addObject:matchedInput];
-        }
-        _inputs = [NSSet setWithSet:result];
-    }
-    else { _inputs = inputs; }
+    if (!inputs) { return; }
+    if (!_inputs) { _inputs = inputs; return; }
     
-    if ([self isMemberOfClass:[RelayrDevice class]])
+    NSMutableSet* previousInputs = [NSMutableSet setWithSet:_inputs];
+    NSMutableSet* result = [NSMutableSet setWithCapacity:inputs.count];
+    
+    for (RelayrInput* nInput in inputs)
     {
-        RelayrDevice* device = (RelayrDevice*)self;
-        if (!device.hasOngoingSubscriptions)
+        RelayrInput* matchedInput;
+        for (RelayrInput* pInput in previousInputs)
         {
-            id <RLAService> service = [RLAServiceSelector serviceCurrentlyInUseByDevice:device];
-            if (service) { [service unsubscribeToDataFromDevice:device]; }
+            if ([pInput.meaning isEqualToString:nInput.meaning]) { matchedInput = pInput; [matchedInput setWith:nInput]; break; }
         }
+        
+        if (matchedInput) { [previousInputs removeObject:matchedInput]; }
+        else { matchedInput = nInput; }
+        
+        [result addObject:matchedInput];
     }
+    
+    _inputs = [NSSet setWithSet:result];
+    for (RelayrInput* pInput in previousInputs) { [pInput removeAllSubscriptions]; }
 }
 
 - (void)replaceOutputs:(NSSet*)outputs

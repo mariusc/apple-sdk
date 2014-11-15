@@ -90,6 +90,15 @@ static NSString* const kCodingSecret = @"sec";
     [_connection setWith:device.connection];
 }
 
+- (void)unsubscribeToCurrentServiceIfNecessary
+{
+    if (!self.hasOngoingSubscriptions)
+    {
+        id <RLAService> service = [RLAServiceSelector serviceCurrentlyInUseByDevice:self];
+        if (service) { [service unsubscribeToDataFromDevice:self]; }
+    }
+}
+
 #pragma mark Processes
 
 - (void)onboardWithClass:(Class <RelayrOnboarding>)onboardingClass timeout:(NSNumber*)timeout options:(NSDictionary*)options completion:(void (^)(NSError* error))completion
