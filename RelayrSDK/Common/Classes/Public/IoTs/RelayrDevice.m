@@ -90,6 +90,11 @@ static NSString* const kCodingSecret = @"sec";
     [_connection setWith:device.connection];
 }
 
+- (void)valueReceived:(NSObject <NSCopying> *)valueOrError at:(NSDate*)date
+{
+    // TODO:
+}
+
 - (void)unsubscribeToCurrentServiceIfNecessary
 {
     if (!self.hasOngoingSubscriptions)

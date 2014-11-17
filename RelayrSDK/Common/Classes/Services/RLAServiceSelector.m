@@ -29,11 +29,14 @@
     if (selectedService) { return completion(nil, selectedService); }
     
     // FIXME: For now, we always return an MQTT service and we are calling the wrong initialiser. Fix it!!!
-    RLAMQTTService* mqttService = [[RLAMQTTService alloc] initWithUser:user device:device];
-    if (!mqttService) { return completion(RelayrErrorNoServiceAvailable, nil); }
+    if (!user.mqttService)
+    {
+        RLAMQTTService* mqttService = [[RLAMQTTService alloc] initWithUser:user device:device];
+        if (!mqttService) { return completion(RelayrErrorNoServiceAvailable, nil); }
+        user.mqttService = mqttService;
+    }
     
-    user.mqttService = mqttService;
-    return completion(nil, mqttService);
+    return completion(nil, user.mqttService);
 }
 
 + (id<RLAService>)serviceCurrentlyInUseByDevice:(RelayrDevice*)device
@@ -42,16 +45,8 @@
     if (!user) { return nil; }
     
     RelayrConnectionProtocol const protocolInUse = device.connection.protocol;
-    if (protocolInUse == RelayrConnectionProtocolBLE)
-    {
-        return (user.bleService) ? user.bleService : nil;
-    }
-    else if (protocolInUse == RelayrConnectionProtocolMQTT)
-    {
-        return (user.mqttService) ? user.mqttService : nil;
-    }
-    
-    return nil;
+    return  (protocolInUse == RelayrConnectionProtocolBLE)  ? user.bleService :
+            (protocolInUse == RelayrConnectionProtocolMQTT) ? user.mqttService : nil;
 }
 
 @end

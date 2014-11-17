@@ -29,7 +29,7 @@
  *
  *  @param user <code>RelayrUser</code> that will own this service.
  *	@return Fully initialised <code>RLAService</code> object or <code>nil</code>.
- */
+ */ 
 - (instancetype)initWithUser:(RelayrUser*)user device:(RelayrDevice*)device;    // FIXME: Delete this method. Only -initWithUser: is supposed to be used.
 
 @end

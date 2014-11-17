@@ -32,6 +32,8 @@ NSString* const kRLAAPIRequestModePUT       = @"PUT";
     if (self)
     {
         _user = user;
+        _connectionState = RelayrConnectionStateUnknown;
+        _connectionScope = RelayrConnectionScopeUnknown;
         _hostString = dRLAAPI_Host;
         
         NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
@@ -86,14 +88,12 @@ NSString* const kRLAAPIRequestModePUT       = @"PUT";
         case RelayrConnectionStateConnecting:
         case RelayrConnectionStateConnected:
             return nil;
-        case RelayrConnectionStateUnknown:
-            return RelayrErrorInternetProblemUnknwon;
+        case RelayrConnectionStateDisconnecting:
+            return RelayrErrorInternetResetting;
         case RelayrConnectionStateUnauthorized:
             return RelayrErrorInternetUnauthorized;
         case RelayrConnectionStateUnsupported:
             return RelayrErrorInternetUnsupported;
-        case RelayrConnectionStateDisconnecting:
-            return RelayrErrorInternetResetting;
         default:
             return RelayrErrorInternetProblemUnknwon;
     }

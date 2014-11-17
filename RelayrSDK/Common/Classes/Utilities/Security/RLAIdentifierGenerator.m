@@ -11,13 +11,13 @@
 
 #pragma mark - Public API
 
-+ (NSString*)generateIDFromUserID:(NSString*)userID withMaximumRandomNumber:(NSUInteger)max
++ (NSString*)generateIDFromBaseString:(NSString*)baseString withMaximumRandomNumber:(NSUInteger)max
 {
-    if (!userID.length) { return nil; }
-    if (max == 0) { return userID; }
+    if (!baseString.length) { return nil; }
+    if (max == 0) { return baseString; }
     
     unsigned long const randomNumber = arc4random() % ((unsigned)max + 1);
-    return [NSString stringWithFormat:@"%@_%lu", userID, randomNumber];
+    return [NSString stringWithFormat:@"%@_%lu", baseString, randomNumber];
 }
 
 + (NSString*)identifierForVendor

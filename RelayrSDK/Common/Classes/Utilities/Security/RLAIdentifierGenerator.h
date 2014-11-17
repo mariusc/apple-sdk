@@ -14,7 +14,7 @@
  *
  *  @see RelayrUser
  */
-+ (NSString*)generateIDFromUserID:(NSString*)userID withMaximumRandomNumber:(NSUInteger)max;
++ (NSString*)generateIDFromBaseString:(NSString*)userID withMaximumRandomNumber:(NSUInteger)max;
 
 /*!
  *  @abstract Unique identifier for the current device and the current app.

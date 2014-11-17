@@ -71,4 +71,13 @@
  */
 - (void)unsubscribeToCurrentServiceIfNecessary;
 
+/*!
+ *  @abstract This method is called everytime a value (or error) is received from any of the data source services (MQTT, BLE, etc.).
+ *  @discussion The <code>valueOrError</code> parameter can be an <code>NSError</code> or any other value. If this parameter is not an error, then a date must be given or the method won't perform any work.
+ *
+ *  @param valueOrError Object defining the value received or the error occurred.
+ *  @param date <code>NSDate</code> with the date of arrival of the value received.
+ */
+- (void)valueReceived:(NSObject <NSCopying> *)valueOrError at:(NSDate*)date;
+
 @end

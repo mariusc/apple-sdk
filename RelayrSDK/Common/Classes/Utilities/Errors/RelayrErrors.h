@@ -38,6 +38,10 @@ FOUNDATION_EXPORT NSString* const kRelayrErrorStringFile;
  *  @constant kRelayrErrorCodeBLEUnsupported Bluetooth Low Energy is not supported by your system.
  *  @constant kRelayrErrorCodeBLEModuleResetting The Bluetooth Low Energy module is being resetted.
  *  @constant kRelayrErrorCodeBLEProblemUnknown An unknown problem with the Bluetooth Low Energy module happened.
+ *  @constant kRelayrErrorCodeMQTTUnableToConnect A connection to the broker could not be made.
+ *  @constant kRelayrErrorCodeMQTTConnectionLost The connection with the broker failed.
+ *  @constant kRelayrErrorCodeMQTTSubscriptionFailed The subscription could not be made.
+ *  @constant kRelayrErrorCodeMQTTProblemUnknown An unkwnon problem related to the MQTT service occurred.
  */
 typedef NS_ENUM(NSInteger, RelayrErrorCode) {
     kRelayrErrorCodeUnknown                 = 1,
@@ -62,7 +66,11 @@ typedef NS_ENUM(NSInteger, RelayrErrorCode) {
     kRelayrErrorCodeBLEModuleUnauthorized   = 26,
     kRelayrErrorCodeBLEUnsupported          = 27,
     kRelayrErrorCodeBLEModuleResetting      = 28,
-    kRelayrErrorCodeBLEProblemUnknown       = 29
+    kRelayrErrorCodeBLEProblemUnknown       = 29,
+    kRelayrErrorCodeMQTTUnableToConnect     = 30,
+    kRelayrErrorCodeMQTTConnectionLost      = 31,
+    kRelayrErrorCodeMQTTSubscriptionFailed  = 32,
+    kRelayrErrorCodeMQTTProblemUnknown      = 33
 };
 
 #define RelayrErrorUserInfoLocal   @{ \
@@ -95,6 +103,15 @@ typedef NS_ENUM(NSInteger, RelayrErrorCode) {
 #define dRelayrErrorMessageBLEUnupported            NSLocalizedStringFromTable(@"The current system doesn't support Bluetooth Low Energy.", kRelayrErrorStringFile, @"It happens when the system running the SDK doesn't have a BLE transceiver.")
 #define dRelayrErrorMessageBLEModuleResetting       NSLocalizedStringFromTable(@"The BLE module is being resetted.", kRelayrErrorStringFile, @"It happens when the BLE is being resetted by the system or the user.")
 #define dRelayrErrorMessageBLEProblemUnknwon        NSLocalizedStringFromTable(@"BLE error unknown.", kRelayrErrorStringFile, @"There was a problem with the BLE Module, but it is unknown.")
+#define dRelayrErrorMessageMQTTUnableToConnect      NSLocalizedStringFromTable(@"It was not possible to make a connection with the MQTT broker.", kRelayrErrorStringFile, @"A connection with the broker could not be made.")
+#define dRelayrErrorMessageMQTTConnectionLost       NSLocalizedStringFromTable(@"The connection between the host and the MQTT broker was lost.", kRelayrErrorStringFile, @"The connection with the broker was lost.")
+#define dRelayrErrorMessageMQTTSubscriptionFailed   NSLocalizedStringFromTable(@"A subscription with the MQTT broker could not be established.", kRelayrErrorStringFile, @"A subscription for a topic was tried, but it wasn't successful.")
+#define dRelayrErrorMessageMQTTProblemUnknown       NSLocalizedStringFromTable(@"An unkwnon problem related to the MQTT service occured.", kRelayrErrorStringFile, @"MQTT problem of unkwnon source.")
+
+//kRelayrErrorCodeMQTTUnableToConnect     = 30,
+//kRelayrErrorCodeMQTTConnectionLost      = 31,
+//kRelayrErrorCodeMQTTSubscriptionFailed  = 32,
+//kRelayrErrorCodeMQTTProblemUnknown      = 33
 
 #pragma mark Error objects
 
@@ -121,6 +138,10 @@ typedef NS_ENUM(NSInteger, RelayrErrorCode) {
 #define RelayrErrorBLEModuleResetting       [RelayrErrors errorWithCode:kRelayrErrorCodeBLEModuleResetting localizedDescription:dRelayrErrorMessageBLEModuleResetting userInfo:RelayrErrorUserInfoLocal]
 #define RelayrErrorBLEUnsupported           [RelayrErrors errorWithCode:kRelayrErrorCodeBLEUnsupported localizedDescription:dRelayrErrorMessageBLEUnupported userInfo:RelayrErrorUserInfoLocal]
 #define RelayrErrorBLEProblemUnknown        [RelayrErrors errorWithCode:kRelayrErrorCodeBLEProblemUnknown localizedDescription:dRelayrErrorMessageBLEProblemUnknwon userInfo:RelayrErrorUserInfoLocal]
+#define RelayrErrorMQTTUnableToConnect      [RelayrErrors errorWithCode:kRelayrErrorCodeMQTTUnableToConnect localizedDescription:dRelayrErrorMessageMQTTUnableToConnect userInfo:RelayrErrorUserInfoLocal]
+#define RelayrErrorMQTTConnectionLost       [RelayrErrors errorWithCode:kRelayrErrorCodeMQTTConnectionLost localizedDescription:dRelayrErrorMessageMQTTConnectionLost userInfo:RelayrErrorUserInfoLocal]
+#define RelayrErrorMQTTSubscriptionFailed   [RelayrErrors errorWithCode:kRelayrErrorCodeMQTTSubscriptionFailed localizedDescription:dRelayrErrorMessageMQTTSubscriptionFailed userInfo:RelayrErrorUserInfoLocal]
+#define RelayrErrorMQTTProblemUnknown       [RelayrErrors errorWithCode:kRelayrErrorCodeMQTTProblemUnknown localizedDescription:dRelayrErrorMessageMQTTProblemUnknown userInfo:RelayrErrorUserInfoLocal]
 
 /*!
  *  @abstract Utility class which provides convenience methods for initializing errors as well as internal framework error codes.

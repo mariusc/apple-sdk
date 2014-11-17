@@ -30,6 +30,9 @@
 #undef malloc_copyStruct
 #define malloc_copyStruct(STRUCT_TYPE, PTR, VALUE)  malloc( sizeof(VALUE) );   struct_shallowCopy(STRUCT_TYPE, PTR, VALUE)
 
+//#undef malloc_struct
+//#define malloc_struct(STRUCT_TYPE, )
+
 #pragma mark - Likely/unlike optimizations
 
 #undef likely
