@@ -24,7 +24,7 @@
 - (void)setUp
 {
     [super setUp];
-    
+
     _app = [[RelayrApp alloc] initWithID:kTestsAppID OAuthClientSecret:kTestsAppSecret redirectURI:kTestsAppRedirect];
     _user = [[RelayrUser alloc] initWithToken:kTestsUserToken];
     _user.uid = kTestsUserID;
@@ -48,28 +48,28 @@
 - (void)testMQTTServiceInitialisationAndConnection
 {
     XCTestExpectation* expectation = [self expectationWithDescription:nil];
-    
+
     [_user queryCloudForUserInfo:^(NSError* error, NSString* previousName, NSString* previousEmail) {
         XCTAssertNil(error);
         [_user queryCloudForIoTs:^(NSError* error) {
             XCTAssertNil(error);
-            
+
             RelayrDevice* gyroscope;
             for (RelayrDevice* device in _user.devices) { if ([device.modelID isEqualToString:@"173c44b5-334e-493f-8eb8-82c8cc65d29f"]) { gyroscope = device; break; } }
-            
+
             if (!gyroscope) { return; }
             NSLog(@"%@", gyroscope);
             
             for (RelayrInput* input in gyroscope.inputs) { NSLog(@"%@", input); }
-            
+
             [RLAServiceSelector selectServiceForDevice:gyroscope completion:^(NSError* error, id<RLAService> service) {
                 XCTAssertNil(error);
                 XCTAssertNotNil(service);
-                
+
             }];
         }];
     }];
-    
+
     [self waitForExpectationsWithTimeout:20 handler:nil];
 }
 
