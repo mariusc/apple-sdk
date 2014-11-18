@@ -23,7 +23,6 @@
 static NSString* const kCodingID = @"uid";
 static NSString* const kCodingName = @"nam";
 static NSString* const kCodingOwner = @"own";
-static NSString* const kCodingUser = @"usr";
 static NSString* const kCodingPublic = @"isP";
 static NSString* const kCodingFirmware = @"fir";
 static NSString* const kCodingSecret = @"sec";
@@ -40,7 +39,7 @@ static NSString* const kCodingSecret = @"sec";
 
 - (RelayrTransmitter*)transmitter
 {
-    for (RelayrTransmitter* transmitter in _user.transmitters)
+    for (RelayrTransmitter* transmitter in self.user.transmitters)
     {
         for (RelayrDevice* device in transmitter.devices) { if (device==self) { return transmitter; } }
     }
@@ -53,7 +52,7 @@ static NSString* const kCodingSecret = @"sec";
     if (!name.length) { if (completion) { completion(RelayrErrorMissingArgument, _name); } return; }
     
     __weak RelayrDevice* weakSelf = self;
-    [_user.apiService setDevice:_uid name:name modelID:nil isPublic:nil description:nil completion:(!completion) ? nil : ^(NSError* error, RelayrDevice* device) {
+    [self.user.apiService setDevice:_uid name:name modelID:nil isPublic:nil description:nil completion:(!completion) ? nil : ^(NSError* error, RelayrDevice* device) {
         NSString* previousName = weakSelf.name;
         if (error) { return completion(error, previousName); }
         
@@ -155,7 +154,6 @@ static NSString* const kCodingSecret = @"sec";
     self = [super initWithCoder:decoder];
     if (self)
     {
-        _user = [decoder decodeObjectForKey:kCodingUser];
         _uid = [decoder decodeObjectForKey:kCodingID];
         _name = [decoder decodeObjectForKey:kCodingName];
         _owner = [decoder decodeObjectForKey:kCodingOwner];
@@ -170,7 +168,6 @@ static NSString* const kCodingSecret = @"sec";
 - (void)encodeWithCoder:(NSCoder*)coder
 {
     [super encodeWithCoder:coder];
-    [coder encodeObject:_user forKey:kCodingUser];
     [coder encodeObject:_uid forKey:kCodingID];
     [coder encodeObject:_name forKey:kCodingName];
     [coder encodeObject:_owner forKey:kCodingOwner];

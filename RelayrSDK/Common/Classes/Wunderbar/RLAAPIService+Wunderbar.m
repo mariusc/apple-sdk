@@ -21,7 +21,7 @@
     NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:(!completion) ? nil : ^(NSData* data, NSURLResponse* response, NSError* error) {
         NSDictionary* json = RLAAPI_processHTTPresponse(Web_RequestResponseCode_WunderbarRegistration, nil);
         
-        RelayrTransmitter* result = [RLAAPIService parseWunderbarFromJSONDictionary:json];
+        RelayrTransmitter* result = [self parseWunderbarFromJSONDictionary:json];
         return (!result) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, result);
     }];
     [task resume];
@@ -42,31 +42,31 @@
 
 #pragma mark - Private methods
 
-+ (RelayrTransmitter*)parseWunderbarFromJSONDictionary:(NSDictionary*)jsonDict
+- (RelayrTransmitter*)parseWunderbarFromJSONDictionary:(NSDictionary*)jsonDict
 {
     if (!jsonDict) { return nil; }
     
-    RelayrTransmitter* masterModule = [RLAAPIService parseTransmitterFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarMasterModule]];
+    RelayrTransmitter* masterModule = [self parseTransmitterFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarMasterModule]];
     if (!masterModule) { return nil; }
     
     NSMutableSet* devices = [NSMutableSet setWithCapacity:6];
     
-    RelayrDevice* gyroscope = [RLAAPIService parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarGyroscope]];
+    RelayrDevice* gyroscope = [self parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarGyroscope]];
     if (gyroscope) { [devices addObject:gyroscope]; }
     
-    RelayrDevice* light = [RLAAPIService parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarLight]];
+    RelayrDevice* light = [self parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarLight]];
     if (light) { [devices addObject:light]; }
     
-    RelayrDevice* mic = [RLAAPIService parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarMicrophone]];
+    RelayrDevice* mic = [self parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarMicrophone]];
     if (mic) { [devices addObject:mic]; }
     
-    RelayrDevice* thermometer = [RLAAPIService parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarThermomether]];
+    RelayrDevice* thermometer = [self parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarThermomether]];
     if (thermometer) { [devices addObject:thermometer]; }
     
-    RelayrDevice* infrared = [RLAAPIService parseDeviceFromJSONDictionary:jsonDict[Web_ResopndKey_WunderbarInfrared]];
+    RelayrDevice* infrared = [self parseDeviceFromJSONDictionary:jsonDict[Web_ResopndKey_WunderbarInfrared]];
     if (infrared) { [devices addObject:infrared]; }
     
-    RelayrDevice* bridge = [RLAAPIService parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarBridge]];
+    RelayrDevice* bridge = [self parseDeviceFromJSONDictionary:jsonDict[Web_RespondKey_WunderbarBridge]];
     if (bridge) { [devices addObject:bridge]; }
     
     masterModule.devices = [NSSet setWithSet:devices];

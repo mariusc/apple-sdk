@@ -128,9 +128,9 @@
 #define dRLAAPI_User_RequestKey_ID                      @"id"
 #define dRLAAPI_User_RequestKey_Name                    @"name"
 // HTTP Respond body keys
-#define RLAAPI_User_RespondKey_ID                       @"id"
-#define RLAAPI_User_RespondKey_Name                     @"name"
-#define RLAAPI_User_RespondKey_Email                    @"email"
+#define dRLAAPI_User_RespondKey_ID                      @"id"
+#define dRLAAPI_User_RespondKey_Name                    @"name"
+#define dRLAAPI_User_RespondKey_Email                   @"email"
 
 #pragma mark RLAAPIService+Publisher
 
@@ -234,11 +234,17 @@
 #define dRLAAPI_DeviceModels_RelativePath               @"/device-models"
 #define dRLAAPI_DeviceModels_ResponseCode               200
 // Device-model (get)
-#define dRLAAPI_DeviceModelGet_RelativePath(modelID)    [NSString stringWithFormat:@"/device-model/%@", modelID]
+#define dRLAAPI_DeviceModelGet_RelativePath(modelID)    [NSString stringWithFormat:@"/device-models/%@", modelID]
 #define dRLAAPI_DeviceModelGet_ResponseCode             200
 // Device-model's meaning (all devices in Cloud)
-#define dRLAAPI_DeviceModelMean_RelativePath            @"/device-model/meanings"
+#define dRLAAPI_DeviceModelMean_RelativePath            @"/device-models/meanings"
 #define dRLAAPI_DeviceModelMean_ResponseCode            200
+// Device-model (firmwares)
+#define dRLAAPI_DeviceModelFirmwares_RelativePath(mID)  [NSString stringWithFormat:@"/device-model/%@/firmware", mID]
+#define dRLAAPI_DeviceModelFirmwares_RepsonseCode       200
+// Device-model (specific firmware)
+#define dRLAAPI_DeviceModelFirmwareVersion_RelativePath(modelID, firmwareVersion)    [NSString stringWithFormat:@"/device-model/%@/firmware/%@", modelID, firmwareVersion]
+#define dRLAAPI_DeviceModelFirmwareVersion_ResponseCode 200
 // HTTP Request body keys
 #define dRLAAPI_Device_RequestKey_Name                  @"name"
 #define dRLAAPI_Device_RequestKey_Owner                 @"owner"

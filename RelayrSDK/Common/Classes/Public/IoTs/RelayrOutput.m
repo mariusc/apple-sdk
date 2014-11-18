@@ -22,8 +22,8 @@ static NSString* const kCodingMeaning = @"men";
 
 - (void)sendValue:(NSString*)value withCompletion:(void (^)(NSError*))completion
 {
-    if (!_device || ![_device isKindOfClass:[RelayrDevice class]]) { if (completion) { completion(RelayrErrorTryingToUseRelayrModel); } return; }
-    RelayrDevice* device = (RelayrDevice*)_device;
+    if (!_deviceModel || ![_deviceModel isKindOfClass:[RelayrDevice class]]) { if (completion) { completion(RelayrErrorTryingToUseRelayrModel); } return; }
+    RelayrDevice* device = (RelayrDevice*)_deviceModel;
     RelayrUser* user = device.user;
     if (!user) { if (completion) { completion(RelayrErrorMissingExpectedValue); } return; }
     
@@ -40,6 +40,13 @@ static NSString* const kCodingMeaning = @"men";
         _meaning = meaning;
     }
     return self;
+}
+
+- (void)setWith:(RelayrOutput*)output
+{
+    if (!output.meaning.length) { return; }
+    
+    // TODO: Fill up
 }
 
 #pragma mark NSCoding

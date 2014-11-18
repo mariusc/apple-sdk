@@ -31,7 +31,7 @@
     NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:(!completion) ? nil : ^(NSData* data, NSURLResponse* response, NSError* error) {
         NSDictionary* json = RLAAPI_processHTTPresponse(dRLAAPI_TransmitterRegistration_ResponseCode, nil);
         
-        RelayrTransmitter* result = [RLAAPIService parseTransmitterFromJSONDictionary:json];
+        RelayrTransmitter* result = [self parseTransmitterFromJSONDictionary:json];
         return (!result) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, result);
     }];
     [task resume];
@@ -49,7 +49,7 @@
     NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
         NSDictionary* json = RLAAPI_processHTTPresponse(dRLAAPI_TransmitterInfo_ResponseCode, nil);
         
-        RelayrTransmitter* result = [RLAAPIService parseTransmitterFromJSONDictionary:json];
+        RelayrTransmitter* result = [self parseTransmitterFromJSONDictionary:json];
         return (!result) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, result);
     }];
     [task resume];
@@ -123,7 +123,7 @@
         NSMutableSet* result = [NSMutableSet setWithCapacity:json.count];
         for (NSDictionary* dict in json)
         {
-            RelayrDevice* device = [RLAAPIService parseDeviceFromJSONDictionary:dict];
+            RelayrDevice* device = [self parseDeviceFromJSONDictionary:dict];
             if (device) { [result addObject:device]; }
         }
         

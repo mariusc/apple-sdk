@@ -15,6 +15,8 @@
     NSURL* absoluteURL = [RLAAPIService buildAbsoluteURLFromHost:dRLAAPI_Host relativeString:dRLAAPI_CloudReachability_RelativePath];
     NSMutableURLRequest* request = [RLAAPIService requestForURL:absoluteURL HTTPMethod:kRLAAPIRequestModeGET authorizationToken:nil];
     if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
+    request.networkServiceType = NSURLNetworkServiceTypeDefault;
+    request.allowsCellularAccess = YES;
     
     NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
         NSArray* json = RLAAPI_processHTTPresponse(dRLAAPI_CloudReachability_ResponseCode, @NO);
@@ -36,6 +38,8 @@
     NSURL* absoluteURL = [RLAAPIService buildAbsoluteURLFromHost:dRLAAPI_Host relativeString:dRLAAPI_CloudOAuthToken_RelativePath];
     NSMutableURLRequest* request = [RLAAPIService requestForURL:absoluteURL HTTPMethod:kRLAAPIRequestModePOST authorizationToken:nil];
     if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
+    request.networkServiceType = NSURLNetworkServiceTypeDefault;
+    request.allowsCellularAccess = YES;
     
     NSString* httpBodyString = dRLAAPI_CloudOAuthToken_HTTPBody(code, redirectURI, clientID, clientSecret);
     [request setValue:dRLAAPIRequest_HeaderValue_ContentType_UTF8 forHTTPHeaderField:dRLAAPIRequest_HeaderField_ContentType];

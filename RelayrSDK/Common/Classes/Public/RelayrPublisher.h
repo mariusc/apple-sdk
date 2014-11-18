@@ -18,15 +18,15 @@
 @property (readonly,nonatomic) NSString* uid;
 
 /*!
+ *  @abstract The owner of the publisher entity. This is the User by whom the Publisher was created.
+ */
+@property (readonly,nonatomic) NSString* owner;
+
+/*!
  *  @abstract Represents the publisher name. 
  *  @discussion Can be <code>nil</code>.
  */
 @property (readonly,nonatomic) NSString* name;
-
-/*!
- *  @abstract The owner of the publisher entity. This is the User by whom the Publisher was created. 
- */
-@property (readonly,nonatomic) NSString* owner;
 
 /*!
  *  @abstract relayr apps owned by this publisher entity.

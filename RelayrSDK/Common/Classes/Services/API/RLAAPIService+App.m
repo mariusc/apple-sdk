@@ -55,23 +55,23 @@
     [task resume];
 }
 
-+ (void)requestAppInfoFor:(NSString*)appID completion:(void (^)(NSError* error, NSString* appID, NSString* appName, NSString* appDescription, NSString* appPublisher))completion
++ (void)requestAppInfoFor:(NSString*)appID completion:(void (^)(NSError* error, NSString* appID, NSString* appName, NSString* appDescription))completion
 {
     if (!completion) { return; }
-    if (!appID.length) { return completion(RelayrErrorMissingArgument, nil, nil, nil, nil); }
+    if (!appID.length) { return completion(RelayrErrorMissingArgument, nil, nil, nil); }
     
     NSURL* absoluteURL = [RLAAPIService buildAbsoluteURLFromHost:dRLAAPI_Host relativeString:dRLAAPI_AppInfo_RelativePath(appID)];
     NSMutableURLRequest* request = [RLAAPIService requestForURL:absoluteURL HTTPMethod:kRLAAPIRequestModeGET authorizationToken:nil];
-    if (!request) { return completion(RelayrErrorWebRequestFailure, nil, nil, nil, nil); }
+    if (!request) { return completion(RelayrErrorWebRequestFailure, nil, nil, nil); }
     
     NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
-        NSDictionary* json = RLAAPI_processHTTPresponse(dRLAAPI_AppInfo_ResponseCode, nil, nil, nil, nil);
-        completion(nil, json[dRLAAPI_App_RespondKey_ID], json[dRLAAPI_App_RespondKey_Name], json[dRLAAPI_App_RespondKey_Description], json[dRLAAPI_App_RespondKey_Publisher]);
+        NSDictionary* json = RLAAPI_processHTTPresponse(dRLAAPI_AppInfo_ResponseCode, nil, nil, nil);
+        completion(nil, json[dRLAAPI_App_RespondKey_ID], json[dRLAAPI_App_RespondKey_Name], json[dRLAAPI_App_RespondKey_Description]);
     }];
     [task resume];
 }
 
-- (void)requestApp:(NSString*)appID completion:(void (^)(NSError* error, RelayrApp* app))completion
+- (void)requestAppInfoExtendedFor:(NSString*)appID completion:(void (^)(NSError* error, RelayrApp* app))completion
 {
     if (!completion) { return; }
     if (!appID.length) { return completion(RelayrErrorMissingArgument, nil); }

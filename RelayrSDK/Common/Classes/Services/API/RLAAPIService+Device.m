@@ -27,7 +27,7 @@
     NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:(!completion) ? nil : ^(NSData* data, NSURLResponse* response, NSError* error) {
         NSDictionary* json = RLAAPI_processHTTPresponse(dRLAAPI_DeviceRegister_ResponseCode, nil);
         
-        RelayrDevice* result = [RLAAPIService parseDeviceFromJSONDictionary:json];
+        RelayrDevice* result = [self parseDeviceFromJSONDictionary:json];
         return (!result) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, result);
     }];
     [task resume];
@@ -45,7 +45,7 @@
     NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
         NSDictionary* json = RLAAPI_processHTTPresponse(dRLAAPI_DeviceInfo_ResponseCode, nil);
         
-        RelayrDevice* result = [RLAAPIService parseDeviceFromJSONDictionary:json];
+        RelayrDevice* result = [self parseDeviceFromJSONDictionary:json];
         return (!result) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, result);
     }];
     [task resume];
@@ -75,7 +75,7 @@
     NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
         NSDictionary* json = RLAAPI_processHTTPresponse(dRLAAPI_DeviceInfoSet_ResponseCode, nil);
         
-        RelayrDevice* result = [RLAAPIService parseDeviceFromJSONDictionary:json];
+        RelayrDevice* result = [self parseDeviceFromJSONDictionary:json];
         return (!result) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, result);
     }];
     [task resume];
@@ -173,7 +173,7 @@
         NSArray* json = RLAAPI_processHTTPresponse(dRLAAPI_DevicesPublic_ResponseCode, nil);
         
         NSMutableSet* result = [[NSMutableSet alloc] initWithCapacity:json.count];
-        for (NSDictionary* dict in json) { RelayrDevice* dev = [RLAAPIService parseDeviceFromJSONDictionary:dict]; if (dev) { [result addObject:dev]; } }
+        for (NSDictionary* dict in json) { RelayrDevice* dev = [self parseDeviceFromJSONDictionary:dict]; if (dev) { [result addObject:dev]; } }
         return completion(nil, (result.count) ? [NSSet setWithSet:result] : nil);
     }];
     [task resume];
@@ -192,7 +192,7 @@
         NSArray* json = RLAAPI_processHTTPresponse(dRLAAPI_DevicesPublicMean_ResponseCode, nil);
         
         NSMutableSet* result = [[NSMutableSet alloc] initWithCapacity:json.count];
-        for (NSDictionary* dict in json) { RelayrDevice* dev = [RLAAPIService parseDeviceFromJSONDictionary:dict]; if (dev) { [result addObject:dev]; } }
+        for (NSDictionary* dict in json) { RelayrDevice* dev = [self parseDeviceFromJSONDictionary:dict]; if (dev) { [result addObject:dev]; } }
         return completion(nil, [NSSet setWithSet:result]);
     }];
     [task resume];
@@ -225,7 +225,7 @@
         NSArray* json = RLAAPI_processHTTPresponse(dRLAAPI_DeviceModels_ResponseCode, nil);
         
         NSMutableSet* result = [[NSMutableSet alloc] initWithCapacity:json.count];
-        for (NSDictionary* dict in json) { RelayrDeviceModel* devModel = [RLAAPIService parseDeviceModelFromJSONDictionary:dict inDeviceObject:nil]; if (devModel) { [result addObject:devModel]; } }
+        for (NSDictionary* dict in json) { RelayrDeviceModel* devModel = [self parseDeviceModelFromJSONDictionary:dict inDeviceObject:nil]; if (devModel) { [result addObject:devModel]; } }
         return completion(nil, (result.count) ? [NSSet setWithSet:result] : nil);
     }];
     [task resume];
@@ -243,7 +243,7 @@
     NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
         NSDictionary* json = RLAAPI_processHTTPresponse(dRLAAPI_DeviceModelGet_ResponseCode, nil);
         
-        RelayrDeviceModel* devModel = [RLAAPIService parseDeviceModelFromJSONDictionary:json inDeviceObject:nil];
+        RelayrDeviceModel* devModel = [self parseDeviceModelFromJSONDictionary:json inDeviceObject:nil];
         return (!deviceModelID) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, devModel);
     }];
     [task resume];
@@ -255,7 +255,7 @@
 
     NSURL* absoluteURL = [RLAAPIService buildAbsoluteURLFromHost:self.hostString relativeString:dRLAAPI_DeviceModelMean_RelativePath];
     NSMutableURLRequest* request = [RLAAPIService requestForURL:absoluteURL HTTPMethod:kRLAAPIRequestModeGET authorizationToken:self.user.token];
-    if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure, nil); } return; }
+    if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
 
     NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
         NSArray* json = RLAAPI_processHTTPresponse(dRLAAPI_DeviceModelMean_ResponseCode, nil);
@@ -268,8 +268,50 @@
             if (key && value) { result[key] = value; }
         }
         
-        return completion(nil, (result.count) ? [NSDictionary dictionaryWithDictionary:result] : nil);
+        return completion(nil, [NSDictionary dictionaryWithDictionary:result]);
     }];
-    [task resume];}
+    [task resume];
+}
+
+- (void)requestFirmwaresFromDeviceModel:(NSString*)deviceModelID completion:(void (^)(NSError*, NSArray*))completion
+{
+    if (!completion) { return; }
+    if (!deviceModelID.length) { return completion(RelayrErrorMissingArgument, nil); }
+    
+    NSURL* absoluteURL = [RLAAPIService buildAbsoluteURLFromHost:self.hostString relativeString:dRLAAPI_DeviceModelFirmwares_RelativePath(deviceModelID)];
+    NSMutableURLRequest* request = [RLAAPIService requestForURL:absoluteURL HTTPMethod:kRLAAPIRequestModeGET authorizationToken:self.user.token];
+    if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
+    
+    NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
+        NSArray* json = RLAAPI_processHTTPresponse(dRLAAPI_DeviceModelFirmwares_RepsonseCode, nil);
+        
+        NSMutableArray* result = [NSMutableArray arrayWithCapacity:json.count];
+        for (NSDictionary* dict in json)
+        {
+            RelayrFirmwareModel* firmwareModel = [self parseFirmwareModelFromJSONDictionary:dict inFirmwareObject:nil];
+            if (firmwareModel) { [result addObject:firmwareModel]; }
+        }
+        return completion(nil, [NSArray arrayWithArray:result]);
+    }];
+    [task resume];
+}
+
+- (void)requestFirmwareWithVersion:(NSString *)versionString fromDeviceModel:(NSString *)deviceModelID completion:(void (^)(NSError *, RelayrFirmwareModel *))completion
+{
+    if (!completion) { return; }
+    if (!versionString.length || !deviceModelID.length) { return completion(RelayrErrorMissingArgument, nil); }
+    
+    NSURL* absoluteURL = [RLAAPIService buildAbsoluteURLFromHost:self.hostString relativeString:dRLAAPI_DeviceModelFirmwareVersion_RelativePath(deviceModelID, versionString)];
+    NSMutableURLRequest* request = [RLAAPIService requestForURL:absoluteURL HTTPMethod:kRLAAPIRequestModeGET authorizationToken:self.user.token];
+    if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
+    
+    NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
+        NSDictionary* json = RLAAPI_processHTTPresponse(dRLAAPI_DeviceModelFirmwareVersion_ResponseCode, nil);
+        
+        RelayrFirmwareModel* firmwareModel = [self parseFirmwareModelFromJSONDictionary:json inFirmwareObject:nil];
+        return (!firmwareModel) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, firmwareModel);
+    }];
+    [task resume];
+}
 
 @end

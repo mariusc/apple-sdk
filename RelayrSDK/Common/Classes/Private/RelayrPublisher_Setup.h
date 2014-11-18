@@ -14,12 +14,16 @@
  *  @discussion Both arguments must be valid for this method to return an initialised instance.
  *
  *  @param uid <code>NSString</code> representing an unique value identifing the Publisher in the Relayr cloud.
- *  @param owner <code>NSString</code> representing the Relayr User ID owner of this publisher entity.
  *	@return A fully initialised <code>RelayrPublisher</code> entity or <code>nil</code> (if there was an error).
  *
  *  @see RelayrUser
  */
-- (instancetype)initWithPublisherID:(NSString*)uid owner:(NSString*)owner;
+- (instancetype)initWithPublisherID:(NSString*)uid;
+
+/*!
+ *  @abstract The owner of the publisher entity. This is the User by whom the Publisher was created.
+ */
+@property (readwrite,nonatomic) NSString* owner;
 
 /*!
  *  @abstract It lets you write the name of a Relayr publisher.

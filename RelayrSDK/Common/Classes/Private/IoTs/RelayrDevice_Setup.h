@@ -23,12 +23,6 @@
 - (instancetype)initWithID:(NSString*)uid modelID:(NSString*)modelID;
 
 /*!
- *  @abstract User currently "using" this transmitter.
- *  @discussion A public device can be owned by another Relayr user, but being used by your <code>RelayrUser</code> entity.
- */
-@property (readwrite,weak,nonatomic) RelayrUser* user;
-
-/*!
  *  @abstract Device name.
  *  @discussion Can be updated using a server call.
  */
@@ -76,7 +70,7 @@
  *  @discussion The <code>valueOrError</code> parameter can be an <code>NSError</code> or any other value. If this parameter is not an error, then a date must be given or the method won't perform any work.
  *
  *  @param valueOrError Object defining the value received or the error occurred.
- *  @param date <code>NSDate</code> with the date of arrival of the value received.
+ *  @param date <code>NSDate</code> with the date of arrival of the value received (and optionally, when the error was received).
  */
 - (void)valueReceived:(NSObject <NSCopying> *)valueOrError at:(NSDate*)date;
 

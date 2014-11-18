@@ -41,7 +41,7 @@
  *  @param completion Block indicating the result of the server query.
  */
 + (void)requestAppInfoFor:(NSString*)appID
-               completion:(void (^)(NSError* error, NSString* appID, NSString* appName, NSString* appDescription, NSString* appPublisher))completion;
+               completion:(void (^)(NSError* error, NSString* appID, NSString* appName, NSString* appDescription))completion;
 
 /*!
  *  @abstract Retrieves information about a specific publisher's Relayr application.
@@ -52,7 +52,7 @@
  *
  *  @see RelayrApp
  */
-- (void)requestApp:(NSString*)appID
+- (void)requestAppInfoExtendedFor:(NSString*)appID
         completion:(void (^)(NSError* error, RelayrApp* app))completion;
 
 /*!

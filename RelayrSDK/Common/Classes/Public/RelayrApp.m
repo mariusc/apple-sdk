@@ -1,15 +1,16 @@
-#import "RelayrApp.h"           // Header
-#import "RelayrApp_Setup.h"     // Relayr.framework (Private)
+#import "RelayrApp.h"               // Header
 
-#import "RelayrCloud.h"         // Relayr.framework (Public)
-#import "RelayrUser.h"          // Relayr.framework (Public)
-#import "RelayrUser_Setup.h"    // Relayr.framework (Private)
-#import "RLAAPIService.h"       // Relayr.framework (Service/API)
-#import "RLAAPIService+Cloud.h" // Relayr.framework (Service/API)
-#import "RLAAPIService+App.h"   // Relayr.framework (Service/API)
-#import "RelayrErrors.h"        // Relayr.framework (Utilities)
-#import "RLALog.h"              // Relayr.framework (Utilities)
-#import "RLAKeyChain.h"         // Relayr.framework (Utilities)
+#import "RelayrCloud.h"             // Relayr.framework (Public)
+#import "RelayrPublisher.h"         // Relayr.framework (Public)
+#import "RelayrUser.h"              // Relayr.framework (Public)
+#import "RelayrErrors.h"            // Relayr.framework (Public)
+#import "RelayrApp_Setup.h"         // Relayr.framework (Private)
+#import "RelayrUser_Setup.h"        // Relayr.framework (Private)
+#import "RLAAPIService.h"           // Relayr.framework (Service/API)
+#import "RLAAPIService+Cloud.h"     // Relayr.framework (Service/API)
+#import "RLAAPIService+App.h"       // Relayr.framework (Service/API)
+#import "RLAKeyChain.h"             // Relayr.framework (Utilities)
+#import "RLALog.h"                  // Relayr.framework (Utilities)
 
 // KeyChain key
 static NSString* const kRelayrAppStorageKey = @"RelayrApps";
@@ -66,7 +67,7 @@ static NSString* const kCodingUsers = @"usr";
 
 - (void)setName:(NSString*)name withUserCredentials:(RelayrUser*)user completion:(void (^)(NSError* error, NSString* previousName))completion
 {
-    if (!name.length || !user.token.length) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
+    if (!name.length || !user.apiService) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
     
     __weak RelayrApp* weakApp = self;
     [user.apiService setApp:self.uid name:name description:nil redirectURI:nil completion:^(NSError* error, RelayrApp* app) {
@@ -81,7 +82,7 @@ static NSString* const kCodingUsers = @"usr";
 
 - (void)setDescription:(NSString*)description withUserCredentials:(RelayrUser*)user completion:(void (^)(NSError* error, NSString* previousDescription))completion
 {
-    if (!user.token.length) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
+    if (!user.apiService) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
     
     __weak RelayrApp* weakApp = self;
     [user.apiService setApp:self.uid name:nil description:description redirectURI:nil completion:^(NSError* error, RelayrApp* app) {
@@ -96,18 +97,22 @@ static NSString* const kCodingUsers = @"usr";
 
 - (void)queryForAppInfoWithUserCredentials:(RelayrUser*)user completion:(void (^)(NSError*, NSString*, NSString*))completion
 {
-    if (!user) { if (completion) { completion(RelayrErrorMissingArgument, nil, nil); } return; }
+    if (!user.apiService) { if (completion) { completion(RelayrErrorMissingArgument, nil, nil); } return; }
     
     __weak RelayrApp* weakSelf = self;
-    [RLAAPIService requestAppInfoFor:_uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription, NSString* appPublisher) {
-        __strong RelayrApp* strongSelf = weakSelf;
+    [user.apiService requestAppInfoExtendedFor:_uid completion:^(NSError* error, RelayrApp* app) {
+        if (error) { if (completion) { completion(error, nil, nil); } return; }
         
-        if ( ![strongSelf.uid isEqualToString:appID] ) { return completion(RelayrErrorWebRequestFailure, nil, nil); }
+        __strong RelayrApp* strongSelf = weakSelf;
+        if (!strongSelf) { return; }
+        
         NSString* pName = strongSelf.name, * pDesc = strongSelf.description;
-        strongSelf.name = appName; strongSelf.appDescription = appDescription;
+        [self setWith:app];
         completion(nil, pName, pDesc);
     }];
 }
+
+#pragma mark Lifecycle
 
 + (void)appWithID:(NSString*)appID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI completion:(void (^)(NSError*, RelayrApp*))completion
 {
@@ -120,11 +125,10 @@ static NSString* const kCodingUsers = @"usr";
     result = [[RelayrApp alloc] initWithID:appID OAuthClientSecret:clientSecret redirectURI:redirectURI];
     if (!result) { return completion(RelayrErrorMissingArgument, nil); }
     
-    [RLAAPIService requestAppInfoFor:result.uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription, NSString* appPublisher) {
+    [RLAAPIService requestAppInfoFor:result.uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription) {
         if ( ![result.uid isEqualToString:appID] ) { return completion(RelayrErrorWebRequestFailure, nil); }
         result.name = appName;
         result.appDescription = appDescription;
-        result.publisherID = appPublisher;
         completion(nil, result);
     }];
 }
@@ -170,6 +174,8 @@ static NSString* const kCodingUsers = @"usr";
     }
     return YES;
 }
+
+#pragma mark Users
 
 - (NSArray*)loggedUsers
 {
@@ -249,9 +255,9 @@ static NSString* const kCodingUsers = @"usr";
     
     if (app.name) { _name = app.name; }
     if (app.appDescription) { _appDescription = app.appDescription; }
-    if (app.publisherID) { _publisherID = app.publisherID; }
     if (app.oauthClientSecret) { _oauthClientSecret = app.oauthClientSecret; }
     if (app.redirectURI) { _redirectURI = app.redirectURI; }
+    if (app.publisherID) { _publisherID = app.publisherID; }
 }
 
 #pragma mark NSCoding
@@ -289,19 +295,19 @@ static NSString* const kCodingUsers = @"usr";
 
 #pragma mark - Private methods
 
-/*******************************************************************************
- * It retrieves all currently stored Relayr Apps.
- * If there are none, it returns <code>nil</code>.
- ******************************************************************************/
+/*!
+ *  @abstract It retrieves all currently stored Relayr Apps.
+ *  @discussion If there are none, it returns <code>nil</code>.
+ */
 + (NSMutableArray*)storedRelayrApps
 {
     NSObject<NSCoding> * obj = [RLAKeyChain objectForKey:kRelayrAppStorageKey];
     return ([obj isKindOfClass:[NSMutableArray class]] && ((NSMutableArray*)obj).count>0) ? (NSMutableArray*)obj : nil;
 }
 
-/*******************************************************************************
- * It returns the index of the Relayr Application with the specified ID (or <code>nil</code>), within an array of RelayrApp objects.
- ******************************************************************************/
+/*!
+ *  @abstract It returns the index of the Relayr Application with the specified ID (or <code>nil</code>), within an array of RelayrApp objects.
+ */
 + (NSNumber*)indexForRelayrAppID:(NSString*)appID inRelayrAppsArray:(NSArray*)apps
 {
     if (apps.count==0 || appID.length==0) { return nil; }

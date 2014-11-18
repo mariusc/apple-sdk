@@ -74,29 +74,12 @@ NSString* const kRLAAPIRequestModePUT       = @"PUT";
     if (!request) { return nil; }
     
     request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
-    request.HTTPMethod = httpMode;
     request.HTTPShouldUsePipelining = YES;
     request.HTTPShouldHandleCookies = NO;
+    request.HTTPMethod = httpMode;
     if (authorizationToken.length) { [request setValue:dRLAAPIRequest_HeaderValue_Authorization(authorizationToken) forHTTPHeaderField:dRLAAPIRequest_HeaderField_Authorization]; }
     
     return request;
-}
-
-+ (NSError*)internetErrorForConnectionState:(RelayrConnectionState)connectionState
-{
-    switch (connectionState) {
-        case RelayrConnectionStateConnecting:
-        case RelayrConnectionStateConnected:
-            return nil;
-        case RelayrConnectionStateDisconnecting:
-            return RelayrErrorInternetResetting;
-        case RelayrConnectionStateUnauthorized:
-            return RelayrErrorInternetUnauthorized;
-        case RelayrConnectionStateUnsupported:
-            return RelayrErrorInternetUnsupported;
-        default:
-            return RelayrErrorInternetProblemUnknwon;
-    }
 }
 
 @end

@@ -1,6 +1,5 @@
 @import Foundation;             // Apple
 #import "RelayrDeviceModel.h"   // Relayr.framework (Public)
-@class RelayrUser;              // Relayr.framework (Public)
 @class RelayrTransmitter;       // Relayr.framework (Public)
 @class RelayrFirmware;          // Relayr.framework (Public)
 @class RelayrConnection;        // Relayr.framework (Public)
@@ -15,20 +14,6 @@
  *	Examples would be a thermometer, a gyroscope or an infrared sensor.
  */
 @interface RelayrDevice : RelayrDeviceModel <NSCoding>
-
-/*!
- *  @abstract User currently "using" this device.
- *  @discussion A public device can be owned by another Relayr user, but being used by your <code>RelayrUser</code> entity.
- */
-@property (readonly,weak,nonatomic) RelayrUser* user;
-
-/*!
- *  @abstract The transmitter that this device is linked with.
- *  @discussion Be aware that using this property implies a deep search on the IoT tree. Only use it when necessary.
- *
- *  @return A fully initialised transmitter or <code>nil</code>.
- */
-@property (readonly,weak,nonatomic) RelayrTransmitter* transmitter;
 
 /*!
  *  @abstract A unique idenfier of the <code>RelayrDevice</code>'s instance.
@@ -50,6 +35,14 @@
  */
 - (void)setNameWith:(NSString*)name
          completion:(void (^)(NSError* error, NSString* previousName))completion;
+
+/*!
+ *  @abstract The transmitter that this device is linked with.
+ *  @discussion Be aware that using this property implies a deep search on the IoT tree. Only use it when necessary.
+ *
+ *  @return A fully initialised transmitter or <code>nil</code>.
+ */
+@property (readonly,weak,nonatomic) RelayrTransmitter* transmitter;
 
 /*!
  *  @abstract The Id of the owner of the Device.
@@ -139,7 +132,7 @@
  *  @discussion Regardless of how the device is connected (Web/Cloud, Bluetooth, etc.),
  *	The action is called as soon as the data is available.
  *
- *  @param block This block will be executed everytime data is available. The block contains three parameters:
+ *  @param block This block will be executed everytime data is available (and it is compulsory). The block contains three parameters:
  *      - <code>device</code>. The device producing the reading.
  *      - <code>input</code>. The reading value received.
  *      - <code>unsubscribe</code>. A Boolean variable, that when set to <code>NO</code>, will stop the subscription.

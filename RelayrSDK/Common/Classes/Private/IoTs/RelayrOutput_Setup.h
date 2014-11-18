@@ -18,6 +18,14 @@
  *  @abstract The device that this output/writing is coming from.
  *  @discussion This property will never be <code>nil</code>.
  */
-@property (readwrite,weak,nonatomic) RelayrDeviceModel* device;
+@property (readwrite,weak,nonatomic) RelayrDeviceModel* deviceModel;
+
+/*!
+ *  @abstract Sets the instance where this object is being called for, with the properties of the object being passed as arguments.
+ *  @discussion The properties being passed as the arguments are considered new and thus have a higher priority.
+ *
+ *  @param output The newly <code>RelayrOutput</code> instance.
+ */
+- (void)setWith:(RelayrOutput*)output;
 
 @end

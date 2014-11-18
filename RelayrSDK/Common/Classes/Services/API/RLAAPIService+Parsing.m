@@ -18,24 +18,14 @@
 #import "RelayrFirmware_Setup.h"        // Relayr.framework (Private)
 #import "RelayrFirmwareModel_Setup.h"   // Relayr.framework (Private)
 #import "RelayrInput_Setup.h"           // Relayr.framework (Private)
+#import "RelayrOutput_Setup.h"          // Relayr.framework (Private)
 #import "RLAAPIConstants.h"             // Relayr.framework (Service/API)
 
 @implementation RLAAPIService (Parsing)
 
-+ (RelayrPublisher*)parsePublisherFromJSONDictionary:(NSDictionary*)jsonDict
-{
-    if (!jsonDict) { return nil; }
-
-    RelayrPublisher* publisher = [[RelayrPublisher alloc] initWithPublisherID:jsonDict[dRLAAPI_Publisher_RespondKey_ID] owner:jsonDict[dRLAAPI_Publisher_RespondKey_Owner]];
-    if (!publisher) { return nil; }
-
-    publisher.name = jsonDict[dRLAAPI_Publisher_RespondKey_Name];
-    return publisher;
-}
-
 + (RelayrApp*)parseAppFromJSONDictionary:(NSDictionary*)jsonDict
 {
-    if (!jsonDict) { return nil; }
+    if (!jsonDict.count) { return nil; }
 
     NSString* appID = (jsonDict[dRLAAPI_App_RespondKey_ID]) ? jsonDict[dRLAAPI_App_RespondKey_ID] : jsonDict[dRLAAPI_App_RespondKey_App];
     RelayrApp* app = [[RelayrApp alloc] initWithID:appID];
@@ -49,20 +39,45 @@
     return app;
 }
 
-+ (RelayrTransmitter*)parseTransmitterFromJSONDictionary:(NSDictionary*)jsonDict
++ (RelayrUser*)paraseUserFromJSONDictionary:(NSDictionary*)jsonDict
 {
-    if (!jsonDict) { return nil; }
+    if (!jsonDict.count) { return nil; }
+    
+    RelayrUser* user = [[RelayrUser alloc] initWithID:jsonDict[dRLAAPI_User_RespondKey_ID]];
+    if (!user) { return nil; }
+    
+    user.name = jsonDict[dRLAAPI_User_RespondKey_Name];
+    user.email = jsonDict[dRLAAPI_User_RespondKey_Email];
+    return user;
+}
+
++ (RelayrPublisher*)parsePublisherFromJSONDictionary:(NSDictionary*)jsonDict
+{
+    if (!jsonDict.count) { return nil; }
+    
+    RelayrPublisher* publisher = [[RelayrPublisher alloc] initWithPublisherID:jsonDict[dRLAAPI_Publisher_RespondKey_ID]];
+    if (!publisher) { return nil; }
+    
+    publisher.name = jsonDict[dRLAAPI_Publisher_RespondKey_Name];
+    publisher.owner = jsonDict[dRLAAPI_Publisher_RespondKey_Owner];
+    return publisher;
+}
+
+- (RelayrTransmitter*)parseTransmitterFromJSONDictionary:(NSDictionary*)jsonDict
+{
+    if (!jsonDict.count) { return nil; }
 
     RelayrTransmitter* transmitter = [[RelayrTransmitter alloc] initWithID:jsonDict[dRLAAPI_Transmitter_RespondKey_ID]];
     if (!transmitter) { return nil; }
 
+    transmitter.user = self.user;
     transmitter.name = jsonDict[dRLAAPI_Transmitter_RespondKey_Name];
     transmitter.owner = jsonDict[dRLAAPI_Transmitter_RespondKey_Owner];
     transmitter.secret = jsonDict[dRLAAPI_Transmitter_RespondKey_Secret];
     return transmitter;
 }
 
-+ (RelayrDevice*)parseDeviceFromJSONDictionary:(NSDictionary*)jsonDict
+- (RelayrDevice*)parseDeviceFromJSONDictionary:(NSDictionary*)jsonDict
 {
     if (!jsonDict) { return nil; }
 
@@ -84,19 +99,21 @@
     RelayrDevice* device = [[RelayrDevice alloc] initWithID:jsonDict[dRLAAPI_Device_RespondKey_ID] modelID:modelID];
     if (!device) { return nil; }
 
+    device.user = self.user;
     device.name = jsonDict[dRLAAPI_Device_RespondKey_Name];
     device.owner = jsonDict[dRLAAPI_Device_RespondKey_Owner];
     device.firmware = [[RelayrFirmware alloc] initWithVersion:jsonDict[dRLAAPI_Device_RespondKey_Firmware]];
+    device.firmware.deviceModel = device;
     device.secret = jsonDict[dRLAAPI_Device_RespondKey_Secret];
 
     NSNumber* isPublic = jsonDict[dRLAAPI_Device_RespondKey_Public];
     device.isPublic = (isPublic) ? isPublic : @YES;
 
-    [RLAAPIService parseDeviceModelFromJSONDictionary:modelDict inDeviceObject:device];
+    [self parseDeviceModelFromJSONDictionary:modelDict inDeviceObject:device];
     return device;
 }
 
-+ (RelayrDeviceModel*)parseDeviceModelFromJSONDictionary:(NSDictionary*)jsonDict inDeviceObject:(RelayrDevice*)device
+- (RelayrDeviceModel*)parseDeviceModelFromJSONDictionary:(NSDictionary*)jsonDict inDeviceObject:(RelayrDevice*)device
 {
     if (!jsonDict) { return device; }
 
@@ -108,19 +125,24 @@
     }
     else { deviceModel = device; }
 
+    deviceModel.user = self.user;
     deviceModel.modelName = jsonDict[dRLAAPI_DeviceModel_RespondKey_Name];
     deviceModel.manufacturer = jsonDict[dRLAAPI_DeviceModel_RespondKey_Manufacturer];
-    deviceModel.inputs = [RLAAPIService parseDeviceReadingsFromJSONArray:jsonDict[dRLAAPI_DeviceModel_RespondKey_Readings] ofDevice:deviceModel];
+    deviceModel.inputs = [self parseDeviceReadingsFromJSONArray:jsonDict[dRLAAPI_DeviceModel_RespondKey_Readings] ofDevice:deviceModel];
     //device.outputs = [RLAAPIService parseDeviceWritingsFromJSONArray:dict[<#name#>];
 
     NSDictionary* availableFirms = jsonDict[dRLAAPI_DeviceModel_RespondKey_Firmware];
-    if (availableFirms)
+    if (availableFirms.count)
     {
         NSMutableArray* firms = [[NSMutableArray alloc] initWithCapacity:availableFirms.count];
         for (NSDictionary* firmDict in availableFirms)
         {
-            RelayrFirmwareModel* firmModel = [RLAAPIService parseFirmwareModelFromJSONDictionary:firmDict inFirmwareObject:nil];
-            if (firmModel) { [firms addObject:firmModel]; }
+            RelayrFirmwareModel* firmModel = [self parseFirmwareModelFromJSONDictionary:firmDict inFirmwareObject:nil];
+            if (firmModel)
+            {
+                [firms addObject:firmModel];
+                firmModel.deviceModel = deviceModel;
+            }
         }
         deviceModel.firmwaresAvailable = [NSArray arrayWithArray:firms];
     }
@@ -128,18 +150,7 @@
     return deviceModel;
 }
 
-+ (RelayrFirmware*)parseFirmwareFromJSONDictionary:(NSDictionary*)jsonDict
-{
-    if (!jsonDict) { return nil; }
-
-    RelayrFirmware* firmware = [[RelayrFirmware alloc] initWithVersion:jsonDict[dRLAAPI_DeviceFirmware_RespondKey_Version]];
-    if (!firmware) { return nil; }
-
-    [RLAAPIService parseFirmwareModelFromJSONDictionary:jsonDict inFirmwareObject:firmware];
-    return firmware;
-}
-
-+ (RelayrFirmwareModel*)parseFirmwareModelFromJSONDictionary:(NSDictionary*)jsonDict inFirmwareObject:(RelayrFirmware*)firmware
+- (RelayrFirmwareModel*)parseFirmwareModelFromJSONDictionary:(NSDictionary*)jsonDict inFirmwareObject:(RelayrFirmware*)firmware
 {
     if (!jsonDict) { return firmware; }
 
@@ -151,35 +162,33 @@
     }
     else { firModel = firmware; }
 
-    /*  // TODO: Look at the configurations
     NSDictionary* configuration = jsonDict[dRLAAPI_DeviceFirmware_RespondKey_Configuration];
 
     NSDictionary* defaultValue = configuration[dRLAAPI_DeviceFirmware_RespondKey_DefaultValues];
     NSDictionary* properties = ((NSDictionary*)configuration[dRLAAPI_DeviceFirmware_RespondKey_Schema])[JSONSchema_Keyword_Properties];
+    
     NSMutableDictionary* firmProperties = [[NSMutableDictionary alloc] initWithCapacity:configuration.count];
-
     if (properties.count==defaultValue.count)
     {
         [properties enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
             NSString* confKey = key;
-            id confValue = [RLAAPIService objectFromJSONSchemaWithType:((NSDictionary*)obj)[JSONSchema_Keyword_Type] withDefaultValue:defaultValue[confKey]];
+            id confValue = [self objectFromJSONSchemaWithType:((NSDictionary*)obj)[JSONSchema_Keyword_Type] withDefaultValue:defaultValue[confKey]];
             if (confValue) { firmProperties[key] = confValue; }
         }];
 
         firModel.configuration = firmProperties;
     }
-     */
 
     return firModel;
 }
 
 #pragma mark - Private methods
 
-/*******************************************************************************
- * This methods parses the <code>reading</code> property of the device model.
- * It will return a set of <code>RelayrInput</code> objects.
- ******************************************************************************/
-+ (NSSet*)parseDeviceReadingsFromJSONArray:(NSArray*)jsonArray ofDevice:(RelayrDeviceModel*)device
+/*!
+ *  @abstract This methods parses the <code>reading</code> property of the device model.
+ *  @discussion It will return a set of <code>RelayrInput</code> objects.
+ */
+- (NSSet*)parseDeviceReadingsFromJSONArray:(NSArray*)jsonArray ofDevice:(RelayrDeviceModel*)device
 {
     if (!jsonArray) { return nil; }
 
@@ -192,32 +201,41 @@
         RelayrInput* input = [[RelayrInput alloc] initWithMeaning:dict[dRLAAPI_DeviceReading_RespondKey_Meaning] unit:dict[dRLAAPI_DeviceReading_RespondKey_Unit]];
         if (!input) { continue; }
 
-        input.device = device;
+        input.deviceModel = device;
         [result addObject:input];
     }
 
     return [NSSet setWithSet:result];
 }
 
-/*******************************************************************************
- * This methods parses the <code>...</code> property of the device model.
- * It will return a set of <code>RelayrOutput</code> objects.
- ******************************************************************************/
-+ (NSSet*)parseDeviceWritingsFromJSONArray:(NSArray*)jsonArray ofDevice:(RelayrDevice*)device
+/*!
+ *  @abstract This methods parses the <code>...</code> property of the device model.
+ *  @discussion It will return a set of <code>RelayrOutput</code> objects.
+ */
+- (NSSet*)parseDeviceWritingsFromJSONArray:(NSArray*)jsonArray ofDevice:(RelayrDevice*)device
 {
-    if (jsonArray) { return nil; }
+    if (!jsonArray) { return nil; }
 
     NSUInteger const numOutputs = jsonArray.count;
     if (numOutputs == 0) { return [NSSet set]; }
-
-    NSMutableSet* result = [NSMutableSet setWithCapacity:jsonArray.count];
-    // FIX ME: No outputs are yet tested.
+    
+    NSMutableSet* result = [NSMutableSet setWithCapacity:numOutputs];
+//    for (NSDictionary* dict in jsonArray)
+//    {
+//        RelayrOutput* output = [[RelayrOutput alloc] initWithMeaning:nil];
+//        if (!output) { continue; }
+//        
+//        output.deviceModel = device;
+//        [result addObject:output];
+//    }
 
     return [NSSet setWithSet:result];
 }
 
-// FIX ME: This method is pretty dumb. Wait till Dmitry really change the JSONSchema
-+ (id)objectFromJSONSchemaWithType:(NSString*)type withDefaultValue:(id)defaultValue
+/*!
+ *  @abstract It returns a value understandable by Cocoa from a JSON object.
+ */
+- (id)objectFromJSONSchemaWithType:(NSString*)type withDefaultValue:(id)defaultValue
 {
     id result;
 

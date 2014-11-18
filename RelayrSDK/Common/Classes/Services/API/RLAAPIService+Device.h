@@ -1,6 +1,7 @@
 #import "RLAAPIService.h"       // Base class
 @class RelayrDevice;            // Relayr.framework (Public)
 @class RelayrDeviceModel;       // Relayr.framework (Public)
+@class RelayrFirmwareModel;     // Relayr.framework (Public)
 
 @interface RLAAPIService (Device)
 
@@ -179,5 +180,29 @@
  *  @see RelayrDevice
  */
 - (void)requestAllDeviceMeanings:(void (^)(NSError* error, NSDictionary* meanings))completion;
+
+/*!
+ *  @abstract Retrieves all available firmware models from a specific device model.
+ * 
+ *  @param deviceModelID <code>NSString</code> with the device modelID.
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrFirmwareModel
+ */
+- (void)requestFirmwaresFromDeviceModel:(NSString*)deviceModelID
+                             completion:(void (^)(NSError* error, NSArray* firmwares))completion;
+
+/*!
+ *  @abstract Retrieves a specific firmware model from a specific device model.
+ *
+ *  @param versionString <code>NSString</code> representing a device model.
+ *  @param deviceModelID <code>NSString</code> with the device modelID.
+ *  @param completion Block indicating the result of the server query.
+ *
+ *  @see RelayrFirmwareModel
+ */
+- (void)requestFirmwareWithVersion:(NSString*)versionString
+                   fromDeviceModel:(NSString*)deviceModelID
+                        completion:(void (^)(NSError* error, RelayrFirmwareModel* firmwareModel))completion;
 
 @end

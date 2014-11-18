@@ -6,6 +6,12 @@
 @interface RelayrDeviceModel ()
 
 /*!
+ *  @abstract User currently "using" this transmitter.
+ *  @discussion A public device can be owned by another Relayr user, but being used by your <code>RelayrUser</code> entity.
+ */
+@property (readwrite,weak,nonatomic) RelayrUser* user;
+
+/*!
  *  @abstract It initialises a Device-model with a Relayr Device-Model ID and a name identifying it.
  *
  *  @param modelID Relayr model identifier. It identifies the device (independently of the firmware version).

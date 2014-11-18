@@ -18,7 +18,7 @@
  *  @abstract The device that this input/reading is coming from.
  *  @discussion This property will never be <code>nil</code>.
  */
-@property (readwrite,weak,nonatomic) RelayrDeviceModel* device;
+@property (readwrite,weak,nonatomic) RelayrDeviceModel* deviceModel;
 
 /*!
  *  @abstract Array with, at top, the last 20 measurements (including the current one in <code>value</code>).

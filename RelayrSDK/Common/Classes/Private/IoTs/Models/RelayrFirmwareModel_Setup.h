@@ -14,6 +14,12 @@
 - (instancetype)initWithVersion:(NSString*)version;
 
 /*!
+ *  @abstract The <code>RelayrDeviceModel</code> that this firmwares is targeting.
+ *  @discussion This property will never be <code>nil</code>.
+ */
+@property (readwrite,weak,nonatomic) RelayrDeviceModel* deviceModel;
+
+/*!
  *  @abstract <code>NSString</code> representing the current version of the firmware.
  */
 @property (readwrite,nonatomic) NSString* version;

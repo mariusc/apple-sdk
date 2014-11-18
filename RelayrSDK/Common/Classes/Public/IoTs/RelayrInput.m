@@ -8,7 +8,6 @@
 #import "RelayrInput_Setup.h"       // Relayr.framework (Private)
 #import "RLAService.h"              // Relayr.framework (Service)
 #import "RLAServiceSelector.h"      // Relayr.framework (Service)
-#import "RLAAPIService+Device.h"    // Relyar.framework (Service/API)
 #import "RLATargetAction.h"         // Relayr.framework (Utilities)
 
 #define dMaxValues   15
@@ -56,7 +55,7 @@ static NSString* const kCodingDates = @"dat";
 {
     if (!block) { if (errorBlock) { errorBlock(RelayrErrorMissingArgument); } return; }
     
-    RelayrDevice* device = ([self.device isKindOfClass:[RelayrDevice class]]) ? (RelayrDevice*)self.device : nil;
+    RelayrDevice* device = ([_deviceModel isKindOfClass:[RelayrDevice class]]) ? (RelayrDevice*)_deviceModel : nil;
     if (!device) { if (errorBlock) { errorBlock(RelayrErrorTryingToUseRelayrModel); } return; }
     
     // Check if there was a previous subscription...
@@ -94,7 +93,7 @@ static NSString* const kCodingDates = @"dat";
     RLATargetAction* pair = [[RLATargetAction alloc] initWithTarget:target action:action];
     if (!pair) { if (errorBlock) { errorBlock(RelayrErrorMissingArgument); } return; }
     
-    RelayrDevice* device = ([self.device isKindOfClass:[RelayrDevice class]]) ? (RelayrDevice*)self.device : nil;
+    RelayrDevice* device = ([_deviceModel isKindOfClass:[RelayrDevice class]]) ? (RelayrDevice*)_deviceModel : nil;
     if (!device) { if (errorBlock) { errorBlock(RelayrErrorTryingToUseRelayrModel); } return; }
     
     // Check if there was a previous subscription...
@@ -138,7 +137,7 @@ static NSString* const kCodingDates = @"dat";
     }
     if (matchedPair) { [_subscribedTargets removeObjectForKey:matchedPair]; }
     
-    if ([self.device isKindOfClass:[RelayrDevice class]] && !_subscribedBlocks.count && !_subscribedTargets.count)
+    if ([_deviceModel isKindOfClass:[RelayrDevice class]] && !_subscribedBlocks.count && !_subscribedTargets.count)
     {
         [((RelayrDevice*)self) unsubscribeToCurrentServiceIfNecessary];
     }
@@ -151,7 +150,7 @@ static NSString* const kCodingDates = @"dat";
     _subscribedBlocks = nil;
     _subscribedTargets = nil;
     
-    if ([self.device isKindOfClass:[RelayrDevice class]])
+    if ([_deviceModel isKindOfClass:[RelayrDevice class]])
     {
         [((RelayrDevice*)self) unsubscribeToCurrentServiceIfNecessary];
     }
@@ -174,6 +173,10 @@ static NSString* const kCodingDates = @"dat";
 
 - (void)setWith:(RelayrInput*)input
 {
+    if (!input.meaning.length) { return; }
+    
+    if (input.deviceModel) { _deviceModel = input.deviceModel; }
+    
     // If the input's meaning and units are the same, no further work is needed.
     if ([_meaning isEqualToString:input.meaning] && [_unit isEqualToString:input.unit]) { return; }
     
@@ -226,7 +229,7 @@ static NSString* const kCodingDates = @"dat";
     
     [tmpBlocks enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL* stop) {
         BOOL unsubscribe = NO;
-        ((RelayrInputDataReceivedBlock)key)(((RelayrDevice*)weakInput.device), weakInput, &unsubscribe);
+        ((RelayrInputDataReceivedBlock)key)(((RelayrDevice*)weakInput.deviceModel), weakInput, &unsubscribe);
         if (unsubscribe) { [toSubstract addObject:key]; }
     }]; tmpBlocks = nil;
     
@@ -238,7 +241,7 @@ static NSString* const kCodingDates = @"dat";
         id target = pair.target;
         SEL action = pair.action;
         if (!target || ![key respondsToSelector:action]) { return [toSubstract addObject:key]; }
-        [self performSelector:action onTarget:target withDevice:(RelayrDevice*)self.device input:self];
+        [self performSelector:action onTarget:target withDevice:(RelayrDevice*)self.deviceModel input:self];
     }]; tmpTargets = nil;
     
     [_subscribedTargets removeObjectsForKeys:toSubstract];

@@ -209,11 +209,22 @@ static NSString* const kCodingPublishers = @"pub";
     return self;
 }
 
+- (instancetype)initWithID:(NSString*)userID
+{
+    if (!userID.length) { return nil; }
+    
+    self = [super init];
+    if (self)
+    {
+        _uid = userID;
+    }
+    return self;
+}
+
 - (RelayrTransmitter*)addTransmitter:(RelayrTransmitter*)transmitter
 {
     NSString* transmitterID = transmitter.uid;
     if (!transmitterID.length) { return nil; }
-    transmitter.user = self;
     
     if (transmitter.devices.count)  // Devices need to be added first.
     {
@@ -274,7 +285,6 @@ static NSString* const kCodingPublishers = @"pub";
 {
     NSString* deviceID = device.uid;
     if (!deviceID.length) { return nil; }
-    device.user = self;
     
     if (_devices)
     {
@@ -395,10 +405,10 @@ static NSString* const kCodingPublishers = @"pub";
 
 #pragma mark - Private methods
 
-/*******************************************************************************
- * It sets the user's IoTs with the server query. The transmitters set brings the devices of transmitters, although these devices are not the same object as the devices set.
- * The parameter can never be <code>nil</code>. If they don't contain any object, they will be an empty set.
- ******************************************************************************/
+/*!
+ *  @abstract It sets the user's IoTs with the server query. The transmitters set brings the devices of transmitters, although these devices are not the same object as the devices set.
+ *  @discussion The parameter can never be <code>nil</code>. If they don't contain any object, they will be an empty set.
+ */
 - (void)processIoTTreeWithTransmitters:(NSSet*)transmitters devices:(NSSet*)devices bookmarkDevices:(NSSet*)bookDevices completion:(void (^)(NSError*))completion
 {
     NSMutableSet* result = [[NSMutableSet alloc] init];
@@ -415,7 +425,6 @@ static NSString* const kCodingPublishers = @"pub";
             {
                 if ([pDevice.uid isEqualToString:nDeviceID]) { matchedDevice = pDevice; [matchedDevice setWith:nDevice]; break; }
             }
-            matchedDevice.user = user;
             [result addObject:matchedDevice];
         }
         devices = [NSSet setWithSet:result];
@@ -431,7 +440,6 @@ static NSString* const kCodingPublishers = @"pub";
         {
             if ([pDevice.uid isEqualToString:bDeviceID]) { matchedDevice = pDevice; break; }
         }
-        matchedDevice.user = user;
         [result addObject:matchedDevice];
     }
     bookDevices = [NSSet setWithSet:result];
@@ -465,15 +473,13 @@ static NSString* const kCodingPublishers = @"pub";
             {
                 if ([pDevice.uid isEqualToString:nDeviceID]) { matchedDevice = pDevice; [matchedDevice setWith:nDevice]; break; }
             }
-            matchedDevice.user = user;
             [result addObject:matchedDevice];
         }
-        transmitter.user = user;
         transmitter.devices = [NSSet setWithSet:result];
     }
     
     // Fifth: Compile list between previous transmitters and current ones...
-    if (_transmitters)
+    if (_transmitters.count)
     {
         [result removeAllObjects];
         for (RelayrTransmitter* nTransmitter in transmitters)
@@ -484,7 +490,6 @@ static NSString* const kCodingPublishers = @"pub";
             {
                 if ([pTransmitter.uid isEqualToString:nTransmitterID]) { matchedTransmitter = pTransmitter; [matchedTransmitter setWith:nTransmitter]; break; }
             }
-            matchedTransmitter.user = user;
             [result addObject:matchedTransmitter];
         }
         transmitters = [NSSet setWithSet:result];
@@ -496,12 +501,12 @@ static NSString* const kCodingPublishers = @"pub";
     if (completion) { completion(nil); }
 }
 
-/*******************************************************************************
- * It replaces/set the current authorised apps with a new set of authorised apps.
- * If <code>apps</code> is <code>nil</code>, the authorisedApps are unknown and thus no further work is performed.
- * If <code>apps</code> is an empty set, there are no authorised apps.
- * If <code>apps</code> contains <code>RelayrApp</code> objects, a replacing process will be launched.
- ******************************************************************************/
+/*!
+ *  @abstract It replaces/set the current authorised apps with a new set of authorised apps.
+ *  @discussion If <code>apps</code> is <code>nil</code>, the authorisedApps are unknown and thus no further work is performed.
+ *      If <code>apps</code> is an empty set, there are no authorised apps.
+ *      If <code>apps</code> contains <code>RelayrApp</code> objects, a replacing process will be launched.
+ */
 - (void)replaceAuthorisedApps:(NSSet*)apps
 {
     if (!apps) { return; }
@@ -529,12 +534,12 @@ static NSString* const kCodingPublishers = @"pub";
     _authorisedApps = [NSSet setWithSet:result];
 }
 
-/*******************************************************************************
- * It replaces/set the current publishers with a new set of publishers
- * If <code>publisher</code> is <code>nil</code>, the publishers are unknown and thus no further work is performed.
- * If <code>publisher</code> is an empty set, there are no publishers.
- * If <code>publisher</code> contains <code>RelayrApp</code> objects, a replacing process will be launched.
- ******************************************************************************/
+/*!
+ *  @abstract It replaces/set the current publishers with a new set of publishers.
+ *  @discussion If <code>publisher</code> is <code>nil</code>, the publishers are unknown and thus no further work is performed.
+ *      If <code>publisher</code> is an empty set, there are no publishers.
+ *      If <code>publisher</code> contains <code>RelayrApp</code> objects, a replacing process will be launched.
+ */
 - (void)replacePublishers:(NSSet*)publishers
 {
     if (!publishers) { return; }

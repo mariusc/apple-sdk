@@ -1,5 +1,10 @@
 #import "RelayrFirmwareModel.h"         // Header
+
+#import "RelayrUser.h"                  // Relayr.framework (Public)
+#import "RelayrDeviceModel.h"           // Relayr.framework (Public)
+#import "RelayrUser_Setup.h"            // Relayr.framework (Private)
 #import "RelayrFirmwareModel_Setup.h"   // Relayr.firmware (Private)
+#import "RLAAPIService+Device.h"        // Relayr.framework (Service/API)
 
 static NSString* const kCodingVersion = @"ver";
 static NSString* const kCodingConfiguration = @"con";
@@ -13,6 +18,15 @@ static NSString* const kCodingConfiguration = @"con";
 
 #pragma mark - Public API
 
+- (void)queryCloudForDefaultConfigurationValues:(void (^)(NSError* error))completion
+{
+    [self.deviceModel.user.apiService requestDeviceModel:self.deviceModel.modelID completion:^(NSError* error, RelayrDeviceModel* deviceModel) {
+        if (error) { if (completion) { completion(error); } return; }
+    }];
+}
+
+#pragma mark Setup extension
+
 - (instancetype)initWithVersion:(NSString*)version
 {
     if (!version.length) { return nil; }
@@ -20,7 +34,7 @@ static NSString* const kCodingConfiguration = @"con";
     self = [super init];
     if (self)
     {
-        _version = nil;
+        _version = version;
     }
     return nil;
 }
@@ -29,6 +43,7 @@ static NSString* const kCodingConfiguration = @"con";
 {
     if (!firmwareModel || self==firmwareModel || ![_version isEqualToString:firmwareModel.version]) { return; }
     
+    if (firmwareModel.deviceModel) { _deviceModel = firmwareModel.deviceModel; }
     if (firmwareModel.version) { _version = firmwareModel.version; }
     if (firmwareModel.configuration) { _configuration = (NSMutableDictionary*)firmwareModel.configuration; }
 }

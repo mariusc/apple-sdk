@@ -21,6 +21,15 @@
 - (instancetype)initWithToken:(NSString*)token;
 
 /*!
+ *  @abstract It initialises a <code>RelayrUser</code> with a ID. However this object is not intended to be used to query the API or any other service.
+ *  @discussion Only use this object to query the most basic data.
+ *
+ *  @param userID <code>NSString</code> representing the userID.
+ *  @return Object holding the basic data of an user.
+ */
+- (instancetype)initWithID:(NSString*)userID;
+
+/*!
  *  @abstract Relayr application that the user has signed in.
  */
 @property (readwrite,weak,nonatomic) RelayrApp* app;

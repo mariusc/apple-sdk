@@ -41,7 +41,7 @@
 @property (readwrite,nonatomic) NSString* appDescription;
 
 /*!
- *  @abstract The Id of the app Publisher.
+ *  @abstract The ID of the app's Publisher.
  *  @discussion This value should first be retrieved asynchronously, from the relayr server.
  *	If the server is not queried, this property is <code>nil</code>.
  */

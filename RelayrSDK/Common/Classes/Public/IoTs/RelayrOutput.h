@@ -11,7 +11,7 @@
  *  @abstract The source of the output/writing. 
  *  @discussion This property will never be <code>nil</code>.
  */
-@property (readonly,weak,nonatomic) RelayrDeviceModel* device;
+@property (readonly,weak,nonatomic) RelayrDeviceModel* deviceModel;
 
 /*!
  *  @abstract The name of the type of writing/output the <code>RelayrDevice</code> can receive.

@@ -42,8 +42,8 @@
 
     NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
         NSDictionary* json = RLAAPI_processHTTPresponse(dRLAAPI_UserInfo_ResponseCode, nil, nil, nil);
-        NSString* futureID = json[RLAAPI_User_RespondKey_ID];
-        return (!futureID) ? completion(RelayrErrorRequestParsingFailure, nil, nil, nil) : completion(nil, futureID, json[RLAAPI_User_RespondKey_Name], json[RLAAPI_User_RespondKey_Email]);
+        NSString* futureID = json[dRLAAPI_User_RespondKey_ID];
+        return (!futureID) ? completion(RelayrErrorRequestParsingFailure, nil, nil, nil) : completion(nil, futureID, json[dRLAAPI_User_RespondKey_Name], json[dRLAAPI_User_RespondKey_Email]);
     }];
     [task resume];
 }
@@ -152,7 +152,7 @@
         NSMutableSet* result = [[NSMutableSet alloc] initWithCapacity:json.count];
         for (NSDictionary* dict in json)
         {
-            RelayrTransmitter* transmitter = [RLAAPIService parseTransmitterFromJSONDictionary:dict];
+            RelayrTransmitter* transmitter = [self parseTransmitterFromJSONDictionary:dict];
             if (transmitter) { [result addObject:transmitter]; }
         }
         return completion(nil, [NSSet setWithSet:result]);
@@ -172,7 +172,7 @@
         NSArray* json = RLAAPI_processHTTPresponse(dRLAAPI_UserDevices_ResponseCode, nil);
         
         NSMutableSet* result = [[NSMutableSet alloc] initWithCapacity:json.count];
-        for (NSDictionary* dict in json) { RelayrDevice* device = [RLAAPIService parseDeviceFromJSONDictionary:dict]; if (device) { [result addObject:device]; } }
+        for (NSDictionary* dict in json) { RelayrDevice* device = [self parseDeviceFromJSONDictionary:dict]; if (device) { [result addObject:device]; } }
         return completion(nil, [NSSet setWithSet:result]);
     }];
     [task resume];
@@ -191,7 +191,7 @@
         NSArray* json = RLAAPI_processHTTPresponse(dRLAAPI_UserDevicesFilter_ResponseCode, nil);
         
         NSMutableSet* result = [[NSMutableSet alloc] initWithCapacity:json.count];
-        for (NSDictionary* dict in json) { RelayrDevice* device = [RLAAPIService parseDeviceFromJSONDictionary:dict]; if (device) { [result addObject:device]; } }
+        for (NSDictionary* dict in json) { RelayrDevice* device = [self parseDeviceFromJSONDictionary:dict]; if (device) { [result addObject:device]; } }
         return completion(nil, [NSSet setWithSet:result]);
     }];
     [task resume];
@@ -224,7 +224,7 @@
         NSArray* json = RLAAPI_processHTTPresponse(dRLAAPI_UserBookDevices_ResponseCode, nil);
         
         NSMutableSet* result = [[NSMutableSet alloc] initWithCapacity:json.count];
-        for (NSDictionary* dict in json) { RelayrDevice* device = [RLAAPIService parseDeviceFromJSONDictionary:dict]; if (device) { [result addObject:device]; } }
+        for (NSDictionary* dict in json) { RelayrDevice* device = [self parseDeviceFromJSONDictionary:dict]; if (device) { [result addObject:device]; } }
         return completion(nil, [NSSet setWithSet:result]);
     }];
     [task resume];

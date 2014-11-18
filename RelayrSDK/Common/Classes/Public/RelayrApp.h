@@ -55,7 +55,7 @@ withUserCredentials:(RelayrUser*)user
                 completion:(void (^)(NSError* error, NSString* previousDescription))completion;
 
 /*!
- *  @abstract The Id of the app's Publisher.
+ *  @abstract The ID of the app's Publisher.
  *  @discussion This value should first be retrieved asynchronously, from the relayr server. 
  *	If the server is not queried, this property is <code>nil</code>.
  */
@@ -77,7 +77,7 @@ withUserCredentials:(RelayrUser*)user
 /*!
  *  @abstract Queries the server for missing application properties. A User with credentials is required to retrieve this information.
  *  @discussion The method is called asynchronously. 
- *	If the request is successful, old values will be written as block arguments, and new ones will be set in the <code>RelayrApp</code> instance.
+ *	If the request is successful, old values will be written as block arguments, and new ones will be set in the <code>RelayrApp</code> instance. Not only name and description are queried, but also publisher info and other security measures are tested.
  *
  *  @param completion A block with the status of the request.
  */

@@ -6,6 +6,7 @@
 #import "RLAService.h"              // Relayr.framework (Private)
 #import "RLAServiceSelector.h"      // Relayr.framework (Private)
 
+static NSString* const kCodingUser = @"usr";
 static NSString* const kCodingModelID = @"mID";
 static NSString* const kCodingModelName = @"mNa";
 static NSString* const kCodingManufacturer = @"man";
@@ -49,6 +50,7 @@ static NSString* const kCodingOutputs = @"out";
     self = [self initWithModelID:[decoder decodeObjectForKey:kCodingModelID]];
     if (self)
     {
+        _user = [decoder decodeObjectForKey:kCodingUser];
         _modelName = [decoder decodeObjectForKey:kCodingModelName];
         _manufacturer = [decoder decodeObjectForKey:kCodingManufacturer];
         _firmwaresAvailable = [decoder decodeObjectForKey:kCodingFirmwareModels];
@@ -60,6 +62,7 @@ static NSString* const kCodingOutputs = @"out";
 
 - (void)encodeWithCoder:(NSCoder*)coder
 {
+    [coder encodeObject:_user forKey:kCodingUser];
     [coder encodeObject:_modelID forKey:kCodingModelID];
     [coder encodeObject:_modelName forKey:kCodingModelName];
     [coder encodeObject:_manufacturer forKey:kCodingManufacturer];

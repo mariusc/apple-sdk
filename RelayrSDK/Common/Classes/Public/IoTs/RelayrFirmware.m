@@ -5,10 +5,7 @@
 
 #pragma mark - Public API
 
-- (void)queryCloudForProperties:(void (^)(NSError* error, NSNumber* isThereChanges))completion
-{
-    // TODO: Fill up
-}
+#pragma mark Setup extension
 
 - (void)setWith:(RelayrFirmware*)firmware
 {

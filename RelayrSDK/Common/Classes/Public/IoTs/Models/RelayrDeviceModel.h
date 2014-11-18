@@ -1,10 +1,17 @@
-@import Foundation;             // Apple
+@class RelayrUser;              // Relayr.framework (Public)
 @class RelayrFirmwareModel;     // Relayr.firmware (Public)
+@import Foundation;             // Apple
 
 /*!
  *  @abstract Specifies the basic functionality of a device.
  */
 @interface RelayrDeviceModel : NSObject <NSCoding>
+
+/*!
+ *  @abstract User currently "using" this device.
+ *  @discussion A public device can be owned by another Relayr user, but being used by your <code>RelayrUser</code> entity.
+ */
+@property (readonly,weak,nonatomic) RelayrUser* user;
 
 /*!
  *  @abstract The identifier of the device model within the relayr Cloud.

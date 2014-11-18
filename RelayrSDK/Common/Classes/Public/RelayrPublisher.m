@@ -1,6 +1,6 @@
 #import "RelayrPublisher.h"         // Header
+
 #import "RelayrPublisher_Setup.h"   // Relayr.framework (Private)
-#import "RelayrUser.h"              // Relayr.framework (Public)
 
 static NSString* const kCodingID = @"uid";
 static NSString* const kCodingName = @"nam";
@@ -17,32 +17,35 @@ static NSString* const kCodingApps = @"apps";
     return nil;
 }
 
-- (instancetype)initWithPublisherID:(NSString*)uid owner:(NSString*)owner
+#pragma mark Setup extension
+
+- (instancetype)initWithPublisherID:(NSString*)uid
 {
     if (uid.length==0) return nil;
     
     if (self)
     {
         _uid = uid;
-        _owner = owner;
     }
     return self;
 }
 
 - (void)setWith:(RelayrPublisher*)publisher
 {
-    if (![publisher.uid isEqualToString:_uid] || ![publisher.owner isEqualToString:_owner]) { return; }
-    _name = publisher.name;
-    _apps = publisher.apps;
+    if (![publisher.uid isEqualToString:_uid]) { return; }
+    if (publisher.owner) { _owner = publisher.owner; }
+    if (publisher.name) { _name = publisher.name; }
+    if (publisher.apps) { _apps = publisher.apps; }
 }
 
 #pragma mark NSCoding
 
 - (id)initWithCoder:(NSCoder*)decoder
 {
-    self = [self initWithPublisherID:[decoder decodeObjectForKey:kCodingID] owner:[decoder decodeObjectForKey:kCodingOwner]];
+    self = [self initWithPublisherID:[decoder decodeObjectForKey:kCodingID]];
     if (self)
     {
+        _owner = [decoder decodeObjectForKey:kCodingOwner];
         _name = [decoder decodeObjectForKey:kCodingName];
         _apps = [decoder decodeObjectForKey:kCodingApps];
     }
@@ -61,7 +64,7 @@ static NSString* const kCodingApps = @"apps";
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"Relayr Publisher:\n{\n\t ID:\t%@\n\t Name:\t%@\n\t User ID:\t%@\n}", _uid, (_name) ? _name : @"?", (_owner) ? _owner : @"?"];
+    return [NSString stringWithFormat:@"Relayr Publisher:\n{\n\t ID:\t%@\n\t Name:\t%@\n\t Owner ID:\t%@\n\t Num apps:\t%@\n}\n", _uid, (_name) ? _name : @"?", (_owner) ? _owner : @"?", (_apps) ? [NSNumber numberWithUnsignedInteger:_apps.count] : @"?"];
 }
 
 @end
