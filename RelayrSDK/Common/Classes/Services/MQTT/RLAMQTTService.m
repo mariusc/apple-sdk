@@ -6,6 +6,7 @@
 #import "RelayrUser_Setup.h"        // Relayr.framework (Private)
 #import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
 #import "RLAAPIService.h"           // Relayr.framework (Private)
+#import "RLAServiceHolder.h"        // Relayr.framework (Service)
 #import "RLAMQTTConstants.h"        // Relayr.framework (Service/MQTT)
 #import "RLAIdentifierGenerator.h"  // Relayr.framework (Utilities)
 #import "RLALog.h"                  // Relayr.framework (Utilities)
@@ -148,7 +149,7 @@ int messageArrived(void* context, char* topicName, int topicLen, MQTTAsync_messa
 
 - (void)subscribeToDataFromDevice:(RelayrDevice*)device completion:(void (^)(NSError* error))completion
 {
-    debug("Device asking for subscription");
+    debug("MQTT: Device asking for subscription...\n\t DeviceID: %s", [device.uid cStringUsingEncoding:NSUTF8StringEncoding]);
     
     BOOL isDeviceBeingSubscribed = NO;
     for (RelayrDevice* tmpDevice in [[_subscribingDevices keyEnumerator] allObjects]) { if (tmpDevice==device) { isDeviceBeingSubscribed = YES; break; } }
@@ -180,7 +181,18 @@ int messageArrived(void* context, char* topicName, int topicLen, MQTTAsync_messa
 
 - (void)unsubscribeToDataFromDevice:(RelayrDevice*)device
 {
+    debug("MQTT: Device removing subscription...\n\t DeviceID: %s", [device.uid cStringUsingEncoding:NSUTF8StringEncoding]);
     // TODO:
+}
+
+#pragma mark NSObject
+
+- (NSString*)description
+{
+    return [NSString stringWithFormat:@"{\n\
+\thost: %@\n\
+\tport: %@\n\
+}\n", _hostString, _port];
 }
 
 #pragma mark - Private functionality
@@ -197,7 +209,7 @@ int messageArrived(void* context, char* topicName, int topicLen, MQTTAsync_messa
         return MQTTASYNC_FAILURE;
     }
     
-    debug("Connecting to broker...\n");
+    debug("MQTT: Connecting to broker...\n\tUsername: %s\n\tPassword %s", connectingState->username, connectingState->password);
     
     _connectionState = RelayrConnectionStateConnecting;
     connectingState->numConnectionTries--;
@@ -229,11 +241,14 @@ int messageArrived(void* context, char* topicName, int topicLen, MQTTAsync_messa
 
 void connectionToBrokerFailed(void* context, MQTTAsync_failureData* response)
 {
+    RLAMQTTServiceConnectingState* connectingState = context;
+    RLAMQTTService* weakService = (__bridge RLAMQTTService*)connectingState->mqttService;
+    
     dispatch_async(dispatch_get_main_queue(), ^{
-        debug("Connection to broker failed!\n");
+        debug("MQTT: Connection to the broker failed!!");
         
-        RLAMQTTServiceConnectingState* connectingState = context;
-        RLAMQTTService* service = (__bridge RLAMQTTService*)connectingState->mqttService;
+        RLAMQTTService* service = weakService;
+        if (!service) { return; }
         
         service.connectionState = RelayrConnectionStateDisconnected;
         [service connectToBrokerWith:connectingState];
@@ -242,15 +257,16 @@ void connectionToBrokerFailed(void* context, MQTTAsync_failureData* response)
 
 void connectionToBrokerSucceeded(void* context, MQTTAsync_successData* response)
 {
+    RLAMQTTServiceConnectingState* connectingState = context;
+    RLAMQTTService* weakService = (__bridge RLAMQTTService*)connectingState->mqttService;
+    free((void*)connectingState->username);
+    free((void*)connectingState->password);
+    free(connectingState);
+    
     dispatch_async(dispatch_get_main_queue(), ^{
-        debug("Connection to broker succeeded!\n");
+        debug("MQTT: Connection to broker succeeded!!");
         
-        RLAMQTTServiceConnectingState* connectingState = context;
-        free((void*)connectingState->username);
-        free((void*)connectingState->password);
-        free(connectingState);
-        
-        RLAMQTTService* service = (__bridge RLAMQTTService*)connectingState->mqttService;
+        RLAMQTTService* service = weakService;
         if (!service) { return; }
         
         service.connectionState = RelayrConnectionStateConnected;
@@ -261,7 +277,7 @@ void connectionToBrokerSucceeded(void* context, MQTTAsync_successData* response)
 void connectionToBrokerLost(void* context, char* cause)
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        debug("Connection to broker lost!\n");
+        debug("MQTT: Connection to the broker lost!!");
         
         RLAMQTTService* service = (__bridge RLAMQTTService*)context;
         service.connectionState = RelayrConnectionStateDisconnected;
@@ -276,7 +292,7 @@ void connectionToBrokerLost(void* context, char* cause)
     MQTTAsync_responseOptions opts = MQTTAsync_responseOptions_initializer;
     opts.onSuccess = subscriptionSucceded;
     opts.onFailure = subscriptionFailed;
-    opts.context = (__bridge void*)self;
+    opts.context = (__bridge_retained void*)[[RLAServiceHolder alloc] initWithService:self device:device];
     
     NSString* tmp_topic = dRLAMQTT_topic(device.uid);
     NSUInteger const length_topic = [tmp_topic lengthOfBytesUsingEncoding:NSUTF8StringEncoding] + 1;
@@ -287,18 +303,8 @@ void connectionToBrokerLost(void* context, char* cause)
     int const status = MQTTAsync_subscribe(_client, topic, (int)qos, &opts);
     if (status != MQTTASYNC_SUCCESS)
     {
-        NSMutableSet* blockSet = [_subscribingDevices objectForKey:device];
-        if (!blockSet) { return; }
-        [_subscribingDevices removeObjectForKey:device];
-        
-        for (id block in blockSet)
-        {
-            if (block != [NSNull null])
-            {
-                void (^completion)(NSError* error) = block;
-                completion(RelayrErrorMQTTSubscriptionFailed);
-            }
-        }
+        RLAServiceHolder* holder = (__bridge_transfer RLAServiceHolder*)opts.context;
+        holder = nil;
         
         [self clearDevice:device fromSubscribingWith:RelayrErrorMQTTSubscriptionFailed];
     }
@@ -306,28 +312,55 @@ void connectionToBrokerLost(void* context, char* cause)
 
 void subscriptionSucceded(void* context, MQTTAsync_successData* response)
 {
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        RLAServiceHolder* holder = (__bridge_transfer RLAServiceHolder*)context;
+        debug("MQTT: Device subscription succeeded!!\n\tDeviceID: %s", [holder.device.uid cStringUsingEncoding:NSUTF8StringEncoding]);
+        
+        [((RLAMQTTService*)holder.service) clearDevice:holder.device fromSubscribingWith:nil];
+        holder = nil;
+    });
 }
 
 void subscriptionFailed(void* context, MQTTAsync_failureData* response)
 {
-    
-}
-
-
-void disconnectionFromBrokerSucceeded(void* context, MQTTAsync_successData* response)
-{
-    MQTTAsync_destroy(&context);
-}
-
-void disconnectionFromBrokerFailed(void* context, MQTTAsync_failureData* response)
-{
-    MQTTAsync_destroy(&context);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        RLAServiceHolder* holder = (__bridge_transfer RLAServiceHolder*)context;
+        debug("MQTT: Device subscription failed!!\n\tDeviceID %s", [holder.device.uid cStringUsingEncoding:NSUTF8StringEncoding]);
+        
+        [((RLAMQTTService*)holder.service) clearDevice:holder.device fromSubscribingWith:RelayrErrorMQTTSubscriptionFailed];
+        holder = nil;
+    });
 }
 
 int messageArrived(void* context, char* topicName, int topicLen, MQTTAsync_message* message)
 {
-    return 0;
+    char* position = NULL;
+    char* topic = strdup(topicName);
+    char const* restrict delimiter = "/";
+    char* result = strtok_r(topic, delimiter, &position);
+    result = strtok_r(NULL, delimiter, &position);
+    
+    NSString* deviceID = [NSString stringWithUTF8String:result];
+    free(topic);
+    
+    RLAMQTTService* service = (__bridge RLAMQTTService*)context;
+    if (!service || !deviceID) { return 1; }
+    
+    RelayrDevice* matchedDevice;
+    for (RelayrDevice* device in [service.subscribedDevices allObjects]) { if ([deviceID isEqualToString:device.uid]) { matchedDevice = device; break; } }
+    
+    if (!matchedDevice)
+    {
+        MQTTAsync_unsubscribe(service.client, topicName, NULL);
+    }
+    else
+    {
+        debug("%s", message->payload);
+        NSData* data = [[NSData alloc] initWithBytes:message->payload length:message->payloadlen];
+        [matchedDevice valueReceived:data at:[NSDate date]];
+    }
+    
+    return 1;
 }
 
 - (void)clearSubscriptionsAndNotifyError:(NSError*)error at:(NSDate*)date
@@ -356,8 +389,10 @@ int messageArrived(void* context, char* topicName, int topicLen, MQTTAsync_messa
 - (void)clearDevice:(RelayrDevice*)device fromSubscribingWith:(NSError*)error
 {
     if (!device) { return; }
+    
     NSMutableSet* blockSet = [_subscribingDevices objectForKey:device];
     if (!blockSet) { return; }
+    
     [_subscribingDevices removeObjectForKey:device];
     
     for (id block in blockSet)
@@ -367,6 +402,16 @@ int messageArrived(void* context, char* topicName, int topicLen, MQTTAsync_messa
         void (^completion)(NSError* error) = block;
         completion(error);
     }
+}
+
+void disconnectionFromBrokerSucceeded(void* context, MQTTAsync_successData* response)
+{
+    MQTTAsync_destroy(&context);
+}
+
+void disconnectionFromBrokerFailed(void* context, MQTTAsync_failureData* response)
+{
+    MQTTAsync_destroy(&context);
 }
 
 @end

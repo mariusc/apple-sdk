@@ -19,7 +19,7 @@
     self = [super initWithCoder:decoder];
     if (self)
     {
-        
+        // Fill up when server guys implement something meaningful
     }
     return self;
 }

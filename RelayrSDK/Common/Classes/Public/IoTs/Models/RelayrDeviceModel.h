@@ -1,5 +1,4 @@
 @class RelayrUser;              // Relayr.framework (Public)
-@class RelayrFirmwareModel;     // Relayr.firmware (Public)
 @import Foundation;             // Apple
 
 /*!

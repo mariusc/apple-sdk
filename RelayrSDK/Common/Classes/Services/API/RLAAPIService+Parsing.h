@@ -80,6 +80,7 @@
  *  @see RelayrFirmwareModel
  */
 - (RelayrFirmwareModel*)parseFirmwareModelFromJSONDictionary:(NSDictionary*)jsonDict
-                                            inFirmwareObject:(RelayrFirmware*)firmware;
+                                            inFirmwareObject:(RelayrFirmware*)firmware
+                                               ofDeviceModel:(RelayrDeviceModel*)deviceModel;
 
 @end

@@ -197,6 +197,10 @@
 		62D73CA019B718C8006F417D /* RelayrDevice_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62D73C9E19B718C8006F417D /* RelayrDevice_Setup.h */; };
 		62F1350819D54DA900DF93A7 /* RelayrOutput_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62F1350719D54DA900DF93A7 /* RelayrOutput_Setup.h */; };
 		62F1350919D54DA900DF93A7 /* RelayrOutput_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62F1350719D54DA900DF93A7 /* RelayrOutput_Setup.h */; };
+		62F351B01A1CE98A00C8591E /* RLAServiceHolder.h in Headers */ = {isa = PBXBuildFile; fileRef = 62F351AE1A1CE98900C8591E /* RLAServiceHolder.h */; };
+		62F351B11A1CE98A00C8591E /* RLAServiceHolder.h in Headers */ = {isa = PBXBuildFile; fileRef = 62F351AE1A1CE98900C8591E /* RLAServiceHolder.h */; };
+		62F351B21A1CE98A00C8591E /* RLAServiceHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F351AF1A1CE98900C8591E /* RLAServiceHolder.m */; };
+		62F351B31A1CE98A00C8591E /* RLAServiceHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F351AF1A1CE98900C8591E /* RLAServiceHolder.m */; };
 		62FB5D9E19F8033E0050C811 /* libMQTT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6299E0AF19F2E766004A9A70 /* libMQTT.a */; };
 		62FDB16819BEF2DD00AE2A64 /* RelayrFirmware_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62FDB16719BEF2DD00AE2A64 /* RelayrFirmware_Setup.h */; };
 		62FDB16919BEF2DD00AE2A64 /* RelayrFirmware_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62FDB16719BEF2DD00AE2A64 /* RelayrFirmware_Setup.h */; };
@@ -408,6 +412,8 @@
 		62E41FC219C35B90008459B7 /* Relayr.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Relayr.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		62E41FD119C35DF1008459B7 /* Relayr_Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Relayr_Tests.plist; sourceTree = "<group>"; };
 		62F1350719D54DA900DF93A7 /* RelayrOutput_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrOutput_Setup.h; sourceTree = "<group>"; };
+		62F351AE1A1CE98900C8591E /* RLAServiceHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAServiceHolder.h; sourceTree = "<group>"; };
+		62F351AF1A1CE98900C8591E /* RLAServiceHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAServiceHolder.m; sourceTree = "<group>"; };
 		62F9A6C119D47CCB0064942D /* RelayrApp_TSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RelayrApp_TSetup.h; path = Tests/Classes/Private/RelayrApp_TSetup.h; sourceTree = SOURCE_ROOT; };
 		62FD686219FFAAA400BC5431 /* Relayr_AdHoc.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_AdHoc.xcconfig; sourceTree = "<group>"; };
 		62FD686319FFAAA400BC5431 /* Relayr_Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Debug.xcconfig; sourceTree = "<group>"; };
@@ -829,6 +835,8 @@
 				62AAA5A61A08EC0600113F6D /* API */,
 				62AAA5BE1A08EC0600113F6D /* BLE */,
 				62AAA5C11A08EC0600113F6D /* MQTT */,
+				62F351AE1A1CE98900C8591E /* RLAServiceHolder.h */,
+				62F351AF1A1CE98900C8591E /* RLAServiceHolder.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1049,6 +1057,7 @@
 				62D73C9F19B718C8006F417D /* RelayrDevice_Setup.h in Headers */,
 				6254F80419CAC673006C836F /* RelayrDeviceModel_Setup.h in Headers */,
 				62FDB16819BEF2DD00AE2A64 /* RelayrFirmware_Setup.h in Headers */,
+				62F351B01A1CE98A00C8591E /* RLAServiceHolder.h in Headers */,
 				6254F80719CACA62006C836F /* RelayrFirmwareModel_Setup.h in Headers */,
 				62FDB16B19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */,
 				62F1350819D54DA900DF93A7 /* RelayrOutput_Setup.h in Headers */,
@@ -1111,6 +1120,7 @@
 				62D73CA019B718C8006F417D /* RelayrDevice_Setup.h in Headers */,
 				6254F80519CAC673006C836F /* RelayrDeviceModel_Setup.h in Headers */,
 				62FDB16919BEF2DD00AE2A64 /* RelayrFirmware_Setup.h in Headers */,
+				62F351B11A1CE98A00C8591E /* RLAServiceHolder.h in Headers */,
 				6254F80819CACA62006C836F /* RelayrFirmwareModel_Setup.h in Headers */,
 				62FDB16C19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */,
 				62F1350919D54DA900DF93A7 /* RelayrOutput_Setup.h in Headers */,
@@ -1170,7 +1180,6 @@
 				6252F0E1199C2AFA002ECE4D /* Frameworks */,
 				6252F0E2199C2AFA002ECE4D /* Headers */,
 				6252F0E3199C2AFA002ECE4D /* Resources */,
-				6271B90A19E687360076C1DD /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1319,22 +1328,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		6271B90A19E687360076C1DD /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "KEYWORDS=\"TODO|FIXME|\\?\\?\\?:|\\!\\!\\!:\"\nfind \"${SRCROOT}\" \\( -name \"*.h\" -or -name \"*.m\" \\) -and \\( -path \"${SRCROOT}/Pods/*\" -prune -o -print0 \\) | xargs -0 egrep --with-filename --line-number --only-matching \"($KEYWORDS).*\\$\" | perl -p -e \"s/($KEYWORDS)/ warning: \\$1/\"";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		6252F0AE199C2465002ECE4D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1349,6 +1342,7 @@
 				62C50A6319CAB8CB0078907A /* RelayrDeviceModel.m in Sources */,
 				622CAFFA19BCB02100F686B3 /* RelayrFirmware.m in Sources */,
 				62C50A6919CAB9150078907A /* RelayrFirmwareModel.m in Sources */,
+				62F351B21A1CE98A00C8591E /* RLAServiceHolder.m in Sources */,
 				622CB00019BCB04B00F686B3 /* RelayrInput.m in Sources */,
 				622CB00619BCB07200F686B3 /* RelayrOutput.m in Sources */,
 				62732D4419C05A24000E9545 /* RelayrConnection.m in Sources */,
@@ -1392,6 +1386,7 @@
 				62C50A6419CAB8CB0078907A /* RelayrDeviceModel.m in Sources */,
 				622CAFFB19BCB02100F686B3 /* RelayrFirmware.m in Sources */,
 				62C50A6A19CAB9150078907A /* RelayrFirmwareModel.m in Sources */,
+				62F351B31A1CE98A00C8591E /* RLAServiceHolder.m in Sources */,
 				622CB00119BCB04B00F686B3 /* RelayrInput.m in Sources */,
 				622CB00719BCB07200F686B3 /* RelayrOutput.m in Sources */,
 				62732D4519C05A24000E9545 /* RelayrConnection.m in Sources */,

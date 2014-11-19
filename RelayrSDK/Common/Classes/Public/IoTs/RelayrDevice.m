@@ -180,7 +180,19 @@ static NSString* const kCodingSecret = @"sec";
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"RelayrDevice\n{\n\t Relayr ID: %@\n\t Name: %@\n\t Owner: %@\n\t Firmware version: %@\n\t MQTT secret: %@\n\t Model ID: %@\n\t Model name: %@\n\t Manufacturer: %@\n\t Num firmwares available: %lu\n\t Num inputs: %lu\n\t Num outputs: %lu\n}\n", _uid, _name, (_owner) ? _owner : @"?", (_firmware.version) ? _firmware.version : @"?", _secret, self.modelID, self.modelName, self.manufacturer, (unsigned long)self.firmwaresAvailable.count, (unsigned long)self.inputs.count, (unsigned long)self.outputs.count];
+    return [NSString stringWithFormat:@"RelayrDevice\n{\n\
+\t Relayr ID: %@\n\
+\t Name: %@\n\
+\t Owner: %@\n\
+\t Firmware version: %@\n\
+\t MQTT secret: %@\n\
+\t Model ID: %@\n\
+\t Model name: %@\n\
+\t Manufacturer: %@\n\
+\t Num firmwares available: %@\n\
+\t Num inputs: %@\n\
+\t Num outputs: %@\
+\n}\n", _uid, _name, (_owner) ? _owner : @"?", (_firmware.version) ? _firmware.version : @"?", _secret, self.modelID, self.modelName, self.manufacturer, (self.firmwaresAvailable) ? @(self.firmwaresAvailable.count) : @"?", (self.inputs) ? @(self.inputs.count) : @"?", (self.outputs) ? @(self.outputs.count) : @"?"];
 }
 
 @end

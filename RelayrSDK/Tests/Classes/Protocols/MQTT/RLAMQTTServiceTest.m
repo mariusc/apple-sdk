@@ -61,11 +61,12 @@
             NSLog(@"%@", gyroscope);
             
             for (RelayrInput* input in gyroscope.inputs) { NSLog(@"%@", input); }
-
-            [RLAServiceSelector selectServiceForDevice:gyroscope completion:^(NSError* error, id<RLAService> service) {
-                XCTAssertNil(error);
-                XCTAssertNotNil(service);
-
+            
+            [gyroscope subscribeToAllInputsWithBlock:^(RelayrDevice *device, RelayrInput *input, BOOL *unsubscribe) {
+                NSLog(@"Subscription succeeded!");
+                [expectation fulfill];
+            } error:^(NSError* error) {
+                XCTFail(@"%@", error);
             }];
         }];
     }];

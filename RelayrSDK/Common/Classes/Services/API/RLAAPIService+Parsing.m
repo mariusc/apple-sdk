@@ -137,12 +137,8 @@
         NSMutableArray* firms = [[NSMutableArray alloc] initWithCapacity:availableFirms.count];
         for (NSDictionary* firmDict in availableFirms)
         {
-            RelayrFirmwareModel* firmModel = [self parseFirmwareModelFromJSONDictionary:firmDict inFirmwareObject:nil];
-            if (firmModel)
-            {
-                [firms addObject:firmModel];
-                firmModel.deviceModel = deviceModel;
-            }
+            RelayrFirmwareModel* firmModel = [self parseFirmwareModelFromJSONDictionary:firmDict inFirmwareObject:nil ofDeviceModel:deviceModel];
+            if (firmModel) { [firms addObject:firmModel]; }
         }
         deviceModel.firmwaresAvailable = [NSArray arrayWithArray:firms];
     }
@@ -150,7 +146,7 @@
     return deviceModel;
 }
 
-- (RelayrFirmwareModel*)parseFirmwareModelFromJSONDictionary:(NSDictionary*)jsonDict inFirmwareObject:(RelayrFirmware*)firmware
+- (RelayrFirmwareModel*)parseFirmwareModelFromJSONDictionary:(NSDictionary*)jsonDict inFirmwareObject:(RelayrFirmware*)firmware ofDeviceModel:(RelayrDeviceModel*)deviceModel
 {
     if (!jsonDict) { return firmware; }
 
@@ -162,8 +158,9 @@
     }
     else { firModel = firmware; }
 
+    firModel.deviceModel = deviceModel;
+    
     NSDictionary* configuration = jsonDict[dRLAAPI_DeviceFirmware_RespondKey_Configuration];
-
     NSDictionary* defaultValue = configuration[dRLAAPI_DeviceFirmware_RespondKey_DefaultValues];
     NSDictionary* properties = ((NSDictionary*)configuration[dRLAAPI_DeviceFirmware_RespondKey_Schema])[JSONSchema_Keyword_Properties];
     

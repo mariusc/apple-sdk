@@ -175,8 +175,6 @@ static NSString* const kCodingDates = @"dat";
 {
     if (!input.meaning.length) { return; }
     
-    if (input.deviceModel) { _deviceModel = input.deviceModel; }
-    
     // If the input's meaning and units are the same, no further work is needed.
     if ([_meaning isEqualToString:input.meaning] && [_unit isEqualToString:input.unit]) { return; }
     
@@ -284,7 +282,12 @@ static NSString* const kCodingDates = @"dat";
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"RelayrInput\n{\n\t Meaning: %@\n\t Unit: %@\n\t Num values: %@\n\t Date: %@\n}\n", _meaning, _unit, (_values.lastObject) ? _values.lastObject : @"?", (_dates.lastObject) ? _dates.lastObject : @"?"];
+    return [NSString stringWithFormat:@"RelayrInput\n{\n\
+\t Meaning: %@\n\
+\t Unit: %@\n\
+\t Last value: %@\n\
+\t Last date: %@\n\
+}\n", _meaning, _unit, (_values.lastObject) ? _values.lastObject : @"?", (_dates.lastObject) ? _dates.lastObject : @"?"];
 }
 
 #pragma mark - Private

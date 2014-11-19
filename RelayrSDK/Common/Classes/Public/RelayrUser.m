@@ -134,8 +134,8 @@ static NSString* const kCodingPublishers = @"pub";
         if (appError) { if (completion) { completion(appError); } return; }
         [weakSelf.apiService requestUserPublishers:^(NSError* publisherError, NSSet* publishers) {
             if (publisherError) { if (completion) { completion(publisherError); } return; }
-            [self replaceAuthorisedApps:apps];
-            [self replacePublishers:publishers];
+            [self setAuthorisedAppsWith:apps];
+            [self setPublishersWith:publishers];
             if (completion) { completion(nil); }
         }];
     }];
@@ -412,7 +412,6 @@ static NSString* const kCodingPublishers = @"pub";
 - (void)processIoTTreeWithTransmitters:(NSSet*)transmitters devices:(NSSet*)devices bookmarkDevices:(NSSet*)bookDevices completion:(void (^)(NSError*))completion
 {
     NSMutableSet* result = [[NSMutableSet alloc] init];
-    __weak RelayrUser* user = self;
     
     // First: compile the current list of devices. Keep the used old objects and add the new ones (the non-used any more, will be deleted)...
     if (_devices)
@@ -507,7 +506,7 @@ static NSString* const kCodingPublishers = @"pub";
  *      If <code>apps</code> is an empty set, there are no authorised apps.
  *      If <code>apps</code> contains <code>RelayrApp</code> objects, a replacing process will be launched.
  */
-- (void)replaceAuthorisedApps:(NSSet*)apps
+- (void)setAuthorisedAppsWith:(NSSet*)apps
 {
     if (!apps) { return; }
     else if (apps.count == 0 || _authorisedApps.count == 0) { _authorisedApps = apps; return; }
@@ -540,7 +539,7 @@ static NSString* const kCodingPublishers = @"pub";
  *      If <code>publisher</code> is an empty set, there are no publishers.
  *      If <code>publisher</code> contains <code>RelayrApp</code> objects, a replacing process will be launched.
  */
-- (void)replacePublishers:(NSSet*)publishers
+- (void)setPublishersWith:(NSSet*)publishers
 {
     if (!publishers) { return; }
     else if (publishers.count == 0 || _publishers.count == 0) { _publishers = publishers; return; }

@@ -1,10 +1,12 @@
 #import "RelayrDeviceModel.h"       // Header
-#import "RelayrDevice.h"            // Relayr.framework (Public)
+
+#import "RelayrFirmware.h"          // Relayr.framework (Public)
 #import "RelayrInput.h"             // Relayr.framework (Public)
+#import "RelayrOutput.h"            // Relayr.framework (Public)
 #import "RelayrDeviceModel_Setup.h" // Relayr.framework (Private)
+#import "RelayrFirmware_Setup.h"    // Relayr.framework (Private)
 #import "RelayrInput_Setup.h"       // Relayr.framework (Private)
-#import "RLAService.h"              // Relayr.framework (Private)
-#import "RLAServiceSelector.h"      // Relayr.framework (Private)
+#import "RelayrOutput_Setup.h"      // Relayr.framework (Private)
 
 static NSString* const kCodingUser = @"usr";
 static NSString* const kCodingModelID = @"mID";
@@ -38,9 +40,9 @@ static NSString* const kCodingOutputs = @"out";
     
     if (deviceModel.modelName) { _modelName = deviceModel.modelName; }
     if (deviceModel.manufacturer) { _manufacturer = deviceModel.manufacturer; }
-    if (deviceModel.firmwaresAvailable) { [self replaceAvailableFirmwares:(NSMutableArray*)deviceModel.firmwaresAvailable]; }
-    [self replaceInputs:deviceModel.inputs];
-    [self replaceOutputs:deviceModel.outputs];
+    [self setFirmwaresAvailableWith:deviceModel.firmwaresAvailable];
+    [self setInputsWith:deviceModel.inputs];
+    [self setOutputsWith:deviceModel.outputs];
 }
 
 #pragma mark NSCoding
@@ -73,40 +75,115 @@ static NSString* const kCodingOutputs = @"out";
 
 #pragma mark - Private methods
 
-- (void)replaceAvailableFirmwares:(NSArray*)availableFirmwares
+- (void)setFirmwaresAvailableWith:(NSArray*)availableFirmwares
 {
-    // TODO: Fill up
-}
-
-- (void)replaceInputs:(NSSet*)inputs
-{
-    if (!inputs) { return; }
-    if (!_inputs) { _inputs = inputs; return; }
+    if (!availableFirmwares) { return; }
     
-    NSMutableSet* previousInputs = [NSMutableSet setWithSet:_inputs];
-    NSMutableSet* result = [NSMutableSet setWithCapacity:inputs.count];
+    NSMutableSet* previous = [NSMutableSet setWithArray:_firmwaresAvailable];
+    NSMutableArray* result = [NSMutableArray arrayWithCapacity:availableFirmwares.count];
     
-    for (RelayrInput* nInput in inputs)
+    for (RelayrFirmware* neueFirmware in availableFirmwares)
     {
-        RelayrInput* matchedInput;
-        for (RelayrInput* pInput in previousInputs)
+        RelayrFirmware* matchedFirmware;
+        for (RelayrFirmware* pFirm in previous)
         {
-            if ([pInput.meaning isEqualToString:nInput.meaning]) { matchedInput = pInput; [matchedInput setWith:nInput]; break; }
+            if ([pFirm.version isEqualToString:neueFirmware.version]) { matchedFirmware = pFirm; break; }
         }
         
-        if (matchedInput) { [previousInputs removeObject:matchedInput]; }
-        else { matchedInput = nInput; }
+        if (matchedFirmware)
+        {
+            [previous removeObject:matchedFirmware];
+            [matchedFirmware setWith:neueFirmware];
+        }
+        else
+        {
+            matchedFirmware = neueFirmware;
+            matchedFirmware.deviceModel = self;
+        }
+        
+        [result addObject:matchedFirmware];
+    }
+    
+    _firmwaresAvailable = [NSMutableArray arrayWithArray:result];
+}
+
+- (void)setInputsWith:(NSSet*)inputs
+{
+    if (!inputs) { return; }
+    
+    NSMutableSet* previous = [NSMutableSet setWithSet:_inputs];
+    NSMutableSet* result = [NSMutableSet setWithCapacity:inputs.count];
+    
+    for (RelayrInput* neueInput in inputs)
+    {
+        RelayrInput* matchedInput;
+        for (RelayrInput* pInput in previous)
+        {
+            if ([pInput.meaning isEqualToString:neueInput.meaning]) { matchedInput = pInput; break; }
+        }
+        
+        if (matchedInput)
+        {
+            [previous removeObject:matchedInput];
+            [matchedInput setWith:neueInput];
+        }
+        else
+        {
+            matchedInput = neueInput;
+            matchedInput.deviceModel = self;
+        }
         
         [result addObject:matchedInput];
     }
     
     _inputs = [NSSet setWithSet:result];
-    for (RelayrInput* pInput in previousInputs) { [pInput removeAllSubscriptions]; }
+    
+    // Clean up previous subscriptions since they are not needed anymore.
+    for (RelayrInput* pInput in previous) { [pInput removeAllSubscriptions]; }
 }
 
-- (void)replaceOutputs:(NSSet*)outputs
+- (void)setOutputsWith:(NSSet*)outputs
 {
-    // TODO: Fill up
+    if (!outputs) { return; }
+    
+    NSMutableSet* previous = [NSMutableSet setWithSet:_outputs];
+    NSMutableSet* result = [NSMutableSet setWithCapacity:outputs.count];
+    
+    for (RelayrOutput* neueOutput in outputs)
+    {
+        RelayrOutput* matchedOutput;
+        for (RelayrOutput* pOutput in previous)
+        {
+            if ([pOutput.meaning isEqualToString:neueOutput.meaning]) { matchedOutput = pOutput; break; }
+        }
+        
+        if (matchedOutput)
+        {
+            [previous removeObject:matchedOutput];
+            [matchedOutput setWith:neueOutput];
+        }
+        else
+        {
+            matchedOutput = neueOutput;
+            matchedOutput.deviceModel = self;
+        }
+        
+        [result addObject:matchedOutput];
+    }
+    
+    _outputs = [NSSet setWithSet:result];
+}
+
+- (NSString*)description
+{
+    return [NSString stringWithFormat:@"RelayrDevice\n{\n\
+\t Model ID: %@\n\
+\t Model name: %@\n\
+\t Manufacturer: %@\n\
+\t Num firmwares available: %@\n\
+\t Num inputs: %@\n\
+\t Num outputs: %@\
+\n}\n", self.modelID, self.modelName, self.manufacturer, (self.firmwaresAvailable) ? @(self.firmwaresAvailable.count) : @"?", (self.inputs) ? @(self.inputs.count) : @"?", (self.outputs) ? @(self.outputs.count) : @"?"];
 }
 
 @end

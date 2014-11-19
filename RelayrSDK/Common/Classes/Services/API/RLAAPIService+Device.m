@@ -273,9 +273,10 @@
     [task resume];
 }
 
-- (void)requestFirmwaresFromDeviceModel:(NSString*)deviceModelID completion:(void (^)(NSError*, NSArray*))completion
+- (void)requestFirmwaresFromDeviceModel:(RelayrDeviceModel*)deviceModel completion:(void (^)(NSError*, NSArray*))completion
 {
     if (!completion) { return; }
+    NSString* deviceModelID = deviceModel.modelID;
     if (!deviceModelID.length) { return completion(RelayrErrorMissingArgument, nil); }
     
     NSURL* absoluteURL = [RLAAPIService buildAbsoluteURLFromHost:self.hostString relativeString:dRLAAPI_DeviceModelFirmwares_RelativePath(deviceModelID)];
@@ -288,7 +289,7 @@
         NSMutableArray* result = [NSMutableArray arrayWithCapacity:json.count];
         for (NSDictionary* dict in json)
         {
-            RelayrFirmwareModel* firmwareModel = [self parseFirmwareModelFromJSONDictionary:dict inFirmwareObject:nil];
+            RelayrFirmwareModel* firmwareModel = [self parseFirmwareModelFromJSONDictionary:dict inFirmwareObject:nil ofDeviceModel:deviceModel];
             if (firmwareModel) { [result addObject:firmwareModel]; }
         }
         return completion(nil, [NSArray arrayWithArray:result]);
@@ -296,9 +297,10 @@
     [task resume];
 }
 
-- (void)requestFirmwareWithVersion:(NSString *)versionString fromDeviceModel:(NSString *)deviceModelID completion:(void (^)(NSError *, RelayrFirmwareModel *))completion
+- (void)requestFirmwareWithVersion:(NSString*)versionString fromDeviceModel:(RelayrDeviceModel*)deviceModel completion:(void (^)(NSError*, RelayrFirmwareModel*))completion
 {
     if (!completion) { return; }
+    NSString* deviceModelID = deviceModel.modelID;
     if (!versionString.length || !deviceModelID.length) { return completion(RelayrErrorMissingArgument, nil); }
     
     NSURL* absoluteURL = [RLAAPIService buildAbsoluteURLFromHost:self.hostString relativeString:dRLAAPI_DeviceModelFirmwareVersion_RelativePath(deviceModelID, versionString)];
@@ -308,7 +310,7 @@
     NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
         NSDictionary* json = RLAAPI_processHTTPresponse(dRLAAPI_DeviceModelFirmwareVersion_ResponseCode, nil);
         
-        RelayrFirmwareModel* firmwareModel = [self parseFirmwareModelFromJSONDictionary:json inFirmwareObject:nil];
+        RelayrFirmwareModel* firmwareModel = [self parseFirmwareModelFromJSONDictionary:json inFirmwareObject:nil ofDeviceModel:deviceModel];
         return (!firmwareModel) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, firmwareModel);
     }];
     [task resume];

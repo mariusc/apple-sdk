@@ -184,25 +184,25 @@
 /*!
  *  @abstract Retrieves all available firmware models from a specific device model.
  * 
- *  @param deviceModelID <code>NSString</code> with the device modelID.
+ *  @param deviceModel <code>RelayrDeviceModel</code> with a specific device modelID.
  *  @param completion Block indicating the result of the server query.
  *
  *  @see RelayrFirmwareModel
  */
-- (void)requestFirmwaresFromDeviceModel:(NSString*)deviceModelID
+- (void)requestFirmwaresFromDeviceModel:(RelayrDeviceModel*)deviceModel
                              completion:(void (^)(NSError* error, NSArray* firmwares))completion;
 
 /*!
  *  @abstract Retrieves a specific firmware model from a specific device model.
  *
  *  @param versionString <code>NSString</code> representing a device model.
- *  @param deviceModelID <code>NSString</code> with the device modelID.
+ *  @param deviceModel <code>RelayrDeviceModel</code> with a specific device modelID.
  *  @param completion Block indicating the result of the server query.
  *
  *  @see RelayrFirmwareModel
  */
 - (void)requestFirmwareWithVersion:(NSString*)versionString
-                   fromDeviceModel:(NSString*)deviceModelID
+                   fromDeviceModel:(RelayrDeviceModel*)deviceModel
                         completion:(void (^)(NSError* error, RelayrFirmwareModel* firmwareModel))completion;
 
 @end

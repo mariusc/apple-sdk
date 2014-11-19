@@ -36,14 +36,13 @@ static NSString* const kCodingConfiguration = @"con";
     {
         _version = version;
     }
-    return nil;
+    return self;
 }
 
 - (void)setWith:(RelayrFirmwareModel*)firmwareModel
 {
     if (!firmwareModel || self==firmwareModel || ![_version isEqualToString:firmwareModel.version]) { return; }
-    
-    if (firmwareModel.deviceModel) { _deviceModel = firmwareModel.deviceModel; }
+
     if (firmwareModel.version) { _version = firmwareModel.version; }
     if (firmwareModel.configuration) { _configuration = (NSMutableDictionary*)firmwareModel.configuration; }
 }
@@ -70,7 +69,21 @@ static NSString* const kCodingConfiguration = @"con";
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"RelayrFirmware\n{\n\t Version: %@\n\t Number of configurations: %lu\n}\n", _version, (unsigned long)_configuration.count];
+    NSString* configurations;
+    if (_configuration)
+    {
+        NSMutableString* tmp = [[NSMutableString alloc] initWithString:@"{ "];
+        [_configuration enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+            [tmp appendString:[NSString stringWithFormat:@"%@ : %@", key, obj]];
+        }];
+        [tmp appendString:@" }"];
+    }
+    else { configurations = @"?"; }
+    
+    return [NSString stringWithFormat:@"RelayrFirmware\n{\n\
+\t Version: %@\n\
+\t Configurations: %@\n\
+}\n", _version, configurations];
 }
 
 @end

@@ -10,7 +10,8 @@
 #if defined(NDEBUG)
     #define debug(msj, ...)
 #else
-    #define debug(msj, ...)     fprintf(stderr, "[DEBUG] %s:%d\n  |---- " msj "\n", __FILE__, __LINE__, ##__VA_ARGS__)
+//    #define debug(msj, ...)     fprintf(stderr, "[DEBUG] %s:%d\n  |---- " msj "\n", __FILE__, __LINE__, ##__VA_ARGS__)
+    #define debug(msj, ...)     fprintf(stderr, "[DEBUG] " msj "\n", ##__VA_ARGS__)
 #endif
 
 #pragma mark - Error/Warning/Info logging only macros
