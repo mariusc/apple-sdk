@@ -202,6 +202,10 @@
 		62F351B21A1CE98A00C8591E /* RLAServiceHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F351AF1A1CE98900C8591E /* RLAServiceHolder.m */; };
 		62F351B31A1CE98A00C8591E /* RLAServiceHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F351AF1A1CE98900C8591E /* RLAServiceHolder.m */; };
 		62FB5D9E19F8033E0050C811 /* libMQTT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6299E0AF19F2E766004A9A70 /* libMQTT.a */; };
+		62FD79DC1A1E3EF400A8CA37 /* WunderbarParsing.h in Headers */ = {isa = PBXBuildFile; fileRef = 62FD79DA1A1E3EF400A8CA37 /* WunderbarParsing.h */; };
+		62FD79DD1A1E3EF400A8CA37 /* WunderbarParsing.h in Headers */ = {isa = PBXBuildFile; fileRef = 62FD79DA1A1E3EF400A8CA37 /* WunderbarParsing.h */; };
+		62FD79DE1A1E3EF400A8CA37 /* WunderbarParsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 62FD79DB1A1E3EF400A8CA37 /* WunderbarParsing.m */; };
+		62FD79DF1A1E3EF400A8CA37 /* WunderbarParsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 62FD79DB1A1E3EF400A8CA37 /* WunderbarParsing.m */; };
 		62FDB16819BEF2DD00AE2A64 /* RelayrFirmware_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62FDB16719BEF2DD00AE2A64 /* RelayrFirmware_Setup.h */; };
 		62FDB16919BEF2DD00AE2A64 /* RelayrFirmware_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62FDB16719BEF2DD00AE2A64 /* RelayrFirmware_Setup.h */; };
 		62FDB16B19BF050400AE2A64 /* RelayrInput_Setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 62FDB16A19BF050400AE2A64 /* RelayrInput_Setup.h */; };
@@ -425,6 +429,8 @@
 		62FD686919FFAAE500BC5431 /* Relayr_iOS_Distribution.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS_Distribution.xcconfig; sourceTree = "<group>"; };
 		62FD686A19FFAAE500BC5431 /* Relayr_iOS_Experimental.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS_Experimental.xcconfig; sourceTree = "<group>"; };
 		62FD686B19FFAAE500BC5431 /* Relayr_iOS_Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS_Release.xcconfig; sourceTree = "<group>"; };
+		62FD79DA1A1E3EF400A8CA37 /* WunderbarParsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WunderbarParsing.h; sourceTree = "<group>"; };
+		62FD79DB1A1E3EF400A8CA37 /* WunderbarParsing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WunderbarParsing.m; sourceTree = "<group>"; };
 		62FDB16719BEF2DD00AE2A64 /* RelayrFirmware_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrFirmware_Setup.h; sourceTree = "<group>"; };
 		62FDB16A19BF050400AE2A64 /* RelayrInput_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrInput_Setup.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -755,6 +761,8 @@
 				629666DF19D0169B003C99D9 /* WunderbarOnboarding.m */,
 				62B0B37819D0985C00AD59BF /* WunderbarFirmwareUpdate.h */,
 				62B0B37919D0985C00AD59BF /* WunderbarFirmwareUpdate.m */,
+				62FD79DA1A1E3EF400A8CA37 /* WunderbarParsing.h */,
+				62FD79DB1A1E3EF400A8CA37 /* WunderbarParsing.m */,
 				62B0B39F19D1B01600AD59BF /* RelayrUser+Wunderbar.h */,
 				62B0B3A019D1B01600AD59BF /* RelayrUser+Wunderbar.m */,
 				62B0B3A519D1B16F00AD59BF /* RLAAPIService+Wunderbar.h */,
@@ -1029,6 +1037,7 @@
 			files = (
 				6252F0DF199C24E2002ECE4D /* Relayr.h in Headers */,
 				62D1718819A62D63009BBED1 /* RelayrCloud.h in Headers */,
+				62FD79DC1A1E3EF400A8CA37 /* WunderbarParsing.h in Headers */,
 				62D1718C19A62E8D009BBED1 /* RelayrApp.h in Headers */,
 				62D1719719A65C98009BBED1 /* RelayrUser.h in Headers */,
 				6250E18B19B50A0D003932AA /* RelayrPublisher.h in Headers */,
@@ -1092,6 +1101,7 @@
 			files = (
 				6252F10B199C2C3B002ECE4D /* Relayr.h in Headers */,
 				623F325919A786BA00F774EB /* RelayrCloud.h in Headers */,
+				62FD79DD1A1E3EF400A8CA37 /* WunderbarParsing.h in Headers */,
 				623F325B19A786BE00F774EB /* RelayrApp.h in Headers */,
 				623F326619A7871F00F774EB /* RelayrUser.h in Headers */,
 				6250E18C19B50A0D003932AA /* RelayrPublisher.h in Headers */,
@@ -1364,6 +1374,7 @@
 				62D1718419A6039F009BBED1 /* RLANetworkInfo.m in Sources */,
 				6298AF3819D5F2250097E956 /* RLATargetAction.m in Sources */,
 				626F614219A506E4006EB510 /* RLAKeyChain.m in Sources */,
+				62FD79DE1A1E3EF400A8CA37 /* WunderbarParsing.m in Sources */,
 				621F3E5119A4FBAF004E3156 /* RLALog.m in Sources */,
 				62B0B38219D0B77400AD59BF /* Wunderbar.m in Sources */,
 				629666E219D0169B003C99D9 /* WunderbarOnboarding.m in Sources */,
@@ -1408,6 +1419,7 @@
 				623F326419A7870D00F774EB /* RLAKeyChain.m in Sources */,
 				6298AF3919D5F2250097E956 /* RLATargetAction.m in Sources */,
 				623F326319A7870000F774EB /* RLALog.m in Sources */,
+				62FD79DF1A1E3EF400A8CA37 /* WunderbarParsing.m in Sources */,
 				62B64D7A19EFF4C700DCD7AA /* RLAIdentifierGenerator.m in Sources */,
 				62B0B38319D0B77400AD59BF /* Wunderbar.m in Sources */,
 				629666E319D0169B003C99D9 /* WunderbarOnboarding.m in Sources */,

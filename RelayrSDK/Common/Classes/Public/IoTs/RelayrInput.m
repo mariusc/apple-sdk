@@ -77,10 +77,8 @@ static NSString* const kCodingDates = @"dat";
             if (error) { if (errorBlock) { errorBlock(error); } return; }
             
             RelayrDevice* strongDevice = weakDevice;
-            if (!strongDevice) { if (errorBlock) { errorBlock(RelayrErrorMissingObjectPointer); } return; }
-            
             RelayrInput* strongInput = weakInput;
-            if (!strongInput) { if (errorBlock) { errorBlock(RelayrErrorMissingObjectPointer); } return; }
+            if (!strongDevice || !strongInput) { if (errorBlock) { errorBlock(RelayrErrorMissingObjectPointer); } return; }
             
             if (!strongInput.subscribedBlocks) { strongInput.subscribedBlocks = [[NSMutableDictionary alloc] init]; }
             strongInput.subscribedBlocks[[block copy]] = (errorBlock) ? [errorBlock copy] : [NSNull null];
@@ -183,66 +181,63 @@ static NSString* const kCodingDates = @"dat";
     [_dates removeAllObjects];
 }
 
-- (void)valueReceived:(NSObject <NSCopying> *)valueOrError at:(NSDate*)date
+- (void)errorReceived:(NSError*)error atDate:(NSDate*)date
 {
-    if (!valueOrError) { return; }
+    NSMutableDictionary* blocks  = _subscribedBlocks;   _subscribedBlocks = nil;
+    NSMutableDictionary* targets = _subscribedTargets;  _subscribedTargets = nil;
     
-    // If an error was received, communicate all subscribers, and remove them from the subscribers dictionary.
-    if ([valueOrError isKindOfClass:[NSError class]])
-    {
-        NSError* error = (NSError*)valueOrError;
-        
-        NSMutableDictionary* blocks = _subscribedBlocks;
-        NSMutableDictionary* targets = _subscribedTargets;
-        _subscribedBlocks = nil;
-        _subscribedTargets = nil;
-        
-        NSNull* null = [NSNull null];
-        
-        [blocks enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL* stop) {
-            if (obj != null) { ((RelayrInputErrorReceivedBlock)obj)(error); }
-        }]; blocks = nil;
-        
-        [targets enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL* stop) {
-            if (obj != null) { ((RelayrInputErrorReceivedBlock)obj)(error); }
-        }]; targets = nil;
-        return;
-    }
+    [blocks enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL* stop) {
+        if (obj != [NSNull null]) { ((RelayrInputErrorReceivedBlock)obj)(error); }
+    }];
     
-    // If there is no date, do not allow the value to be stored.
-    if (!date) { return; }
+    [targets enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL* stop) {
+        if (obj != [NSNull null]) { ((RelayrInputErrorReceivedBlock)obj)(error); }
+    }];
+}
+
+- (void)valueReceived:(NSObject<NSCopying>*)value atDate:(NSDate*)date
+{
+    if (!value || !date) { return; }
     
     if (!_values) { _values = [[NSMutableArray alloc] init]; }
     else if (_values.count > dMaxValues) { [_values removeObjectAtIndex:0]; }
-    [_values addObject:valueOrError];
+    [_values addObject:value];
     
     if (!_dates) { _dates = [[NSMutableArray alloc] init]; }
     else if (_dates.count > dMaxValues) { [_dates removeObjectAtIndex:0]; }
     [_dates addObject:date];
     
     __weak RelayrInput* weakInput = self;
-    NSMutableDictionary* tmpBlocks = [NSMutableDictionary dictionaryWithDictionary:_subscribedBlocks];
-    NSMutableDictionary* tmpTargets = [NSMutableDictionary dictionaryWithDictionary:_subscribedTargets];
-    NSMutableArray* toSubstract = [[NSMutableArray alloc] init];
     
-    [tmpBlocks enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL* stop) {
-        BOOL unsubscribe = NO;
-        ((RelayrInputDataReceivedBlock)key)(((RelayrDevice*)weakInput.deviceModel), weakInput, &unsubscribe);
-        if (unsubscribe) { [toSubstract addObject:key]; }
-    }]; tmpBlocks = nil;
+    if (_subscribedBlocks.count)
+    {
+        NSMutableArray* toSubstract = [[NSMutableArray alloc] init];
+        NSMutableDictionary* tmpBlocks = [NSMutableDictionary dictionaryWithDictionary:_subscribedBlocks];
+        
+        [tmpBlocks enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL* stop) {
+            BOOL unsubscribe = NO;
+            ((RelayrInputDataReceivedBlock)key)(((RelayrDevice*)weakInput.deviceModel), weakInput, &unsubscribe);
+            if (unsubscribe) { [toSubstract addObject:key]; }
+        }];
+        
+        [_subscribedBlocks removeObjectsForKeys:toSubstract];
+    }
     
-    [_subscribedBlocks removeObjectsForKeys:toSubstract];
-    [toSubstract removeAllObjects];
-    
-    [tmpTargets enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL* stop) {
-        RLATargetAction* pair = key;
-        id target = pair.target;
-        SEL action = pair.action;
-        if (!target || ![key respondsToSelector:action]) { return [toSubstract addObject:key]; }
-        [self performSelector:action onTarget:target withDevice:(RelayrDevice*)self.deviceModel input:self];
-    }]; tmpTargets = nil;
-    
-    [_subscribedTargets removeObjectsForKeys:toSubstract];
+    if (_subscribedTargets.count)
+    {
+        NSMutableArray* toSubstract = [[NSMutableArray alloc] init];
+        NSMutableDictionary* tmpTargets = [NSMutableDictionary dictionaryWithDictionary:_subscribedTargets];
+        
+        [tmpTargets enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL* stop) {
+            RLATargetAction* pair = key;
+            id target = pair.target;
+            SEL action = pair.action;
+            if (!target || ![key respondsToSelector:action]) { return [toSubstract addObject:key]; }
+            [self performSelector:action onTarget:target withDevice:(RelayrDevice*)self.deviceModel input:self];
+        }];
+        
+        [_subscribedTargets removeObjectsForKeys:toSubstract];
+    }
 }
 
 #pragma mark NSCoding

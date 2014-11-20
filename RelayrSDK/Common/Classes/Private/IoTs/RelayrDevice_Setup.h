@@ -1,6 +1,7 @@
+@class RelayrUser;                  // Relayr.framework (Public)
 #import "RelayrDevice.h"            // Relayr.framework (Public)
 #import "RelayrDeviceModel_Setup.h" // Relayr.framework (Private)
-@class RelayrUser;                  // Relayr.framework (Public)
+@protocol RLAService;               // Relayr.framework (Service)
 
 /*!
  *  @abstract An instance of this class represents a Device. A basic relayr entity
@@ -67,11 +68,13 @@
 
 /*!
  *  @abstract This method is called everytime a value (or error) is received from any of the data source services (MQTT, BLE, etc.).
- *  @discussion The <code>valueOrError</code> parameter can be an <code>NSError</code> or any other value. If this parameter is not an error, then a date must be given or the method won't perform any work.
+ *  @discussion The device needs to parse the data in the appropriate manner.
  *
- *  @param valueOrError Object defining the value received or the error occurred.
+ *  @param value Binary blob received in the data source.
+ *  @param service The data source service where the message was received.
  *  @param date <code>NSDate</code> with the date of arrival of the value received (and optionally, when the error was received).
+ *  @param error It is set up when something exceptional happened on the data source service.
  */
-- (void)valueReceived:(NSObject <NSCopying> *)valueOrError at:(NSDate*)date;
+- (void)handleBinaryValue:(NSData*)value fromService:(id <RLAService>)service atDate:(NSDate*)date withError:(NSError*)error;
 
 @end

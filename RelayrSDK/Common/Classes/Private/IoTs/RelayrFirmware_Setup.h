@@ -1,5 +1,6 @@
 #import "RelayrFirmware.h"              // Relayr.framework (Public)
 #import "RelayrFirmwareModel_Setup.h"   // Relayr.framework (Private)
+@protocol RLAService;                   // Relayr.framework (Service)
 
 /*!
  *  @abstract Represents the firmware running on a <code>RelayrDevice</code> or a <code>RelayrTransmitter</code>.
@@ -16,5 +17,10 @@
  *  @param firmware The newly <code>RelayrFirmware</code> instance.
  */
 - (void)setWith:(RelayrFirmware*)firmware;
+
+/*!
+ *  @abstract It parses the data received on a specific service
+ */
+- (NSDictionary*)parseData:(NSData*)data fromService:(id <RLAService>)service atDate:(NSDate**)datePtr;
 
 @end

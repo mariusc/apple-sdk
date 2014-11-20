@@ -104,5 +104,35 @@ FOUNDATION_EXPORT NSString* const kWunderbarOnboardingOptionsDeviceConnectionTyp
 #pragma mark - Firmware update process
 
 #define Wunderbar_firmUpdate_transmitter_timeout    15
-
 #define Wunderbar_firmUpdate_device_timeout         15
+
+#pragma mark - Parsing
+
+#define dWunderbar_parsing_timestamp                @"ts"
+#define dWunderbar_parsing_accelerometer            @"accel"
+#define dWunderbar_parsing_gyroscope                @"gyro"
+#define dWunderbar_parsing_temperature              @"temp"
+#define dWunderbar_parsing_humidity                 @"hum"
+#define dWunderbar_parsing_light                    @"light"
+#define dWunderbar_parsing_color                    @"clr"
+#define dWunderbar_parsing_proximity                @"prox"
+#define dWunderbar_parsing_sound                    @"snd_level"
+#define dWunderbar_parsing_infrarredMessageID       @"msgid"
+#define dWunderbar_parsing_infrarredCommand         @"cmd"
+#define dWunderbar_parsing_bridgeUpchannelPayload   @"up_ch_payload"
+
+#define dWunderbar_parsing_x    @"x"
+#define dWunderbar_parsing_y    @"y"
+#define dWunderbar_parsing_z    @"z"
+#define dWunderbar_parsing_r    @"r"
+#define dWunderbar_parsing_g    @"g"
+#define dWunderbar_parsing_b    @"b"
+
+#define dWunderbar_meaning_acceleration             @"acceleration"
+#define dWunderbar_meaning_angularSpeed             @"angular_speed"
+#define dWunderbar_meaning_temperature              @"temperature"
+#define dWunderbar_meaning_humidity                 @"humidity"
+#define dWunderbar_meaning_luminosity               @"luminosity"
+#define dWunderbar_meaning_color                    @"color"
+#define dWunderbar_meaning_proximity                @"proximity"
+#define dWunderbar_meaning_noiseLevel               @"noise_level"

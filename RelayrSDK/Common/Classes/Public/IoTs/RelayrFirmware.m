@@ -1,5 +1,6 @@
 #import "RelayrFirmware.h"          // Header
 #import "RelayrFirmware_Setup.h"    // Relayr.framework (Private)
+#import "WunderbarParsing.h"        // Relayr.framework (Wunderbar)
 
 @implementation RelayrFirmware
 
@@ -10,6 +11,12 @@
 - (void)setWith:(RelayrFirmware*)firmware
 {
     [super setWith:firmware];
+}
+
+- (NSDictionary*)parseData:(NSData*)data fromService:(id<RLAService>)service atDate:(NSDate**)datePtr
+{
+    // FIXME: Make it generic. Talk to the server guys
+    return [WunderbarParsing parseData:data fromService:service device:(RelayrDevice*)self.deviceModel atDate:datePtr];
 }
 
 #pragma mark NSCoding

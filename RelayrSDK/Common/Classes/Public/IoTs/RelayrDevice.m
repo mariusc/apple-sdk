@@ -9,9 +9,9 @@
 #import "RelayrOnboarding.h"        // Relayr.framework (Public)
 #import "RelayrFirmwareUpdate.h"    // Relayr.framework (Public)
 #import "RelayrUser_Setup.h"        // Relayr.framework (Private)
+#import "RelayrFirmware_Setup.h"    // Relayr.framework (Private)
 #import "RelayrInput_Setup.h"       // Relayr.framework (Private)
 #import "RelayrConnection_Setup.h"  // Relayr.framework (Private)
-#import "RelayrFirmware_Setup.h"    // Relayr.framework (Private)
 #import "RLAService.h"              // Relayr.framework (Service)
 #import "RLAServiceSelector.h"      // Relayr.framework (Service)
 #import "RLAAPIService.h"           // Relayr.framework (Service/API)
@@ -89,9 +89,18 @@ static NSString* const kCodingSecret = @"sec";
     [_connection setWith:device.connection];
 }
 
-- (void)valueReceived:(NSObject <NSCopying> *)valueOrError at:(NSDate*)date
+- (void)handleBinaryValue:(NSData*)value fromService:(id<RLAService>)service atDate:(NSDate*)date withError:(NSError*)error
 {
-    // TODO:
+    if (error)
+    {
+        for (RelayrInput* input in self.inputs) { [input errorReceived:error atDate:date]; }
+        return;
+    }
+    
+    NSDictionary* dict = [_firmware parseData:value fromService:service atDate:&date];
+    if (!dict.count) { return; }
+    
+    for (RelayrInput* input in self.inputs) { [input valueReceived:dict[input.meaning] atDate:date]; };
 }
 
 - (void)unsubscribeToCurrentServiceIfNecessary

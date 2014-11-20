@@ -3,6 +3,16 @@
 #import "RelayrConnection.h"    // Relayr.framework (Public/IoTs)
 
 /*!
+ *  @abstract Block indicating the result of a service query.
+ */
+typedef void(^RLAServiceBlockQuery)(NSError* error, id value, NSDate* date);
+
+/*!
+ *  @abstract Block indicating the result of a service action.
+ */
+typedef void(^RLAServiceBlockError)(NSError* error);
+
+/*!
  *  @abstract All Relayr SDK services must implement the classes listed on this protocol.
  *  @discussion Services will check if the devices subscribed are still <i>living</i> and whehter the have subscription blocks.
  */
@@ -49,7 +59,7 @@
  *  @see RelayrDevice
  */
 - (void)queryDataFromDevice:(RelayrDevice*)device
-                 completion:(void (^)(NSError* error, id value, NSDate* date))completion;
+                 completion:(RLAServiceBlockQuery)completion;
 
 @required
 /*!
@@ -62,7 +72,7 @@
  *  @see RelayrDevice
  */
 - (void)subscribeToDataFromDevice:(RelayrDevice*)device
-                       completion:(void (^)(NSError* error))completion;
+                       completion:(RLAServiceBlockError)completion;
 
 @required
 /*!

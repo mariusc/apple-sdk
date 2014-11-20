@@ -53,12 +53,21 @@
 @property (readwrite,nonatomic) NSMutableDictionary* subscribedTargets;
 
 /*!
- *  @abstract This method is called everytime a value (or error) is received from any of the data source services (MQTT, BLE, etc.).
- *  @discussion The <code>valueOrError</code> parameter can be an <code>NSError</code> or any other value. If this parameter is not an error, then a date must be given or the method won't perform any work.
+ *  @abstract If an error is issue in a data subscription mechanism, this method is called with the specific error being passed.
+ *  @discussion This method transmit the error to all the subscribers and unsubscribe all of them.
  *
- *  @param valueOrError Object defining the value received or the error occurred.
+ *  @param error <code>NSError</code> explaining the problem that happened.
+ *  @param date Time that the eror happened.
+ */
+- (void)errorReceived:(NSError*)error atDate:(NSDate*)date;
+
+/*!
+ *  @abstract This method is called everytime a value is received from any of the data source services (MQTT, BLE, etc.).
+ *  @discussion The <code>value</code> parameter can be any value type that allows the <code>NSCopying</code> protocol. If this parameter is not an error, then a date must be given or the method won't perform any work.
+ *
+ *  @param value Object defining the value received.
  *  @param date <code>NSDate</code> with the date of arrival of the value received.
  */
-- (void)valueReceived:(NSObject <NSCopying> *)valueOrError at:(NSDate*)date;
+- (void)valueReceived:(NSObject <NSCopying> *)value atDate:(NSDate*)date;
 
 @end

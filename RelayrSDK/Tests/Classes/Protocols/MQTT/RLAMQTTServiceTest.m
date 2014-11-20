@@ -54,17 +54,13 @@
         [_user queryCloudForIoTs:^(NSError* error) {
             XCTAssertNil(error);
 
-            RelayrDevice* gyroscope;
-            for (RelayrDevice* device in _user.devices) { if ([device.modelID isEqualToString:@"173c44b5-334e-493f-8eb8-82c8cc65d29f"]) { gyroscope = device; break; } }
-
-            if (!gyroscope) { return; }
-            NSLog(@"%@", gyroscope);
+            RelayrDevice* subscribedDevice;
+            for (RelayrDevice* device in _user.devices) { if ([device.modelID isEqualToString:@"a7ec1b21-8582-4304-b1cf-15a1fc66d1e8"]) { subscribedDevice = device; break; } }
+            if (!subscribedDevice) { XCTFail(@"No device found for testing MQTT"); }
             
-            for (RelayrInput* input in gyroscope.inputs) { NSLog(@"%@", input); }
-            
-            [gyroscope subscribeToAllInputsWithBlock:^(RelayrDevice *device, RelayrInput *input, BOOL *unsubscribe) {
-                NSLog(@"Subscription succeeded!");
-                [expectation fulfill];
+            [subscribedDevice subscribeToAllInputsWithBlock:^(RelayrDevice* device, RelayrInput* input, BOOL* unsubscribe) {
+                NSLog(@"Input value: %@ at: %@", input.value, input.date);
+                
             } error:^(NSError* error) {
                 XCTFail(@"%@", error);
             }];
