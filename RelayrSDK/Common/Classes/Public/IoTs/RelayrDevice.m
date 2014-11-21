@@ -97,8 +97,10 @@ static NSString* const kCodingSecret = @"sec";
         return;
     }
     
-    NSDictionary* dict = [_firmware parseData:value fromService:service atDate:&date];
+    __autoreleasing NSDate* parsedDate;
+    NSDictionary* dict = [_firmware parseData:value fromService:service atDate:&parsedDate];
     if (!dict.count) { return; }
+    if (parsedDate) { date = parsedDate; }
     
     for (RelayrInput* input in self.inputs) { [input valueReceived:dict[input.meaning] atDate:date]; };
 }

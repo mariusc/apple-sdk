@@ -209,7 +209,7 @@ int messageArrived(void* context, char* topicName, int topicLen, MQTTAsync_messa
         return MQTTASYNC_FAILURE;
     }
     
-    debug("MQTT: Connecting to broker...\n\tUsername: %s\n\tPassword %s", connectingState->username, connectingState->password);
+    //debug("MQTT: Connecting to broker...\n\tUsername: %s\n\tPassword: %s", connectingState->username, connectingState->password);
     
     _connectionState = RelayrConnectionStateConnecting;
     connectingState->numConnectionTries--;
@@ -245,7 +245,7 @@ void connectionToBrokerFailed(void* context, MQTTAsync_failureData* response)
     RLAMQTTService* weakService = (__bridge RLAMQTTService*)connectingState->mqttService;
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        debug("MQTT: Connection to the broker failed!!");
+        //debug("MQTT: Connection to the broker failed!!");
         
         RLAMQTTService* service = weakService;
         if (!service) { return; }
@@ -264,7 +264,7 @@ void connectionToBrokerSucceeded(void* context, MQTTAsync_successData* response)
     free(connectingState);
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        debug("MQTT: Connection to broker succeeded!!");
+        //debug("MQTT: Connection to broker succeeded!!");
         
         RLAMQTTService* service = weakService;
         if (!service) { return; }
@@ -282,7 +282,7 @@ void connectionToBrokerSucceeded(void* context, MQTTAsync_successData* response)
 void connectionToBrokerLost(void* context, char* cause)
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        debug("MQTT: Connection to the broker lost!!");
+        //debug("MQTT: Connection to the broker lost!!");
         
         RLAMQTTService* service = (__bridge RLAMQTTService*)context;
         service.connectionState = RelayrConnectionStateDisconnected;
@@ -320,7 +320,7 @@ void subscriptionSucceded(void* context, MQTTAsync_successData* response)
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         RLAServiceHolder* holder = (__bridge_transfer RLAServiceHolder*)context;
-        debug("MQTT: Device subscription succeeded!!\n\tDeviceID: %s", [holder.device.uid cStringUsingEncoding:NSUTF8StringEncoding]);
+        //debug("MQTT: Device subscription succeeded!!\n\tDeviceID: %s", [holder.device.uid cStringUsingEncoding:NSUTF8StringEncoding]);
         
         __weak RLAMQTTService* service = holder.service;
         __weak RelayrDevice* device = holder.device;
@@ -337,7 +337,7 @@ void subscriptionFailed(void* context, MQTTAsync_failureData* response)
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         RLAServiceHolder* holder = (__bridge_transfer RLAServiceHolder*)context;
-        debug("MQTT: Device subscription failed!!\n\tDeviceID %s", [holder.device.uid cStringUsingEncoding:NSUTF8StringEncoding]);
+        //debug("MQTT: Device subscription failed!!\n\tDeviceID %s", [holder.device.uid cStringUsingEncoding:NSUTF8StringEncoding]);
         
         RLAMQTTService* service = holder.service;
         RelayrDevice* device = holder.device;

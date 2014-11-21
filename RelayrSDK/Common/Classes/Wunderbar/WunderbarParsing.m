@@ -9,7 +9,7 @@
 
 @implementation WunderbarParsing
 
-+ (NSDictionary*)parseData:(NSData*)data fromService:(id<RLAService>)service device:(RelayrDevice*)device atDate:(NSDate**)datePtr
++ (NSDictionary*)parseData:(NSData*)data fromService:(id<RLAService>)service device:(RelayrDevice*)device atDate:(__autoreleasing NSDate**)datePtr
 {
     NSString* modelID = device.modelID;
     if (!data || !service || !modelID.length) { return nil; }
@@ -30,30 +30,25 @@
         }
         else if ([modelID isEqualToString:Wunderbar_devicemodel_thermometer])
         {
-            NSLog(@"%@", json);
             result = @{ dWunderbar_meaning_temperature : json[dWunderbar_parsing_temperature],
                         dWunderbar_meaning_humidity : json[dWunderbar_parsing_humidity] };
         }
-        else if ([modelID isEqualToString:dWunderbar_parsing_color])
+        else if ([modelID isEqualToString:Wunderbar_devicemodel_light])
         {
-            NSLog(@"%@", json);
-            NSDictionary* clr = json[Wunderbar_devicemodel_light];
+            NSDictionary* clr = json[dWunderbar_parsing_color];
             result = @{ dWunderbar_meaning_luminosity : json[dWunderbar_parsing_light],
                         dWunderbar_meaning_color : @[clr[dWunderbar_parsing_r], clr[dWunderbar_parsing_g], clr[dWunderbar_parsing_b]],
                         dWunderbar_meaning_proximity : json[dWunderbar_parsing_proximity] };
         }
         else if ([modelID isEqualToString:Wunderbar_devicemodel_microphone])
         {
-            NSLog(@"%@", json);
             result = @{ dWunderbar_meaning_noiseLevel : json[dWunderbar_parsing_sound] };
         }
         else { return nil; }
         
         if (datePtr != NULL)
         {
-            NSDate* timestamp = [NSDate dateWithTimeIntervalSince1970:((NSNumber*)json[dWunderbar_parsing_timestamp]).doubleValue];
-            NSLog(@"%@", timestamp);
-            *datePtr = timestamp;
+            *datePtr = [NSDate dateWithTimeIntervalSince1970:((NSNumber*)json[dWunderbar_parsing_timestamp]).doubleValue];
         }
     }
     else if ([service isKindOfClass:[RLABLEService class]])

@@ -53,21 +53,22 @@
         XCTAssertNil(error);
         [_user queryCloudForIoTs:^(NSError* error) {
             XCTAssertNil(error);
-
-            RelayrDevice* subscribedDevice;
-            for (RelayrDevice* device in _user.devices) { if ([device.modelID isEqualToString:@"a7ec1b21-8582-4304-b1cf-15a1fc66d1e8"]) { subscribedDevice = device; break; } }
-            if (!subscribedDevice) { XCTFail(@"No device found for testing MQTT"); }
             
-            [subscribedDevice subscribeToAllInputsWithBlock:^(RelayrDevice* device, RelayrInput* input, BOOL* unsubscribe) {
-                NSLog(@"Input value: %@ at: %@", input.value, input.date);
-                
-            } error:^(NSError* error) {
-                XCTFail(@"%@", error);
-            }];
+            __block unsigned int inputsReceived = 20;
+
+            for (RelayrDevice* device in _user.devices)
+            {
+                [device subscribeToAllInputsWithBlock:^(RelayrDevice *device, RelayrInput *input, BOOL *unsubscribe) {
+                    printf("Input received: %s\n", [((NSObject*)(input.value)).description cStringUsingEncoding:NSUTF8StringEncoding]);
+                    if (--inputsReceived == 0) { [expectation fulfill]; }
+                } error:^(NSError *error) {
+                    XCTFail(@"%@", error);
+                }];
+            }
         }];
     }];
 
-    [self waitForExpectationsWithTimeout:20 handler:nil];
+    [self waitForExpectationsWithTimeout:60 handler:nil];
 }
 
 @end
