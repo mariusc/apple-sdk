@@ -12,7 +12,7 @@
 @interface RelayrUser : NSObject <NSCoding>
 
 /*!
- *  @abstract Relayr application that the user has signed in.
+ *  @abstract The relayr application the user has signed in to.
  */
 @property (readonly,weak,nonatomic) RelayrApp* app;
 
@@ -31,78 +31,78 @@
 /*!
  *  @abstract A user name for a specific <code>RelayrUser</code> instace.
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
- *      If <code>nil</code>, the name is unknown. If it is an empty string, the name is not set in the server.
+ *      If <code>nil</code>, the name is unknown. If an empty string is returned, the name is not set on the server.
  */
 @property (readonly,nonatomic) NSString* name;
 
 /*!
- *  @abstract It sets a user name to a new value.
- *  @discussion This method tries to push to the server the new name, if it is not successful, the local name is not changed.
+ *  @abstract Sets a new user name.
+ *  @discussion This method atttempts to push the new name to the server , if it is not successful, the local name is not changed.
  *
- *  @param name The new name for the user.
- *  @param completion Block indicating the result of the server push.
+ *  @param name The new user name.
+ *  @param completion A block indicating the result of the server push.
  */
 - (void)setNameWith:(NSString*)name
          completion:(void (^)(NSError* error, NSString* previousName))completion;
 
 /*!
- *  @abstract Relayr user email for a specific <code>RelayrUser</code> instace.
- *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
- *      If <code>nil</code>, the email is unknown. If it is an empty string, the email is not set in the server.
+ *  @abstract The user email for the specific <code>RelayrUser</code> instace.
+ *  @discussion It can can be changed with a successful <code>queryCloudForUserInfo:</code> call.
+ *      If <code>nil</code>, the email is unknown. If an empty string is returned, the email is not set in the server.
  */
 @property (readonly,nonatomic) NSString* email;
 
 /*!
- *  @abstract It sets a user's email to a new value.
- *  @discussion This method tries to push to the server the new email, it it is not successful, the local name is not changed.
+ *  @abstract Sets a user's email to a new value.
+ *  @discussion This method attempts to push the new email to the server, if it is not successful, the local name is not changed.
  *
- *  @param email The new email for the user.
- *  @param completion Block indicating the result of the server push.
+ *  @param email The new user email.
+ *  @param completion A block indicating the result of the server push.
  */
 - (void)setEmail:(NSString*)email
       completion:(void (^)(NSError* error, NSString* previousEmail))completion;
 
 /*!
- *  @abstract Relayr applications installed the specific <code>RelayrUser</code> instace.
- *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
- *      If <code>nil</code>, the authorised apps are unknown. If it is an empty set, there are no authorised apps.
+ *  @abstract The relayr applications installed (authorized) for the specific <code>RelayrUser</code> instace.
+ *  @discussion It can can be changed with a successful <code>queryCloudForUserInfo:</code> call.
+ *      If <code>nil</code>, the authorised apps are unknown. If an empty set is returned, there are no authorised apps.
  */
 @property (readonly,nonatomic) NSSet* authorisedApps;
 
 /*!
- *  @abstract A set of the <code>publisher</code>s listed under the specific user.
- *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
- *      If <code>nil</code>, the publishers are unknown. If it is an empty set, there are no publishers set in the server.
+ *  @abstract A set of <code>publisher</code>s listed under the specific user.
+ *  @discussion It can be changed with a successful <code>queryCloudForUserInfo:</code> call.
+ *      If <code>nil</code>, the publishers are unknown. If an empty set is returned, there are no publishers set in the server.
  */
 @property (readonly,nonatomic) NSSet* publishers;
 
 /*!
  *  @abstract A set of the Transmitter entities owned by the specific <code>RelayrUser</code> instace.
- *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
- *      If <code>nil</code>, the transmitters are unknown. If it is an empty set, there are no transmitters owned by this user in the server.
+ *  @discussion It can be changed with a successful <code>queryCloudForUserInfo:</code> call.
+ *      If <code>nil</code>, the transmitters are unknown. If an empty set is returned, there are no transmitters owned by the user in the server.
  */
 @property (readonly,nonatomic) NSSet* transmitters;
 
 /*!
  *  @abstract A set of the Device entities owned by the specific <code>RelayrUser</code> instace
- *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
- *      If <code>nil</code>, the devices are unknwon. If it is an empty set, there are no devices owned by this user in the server.
+ *  @discussion It can be changed with a successful <code>queryCloudForUserInfo:</code> call.
+ *      If <code>nil</code>, the devices are unknwon. If an empty set is returned, there are no devices owned by this user in the server.
  */
 @property (readonly,nonatomic) NSSet* devices;
 
 /*!
  *  @abstract Devices that the specific <code>RelayrUser</code> instace has bookmarked. Only public devices can be bookmarked devices.
- *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call. 
- *      By Bookmarking a device you are indicating that you have a particular interest in this device.
+ *  @discussion It can be changed with a successful <code>queryCloudForUserInfo:</code> call. 
+ *      By Bookmarking a device you are indicating that you have a particular interest in it.
  *      In the relayr context, a bookmarked device will appear on a user's Developer Dashboard.
- *      If <code>nil</code>, the devices bookmarked are unknwon. If it is an empty set, there are no devices bookmarked by this user.
+ *      If <code>nil</code>, the devices bookmarked are unknwon. If an empty set is returned, there are no devices bookmarked by this user.
  */
 @property (readonly,nonatomic) NSSet* devicesBookmarked;
 
 /*!
  *  @abstract Queries the relayr platform for the user information.
  *  @discussion Every time this method is called a server query is launched. 
- *	Once response is returned successfuly, all the <i>readonly</i> user related properties would be populated with respective values.
+ *	Once the response is returned successfuly, all the <i>readonly</i> user related properties are populated with the respective values.
  *
  *  @param completion A block indiciating whether the server query was successful or not.
  *
@@ -113,7 +113,7 @@
 /*!
  *  @abstract Queries the relayr platform for all devices, transmitters, and bookmarked devices under the specific <code>RelayUser</code> instance.
  *  @discussion Every time this method is called a server query is launched. 
- *	Once the response is returned successfuly, all the <i>readonly</i> device related properties would be populated with the respective values.
+ *	Once the response is returned successfuly, all the <i>readonly</i> device related properties are populated with the respective values.
  *
  *  @param completion A block indicating whether the server query was successful or not.
  *
@@ -124,7 +124,7 @@
 /*!
  *  @abstract Queries the relayr platform for all the application and publisher entities owned by the user.
  *  @discussion Every time this method is called a server query is launched. 
- *	Once the response is returned successfully, the <i>readonly</i> app and publisher properties would would be populated with the respective values.
+ *	Once the response is returned successfully, the <i>readonly</i> app and publisher properties are populated with the respective values.
  *
  *  @param completion A block indicating whether the server query was successful or not.
  */
@@ -147,10 +147,10 @@
                             completion:(void (^)(NSError* error, RelayrTransmitter* transmitter))completion;
 
 /*!
- *  @abstract Deletes a transmitter entity from the Relayr cloud and also from the iOS/OSX client.
+ *  @abstract Deletes a transmitter entity from the relayr platform as well as from the iOS/OSX client.
  *
- *  @param transmitter Relayr transmitter to be deleted.
- *  @param completion Block indicating whether the server call was successful or not. It can be <code>nil</code>
+ *  @param transmitter the relayr transmitter to be deleted.
+ *  @param completion A block indicating whether the server call was successful or not. It can be <code>nil</code>
  *
  *  @see RelayrTransmitter
  */
@@ -164,7 +164,7 @@
  *  @param modelID Identifier for the newly created device instance. This parameter is required.
  *  @param firmwareVersion The version of the firmware running on the device. This parameter is required.
  *  @param name The given name to identify this device. This parameter is required.
- *  @param completion Block indicating whether the server registration call was successful or not. It can be <code>nil</code>.
+ *  @param completion A block indicating whether the server registration call was successful or not. It can be <code>nil</code>.
  *
  *  @see RelayrDevice
  */
@@ -174,10 +174,10 @@
                        completion:(void (^)(NSError* error, RelayrDevice* device))completion;
 
 /*!
- *  @abstract Deletes a device entity from the Relayr cloud and also from the iOS/OSX client.
+ *  @abstract Deletes a device entity from the relayr platform as well as from the iOS/OSX client.
  *
  *  @param device The relayr device to be deleted.
- *  @param completion Block indicating whether the server call was successful or not. It can be <code>nil</code>
+ *  @param completion A block indicating whether the server call was successful or not. It can be <code>nil</code>
  *
  *  @see RelayrDevice
  */

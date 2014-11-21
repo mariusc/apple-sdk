@@ -6,7 +6,7 @@
  *  @discussion An app is a basic entity in the relayr platform. 
  *	The relayr platform relates to apps in two manners: Publisher Apps and User Apps.
  *	Publisher apps are apps which are purchasable on an app store and are owned by a publisher.
- *	User apps are apps which have been approved to the data of an end user. This approval has been granted by the user.
+ *	User apps are apps which have been approved to receive the data of an end user. This approval has been granted by the user.
  */
 @interface RelayrApp : NSObject
 
@@ -25,12 +25,12 @@
 @property (readonly,nonatomic) NSString* name;
 
 /*!
- *  @abstract It changes the Relayr application's name and push it to the server.
- *  @discussion If the server is not reachable or there was any problem, an error will be returned in the completion block and the name won't be changed;
+ *  @abstract Changes the relayr application name and pushes the change to the server.
+ *  @discussion If the server is not reachable or in case of a problem, an error will be returned in the completion block and the name won't be changed;
  *
- *  @param name New name to identify this application with.
- *  @param user To set up an application's name, you need to provide a user with the appropriate credentials for the setup.
- *  @param completion Block indicating the result of the server push.
+ *  @param name A new name to identify the application with.
+ *  @param user To set up an application's name, a user with the appropriate credentials for the setup is required.
+ *  @param completion A block indicating the result of the server push.
  */
 - (void)setName:(NSString*)name
 withUserCredentials:(RelayrUser*)user
@@ -43,12 +43,12 @@ withUserCredentials:(RelayrUser*)user
 @property (readonly,nonatomic) NSString* appDescription;
 
 /*!
- *  @abstract It changes the Relayr application's description and push it to the server.
- *  @discussion If the server is not reachable or there was any problem, and error will be returned in the completion block and the name won't be changed;
+ *  @abstract Changes the relayr application's description and pushes the change to the server.
+ *  @discussion If the server is not reachable or in case of a problem, an error will be returned in the completion block and the name won't be changed;
  *
- *  @param description New description string given to the application.
- *  @param user To set up an application's name, you need to provide a user with the appropriate credentials for the setup.
- *  @param completion Block indicating the result of the server push.
+ *  @param description The new description string given to the application.
+ *  @param user To set the description, a user with the appropriate credentials for the setup is required.
+ *  @param completion A block indicating the result of the server push.
  */
 - (void)setDescription:(NSString*)description
    withUserCredentials:(RelayrUser*)user
@@ -70,7 +70,7 @@ withUserCredentials:(RelayrUser*)user
  *  @abstract The OAuth redirect URI.
  *  @discussion The URI of the page where the user is redirected upon successful login. The URI must include the protocol used e.g. 'http'. 
  *	The redirect URI is set when an application is registered on the relayr Platform. 
- *	@see <a href="https://developer.relayr.io/documents/Authorization/OAuthAndRelayr">The OAuth on relayr section on the Develooper Dashboard.</a>
+ *	@see <a href="https://developer.relayr.io/documents/Authorization/OAuthAndRelayr">The OAuth section on the Develooper Dashboard.</a>
  */
 @property (readonly,nonatomic) NSString* redirectURI;
 
@@ -92,7 +92,7 @@ withUserCredentials:(RelayrUser*)user
  *  @param appID <code>NSString</code> representing the relayr Application ID. Generated when creating an app on the relayr developer dashboard.
  *  @param clientSecret <code>NSString</code> representing the OAuth client secret. Generated when creating an app on the relayr developer dashboard.
  *  @param redirectURI <code>NSString</code> representing the redirect URI entered when creating an app on the relayr developer dashboard.
- *  @param completion Block indicating the result of the initialization. Note: This method is potentially asynchronous, if it does need to talk to the server.
+ *  @param completion A block indicating the result of the initialization. Note: This method is potentially asynchronous, if it does need to talk to the server.
  *
  *  @see RelayrCloud
  */
@@ -148,12 +148,13 @@ OAuthClientSecret:(NSString*)clientSecret
 - (RelayrUser*)loggedUserWithRelayrID:(NSString*)relayrID;
 
 /*!
- *  @abstract Signs in a Relayr User to the current relayr application and returns (in the completion block) an object representing the user.
+ *  @abstract Signs a relayr user in to the current relayr application and returns an object representing the user (in the completion block).
  *  @discussion The user will be prompted with a modal webview asking for their relayr credentials. 
  *	If the sign in process is successful, a fully formed <code>RelayrUser</code> object will be returned in the <code>completion</code> block.
         Start by querying loggedUsers. 
-        This method is only supposed to be used when looking for credentials of a relayr User that you don't have or when you want to register a new user on the relayr platform.
-        If the user is already logged in and part of the <code>loggedUsers</code> array, you will receive the <code>RelayrUser</code> in that array rather than a new instance.
+        This method should only be used when looking for credentials of a relayr User not already in the <code>loggedUsers</code> array
+        or when you wish to register a new user on the relayr platform.
+        If the user is already logged in and a part of the <code>loggedUsers</code> array, you will receive the <code>RelayrUser</code> in that array rather than a new instance.
  *
  *  @param completion An Asynchronous block with the status of the sign in process.
  *
@@ -162,12 +163,12 @@ OAuthClientSecret:(NSString*)clientSecret
 - (void)signInUser:(void (^)(NSError* error, RelayrUser* user))completion;
 
 /*!
- *  @abstract Signs out a user from the application.
+ *  @abstract Signs a user out of the application.
  *  @discussion What this method actually does is to remove the user from the stored users array. 
- *	You keep the <code>RelayrUser</code> reference alive, so you can still use it.
+ *	The <code>RelayrUser</code> reference is kept, so you can still use it.
  *
  *  @param user A representaton of a relayr user. 
- *	If <code>RelayrUser</code> is not valid or <code>nil</code>, this method will not perform anything.
+ *	If the <code>RelayrUser</code> is not valid or <code>nil</code>, this method will not perform anything.
  *
  *  @see RelayrUser
  */
