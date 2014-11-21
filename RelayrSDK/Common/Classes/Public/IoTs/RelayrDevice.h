@@ -27,18 +27,18 @@
 @property (readonly,nonatomic) NSString* name;
 
 /*!
- *  @abstract It changes the device's name and push it to the server.
- *  @discussion If the server is not reachable or there was any problem, and error will be returned in the completion block and the name won't be changed;
+ *  @abstract Changes the Device's name and pushes it to the server.
+ *  @discussion If the server is not reachable or in case of a problem, and error will be returned in the completion block and the name won't be changed;
  *
- *  @param name New name to identify this device with.
+ *  @param name A new name to identify the device with.
  *  @param completion Block indicating the result of the server push.
  */
 - (void)setNameWith:(NSString*)name
          completion:(void (^)(NSError* error, NSString* previousName))completion;
 
 /*!
- *  @abstract The transmitter that this device is linked with.
- *  @discussion Be aware that using this property implies a deep search on the IoT tree. Only use it when necessary.
+ *  @abstract The transmitter that the Device is associated with.
+ *  @discussion Note: using this property implies a deep search on the IoT tree. Only use it when necessary.
  *
  *  @return A fully initialised transmitter or <code>nil</code>.
  */
@@ -57,8 +57,8 @@
 @property (readonly,nonatomic) NSNumber* isPublic;
 
 /*!
- *  @abstract Indicates the firmware attributes of the Device instance being called.
- *  @discussion A device may have many different firmware versions. This indicates the firmware of the device called.
+ *  @abstract Indicates the firmware attributes of the device instance being called.
+ *  @discussion A device may have many different firmware versions. This indicates the firmware version of the device called.
  */
 @property (readonly,nonatomic) RelayrFirmware* firmware;
 
@@ -69,8 +69,11 @@
 @property (readonly,nonatomic) NSString* secret;
 
 /*!
- *  @abstract It represents the connection from where all the data is coming.
- *  @discussion Abstraction of the connection between the system running the SDK and the source of the data. Thus, if you are connecting directly to a specific device (through BLE, NFC, etc.), this object will specify it. However, if the data is coming from the Relayr Cloud the connection will be of type <i>cloud</i>. The actual connection between the device and the cloud is not specified by this object.
+ *  @abstract Represents the connection via which data is received.
+ *  @discussion Abstraction of the connection between the system running the SDK and the source data. 
+ *  Thus, if you are connecting directly to a specific device (through BLE, NFC, etc.), this object will specify it. 
+ *  However, if the data is coming from the relayr Cloud the connection will be of type <i>cloud</i>. 
+ *  The actual connection between the device and the cloud is not specified by this object.
  *      This object is never <code>nil</code>.
  */
 @property (readonly,nonatomic) RelayrConnection* connection;
@@ -79,13 +82,13 @@
 
 /*!
  *  @abstract Denotes a physical device with the properties of this <code>RelayrDevice</code> entity.
- *  @discussion During the onboarding process the properties needed for the device to be a member of the relayr cloud are written 
+ *  @discussion During the onboarding process the properties required for the device to be added to the relayr cloud are written 
  *	to the physical memory of the targeted device. 
  *	
  *
  *
  *  @param onboardingClass In charge of the onboarding process. This class "knows" how to communicate with the specific device.
- *  @param timeout The period that the onboarding process can take in seconds. 
+ *  @param timeout The maximum duration of the onboarding process in seconds. 
  *	If the onboarding process doesn't finish within the specified timeout, the completion block is executed.
  *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. 
  *	If a negative number is passed, the block is returned with a respective error.
@@ -101,11 +104,11 @@
  *  @abstract Performs a firmware update on the specific device.
  *
  *  @param updateClass In charge of the firmware update process. This class "knows" how to communicate with the specific device.
- *  @param timeout The period that the onboarding process can take in seconds. 
- *	If the onboarding process doesn't finish within the specified timeout, the completion block is executed.
+ *  @param timeout The maximum duration of the update process in seconds. 
+ *	If the update process doesn't finish within the specified timeout, the completion block is executed.
  *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. 
  *	If a negative number is passed, the block is returned with a respective error.
- *  @param options Specific options for the device you are updating. The specific <code>RelayrFirmwareUpdate</code> class will list all additional variables required for a successful firmware update.
+ *  @param options Specific options for the device updated. The specific <code>RelayrFirmwareUpdate</code> class will list all additional variables required for a successful firmware update.
  *  @param completion A Block indicating whether the update process was successful or not.
  */
 - (void)updateFirmwareWithClass:(Class <RelayrFirmwareUpdate>)updateClass
@@ -116,21 +119,21 @@
 #pragma mark Subscriptions
 
 /*!
- *  @abstract Virtual property that indicates whether there are ongoing subscriptions (connections, inputs, etc.).
- *  @discussion Every time this property is called, a calculation is made to check if there are subscriptions running.
+ *  @abstract A virtual property indicating whether there are ongoing subscriptions (connections, inputs, etc.).
+ *  @discussion Every time this property is called, a calculation is made to check if there are ongoing subscriptions.
  */
 @property (readonly,nonatomic) BOOL hasOngoingSubscriptions;
 
 /*!
- *  @abstract Virtual property that indicates whether there are ongoing input subscriptions.
- *  @discussion Every time this property is called, a calculation is made to check if there are input subscriptions running.
+ *  @abstract A virtual property indicating whether there are ongoing input subscriptions.
+ *  @discussion Every time this property is called, a calculation is made to check if there are ongoing input subscriptions.
  */
 @property (readonly,nonatomic) BOOL hasOngoingInputSubscriptions;
 
 /*!
  *  @abstract Subscribes a block to the data sent from the <code>RelayrDevice</code>.
  *  @discussion Regardless of how the device is connected (Web/Cloud, Bluetooth, etc.),
- *	The action is called as soon as the data is available.
+ *	The action is called as soon as data is available.
  *
  *  @param block This block will be executed everytime data is available (and it is compulsory). The block contains three parameters:
  *      - <code>device</code>. The device producing the reading.

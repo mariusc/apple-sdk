@@ -4,23 +4,23 @@
 @import Foundation;         // Apple
 
 /*!
- *  @abstract Block executed when an input receive data.
+ *  @abstract A Block executed when the input (the reading) receives data.
  *
- *  @param device <code>RelayrDevice</code> which is sending the information.
- *  @param input <code>RelayrInput</code> specifying the meaning and value of the data that just arrived.
- *  @param unsubscribe Boolean pointer that can be set to <code>YES</code> if you want the block to not be executed anymore.
+ *  @param device The <code>RelayrDevice</code> sending the data.
+ *  @param input <code>RelayrInput</code> specifying the meaning and value of the data received.
+ *  @param unsubscribe A boolean pointer that can be set to <code>YES</code> if you wish to stop the block from being further executed.
  */
 typedef void (^RelayrInputDataReceivedBlock)(RelayrDevice* device, RelayrInput* input, BOOL* unsubscribe);
 
 /*!
- *  @abstract Block executed when an input receive an error.
+ *  @abstract A Block executed when the input receives an error.
  *
  *  @param error <code>NSError</code> describing the specific error.
  */
 typedef void (^RelayrInputErrorReceivedBlock)(NSError* error);
 
 /*!
- *  @abstract References the type of reading a relayr Device (sensor) can collect.
+ *  @abstract References the type of input (reading) a relayr Device (sensor) can collect.
  *  @discussion This object has a single 'meaning', however, This meaning could consist of one or more values. 
  *	For example: The Luminosity meaning is represented by a single value  
  *	however, the Color meaning consists of three or four values (red, green, blue, and white).
@@ -28,19 +28,20 @@ typedef void (^RelayrInputErrorReceivedBlock)(NSError* error);
 @interface RelayrInput : NSObject <NSCoding>
 
 /*!
- *  @abstract The source of the input/reading.
+ *  @abstract The source of the input (reading).
  *  @discussion This property will never be <code>nil</code>.
- *      Although describe as <code>RelayrDeviceModel</code>, this object might be a full <code>RelayrDevice</code> if the input is associated with a full-fledge <code>RelayrDevice</code>.
+ *      Although it is described as <code>RelayrDeviceModel</code>, 
+ *		this object might be a full <code>RelayrDevice</code> if the input is associated with a <code>RelayrDevice</code>.
  */
 @property (readonly,weak,nonatomic) RelayrDeviceModel* deviceModel;
 
 /*!
- *  @abstract The name of the reading as it is defined on the relayr platform.
+ *  @abstract The name of the input (reading) as it is defined on the relayr platform.
  */
 @property (readonly,nonatomic) NSString* meaning;
 
 /*!
- *  @abstract The unit in which the reading is measured.
+ *  @abstract The unit in which the input (reading) is measured.
  */
 @property (readonly,nonatomic) NSString* unit;
 

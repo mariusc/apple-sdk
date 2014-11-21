@@ -13,7 +13,7 @@
  *  @discussion The method MUST not modify the primal characteristics of the <code>RelayrTransmitter</code> entity passed as an argument.
  *
  *  @param transmitter <code>RelayrTransmitter</code> entity used to represent a physical transmitter.
- *  @param timeout The period that the onboarding process can take in seconds. 
+ *  @param timeout The maximum duration of the onboarding process in seconds. 
  *	If the onboarding process doesn't finish within the specified timeout, the completion block is executed.
  *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. 
  *	If a negative number is passed, the block is returned with a respective error.
@@ -34,7 +34,7 @@
  *  @discussion The method MUST not modify the primal characteristics of the <code>RelayrDevice</code> entity passed as an argument.
  *
  *  @param device <code>RelayrDevice</code> entity used to represent a physical device.
- *  @param timeout The period that the onboarding process can take in seconds. 
+ *  @param timeout The maximum duration of the onboarding process in seconds. 
  *	If the onboarding process doesn't finish within the specified timeout, the completion block is executed.
  *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. 
  *	If a negative number is passed, the block is returned with a respective error.

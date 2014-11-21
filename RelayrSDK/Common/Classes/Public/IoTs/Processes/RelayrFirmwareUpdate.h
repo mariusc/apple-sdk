@@ -14,8 +14,8 @@
  *	passed as an argument.
  *
  *  @param transmitter <code>RelayrTransmitter</code> entity representing the physical transmitter that will be updated.
- *  @param timeout The period that the onboarding process can take in seconds. 
- *	If the onboarding process doesn't finish within the specified timeout, the completion block is executed.
+ *  @param timeout The maximum duration of the update process in seconds. 
+ *	If the update process doesn't finish within the specified timeout, the completion block is executed.
  *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. 
  *	If a negative number is passed, the block is returned with a respective error.
  *  @param completion A Block indicating whether the update process was successful or not.
@@ -30,8 +30,8 @@
  *  @discussion The method MUST not modify the primal characteristics of the <code>RelayrDevice</code> entity passed as an argument.
  *
  *  @param device <code>RelayrDevice</code> entity representing the physical device that will be updated.
- *  @param timeout The period that the onboarding process can take in seconds. 
- *	If the onboarding process doesn't finish within the specified timeout, the completion block is executed.
+ *  @param timeout The maximum duration of the update process in seconds. 
+ *	If the update process doesn't finish within the specified timeout, the completion block is executed.
  *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. 
  *	If a negative number is passed, the block is returned with a respective error.
  *  @param completion A Block indicating whether the update process was successful or not.

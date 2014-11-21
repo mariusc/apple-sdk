@@ -15,7 +15,7 @@
 
 /*!
  *  @abstract The name of the type of writing/output the <code>RelayrDevice</code> can receive.
- *  @discussion It currently only accepts two types of meaning: "led" and <code>nil</code>.
+ *  @discussion Currently only two types of meanings are accepted: "led" and <code>nil</code>.
  */
 @property (readonly,nonatomic) NSString* meaning;
 
