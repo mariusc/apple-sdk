@@ -19,11 +19,12 @@
     if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
     
     NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
-        NSArray* json = RLAAPI_processHTTPresponse(dRLAAPI_Apps_ResponseCode, nil);
+        NSArray* json = (!error && ((NSHTTPURLResponse*)response).statusCode==dRLAAPI_Apps_ResponseCode && data) ? [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] : nil;
+        if (!json) { return dispatch_async(dispatch_get_main_queue(), ^{ completion((error) ? error : RelayrErrorWebRequestFailure, nil); }); }
         
         NSMutableSet* result = [[NSMutableSet alloc] initWithCapacity:json.count];
         for (NSDictionary* dict in json) { RelayrApp* app = [RLAAPIService parseAppFromJSONDictionary:dict]; if (app) { [result addObject:app]; } }
-        return completion(nil, [NSSet setWithSet:result]);
+        dispatch_async(dispatch_get_main_queue(), ^{ completion(nil, [NSSet setWithSet:result]); });
     }];
     [task resume];
 }
@@ -65,8 +66,9 @@
     if (!request) { return completion(RelayrErrorWebRequestFailure, nil, nil, nil); }
     
     NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
-        NSDictionary* json = RLAAPI_processHTTPresponse(dRLAAPI_AppInfo_ResponseCode, nil, nil, nil);
-        completion(nil, json[dRLAAPI_App_RespondKey_ID], json[dRLAAPI_App_RespondKey_Name], json[dRLAAPI_App_RespondKey_Description]);
+        NSDictionary* json = (!error && ((NSHTTPURLResponse*)response).statusCode==dRLAAPI_Apps_ResponseCode && data) ? [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] : nil;
+        if (!json) { return dispatch_async(dispatch_get_main_queue(), ^{ completion((error) ? error : RelayrErrorWebRequestFailure, nil, nil, nil); }); }
+        dispatch_async(dispatch_get_main_queue(), ^{ completion(nil, json[dRLAAPI_App_RespondKey_ID], json[dRLAAPI_App_RespondKey_Name], json[dRLAAPI_App_RespondKey_Description]); });
     }];
     [task resume];
 }

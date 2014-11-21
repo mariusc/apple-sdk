@@ -207,8 +207,9 @@
     if (!request) { if (completion) { completion(RelayrErrorWebRequestFailure, nil); } return; }
 
     NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
-        NSDictionary* json = RLAAPI_processHTTPresponse(dRLAAPI_DevicesPublicSub_ResponseCode, nil);
-        return completion(nil, json);
+        NSDictionary* json = json = (!error && ((NSHTTPURLResponse*)response).statusCode==dRLAAPI_DevicesPublicSub_ResponseCode && data) ? [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] : nil;
+        if (!json) { return dispatch_async(dispatch_get_main_queue(), ^{ completion((error) ? error : RelayrErrorWebRequestFailure, nil); }); }
+        dispatch_async(dispatch_get_main_queue(), ^{ completion(nil, json); });
     }];
     [task resume];
 }

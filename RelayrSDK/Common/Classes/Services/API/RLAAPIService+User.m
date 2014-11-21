@@ -25,9 +25,11 @@
     if (!request) { completion(RelayrErrorWebRequestFailure, nil); }
 
     NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
-        NSDictionary* json = RLAAPI_processHTTPresponse(dRLAAPI_UserEmailCheck_ResponseCode, nil);
+        NSDictionary* json = (!error && ((NSHTTPURLResponse*)response).statusCode==dRLAAPI_UserEmailCheck_ResponseCode && data) ? [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] : nil;
+        if (!json) { return dispatch_async(dispatch_get_main_queue(), ^{ completion((error) ? error : RelayrErrorWebRequestFailure, nil); }); }
+        
         NSNumber* result = json[dRLAAPI_UserEmailCheck_ResponseKey];
-        return (!result) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, result);
+        dispatch_async(dispatch_get_main_queue(), ^{ return (!result) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, result); });
     }];
     [task resume];
 }

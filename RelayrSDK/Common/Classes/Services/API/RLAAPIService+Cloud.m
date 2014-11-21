@@ -19,8 +19,11 @@
     request.allowsCellularAccess = YES;
     
     NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
-        NSArray* json = RLAAPI_processHTTPresponse(dRLAAPI_CloudReachability_ResponseCode, @NO);
-        completion(nil, @YES);
+        NSArray* json = (!error && ((NSHTTPURLResponse*)response).statusCode==dRLAAPI_CloudReachability_ResponseCode && data) ? [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] : nil;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!json) { completion((error) ? error : RelayrErrorWebRequestFailure, @NO); }
+            else { completion(nil, @YES); }
+        });
     }];
     [task resume];
 }
@@ -46,10 +49,17 @@
     request.HTTPBody = [httpBodyString dataUsingEncoding:NSUTF8StringEncoding];
 
     NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
-        NSDictionary* json = RLAAPI_processHTTPresponse(dRLAAPI_CloudOAuthToken_ResponseCode, nil);
+        NSDictionary* json = (!error && ((NSHTTPURLResponse*)response).statusCode==dRLAAPI_CloudOAuthToken_ResponseCode && data) ? [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] : nil;
         
-        NSString* token = json[dRLAAPI_CloudOAuthToken_RespondKey_AccessToken];
-        return (!token) ? completion(RelayrErrorRequestParsingFailure, nil) : completion(nil, token);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (json)
+            {
+                NSString* token = json[dRLAAPI_CloudOAuthToken_RespondKey_AccessToken];
+                if (token) { completion(nil, token); }
+                else { completion(RelayrErrorRequestParsingFailure, nil); }
+            }
+            else { completion((error) ? error : RelayrErrorWebRequestFailure, nil); }
+        });
     }];
     [task resume];
 }

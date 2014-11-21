@@ -11,7 +11,7 @@
  *  @abstract It checks whether the Relayr cloud is reachable and the service is up.
  *  @discussion The Relayr cloud can be unreachable for several reasons: no internet connection, cannot resolve DNS, Relayr service is temporarily unavailable. It is worth noticing, that you can still work with the SDK even when the Relayr cloud is unavailable (in the unlikely case that that happened).
  *
- *  @param completion Block giving you a Boolean answer about the availability of the service and an error explaining the unreachability (in case that happened).
+ *  @param completion Block giving you a Boolean answer about the availability of the service and an error explaining the unreachability (in case that happened). The block will be executed in the main thread (UI Thread).
  */
 + (void)isRelayrCloudReachable:(void (^)(NSError* error, NSNumber* isReachable))completion;
 

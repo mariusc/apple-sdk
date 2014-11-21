@@ -43,11 +43,12 @@ NSString* const kRLAAPIRequestModePUT       = @"PUT";
         sessionConfiguration.TLSMinimumSupportedProtocol = kTLSProtocol12;
         sessionConfiguration.networkServiceType = NSURLNetworkServiceTypeDefault;
         sessionConfiguration.allowsCellularAccess = YES;
+        sessionConfiguration.HTTPShouldUsePipelining = YES;
         sessionConfiguration.HTTPAdditionalHeaders = @{
             dRLAAPIRequest_HeaderField_UserAgent    : [RelayrCloud userAgentString]
         };
         
-        _session = [NSURLSession sessionWithConfiguration:sessionConfiguration];
+        _session = [NSURLSession sessionWithConfiguration:sessionConfiguration delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
         if (!_session) { return nil; }
     }
     return self;
@@ -74,7 +75,6 @@ NSString* const kRLAAPIRequestModePUT       = @"PUT";
     if (!request) { return nil; }
     
     request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
-    request.HTTPShouldUsePipelining = YES;
     request.HTTPShouldHandleCookies = NO;
     request.HTTPMethod = httpMode;
     if (authorizationToken.length) { [request setValue:dRLAAPIRequest_HeaderValue_Authorization(authorizationToken) forHTTPHeaderField:dRLAAPIRequest_HeaderField_Authorization]; }

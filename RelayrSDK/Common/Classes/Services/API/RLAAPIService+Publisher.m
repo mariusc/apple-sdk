@@ -19,11 +19,12 @@
     if (!request) { return completion(RelayrErrorWebRequestFailure, nil); }
 
     NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
-        NSArray* json = RLAAPI_processHTTPresponse(dRLAAPI_PublishersCloud_ResponseCode, nil);
-        
+        NSArray* json = (!error && ((NSHTTPURLResponse*)response).statusCode==dRLAAPI_PublishersCloud_ResponseCode && data) ? [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] : nil;
+        if (!json) { return dispatch_async(dispatch_get_main_queue(), ^{ completion((error) ? error : RelayrErrorWebRequestFailure, nil); }); }
+
         NSMutableSet* result = [[NSMutableSet alloc] initWithCapacity:json.count];
         for (NSDictionary* dict in result) { RelayrPublisher* pub = [RLAAPIService parsePublisherFromJSONDictionary:dict]; if (pub) { [result addObject:pub]; } }
-        return completion(nil, (result.count) ? [NSSet setWithSet:result] : nil);
+        dispatch_async(dispatch_get_main_queue(), ^{ completion(nil, (result.count) ? [NSSet setWithSet:result] : nil); });
     }];
     [task resume];
 }

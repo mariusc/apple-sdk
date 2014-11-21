@@ -30,6 +30,8 @@ static NSString* const kRelayrCloud_LoggingSession_connection   = @"connection";
     return nil;
 }
 
+#pragma mark Cloud information
+
 + (void)isReachable:(void (^)(NSError* error, NSNumber* isReachable))completion
 {
     if (!completion) { return [RLALog debug:RelayrErrorMissingArgument.localizedDescription]; }
@@ -47,6 +49,8 @@ static NSString* const kRelayrCloud_LoggingSession_connection   = @"connection";
     if (!completion) { return [RLALog debug:RelayrErrorMissingArgument.localizedDescription]; }
     [RLAAPIService requestAllRelayrApps:completion];
 }
+
+#pragma mark Logging system
 
 + (BOOL)logMessage:(NSString*)message onBehalfOfUser:(RelayrUser*)user
 {
@@ -73,6 +77,8 @@ static NSString* const kRelayrCloud_LoggingSession_connection   = @"connection";
     [task resume];
     return YES;
 }
+
+#pragma mark System information
 
 + (NSString*)userAgentString
 {
