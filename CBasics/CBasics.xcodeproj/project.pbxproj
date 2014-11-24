@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6234A2DC1A2325E000330BFE /* CCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 6234A2DB1A2325E000330BFE /* CCore.h */; };
+		6234A2DD1A2325E000330BFE /* CCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 6234A2DB1A2325E000330BFE /* CCore.h */; };
+		6234A2DF1A23265900330BFE /* CCore.c in Sources */ = {isa = PBXBuildFile; fileRef = 6234A2DE1A23265900330BFE /* CCore.c */; };
+		6234A2E01A23265900330BFE /* CCore.c in Sources */ = {isa = PBXBuildFile; fileRef = 6234A2DE1A23265900330BFE /* CCore.c */; };
 		62CF59AE1A029D3200D16DF1 /* CBasics.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59A41A029D3200D16DF1 /* CBasics.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		62CF59AF1A029D3200D16DF1 /* CBasics.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59A41A029D3200D16DF1 /* CBasics.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		62CF59B01A029D3200D16DF1 /* CString.c in Sources */ = {isa = PBXBuildFile; fileRef = 62CF59A61A029D3200D16DF1 /* CString.c */; };
@@ -30,6 +34,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6234A2DB1A2325E000330BFE /* CCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCore.h; sourceTree = "<group>"; };
+		6234A2DE1A23265900330BFE /* CCore.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CCore.c; sourceTree = "<group>"; };
 		624FD11619F59D290009B3CF /* libcbasics.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcbasics.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6273782219FE8A55009CDAB4 /* CBasics_Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CBasics_Debug.xcconfig; sourceTree = "<group>"; };
 		6273782319FE8B52009CDAB4 /* CBasics_Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CBasics_Release.xcconfig; sourceTree = "<group>"; };
@@ -220,6 +226,8 @@
 			children = (
 				62CF59A71A029D3200D16DF1 /* CString.h */,
 				62CF59A61A029D3200D16DF1 /* CString.c */,
+				6234A2DB1A2325E000330BFE /* CCore.h */,
+				6234A2DE1A23265900330BFE /* CCore.c */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -250,6 +258,7 @@
 				62CF59B51A029D3200D16DF1 /* CMacros.h in Headers */,
 				62CF59B71A029D3200D16DF1 /* CMath.h in Headers */,
 				62CF59B91A029D3200D16DF1 /* CPlatforms.h in Headers */,
+				6234A2DD1A2325E000330BFE /* CCore.h in Headers */,
 				62CF59BB1A029D3200D16DF1 /* CPlatforms_endianness.h in Headers */,
 				62CF59B31A029D3200D16DF1 /* CString.h in Headers */,
 				62CF59C31A02AB1400D16DF1 /* CCheck.h in Headers */,
@@ -266,6 +275,7 @@
 				62CF59B41A029D3200D16DF1 /* CMacros.h in Headers */,
 				62CF59B61A029D3200D16DF1 /* CMath.h in Headers */,
 				62CF59B21A029D3200D16DF1 /* CString.h in Headers */,
+				6234A2DC1A2325E000330BFE /* CCore.h in Headers */,
 				62CF59B81A029D3200D16DF1 /* CPlatforms.h in Headers */,
 				62CF59BA1A029D3200D16DF1 /* CPlatforms_endianness.h in Headers */,
 				62CF59C21A02AB1400D16DF1 /* CCheck.h in Headers */,
@@ -349,6 +359,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6234A2DF1A23265900330BFE /* CCore.c in Sources */,
 				62CF59B01A029D3200D16DF1 /* CString.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,6 +368,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6234A2E01A23265900330BFE /* CCore.c in Sources */,
 				62CF59B11A029D3200D16DF1 /* CString.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

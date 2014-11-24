@@ -1,221 +1,67 @@
-#include "CString.h"    // CBasics (Utilities)
+#include "CString.h"    // Header
+
 #include "CMacros.h"    // CBasics (Utilities)
 #include "CDebug.h"     // CBasics (Utilities)
 
 #include <stdlib.h>     // C Standard
-#include <string.h>     // C Standard
 
-#pragma mark - Protoype definitions
+#pragma mark - CString
 
-//static CString _new_(CString const* const restrict str) __attribute__((pure));
-//static CString _new_chars_(char const* const restrict chars);
-//static CString _new_aliasing_(CString const* const restrict str);
-//static CString _new_aliasing_chars_(char const* const restrict chars);
+#pragma mark - CObjString
 
-//static inline CObjString* _alloc_(void);
-//static void _dealloc_(CObjString* const restrict str);  // This function is not exposed.
-//static CString* _init_(CString* const restrict str);
-//
-//static CObjString* _create_(void);
-//static CObjString* _create_with_(char const* const restrict string);
-//static CObjString* _create_with_chars_and_length_(char const* const restrict string, size_t const max_length);
-//static CObjString* _retain_(CObjString* const restrict str);
-//static CObjString* _release_(CObjString* restrict str);
-//static CObjString* _clone_(CString const* const restrict str);
-//
-//static CObjString* _append_(CString const* const restrict base, CString const* const restrict to_add);
-//static CObjString* _append_chars_(CString const* const restrict base, char const* const restrict string, size_t const max_length);
-//static CObjString* _append_path_(CString const* const restrict base, CString const* const restrict to_add, CString const* const restrict delimiter);
-//
-//static CObjString* _prepend_(CString const* const restrict base, CString const* const restrict to_add);
-//static CObjString* _prepend_chars_(CString const* const restrict base, char const* const restrict string, size_t const max_length);
-//static CObjString* _prepend_path_(CString const* const restrict base, CString const* const restrict to_prepend, CString const* const restrict delimiter);
-//
-//static bool _compare_(CString const* const restrict str_a, CString const* const restrict str_b);
-
-#pragma mark - Class object declaration
-
-struct CStringFunctionality const cstring = {
-    .nullchar = '\0',
-    .nullCString = (CString){ .chars=NULL, .length=0, .allocatedLength=0 },
-//    
-//    .newWithCString = _new_,
-//    .newWithChars = _new_chars_,
-//    .new_aliasing = _new_aliasing_,
-//    .new_aliasing_chars = _new_aliasing_chars_
+struct CObjString* cobjstring_malloc()
+{
+    struct CObjString* obj = malloc_sizeof(struct CObjString);
+    verifymem_opt(obj, end);
     
+    obj->core = ccore(CClassString, 1);
+    obj->string = cstring(0, NULL);
+end:
+    return obj;
+}
+
+struct CObjString* cobjstring_create(size_t const length, char const* const restrict chars)
+{
+    struct CObjString* obj = malloc_sizeof(struct CObjString);
+    verifymem_opt(obj, end);
     
-//    .alloc = _alloc_,
-//    .init = _init_,
-//
-//    .create = _create_,
-//    .create_with = _create_with_,
-//    .create_with_chars_length = _create_with_chars_and_length_,
-//    .retain = _retain_,
-//    .release = _release_,
-//    .clone = _clone_,
-//    
-//    .append = _append_,
-//    .prepend = _prepend_,
-//    .append_chars = _append_chars_,
-//    .prepend_chars = _prepend_chars_,
-//    .append_path = _append_path_,
-//    .prepend_path = _prepend_path_,
-//    
-//    .compare = _compare_
-};
+    obj->core = ccore(CClassString, 1);
+    
+    if (length!=0 && chars!=NULL)
+    {
+        obj->string.length = length;
+        memcpy(obj->string.chars, chars, length+1);
+    }
+    else { obj->string = cstring(0, NULL); }
+    
+end:
+    return obj;
+}
 
-#pragma mark - Implementation
+struct CObjString* cobjstring_createWithValuesOf(struct CString const* str)
+{
+    struct CObjString* obj = NULL;
+    verifymem(str, end);
+    
+    obj = cobjstring_create(str->length, str->chars);
+end:
+    return obj;
+}
 
-//static CString _new_(CString const* const restrict str)
-//{
-//    if ( str!=NULL && str->length>0 && str->chars!=NULL )
-//    {
-//        char* const restrict copy = malloc(str->length);
-//        memverify(copy, end);
-//        
-//        strcpy(copy, str->chars);
-//        return (CString){ .length=0, .chars=copy };
-//    }
-//    
-//end:
-//    return cstring.nullCString;
-//}
-//
-//static CString _new_chars_(char const* const restrict chars)
-//{
-//    if ( chars!= NULL )
-//    {
-//        size_t const length = strlen(chars);
-//        if (length == 0) goto end;
-//        
-//        char* const restrict copy = malloc(length);
-//        memverify(copy, end);
-//        
-//        strcpy(copy, chars);
-//        return (CString){ .length=0, .chars=copy };
-//    }
-//    
-//end:
-//    return (CString){ .length=0, .chars=NULL };
-//}
-//
-//static CString _new_aliasing_(CString const* const restrict str)
-//{
-//    if ( str!=NULL && str->length>0 && str->chars!=NULL )
-//        return (CString) { .length=str->length, .chars=str->chars };
-//    else
-//        return (CString){ .length=0, .chars=NULL };
-//}
-//
-//static CString _new_aliasing_chars_(char const* const restrict chars)
-//{
-//    if (chars != NULL)
-//        return (CString){ .length=strlen(chars), .chars=(char*)chars };
-//    else
-//        return (CString){ .length=0, .chars=NULL };
-//}
+void cobjstring_release(struct CObjString* objStringPtr)
+{
+    verifymem(objStringPtr, end);
+    
+    ccore_release(objStringPtr->core)
+    {
+        free(objStringPtr->string.chars);
+        free(objStringPtr);
+    }
+    
+end:
+    return;
+}
 
-//static inline CObjString* _alloc_(void)
-//{
-//    return malloc( sizeof(CObjString) );
-//}
-//
-//static void _dealloc_(CObjString* const restrict str)
-//{
-//    if (likely(str != NULL))
-//    {
-//        free(str->string.chars);
-//        free(str);
-//    }
-//}
-//
-//static CString* _init_(CString* const restrict str)
-//{
-//    if (str != NULL)
-//    {
-//        str->length = 0;
-//        str->chars = NULL;
-//    }
-//    
-//    return str;
-//}
-//
-//static CObjString* _create_(void)
-//{
-//    CObjString* obj = cstring.alloc();
-//    if (likely(obj != NULL))
-//    {
-//        ccore.initWithType(&obj->core, COBJ_TYPE_STRING);
-//        cstring.init(&obj->string);
-//    }
-//    return obj;
-//}
-//
-//static CObjString* _create_with_(char const* const restrict string)
-//{
-//    CObjString* restrict result = NULL;
-//    if (string==NULL || string[0]==cstring.nullchar) goto end;
-//    
-//    size_t const strlength = strlen(string);
-//    if (strlength == 0) goto end;
-//    
-//    result = cstring.create();
-//    memverify(result, end);
-//    
-//end:
-//    return result;
-//}
-//
-//static CObjString* _create_with_chars_and_length_(char const* const restrict string, size_t const max_length)
-//{
-//    CObjString* restrict result = NULL;
-//    if (string==NULL || max_length==0 || string[0]==cstring.nullchar) goto end;
-//    
-//    size_t const strlen = strnlen(string, max_length);
-//    if (strlen == 0) goto end;
-//    
-//    result = cstring.create();
-//    memverify(result, end);
-//    
-//    size_t const total_length = (string[strlen-1] == cstring.nullchar) ? strlen : strlen+1;
-//    char* const restrict chars = malloc(total_length);
-//    if (unlikely(chars==NULL)) return cstring.release(result);
-//    
-//    memcpy(chars, string, strlen);
-//    *(chars + total_length - 1) = cstring.nullchar;
-//    
-//    result->string.length = total_length;
-//    result->string.chars = chars;
-//end:
-//    return result;
-//}
-//
-//static CObjString* _retain_(CObjString* const restrict str)
-//{
-//    cobjcore.retain(&str->core);
-//    return str;
-//}
-//
-//static CObjString* _release_(CObjString* restrict str)
-//{
-//    if (str != NULL)
-//    {
-//        CObjCore* const restrict core = cobjcore.release(&str->core);
-//        if ((core->actives==0) && (core->type==COBJ_TYPE_STRING) && cobjcore.isFlagSet(core, COBJCORE_FLAG_ISINHEAP_POS))
-//        {
-//            _dealloc_(str);
-//            str = NULL;
-//        }
-//    }
-//    
-//    return str;
-//}
-//
-//static CObjString* _clone_(CString const* const restrict str)
-//{
-//    return (str != NULL) ? cstring.create_with_chars(str->chars, str->length) : NULL;
-//}
 //
 //static CObjString* _append_(CString const* const restrict base, CString const* const restrict to_add)
 //{
