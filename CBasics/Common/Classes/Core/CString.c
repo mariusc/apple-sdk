@@ -2,66 +2,162 @@
 
 #include "CMacros.h"    // CBasics (Utilities)
 #include "CDebug.h"     // CBasics (Utilities)
-
 #include <stdlib.h>     // C Standard
 
-#pragma mark - CString
+#pragma mark - Private prototype
 
-#pragma mark - CObjString
+/*!
+ *  @abstract It frees the <code>target->chars</code> if the allocated space is bigger than zero and the pointer is not <code>NULL</code>.
+ *
+ *  @param target The <code>CString</code> structure where to apply the changes.
+ */
+#define _freeAllocatedChars(target)      if ( target->allocated && likely(target->chars != NULL) ) { free(target->chars); }
 
-struct CObjString* cobjstring_malloc()
+/*!
+ *  @abstract It copies/duplicates the arguments passed into the <code>target</code> <code>CString</code> structure.
+ *  @discussion If the allocated space of the <code>target</code> can accomodate <code>length + 1</code> bytes, the buffer is reused. In any other case, the previous buffer is deallocated, and a new one is allocated.
+ *
+ *  @param target Structure that will hold the arguments copied.
+ *  @param length The number of <code>char</code>s in the buffer (not including the Null character).
+ *  @param allocatedSpace The space that the buffer occupies in the heap. It can be 0 for compile-time strings.
+ *  @param chars The buffer containing the characters (including the NULL character).
+ *  @return It returns the <code>target</code> argument.
+ */
+struct CString* _cstring_copy(struct CString* const target, size_t const length, size_t const allocatedSpace, char const* const chars);
+
+#pragma mark - Public API
+
+#pragma mark CString
+
+struct CString* cstring_set(struct CString* const target, size_t const length, size_t const allocatedSpace, char const* const chars)
 {
-    struct CObjString* obj = malloc_sizeof(struct CObjString);
-    verifymem_opt(obj, end);
+    verifymem(target, end);
+    _freeAllocatedChars(target);
     
-    obj->core = ccore(CClassString, 1);
-    obj->string = cstring(0, NULL);
+    target->length = length;
+    target->allocated = allocatedSpace;
+    target->chars = (char*)chars;
 end:
-    return obj;
+    return target;
 }
 
-struct CObjString* cobjstring_create(size_t const length, char const* const restrict chars)
+struct CString* cstring_setWith(struct CString* const target, size_t const length, char const* const chars)
 {
-    struct CObjString* obj = malloc_sizeof(struct CObjString);
-    verifymem_opt(obj, end);
+    return cstring_set(target, length, length+1, chars);
+}
+
+struct CString* cstring_setWithGlobal(struct CString* const target, char const* const chars)
+{
+    return (chars != NULL) ? cstring_set(target, strlen(chars), 0, chars) : cstring_set(target, 0, 0, NULL);
+}
+
+struct CString* cstring_copy(struct CString* const restrict target, struct CString const* const restrict toCopy)
+{
+    return (toCopy != NULL) ? _cstring_copy(target, toCopy->length, toCopy->allocated, toCopy->chars) : cstring_set(target, 0, 0, NULL);
+}
+
+struct CString* cstring_copyWith(struct CString* const target, size_t const length, char const* const chars)
+{
+    return _cstring_copy(target, length, length+1, chars);
+}
+
+struct CString* cstring_copyWithGlobal(struct CString* target, char const* const chars)
+{
+    return (chars != NULL) ? _cstring_copy(target, strlen(chars), 0, chars) : cstring_set(target, 0, 0, NULL);
+}
+
+#pragma mark - Private functionality
+
+struct CString* _cstring_copy(struct CString* const target, size_t const length, size_t const allocatedSpace, char const* const chars)
+{
+    verifymem(target, end);
+    verify2(length, chars!=NULL, error);
     
-    obj->core = ccore(CClassString, 1);
-    
-    if (length!=0 && chars!=NULL)
+    size_t const neededSpace = length+1;
+    if (target->allocated == neededSpace)
     {
-        obj->string.length = length;
-        memcpy(obj->string.chars, chars, length+1);
+        target->length = length;
+        target->chars = memcpy(target->chars, chars, neededSpace);
     }
-    else { obj->string = cstring(0, NULL); }
-    
-end:
-    return obj;
-}
-
-struct CObjString* cobjstring_createWithValuesOf(struct CString const* str)
-{
-    struct CObjString* obj = NULL;
-    verifymem(str, end);
-    
-    obj = cobjstring_create(str->length, str->chars);
-end:
-    return obj;
-}
-
-void cobjstring_release(struct CObjString* objStringPtr)
-{
-    verifymem(objStringPtr, end);
-    
-    ccore_release(objStringPtr->core)
+    else if (target->allocated != 0)
     {
-        free(objStringPtr->string.chars);
-        free(objStringPtr);
+        char* const ptr = realloc(target->chars, neededSpace);
+        verifymem_opt(ptr, error);
+        
+        target->length = length;
+        target->allocated = neededSpace;
+        target->chars = ptr;
+    }
+    else
+    {
+        char* const ptr = malloc(neededSpace);
+        verifymem_opt(ptr, error);
+        
+        target->length = length;
+        target->allocated = neededSpace;
+        target->chars = memcpy(ptr, chars, neededSpace);
     }
     
+    target->chars[length] = '\0';
+    
 end:
-    return;
+    return target;
+error:
+    return cstring_set(target, 0, 0, NULL);
 }
 
+//struct CObjString* cobjstring_malloc()
+//{
+//    struct CObjString* obj = malloc_sizeof(struct CObjString);
+//    verifymem_opt(obj, end);
+//    
+//    obj->core = ccore(CClassString, 1);
+//    obj->string = cstring(0, NULL);
+//end:
+//    return obj;
+//}
+//
+//struct CObjString* cobjstring_create(size_t const length, char const* const restrict chars)
+//{
+//    struct CObjString* obj = malloc_sizeof(struct CObjString);
+//    verifymem_opt(obj, end);
+//    
+//    obj->core = ccore(CClassString, 1);
+//    
+//    if (length!=0 && chars!=NULL)
+//    {
+//        obj->string.length = length;
+//        memcpy(obj->string.chars, chars, length+1);
+//    }
+//    else { obj->string = cstring(0, NULL); }
+//    
+//end:
+//    return obj;
+//}
+//
+//struct CObjString* cobjstring_createWithValuesOf(struct CString const* str)
+//{
+//    struct CObjString* obj = NULL;
+//    verifymem(str, end);
+//    
+//    obj = cobjstring_create(str->length, str->chars);
+//end:
+//    return obj;
+//}
+//
+//void cobjstring_release(struct CObjString* objStringPtr)
+//{
+//    verifymem(objStringPtr, end);
+//    
+//    ccore_release(objStringPtr->core)
+//    {
+//        free(objStringPtr->string.chars);
+//        free(objStringPtr);
+//    }
+//    
+//end:
+//    return;
+//}
 //
 //static CObjString* _append_(CString const* const restrict base, CString const* const restrict to_add)
 //{

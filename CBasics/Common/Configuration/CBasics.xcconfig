@@ -5,12 +5,12 @@ BUNDLE_SIGNATURE = RLYR                 // Signature
 DYLIB_CURRENT_VERSION = 0.0.1           // Version number
 DYLIB_COMPATIBILITY_VERSION = $(DYLIB_CURRENT_VERSION)
 
-ARCHS = $(ARCHS_STANDARD)                        // Architectures supported
-SKIP_INSTALL = NO                                // Whether the installation process should be skipped or not
-DEPLOYMENT_LOCATION = YES                        // Products are placed in $(DSTROOT)
+ARCHS = $(ARCHS_STANDARD)               // Architectures supported
+SKIP_INSTALL = NO                       // Whether the installation process should be skipped or not
+DEPLOYMENT_LOCATION = YES               // Products are placed in $(DSTROOT)
 DSTROOT = $(PROJECT_DIR)/../bin/$(CONFIGURATION) // Root path for products
 INSTALL_PATH = /$(PLATFORM_NAME)/CBasics         // Path to be appended to $(DSTROOT), where the product will be installed
-PUBLIC_HEADERS_FOLDER_PATH =                     // The public header product folder. It is appendend to: $(DSTROOT)/$(INSTALL_PATH)
+PUBLIC_HEADERS_FOLDER_PATH =            // The public header product folder. It is appendend to: $(DSTROOT)/$(INSTALL_PATH)
 PRIVATE_HEADERS_FOLDER_PATH = $(PUBLIC_HEADERS_FOLDER_PATH)
 
 GCC_C_LANGUAGE_STANDARD = c11

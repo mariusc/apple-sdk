@@ -1,22 +1,29 @@
 #pragma once
 
 #include "CDebug.h"     // CBasics (Utilities)
+#include "CMacros.h"    // CBasics (Utilities)
 
 #include <stdio.h>      // C Standard
 #include <stdlib.h>     // C Standard
 #include <string.h>     // C Standard
+#include <stdbool.h>    // C Standard
 
 #pragma mark - Main functions
 
-// This macro will call name(), which will return a char* type. The string returned will be NULL if the test succeded, or it will contain an error message.
-// If name() contained several mu_run_test() and any failed, name() will stop executing and return the message immediately, without being able to run the other tests that haven't been run.
+/*!
+ *  @abstract This macro represents the <code>main</code> function of the test file.
+ *  @discussion The macro will initialize the test command-line program and execute the function name passed as an argument.
+ *
+ *  @param test_name The function to execute as the main function for the test.
+ *  @return It returns an integer as any <code>main</code> C function.
+ */
 #define TEST_MAIN(test_name)                    \
-unsigned int test_level;                        \
+unsigned int cbasics_testLevel;                 \
 int main(int argc, char const* argv[])          \
 {                                               \
     printf("\n------------------------------------------\nRUNNING: %s()\n------------------------------------------\n", #test_name);\
                                                 \
-    test_level = 0;                             \
+    cbasics_testLevel = 0;                      \
                                                 \
     if (test_name()) {                          \
         printf("\n\nALL TESTS PASSED!\n\n");    \
@@ -26,17 +33,28 @@ int main(int argc, char const* argv[])          \
     }                                           \
 }
 
+/*!
+ *  @abstract It initialises the top function on a test C file.
+ *  @discussion A call to this macro must be paired in the same scope by a call to <code>TEST_FINALIZE</code> macro.
+ */
 #define TEST_INITIALIZE()                       \
-    extern unsigned int test_level;             \
+    extern unsigned int cbasics_testLevel;      \
     char* test_str = NULL;                      \
     unsigned int test_num_run = 0;              \
-    {                                                       \
-        if (test_level == 0)                                \
-        {                                                   \
-            test_str = malloc(sizeof(char)*3);              \
-            if (likely(test_str != NULL)) { test_str[0] = ' '; test_str[1] = 'T'; test_str[2] = '\0'; }  \
-        } else {                                            \
-            unsigned int amount_white_spaces = 1 + 3*test_level; \
+    {                                           \
+        if (cbasics_testLevel++ == 0)           \
+        {                                       \
+            test_str = malloc( 3*sizeof(char) );\
+            if (likely(test_str != NULL))       \
+            {                                   \
+                test_str[0] = ' ';              \
+                test_str[1] = 'T';              \
+                test_str[2] = '\0';             \
+            }                                   \
+        }                                       \
+        else                                    \
+        {                                       \
+            unsigned int amount_white_spaces = 1 + 3*cbasics_testLevel;                     \
             char symbols[] = "|--- Subt";                   \
             unsigned int amount_symbols = sizeof(symbols) / sizeof(symbols[0]);             \
             test_str = malloc(sizeof(char) * (amount_white_spaces + amount_symbols));       \
@@ -48,23 +66,29 @@ int main(int argc, char const* argv[])          \
                 strcat(test_str, symbols);                  \
             }                                               \
         }                                                   \
-    }                                                       \
-    ++test_level
+    }
 
+/*!
+ *  @abstract It cleans up the variables initialised by <code>TEST_INITIALIZE</code> macro.
+ */
 #define TEST_FINALIZE()                         \
-    --test_level;                               \
+    --cbasics_testLevel;                        \
     free(test_str);                             \
     return true
 
-// This macro will call test(), which will return a char* type. The string returned will be NULL if the test succeded, or it will contain an error message.
+/*!
+ *  @abstract It runs a test function.
+ */
 #define TEST_RUN(test, ...) \
     printf("%sest %u: %s\n", test_str, ++test_num_run, #test); \
     if ( unlikely(!test(__VA_ARGS__)) ) return false
 
-// This method checks whether an assertion is true. If it is not, it returns a custom error message
+/*!
+ *  @abstract This macro checks whether an assertion is true. If it is not, it returns a custom error message
+ */
 #define TEST_ASSERT(assert_expression, msg)     \
     if ( unlikely(!(assert_expression)) )       \
     {                                           \
-        log_err("\n" msg);                           \
+        log_err("\n" msg);                      \
         return false;                           \
     }

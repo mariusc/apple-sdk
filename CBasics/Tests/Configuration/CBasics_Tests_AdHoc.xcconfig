@@ -1,0 +1,2 @@
+#include "OSX/Configuration/CBasics_OSX_AdHoc.xcconfig"
+#include "Tests/Configuration/CBasics_Tests.xcconfig"

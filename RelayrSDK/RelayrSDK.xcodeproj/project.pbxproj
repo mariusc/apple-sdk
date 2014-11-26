@@ -220,6 +220,13 @@
 			remoteGlobalIDString = 6252F0E4199C2AFA002ECE4D;
 			remoteInfo = Relayr_OSX;
 		};
+		6264333E1A2516A800A5A11B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 62CF59DC1A02B3B000D16DF1 /* CBasics.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 626433221A2512C800A5A11B;
+			remoteInfo = CBasics_Tests;
+		};
 		6291E9661A12544400750607 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */;
@@ -907,6 +914,7 @@
 			children = (
 				62CF59E21A02B3B000D16DF1 /* libcbasics.a */,
 				62CF59E41A02B3B000D16DF1 /* libcbasics.a */,
+				6264333F1A2516A800A5A11B /* CBasics_Tests */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1270,6 +1278,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		6264333F1A2516A800A5A11B /* CBasics_Tests */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = CBasics_Tests;
+			remoteRef = 6264333E1A2516A800A5A11B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		6291E9671A12544400750607 /* MQTT_CommandLine */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
@@ -1601,7 +1616,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "9bf73209-5c21-4b56-ad81-e2d10094f046";
+				PROVISIONING_PROFILE = "94f2d988-4598-4ec0-b61e-ce61dc31993a";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1707,7 +1722,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "9bf73209-5c21-4b56-ad81-e2d10094f046";
+				PROVISIONING_PROFILE = "94f2d988-4598-4ec0-b61e-ce61dc31993a";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Distribution;
@@ -1867,7 +1882,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
@@ -1984,7 +1998,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "df136790-6063-4079-b36f-5372a125d4c7";
+				PROVISIONING_PROFILE = "c4ec490f-dd4b-4e1f-bc2d-7a8d6321b169";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -2020,7 +2034,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "df136790-6063-4079-b36f-5372a125d4c7";
+				PROVISIONING_PROFILE = "c4ec490f-dd4b-4e1f-bc2d-7a8d6321b169";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = "Ad Hoc";

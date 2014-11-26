@@ -70,7 +70,7 @@
  * @param assertB Expression/value that must be evaluated to true.
  * @param goto_label Label indicating the branching path that will be executed if the assertions are not true.
  */
-#define verify2(assertA, assertB, goto_label)   if ( !(assertA)) || !(assertB) ) { goto goto_label; }
+#define verify2(assertA, assertB, goto_label)   if ( !(assertA) || !(assertB) ) { goto goto_label; }
 
 #undef verify3
 /*!
