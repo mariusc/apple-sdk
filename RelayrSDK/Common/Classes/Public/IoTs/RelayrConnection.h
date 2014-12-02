@@ -6,9 +6,9 @@
 /*!
  *  @abstract The type of connection between a device and the system running the SDK.
  *
- *  @constant RelayrConnectionTypeCloud The device's data is coming via the relayr Cloud.
- *  @constant RelayrConnectionTypeDirect The device's data is coming through a direct connection.
- *  @constant RelayrConnectionTypeUnknown The device's data is not being received or the source is unknown.
+ *  @constant RelayrConnectionTypeCloud Data from the device is arriving via the relayr cloud.
+ *  @constant RelayrConnectionTypeDirect Data from the device is arriving via BLE direct connection.
+ *  @constant RelayrConnectionTypeUnknown Data from the device is arriving from an unknown source or not being received.
  */
 typedef NS_ENUM(NSUInteger, RelayrConnectionType) {
     RelayrConnectionTypeUnknown,
@@ -31,12 +31,12 @@ typedef NS_ENUM(NSUInteger, RelayrConnectionProtocol) {
 
 /*!
  *  @abstract The scope of the connection.
- *  @discussion The scope provide interesting information about the technology being used for the connection.
+ *  @discussion The scope provides valuable information about the technology being used for the connection.
  *
  *  @constant RelayrConnectionScopeUnknown The scope is unknown at the moment.
- *  @constant RelayrConnectionScopePAN Personal Area Network scope. Technologies included here are BLE, Zigbee, etc.
- *  @constant RelayrConnectionScopeLAN Local Area Network scope. Technologies included here are Ethernet cable connection, WiFi connections, etc.
- *  @constant RelayrConnectionScopeWAN Wide Area Network scope. Many of the current mobile connection technologies are included here: EDGE, 3G, LTE, etc.
+ *  @constant RelayrConnectionScopePAN A Personal Area Network scope. Technologies included here are BLE, Zigbee, etc.
+ *  @constant RelayrConnectionScopeLAN A Local Area Network scope. Technologies included here are Ethernet cable connection, WiFi connections, etc.
+ *  @constant RelayrConnectionScopeWAN A Wide Area Network scope. Many of the current mobile connection technologies are included here: EDGE, 3G, LTE, etc.
  */
 typedef NS_ENUM(NSUInteger, RelayrConnectionScope) {
     RelayrConnectionScopeUnknown,
@@ -50,7 +50,7 @@ typedef NS_ENUM(NSUInteger, RelayrConnectionScope) {
  *
  *  @constant RelayrConnectionStateUnknonw The state of the connection is unknown.
  *  @constant RelayrConnectionStateUnsupported The machine running the SDK does not support this connection.
- *  @constant RelayrConnectionStateUnauthorized The OS is not authorizing the SDK to use this connection.
+ *  @constant RelayrConnectionStateUnauthorized The OS does not authorize the SDK to use this connection.
  *  @constant RelayrConnectionStateConnecting The connection is being established.
  *  @constant RelayrConnectionStateConnected The connection is on and functions as expected.
  *  @constant RelayrConnectionStateDisconnecting The connection is being disabled.
@@ -81,12 +81,12 @@ typedef NS_ENUM(NSUInteger, RelayrConnectionState) {
 @property (readonly,weak,nonatomic) RelayrDevice* device;
 
 /*!
- *  @abstract Whether the connection is through the cloud or is directly performed with the device.
+ *  @abstract Specifies whether the connection is through the relayr cloud or via BLE direct connection.
  */
 @property (readonly,nonatomic) RelayrConnectionType type;
 
 /*!
- *  @abstract Protocol being used by the connection between the device's data source and the system running the SDK.
+ *  @abstract Specifies the protocol being used by the connection between data source and the system running the SDK.
  */
 @property (readonly,nonatomic) RelayrConnectionProtocol protocol;
 
@@ -103,8 +103,8 @@ typedef NS_ENUM(NSUInteger, RelayrConnectionState) {
 #pragma mark Subscriptions
 
 /*!
- *  @abstract Virtual property that indicates whether there are ongoing subscriptions for this connection channel.
- *  @discussion Every time this property is called, a calculation is made to check if there are subscriptions running.
+ *  @abstract A Virtual property indicating whether there are ongoing subscriptions for this connection channel.
+ *  @discussion Every time this property is called, a calculation is made to check if there are ongoing subscriptions.
  */
 @property (readonly,nonatomic) BOOL hasOngoingSubscriptions;
 

@@ -7,7 +7,7 @@
 @interface RelayrFirmwareModel : NSObject <NSCoding>
 
 /*!
- *  @abstract The <code>RelayrDeviceModel</code> that this firmwares is targeting.
+ *  @abstract The <code>RelayrDeviceModel</code> targeted by the firmware.
  *  @discussion This property will never be <code>nil</code>.
  */
 @property (readonly,weak,nonatomic) RelayrDeviceModel* deviceModel;

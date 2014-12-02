@@ -7,7 +7,7 @@
 @interface RelayrDeviceModel : NSObject <NSCoding>
 
 /*!
- *  @abstract User currently "using" this device.
+ *  @abstract The User currently "using" this device.
  *  @discussion A public device can be owned by another Relayr user, but being used by your <code>RelayrUser</code> entity.
  */
 @property (readonly,weak,nonatomic) RelayrUser* user;

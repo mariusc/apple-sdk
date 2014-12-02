@@ -27,10 +27,10 @@
 @property (readonly,nonatomic) NSString* name;
 
 /*!
- *  @abstract It changes the transmitter's name and push it to the server.
- *  @discussion If the server is not reachable or there was any problem, and error will be returned in the completion block and the name won't be changed;
+ *  @abstract Changes the transmitter's name and pushes the change to the server.
+ *  @discussion If the server is not reachable or in case of a problem, an error will be returned in the completion block and the name won't be changed;
  *
- *  @param name New name to identify this transmitter with.
+ *  @param name A new name to identify the transmitter with.
  *  @param completion Block indicating the result of the server push.
  */
 - (void)setNameWith:(NSString*)name
@@ -49,8 +49,10 @@
 
 /*!
  *  @abstract Returns all devices related to the specific transmitter.
- *  @discussion Links to <code>RelayrDevice</code>s owned by the <code>RelayrUser</code> which owns the Transmitter.
- *      If this property is <code>nil</code>, it indicates that the number of devices managed by this transmitter is unknown and you should query the server for more information. If this property is an empty set, the transmitter doesn't manage any device.
+ *  @discussion Links to <code>RelayrDevice</code>s owned by the <code>RelayrUser</code>, which owns the Transmitter.
+ *      If this property is <code>nil</code>, the number of devices managed by this transmitter is unknown. 
+ *		You should query the server for more information. 
+ *		If this property is an empty set, the transmitter doesn't manage any devices.
  */
 @property (readonly,nonatomic) NSSet* devices;
 
@@ -58,14 +60,16 @@
 
 /*!
  *  @abstract Initialises a physical transmitter with the properties of this <code>RelayrTransmitter</code> entity.
- *  @discussion During the onboarding process the properties needed for the transmitter to be a member of the relayr cloud are written 
+ *  @discussion During the onboarding process the properties needed for the transmitter to be added to the relayr cloud are written 
  *	to the physical memory of the targeted transmitter.
  *
- *  @param onboardingClass Class in charge of the onboarding process. This class "knows" how to talk to the specific transmitter.
- *  @param timeout The seconds that the onboarding process can span. If the onboarding process hasn't finished by the specified seconds, the completion block will be executed.
- *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. If a negative number is passed, then the block is returned with a proper error.
- *  @param options Specific options for the transmitter you are onboarding. The specific <code>RelayrOnboarding</code> class will list all the additional variables needed for a correct onboarding.
- *  @param completion Block indicating whether the onboarding process was successful or not.
+ *  @param onboardingClass Responsible for the onboarding process. This class "knows" how to talk to the specific transmitter.
+ *  @param timeout The maximum duration of the onboarding process in seconds. 
+ *	If the onboarding process does not finish within this time span, the completion block is executed.
+ *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. 
+ *	If a negative number is passed, the block is returned with a respective error.
+ *  @param options Specific options for the transmitter onboarded. The specific <code>RelayrOnboarding</code> class will list all the additional variables needed for a correct onboarding.
+ *  @param completion A Block indicating whether the onboarding process was successful or not.
  */
 - (void)onboardWithClass:(Class <RelayrOnboarding>)onboardingClass
                  timeout:(NSNumber*)timeout
@@ -75,12 +79,12 @@
 /*!
  *  @abstract Performs a firmware update on the specific transmitter.
  *
- *  @param updateClass In charge of the firmware update process. This class "knows" how to communicate with the specific transmitter.
- *  @param timeout The period that the onboarding process can take in seconds. 
- *	If the onboarding process doesn't finish within the specified timeout, the completion block is executed.
+ *  @param updateClass Responsible for the firmware update process. This class "knows" how to communicate with the specific transmitter.
+ *  @param timeout The maximum duration of the onboarding process in seconds. 
+ *	If the update process doesn't finish within the specified timeout, the completion block is executed.
  *      If <code>nil</code> is passed, a timeout defined by the manufacturer is used. 
  *	If a negative number is passed, the block is returned with a respective error.
- *  @param options Specific options for the device you are updating. The specific <code>RelayrFirmwareUpdate</code> class will list all additional variables required for a successful firmware update.
+ *  @param options Specific options for the device updated. The specific <code>RelayrFirmwareUpdate</code> class will list all additional variables required for a successful firmware update.
  *  @param completion A Block indicating whether the update process was successful or not.
  */
 - (void)updateFirmwareWithClass:(Class <RelayrFirmwareUpdate>)updateClass
