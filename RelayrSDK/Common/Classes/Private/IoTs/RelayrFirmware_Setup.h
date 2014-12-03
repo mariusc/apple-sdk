@@ -19,7 +19,11 @@
 - (void)setWith:(RelayrFirmware*)firmware;
 
 /*!
- *  @abstract It parses the data received on a specific service
+ *  @abstract It parses the data received on a specific service.
+ *
+ *  @param service Where the data is coming.
+ *  @param datePtr If there is timestamp data in the blob received, this pointer is being filled with an object.
+ *  @return Dictionary with the results of the parsing. The result values are identified as <code>NSString</code> meaning keys.
  */
 - (NSDictionary*)parseData:(NSData*)data fromService:(id <RLAService>)service atDate:(NSDate**)datePtr;
 

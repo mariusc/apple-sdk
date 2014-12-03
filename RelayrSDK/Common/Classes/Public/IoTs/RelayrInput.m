@@ -172,7 +172,7 @@ static NSString* const kCodingDates = @"dat";
 - (void)setWith:(RelayrInput*)input
 {
     if (!input.meaning.length) { return; }
-    
+
     // If the input's meaning and units are the same, no further work is needed.
     if ([_meaning isEqualToString:input.meaning] && [_unit isEqualToString:input.unit]) { return; }
     

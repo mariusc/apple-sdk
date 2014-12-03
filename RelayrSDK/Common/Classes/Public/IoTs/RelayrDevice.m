@@ -1,5 +1,4 @@
 #import "RelayrDevice.h"            // Header
-#import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
 
 #import "RelayrUser.h"              // Relayr.framework (Public)
 #import "RelayrTransmitter.h"       // Relyar.framework (Public)
@@ -9,6 +8,7 @@
 #import "RelayrOnboarding.h"        // Relayr.framework (Public)
 #import "RelayrFirmwareUpdate.h"    // Relayr.framework (Public)
 #import "RelayrUser_Setup.h"        // Relayr.framework (Private)
+#import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
 #import "RelayrFirmware_Setup.h"    // Relayr.framework (Private)
 #import "RelayrInput_Setup.h"       // Relayr.framework (Private)
 #import "RelayrConnection_Setup.h"  // Relayr.framework (Private)
@@ -185,6 +185,13 @@ static NSString* const kCodingSecret = @"sec";
     [coder encodeObject:_isPublic forKey:kCodingPublic];
     [coder encodeObject:_firmware forKey:kCodingFirmware];
     [coder encodeObject:_secret forKey:kCodingSecret];
+}
+
+#pragma mark NSCopying
+
+- (id)copyWithZone:(NSZone*)zone
+{
+    return self;
 }
 
 #pragma mark NSObject

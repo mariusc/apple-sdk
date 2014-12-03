@@ -9,7 +9,6 @@
 #import "RelayrUser+Wunderbar.h"    // Relayr.framework (Wunderbar)
 #import "WunderbarFirmwareUpdate.h" // Relayr.framework (Wunderbar)
 #import "RLATestsConstants.h"       // Tests
-#import "RelayrApp_TSetup.h"        // Tests
 
 /*!
  *  @abstract Test the high-level methods that handle Wunderbar specific code.

@@ -24,10 +24,6 @@ static NSString* const kCodingDescription = @"des";
 static NSString* const kCodingPublisherID = @"pub";
 static NSString* const kCodingUsers = @"usr";
 
-@interface RelayrApp ()
-@property (readonly,nonatomic) NSMutableArray* users;
-@end
-
 @implementation RelayrApp
 
 #pragma mark - Public API
@@ -46,6 +42,7 @@ static NSString* const kCodingUsers = @"usr";
     if (self)
     {
         _uid = appID;
+        _users = [NSMutableArray array];
     }
     return self;
 }
@@ -107,7 +104,7 @@ static NSString* const kCodingUsers = @"usr";
         if (!strongSelf) { return; }
         
         NSString* pName = strongSelf.name, * pDesc = strongSelf.description;
-        [self setWith:app];
+        [strongSelf setWith:app];
         completion(nil, pName, pDesc);
     }];
 }
@@ -179,7 +176,7 @@ static NSString* const kCodingUsers = @"usr";
 
 - (NSArray*)loggedUsers
 {
-    return (_users.count>0) ? [NSMutableArray arrayWithArray:_users] : nil ;
+    return [NSMutableArray arrayWithArray:_users];
 }
 
 - (RelayrUser*)loggedUserWithRelayrID:(NSString*)relayrID
@@ -187,13 +184,10 @@ static NSString* const kCodingUsers = @"usr";
     if (!relayrID || relayrID.length==0) { [RLALog debug:RelayrErrorMissingArgument.localizedDescription]; return nil; }
     
     RelayrUser* result;
-    NSArray* loggedUsers = self.loggedUsers;
-    
-    for (RelayrUser* user in loggedUsers)
+    for (RelayrUser* user in _users)
     {
         if ( [user.uid isEqualToString:relayrID] ) { result=user; break; }
     }
-    
     return result;
 }
 
@@ -228,7 +222,7 @@ static NSString* const kCodingUsers = @"usr";
                 else
                 {
                     user = serverUser;
-                    [strongSelf.users addObject:user];
+                    [strongSelf.users addObject:serverUser];
                 }
                 
                 if (completion) { completion(nil, user); }

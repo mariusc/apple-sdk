@@ -4,8 +4,8 @@
 #import "RelayrApp_Setup.h"     // Relayr.framework (Private)
 #import "RelayrUser_Setup.h"    // Relayr.framework (Private)
 #import "RLAMQTTService.h"      // Relayr.framework (Service/MQTT)
+#import "RelayrUser+Wunderbar.h"// Relayr.framework (Wunderbar)
 #import "RLATestsConstants.h"   // Tests
-#import "RelayrApp_TSetup.h"    // Tests
 
 #import "RLAServiceSelector.h"  // FIXME: Delete
 
@@ -54,7 +54,7 @@
         [_user queryCloudForIoTs:^(NSError* error) {
             XCTAssertNil(error);
             
-            __block unsigned int inputsReceived = 20;
+            __block unsigned int inputsReceived = 30;
 
             for (RelayrDevice* device in _user.devices)
             {
@@ -68,6 +68,63 @@
         }];
     }];
 
+    [self waitForExpectationsWithTimeout:60 handler:nil];
+}
+
+- (void)testMQTTDifferentTransmitterDevices
+{
+    XCTestExpectation* expectation = [self expectationWithDescription:nil];
+    
+    [_user queryCloudForUserInfo:^(NSError* error, NSString* previousName, NSString* previousEmail) {
+        XCTAssertNil(error);
+        
+        [_user queryCloudForIoTs:^(NSError* error) {
+            XCTAssertNil(error);
+            
+            [_user registerWunderbarWithName:@"Fake test Wunderbar" completion:^(NSError* error, RelayrTransmitter* transmitter) {
+                XCTAssertNil(error);
+                
+                for (RelayrTransmitter* transmitter in _user.transmitters)
+                {
+                    for (RelayrDevice* device in transmitter.devices)
+                    {
+                        // TODO: Try also targets.
+                        [device subscribeToAllInputsWithBlock:^(RelayrDevice *device, RelayrInput *input, BOOL* unsubscribe) {
+                            printf("Input received: %s\n", [((NSObject*)(input.value)).description cStringUsingEncoding:NSUTF8StringEncoding]);
+                        } error:^(NSError* error) {
+                            printf("Subscription error: %s\n", [error.localizedDescription cStringUsingEncoding:NSUTF8StringEncoding]);
+                        }];
+                    }
+                }
+            }];
+        }];
+    }];
+    
+    [self waitForExpectationsWithTimeout:60 handler:nil];
+}
+
+- (void)testDeleteFakeTransmitter
+{
+    XCTestExpectation* expectation = [self expectationWithDescription:nil];
+    
+    [_user queryCloudForUserInfo:^(NSError* error, NSString* previousName, NSString* previousEmail) {
+        XCTAssertNil(error);
+        
+        [_user queryCloudForIoTs:^(NSError* error) {
+            XCTAssertNil(error);
+            
+            for (RelayrTransmitter* transmitter in _user.transmitters)
+            {
+                if ([transmitter.name isEqualToString:@"Fake test Wunderbar"])
+                {
+                    [_user deleteWunderbar:transmitter completion:nil];
+                    [expectation fulfill];
+                    break;
+                }
+            }
+        }];
+    }];
+    
     [self waitForExpectationsWithTimeout:60 handler:nil];
 }
 

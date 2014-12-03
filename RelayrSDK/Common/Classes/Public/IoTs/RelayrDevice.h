@@ -13,7 +13,7 @@
  *	or one which is capable of receiving information from the relayr platform. 
  *	Examples would be a thermometer, a gyroscope or an infrared sensor.
  */
-@interface RelayrDevice : RelayrDeviceModel <NSCoding>
+@interface RelayrDevice : RelayrDeviceModel <NSCoding,NSCopying>
 
 /*!
  *  @abstract A unique idenfier of the <code>RelayrDevice</code>'s instance.

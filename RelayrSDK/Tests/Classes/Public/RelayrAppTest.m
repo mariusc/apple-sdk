@@ -4,7 +4,6 @@
 #import "RelayrApp_Setup.h"     // Relayr.framework (Private)
 #import "RelayrUser_Setup.h"    // Relayr.framework (Private)
 #import "RLATestsConstants.h"   // Tests
-#import "RelayrApp_TSetup.h"    // Tests
 
 /*!
  *  @abstract Test the high-level methods of <code>RelayrApp</code> objects.

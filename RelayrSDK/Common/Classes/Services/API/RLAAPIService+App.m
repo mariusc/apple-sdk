@@ -111,7 +111,7 @@
     [request setValue:dRLAAPIRequest_HeaderValue_ContentType_JSON forHTTPHeaderField:dRLAAPIRequest_HeaderField_ContentType];
     request.HTTPBody = jsonData;
     
-    NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
         NSDictionary* json = RLAAPI_processHTTPresponse(dRLAAPI_AppInfoSet_ResponseCode, nil);
         
         RelayrApp* result = [RLAAPIService parseAppFromJSONDictionary:json];

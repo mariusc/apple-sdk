@@ -46,10 +46,7 @@
         }
         else { return nil; }
         
-        if (datePtr != NULL)
-        {
-            *datePtr = [NSDate dateWithTimeIntervalSince1970:((NSNumber*)json[dWunderbar_parsing_timestamp]).doubleValue];
-        }
+        if (datePtr != NULL) { *datePtr = [NSDate dateWithTimeIntervalSince1970:((NSNumber*)json[dWunderbar_parsing_timestamp]).doubleValue]; }
     }
     else if ([service isKindOfClass:[RLABLEService class]])
     {

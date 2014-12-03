@@ -63,6 +63,7 @@ int messageArrived(void* context, char* topicName, int topicLen, MQTTAsync_messa
 
 - (instancetype)initWithUser:(RelayrUser*)user
 {
+    // TODO: Write when the MQTT credentials is ready.
     return nil;
 }
 
@@ -92,7 +93,7 @@ int messageArrived(void* context, char* topicName, int topicLen, MQTTAsync_messa
         [tmp_serverURI getCString:serverURI maxLength:length_serverURI encoding:NSUTF8StringEncoding];
         serverURI[length_serverURI] = '\0';
         
-        NSString* tmp_clientID = [RLAIdentifierGenerator generateIDFromBaseString:@"APPLE" withMaximumRandomNumber:65535];
+        NSString* tmp_clientID = [RLAIdentifierGenerator generateIDFromBaseString:@"APPLE_" withMaximumRandomNumber:65535];
         NSUInteger const length_clientID = [tmp_clientID lengthOfBytesUsingEncoding:NSUTF8StringEncoding] + 1;
         char clientID[length_clientID];
         [tmp_clientID getCString:clientID maxLength:length_clientID encoding:NSUTF8StringEncoding];
@@ -166,11 +167,11 @@ int messageArrived(void* context, char* topicName, int topicLen, MQTTAsync_messa
     
     if ( [_subscribedDevices containsObject:device] ) { if (completion) { completion(nil); } return; }
     
-    if (self.connectionState==RelayrConnectionStateConnected || self.connectionState==RelayrConnectionStateConnecting)
+    if (_connectionState==RelayrConnectionStateConnected || _connectionState==RelayrConnectionStateConnecting)
     {
-        [_subscribingDevices setObject:((completion) ? [NSMutableSet setWithObject:completion] : [NSMutableSet setWithObject:[NSNull null]]) forKey:device];
+        [_subscribingDevices setObject:((completion) ? [NSMutableSet setWithObject:[completion copy]] : [NSMutableSet setWithObject:[NSNull null]]) forKey:device];
         
-        if (self.connectionState==RelayrConnectionStateConnected && ![_queryingDevices objectForKey:device])
+        if (_connectionState==RelayrConnectionStateConnected && ![_queryingDevices objectForKey:device])
         { [self susbribeToDevice:device withQualityOfService:dRLAMQTT_QoS]; }
     }
     else if (completion) { completion(RelayrErrorMQTTUnableToConnect); }

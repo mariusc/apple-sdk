@@ -425,7 +425,6 @@
 		62F1350719D54DA900DF93A7 /* RelayrOutput_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrOutput_Setup.h; sourceTree = "<group>"; };
 		62F351AE1A1CE98900C8591E /* RLAServiceHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAServiceHolder.h; sourceTree = "<group>"; };
 		62F351AF1A1CE98900C8591E /* RLAServiceHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAServiceHolder.m; sourceTree = "<group>"; };
-		62F9A6C119D47CCB0064942D /* RelayrApp_TSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RelayrApp_TSetup.h; path = Tests/Classes/Private/RelayrApp_TSetup.h; sourceTree = SOURCE_ROOT; };
 		62FD686219FFAAA400BC5431 /* Relayr_AdHoc.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_AdHoc.xcconfig; sourceTree = "<group>"; };
 		62FD686319FFAAA400BC5431 /* Relayr_Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Debug.xcconfig; sourceTree = "<group>"; };
 		62FD686419FFAAA400BC5431 /* Relayr_Distribution.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Distribution.xcconfig; sourceTree = "<group>"; };
@@ -525,8 +524,6 @@
 		622CD0CC19C3820F003E8660 /* Private */ = {
 			isa = PBXGroup;
 			children = (
-				62F9A6C119D47CCB0064942D /* RelayrApp_TSetup.h */,
-				622CD0D319C382A1003E8660 /* IoTs */,
 			);
 			path = Private;
 			sourceTree = "<group>";
@@ -541,13 +538,6 @@
 				627AC51319C4BC5300986B6A /* IoTs */,
 			);
 			path = Public;
-			sourceTree = "<group>";
-		};
-		622CD0D319C382A1003E8660 /* IoTs */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = IoTs;
 			sourceTree = "<group>";
 		};
 		622E7E9A19CF7F4200948558 /* Processes */ = {
@@ -914,7 +904,7 @@
 			children = (
 				62CF59E21A02B3B000D16DF1 /* libcbasics.a */,
 				62CF59E41A02B3B000D16DF1 /* libcbasics.a */,
-				6264333F1A2516A800A5A11B /* CBasics_Tests */,
+				6264333F1A2516A800A5A11B /* cbasics_tests */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1278,10 +1268,10 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		6264333F1A2516A800A5A11B /* CBasics_Tests */ = {
+		6264333F1A2516A800A5A11B /* cbasics_tests */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
-			path = CBasics_Tests;
+			path = cbasics_tests;
 			remoteRef = 6264333E1A2516A800A5A11B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
