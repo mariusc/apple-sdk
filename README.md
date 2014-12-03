@@ -22,7 +22,7 @@ The framework can be obtained in the following manner:
 
 - Generate the binary `.framework` file from this Xcode project. Just select the platform 	you want from the project's targets and click *build* (⌘+B).
 
-  ![Generating the framework file](./README/Assets/BuildProcess01.gif)
+  A `/bin` folder is created in the workspace folder every time you build a framework. There you can find the type of build you are doing (whether `Debug`, `Release`, `Experimental`, etc.), and the target of your build (whether `iphonesimulator`, `macosx`, `ios`). Grab the framework from that folder.
 
 ### Using the Framework
 
