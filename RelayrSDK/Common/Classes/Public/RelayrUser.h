@@ -8,8 +8,10 @@
  *	@discussion Every user registers with an email address, a respective name and password and is assigned a unique userId. 
  *	A user can be both an application owner (a publisher) and an end user. 
  *	A user is required in order to add other entities to the relayr platform.
+ *
+ *  All RelayrSDK objects (except when explicitly said otherwise) will return the same instance when copied (e.g.: when added to a dictionary). Thus the <code>NSCopying</code> method <code>-copyWithZone:</code> will return the same instance. Same happening with <code>NSMutableCopying</code> method <code>-mutableCopyWithZone:</code>.
  */
-@interface RelayrUser : NSObject <NSCoding>
+@interface RelayrUser : NSObject <NSCoding,NSCopying,NSMutableCopying>
 
 /*!
  *  @abstract The relayr application the user has signed in to.

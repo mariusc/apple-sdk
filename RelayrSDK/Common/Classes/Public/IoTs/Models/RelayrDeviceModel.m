@@ -73,6 +73,18 @@ static NSString* const kCodingOutputs = @"out";
     [coder encodeObject:_outputs forKey:kCodingOutputs];
 }
 
+#pragma mark NSCopying & NSMutableCopying
+
+- (id)copyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
+- (id)mutableCopyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
 #pragma mark - Private methods
 
 - (void)setFirmwaresAvailableWith:(NSArray*)availableFirmwares

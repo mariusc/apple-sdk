@@ -67,11 +67,12 @@ typedef NS_ENUM(NSUInteger, RelayrConnectionState) {
 
 /*!
  *  @abstract Represents the type of connection between the current platform and the device or transmitter.
+ *  @discussion All RelayrSDK objects (except when explicitly said otherwise) will return the same instance when copied (e.g.: when added to a dictionary). Thus the <code>NSCopying</code> method <code>-copyWithZone:</code> will return the same instance. Same happening with <code>NSMutableCopying</code> method <code>-mutableCopyWithZone:</code>.
  *
  *  @see RelayrDevice
  *  @see RelayrTransmitter
  */
-@interface RelayrConnection : NSObject
+@interface RelayrConnection : NSObject <NSCopying,NSMutableCopying>
 
 #pragma mark - Public API
 

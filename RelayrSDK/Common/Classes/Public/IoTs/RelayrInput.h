@@ -5,6 +5,7 @@
 
 /*!
  *  @abstract A Block executed when the input (the reading) receives data.
+ *  @discussion All RelayrSDK objects (except when explicitly said otherwise) will return the same instance when copied (e.g.: when added to a dictionary). Thus the <code>NSCopying</code> method <code>-copyWithZone:</code> will return the same instance. Same happening with <code>NSMutableCopying</code> method <code>-mutableCopyWithZone:</code>.
  *
  *  @param device The <code>RelayrDevice</code> sending the data.
  *  @param input <code>RelayrInput</code> specifying the meaning and value of the data received.
@@ -25,7 +26,7 @@ typedef void (^RelayrInputErrorReceivedBlock)(NSError* error);
  *	For example: The Luminosity meaning is represented by a single value  
  *	however, the Color meaning consists of three or four values (red, green, blue, and white).
  */
-@interface RelayrInput : NSObject <NSCoding>
+@interface RelayrInput : NSObject <NSCoding,NSCopying,NSMutableCopying>
 
 /*!
  *  @abstract The source of the input (reading).

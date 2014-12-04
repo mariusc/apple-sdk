@@ -396,6 +396,18 @@ static NSString* const kCodingPublishers = @"pub";
     [coder encodeObject:_publishers forKey:kCodingPublishers];
 }
 
+#pragma mark NSCopying & NSMutableCopying
+
+- (id)copyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
+- (id)mutableCopyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
 #pragma mark NSObject
 
 - (NSString*)description

@@ -6,8 +6,10 @@
 /*!
  *  @abstract An instance of this class represents a relayr Transmitter. a basic entity on the relayr platform.
  *  @discussion A transmitter contrary to a device does not gather data but is only used to relay the data from the devices to the relayr platform. The transmitter is also used to authenticate the different devices that transmit data via it.
+ *
+ *  All RelayrSDK objects (except when explicitly said otherwise) will return the same instance when copied (e.g.: when added to a dictionary). Thus the <code>NSCopying</code> method <code>-copyWithZone:</code> will return the same instance. Same happening with <code>NSMutableCopying</code> method <code>-mutableCopyWithZone:</code>.
  */
-@interface RelayrTransmitter : NSObject <NSCoding>
+@interface RelayrTransmitter : NSObject <NSCoding,NSCopying,NSMutableCopying>
 
 /*!
  *  @abstract User currently "using" this transmitter.

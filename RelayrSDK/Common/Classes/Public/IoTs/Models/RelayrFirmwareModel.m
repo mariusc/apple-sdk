@@ -65,6 +65,18 @@ static NSString* const kCodingConfiguration = @"con";
     [coder encodeObject:_configuration forKey:kCodingConfiguration];
 }
 
+#pragma mark NSCopying & NSMutableCopying
+
+- (id)copyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
+- (id)mutableCopyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
 #pragma mark NSObject
 
 - (NSString*)description

@@ -102,6 +102,18 @@ static NSString* const kCodingDevices = @"dev";
     [coder encodeObject:_devices forKey:kCodingDevices];
 }
 
+#pragma mark NSCopying & NSMutableCopying
+
+- (id)copyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
+- (id)mutableCopyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
 #pragma mark NSObject
 
 - (NSString*)description

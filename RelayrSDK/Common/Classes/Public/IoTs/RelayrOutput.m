@@ -61,6 +61,18 @@ static NSString* const kCodingMeaning = @"men";
     [coder encodeObject:_meaning forKey:kCodingMeaning];
 }
 
+#pragma mark NSCopying & NSMutableCopying
+
+- (id)copyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
+- (id)mutableCopyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
 #pragma mark NSObject
 
 - (NSString*)description

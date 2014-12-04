@@ -4,11 +4,12 @@
 /*!
  *  @abstract Specifies the basic functionality of a device.
  */
-@interface RelayrFirmwareModel : NSObject <NSCoding>
+@interface RelayrFirmwareModel : NSObject <NSCoding,NSCopying,NSMutableCopying>
 
 /*!
  *  @abstract The <code>RelayrDeviceModel</code> targeted by the firmware.
  *  @discussion This property will never be <code>nil</code>.
+ *  All RelayrSDK objects (except when explicitly said otherwise) will return the same instance when copied (e.g.: when added to a dictionary). Thus the <code>NSCopying</code> method <code>-copyWithZone:</code> will return the same instance. Same happening with <code>NSMutableCopying</code> method <code>-mutableCopyWithZone:</code>.
  */
 @property (readonly,weak,nonatomic) RelayrDeviceModel* deviceModel;
 

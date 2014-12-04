@@ -4,11 +4,12 @@
 /*!
  *  @abstract Specifies the basic functionality of a device.
  */
-@interface RelayrDeviceModel : NSObject <NSCoding>
+@interface RelayrDeviceModel : NSObject <NSCoding,NSCopying,NSMutableCopying>
 
 /*!
  *  @abstract The User currently "using" this device.
  *  @discussion A public device can be owned by another Relayr user, but being used by your <code>RelayrUser</code> entity.
+ *  All RelayrSDK objects (except when explicitly said otherwise) will return the same instance when copied (e.g.: when added to a dictionary). Thus the <code>NSCopying</code> method <code>-copyWithZone:</code> will return the same instance. Same happening with <code>NSMutableCopying</code> method <code>-mutableCopyWithZone:</code>.
  */
 @property (readonly,weak,nonatomic) RelayrUser* user;
 

@@ -6,10 +6,12 @@
  *  @discussion A Publisher is a basic entity in the relayr platform. 
  *	Each user can choose to have the option to publish apps on the relayr platform and they are then assigned a publisherId.
  *
+ *  All RelayrSDK objects (except when explicitly said otherwise) will return the same instance when copied (e.g.: when added to a dictionary). Thus the <code>NSCopying</code> method <code>-copyWithZone:</code> will return the same instance. Same happening with <code>NSMutableCopying</code> method <code>-mutableCopyWithZone:</code>.
+ *
  *  @see RelayrUser
  *  @see RelayrApp
  */
-@interface RelayrPublisher : NSObject <NSCoding>
+@interface RelayrPublisher : NSObject <NSCoding,NSCopying,NSMutableCopying>
 
 /*!
  *  @abstract Uniquely represents a Publisher on the relayr platform.

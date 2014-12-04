@@ -7,8 +7,10 @@
  *	The relayr platform relates to apps in two manners: Publisher Apps and User Apps.
  *	Publisher apps are apps which are purchasable on an app store and are owned by a publisher.
  *	User apps are apps which have been approved to receive the data of an end user. This approval has been granted by the user.
+ *
+ *  All RelayrSDK objects (except when explicitly said otherwise) will return the same instance when copied (e.g.: when added to a dictionary). Thus the <code>NSCopying</code> method <code>-copyWithZone:</code> will return the same instance. Same happening with <code>NSMutableCopying</code> method <code>-mutableCopyWithZone:</code>.
  */
-@interface RelayrApp : NSObject
+@interface RelayrApp : NSObject <NSCopying,NSMutableCopying>
 
 #pragma mark Characteristics
 

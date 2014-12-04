@@ -9,11 +9,12 @@
 
 /*!
  *  @abstract An instance of this class represents a Device. A basic relayr entity
- *	@discussion A device is any external entity capable of producing measurements and sending them to a transmitter to be further sent to the relayr cloud, 
- *	or one which is capable of receiving information from the relayr platform. 
+ *	@discussion A device is any external entity capable of producing measurements and sending them to a transmitter to be further sent to the relayr cloud, or one which is capable of receiving information from the relayr platform. 
  *	Examples would be a thermometer, a gyroscope or an infrared sensor.
+ *
+ *  All RelayrSDK objects (except when explicitly said otherwise) will return the same instance when copied (e.g.: when added to a dictionary). Thus the <code>NSCopying</code> method <code>-copyWithZone:</code> will return the same instance. Same happening with <code>NSMutableCopying</code> method <code>-mutableCopyWithZone:</code>.
  */
-@interface RelayrDevice : RelayrDeviceModel <NSCoding,NSCopying>
+@interface RelayrDevice : RelayrDeviceModel <NSCoding,NSCopying,NSMutableCopying>
 
 /*!
  *  @abstract A unique idenfier of the <code>RelayrDevice</code>'s instance.

@@ -60,6 +60,18 @@ static NSString* const kCodingApps = @"apps";
     [coder encodeObject:_apps forKey:kCodingApps];
 }
 
+#pragma mark NSCopying & NSMutableCopying
+
+- (id)copyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
+- (id)mutableCopyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
 #pragma mark Base class
 
 - (NSString*)description

@@ -187,9 +187,14 @@ static NSString* const kCodingSecret = @"sec";
     [coder encodeObject:_secret forKey:kCodingSecret];
 }
 
-#pragma mark NSCopying
+#pragma mark NSCopying & NSMutableCopying
 
 - (id)copyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
+- (id)mutableCopyWithZone:(NSZone*)zone
 {
     return self;
 }

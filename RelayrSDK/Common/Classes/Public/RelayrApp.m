@@ -42,7 +42,7 @@ static NSString* const kCodingUsers = @"usr";
     if (self)
     {
         _uid = appID;
-        _users = [NSMutableArray array];
+        _users = [[NSMutableArray alloc] initWithCapacity:1];
     }
     return self;
 }
@@ -57,7 +57,7 @@ static NSString* const kCodingUsers = @"usr";
         _uid = appID;
         _oauthClientSecret = clientSecret;
         _redirectURI = redirectURI;
-        _users = [NSMutableArray array];
+        _users = [[NSMutableArray alloc] initWithCapacity:1];
     }
     return self;
 }
@@ -264,7 +264,9 @@ static NSString* const kCodingUsers = @"usr";
         _name = [decoder decodeObjectForKey:kCodingName];
         _appDescription = [decoder decodeObjectForKey:kCodingDescription];
         _publisherID = [decoder decodeObjectForKey:kCodingPublisherID];
-        [_users addObjectsFromArray:[decoder decodeObjectForKey:kCodingUsers]];
+        
+        NSArray* tmp = [decoder decodeObjectForKey:kCodingUsers];
+        if (tmp) { [_users addObjectsFromArray:tmp]; }
     }
     return self;
 }
@@ -277,7 +279,19 @@ static NSString* const kCodingUsers = @"usr";
     [coder encodeObject:_name forKey:kCodingName];
     [coder encodeObject:_appDescription forKey:kCodingDescription];
     [coder encodeObject:_publisherID forKey:kCodingPublisherID];
-    [coder encodeObject:_users forKey:kCodingUsers];
+    if (_users.count) { [coder encodeObject:[NSArray arrayWithArray:_users] forKey:kCodingUsers]; }
+}
+
+#pragma mark NSCopying & NSMutableCopying
+
+- (id)copyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
+- (id)mutableCopyWithZone:(NSZone*)zone
+{
+    return self;
 }
 
 #pragma mark NSObject
@@ -295,7 +309,7 @@ static NSString* const kCodingUsers = @"usr";
  */
 + (NSMutableArray*)storedRelayrApps
 {
-    NSObject<NSCoding> * obj = [RLAKeyChain objectForKey:kRelayrAppStorageKey];
+    NSObject<NSCoding>* obj = [RLAKeyChain objectForKey:kRelayrAppStorageKey];
     return ([obj isKindOfClass:[NSMutableArray class]] && ((NSMutableArray*)obj).count>0) ? (NSMutableArray*)obj : nil;
 }
 
