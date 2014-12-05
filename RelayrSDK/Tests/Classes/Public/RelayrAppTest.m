@@ -127,6 +127,22 @@
     XCTAssertTrue(tmpApp);
 }
 
+- (void)testSignIn
+{
+    RelayrApp* tmpApp = [[RelayrApp alloc] initWithID:kTestsAppID OAuthClientSecret:kTestsAppSecret redirectURI:kTestsAppRedirect];
+    XCTAssertNotNil(tmpApp);
+    
+    XCTestExpectation* expectation = [self expectationWithDescription:nil];
+    
+    [tmpApp signInUser:^(NSError* error, RelayrUser* user) {
+        XCTAssertNil(error);
+        XCTAssertNotNil(user);
+        [expectation fulfill];
+    }];
+    
+    [self waitForExpectationsWithTimeout:120 handler:nil];
+}
+
 - (void)testSignOut
 {
     [_app signOutUser:_user];

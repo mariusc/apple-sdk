@@ -24,6 +24,8 @@ static NSString* const kCodingUsers = @"usr";
 
 @implementation RelayrApp
 
+@synthesize users=_users;
+
 #pragma mark - Public API
 
 - (instancetype)init
@@ -169,12 +171,12 @@ static NSString* const kCodingUsers = @"usr";
 
 - (NSArray*)loggedUsers
 {
-    return [NSMutableArray arrayWithArray:_users];
+    return [NSArray arrayWithArray:_users];
 }
 
 - (RelayrUser*)loggedUserWithRelayrID:(NSString*)relayrID
 {
-    if (!relayrID || relayrID.length==0) { [RLALog debug:RelayrErrorMissingArgument.localizedDescription]; return nil; }
+    if (!relayrID.length) { [RLALog debug:RelayrErrorMissingArgument.localizedDescription]; return nil; }
     
     RelayrUser* result;
     for (RelayrUser* user in _users)
@@ -188,11 +190,10 @@ static NSString* const kCodingUsers = @"usr";
 {
     if (!_uid.length || !_redirectURI.length || !_oauthClientSecret.length) { if (completion) { completion(RelayrErrorMissingExpectedValue, nil); } return; }
     
-    __weak RelayrApp* weakSelf = self;
     [RLAAPIService requestOAuthCodeWithOAuthClientID:_uid redirectURI:_redirectURI completion:^(NSError* error, NSString* tmpCode) {
         if (error) { if (completion) { completion(error, nil); } return; }
         
-        [RLAAPIService requestOAuthTokenWithOAuthCode:tmpCode OAuthClientID:weakSelf.uid OAuthClientSecret:weakSelf.oauthClientSecret redirectURI:weakSelf.redirectURI completion:^(NSError* error, NSString* token) {
+        [RLAAPIService requestOAuthTokenWithOAuthCode:tmpCode OAuthClientID:_uid OAuthClientSecret:_oauthClientSecret redirectURI:_redirectURI completion:^(NSError* error, NSString* token) {
             if (error) { if (completion) { completion(error, nil); } return; }
             if (!token.length) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
             
@@ -203,9 +204,8 @@ static NSString* const kCodingUsers = @"usr";
             // If the user wasn't logged, retrieve the basic information.
             [serverUser queryCloudForUserInfo:^(NSError* error, NSString* previousName, NSString* previousEmail) {
                 if (error) { if (completion) { completion(error, nil); } return; }
-                
-                __strong RelayrApp* strongSelf = weakSelf;  // If the user was already logged, return that user.
-                RelayrUser* user = [strongSelf loggedUserWithRelayrID:serverUser.uid];
+
+                RelayrUser* user = [self loggedUserWithRelayrID:serverUser.uid];
                 if (user)
                 {
                     user.app = serverUser.app;
@@ -215,7 +215,7 @@ static NSString* const kCodingUsers = @"usr";
                 else
                 {
                     user = serverUser;
-                    [strongSelf.users addObject:serverUser];
+                    [_users addObject:serverUser];
                 }
                 
                 if (completion) { completion(nil, user); }
@@ -291,7 +291,7 @@ static NSString* const kCodingUsers = @"usr";
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"RelayrApp\n{\n\t ID:\t%@\n\t Name:\t%@\n\t Description: %@\n}\n", _uid, _name, _appDescription];
+    return [NSString stringWithFormat:@"RelayrApp\n{\n\t ID:\t%@\n\t Name:\t%@\n\t Description: %@\n\t Num logged users: %@\n}\n", _uid, _name, _appDescription, @(_users.count)];
 }
 
 #pragma mark - Private functionality

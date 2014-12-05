@@ -150,7 +150,7 @@ static NSString* const kCodingDates = @"dat";
     
     if ([_deviceModel isKindOfClass:[RelayrDevice class]])
     {
-        [((RelayrDevice*)self) unsubscribeToCurrentServiceIfNecessary];
+        [((RelayrDevice*)_deviceModel) unsubscribeToCurrentServiceIfNecessary];
     }
 }
 
