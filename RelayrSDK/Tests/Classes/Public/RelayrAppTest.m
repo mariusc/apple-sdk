@@ -34,7 +34,7 @@
 
 - (void)tearDown
 {
-    [RelayrApp removeAppFromKeyChain:_app];
+    [RelayrApp removeAppFromFileSystem:_app];
     [_app signOutUser:_user];
     _user = nil;
     _app = nil;
@@ -107,25 +107,30 @@
     [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
 }
 
+- (void)testStorage
+{
+    RelayrApp* tmpApp = [RelayrApp retrieveAppWithIDFromFileSystem:kTestsAppID];
+    XCTAssertNil(tmpApp);
+    
+    tmpApp = [[RelayrApp alloc] initWithID:kTestsAppID OAuthClientSecret:kTestsAppSecret redirectURI:kTestsAppRedirect];
+    RelayrUser* tmpUser = [[RelayrUser alloc] initWithToken:kTestsUserToken];
+    [tmpApp.users addObject:tmpUser];
+    
+    BOOL status = [RelayrApp persistAppInFileSystem:tmpApp];
+    XCTAssertTrue(status);
+    
+    tmpApp = nil;
+    tmpApp = [RelayrApp retrieveAppWithIDFromFileSystem:kTestsAppID];
+    XCTAssertNotNil(tmpApp);
+    
+    status = [RelayrApp removeAppFromFileSystem:tmpApp];
+    XCTAssertTrue(tmpApp);
+}
+
 - (void)testSignOut
 {
     [_app signOutUser:_user];
     XCTAssertNil([_app loggedUserWithRelayrID:_user.uid]);
-}
-
-- (void)testKeyChain
-{
-    XCTAssertTrue([RelayrApp removeAppFromKeyChain:_app]);
-    XCTAssertNil([RelayrApp retrieveAppFromKeyChain:kTestsAppID]);
-    XCTAssertTrue([RelayrApp storeAppInKeyChain:_app]);
-    
-    RelayrApp* tmpApp = [RelayrApp retrieveAppFromKeyChain:_app.uid];
-    XCTAssertNotNil(tmpApp);
-    RelayrUser* tmpUser = [tmpApp loggedUserWithRelayrID:kTestsUserID];
-    XCTAssertNotNil(tmpUser);
-    XCTAssertTrue([tmpUser.uid isEqualToString:kTestsUserID]);
-    XCTAssertTrue([tmpUser.name isEqualToString:kTestsUserName]);
-    XCTAssertTrue([tmpUser.email isEqualToString:kTestsUserEmail]);
 }
 
 @end

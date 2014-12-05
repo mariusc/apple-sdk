@@ -34,7 +34,7 @@
 
 - (void)tearDown
 {
-    [RelayrApp removeAppFromKeyChain:_app];
+    [RelayrApp removeAppFromFileSystem:_app];
     [_app signOutUser:_user];
     _user = nil;
     _app = nil;

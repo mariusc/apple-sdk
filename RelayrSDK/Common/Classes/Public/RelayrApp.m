@@ -9,11 +9,9 @@
 #import "RLAAPIService.h"           // Relayr.framework (Service/API)
 #import "RLAAPIService+Cloud.h"     // Relayr.framework (Service/API)
 #import "RLAAPIService+App.h"       // Relayr.framework (Service/API)
-#import "RLAKeyChain.h"             // Relayr.framework (Utilities)
 #import "RLALog.h"                  // Relayr.framework (Utilities)
 
-// KeyChain key
-static NSString* const kRelayrAppStorageKey = @"RelayrApps";
+#define RelayrApp_FSFolder                  @"/io.relayr.sdk"
 
 // NSCoding variables
 static NSString* const kCodingID = @"uid";
@@ -116,7 +114,7 @@ static NSString* const kCodingUsers = @"usr";
     if (!completion) { return [RLALog debug:RelayrErrorMissingArgument.localizedDescription]; }
     if (appID.length==0) { return completion(RelayrErrorMissingArgument, nil); }
     
-    RelayrApp* result = [RelayrApp retrieveAppFromKeyChain:appID];
+    RelayrApp* result = [RelayrApp retrieveAppWithIDFromFileSystem:appID];
     if (result) { return completion(nil, result); }
     
     result = [[RelayrApp alloc] initWithID:appID OAuthClientSecret:clientSecret redirectURI:redirectURI];
@@ -130,46 +128,41 @@ static NSString* const kCodingUsers = @"usr";
     }];
 }
 
-+ (BOOL)storeAppInKeyChain:(RelayrApp*)app
++ (BOOL)persistAppInFileSystem:(RelayrApp*)app
 {
-    if (!app.uid || !app.oauthClientSecret || !app.redirectURI) { [RLALog debug:RelayrErrorMissingArgument.localizedDescription]; return NO; }
-    NSMutableArray* storedApps = [RelayrApp storedRelayrApps];
+    if (!app.uid.length) { return NO; }
     
-    if (storedApps.count)
+    NSData* appData = [NSKeyedArchiver archivedDataWithRootObject:app];
+    NSFileManager* manager = [NSFileManager defaultManager];
+    if (!appData || !manager) { return NO; }
+    
+    NSString* folderPath = [RelayrApp absoluteRelayrAppFolderPath];
+    if ( ![manager fileExistsAtPath:folderPath] )
     {
-        NSNumber* appIndex = [RelayrApp indexForRelayrAppID:app.uid inRelayrAppsArray:storedApps];
-        if (!appIndex) { [storedApps addObject:app]; }
-        else { [storedApps replaceObjectAtIndex:appIndex.unsignedIntegerValue withObject:app]; }
+        NSError* error;
+        BOOL operationStatus = [manager createDirectoryAtPath:folderPath withIntermediateDirectories:YES attributes:nil error:&error];
+        if (!operationStatus || error) { return NO; }
     }
-    else { storedApps = [NSMutableArray arrayWithObject:app]; }
     
-    [RLAKeyChain setObject:storedApps forKey:kRelayrAppStorageKey];
-    return YES;
+    NSString* path = [folderPath stringByAppendingPathComponent:app.uid];
+    return [manager createFileAtPath:path contents:appData attributes:nil];
 }
 
-+ (RelayrApp*)retrieveAppFromKeyChain:(NSString*)appID
++ (RelayrApp*)retrieveAppWithIDFromFileSystem:(NSString*)appID
 {
-    NSArray* currentlyStoredApps = [RelayrApp storedRelayrApps];
-    NSNumber* appIndex = [RelayrApp indexForRelayrAppID:appID inRelayrAppsArray:currentlyStoredApps];
-    return (appIndex) ? [currentlyStoredApps objectAtIndex:appIndex.unsignedIntegerValue] : nil;
+    if (!appID.length) { return nil; }
+    return [NSKeyedUnarchiver unarchiveObjectWithFile:[[RelayrApp absoluteRelayrAppFolderPath] stringByAppendingPathComponent:appID]];
 }
 
-+ (BOOL)removeAppFromKeyChain:(RelayrApp*)app
++ (BOOL)removeAppFromFileSystem:(RelayrApp*)app
 {
-    if (!app.uid) { return NO; }
+    if (!app.uid.length) { return NO; }
+    NSFileManager* manager = [NSFileManager defaultManager];
     
-    NSMutableArray* storedApps = [RelayrApp storedRelayrApps];
-    if (storedApps.count==0) { return YES; }
+    NSString* path = [RelayrApp absoluteRelayrAppFolderPath];
+    if (![manager fileExistsAtPath:path]) { return YES; }
     
-    NSNumber* appIndex = [RelayrApp indexForRelayrAppID:app.uid inRelayrAppsArray:storedApps];
-    if (appIndex)
-    {
-        [storedApps removeObjectAtIndex:appIndex.unsignedIntegerValue];
-        
-        if (storedApps.count == 0) { [RLAKeyChain removeObjectForKey:kRelayrAppStorageKey]; }
-        else { [RLAKeyChain setObject:storedApps forKey:kRelayrAppStorageKey]; }
-    }
-    return YES;
+    return [manager removeItemAtPath:path error:nil];
 }
 
 #pragma mark Users
@@ -301,34 +294,19 @@ static NSString* const kCodingUsers = @"usr";
     return [NSString stringWithFormat:@"RelayrApp\n{\n\t ID:\t%@\n\t Name:\t%@\n\t Description: %@\n}\n", _uid, _name, _appDescription];
 }
 
-#pragma mark - Private methods
+#pragma mark - Private functionality
 
-/*!
- *  @abstract It retrieves all currently stored Relayr Apps.
- *  @discussion If there are none, it returns <code>nil</code>.
- */
-+ (NSMutableArray*)storedRelayrApps
++ (NSString*)absoluteRelayrAppFolderPath
 {
-    NSObject<NSCoding>* obj = [RLAKeyChain objectForKey:kRelayrAppStorageKey];
-    return ([obj isKindOfClass:[NSMutableArray class]] && ((NSMutableArray*)obj).count>0) ? (NSMutableArray*)obj : nil;
-}
-
-/*!
- *  @abstract It returns the index of the Relayr Application with the specified ID (or <code>nil</code>), within an array of RelayrApp objects.
- */
-+ (NSNumber*)indexForRelayrAppID:(NSString*)appID inRelayrAppsArray:(NSArray*)apps
-{
-    if (apps.count==0 || appID.length==0) { return nil; }
+    static NSString* folderPath;
     
-    __block NSNumber* result = nil;
-    [apps enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop) {
-        if ( [obj isKindOfClass:[RelayrApp class]] && [((RelayrApp*)obj).uid isEqualToString:appID] )
-        {
-            result = [NSNumber numberWithUnsignedInteger:idx];
-            *stop = YES;
-        }
-    }];
-    return result;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSArray* paths = NSSearchPathForDirectoriesInDomains(NSApplicationScriptsDirectory, NSUserDomainMask, YES);
+        folderPath = [(NSString*)paths.firstObject stringByAppendingPathComponent:RelayrApp_FSFolder];
+    });
+    
+    return folderPath;
 }
 
 @end

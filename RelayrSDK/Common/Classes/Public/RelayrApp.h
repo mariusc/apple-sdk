@@ -104,29 +104,28 @@ OAuthClientSecret:(NSString*)clientSecret
        completion:(void (^)(NSError* error, RelayrApp* app))completion;
 
 /*!
- *  @abstract Stores a Relayr Application in permanent storage (KeyChain or iCloud, depending on your device capabilities).
- *  @param app The relayr application to be stored.
+ *  @abstract Persist a <code>RelayrApp</code> and its logged users in the File System.
  *
+ *  @param app The relayr application to be stored.
  *	@return Boolean indicating whether the operation was successful or not.
  */
-+ (BOOL)storeAppInKeyChain:(RelayrApp*)app;
++ (BOOL)persistAppInFileSystem:(RelayrApp*)app;
 
 /*!
- *  @abstract Retrieves a previously stored relayr application from permanent storage (KeyChain or iCloud).
+ *  @abstract Retrieves a previously stored relayr application from the File System..
  *
- *  @param appID The Id of the application.
- *
+ *  @param appID The ID of the application.
  *	@return A fully initialized <code>RelayrApp</code> or <code>nil</code>.
  */
-+ (RelayrApp*)retrieveAppFromKeyChain:(NSString*)appID;
++ (RelayrApp*)retrieveAppWithIDFromFileSystem:(NSString*)appID;
 
 /*!
- *  @abstract Removes a previously stored relayr application from permanent storage (KeyChain or iCloud).
+ *  @abstract Removes a previously stored relayr application from the File System.
  *
  *  @param app The relayr application to be removed.
  *	@return If the object is successfully removed or not found, <code>YES</code> is returned. If the remove operation could not be performed, the method will return <code>NO</code>.
  */
-+ (BOOL)removeAppFromKeyChain:(RelayrApp*)app;
++ (BOOL)removeAppFromFileSystem:(RelayrApp*)app;
 
 #pragma mark Users
 
