@@ -302,7 +302,7 @@ static NSString* const kCodingUsers = @"usr";
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSArray* paths = NSSearchPathForDirectoriesInDomains(NSApplicationScriptsDirectory, NSUserDomainMask, YES);
+        NSArray* paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
         folderPath = [(NSString*)paths.firstObject stringByAppendingPathComponent:RelayrApp_FSFolder];
     });
     
