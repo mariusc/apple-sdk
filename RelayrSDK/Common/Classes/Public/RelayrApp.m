@@ -11,7 +11,7 @@
 #import "RLAAPIService+App.h"       // Relayr.framework (Service/API)
 #import "RLALog.h"                  // Relayr.framework (Utilities)
 
-#define RelayrApp_FSFolder                  @"/io.relayr.sdk"
+#define RelayrApp_FSFolder  @"/io.relayr.sdk"
 
 // NSCoding variables
 static NSString* const kCodingID = @"uid";
@@ -42,22 +42,21 @@ static NSString* const kCodingUsers = @"usr";
     if (self)
     {
         _uid = appID;
-        _users = [[NSMutableArray alloc] initWithCapacity:1];
+        _users = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
 - (instancetype)initWithID:(NSString*)appID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI
 {
-    if (!appID.length || !clientSecret.length || !redirectURI.length) { return nil; }
+    if (!clientSecret.length || !redirectURI.length) { return nil; }
     
-    self = [super init];
+    self = [self initWithID:appID];
     if (self)
     {
         _uid = appID;
         _oauthClientSecret = clientSecret;
         _redirectURI = redirectURI;
-        _users = [[NSMutableArray alloc] initWithCapacity:1];
     }
     return self;
 }
@@ -171,7 +170,7 @@ static NSString* const kCodingUsers = @"usr";
 
 - (NSArray*)loggedUsers
 {
-    return [NSArray arrayWithArray:_users];
+    return (_users.count) ? _users : nil;
 }
 
 - (RelayrUser*)loggedUserWithRelayrID:(NSString*)relayrID
@@ -299,13 +298,11 @@ static NSString* const kCodingUsers = @"usr";
 + (NSString*)absoluteRelayrAppFolderPath
 {
     static NSString* folderPath;
-    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSArray* paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
         folderPath = [(NSString*)paths.firstObject stringByAppendingPathComponent:RelayrApp_FSFolder];
     });
-    
     return folderPath;
 }
 

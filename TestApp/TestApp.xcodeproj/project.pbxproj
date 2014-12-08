@@ -1,0 +1,540 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		623457771A3601640082146E /* Relayr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 624EB5CE1A35FC8D00451B92 /* Relayr.framework */; };
+		623457781A3601640082146E /* Relayr.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 624EB5CE1A35FC8D00451B92 /* Relayr.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		624EB5BB1A35DDBF00451B92 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 624EB5AA1A35DDBF00451B92 /* Images.xcassets */; };
+		624EB5BC1A35DDBF00451B92 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 624EB5AC1A35DDBF00451B92 /* LaunchScreen.xib */; };
+		624EB5BD1A35DDBF00451B92 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 624EB5AE1A35DDBF00451B92 /* Main.storyboard */; };
+		624EB5BE1A35DDBF00451B92 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 624EB5B21A35DDBF00451B92 /* AppDelegate.m */; };
+		624EB5BF1A35DDBF00451B92 /* RLAKickoffController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624EB5B51A35DDBF00451B92 /* RLAKickoffController.m */; };
+		624EB5C01A35DDBF00451B92 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 624EB5B61A35DDBF00451B92 /* main.m */; };
+		624EB5C41A35F83400451B92 /* common.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 624EB5C31A35F83400451B92 /* common.xcassets */; };
+		62FB45AD1A3604A400D0414D /* RLAMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62FB45AC1A3604A400D0414D /* RLAMainController.m */; };
+		62FB45B01A3605E900D0414D /* RLANavigationRootController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62FB45AF1A3605E900D0414D /* RLANavigationRootController.m */; };
+		62FB45B51A360AE700D0414D /* RLAWindowRootControllerSwapSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 62FB45B41A360AE700D0414D /* RLAWindowRootControllerSwapSegue.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		623457791A3601640082146E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 624EB5C71A35FC8D00451B92 /* RelayrSDK.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 6252F0B2199C2465002ECE4D;
+			remoteInfo = Relayr_iOS;
+		};
+		624EB5CD1A35FC8D00451B92 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 624EB5C71A35FC8D00451B92 /* RelayrSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6252F0B3199C2465002ECE4D;
+			remoteInfo = Relayr_iOS;
+		};
+		624EB5CF1A35FC8D00451B92 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 624EB5C71A35FC8D00451B92 /* RelayrSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6252F0E5199C2AFA002ECE4D;
+			remoteInfo = Relayr_OSX;
+		};
+		624EB5D11A35FC8D00451B92 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 624EB5C71A35FC8D00451B92 /* RelayrSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 62E41FC219C35B90008459B7;
+			remoteInfo = Relayr_Tests;
+		};
+		624EB5D31A35FC9E00451B92 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 624EB5C71A35FC8D00451B92 /* RelayrSDK.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 6252F0B2199C2465002ECE4D;
+			remoteInfo = Relayr_iOS;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6234577B1A3601640082146E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				623457781A3601640082146E /* Relayr.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		624EB57A1A35DC4D00451B92 /* Relayr Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Relayr Test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		624EB5A61A35DDBF00451B92 /* common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = common.xcconfig; sourceTree = "<group>"; };
+		624EB5AA1A35DDBF00451B92 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		624EB5AD1A35DDBF00451B92 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		624EB5AF1A35DDBF00451B92 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		624EB5B11A35DDBF00451B92 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		624EB5B21A35DDBF00451B92 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		624EB5B41A35DDBF00451B92 /* RLAKickoffController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAKickoffController.h; sourceTree = "<group>"; };
+		624EB5B51A35DDBF00451B92 /* RLAKickoffController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAKickoffController.m; sourceTree = "<group>"; };
+		624EB5B61A35DDBF00451B92 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		624EB5B91A35DDBF00451B92 /* ios.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ios.plist; sourceTree = "<group>"; };
+		624EB5C31A35F83400451B92 /* common.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = common.xcassets; sourceTree = "<group>"; };
+		624EB5C51A35FAB100451B92 /* ios.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ios.xcconfig; sourceTree = "<group>"; };
+		624EB5C71A35FC8D00451B92 /* RelayrSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RelayrSDK.xcodeproj; path = ../RelayrSDK/RelayrSDK.xcodeproj; sourceTree = "<group>"; };
+		62FB45AB1A3604A400D0414D /* RLAMainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAMainController.h; sourceTree = "<group>"; };
+		62FB45AC1A3604A400D0414D /* RLAMainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAMainController.m; sourceTree = "<group>"; };
+		62FB45AE1A3605E900D0414D /* RLANavigationRootController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLANavigationRootController.h; sourceTree = "<group>"; };
+		62FB45AF1A3605E900D0414D /* RLANavigationRootController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLANavigationRootController.m; sourceTree = "<group>"; };
+		62FB45B11A3606D600D0414D /* RLAStoryboardIDs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RLAStoryboardIDs.h; sourceTree = "<group>"; };
+		62FB45B31A360AE700D0414D /* RLAWindowRootControllerSwapSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAWindowRootControllerSwapSegue.h; sourceTree = "<group>"; };
+		62FB45B41A360AE700D0414D /* RLAWindowRootControllerSwapSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAWindowRootControllerSwapSegue.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		624EB5771A35DC4D00451B92 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				623457771A3601640082146E /* Relayr.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		624EB5711A35DC4D00451B92 = {
+			isa = PBXGroup;
+			children = (
+				624EB5A31A35DDBF00451B92 /* Common */,
+				624EB5A71A35DDBF00451B92 /* iOS */,
+				624EB5C61A35FC7200451B92 /* Frameworks */,
+				624EB57B1A35DC4D00451B92 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		624EB57B1A35DC4D00451B92 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				624EB57A1A35DC4D00451B92 /* Relayr Test.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		624EB5A31A35DDBF00451B92 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				624EB5C21A35F81D00451B92 /* Assets */,
+				624EB5A41A35DDBF00451B92 /* Classes */,
+				624EB5A51A35DDBF00451B92 /* Configuration */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		624EB5A41A35DDBF00451B92 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		624EB5A51A35DDBF00451B92 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				624EB5A61A35DDBF00451B92 /* common.xcconfig */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		624EB5A71A35DDBF00451B92 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				624EB5A81A35DDBF00451B92 /* Assets */,
+				624EB5B01A35DDBF00451B92 /* Classes */,
+				624EB5B81A35DDBF00451B92 /* Configuration */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		624EB5A81A35DDBF00451B92 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				624EB5A91A35DDBF00451B92 /* Images */,
+				624EB5AB1A35DDBF00451B92 /* Storyboards */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		624EB5A91A35DDBF00451B92 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				624EB5AA1A35DDBF00451B92 /* Images.xcassets */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		624EB5AB1A35DDBF00451B92 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				624EB5AC1A35DDBF00451B92 /* LaunchScreen.xib */,
+				624EB5AE1A35DDBF00451B92 /* Main.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		624EB5B01A35DDBF00451B92 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				624EB5B61A35DDBF00451B92 /* main.m */,
+				624EB5B11A35DDBF00451B92 /* AppDelegate.h */,
+				624EB5B21A35DDBF00451B92 /* AppDelegate.m */,
+				624EB5B31A35DDBF00451B92 /* Controllers */,
+				624EB5B71A35DDBF00451B92 /* Models */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		624EB5B31A35DDBF00451B92 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				62FB45B21A360ABA00D0414D /* Segues */,
+				62FB45B11A3606D600D0414D /* RLAStoryboardIDs.h */,
+				624EB5B41A35DDBF00451B92 /* RLAKickoffController.h */,
+				624EB5B51A35DDBF00451B92 /* RLAKickoffController.m */,
+				62FB45AB1A3604A400D0414D /* RLAMainController.h */,
+				62FB45AC1A3604A400D0414D /* RLAMainController.m */,
+				62FB45AE1A3605E900D0414D /* RLANavigationRootController.h */,
+				62FB45AF1A3605E900D0414D /* RLANavigationRootController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		624EB5B71A35DDBF00451B92 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		624EB5B81A35DDBF00451B92 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				624EB5C51A35FAB100451B92 /* ios.xcconfig */,
+				624EB5B91A35DDBF00451B92 /* ios.plist */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		624EB5C21A35F81D00451B92 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				624EB5C31A35F83400451B92 /* common.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		624EB5C61A35FC7200451B92 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				624EB5C71A35FC8D00451B92 /* RelayrSDK.xcodeproj */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		624EB5C81A35FC8D00451B92 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				624EB5CE1A35FC8D00451B92 /* Relayr.framework */,
+				624EB5D01A35FC8D00451B92 /* Relayr.framework */,
+				624EB5D21A35FC8D00451B92 /* Relayr.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		62FB45B21A360ABA00D0414D /* Segues */ = {
+			isa = PBXGroup;
+			children = (
+				62FB45B31A360AE700D0414D /* RLAWindowRootControllerSwapSegue.h */,
+				62FB45B41A360AE700D0414D /* RLAWindowRootControllerSwapSegue.m */,
+			);
+			path = Segues;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		624EB5791A35DC4D00451B92 /* TestApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 624EB59D1A35DC4D00451B92 /* Build configuration list for PBXNativeTarget "TestApp" */;
+			buildPhases = (
+				624EB5761A35DC4D00451B92 /* Sources */,
+				624EB5771A35DC4D00451B92 /* Frameworks */,
+				624EB5781A35DC4D00451B92 /* Resources */,
+				6234577B1A3601640082146E /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				624EB5D41A35FC9E00451B92 /* PBXTargetDependency */,
+				6234577A1A3601640082146E /* PBXTargetDependency */,
+			);
+			name = TestApp;
+			productName = TestApp;
+			productReference = 624EB57A1A35DC4D00451B92 /* Relayr Test.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		624EB5721A35DC4D00451B92 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = Relayr;
+				TargetAttributes = {
+					624EB5791A35DC4D00451B92 = {
+						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = C87D7SA3JH;
+					};
+				};
+			};
+			buildConfigurationList = 624EB5751A35DC4D00451B92 /* Build configuration list for PBXProject "TestApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 624EB5711A35DC4D00451B92;
+			productRefGroup = 624EB57B1A35DC4D00451B92 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 624EB5C81A35FC8D00451B92 /* Products */;
+					ProjectRef = 624EB5C71A35FC8D00451B92 /* RelayrSDK.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				624EB5791A35DC4D00451B92 /* TestApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		624EB5CE1A35FC8D00451B92 /* Relayr.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Relayr.framework;
+			remoteRef = 624EB5CD1A35FC8D00451B92 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		624EB5D01A35FC8D00451B92 /* Relayr.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Relayr.framework;
+			remoteRef = 624EB5CF1A35FC8D00451B92 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		624EB5D21A35FC8D00451B92 /* Relayr.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Relayr.xctest;
+			remoteRef = 624EB5D11A35FC8D00451B92 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		624EB5781A35DC4D00451B92 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				624EB5C41A35F83400451B92 /* common.xcassets in Resources */,
+				624EB5BB1A35DDBF00451B92 /* Images.xcassets in Resources */,
+				624EB5BC1A35DDBF00451B92 /* LaunchScreen.xib in Resources */,
+				624EB5BD1A35DDBF00451B92 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		624EB5761A35DC4D00451B92 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				624EB5C01A35DDBF00451B92 /* main.m in Sources */,
+				62FB45B51A360AE700D0414D /* RLAWindowRootControllerSwapSegue.m in Sources */,
+				624EB5BE1A35DDBF00451B92 /* AppDelegate.m in Sources */,
+				62FB45B01A3605E900D0414D /* RLANavigationRootController.m in Sources */,
+				62FB45AD1A3604A400D0414D /* RLAMainController.m in Sources */,
+				624EB5BF1A35DDBF00451B92 /* RLAKickoffController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6234577A1A3601640082146E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Relayr_iOS;
+			targetProxy = 623457791A3601640082146E /* PBXContainerItemProxy */;
+		};
+		624EB5D41A35FC9E00451B92 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Relayr_iOS;
+			targetProxy = 624EB5D31A35FC9E00451B92 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		624EB5AC1A35DDBF00451B92 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				624EB5AD1A35DDBF00451B92 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		624EB5AE1A35DDBF00451B92 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				624EB5AF1A35DDBF00451B92 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		624EB59B1A35DC4D00451B92 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		624EB59C1A35DC4D00451B92 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		624EB59E1A35DC4D00451B92 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 624EB5C51A35FAB100451B92 /* ios.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+			};
+			name = Debug;
+		};
+		624EB59F1A35DC4D00451B92 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 624EB5C51A35FAB100451B92 /* ios.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		624EB5751A35DC4D00451B92 /* Build configuration list for PBXProject "TestApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				624EB59B1A35DC4D00451B92 /* Debug */,
+				624EB59C1A35DC4D00451B92 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		624EB59D1A35DC4D00451B92 /* Build configuration list for PBXNativeTarget "TestApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				624EB59E1A35DC4D00451B92 /* Debug */,
+				624EB59F1A35DC4D00451B92 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 624EB5721A35DC4D00451B92 /* Project object */;
+}

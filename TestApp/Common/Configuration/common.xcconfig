@@ -1,0 +1,6 @@
+PRODUCT_NAME = Relayr Test              // Library's name
+BUNDLE_NAME = $(PRODUCT_NAME)           // Framework's name (if any)
+BUNDLE_IDENTIFIER = io.relayr.tests.app // Identifier
+BUNDLE_SIGNATURE = RLYR                 // Signature
+
+GCC_C_LANGUAGE_STANDARD = c11           // The compiler C Standard to use

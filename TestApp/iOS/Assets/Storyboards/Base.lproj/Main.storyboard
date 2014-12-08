@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B23" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Kickoff Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController storyboardIdentifier="RLAKickoffController" id="BYZ-38-t0r" customClass="RLAKickoffController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bvC-C6-wpO">
+                                <rect key="frame" x="200" y="336" width="200" height="36"/>
+                                <color key="backgroundColor" red="0.56470588239999997" green="0.71764705880000002" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="bvh-L4-9Ap"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <state key="normal" title="Try to connect">
+                                    <color key="titleColor" red="0.90588235289999997" green="0.94509803920000002" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="connectionRetryPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Fip-Qj-Sim"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explanation" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GSM-4P-7H5">
+                                <rect key="frame" x="253" y="290" width="95" height="22"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="LogoRelayr" translatesAutoresizingMaskIntoConstraints="NO" id="W5a-rQ-ZDa">
+                                <rect key="frame" x="231" y="220.5" width="138" height="51"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.035294117649999998" green="0.2156862745" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="bvC-C6-wpO" firstAttribute="top" secondItem="GSM-4P-7H5" secondAttribute="bottom" constant="25" id="Afh-MV-IIs"/>
+                            <constraint firstItem="GSM-4P-7H5" firstAttribute="top" secondItem="W5a-rQ-ZDa" secondAttribute="bottom" constant="18" id="CTb-Do-a77"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="GSM-4P-7H5" secondAttribute="trailing" constant="25" id="LYv-Lm-veK"/>
+                            <constraint firstAttribute="centerX" secondItem="W5a-rQ-ZDa" secondAttribute="centerX" id="MMT-te-ozg"/>
+                            <constraint firstAttribute="centerY" secondItem="GSM-4P-7H5" secondAttribute="centerY" id="Xkg-u3-w2h"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="bvC-C6-wpO" secondAttribute="trailing" priority="750" constant="25" id="Y8u-gx-9jt"/>
+                            <constraint firstItem="bvC-C6-wpO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" priority="750" constant="25" id="bNH-Xj-PkO"/>
+                            <constraint firstAttribute="centerX" secondItem="bvC-C6-wpO" secondAttribute="centerX" id="dlD-6L-cYG"/>
+                            <constraint firstAttribute="centerX" secondItem="GSM-4P-7H5" secondAttribute="centerX" id="uLh-qd-9cA"/>
+                            <constraint firstItem="GSM-4P-7H5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="25" id="wW4-4E-uQr"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="explanationLabel" destination="GSM-4P-7H5" id="TiC-gt-27M"/>
+                        <outlet property="retryButton" destination="bvC-C6-wpO" id="m4r-bq-GIh"/>
+                        <segue destination="BlX-Oq-Vdu" kind="custom" identifier="RLAKickoffSegue" customClass="RLAWindowRootControllerSwapSegue" id="g9u-be-OOT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="624" y="525"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="eDr-pW-bfe">
+            <objects>
+                <navigationController id="BlX-Oq-Vdu" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hep-Gd-iLc">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.015686274510000001" green="0.1058823529" blue="0.15686274510000001" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="IqH-2K-3iR" kind="relationship" relationship="rootViewController" id="5xX-Ds-KYM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5f5-dB-lBo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1326" y="525"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="oNs-gI-tq8">
+            <objects>
+                <viewController id="IqH-2K-3iR" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FGI-EK-UkM"/>
+                        <viewControllerLayoutGuide type="bottom" id="u0r-55-zis"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fVA-f6-qmy">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.035294117649999998" green="0.2156862745" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="SIw-hH-vgR"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bv2-0K-UTD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2032" y="525"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="LogoRelayr" width="138" height="51"/>
+    </resources>
+</document>

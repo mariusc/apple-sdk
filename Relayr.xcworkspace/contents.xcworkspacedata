@@ -10,4 +10,7 @@
    <FileRef
       location = "group:CBasics/CBasics.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:TestApp/TestApp.xcodeproj">
+   </FileRef>
 </Workspace>
