@@ -24,8 +24,6 @@ static NSString* const kCodingUsers = @"usr";
 
 @implementation RelayrApp
 
-@synthesize users=_users;
-
 #pragma mark - Public API
 
 - (instancetype)init
@@ -54,7 +52,6 @@ static NSString* const kCodingUsers = @"usr";
     self = [self initWithID:appID];
     if (self)
     {
-        _uid = appID;
         _oauthClientSecret = clientSecret;
         _redirectURI = redirectURI;
     }
@@ -115,10 +112,7 @@ static NSString* const kCodingUsers = @"usr";
     if (!completion) { return [RLALog debug:RelayrErrorMissingArgument.localizedDescription]; }
     if (appID.length==0) { return completion(RelayrErrorMissingArgument, nil); }
     
-    RelayrApp* result = [RelayrApp retrieveAppWithIDFromFileSystem:appID];
-    if (result) { return completion(nil, result); }
-    
-    result = [[RelayrApp alloc] initWithID:appID OAuthClientSecret:clientSecret redirectURI:redirectURI];
+    RelayrApp* result = [[RelayrApp alloc] initWithID:appID OAuthClientSecret:clientSecret redirectURI:redirectURI];
     if (!result) { return completion(RelayrErrorMissingArgument, nil); }
     
     [RLAAPIService requestAppInfoFor:result.uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription) {
