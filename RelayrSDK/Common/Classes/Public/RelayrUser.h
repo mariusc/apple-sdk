@@ -102,6 +102,22 @@
 @property (readonly,nonatomic) NSSet* devicesBookmarked;
 
 /*!
+ *  @abstract It returns a <code>RelayrTransmitter</code> object with the specific Relayr ID if the user owns it.
+ *
+ *  @param transmitterID String identifying a transmitter uniquely in the Relayr Cloud.
+ *  @return A full-fledge <code>RelayrTransmitter</code> or <code>nil</code> if no transmitter where found.
+ */
+- (RelayrTransmitter*)transmitterWithID:(NSString*)transmitterID;
+
+/*!
+ *  @abstract It returns a <code>RelayrDevice</code> object with the specific Relayr ID if the user owns it.
+ *
+ *  @param deviceID String identigying a device uniquely in the Relayr Cloud.
+ *  @return A full-fledge <code>RelayrDevice</code> or <code>nil</code> if no device where found.
+ */
+- (RelayrDevice*)deviceWithID:(NSString*)deviceID;
+
+/*!
  *  @abstract Queries the relayr platform for the user information.
  *  @discussion Every time this method is called a server query is launched. 
  *	Once the response is returned successfuly, all the <i>readonly</i> user related properties are populated with the respective values.

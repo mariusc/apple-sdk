@@ -41,6 +41,25 @@ static NSString* const kCodingDevices = @"dev";
     }];
 }
 
+- (NSArray*)devicesWithInputMeaning:(NSString*)meaning
+{
+    NSMutableArray* result = [[NSMutableArray alloc] init];
+    
+    for (RelayrDevice* device in _devices)
+    {
+        for (RelayrInput* input in device.inputs)
+        {
+            if ([input.meaning isEqualToString:meaning])
+            {
+                [result addObject:device];
+                break;
+            }
+        }
+    }
+    
+    return (result.count) ? result : nil;
+}
+
 #pragma mark Setup extension
 
 - (instancetype)initWithID:(NSString*)uid

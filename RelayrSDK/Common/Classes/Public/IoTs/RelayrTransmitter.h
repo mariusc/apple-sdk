@@ -58,6 +58,14 @@
  */
 @property (readonly,nonatomic) NSSet* devices;
 
+/*!
+ *  @abstract Returns an array of devices connected to the transmitter that can read a specific meaning.
+ *
+ *  @param meaning The type of reading that the devices must reads to be placed on the results array.
+ *  @return Array of devices that can read the specific inputs..
+ */
+- (NSArray*)devicesWithInputMeaning:(NSString*)meaning;
+
 #pragma mark Processes
 
 /*!
