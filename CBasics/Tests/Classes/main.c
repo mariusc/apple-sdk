@@ -7,7 +7,7 @@ static bool test_main(void);
 
 #pragma mark - Public API
 
-TEST_MAIN(test_main);
+TEST_MAIN(test_main)
 
 #pragma mark - Private functionality
 

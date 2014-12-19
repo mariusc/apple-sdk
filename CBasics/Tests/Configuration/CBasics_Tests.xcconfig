@@ -1,4 +1,0 @@
-
-PRODUCT_NAME = cbasics_tests
-BUNDLE_NAME = $(PRODUCT_NAME)
-BUNDLE_IDENTIFIER = io.relayr.cbasics.tests

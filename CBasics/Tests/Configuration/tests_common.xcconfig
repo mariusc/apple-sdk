@@ -1,0 +1,28 @@
+// Architectures
+
+// Build locations
+
+// Build options
+
+// Code signing
+
+// Deployment
+
+// Kernel module
+
+// Linking
+
+// Packaging
+PRODUCT_NAME = cbasics_tests
+
+// Search paths
+
+// Testing
+
+// Versioning
+
+// Apple LLVM - Code Generation
+
+// Apple LLVM - Custom compiler flags
+
+// Apple LLVM - Language

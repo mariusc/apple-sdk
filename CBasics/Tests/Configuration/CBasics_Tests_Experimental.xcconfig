@@ -1,2 +1,0 @@
-#include "OSX/Configuration/CBasics_OSX_Experimental.xcconfig"
-#include "Tests/Configuration/CBasics_Tests.xcconfig"

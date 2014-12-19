@@ -1,4 +1,0 @@
-SDKROOT = iphoneos                  // iOS SDK
-IPHONEOS_DEPLOYMENT_TARGET = 8.0    // The earliest iOS version the product is to run onto
-SUPPORTED_PLATFORMS = iphoneos iphonesimulator
-TARGETED_DEVICE_FAMILY = 1,2        // For iPhones and iPads

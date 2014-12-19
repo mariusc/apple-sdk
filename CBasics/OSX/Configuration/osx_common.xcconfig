@@ -1,0 +1,30 @@
+// Architectures
+SDKROOT = macosx
+SUPPORTED_PLATFORMS = macosx
+
+// Build locations
+
+// Build options
+
+// Code signing
+
+// Deployment
+MACOSX_DEPLOYMENT_TARGET = 10.10
+
+// Kernel module
+
+// Linking
+
+// Packaging
+
+// Search paths
+
+// Testing
+
+// Versioning
+
+// Apple LLVM - Code Generation
+
+// Apple LLVM - Custom compiler flags
+
+// Apple LLVM - Language

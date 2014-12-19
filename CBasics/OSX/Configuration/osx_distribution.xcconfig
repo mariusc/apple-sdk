@@ -1,0 +1,2 @@
+#include "Common/Configuration/distribution.xcconfig"
+#include "OSX/Configuration/osx_common.xcconfig"

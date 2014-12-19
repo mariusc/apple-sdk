@@ -1,2 +1,0 @@
-#include "Common/Configuration/CBasics_Experimental.xcconfig"
-#include "iOS/Configuration/CBasics_iOS.xcconfig"

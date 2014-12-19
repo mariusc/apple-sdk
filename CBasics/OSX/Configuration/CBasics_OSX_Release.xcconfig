@@ -1,2 +1,0 @@
-#include "Common/Configuration/CBasics_Release.xcconfig"
-#include "OSX/Configuration/CBasics_OSX.xcconfig"

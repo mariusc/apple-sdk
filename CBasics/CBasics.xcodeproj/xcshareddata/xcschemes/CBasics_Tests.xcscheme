@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "626433211A2512C800A5A11B"
-               BuildableName = "cbasics_tests"
+               BuildableName = "CBasics_Tests"
                BlueprintName = "CBasics_Tests"
                ReferencedContainer = "container:CBasics.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "626433211A2512C800A5A11B"
-            BuildableName = "cbasics_tests"
+            BuildableName = "CBasics_Tests"
             BlueprintName = "CBasics_Tests"
             ReferencedContainer = "container:CBasics.xcodeproj">
          </BuildableReference>
@@ -52,7 +52,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "626433211A2512C800A5A11B"
-            BuildableName = "cbasics_tests"
+            BuildableName = "CBasics_Tests"
             BlueprintName = "CBasics_Tests"
             ReferencedContainer = "container:CBasics.xcodeproj">
          </BuildableReference>
@@ -70,7 +70,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "626433211A2512C800A5A11B"
-            BuildableName = "cbasics_tests"
+            BuildableName = "CBasics_Tests"
             BlueprintName = "CBasics_Tests"
             ReferencedContainer = "container:CBasics.xcodeproj">
          </BuildableReference>
