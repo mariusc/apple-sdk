@@ -1,0 +1,32 @@
+// Architectures
+SDKROOT = iphoneos                  // Build against the latest SDK
+SUPPORTED_PLATFORMS = iphoneos iphonesimulator
+VALID_ARCHS = arm64 armv7 armv7s
+
+// Build locations
+
+// Build options
+
+// Code signing
+
+// Deployment
+TARGETED_DEVICE_FAMILY = 1,2        // For iPhones and iPads
+IPHONEOS_DEPLOYMENT_TARGET = 8.0    // The earliest iOS version the product is to run onto
+
+// Kernel module
+
+// Linking
+
+// Packaging
+
+// Search paths
+
+// Testing
+
+// Versioning
+
+// Apple LLVM - Code Generation
+
+// Apple LLVM - Custom compiler flags
+
+// Apple LLVM - Language

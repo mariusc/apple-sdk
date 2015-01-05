@@ -14,7 +14,7 @@ VALIDATE_PRODUCT = YES
 DEPLOYMENT_LOCATION = YES           // Products are placed in the build products folder
 DEPLOYMENT_POSTPROCESSING = YES     // Strip binariy and set file mode, owner, and group
 DSTROOT = $(PROJECT_DIR)/../bin/$(CONFIGURATION) // Root path for products
-INSTALL_PATH = /$(PLATFORM_NAME)/CBasics         // Path to be appended to $(DSTROOT), where the product will be installed
+INSTALL_PATH = /$(PLATFORM_NAME)/$(PRODUCT_NAME) // Path to be appended to $(DSTROOT), where the product will be installed
 SKIP_INSTALL = NO                   // Whether the installation process should be skipped or not
 COPY_PHASE_STRIP = YES
 

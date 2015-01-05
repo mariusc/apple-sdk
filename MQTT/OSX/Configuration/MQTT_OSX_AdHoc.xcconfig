@@ -1,2 +1,0 @@
-#include "Common/Configuration/MQTT_AdHoc.xcconfig"
-#include "OSX/Configuration/MQTT_OSX.xcconfig"

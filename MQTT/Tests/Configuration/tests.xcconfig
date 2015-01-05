@@ -1,0 +1,34 @@
+#include "OSX/Configuration/osx_release.xcconfig"
+
+// Architectures
+
+// Build locations
+
+// Build options
+
+// Code signing
+
+// Deployment
+
+// Kernel module
+
+// Linking
+
+// Packaging
+PRODUCT_NAME = MQTT
+
+// Search paths
+
+// Testing
+
+// Versioning
+
+// Apple LLVM - Code Generation
+
+// Apple LLVM - Custom compiler flags
+
+// Apple LLVM - Language
+
+BUNDLE_NAME = $(PRODUCT_NAME)
+BUNDLE_IDENTIFIER = io.relayr.mqtt.tests
+INFOPLIST_FILE = Tests/Configuration/MQTT_Tests.plist

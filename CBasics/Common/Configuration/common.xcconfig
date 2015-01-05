@@ -1,6 +1,6 @@
 // Architectures
 ADDITIONAL_SDKS =
-ARCHS = $(ARCHS_STANDARD)               // Architectures supporte
+ARCHS = $(ARCHS_STANDARD)
 
 // Build locations
 
@@ -15,13 +15,13 @@ SEPARATE_STRIP = NO
 // Kernel module
 
 // Linking
-DYLIB_CURRENT_VERSION = 0.0.2           // Version number
+DYLIB_CURRENT_VERSION = 0.0.2
 DYLIB_COMPATIBILITY_VERSION = $(DYLIB_CURRENT_VERSION)
 
 // Packaging
 EXECUTABLE_PREFIX = lib
 EXECUTABLE_EXTENSION = a
-PRODUCT_NAME = cbasics                  // Library's name
+PRODUCT_NAME = cbasics
 
 // Search paths
 
@@ -30,7 +30,8 @@ PRODUCT_NAME = cbasics                  // Library's name
 // Versioning
 
 // Apple LLVM - Code Generation
-GCC_SYMBOLS_PRIVATE_EXTERN = NO         // When enabled, all symbols are declared 'private extern' unless explicitly marked to be exported using __attribute__( (visibility("default")) ) in code. If not enabled, all symbols are exported unless explicitly marked as 'private extern'.
+// When enabled, all symbols are declared 'private extern' unless explicitly marked to be exported using __attribute__( (visibility("default")) ) in code. If not enabled, all symbols are exported unless explicitly marked as 'private extern'.
+GCC_SYMBOLS_PRIVATE_EXTERN = NO
 
 // Apple LLVM - Custom compiler flags
 

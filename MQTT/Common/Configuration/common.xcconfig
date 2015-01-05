@@ -1,0 +1,56 @@
+// Architectures
+ADDITIONAL_SDKS =
+ARCHS = $(ARCHS_STANDARD)
+
+// Build locations
+
+// Build options
+
+// Code signing
+
+// Deployment
+STRIP_INSTALLED_PRODUCT = YES
+SEPARATE_STRIP = NO
+
+// Kernel module
+
+// Linking
+DYLIB_CURRENT_VERSION = 0.1.0
+DYLIB_COMPATIBILITY_VERSION = $(DYLIB_CURRENT_VERSION)
+
+// Packaging
+EXECUTABLE_PREFIX = lib
+EXECUTABLE_EXTENSION = a
+PRODUCT_NAME = MQTT
+
+// Search paths
+HEADER_SEARCH_PATHS = $(PROJECT_DIR)/Common/Libraries
+LIBRARY_SEARCH_PATHS = $(PROJECT_DIR)/Common/Libraries/openssl
+
+// Testing
+
+// Versioning
+
+// Apple LLVM - Code Generation
+// When enabled, all symbols are declared 'private extern' unless explicitly marked to be exported using __attribute__( (visibility("default")) ) in code. If not enabled, all symbols are exported unless explicitly marked as 'private extern'. (http://gcc.gnu.org/onlinedocs/gcc-4.3.3/gcc/Code-Gen-Options.html -fvisibility)
+GCC_SYMBOLS_PRIVATE_EXTERN = YES
+
+// Apple LLVM - Custom compiler flags
+OTHER_CFLAGS=-DUSE_NAMED_SEMAPHORES -DNOSIGPIPE -DNO_PERSISTENCE -DOPENSSL -Wno-deprecated-declarations -fomit-frame-pointer
+//OTHER_CFLAGS=-DUSE_NAMED_SEMAPHORES -DNOSIGPIPE -DNO_PERSISTENCE -DOPENSSL -Wno-deprecated-declarations -fvisibility=hidden -fomit-frame-pointer
+// -DMQTT_ASYNC -static
+
+// Apple LLVM - Language
+GCC_C_LANGUAGE_STANDARD = gnu11
+
+// Apple LLVM - Language modules
+CLANG_ENABLE_MODULES = YES
+
+// Apple LLVM - Warnings
+GCC_WARN_PEDANTIC = NO
+GCC_WARN_INHIBIT_ALL_WARNINGS = YES
+
+// User-defined
+BUNDLE_NAME = $(PRODUCT_NAME)
+BUNDLE_IDENTIFIER = io.relayr.mqtt
+BUNDLE_SIGNATURE = RLYR

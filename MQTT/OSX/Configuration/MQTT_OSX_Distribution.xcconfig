@@ -1,2 +1,0 @@
-#include "Common/Configuration/MQTT_Distribution.xcconfig"
-#include "OSX/Configuration/MQTT_OSX.xcconfig"

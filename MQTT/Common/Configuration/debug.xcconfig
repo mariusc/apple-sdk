@@ -1,12 +1,12 @@
 #include "Common/Configuration/common.xcconfig"
 
 // Architectures
-ONLY_ACTIVE_ARCH = NO
+ONLY_ACTIVE_ARCH = YES
 
 // Build locations
 
 // Build options
-VALIDATE_PRODUCT = YES
+VALIDATE_PRODUCT = NO
 
 // Code signing
 
@@ -14,7 +14,7 @@ VALIDATE_PRODUCT = YES
 DEPLOYMENT_LOCATION = NO            // Products are placed in $(DSTROOT)
 DEPLOYMENT_POSTPROCESSING = NO
 SKIP_INSTALL = YES                  // Whether the installation process should be skipped or not
-COPY_PHASE_STRIP = YES
+COPY_PHASE_STRIP = NO
 
 // Kernel module
 
@@ -30,7 +30,7 @@ ALWAYS_SEARCH_USER_PATHS = NO
 // Versioning
 
 // Apple LLVM - Code Generation
-GCC_OPTIMIZATION_LEVEL = s
+GCC_OPTIMIZATION_LEVEL = 0
 
 // Apple LLVM - Custom compiler flags
 

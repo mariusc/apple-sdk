@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "62CBFBF819F5A502007E84C2"
-               BuildableName = "lib.a"
+               BuildableName = "libcbasics.a"
                BlueprintName = "CBasics_OSX"
                ReferencedContainer = "container:CBasics.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "62CBFBF819F5A502007E84C2"
-            BuildableName = "lib.a"
+            BuildableName = "libcbasics.a"
             BlueprintName = "CBasics_OSX"
             ReferencedContainer = "container:CBasics.xcodeproj">
          </BuildableReference>
@@ -61,7 +61,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "62CBFBF819F5A502007E84C2"
-            BuildableName = "lib.a"
+            BuildableName = "libcbasics.a"
             BlueprintName = "CBasics_OSX"
             ReferencedContainer = "container:CBasics.xcodeproj">
          </BuildableReference>
