@@ -1,0 +1,50 @@
+// Architectures
+ADDITIONAL_SDKS =
+ARCHS = $(ARCHS_STANDARD)
+
+// Build locations
+
+// Build options
+
+// Code signing
+
+// Deployment
+STRIP_INSTALLED_PRODUCT = YES
+SEPARATE_STRIP = NO
+
+// Kernel module
+
+// Linking
+DYLIB_CURRENT_VERSION = 0.2.1
+DYLIB_COMPATIBILITY_VERSION = $(DYLIB_CURRENT_VERSION)
+
+// Packaging
+PRODUCT_NAME = Relayr
+
+// Search paths
+
+// Testing
+
+// Versioning
+
+// Apple LLVM - Code Generation
+// When enabled, all symbols are declared 'private extern' unless explicitly marked to be exported using __attribute__( (visibility("default")) ) in code. If not enabled, all symbols are exported unless explicitly marked as 'private extern'.
+GCC_SYMBOLS_PRIVATE_EXTERN = NO
+
+// Apple LLVM - Custom compiler flags
+OTHER_CFLAGS = -DRELAYRSDK_VERSION=\"$(DYLIB_CURRENT_VERSION)\"
+
+// Apple LLVM - Language
+GCC_C_LANGUAGE_STANDARD = gnu11
+
+// Apple LLVM - Language modules
+CLANG_ENABLE_MODULES = YES
+
+// Apple LLVM - Warnings
+GCC_WARN_PEDANTIC = NO
+
+// User-defined
+BUNDLE_NAME = $(PRODUCT_NAME)           // Framework's name (if any)
+BUNDLE_IDENTIFIER = io.relayr.sdk       // Identifier
+BUNDLE_SIGNATURE = RLYR                 // Signature
+FRAMEWORK_LICENSE = Copyright © 2015 Relayr. MIT License.

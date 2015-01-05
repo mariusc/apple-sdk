@@ -1,0 +1,2 @@
+#include "OSX/Configuration/osx_release.xcconfig"
+#include "Tests/Configuration/tests_common.xcconfig"

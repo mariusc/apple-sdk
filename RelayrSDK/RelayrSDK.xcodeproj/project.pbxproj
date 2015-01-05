@@ -244,13 +244,6 @@
 			remoteGlobalIDString = 62D711B619F11E5C00A72F40;
 			remoteInfo = MQTT_OSX;
 		};
-		6299E0B219F2E766004A9A70 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 62D711C019F11E5C00A72F40;
-			remoteInfo = MQTT_Tests;
-		};
 		6299E0B719F2E78F004A9A70 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6299E0A819F2E766004A9A70 /* MQTT.xcodeproj */;
@@ -320,30 +313,26 @@
 		6250E18A19B50A0D003932AA /* RelayrPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrPublisher.m; sourceTree = "<group>"; };
 		6250E18F19B50AAD003932AA /* RelayrPublisher_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrPublisher_Setup.h; sourceTree = "<group>"; };
 		6250E19219B51566003932AA /* RelayrApp_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrApp_Setup.h; sourceTree = "<group>"; };
-		6252ABDC19C4C27E00A53221 /* Relayr_Tests.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Relayr_Tests.xcconfig; path = Tests/Configuration/Relayr_Tests.xcconfig; sourceTree = SOURCE_ROOT; };
+		6252ABDC19C4C27E00A53221 /* tests_common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = tests_common.xcconfig; path = Tests/Configuration/tests_common.xcconfig; sourceTree = SOURCE_ROOT; };
 		6252F0B3199C2465002ECE4D /* Relayr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Relayr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6252F0D1199C2492002ECE4D /* Relayr.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr.xcconfig; sourceTree = "<group>"; };
+		6252F0D1199C2492002ECE4D /* common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = common.xcconfig; sourceTree = "<group>"; };
 		6252F0D5199C24AD002ECE4D /* Relayr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Relayr.h; sourceTree = "<group>"; };
 		6252F0D7199C24AD002ECE4D /* Relayr_iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Relayr_iOS.plist; sourceTree = "<group>"; };
-		6252F0D8199C24AD002ECE4D /* Relayr_iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS.xcconfig; sourceTree = "<group>"; };
+		6252F0D8199C24AD002ECE4D /* ios_common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ios_common.xcconfig; sourceTree = "<group>"; };
 		6252F0E5199C2AFA002ECE4D /* Relayr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Relayr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6252F100199C2BFC002ECE4D /* Relayr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Relayr.h; sourceTree = "<group>"; };
 		6252F102199C2BFC002ECE4D /* Relayr_OSX.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Relayr_OSX.plist; sourceTree = "<group>"; };
-		6252F103199C2BFC002ECE4D /* Relayr_OSX.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_OSX.xcconfig; sourceTree = "<group>"; };
+		6252F103199C2BFC002ECE4D /* osx_common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = osx_common.xcconfig; sourceTree = "<group>"; };
 		6254F80319CAC673006C836F /* RelayrDeviceModel_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrDeviceModel_Setup.h; sourceTree = "<group>"; };
 		6254F80619CACA62006C836F /* RelayrFirmwareModel_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrFirmwareModel_Setup.h; sourceTree = "<group>"; };
 		62732D4019C05A24000E9545 /* RelayrConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrConnection.h; sourceTree = "<group>"; };
 		62732D4119C05A24000E9545 /* RelayrConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelayrConnection.m; sourceTree = "<group>"; };
-		6291E96E1A13B2EB00750607 /* Relayr_Tests_AdHoc.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Tests_AdHoc.xcconfig; sourceTree = "<group>"; };
-		6291E96F1A13B2EB00750607 /* Relayr_Tests_Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Tests_Debug.xcconfig; sourceTree = "<group>"; };
-		6291E9701A13B2EB00750607 /* Relayr_Tests_Distribution.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Tests_Distribution.xcconfig; sourceTree = "<group>"; };
-		6291E9711A13B2EB00750607 /* Relayr_Tests_Experimental.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Tests_Experimental.xcconfig; sourceTree = "<group>"; };
-		6291E9721A13B2EB00750607 /* Relayr_Tests_Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Tests_Release.xcconfig; sourceTree = "<group>"; };
-		6291E9731A13B32C00750607 /* Relayr_OSX_AdHoc.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_OSX_AdHoc.xcconfig; sourceTree = "<group>"; };
-		6291E9741A13B32C00750607 /* Relayr_OSX_Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_OSX_Debug.xcconfig; sourceTree = "<group>"; };
-		6291E9751A13B32C00750607 /* Relayr_OSX_Distribution.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_OSX_Distribution.xcconfig; sourceTree = "<group>"; };
-		6291E9761A13B32C00750607 /* Relayr_OSX_Experimental.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_OSX_Experimental.xcconfig; sourceTree = "<group>"; };
-		6291E9771A13B32C00750607 /* Relayr_OSX_Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_OSX_Release.xcconfig; sourceTree = "<group>"; };
+		6291E96F1A13B2EB00750607 /* tests_debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = tests_debug.xcconfig; sourceTree = "<group>"; };
+		6291E9701A13B2EB00750607 /* tests_distribution.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = tests_distribution.xcconfig; sourceTree = "<group>"; };
+		6291E9721A13B2EB00750607 /* tests_release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = tests_release.xcconfig; sourceTree = "<group>"; };
+		6291E9741A13B32C00750607 /* osx_debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = osx_debug.xcconfig; sourceTree = "<group>"; };
+		6291E9751A13B32C00750607 /* osx_distribution.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = osx_distribution.xcconfig; sourceTree = "<group>"; };
+		6291E9771A13B32C00750607 /* osx_release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = osx_release.xcconfig; sourceTree = "<group>"; };
 		629666DE19D0169B003C99D9 /* WunderbarOnboarding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WunderbarOnboarding.h; sourceTree = "<group>"; };
 		629666DF19D0169B003C99D9 /* WunderbarOnboarding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WunderbarOnboarding.m; sourceTree = "<group>"; };
 		6298AF3419D5F2250097E956 /* RLATargetAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLATargetAction.h; sourceTree = "<group>"; };
@@ -419,16 +408,12 @@
 		62F1350719D54DA900DF93A7 /* RelayrOutput_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrOutput_Setup.h; sourceTree = "<group>"; };
 		62F351AE1A1CE98900C8591E /* RLAServiceHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAServiceHolder.h; sourceTree = "<group>"; };
 		62F351AF1A1CE98900C8591E /* RLAServiceHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAServiceHolder.m; sourceTree = "<group>"; };
-		62FD686219FFAAA400BC5431 /* Relayr_AdHoc.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_AdHoc.xcconfig; sourceTree = "<group>"; };
-		62FD686319FFAAA400BC5431 /* Relayr_Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Debug.xcconfig; sourceTree = "<group>"; };
-		62FD686419FFAAA400BC5431 /* Relayr_Distribution.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Distribution.xcconfig; sourceTree = "<group>"; };
-		62FD686519FFAAA400BC5431 /* Relayr_Experimental.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Experimental.xcconfig; sourceTree = "<group>"; };
-		62FD686619FFAAA400BC5431 /* Relayr_Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_Release.xcconfig; sourceTree = "<group>"; };
-		62FD686719FFAAE500BC5431 /* Relayr_iOS_AdHoc.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS_AdHoc.xcconfig; sourceTree = "<group>"; };
-		62FD686819FFAAE500BC5431 /* Relayr_iOS_Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS_Debug.xcconfig; sourceTree = "<group>"; };
-		62FD686919FFAAE500BC5431 /* Relayr_iOS_Distribution.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS_Distribution.xcconfig; sourceTree = "<group>"; };
-		62FD686A19FFAAE500BC5431 /* Relayr_iOS_Experimental.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS_Experimental.xcconfig; sourceTree = "<group>"; };
-		62FD686B19FFAAE500BC5431 /* Relayr_iOS_Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Relayr_iOS_Release.xcconfig; sourceTree = "<group>"; };
+		62FD686319FFAAA400BC5431 /* debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = debug.xcconfig; sourceTree = "<group>"; };
+		62FD686419FFAAA400BC5431 /* distribution.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = distribution.xcconfig; sourceTree = "<group>"; };
+		62FD686619FFAAA400BC5431 /* release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = release.xcconfig; sourceTree = "<group>"; };
+		62FD686819FFAAE500BC5431 /* ios_debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ios_debug.xcconfig; sourceTree = "<group>"; };
+		62FD686919FFAAE500BC5431 /* ios_distribution.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ios_distribution.xcconfig; sourceTree = "<group>"; };
+		62FD686B19FFAAE500BC5431 /* ios_release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ios_release.xcconfig; sourceTree = "<group>"; };
 		62FD79DA1A1E3EF400A8CA37 /* WunderbarParsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WunderbarParsing.h; sourceTree = "<group>"; };
 		62FD79DB1A1E3EF400A8CA37 /* WunderbarParsing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WunderbarParsing.m; sourceTree = "<group>"; };
 		62FDB16719BEF2DD00AE2A64 /* RelayrFirmware_Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelayrFirmware_Setup.h; sourceTree = "<group>"; };
@@ -647,12 +632,10 @@
 		6252F0D0199C2492002ECE4D /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				6252F0D1199C2492002ECE4D /* Relayr.xcconfig */,
-				62FD686319FFAAA400BC5431 /* Relayr_Debug.xcconfig */,
-				62FD686619FFAAA400BC5431 /* Relayr_Release.xcconfig */,
-				62FD686419FFAAA400BC5431 /* Relayr_Distribution.xcconfig */,
-				62FD686219FFAAA400BC5431 /* Relayr_AdHoc.xcconfig */,
-				62FD686519FFAAA400BC5431 /* Relayr_Experimental.xcconfig */,
+				6252F0D1199C2492002ECE4D /* common.xcconfig */,
+				62FD686319FFAAA400BC5431 /* debug.xcconfig */,
+				62FD686619FFAAA400BC5431 /* release.xcconfig */,
+				62FD686419FFAAA400BC5431 /* distribution.xcconfig */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -670,12 +653,10 @@
 			isa = PBXGroup;
 			children = (
 				6252F0D7199C24AD002ECE4D /* Relayr_iOS.plist */,
-				6252F0D8199C24AD002ECE4D /* Relayr_iOS.xcconfig */,
-				62FD686819FFAAE500BC5431 /* Relayr_iOS_Debug.xcconfig */,
-				62FD686B19FFAAE500BC5431 /* Relayr_iOS_Release.xcconfig */,
-				62FD686919FFAAE500BC5431 /* Relayr_iOS_Distribution.xcconfig */,
-				62FD686719FFAAE500BC5431 /* Relayr_iOS_AdHoc.xcconfig */,
-				62FD686A19FFAAE500BC5431 /* Relayr_iOS_Experimental.xcconfig */,
+				6252F0D8199C24AD002ECE4D /* ios_common.xcconfig */,
+				62FD686819FFAAE500BC5431 /* ios_debug.xcconfig */,
+				62FD686B19FFAAE500BC5431 /* ios_release.xcconfig */,
+				62FD686919FFAAE500BC5431 /* ios_distribution.xcconfig */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -702,12 +683,10 @@
 			isa = PBXGroup;
 			children = (
 				6252F102199C2BFC002ECE4D /* Relayr_OSX.plist */,
-				6252F103199C2BFC002ECE4D /* Relayr_OSX.xcconfig */,
-				6291E9741A13B32C00750607 /* Relayr_OSX_Debug.xcconfig */,
-				6291E9771A13B32C00750607 /* Relayr_OSX_Release.xcconfig */,
-				6291E9751A13B32C00750607 /* Relayr_OSX_Distribution.xcconfig */,
-				6291E9731A13B32C00750607 /* Relayr_OSX_AdHoc.xcconfig */,
-				6291E9761A13B32C00750607 /* Relayr_OSX_Experimental.xcconfig */,
+				6252F103199C2BFC002ECE4D /* osx_common.xcconfig */,
+				6291E9741A13B32C00750607 /* osx_debug.xcconfig */,
+				6291E9771A13B32C00750607 /* osx_release.xcconfig */,
+				6291E9751A13B32C00750607 /* osx_distribution.xcconfig */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -785,8 +764,7 @@
 			children = (
 				6299E0AF19F2E766004A9A70 /* libMQTT.a */,
 				6299E0B119F2E766004A9A70 /* libMQTT.a */,
-				6299E0B319F2E766004A9A70 /* MQTT.xctest */,
-				6291E9671A12544400750607 /* MQTT_CommandLine */,
+				6291E9671A12544400750607 /* libMQTT_CommandLine */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -898,7 +876,7 @@
 			children = (
 				62CF59E21A02B3B000D16DF1 /* libcbasics.a */,
 				62CF59E41A02B3B000D16DF1 /* libcbasics.a */,
-				6264333F1A2516A800A5A11B /* cbasics_tests */,
+				6264333F1A2516A800A5A11B /* libcbasics_tests */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1006,12 +984,10 @@
 			isa = PBXGroup;
 			children = (
 				62E41FD119C35DF1008459B7 /* Relayr_Tests.plist */,
-				6252ABDC19C4C27E00A53221 /* Relayr_Tests.xcconfig */,
-				6291E96F1A13B2EB00750607 /* Relayr_Tests_Debug.xcconfig */,
-				6291E9721A13B2EB00750607 /* Relayr_Tests_Release.xcconfig */,
-				6291E9701A13B2EB00750607 /* Relayr_Tests_Distribution.xcconfig */,
-				6291E96E1A13B2EB00750607 /* Relayr_Tests_AdHoc.xcconfig */,
-				6291E9711A13B2EB00750607 /* Relayr_Tests_Experimental.xcconfig */,
+				6252ABDC19C4C27E00A53221 /* tests_common.xcconfig */,
+				6291E96F1A13B2EB00750607 /* tests_debug.xcconfig */,
+				6291E9721A13B2EB00750607 /* tests_release.xcconfig */,
+				6291E9701A13B2EB00750607 /* tests_distribution.xcconfig */,
 				6212444A19D9902F0000EDE8 /* RLATestsConstants.h */,
 			);
 			name = Configuration;
@@ -1258,17 +1234,17 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		6264333F1A2516A800A5A11B /* cbasics_tests */ = {
+		6264333F1A2516A800A5A11B /* libcbasics_tests */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
-			path = cbasics_tests;
+			path = libcbasics_tests;
 			remoteRef = 6264333E1A2516A800A5A11B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		6291E9671A12544400750607 /* MQTT_CommandLine */ = {
+		6291E9671A12544400750607 /* libMQTT_CommandLine */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
-			path = MQTT_CommandLine;
+			path = libMQTT_CommandLine;
 			remoteRef = 6291E9661A12544400750607 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1284,13 +1260,6 @@
 			fileType = archive.ar;
 			path = libMQTT.a;
 			remoteRef = 6299E0B019F2E766004A9A70 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		6299E0B319F2E766004A9A70 /* MQTT.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = MQTT.xctest;
-			remoteRef = 6299E0B219F2E766004A9A70 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		62CF59E21A02B3B000D16DF1 /* libcbasics.a */ = {
@@ -1492,7 +1461,7 @@
 		};
 		6252F0C5199C2465002ECE4D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 62FD686819FFAAE500BC5431 /* Relayr_iOS_Debug.xcconfig */;
+			baseConfigurationReference = 62FD686819FFAAE500BC5431 /* ios_debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1530,7 +1499,7 @@
 		};
 		6252F0C6199C2465002ECE4D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 62FD686B19FFAAE500BC5431 /* Relayr_iOS_Release.xcconfig */;
+			baseConfigurationReference = 62FD686B19FFAAE500BC5431 /* ios_release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1566,7 +1535,7 @@
 		};
 		6252F0C7199C2465002ECE4D /* Distribution */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 62FD686919FFAAE500BC5431 /* Relayr_iOS_Distribution.xcconfig */;
+			baseConfigurationReference = 62FD686919FFAAE500BC5431 /* ios_distribution.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1602,7 +1571,7 @@
 		};
 		6252F0F6199C2AFB002ECE4D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6291E9741A13B32C00750607 /* Relayr_OSX_Debug.xcconfig */;
+			baseConfigurationReference = 6291E9741A13B32C00750607 /* osx_debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1638,7 +1607,7 @@
 		};
 		6252F0F7199C2AFB002ECE4D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6291E9771A13B32C00750607 /* Relayr_OSX_Release.xcconfig */;
+			baseConfigurationReference = 6291E9771A13B32C00750607 /* osx_release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1672,7 +1641,7 @@
 		};
 		6252F0F8199C2AFB002ECE4D /* Distribution */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6291E9751A13B32C00750607 /* Relayr_OSX_Distribution.xcconfig */;
+			baseConfigurationReference = 6291E9751A13B32C00750607 /* osx_distribution.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1705,124 +1674,9 @@
 			};
 			name = Distribution;
 		};
-		627421431A038D330046185B /* Experimental */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-			};
-			name = Experimental;
-		};
-		627421441A038D330046185B /* Experimental */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 62FD686A19FFAAE500BC5431 /* Relayr_iOS_Experimental.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = Experimental;
-		};
-		627421451A038D330046185B /* Experimental */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6291E9761A13B32C00750607 /* Relayr_OSX_Experimental.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = Experimental;
-		};
-		627421461A038D330046185B /* Experimental */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6291E9711A13B2EB00750607 /* Relayr_Tests_Experimental.xcconfig */;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_C_LANGUAGE_STANDARD = c11;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-			};
-			name = Experimental;
-		};
 		62E41FC819C35B90008459B7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6291E96F1A13B2EB00750607 /* Relayr_Tests_Debug.xcconfig */;
+			baseConfigurationReference = 6291E96F1A13B2EB00750607 /* tests_debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1865,7 +1719,7 @@
 		};
 		62E41FC919C35B90008459B7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6291E9721A13B2EB00750607 /* Relayr_Tests_Release.xcconfig */;
+			baseConfigurationReference = 6291E9721A13B2EB00750607 /* tests_release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1903,7 +1757,7 @@
 		};
 		62E41FCA19C35B90008459B7 /* Distribution */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6291E9701A13B2EB00750607 /* Relayr_Tests_Distribution.xcconfig */;
+			baseConfigurationReference = 6291E9701A13B2EB00750607 /* tests_distribution.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1939,122 +1793,6 @@
 			};
 			name = Distribution;
 		};
-		62F6E71719EBD641004AAA4A /* Ad Hoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-			};
-			name = "Ad Hoc";
-		};
-		62F6E71819EBD641004AAA4A /* Ad Hoc */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 62FD686719FFAAE500BC5431 /* Relayr_iOS_AdHoc.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: iThings4U GmbH (C87D7SA3JH)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: iThings4U GmbH (C87D7SA3JH)";
-				COPY_PHASE_STRIP = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "c4ec490f-dd4b-4e1f-bc2d-7a8d6321b169";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = "Ad Hoc";
-		};
-		62F6E71919EBD641004AAA4A /* Ad Hoc */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6291E9731A13B32C00750607 /* Relayr_OSX_AdHoc.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "c4ec490f-dd4b-4e1f-bc2d-7a8d6321b169";
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = "Ad Hoc";
-		};
-		62F6E71A19EBD641004AAA4A /* Ad Hoc */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6291E96E1A13B2EB00750607 /* Relayr_Tests_AdHoc.xcconfig */;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_C_LANGUAGE_STANDARD = c11;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-			};
-			name = "Ad Hoc";
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2064,8 +1802,6 @@
 				6252F0AB199C243D002ECE4D /* Debug */,
 				6252F0AC199C243D002ECE4D /* Release */,
 				6252F0AD199C2443002ECE4D /* Distribution */,
-				62F6E71719EBD641004AAA4A /* Ad Hoc */,
-				627421431A038D330046185B /* Experimental */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2076,8 +1812,6 @@
 				6252F0C5199C2465002ECE4D /* Debug */,
 				6252F0C6199C2465002ECE4D /* Release */,
 				6252F0C7199C2465002ECE4D /* Distribution */,
-				62F6E71819EBD641004AAA4A /* Ad Hoc */,
-				627421441A038D330046185B /* Experimental */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2088,8 +1822,6 @@
 				6252F0F6199C2AFB002ECE4D /* Debug */,
 				6252F0F7199C2AFB002ECE4D /* Release */,
 				6252F0F8199C2AFB002ECE4D /* Distribution */,
-				62F6E71919EBD641004AAA4A /* Ad Hoc */,
-				627421451A038D330046185B /* Experimental */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2100,8 +1832,6 @@
 				62E41FC819C35B90008459B7 /* Debug */,
 				62E41FC919C35B90008459B7 /* Release */,
 				62E41FCA19C35B90008459B7 /* Distribution */,
-				62F6E71A19EBD641004AAA4A /* Ad Hoc */,
-				627421461A038D330046185B /* Experimental */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

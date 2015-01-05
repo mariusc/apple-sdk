@@ -1,2 +1,0 @@
-#include "Common/Configuration/Relayr_Release.xcconfig"
-#include "OSX/Configuration/Relayr_OSX.xcconfig"

@@ -1,6 +1,0 @@
-SDKROOT = macosx
-SUPPORTED_PLATFORMS = macosx
-MACOSX_DEPLOYMENT_TARGET = 10.9
-
-BUNDLE_IDENTIFIER = io.relayr.sdk.tests
-INFOPLIST_FILE = $(SRCROOT)/Tests/Configuration/Relayr_Tests.plist

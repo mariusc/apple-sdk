@@ -1,0 +1,5 @@
+// Packaging
+INFOPLIST_FILE = $(SRCROOT)/Tests/Configuration/Relayr_Tests.plist
+
+// User-defined
+BUNDLE_IDENTIFIER = io.relayr.sdk.tests

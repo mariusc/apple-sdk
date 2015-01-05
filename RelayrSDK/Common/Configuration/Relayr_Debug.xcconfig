@@ -1,6 +1,0 @@
-#include "Common/Configuration/Relayr.xcconfig"
-
-ONLY_ACTIVE_ARCH = YES          // Only build for the current architecture
-DEPLOYMENT_POSTPROCESSING = NO  // Do not strip or process the end binaries in any way
-
-GCC_OPTIMIZATION_LEVEL = 0      // The optimazation level

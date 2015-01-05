@@ -1,2 +1,0 @@
-#include "Common/Configuration/Relayr_Experimental.xcconfig"
-#include "iOS/Configuration/Relayr_iOS.xcconfig"
