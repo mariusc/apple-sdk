@@ -63,6 +63,32 @@ static NSString* const kCodingPublishers = @"pub";
     }];
 }
 
+- (RelayrTransmitter*)transmitterWithID:(NSString*)transmitterID
+{
+    RelayrTransmitter* result;
+    if (!transmitterID.length) { return nil; }
+    
+    for (RelayrTransmitter* transmitter in _transmitters)
+    {
+        if ([transmitter.uid isEqualToString:transmitterID]) { result = transmitter; break; }
+    }
+    
+    return result;
+}
+
+- (RelayrDevice*)deviceWithID:(NSString*)deviceID
+{
+    RelayrDevice* result;
+    if (!deviceID.length) { return nil; }
+    
+    for (RelayrDevice* device in _devices)
+    {
+        if ([device.uid isEqualToString:deviceID]) { result = device; break; }
+    }
+    
+    return result;
+}
+
 - (void)queryCloudForUserInfo:(void (^)(NSError* error, NSString* previousName, NSString* previousEmail))completion
 {
     __weak RelayrUser* weakSelf = self;
