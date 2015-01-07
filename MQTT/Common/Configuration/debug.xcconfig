@@ -11,10 +11,7 @@ VALIDATE_PRODUCT = NO
 // Code signing
 
 // Deployment
-DEPLOYMENT_LOCATION = NO            // Products are placed in $(DSTROOT)
 DEPLOYMENT_POSTPROCESSING = NO
-SKIP_INSTALL = YES                  // Whether the installation process should be skipped or not
-COPY_PHASE_STRIP = NO
 
 // Kernel module
 
@@ -23,7 +20,6 @@ COPY_PHASE_STRIP = NO
 // Packaging
 
 // Search paths
-ALWAYS_SEARCH_USER_PATHS = NO
 
 // Testing
 

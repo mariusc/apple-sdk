@@ -1,5 +1,4 @@
 // Architectures
-ADDITIONAL_SDKS =
 ARCHS = $(ARCHS_STANDARD)
 
 // Build locations
@@ -9,8 +8,14 @@ ARCHS = $(ARCHS_STANDARD)
 // Code signing
 
 // Deployment
-STRIP_INSTALLED_PRODUCT = YES
-SEPARATE_STRIP = NO
+COPY_PHASE_STRIP = NO        // Activating this setting causes binary files which are copied during the build (e.g., in a Copy Bundle Resources or Copy Files build phase) to be stripped of debugging symbols. It does not cause the linked product of a target to be stripped.
+STRIP_INSTALLED_PRODUCT = NO // Activating this setting causes the linked product of the build to be stripped of symbols as part of deployment postprocessing.
+SEPARATE_STRIP = NO          // Activating this setting when the linked product is to be stripped will cause stripping to occur via a separate invocation of strip(1).  Otherwise stripping will occur during linking, if possible.
+
+SKIP_INSTALL = NO
+DEPLOYMENT_LOCATION = YES           // Whether the products should be placed on their installed location (YES) or on the built products folder
+DSTROOT = $(PROJECT_DIR)/../bin/$(CONFIGURATION) // Root path for products
+INSTALL_PATH = /$(PLATFORM_NAME)/CBasics         // Path to be appended to $(DSTROOT), where the product will be installed
 
 // Kernel module
 
@@ -20,10 +25,14 @@ DYLIB_COMPATIBILITY_VERSION = $(DYLIB_CURRENT_VERSION)
 
 // Packaging
 EXECUTABLE_PREFIX = lib
-EXECUTABLE_EXTENSION = a
 PRODUCT_NAME = cbasics
+EXECUTABLE_EXTENSION = a
+
+PUBLIC_HEADERS_FOLDER_PATH =        // The public header product folder. It is appendend to: $(DSTROOT)/$(INSTALL_PATH)
+PRIVATE_HEADERS_FOLDER_PATH = $(PUBLIC_HEADERS_FOLDER_PATH)
 
 // Search paths
+ALWAYS_SEARCH_USER_PATHS = NO
 
 // Testing
 

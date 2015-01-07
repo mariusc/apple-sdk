@@ -1,5 +1,4 @@
 #import "RelayrPublisher.h"         // Header
-
 #import "RelayrPublisher_Setup.h"   // Relayr.framework (Private)
 
 static NSString* const kCodingID = @"uid";

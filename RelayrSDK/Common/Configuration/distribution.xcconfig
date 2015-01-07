@@ -11,24 +11,20 @@ VALIDATE_PRODUCT = YES
 // Code signing
 
 // Deployment
-DEPLOYMENT_LOCATION = YES           // Products are placed in the build products folder
-DEPLOYMENT_POSTPROCESSING = YES     // Strip binariy and set file mode, owner, and group
-DSTROOT = $(PROJECT_DIR)/../bin/$(CONFIGURATION) // Root path for products
-INSTALL_PATH = /$(PLATFORM_NAME)/$(PRODUCT_NAME) // Path to be appended to $(DSTROOT), where the product will be installed
-SKIP_INSTALL = NO                   // Whether the installation process should be skipped or not
-COPY_PHASE_STRIP = YES
+SKIP_INSTALL = NO
+DEPLOYMENT_LOCATION = YES
+DSTROOT = $(PROJECT_DIR)/../bin/$(CONFIGURATION)
+INSTALL_PATH = /$(PLATFORM_NAME)/$(PRODUCT_NAME)
+
+DEPLOYMENT_POSTPROCESSING = YES
 
 // Kernel module
 
 // Linking
 
 // Packaging
-PUBLIC_HEADERS_FOLDER_PATH =        // The public header product folder. It is appendend to: $(DSTROOT)/$(INSTALL_PATH)
-PRIVATE_HEADERS_FOLDER_PATH = $(PUBLIC_HEADERS_FOLDER_PATH)
 
 // Search paths
-ALWAYS_SEARCH_USER_PATHS = YES
-HEADER_SEARCH_PATHS = $(DSTROOT)/$(PLATFORM_NAME)   // Where to search for headers
 
 // Testing
 
