@@ -16,6 +16,7 @@ static NSString* const kCodingMeaning = @"men";
 static NSString* const kCodingUnit = @"uni";
 static NSString* const kCodingValues = @"val";
 static NSString* const kCodingDates = @"dat";
+static NSString* const kCodingDeviceModel = @"dmod";
 
 @implementation RelayrInput
 
@@ -172,6 +173,9 @@ static NSString* const kCodingDates = @"dat";
 - (void)setWith:(RelayrInput*)input
 {
     if (!input.meaning.length) { return; }
+    
+    // If there is a deviceModel, pass it to receiving input.
+    if (_deviceModel) { _deviceModel = input.deviceModel; }
 
     // If the input's meaning and units are the same, no further work is needed.
     if ([_meaning isEqualToString:input.meaning] && [_unit isEqualToString:input.unit]) { return; }
@@ -247,6 +251,8 @@ static NSString* const kCodingDates = @"dat";
     self = [self initWithMeaning:[decoder decodeObjectForKey:kCodingMeaning] unit:[decoder decodeObjectForKey:kCodingUnit]];
     if (self)
     {
+        _deviceModel = [decoder decodeObjectForKey:kCodingDeviceModel];
+        
         NSMutableArray* tmpValues = [decoder decodeObjectForKey:kCodingValues];
         NSMutableArray* tmpDates = [decoder decodeObjectForKey:kCodingDates];
         
@@ -262,6 +268,7 @@ static NSString* const kCodingDates = @"dat";
 
 - (void)encodeWithCoder:(NSCoder*)coder
 {
+    [coder encodeObject:_deviceModel forKey:kCodingDeviceModel];
     [coder encodeObject:_meaning forKey:kCodingMeaning];
     [coder encodeObject:_unit forKey:kCodingUnit];
     
