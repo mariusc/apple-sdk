@@ -1,4 +1,5 @@
 @class RelayrUser;              // Relayr.framework (Public)
+@class RelayrInput;             // Relayr.framework (Public/IoT)
 @import Foundation;             // Apple
 
 /*!
@@ -45,6 +46,16 @@
  *  @see RelayrInput
  */
 @property (readonly,nonatomic) NSSet* inputs;
+
+/*!
+ *  @abstract Returns a <code>RelayrInput</code> supporting the passed meaning.
+ *  @discussion If there are more than one input supporting the passed meaning, only one will be returned. It could be different on different passes of the method called (since the inputs are stored in a <code>NSSet</code>).
+ *  @param meaning <code>NSString</code> specifying the desired <code>meaning</code>.
+ *	@return <code>RelayrInput</code> or <code>nil</code>.
+ *
+ *  @see RelayrInput
+ */
+- (RelayrInput*)inputWithMeaning:(NSString*)meaning;
 
 /*!
  *  @abstract Returns an array of possible Outputs a Device is capable of receiving.

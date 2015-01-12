@@ -32,6 +32,18 @@ static NSString* const kCodingOutputs = @"out";
     return self;
 }
 
+- (RelayrInput*)inputWithMeaning:(NSString*)meaning
+{
+    if (!meaning.length) { return nil; }
+    
+    RelayrInput* matchedInput;
+    for (RelayrInput* input in _inputs)
+    {
+        if ([meaning isEqualToString:input.meaning]) { matchedInput=input; break; }
+    }
+    return matchedInput;
+}
+
 #pragma mark Setup extension
 
 - (void)setWith:(RelayrDeviceModel*)deviceModel

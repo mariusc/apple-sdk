@@ -41,9 +41,9 @@ static NSString* const kCodingDevices = @"dev";
     }];
 }
 
-- (NSArray*)devicesWithInputMeaning:(NSString*)meaning
+- (NSSet*)devicesWithInputMeaning:(NSString*)meaning
 {
-    NSMutableArray* result = [[NSMutableArray alloc] init];
+    NSMutableSet* result = [[NSMutableSet alloc] init];
     
     for (RelayrDevice* device in _devices)
     {
