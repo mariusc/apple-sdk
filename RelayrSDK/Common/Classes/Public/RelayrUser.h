@@ -1,7 +1,9 @@
 @import Foundation;         // Apple
 @class RelayrApp;           // Relayr.framework (Public)
+@class RelayrPublisher;     // Relayr.framework (Public)
 @class RelayrTransmitter;   // Relayr.framework (Public)
 @class RelayrDevice;        // Relayr.framework (Public)
+#import "NSSet+RelayrID.h"  // Relayr.framework (Utilities/Collections)
 
 /*!
  *  @abstract The very basic entity in the relayr platform is the user. 
@@ -11,7 +13,7 @@
  *
  *  All RelayrSDK objects (except when explicitly said otherwise) will return the same instance when copied (e.g.: when added to a dictionary). Thus the <code>NSCopying</code> method <code>-copyWithZone:</code> will return the same instance. Same happening with <code>NSMutableCopying</code> method <code>-mutableCopyWithZone:</code>.
  */
-@interface RelayrUser : NSObject <NSCoding,NSCopying,NSMutableCopying>
+@interface RelayrUser : NSObject <NSCoding,NSCopying,NSMutableCopying,RelayrIDSubscripting>
 
 /*!
  *  @abstract The relayr application the user has signed in to.
@@ -69,28 +71,28 @@
  *  @discussion It can can be changed with a successful <code>queryCloudForUserInfo:</code> call.
  *      If <code>nil</code>, the authorised apps are unknown. If an empty set is returned, there are no authorised apps.
  */
-@property (readonly,nonatomic) NSSet* authorisedApps;
+@property (readonly,nonatomic) NSSet <RelayrIDSubscripting>* authorisedApps;
 
 /*!
  *  @abstract A set of <code>publisher</code>s listed under the specific user.
  *  @discussion It can be changed with a successful <code>queryCloudForUserInfo:</code> call.
  *      If <code>nil</code>, the publishers are unknown. If an empty set is returned, there are no publishers set in the server.
  */
-@property (readonly,nonatomic) NSSet* publishers;
+@property (readonly,nonatomic) NSSet <RelayrIDSubscripting>* publishers;
 
 /*!
  *  @abstract A set of the Transmitter entities owned by the specific <code>RelayrUser</code> instace.
  *  @discussion It can be changed with a successful <code>queryCloudForUserInfo:</code> call.
  *      If <code>nil</code>, the transmitters are unknown. If an empty set is returned, there are no transmitters owned by the user in the server.
  */
-@property (readonly,nonatomic) NSSet* transmitters;
+@property (readonly,nonatomic) NSSet <RelayrIDSubscripting>* transmitters;
 
 /*!
  *  @abstract A set of the Device entities owned by the specific <code>RelayrUser</code> instace
  *  @discussion It can be changed with a successful <code>queryCloudForUserInfo:</code> call.
  *      If <code>nil</code>, the devices are unknwon. If an empty set is returned, there are no devices owned by this user in the server.
  */
-@property (readonly,nonatomic) NSSet* devices;
+@property (readonly,nonatomic) NSSet <RelayrIDSubscripting>* devices;
 
 /*!
  *  @abstract Devices that the specific <code>RelayrUser</code> instace has bookmarked. Only public devices can be bookmarked devices.
@@ -99,23 +101,7 @@
  *      In the relayr context, a bookmarked device will appear on a user's Developer Dashboard.
  *      If <code>nil</code>, the devices bookmarked are unknwon. If an empty set is returned, there are no devices bookmarked by this user.
  */
-@property (readonly,nonatomic) NSSet* devicesBookmarked;
-
-/*!
- *  @abstract It returns a <code>RelayrTransmitter</code> object with the specific Relayr ID if the user owns it.
- *
- *  @param transmitterID String identifying a transmitter uniquely in the Relayr Cloud.
- *  @return A full-fledge <code>RelayrTransmitter</code> or <code>nil</code> if no transmitter where found.
- */
-- (RelayrTransmitter*)transmitterWithID:(NSString*)transmitterID;
-
-/*!
- *  @abstract It returns a <code>RelayrDevice</code> object with the specific Relayr ID if the user owns it.
- *
- *  @param deviceID String identigying a device uniquely in the Relayr Cloud.
- *  @return A full-fledge <code>RelayrDevice</code> or <code>nil</code> if no device where found.
- */
-- (RelayrDevice*)deviceWithID:(NSString*)deviceID;
+@property (readonly,nonatomic) NSSet <RelayrIDSubscripting>* devicesBookmarked;
 
 /*!
  *  @abstract Queries the relayr platform for the user information.

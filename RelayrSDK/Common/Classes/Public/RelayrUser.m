@@ -37,7 +37,7 @@ static NSString* const kCodingPublishers = @"pub";
     return nil;
 }
 
-- (void)setNameWith:(NSString *)name completion:(void (^)(NSError* error, NSString* previousName))completion
+- (void)setNameWith:(NSString*)name completion:(void (^)(NSError* error, NSString* previousName))completion
 {
     __weak RelayrUser* weakSelf = self;
     [_apiService setUserName:name email:nil completion:^(NSError* error) {
@@ -61,32 +61,6 @@ static NSString* const kCodingPublishers = @"pub";
         strongSelf.email = email;
         if (completion) { completion(nil, pEmail); }
     }];
-}
-
-- (RelayrTransmitter*)transmitterWithID:(NSString*)transmitterID
-{
-    RelayrTransmitter* result;
-    if (!transmitterID.length) { return nil; }
-    
-    for (RelayrTransmitter* transmitter in _transmitters)
-    {
-        if ([transmitter.uid isEqualToString:transmitterID]) { result = transmitter; break; }
-    }
-    
-    return result;
-}
-
-- (RelayrDevice*)deviceWithID:(NSString*)deviceID
-{
-    RelayrDevice* result;
-    if (!deviceID.length) { return nil; }
-    
-    for (RelayrDevice* device in _devices)
-    {
-        if ([device.uid isEqualToString:deviceID]) { result = device; break; }
-    }
-    
-    return result;
 }
 
 - (void)queryCloudForUserInfo:(void (^)(NSError* error, NSString* previousName, NSString* previousEmail))completion
@@ -251,6 +225,7 @@ static NSString* const kCodingPublishers = @"pub";
 {
     NSString* transmitterID = transmitter.uid;
     if (!transmitterID.length) { return nil; }
+    transmitter.user = self;
     
     if (transmitter.devices.count)  // Devices need to be added first.
     {
@@ -399,11 +374,11 @@ static NSString* const kCodingPublishers = @"pub";
         _uid = [decoder decodeObjectForKey:kCodingID];
         _name = [decoder decodeObjectForKey:kCodingName];
         _email = [decoder decodeObjectForKey:kCodingEmail];
+        _authorisedApps = [decoder decodeObjectForKey:kCodingApps];
+        _publishers = [decoder decodeObjectForKey:kCodingPublishers];
         _transmitters = [decoder decodeObjectForKey:kCodingTransmitters];
         _devices = [decoder decodeObjectForKey:kCodingDevices];
         _devicesBookmarked = [decoder decodeObjectForKey:kCodingDevices];
-        _authorisedApps = [decoder decodeObjectForKey:kCodingApps];
-        _publishers = [decoder decodeObjectForKey:kCodingPublishers];
     }
     return self;
 }
@@ -415,11 +390,11 @@ static NSString* const kCodingPublishers = @"pub";
     [coder encodeObject:_uid forKey:kCodingID];
     [coder encodeObject:_name forKey:kCodingName];
     [coder encodeObject:_email forKey:kCodingEmail];
+    [coder encodeObject:_authorisedApps forKey:kCodingApps];
+    [coder encodeObject:_publishers forKey:kCodingPublishers];
     [coder encodeObject:_transmitters forKey:kCodingTransmitters];
     [coder encodeObject:_devices forKey:kCodingDevices];
     [coder encodeObject:_devicesBookmarked forKey:kCodingBookmarks];
-    [coder encodeObject:_authorisedApps forKey:kCodingApps];
-    [coder encodeObject:_publishers forKey:kCodingPublishers];
 }
 
 #pragma mark NSCopying & NSMutableCopying
@@ -432,6 +407,27 @@ static NSString* const kCodingPublishers = @"pub";
 - (id)mutableCopyWithZone:(NSZone*)zone
 {
     return self;
+}
+
+#pragma mark RelayrIDSubscripting
+
+- (id <RelayrID>)objectForKeyedSubscript:(NSString*)key
+{
+    if (!key.length) { return nil; }
+    
+    id result = _transmitters[key];
+    if (result) { return result; }
+    
+    result = _devices[key];
+    if (result) { return result; }
+    
+    result = _devicesBookmarked[key];
+    if (result) { return result; }
+    
+    result = _authorisedApps[key];
+    if (result) { return result; }
+    
+    return _publishers[key];
 }
 
 #pragma mark NSObject
