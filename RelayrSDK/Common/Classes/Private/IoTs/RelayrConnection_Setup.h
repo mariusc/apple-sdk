@@ -1,4 +1,4 @@
-#import "RelayrConnection.h"    // Relayr.framework (Public)
+#import "RelayrConnection.h"    // Parent class
 @class RelayrDevice;            // Relayr.framework (Public)
 
 /*!

@@ -9,7 +9,7 @@
 #import "RLAAPIService.h"           // Relayr.framework (Service/API)
 #import "RLAAPIService+Cloud.h"     // Relayr.framework (Service/API)
 #import "RLAAPIService+App.h"       // Relayr.framework (Service/API)
-#import "RLALog.h"                  // Relayr.framework (Utilities)
+#import "RLALog.h"                  // Relayr.framework (Utilities/Log)
 
 #define RelayrApp_FSFolder  @"/io.relayr.sdk"
 
@@ -24,38 +24,14 @@ static NSString* const kCodingUsers = @"usr";
 
 @implementation RelayrApp
 
+@synthesize uid = _uid;
+
 #pragma mark - Public API
 
 - (instancetype)init
 {
     [self doesNotRecognizeSelector:_cmd];
     return nil;
-}
-
-- (instancetype)initWithID:(NSString*)appID
-{
-    if (!appID.length) { return nil; }
-    
-    self = [super init];
-    if (self)
-    {
-        _uid = appID;
-        _users = [[NSMutableArray alloc] init];
-    }
-    return self;
-}
-
-- (instancetype)initWithID:(NSString*)appID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI
-{
-    if (!clientSecret.length || !redirectURI.length) { return nil; }
-    
-    self = [self initWithID:appID];
-    if (self)
-    {
-        _oauthClientSecret = clientSecret;
-        _redirectURI = redirectURI;
-    }
-    return self;
 }
 
 - (void)setName:(NSString*)name withUserCredentials:(RelayrUser*)user completion:(void (^)(NSError* error, NSString* previousName))completion
@@ -65,8 +41,9 @@ static NSString* const kCodingUsers = @"usr";
     __weak RelayrApp* weakApp = self;
     [user.apiService setApp:self.uid name:name description:nil redirectURI:nil completion:^(NSError* error, RelayrApp* app) {
         if (error) { if (completion) { completion(error, nil); } return; }
-        
         __strong RelayrApp* strongApp = weakApp;
+        if (!strongApp) { if (completion) { completion(RelayrErrorMissingObjectPointer, nil); } return; }
+        
         NSString* pName = strongApp.name;
         strongApp.name = app.name;
         if (completion) { completion(nil, pName); }
@@ -80,8 +57,9 @@ static NSString* const kCodingUsers = @"usr";
     __weak RelayrApp* weakApp = self;
     [user.apiService setApp:self.uid name:nil description:description redirectURI:nil completion:^(NSError* error, RelayrApp* app) {
         if (error) { if (completion) { completion(error, nil); } return; }
-        
         __strong RelayrApp* strongApp = weakApp;
+        if (!strongApp) { if (completion) { completion(RelayrErrorMissingObjectPointer, nil); } return; }
+        
         NSString* pDescription = strongApp.appDescription;
         strongApp.appDescription = app.description;
         if (completion) { completion(nil, pDescription); }
@@ -92,15 +70,14 @@ static NSString* const kCodingUsers = @"usr";
 {
     if (!user.apiService) { if (completion) { completion(RelayrErrorMissingArgument, nil, nil); } return; }
     
-    __weak RelayrApp* weakSelf = self;
+    __weak RelayrApp* weakApp = self;
     [user.apiService requestAppInfoExtendedFor:_uid completion:^(NSError* error, RelayrApp* app) {
         if (error) { if (completion) { completion(error, nil, nil); } return; }
+        __strong RelayrApp* strongApp = weakApp;
+        if (!strongApp) { if (completion) { completion(RelayrErrorMissingObjectPointer, nil, nil); } return; }
         
-        __strong RelayrApp* strongSelf = weakSelf;
-        if (!strongSelf) { return; }
-        
-        NSString* pName = strongSelf.name, * pDesc = strongSelf.description;
-        [strongSelf setWith:app];
+        NSString* pName = strongApp.name, * pDesc = strongApp.description;
+        [strongApp setWith:app];
         completion(nil, pName, pDesc);
     }];
 }
@@ -110,13 +87,14 @@ static NSString* const kCodingUsers = @"usr";
 + (void)appWithID:(NSString*)appID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI completion:(void (^)(NSError*, RelayrApp*))completion
 {
     if (!completion) { return [RLALog debug:RelayrErrorMissingArgument.localizedDescription]; }
-    if (appID.length==0) { return completion(RelayrErrorMissingArgument, nil); }
+    else if (!appID.length) { return completion(RelayrErrorMissingArgument, nil); }
     
     RelayrApp* result = [[RelayrApp alloc] initWithID:appID OAuthClientSecret:clientSecret redirectURI:redirectURI];
     if (!result) { return completion(RelayrErrorMissingArgument, nil); }
     
     [RLAAPIService requestAppInfoFor:result.uid completion:^(NSError* error, NSString* appID, NSString* appName, NSString* appDescription) {
-        if ( ![result.uid isEqualToString:appID] ) { return completion(RelayrErrorWebRequestFailure, nil); }
+        if (error) { return completion(error, nil); }
+        else if ( ![appID isEqualToString:result.uid] ) { return completion(RelayrErrorWebRequestFailure, nil); }
         result.name = appName;
         result.appDescription = appDescription;
         completion(nil, result);
@@ -183,22 +161,26 @@ static NSString* const kCodingUsers = @"usr";
 {
     if (!_uid.length || !_redirectURI.length || !_oauthClientSecret.length) { if (completion) { completion(RelayrErrorMissingExpectedValue, nil); } return; }
     
+    __weak RelayrApp* weakApp = self;
     [RLAAPIService requestOAuthCodeWithOAuthClientID:_uid redirectURI:_redirectURI completion:^(NSError* error, NSString* tmpCode) {
         if (error) { if (completion) { completion(error, nil); } return; }
         
         [RLAAPIService requestOAuthTokenWithOAuthCode:tmpCode OAuthClientID:_uid OAuthClientSecret:_oauthClientSecret redirectURI:_redirectURI completion:^(NSError* error, NSString* token) {
             if (error) { if (completion) { completion(error, nil); } return; }
-            if (!token.length) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
+            else if (!token.length) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }
+            
+            RelayrApp* strongApp = weakApp;
+            if (!strongApp) { if (completion) { completion(RelayrErrorMissingObjectPointer, nil); } return; }
             
             RelayrUser* serverUser = [[RelayrUser alloc] initWithToken:token];
             if (!serverUser) { if (completion) { completion(RelayrErrorMissingExpectedValue,nil); } return; }
-            serverUser.app = self;
+            serverUser.app = strongApp;
             
             // If the user wasn't logged, retrieve the basic information.
             [serverUser queryCloudForUserInfo:^(NSError* error, NSString* previousName, NSString* previousEmail) {
                 if (error) { if (completion) { completion(error, nil); } return; }
 
-                RelayrUser* user = [self loggedUserWithRelayrID:serverUser.uid];
+                RelayrUser* user = [strongApp loggedUserWithRelayrID:serverUser.uid];
                 if (user)
                 {
                     user.app = serverUser.app;
@@ -220,13 +202,73 @@ static NSString* const kCodingUsers = @"usr";
 - (void)signOutUser:(RelayrUser*)user
 {
     NSString* userID = user.uid;
-    if (userID.length == 0) { return; }
+    if (!userID.length) { return; }
     
     NSUInteger const userCount = _users.count;
     for (NSUInteger i=0; i<userCount; ++i)
     {
         if ( [userID isEqualToString:((RelayrUser*)_users[i]).uid] ) { return [_users removeObjectAtIndex:i]; }
     }
+}
+
+#pragma mark NSCopying & NSMutableCopying
+
+- (id)copyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
+- (id)mutableCopyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
+#pragma mark NSObject
+
+- (NSString*)description
+{
+    return [NSString stringWithFormat:@"RelayrApp\n{\n\t ID:\t%@\n\t Name:\t%@\n\t Description: %@\n\t Publisher ID: %@\n\t Num logged users: %@\n}\n", _uid, _name, _appDescription, _publisherID, @(_users.count)];
+}
+
+#pragma mark - Private functionality
+
++ (NSString*)absoluteRelayrAppFolderPath
+{
+    static NSString* folderPath;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSArray* paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+        folderPath = [(NSString*)paths.firstObject stringByAppendingPathComponent:RelayrApp_FSFolder];
+    });
+    return folderPath;
+}
+
+#pragma mark Setup extension
+
+- (instancetype)initWithID:(NSString*)appID
+{
+    if (!appID.length) { return nil; }
+    
+    self = [super init];
+    if (self)
+    {
+        _uid = appID;
+        _users = [[NSMutableArray alloc] init];
+    }
+    return self;
+}
+
+- (instancetype)initWithID:(NSString*)appID OAuthClientSecret:(NSString*)clientSecret redirectURI:(NSString*)redirectURI
+{
+    if (!clientSecret.length || !redirectURI.length) { return nil; }
+    
+    self = [self initWithID:appID];
+    if (self)
+    {
+        _oauthClientSecret = clientSecret;
+        _redirectURI = redirectURI;
+    }
+    return self;
 }
 
 - (void)setWith:(RelayrApp*)app
@@ -238,6 +280,30 @@ static NSString* const kCodingUsers = @"usr";
     if (app.oauthClientSecret) { _oauthClientSecret = app.oauthClientSecret; }
     if (app.redirectURI) { _redirectURI = app.redirectURI; }
     if (app.publisherID) { _publisherID = app.publisherID; }
+    
+    NSArray* serverUsers = app.users;
+    if (serverUsers.count)
+    {
+        if (!_users.count) { return [_users addObjectsFromArray:serverUsers]; }
+        
+        for (RelayrUser* serverUser in serverUsers)
+        {
+            NSString* serverUserID = serverUser.uid;
+            
+            RelayrUser* matchedUser;
+            for (RelayrUser* localUser in _users)
+            {
+                if ([serverUserID isEqualToString:localUser.uid]) { matchedUser = localUser; break; }
+            }
+            
+            if (!matchedUser)
+            {
+                serverUser.app = self;
+                [_users addObject:serverUser];
+            }
+            else { [matchedUser setWith:serverUser]; }
+        }
+    }
 }
 
 #pragma mark NSCoding
@@ -260,44 +326,12 @@ static NSString* const kCodingUsers = @"usr";
 - (void)encodeWithCoder:(NSCoder*)coder
 {
     [coder encodeObject:_uid forKey:kCodingID];
-    [coder encodeObject:_oauthClientSecret forKey:kCodingClientSecret];
-    [coder encodeObject:_redirectURI forKey:kCodingRedirectURI];
     [coder encodeObject:_name forKey:kCodingName];
     [coder encodeObject:_appDescription forKey:kCodingDescription];
+    [coder encodeObject:_oauthClientSecret forKey:kCodingClientSecret];
+    [coder encodeObject:_redirectURI forKey:kCodingRedirectURI];
     [coder encodeObject:_publisherID forKey:kCodingPublisherID];
     if (_users.count) { [coder encodeObject:[NSArray arrayWithArray:_users] forKey:kCodingUsers]; }
-}
-
-#pragma mark NSCopying & NSMutableCopying
-
-- (id)copyWithZone:(NSZone*)zone
-{
-    return self;
-}
-
-- (id)mutableCopyWithZone:(NSZone*)zone
-{
-    return self;
-}
-
-#pragma mark NSObject
-
-- (NSString*)description
-{
-    return [NSString stringWithFormat:@"RelayrApp\n{\n\t ID:\t%@\n\t Name:\t%@\n\t Description: %@\n\t Num logged users: %@\n}\n", _uid, _name, _appDescription, @(_users.count)];
-}
-
-#pragma mark - Private functionality
-
-+ (NSString*)absoluteRelayrAppFolderPath
-{
-    static NSString* folderPath;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSArray* paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-        folderPath = [(NSString*)paths.firstObject stringByAppendingPathComponent:RelayrApp_FSFolder];
-    });
-    return folderPath;
 }
 
 @end

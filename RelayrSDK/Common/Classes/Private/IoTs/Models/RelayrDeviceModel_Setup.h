@@ -1,9 +1,9 @@
-#import "RelayrDeviceModel.h"    // Relayr.framework (Public)
+#import "RelayrDeviceModel.h"    // Parent class
 
 /*!
  *  @abstract An instance of this class models how a device should look and perform.
  */
-@interface RelayrDeviceModel ()
+@interface RelayrDeviceModel () <NSCoding>
 
 /*!
  *  @abstract User currently "using" this transmitter.

@@ -1,5 +1,5 @@
+#import "RelayrDevice.h"            // Parent class
 @class RelayrUser;                  // Relayr.framework (Public)
-#import "RelayrDevice.h"            // Relayr.framework (Public)
 #import "RelayrDeviceModel_Setup.h" // Relayr.framework (Private)
 @protocol RLAService;               // Relayr.framework (Service)
 
@@ -9,7 +9,7 @@
  *	or one which is capable of receiving information from the relayr platform.
  *	Examples would be a thermometer, a gyroscope or an infrared sensor.
  */
-@interface RelayrDevice ()
+@interface RelayrDevice () <NSCoding>
 
 /*!
  *  @abstract It initialises a Device with a Relayr ID and an MQTT secret/password.

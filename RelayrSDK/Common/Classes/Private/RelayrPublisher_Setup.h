@@ -7,7 +7,7 @@
  *  @see RelayrUser
  *  @see RelayrApp
  */
-@interface RelayrPublisher ()
+@interface RelayrPublisher () <NSCoding>
 
 /*!
  *  @abstract It initialises a <code>RelayrPublisher</code> entity with an ID and a <code>RelayrUser</code>.

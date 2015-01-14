@@ -1,9 +1,9 @@
-#import "RelayrFirmwareModel.h" // Relayr.framework (Public)
+#import "RelayrFirmwareModel.h" // Parent class
 
 /*!
  *  @abstract An instance of this class models how a firmware should look and perform.
  */
-@interface RelayrFirmwareModel ()
+@interface RelayrFirmwareModel () <NSCoding>
 
 /*!
  *  @abstract Designated initialiser for the <code>RelayrFirmwareModel</code> objects.

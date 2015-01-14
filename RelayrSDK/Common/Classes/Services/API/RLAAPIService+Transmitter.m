@@ -6,7 +6,8 @@
 #import "RelayrFirmware.h"              // Relayr.framework (Public)
 #import "RLAAPIConstants.h"             // Relayr.framework (Service/API)
 #import "RLAAPIService+Parsing.h"       // Relayr.framework (Service/API)
-#import "RelayrErrors.h"                // Relayr.framework (Utilities)
+#import "RelayrErrors.h"                // Relayr.framework (Utilities/Errors)
+#import "NSSet+RelayrID.h"              // Relayr.framework (Utilities/Collections)
 
 @implementation RLAAPIService (Transmitter)
 
@@ -108,7 +109,7 @@
     [task resume];
 }
 
-- (void)requestDevicesFromTransmitter:(NSString*)transmitterID completion:(void (^)(NSError* error, NSSet* devices))completion
+- (void)requestDevicesFromTransmitter:(NSString*)transmitterID completion:(void (^)(NSError* error, NSSet <RelayrIDSubscripting>* devices))completion
 {
     if (!completion) { return; }
     if (!transmitterID.length) { return completion(RelayrErrorMissingArgument, nil); }

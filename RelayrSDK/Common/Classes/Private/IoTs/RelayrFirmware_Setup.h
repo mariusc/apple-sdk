@@ -1,4 +1,4 @@
-#import "RelayrFirmware.h"              // Relayr.framework (Public)
+#import "RelayrFirmware.h"              // Parent class
 #import "RelayrFirmwareModel_Setup.h"   // Relayr.framework (Private)
 @protocol RLAService;                   // Relayr.framework (Service)
 
@@ -8,7 +8,7 @@
  *  @see RelayrDevice
  *  @see RelayrTransmitter
  */
-@interface RelayrFirmware ()
+@interface RelayrFirmware () <NSCoding>
 
 /*!
  *  @abstract Sets the instance where this object is being called onto, with the properties of the object passed as the argument.

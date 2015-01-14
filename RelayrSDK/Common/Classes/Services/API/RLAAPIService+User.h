@@ -1,4 +1,5 @@
-#import "RLAAPIService.h"
+#import "RLAAPIService.h"           // Parent class
+#import "RelayrIDSubscripting.h"    // Relayr.framework (Utilities/Collections)
 
 /*!
  *  @abstract API calls refering to Relayr User (as entities).
@@ -89,7 +90,7 @@ registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))co
  *  @see RelayrUser
  *  @see RelayrTransmitter
  */
-- (void)requestUserTransmitters:(void (^)(NSError* error, NSSet* transmitters))completion;
+- (void)requestUserTransmitters:(void (^)(NSError* error, NSSet <RelayrIDSubscripting>* transmitters))completion;
 
 /*!
  *  @abstract Retrieves the <code>RelayrDevice</code>s the user owns.
@@ -100,7 +101,7 @@ registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))co
  *  @see RelayrUser
  *  @see RelayrDevice
  */
-- (void)requestUserDevices:(void (^)(NSError* error, NSSet* devices))completion;
+- (void)requestUserDevices:(void (^)(NSError* error, NSSet <RelayrIDSubscripting>* devices))completion;
 
 /*!
  *  @abstract Retrieves the user devices entities filtered by meaning.
@@ -135,7 +136,7 @@ registeredInRelayrCloud:(void (^)(NSError* error, NSNumber* isUserRegistered))co
  *  @see RelayrUser
  *  @see RelayrDevice
  */
-- (void)requestUserBookmarkedDevices:(void (^)(NSError* error, NSSet* bookDevices))completion;
+- (void)requestUserBookmarkedDevices:(void (^)(NSError* error, NSSet <RelayrIDSubscripting>* bookDevices))completion;
 
 /*!
  *  @abstract Deletes a bookmark that a user had to a specific device.

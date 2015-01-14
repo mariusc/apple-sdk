@@ -1,11 +1,12 @@
-@import Foundation;             // Apple
-#import "RelayrDeviceModel.h"   // Relayr.framework (Public)
-@class RelayrTransmitter;       // Relayr.framework (Public)
-@class RelayrFirmware;          // Relayr.framework (Public)
-@class RelayrConnection;        // Relayr.framework (Public)
-#import "RelayrInput.h"         // Relayr.framework (Public)
-@protocol RelayrOnboarding;     // Relayr.framework (Public)
-@protocol RelayrFirmwareUpdate; // Relayr.framework (Public)
+#import <Relayr/RelayrDeviceModel.h>    // Parent class
+@class RelayrTransmitter;               // Relayr.framework (Public)
+@class RelayrFirmware;                  // Relayr.framework (Public)
+@class RelayrConnection;                // Relayr.framework (Public)
+#import <Relayr/RelayrInput.h>          // Relayr.framework (Public)
+@protocol RelayrOnboarding;             // Relayr.framework (Public)
+@protocol RelayrFirmwareUpdate;         // Relayr.framework (Public)
+#import <Relayr/RelayrID.h>             // Relayr.framework (Public)
+@import Foundation;                     // Apple
 
 /*!
  *  @abstract An instance of this class represents a Device. A basic relayr entity
@@ -14,12 +15,7 @@
  *
  *  All RelayrSDK objects (except when explicitly said otherwise) will return the same instance when copied (e.g.: when added to a dictionary). Thus the <code>NSCopying</code> method <code>-copyWithZone:</code> will return the same instance. Same happening with <code>NSMutableCopying</code> method <code>-mutableCopyWithZone:</code>.
  */
-@interface RelayrDevice : RelayrDeviceModel <NSCoding,NSCopying,NSMutableCopying>
-
-/*!
- *  @abstract A unique idenfier of the <code>RelayrDevice</code>'s instance.
- */
-@property (readonly,nonatomic) NSString* uid;
+@interface RelayrDevice : RelayrDeviceModel <RelayrID,NSCopying,NSMutableCopying>
 
 /*!
  *  @abstract Device name.
@@ -46,7 +42,7 @@
 @property (readonly,weak,nonatomic) RelayrTransmitter* transmitter;
 
 /*!
- *  @abstract The Id of the owner of the Device.
+ *  @abstract The ID of the owner of the Device.
  *  @discussion A relayr User Id.
  */
 @property (readonly,nonatomic) NSString* owner;

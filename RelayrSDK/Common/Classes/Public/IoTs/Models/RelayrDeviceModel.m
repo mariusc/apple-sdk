@@ -20,18 +20,6 @@ static NSString* const kCodingOutputs = @"out";
 
 #pragma mark - Public API
 
-- (instancetype)initWithModelID:(NSString*)modelID
-{
-    if (!modelID.length) { return nil; }
-    
-    self = [super init];
-    if (self)
-    {
-        _modelID = modelID;
-    }
-    return self;
-}
-
 - (RelayrInput*)inputWithMeaning:(NSString*)meaning
 {
     if (!meaning.length) { return nil; }
@@ -44,47 +32,6 @@ static NSString* const kCodingOutputs = @"out";
     return matchedInput;
 }
 
-#pragma mark Setup extension
-
-- (void)setWith:(RelayrDeviceModel*)deviceModel
-{
-    if (self==deviceModel || ![_modelID isEqualToString:deviceModel.modelID]) { return; }
-    
-    if (deviceModel.modelName) { _modelName = deviceModel.modelName; }
-    if (deviceModel.manufacturer) { _manufacturer = deviceModel.manufacturer; }
-    [self setFirmwaresAvailableWith:deviceModel.firmwaresAvailable];
-    [self setInputsWith:deviceModel.inputs];
-    [self setOutputsWith:deviceModel.outputs];
-}
-
-#pragma mark NSCoding
-
-- (id)initWithCoder:(NSCoder*)decoder
-{
-    self = [self initWithModelID:[decoder decodeObjectForKey:kCodingModelID]];
-    if (self)
-    {
-        _user = [decoder decodeObjectForKey:kCodingUser];
-        _modelName = [decoder decodeObjectForKey:kCodingModelName];
-        _manufacturer = [decoder decodeObjectForKey:kCodingManufacturer];
-        _firmwaresAvailable = [decoder decodeObjectForKey:kCodingFirmwareModels];
-        _inputs = [decoder decodeObjectForKey:kCodingInputs];
-        _outputs = [decoder decodeObjectForKey:kCodingOutputs];
-    }
-    return self;
-}
-
-- (void)encodeWithCoder:(NSCoder*)coder
-{
-    [coder encodeObject:_user forKey:kCodingUser];
-    [coder encodeObject:_modelID forKey:kCodingModelID];
-    [coder encodeObject:_modelName forKey:kCodingModelName];
-    [coder encodeObject:_manufacturer forKey:kCodingManufacturer];
-    [coder encodeObject:_firmwaresAvailable forKey:kCodingFirmwareModels];
-    [coder encodeObject:_inputs forKey:kCodingInputs];
-    [coder encodeObject:_outputs forKey:kCodingOutputs];
-}
-
 #pragma mark NSCopying & NSMutableCopying
 
 - (id)copyWithZone:(NSZone*)zone
@@ -95,6 +42,20 @@ static NSString* const kCodingOutputs = @"out";
 - (id)mutableCopyWithZone:(NSZone*)zone
 {
     return self;
+}
+
+#pragma mark NSObject
+
+- (NSString*)description
+{
+    return [NSString stringWithFormat:@"RelayrDevice\n{\n\
+\t Model ID: %@\n\
+\t Model name: %@\n\
+\t Manufacturer: %@\n\
+\t Num firmwares available: %@\n\
+\t Num inputs: %@\n\
+\t Num outputs: %@\
+\n}\n", self.modelID, self.modelName, self.manufacturer, (self.firmwaresAvailable) ? @(self.firmwaresAvailable.count) : @"?", (self.inputs) ? @(self.inputs.count) : @"?", (self.outputs) ? @(self.outputs.count) : @"?"];
 }
 
 #pragma mark - Private methods
@@ -198,16 +159,57 @@ static NSString* const kCodingOutputs = @"out";
     _outputs = [NSSet setWithSet:result];
 }
 
-- (NSString*)description
+#pragma mark Setup extension
+
+- (instancetype)initWithModelID:(NSString*)modelID
 {
-    return [NSString stringWithFormat:@"RelayrDevice\n{\n\
-\t Model ID: %@\n\
-\t Model name: %@\n\
-\t Manufacturer: %@\n\
-\t Num firmwares available: %@\n\
-\t Num inputs: %@\n\
-\t Num outputs: %@\
-\n}\n", self.modelID, self.modelName, self.manufacturer, (self.firmwaresAvailable) ? @(self.firmwaresAvailable.count) : @"?", (self.inputs) ? @(self.inputs.count) : @"?", (self.outputs) ? @(self.outputs.count) : @"?"];
+    if (!modelID.length) { return nil; }
+    
+    self = [super init];
+    if (self)
+    {
+        _modelID = modelID;
+    }
+    return self;
+}
+
+- (void)setWith:(RelayrDeviceModel*)deviceModel
+{
+    if (self==deviceModel || ![_modelID isEqualToString:deviceModel.modelID]) { return; }
+    
+    if (deviceModel.modelName) { _modelName = deviceModel.modelName; }
+    if (deviceModel.manufacturer) { _manufacturer = deviceModel.manufacturer; }
+    [self setFirmwaresAvailableWith:deviceModel.firmwaresAvailable];
+    [self setInputsWith:deviceModel.inputs];
+    [self setOutputsWith:deviceModel.outputs];
+}
+
+#pragma mark NSCoding
+
+- (id)initWithCoder:(NSCoder*)decoder
+{
+    self = [self initWithModelID:[decoder decodeObjectForKey:kCodingModelID]];
+    if (self)
+    {
+        _user = [decoder decodeObjectForKey:kCodingUser];
+        _modelName = [decoder decodeObjectForKey:kCodingModelName];
+        _manufacturer = [decoder decodeObjectForKey:kCodingManufacturer];
+        _firmwaresAvailable = [decoder decodeObjectForKey:kCodingFirmwareModels];
+        _inputs = [decoder decodeObjectForKey:kCodingInputs];
+        _outputs = [decoder decodeObjectForKey:kCodingOutputs];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder*)coder
+{
+    [coder encodeObject:_user forKey:kCodingUser];
+    [coder encodeObject:_modelID forKey:kCodingModelID];
+    [coder encodeObject:_modelName forKey:kCodingModelName];
+    [coder encodeObject:_manufacturer forKey:kCodingManufacturer];
+    [coder encodeObject:_firmwaresAvailable forKey:kCodingFirmwareModels];
+    [coder encodeObject:_inputs forKey:kCodingInputs];
+    [coder encodeObject:_outputs forKey:kCodingOutputs];
 }
 
 @end

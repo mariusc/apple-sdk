@@ -1,5 +1,6 @@
-@class RelayrUser;      // Relayr.framework (public)
-@import Foundation;     // Apple
+@class RelayrUser;                      // Relayr.framework (public)
+#import <Relayr/RelayrID.h>             // Relayr.framework (Public)
+@import Foundation;                     // Apple
 
 /*!
  *  @abstract Represents a relayr Application which allows interaction with the relayr Cloud.
@@ -10,14 +11,9 @@
  *
  *  All RelayrSDK objects (except when explicitly said otherwise) will return the same instance when copied (e.g.: when added to a dictionary). Thus the <code>NSCopying</code> method <code>-copyWithZone:</code> will return the same instance. Same happening with <code>NSMutableCopying</code> method <code>-mutableCopyWithZone:</code>.
  */
-@interface RelayrApp : NSObject <NSCopying,NSMutableCopying>
+@interface RelayrApp : NSObject <RelayrID,NSCopying,NSMutableCopying>
 
 #pragma mark Characteristics
-
-/*!
- *  @abstract The relayr application ID.
- */
-@property (readonly,nonatomic) NSString* uid;
 
 /*!
  *  @abstract The relayr application name.

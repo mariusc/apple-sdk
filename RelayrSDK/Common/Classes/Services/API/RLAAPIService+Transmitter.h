@@ -1,5 +1,6 @@
-#import "RLAAPIService.h"   // Base class
-@class RelayrTransmitter;   // Relayr.framework (Public)
+#import "RLAAPIService.h"           // Parent class
+@class RelayrTransmitter;           // Relayr.framework (Public)
+#import "RelayrIDSubscripting.h"    // Relayr.framework (Utilities/Collections)
 
 @interface RLAAPIService (Transmitter)
 
@@ -82,7 +83,7 @@
  *  @see RelayrDevice
  */
 - (void)requestDevicesFromTransmitter:(NSString*)transmitterID
-                           completion:(void (^)(NSError* error, NSSet* devices))completion;
+                           completion:(void (^)(NSError* error, NSSet <RelayrIDSubscripting>* devices))completion;
 
 /*!
  *  @abstract Deletes the abstract connection between a transmitter and a device.

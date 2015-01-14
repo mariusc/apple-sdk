@@ -1,9 +1,11 @@
-@import Foundation;         // Apple
-@class RelayrApp;           // Relayr.framework (Public)
-@class RelayrPublisher;     // Relayr.framework (Public)
-@class RelayrTransmitter;   // Relayr.framework (Public)
-@class RelayrDevice;        // Relayr.framework (Public)
-#import "NSSet+RelayrID.h"  // Relayr.framework (Utilities/Collections)
+@class RelayrApp;                       // Relayr.framework (Public)
+@class RelayrPublisher;                 // Relayr.framework (Public)
+@class RelayrTransmitter;               // Relayr.framework (Public)
+@class RelayrDevice;                    // Relayr.framework (Public)
+#import <Relayr/RelayrID.h>             // Relayr.framework (Public)
+#import <Relayr/RelayrIDSubscripting.h> // Relayr.framework (Utilities/Collections)
+#import <Relayr/NSSet+RelayrID.h>       // Relayr.framework (Utilities/Collections)
+@import Foundation;                     // Apple
 
 /*!
  *  @abstract The very basic entity in the relayr platform is the user. 
@@ -13,7 +15,7 @@
  *
  *  All RelayrSDK objects (except when explicitly said otherwise) will return the same instance when copied (e.g.: when added to a dictionary). Thus the <code>NSCopying</code> method <code>-copyWithZone:</code> will return the same instance. Same happening with <code>NSMutableCopying</code> method <code>-mutableCopyWithZone:</code>.
  */
-@interface RelayrUser : NSObject <NSCoding,NSCopying,NSMutableCopying,RelayrIDSubscripting>
+@interface RelayrUser : NSObject <RelayrID,RelayrIDSubscripting,NSCopying,NSMutableCopying>
 
 /*!
  *  @abstract The relayr application the user has signed in to.
@@ -25,12 +27,6 @@
  *  @discussion This property does not change during the life cycle of the <code>RelayrUser</code> and it is never <code>nil</code>.
  */
 @property (readonly,nonatomic) NSString* token;
-
-/*!
- *  @abstract A unique idenfier of a <code>RelayrUser</code> instance.
- *  @discussion This property does not change during the life cycle of the <code>RelayrUser</code> and it is never <code>nil</code>.
- */
-@property (readonly,nonatomic) NSString* uid;
 
 /*!
  *  @abstract A user name for a specific <code>RelayrUser</code> instace.
@@ -67,6 +63,17 @@
       completion:(void (^)(NSError* error, NSString* previousEmail))completion;
 
 /*!
+ *  @abstract Queries the relayr platform for the user information.
+ *  @discussion Every time this method is called a server query is launched.
+ *	Once the response is returned successfuly, all the <i>readonly</i> user related properties are populated with the respective values.
+ *
+ *  @param completion A block indiciating whether the server query was successful or not.
+ *
+ *  @see queryCloudForIoTs:
+ */
+- (void)queryCloudForUserInfo:(void (^)(NSError* error, NSString* previousName, NSString* previousEmail))completion;
+
+/*!
  *  @abstract The relayr applications installed (authorized) for the specific <code>RelayrUser</code> instace.
  *  @discussion It can can be changed with a successful <code>queryCloudForUserInfo:</code> call.
  *      If <code>nil</code>, the authorised apps are unknown. If an empty set is returned, there are no authorised apps.
@@ -79,6 +86,15 @@
  *      If <code>nil</code>, the publishers are unknown. If an empty set is returned, there are no publishers set in the server.
  */
 @property (readonly,nonatomic) NSSet <RelayrIDSubscripting>* publishers;
+
+/*!
+ *  @abstract Queries the relayr platform for all the application and publisher entities owned by the user.
+ *  @discussion Every time this method is called a server query is launched.
+ *	Once the response is returned successfully, the <i>readonly</i> app and publisher properties are populated with the respective values.
+ *
+ *  @param completion A block indicating whether the server query was successful or not.
+ */
+- (void)queryCloudForPublishersAndAuthorisedApps:(void (^)(NSError* error))completion;
 
 /*!
  *  @abstract A set of the Transmitter entities owned by the specific <code>RelayrUser</code> instace.
@@ -104,17 +120,6 @@
 @property (readonly,nonatomic) NSSet <RelayrIDSubscripting>* devicesBookmarked;
 
 /*!
- *  @abstract Queries the relayr platform for the user information.
- *  @discussion Every time this method is called a server query is launched. 
- *	Once the response is returned successfuly, all the <i>readonly</i> user related properties are populated with the respective values.
- *
- *  @param completion A block indiciating whether the server query was successful or not.
- *
- *  @see queryCloudForIoTs:
- */
-- (void)queryCloudForUserInfo:(void (^)(NSError* error, NSString* previousName, NSString* previousEmail))completion;
-
-/*!
  *  @abstract Queries the relayr platform for all devices, transmitters, and bookmarked devices under the specific <code>RelayUser</code> instance.
  *  @discussion Every time this method is called a server query is launched. 
  *	Once the response is returned successfuly, all the <i>readonly</i> device related properties are populated with the respective values.
@@ -124,15 +129,6 @@
  *  @see queryCloudForUserInfo:
  */
 - (void)queryCloudForIoTs:(void (^)(NSError* error))completion;
-
-/*!
- *  @abstract Queries the relayr platform for all the application and publisher entities owned by the user.
- *  @discussion Every time this method is called a server query is launched. 
- *	Once the response is returned successfully, the <i>readonly</i> app and publisher properties are populated with the respective values.
- *
- *  @param completion A block indicating whether the server query was successful or not.
- */
-- (void)queryCloudForPublishersAndAuthorisedApps:(void (^)(NSError* error))completion;
 
 /*!
  *  @abstract Creates/registers a Transmitter entity on the Relayr cloud.

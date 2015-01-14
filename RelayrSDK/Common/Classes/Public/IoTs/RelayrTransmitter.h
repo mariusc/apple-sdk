@@ -1,7 +1,10 @@
-@import Foundation;             // Apple
-@class RelayrUser;              // Relayr.framework (Public)
-@protocol RelayrOnboarding;     // Relayr.framework (Public)
-@protocol RelayrFirmwareUpdate; // Relayr.framework (Public)
+@class RelayrUser;                      // Relayr.framework (Public)
+@protocol RelayrOnboarding;             // Relayr.framework (Public)
+@protocol RelayrFirmwareUpdate;         // Relayr.framework (Public)
+#import <Relayr/RelayrID.h>             // Relayr.framework (Public)
+#import <Relayr/RelayrIDSubscripting.h> // Relayr.framework (Utilities/Collections)
+#import <Relayr/NSSet+RelayrID.h>       // Relayr.framework (Utilities/Collections)
+@import Foundation;                     // Apple
 
 /*!
  *  @abstract An instance of this class represents a relayr Transmitter. a basic entity on the relayr platform.
@@ -9,19 +12,13 @@
  *
  *  All RelayrSDK objects (except when explicitly said otherwise) will return the same instance when copied (e.g.: when added to a dictionary). Thus the <code>NSCopying</code> method <code>-copyWithZone:</code> will return the same instance. Same happening with <code>NSMutableCopying</code> method <code>-mutableCopyWithZone:</code>.
  */
-@interface RelayrTransmitter : NSObject <NSCoding,NSCopying,NSMutableCopying>
+@interface RelayrTransmitter : NSObject <RelayrID,RelayrIDSubscripting,NSCopying,NSMutableCopying>
 
 /*!
  *  @abstract User currently "using" this transmitter.
  *  @discussion A public device can be owned by another Relayr user, but being used by your <code>RelayrUser</code> entity.
  */
 @property (readonly,weak,nonatomic) RelayrUser* user;
-
-/*!
- *  @abstract A Unique idenfier for a <code>RelayrTransmitter</code> instance.
- *  @discussion This property is inmutable.
- */
-@property (readonly,nonatomic) NSString* uid;
 
 /*!
  *  @abstract Transmitter name.
@@ -56,7 +53,7 @@
  *		You should query the server for more information. 
  *		If this property is an empty set, the transmitter doesn't manage any devices.
  */
-@property (readonly,nonatomic) NSSet* devices;
+@property (readonly,nonatomic) NSSet <RelayrIDSubscripting>* devices;
 
 /*!
  *  @abstract Returns an array of devices connected to the transmitter that can read a specific meaning.
@@ -70,8 +67,7 @@
 
 /*!
  *  @abstract Initialises a physical transmitter with the properties of this <code>RelayrTransmitter</code> entity.
- *  @discussion During the onboarding process the properties needed for the transmitter to be added to the relayr cloud are written 
- *	to the physical memory of the targeted transmitter.
+ *  @discussion During the onboarding process the properties needed for the transmitter to be added to the relayr cloud are written to the physical memory of the targeted transmitter.
  *
  *  @param onboardingClass Responsible for the onboarding process. This class "knows" how to talk to the specific transmitter.
  *  @param timeout The maximum duration of the onboarding process in seconds. 

@@ -1,6 +1,6 @@
 #import "RelayrConnection.h"        // Header
 
-#import "RelayrDevice.h"            // Relayr.framework (Public)
+#import "RelayrDevice.h"            // Relayr.framework (Public/IoTs)
 #import "RelayrConnection_Setup.h"  // Relayr.framework (Private)
 
 @implementation RelayrConnection
@@ -15,7 +15,7 @@
 
 - (BOOL)hasOngoingSubscriptions
 {
-    return NO;  // TODO:
+    return NO;  // TODO: Fill up
 }
 
 - (void)subscribeToStateChangesWithTarget:(id)target action:(SEL)action error:(void (^)(NSError* error))subscriptionError
@@ -60,7 +60,7 @@
 {
     if (!connection || self==connection) { return; }
     
-    // TODO:
+    // TODO: Fill up
 }
 
 #pragma mark NSCopying & NSMutableCopying

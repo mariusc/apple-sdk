@@ -155,6 +155,62 @@ static NSString* const kCodingDeviceModel = @"dmod";
     }
 }
 
+#pragma mark NSCopying & NSMutableCopying
+
+- (id)copyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
+- (id)mutableCopyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
+#pragma mark NSObject
+
+- (NSString*)description
+{
+    return [NSString stringWithFormat:@"RelayrInput\n{\n\
+\t Meaning: %@\n\
+\t Unit: %@\n\
+\t Last value: %@\n\
+\t Last date: %@\n\
+}\n", _meaning, _unit, (_values.lastObject) ? _values.lastObject : @"?", (_dates.lastObject) ? _dates.lastObject : @"?"];
+}
+
+#pragma mark - Private functionality
+
+/*******************************************************************************
+ * It performs a selector on a given target.
+ * This method doesn't check that the arguments aren't <code>nil</code>. Be careful.
+ ******************************************************************************/
+- (void)performSelector:(SEL)action onTarget:(id)target withDevice:(RelayrDevice*)device input:(RelayrInput*)input
+{
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    
+    NSMethodSignature* msig = [target methodSignatureForSelector:action];
+    if (msig != nil)
+    {
+        NSUInteger const numArguments = msig.numberOfArguments;
+        if (numArguments == 2)
+        {
+            [target performSelector:action];
+        }
+        else if (numArguments == 3)
+        {
+            [target performSelector:action withObject:input];
+        }
+        else if (numArguments == 4)
+        {
+            [target performSelector:action withObject:device withObject:input];
+        }
+    }
+    
+    #pragma clang diagnostic pop
+}
+
 #pragma mark Setup extension
 
 - (instancetype)initWithMeaning:(NSString*)meaning unit:(NSString*)unit
@@ -176,7 +232,7 @@ static NSString* const kCodingDeviceModel = @"dmod";
     
     // If there is a deviceModel, pass it to receiving input.
     if (_deviceModel) { _deviceModel = input.deviceModel; }
-
+    
     // If the input's meaning and units are the same, no further work is needed.
     if ([_meaning isEqualToString:input.meaning] && [_unit isEqualToString:input.unit]) { return; }
     
@@ -253,14 +309,14 @@ static NSString* const kCodingDeviceModel = @"dmod";
     {
         _deviceModel = [decoder decodeObjectForKey:kCodingDeviceModel];
         
-        NSMutableArray* tmpValues = [decoder decodeObjectForKey:kCodingValues];
-        NSMutableArray* tmpDates = [decoder decodeObjectForKey:kCodingDates];
+        NSArray* tmpValues = [decoder decodeObjectForKey:kCodingValues];
+        NSArray* tmpDates = [decoder decodeObjectForKey:kCodingDates];
         
         NSUInteger const numValues = tmpValues.count;
         if (numValues && numValues==tmpDates.count)
         {
-            _values = tmpValues;
-            _dates = tmpDates;
+            _values = [[NSMutableArray alloc] initWithArray:tmpValues];
+            _dates = [[NSMutableArray alloc] initWithArray:tmpDates];
         }
     }
     return self;
@@ -275,65 +331,9 @@ static NSString* const kCodingDeviceModel = @"dmod";
     NSUInteger const numValues = _values.count;
     if (numValues && numValues==_dates.count)
     {
-        [coder encodeObject:_values forKey:kCodingValues];
-        [coder encodeObject:_dates forKey:kCodingDates];
+        [coder encodeObject:[NSArray arrayWithArray:_values] forKey:kCodingValues];
+        [coder encodeObject:[NSArray arrayWithArray:_dates] forKey:kCodingDates];
     }
-}
-
-#pragma mark NSCopying & NSMutableCopying
-
-- (id)copyWithZone:(NSZone*)zone
-{
-    return self;
-}
-
-- (id)mutableCopyWithZone:(NSZone*)zone
-{
-    return self;
-}
-
-#pragma mark NSObject
-
-- (NSString*)description
-{
-    return [NSString stringWithFormat:@"RelayrInput\n{\n\
-\t Meaning: %@\n\
-\t Unit: %@\n\
-\t Last value: %@\n\
-\t Last date: %@\n\
-}\n", _meaning, _unit, (_values.lastObject) ? _values.lastObject : @"?", (_dates.lastObject) ? _dates.lastObject : @"?"];
-}
-
-#pragma mark - Private
-
-/*******************************************************************************
- * It performs a selector on a given target.
- * This method doesn't check that the arguments aren't <code>nil</code>. Be careful.
- ******************************************************************************/
-- (void)performSelector:(SEL)action onTarget:(id)target withDevice:(RelayrDevice*)device input:(RelayrInput*)input
-{
-    #pragma clang diagnostic push
-    #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-    
-    NSMethodSignature* msig = [target methodSignatureForSelector:action];
-    if (msig != nil)
-    {
-        NSUInteger const numArguments = msig.numberOfArguments;
-        if (numArguments == 2)
-        {
-            [target performSelector:action];
-        }
-        else if (numArguments == 3)
-        {
-            [target performSelector:action withObject:input];
-        }
-        else if (numArguments == 4)
-        {
-            [target performSelector:action withObject:device withObject:input];
-        }
-    }
-    
-    #pragma clang diagnostic pop
 }
 
 @end

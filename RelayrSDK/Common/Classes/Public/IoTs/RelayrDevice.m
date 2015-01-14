@@ -29,6 +29,8 @@ static NSString* const kCodingSecret = @"sec";
 
 @implementation RelayrDevice
 
+@synthesize uid = _uid;
+
 #pragma mark - Public API
 
 - (instancetype)init

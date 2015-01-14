@@ -1,10 +1,25 @@
 #import "RelayrFirmware.h"          // Header
+
 #import "RelayrFirmware_Setup.h"    // Relayr.framework (Private)
 #import "WunderbarParsing.h"        // Relayr.framework (Wunderbar)
 
 @implementation RelayrFirmware
 
 #pragma mark - Public API
+
+#pragma mark NSCopying & NSMutableCopying
+
+- (id)copyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
+- (id)mutableCopyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
+#pragma mark - Private functionality
 
 #pragma mark Setup extension
 
@@ -34,18 +49,6 @@
 - (void)encodeWithCoder:(NSCoder*)coder
 {
     [super encodeWithCoder:coder];
-}
-
-#pragma mark NSCopying & NSMutableCopying
-
-- (id)copyWithZone:(NSZone*)zone
-{
-    return self;
-}
-
-- (id)mutableCopyWithZone:(NSZone*)zone
-{
-    return self;
 }
 
 @end

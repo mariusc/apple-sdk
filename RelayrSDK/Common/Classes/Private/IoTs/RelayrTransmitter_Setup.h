@@ -1,4 +1,4 @@
-#import "RelayrTransmitter.h"   // Relayr.framework (Public)
+#import "RelayrTransmitter.h"   // Parent class
 @class RelayrUser;              // Relayr.framework (Public)
 
 /*!
@@ -6,7 +6,7 @@
  *  @discussion A transmitter contrary to a device does not gather data but is only used to relay the data from the
  *	devices to the relayr platform. The transmitter is also used to authenticate the different devices that transmit data via it.
  */
-@interface RelayrTransmitter ()
+@interface RelayrTransmitter () <NSCoding>
 
 /*!
  *  @abstract It initialises a Transmitter with a Relayr ID.

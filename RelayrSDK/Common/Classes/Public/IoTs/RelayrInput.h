@@ -26,7 +26,7 @@ typedef void (^RelayrInputErrorReceivedBlock)(NSError* error);
  *	For example: The Luminosity meaning is represented by a single value  
  *	however, the Color meaning consists of three or four values (red, green, blue, and white).
  */
-@interface RelayrInput : NSObject <NSCoding,NSCopying,NSMutableCopying>
+@interface RelayrInput : NSObject <NSCopying,NSMutableCopying>
 
 /*!
  *  @abstract The source of the input (reading).

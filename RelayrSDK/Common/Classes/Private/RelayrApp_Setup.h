@@ -1,4 +1,4 @@
-#import <Relayr/RelayrApp.h>       // Header
+#import <Relayr/RelayrApp.h>       // Parent class
 
 /*!
  *  @abstract Represents a relayr Application which allows interaction with the relayr Cloud.

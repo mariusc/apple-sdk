@@ -5,7 +5,7 @@
 /*!
  *  @abstract Specifies the basic functionality of a device.
  */
-@interface RelayrDeviceModel : NSObject <NSCoding,NSCopying,NSMutableCopying>
+@interface RelayrDeviceModel : NSObject <NSCopying,NSMutableCopying>
 
 /*!
  *  @abstract The User currently "using" this device.

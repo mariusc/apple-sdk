@@ -29,6 +29,8 @@ static NSString* const kCodingPublishers = @"pub";
 
 @implementation RelayrUser
 
+@synthesize uid = _uid;
+
 #pragma mark - Public API
 
 - (instancetype)init
@@ -42,8 +44,9 @@ static NSString* const kCodingPublishers = @"pub";
     __weak RelayrUser* weakSelf = self;
     [_apiService setUserName:name email:nil completion:^(NSError* error) {
         if (error) { if (completion) { completion(error, nil); } return; }
-        
         __strong RelayrUser* strongSelf = weakSelf;
+        if (!strongSelf) { if (completion) { completion(RelayrErrorMissingObjectPointer, nil); } return; }
+        
         NSString* pName = strongSelf.name;
         strongSelf.name = name;
         if (completion) { completion(nil, pName); }
@@ -55,8 +58,9 @@ static NSString* const kCodingPublishers = @"pub";
     __weak RelayrUser* weakSelf = self;
     [_apiService setUserName:nil email:email completion:^(NSError *error) {
         if (error) { if (completion) { completion(error, nil); } return; }
-        
         __strong RelayrUser* strongSelf = weakSelf;
+        if (!strongSelf) { if (completion) { completion(RelayrErrorMissingObjectPointer, nil); } return; }
+        
         NSString* pEmail = strongSelf.email;
         strongSelf.email = email;
         if (completion) { completion(nil, pEmail); }
@@ -68,18 +72,12 @@ static NSString* const kCodingPublishers = @"pub";
     __weak RelayrUser* weakSelf = self;
     [_apiService requestUserInfo:^(NSError* error, NSString* uid, NSString* name, NSString* email) {
         if (error) { if (completion) { completion(error, nil, nil); } return; }
-        if (!uid.length) { if (completion) { completion(RelayrErrorWrongRelayrUser, nil, nil); } return; }
-        
         RelayrUser* strongSelf = weakSelf;
-        if (!strongSelf.uid)
-        {
-            strongSelf.uid = uid;
-        }
-        else if ( ![strongSelf.uid isEqualToString:uid] )
-        {
-            if (completion) { completion(RelayrErrorWrongRelayrUser, nil, nil); }
-            return;
-        }
+        if (!strongSelf) { if (completion) { completion(RelayrErrorMissingObjectPointer, nil, nil); } return; }
+        else if (!uid.length) { if (completion) { completion(RelayrErrorWrongRelayrUser, nil, nil); } return; }
+        
+        if (!strongSelf.uid) { strongSelf.uid = uid; }
+        else if ( ![strongSelf.uid isEqualToString:uid] ) { if (completion) { completion(RelayrErrorWrongRelayrUser, nil, nil); } return; }
         
         NSString* pName = strongSelf.name, * pEmail = strongSelf.email;
         strongSelf.name = name; strongSelf.email = email;
@@ -87,23 +85,41 @@ static NSString* const kCodingPublishers = @"pub";
     }];
 }
 
+- (void)queryCloudForPublishersAndAuthorisedApps:(void (^)(NSError* error))completion
+{
+    __weak RelayrUser* weakSelf = self;
+    [_apiService requestUserAuthorisedApps:^(NSError* appError, NSSet* apps) {
+        if (appError) { if (completion) { completion(appError); } return; }
+        [weakSelf.apiService requestUserPublishers:^(NSError* publisherError, NSSet* publishers) {
+            if (publisherError) { if (completion) { completion(publisherError); } return; }
+            
+            RelayrUser* strongSelf = weakSelf;
+            if (!strongSelf) { if (completion) { completion(RelayrErrorMissingObjectPointer); } return; }
+            
+            [strongSelf setAuthorisedAppsWith:apps];
+            [strongSelf setPublishersWith:publishers];
+            if (completion) { completion(nil); }
+        }];
+    }];
+}
+
 - (void)queryCloudForIoTs:(void (^)(NSError*))completion
 {
     __weak RelayrUser* weakSelf = self;
-    [_apiService requestUserTransmitters:^(NSError* transmitterError, NSSet* transmitters) {
+    [_apiService requestUserTransmitters:^(NSError* transmitterError, NSSet <RelayrIDSubscripting>* transmitters) {
         if (transmitterError) { if (completion) { completion(transmitterError); } return; }
-        if (!weakSelf) { return; }
+        if (!weakSelf) { if (completion) { completion(RelayrErrorMissingObjectPointer); } return; }
         
-        [weakSelf.apiService requestUserDevices:^(NSError* deviceError, NSSet* devices) {
+        [weakSelf.apiService requestUserDevices:^(NSError* deviceError, NSSet <RelayrIDSubscripting>* devices) {
             if (deviceError) { if (completion) { completion(deviceError); } return ; }
-            if (!weakSelf) { return; }
+            if (!weakSelf) { if (completion) { completion(RelayrErrorMissingObjectPointer); } return; }
             
-            [weakSelf.apiService requestUserBookmarkedDevices:^(NSError* bookmarkError, NSSet* devicesBookmarked) {
+            [weakSelf.apiService requestUserBookmarkedDevices:^(NSError* bookmarkError, NSSet <RelayrIDSubscripting>* devicesBookmarked) {
                 if (bookmarkError) { if (completion) { completion(bookmarkError); } return; }
-                if (!weakSelf) { return; }
+                if (!weakSelf) { if (completion) { completion(RelayrErrorMissingObjectPointer); } return; }
 
                 __block NSUInteger count = transmitters.count;
-                if (count == 0) { return [weakSelf processIoTTreeWithTransmitters:transmitters devices:devices bookmarkDevices:devicesBookmarked completion:completion]; }
+                if (!count) { return [weakSelf processIoTTreeWithTransmitters:transmitters devices:devices bookmarkDevices:devicesBookmarked completion:completion]; }
                 
                 __block NSError* intermediateError;
                 for (RelayrTransmitter* transmitter in transmitters)
@@ -118,25 +134,15 @@ static NSString* const kCodingPublishers = @"pub";
                         if (--count == 0)
                         {
                             if (intermediateError) { if (completion) { completion(intermediateError); } return; }
+                            
+                            RelayrUser* strongSelf = weakSelf;
+                            if (!strongSelf) { if (completion) { completion(RelayrErrorMissingObjectPointer); } return; }
+                            
                             [weakSelf processIoTTreeWithTransmitters:transmitters devices:devices bookmarkDevices:devicesBookmarked completion:completion];
                         }
                     }];
                 }
             }];
-        }];
-    }];
-}
-
-- (void)queryCloudForPublishersAndAuthorisedApps:(void (^)(NSError* error))completion
-{
-    __weak RelayrUser* weakSelf = self;
-    [_apiService requestUserAuthorisedApps:^(NSError* appError, NSSet* apps) {
-        if (appError) { if (completion) { completion(appError); } return; }
-        [weakSelf.apiService requestUserPublishers:^(NSError* publisherError, NSSet* publishers) {
-            if (publisherError) { if (completion) { completion(publisherError); } return; }
-            [self setAuthorisedAppsWith:apps];
-            [self setPublishersWith:publishers];
-            if (completion) { completion(nil); }
         }];
     }];
 }
@@ -148,6 +154,7 @@ static NSString* const kCodingPublishers = @"pub";
     __weak RelayrUser* weakSelf = self;
     [_apiService registerTransmitterWithName:name ownerID:_uid model:modelID firmwareVersion:firmwareVersion completion:^(NSError* error, RelayrTransmitter* transmitter) {
         if (error) { if (completion) { completion(error, nil); } return; }
+        
         RelayrTransmitter* result = [weakSelf addTransmitter:transmitter];
         if (!completion) { return; }
         return (result) ? completion(nil, result) : completion(RelayrErrorMissingExpectedValue, nil);
@@ -186,12 +193,213 @@ static NSString* const kCodingPublishers = @"pub";
     if (!device.uid.length) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
     
     __weak RelayrUser* weakSelf = self;
-    [_apiService deleteDevice:device.uid completion:^(NSError *error) {
+    [_apiService deleteDevice:device.uid completion:^(NSError* error) {
         if (error) { if (completion) { completion(error); } return; }
         
         [weakSelf removeDevice:device];
         if (completion) { completion(nil); }
     }];
+}
+
+#pragma mark NSCopying & NSMutableCopying
+
+- (id)copyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
+- (id)mutableCopyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
+#pragma mark RelayrIDSubscripting
+
+- (id <RelayrID>)objectForKeyedSubscript:(NSString*)key
+{
+    if (!key.length) { return nil; }
+    
+    id result = _transmitters[key];
+    if (result) { return result; }
+    
+    result = _devices[key];
+    if (result) { return result; }
+    
+    result = _devicesBookmarked[key];
+    if (result) { return result; }
+    
+    result = _authorisedApps[key];
+    if (result) { return result; }
+    
+    return _publishers[key];
+}
+
+#pragma mark NSObject
+
+- (NSString*)description
+{
+    return [NSString stringWithFormat:@"Relayr User:\n{\n\t ID:\t%@\n\t Token:\t%@\n\t Name:\t%@\n\t Email:\t%@\n\t Number of transmitters:\t\t%@\n\t Number of devices:\t\t\t\t%@\n\t Number of bookmarked devices:\t%@\n\t Number of publishers under this user:\t%@\n}", _uid, _token, _name, _email, (!_transmitters) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_transmitters.count], (!_devices) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_devices.count], (!_devicesBookmarked) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_devicesBookmarked.count], (!_publishers) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_publishers.count]];
+}
+
+#pragma mark - Private methods
+
+/*!
+ *  @abstract It sets the user's IoTs with the server query. The transmitters set brings the devices of transmitters, although these devices are not the same object as the devices set.
+ *  @discussion The parameter can never be <code>nil</code>. If they don't contain any object, they will be an empty set.
+ */
+- (void)processIoTTreeWithTransmitters:(NSSet <RelayrIDSubscripting>*)transmitters devices:(NSSet <RelayrIDSubscripting>*)devices bookmarkDevices:(NSSet <RelayrIDSubscripting>*)bookDevices completion:(void (^)(NSError*))completion
+{
+    NSMutableSet* result = [[NSMutableSet alloc] init];
+    
+    // First: compile the current list of devices. Keep the used old objects and add the new ones (the non-used any more, will be deleted)...
+    if (_devices)
+    {
+        for (RelayrDevice* nDevice in devices)  // Always loop through the newer set
+        {
+            NSString* nDeviceID = nDevice.uid;
+            RelayrDevice* matchedDevice = nDevice;
+            for (RelayrDevice* pDevice in _devices)
+            {
+                if ([pDevice.uid isEqualToString:nDeviceID]) { matchedDevice = pDevice; [matchedDevice setWith:nDevice]; break; }
+            }
+            [result addObject:matchedDevice];
+        }
+        devices = [NSSet setWithSet:result];
+    }
+    
+    // Second: Check bookmarked devices for already set up devices...
+    [result removeAllObjects];
+    for (RelayrDevice* bDevice in bookDevices)
+    {
+        NSString* bDeviceID = bDevice.uid;
+        RelayrDevice* matchedDevice = bDevice;
+        for (RelayrDevice* pDevice in devices)
+        {
+            if ([pDevice.uid isEqualToString:bDeviceID]) { matchedDevice = pDevice; break; }
+        }
+        [result addObject:matchedDevice];
+    }
+    bookDevices = [NSSet setWithSet:result];
+    
+    // Third: Compile list between previous bookmarked devices and current ones...
+    if (_devicesBookmarked)
+    {
+        [result removeAllObjects];
+        for (RelayrDevice* bDevice in bookDevices)  // Always loop through the newer set
+        {
+            NSString* bDeviceID = bDevice.uid;
+            RelayrDevice* matchedDevice = bDevice;
+            for (RelayrDevice* pDevice in _devicesBookmarked)
+            {
+                if ([pDevice.uid isEqualToString:bDeviceID]) { matchedDevice = pDevice; [matchedDevice setWith:bDevice]; break; }
+            }
+            [result addObject:matchedDevice];
+        }
+        bookDevices = [NSSet setWithSet:result];
+    }
+    
+    // Fourth: Go through the transmitter's devices and substitude them with the devices in <code>devices</code>
+    for (RelayrTransmitter* transmitter in transmitters)
+    {
+        [result removeAllObjects];
+        for (RelayrDevice* nDevice in transmitter.devices)
+        {
+            NSString* nDeviceID = nDevice.uid;
+            RelayrDevice* matchedDevice = nDevice;
+            for (RelayrDevice* pDevice in devices)
+            {
+                if ([pDevice.uid isEqualToString:nDeviceID]) { matchedDevice = pDevice; [matchedDevice setWith:nDevice]; break; }
+            }
+            [result addObject:matchedDevice];
+        }
+        transmitter.devices = [NSSet setWithSet:result];
+    }
+    
+    // Fifth: Compile list between previous transmitters and current ones...
+    if (_transmitters.count)
+    {
+        [result removeAllObjects];
+        for (RelayrTransmitter* nTransmitter in transmitters)
+        {
+            NSString* nTransmitterID = nTransmitter.uid;
+            RelayrTransmitter* matchedTransmitter = nTransmitter;
+            for (RelayrTransmitter* pTransmitter in _transmitters)
+            {
+                if ([pTransmitter.uid isEqualToString:nTransmitterID]) { matchedTransmitter = pTransmitter; [matchedTransmitter setWith:nTransmitter]; break; }
+            }
+            [result addObject:matchedTransmitter];
+        }
+        transmitters = [NSSet setWithSet:result];
+    }
+    
+    _devices = devices;
+    _devicesBookmarked = bookDevices;
+    _transmitters = transmitters;
+    if (completion) { completion(nil); }
+}
+
+/*!
+ *  @abstract It replaces/set the current authorised apps with a new set of authorised apps.
+ *  @discussion If <code>apps</code> is <code>nil</code>, the authorisedApps are unknown and thus no further work is performed.
+ *      If <code>apps</code> is an empty set, there are no authorised apps.
+ *      If <code>apps</code> contains <code>RelayrApp</code> objects, a replacing process will be launched.
+ */
+- (void)setAuthorisedAppsWith:(NSSet*)apps
+{
+    if (!apps) { return; }
+    else if (apps.count == 0 || _authorisedApps.count == 0) { _authorisedApps = apps; return; }
+    
+    NSMutableSet* result = [[NSMutableSet alloc] init];
+    for (RelayrApp* app in apps)
+    {
+        NSString* appID = app.uid;
+
+        RelayrApp* matchedApp = app;
+        for (RelayrApp* previousApp in _authorisedApps)
+        {
+            if ([previousApp.uid isEqualToString:appID])
+            {
+                [previousApp setWith:app];
+                matchedApp = previousApp;
+                break;
+            }
+        }
+        [result addObject:matchedApp];
+    }
+    
+    _authorisedApps = [NSSet setWithSet:result];
+}
+
+/*!
+ *  @abstract It replaces/set the current publishers with a new set of publishers.
+ *  @discussion If <code>publisher</code> is <code>nil</code>, the publishers are unknown and thus no further work is performed.
+ *      If <code>publisher</code> is an empty set, there are no publishers.
+ *      If <code>publisher</code> contains <code>RelayrApp</code> objects, a replacing process will be launched.
+ */
+- (void)setPublishersWith:(NSSet*)publishers
+{
+    if (!publishers) { return; }
+    else if (publishers.count == 0 || _publishers.count == 0) { _publishers = publishers; return; }
+    
+    NSMutableSet* result = [[NSMutableSet alloc] init];
+    for (RelayrPublisher* publisher in publishers)
+    {
+        NSString* publisherID = publisher.uid;
+        
+        RelayrPublisher* matchedPublisher = publisher;
+        for (RelayrPublisher* previousPublisher in _authorisedApps)
+        {
+            if ([previousPublisher.uid isEqualToString:publisherID])
+            {
+                [previousPublisher setWith:publisher];
+                matchedPublisher = previousPublisher;
+                break;
+            }
+        }
+        [result addObject:matchedPublisher];
+    }
+    
+    _publishers = [NSSet setWithSet:result];
 }
 
 #pragma mark Setup extension
@@ -221,11 +429,21 @@ static NSString* const kCodingPublishers = @"pub";
     return self;
 }
 
+- (void)setWith:(RelayrUser*)user
+{
+    if (!user || ![_uid isEqualToString:user.uid]) { return; }
+    
+    if (user.app) { _app = user.app; }
+    if (user.name) { _name = user.name; }
+    if (user.email) { _email = user.email; }
+    
+    // TODO: Write all the set-methods for the NSSets
+}
+
 - (RelayrTransmitter*)addTransmitter:(RelayrTransmitter*)transmitter
 {
     NSString* transmitterID = transmitter.uid;
     if (!transmitterID.length) { return nil; }
-    transmitter.user = self;
     
     if (transmitter.devices.count)  // Devices need to be added first.
     {
@@ -370,8 +588,8 @@ static NSString* const kCodingPublishers = @"pub";
     self = [self initWithToken:[decoder decodeObjectForKey:kCodingToken]];
     if (self)
     {
-        _app = [decoder decodeObjectForKey:kCodingApp];
         _uid = [decoder decodeObjectForKey:kCodingID];
+        _app = [decoder decodeObjectForKey:kCodingApp];
         _name = [decoder decodeObjectForKey:kCodingName];
         _email = [decoder decodeObjectForKey:kCodingEmail];
         _authorisedApps = [decoder decodeObjectForKey:kCodingApps];
@@ -386,8 +604,8 @@ static NSString* const kCodingPublishers = @"pub";
 - (void)encodeWithCoder:(NSCoder*)coder
 {
     [coder encodeObject:_token forKey:kCodingToken];
-    [coder encodeObject:_app forKey:kCodingApp];
     [coder encodeObject:_uid forKey:kCodingID];
+    [coder encodeObject:_app forKey:kCodingApp];
     [coder encodeObject:_name forKey:kCodingName];
     [coder encodeObject:_email forKey:kCodingEmail];
     [coder encodeObject:_authorisedApps forKey:kCodingApps];
@@ -395,210 +613,6 @@ static NSString* const kCodingPublishers = @"pub";
     [coder encodeObject:_transmitters forKey:kCodingTransmitters];
     [coder encodeObject:_devices forKey:kCodingDevices];
     [coder encodeObject:_devicesBookmarked forKey:kCodingBookmarks];
-}
-
-#pragma mark NSCopying & NSMutableCopying
-
-- (id)copyWithZone:(NSZone*)zone
-{
-    return self;
-}
-
-- (id)mutableCopyWithZone:(NSZone*)zone
-{
-    return self;
-}
-
-#pragma mark RelayrIDSubscripting
-
-- (id <RelayrID>)objectForKeyedSubscript:(NSString*)key
-{
-    if (!key.length) { return nil; }
-    
-    id result = _transmitters[key];
-    if (result) { return result; }
-    
-    result = _devices[key];
-    if (result) { return result; }
-    
-    result = _devicesBookmarked[key];
-    if (result) { return result; }
-    
-    result = _authorisedApps[key];
-    if (result) { return result; }
-    
-    return _publishers[key];
-}
-
-#pragma mark NSObject
-
-- (NSString*)description
-{
-    return [NSString stringWithFormat:@"Relayr User:\n{\n\t ID:\t%@\n\t Token:\t%@\n\t Name:\t%@\n\t Email:\t%@\n\t Number of transmitters:\t\t%@\n\t Number of devices:\t\t\t\t%@\n\t Number of bookmarked devices:\t%@\n\t Number of publishers under this user:\t%@\n}", _uid, _token, _name, _email, (!_transmitters) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_transmitters.count], (!_devices) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_devices.count], (!_devicesBookmarked) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_devicesBookmarked.count], (!_publishers) ? @"?" : [NSString stringWithFormat:@"%lu", (unsigned long)_publishers.count]];
-}
-
-#pragma mark - Private methods
-
-/*!
- *  @abstract It sets the user's IoTs with the server query. The transmitters set brings the devices of transmitters, although these devices are not the same object as the devices set.
- *  @discussion The parameter can never be <code>nil</code>. If they don't contain any object, they will be an empty set.
- */
-- (void)processIoTTreeWithTransmitters:(NSSet*)transmitters devices:(NSSet*)devices bookmarkDevices:(NSSet*)bookDevices completion:(void (^)(NSError*))completion
-{
-    NSMutableSet* result = [[NSMutableSet alloc] init];
-    
-    // First: compile the current list of devices. Keep the used old objects and add the new ones (the non-used any more, will be deleted)...
-    if (_devices)
-    {
-        for (RelayrDevice* nDevice in devices)  // Always loop through the newer set
-        {
-            NSString* nDeviceID = nDevice.uid;
-            RelayrDevice* matchedDevice = nDevice;
-            for (RelayrDevice* pDevice in _devices)
-            {
-                if ([pDevice.uid isEqualToString:nDeviceID]) { matchedDevice = pDevice; [matchedDevice setWith:nDevice]; break; }
-            }
-            [result addObject:matchedDevice];
-        }
-        devices = [NSSet setWithSet:result];
-    }
-    
-    // Second: Check bookmarked devices for already set up devices...
-    [result removeAllObjects];
-    for (RelayrDevice* bDevice in bookDevices)
-    {
-        NSString* bDeviceID = bDevice.uid;
-        RelayrDevice* matchedDevice = bDevice;
-        for (RelayrDevice* pDevice in devices)
-        {
-            if ([pDevice.uid isEqualToString:bDeviceID]) { matchedDevice = pDevice; break; }
-        }
-        [result addObject:matchedDevice];
-    }
-    bookDevices = [NSSet setWithSet:result];
-    
-    // Third: Compile list between previous bookmarked devices and current ones...
-    if (_devicesBookmarked)
-    {
-        [result removeAllObjects];
-        for (RelayrDevice* bDevice in bookDevices)  // Always loop through the newer set
-        {
-            NSString* bDeviceID = bDevice.uid;
-            RelayrDevice* matchedDevice = bDevice;
-            for (RelayrDevice* pDevice in _devicesBookmarked)
-            {
-                if ([pDevice.uid isEqualToString:bDeviceID]) { matchedDevice = pDevice; [matchedDevice setWith:bDevice]; break; }
-            }
-            [result addObject:matchedDevice];
-        }
-        bookDevices = [NSSet setWithSet:result];
-    }
-    
-    // Fourth: Go through the transmitter's devices and substitude them with the devices in <code>devices</code>
-    for (RelayrTransmitter* transmitter in transmitters)
-    {
-        [result removeAllObjects];
-        for (RelayrDevice* nDevice in transmitter.devices)
-        {
-            NSString* nDeviceID = nDevice.uid;
-            RelayrDevice* matchedDevice = nDevice;
-            for (RelayrDevice* pDevice in devices)
-            {
-                if ([pDevice.uid isEqualToString:nDeviceID]) { matchedDevice = pDevice; [matchedDevice setWith:nDevice]; break; }
-            }
-            [result addObject:matchedDevice];
-        }
-        transmitter.devices = [NSSet setWithSet:result];
-    }
-    
-    // Fifth: Compile list between previous transmitters and current ones...
-    if (_transmitters.count)
-    {
-        [result removeAllObjects];
-        for (RelayrTransmitter* nTransmitter in transmitters)
-        {
-            NSString* nTransmitterID = nTransmitter.uid;
-            RelayrTransmitter* matchedTransmitter = nTransmitter;
-            for (RelayrTransmitter* pTransmitter in _transmitters)
-            {
-                if ([pTransmitter.uid isEqualToString:nTransmitterID]) { matchedTransmitter = pTransmitter; [matchedTransmitter setWith:nTransmitter]; break; }
-            }
-            [result addObject:matchedTransmitter];
-        }
-        transmitters = [NSSet setWithSet:result];
-    }
-    
-    _devices = devices;
-    _devicesBookmarked = bookDevices;
-    _transmitters = transmitters;
-    if (completion) { completion(nil); }
-}
-
-/*!
- *  @abstract It replaces/set the current authorised apps with a new set of authorised apps.
- *  @discussion If <code>apps</code> is <code>nil</code>, the authorisedApps are unknown and thus no further work is performed.
- *      If <code>apps</code> is an empty set, there are no authorised apps.
- *      If <code>apps</code> contains <code>RelayrApp</code> objects, a replacing process will be launched.
- */
-- (void)setAuthorisedAppsWith:(NSSet*)apps
-{
-    if (!apps) { return; }
-    else if (apps.count == 0 || _authorisedApps.count == 0) { _authorisedApps = apps; return; }
-    
-    NSMutableSet* result = [[NSMutableSet alloc] init];
-    for (RelayrApp* app in apps)
-    {
-        NSString* appID = app.uid;
-
-        RelayrApp* matchedApp = app;
-        for (RelayrApp* previousApp in _authorisedApps)
-        {
-            if ([previousApp.uid isEqualToString:appID])
-            {
-                [previousApp setWith:app];
-                matchedApp = previousApp;
-                break;
-            }
-        }
-        
-        [result addObject:matchedApp];
-    }
-    
-    _authorisedApps = [NSSet setWithSet:result];
-}
-
-/*!
- *  @abstract It replaces/set the current publishers with a new set of publishers.
- *  @discussion If <code>publisher</code> is <code>nil</code>, the publishers are unknown and thus no further work is performed.
- *      If <code>publisher</code> is an empty set, there are no publishers.
- *      If <code>publisher</code> contains <code>RelayrApp</code> objects, a replacing process will be launched.
- */
-- (void)setPublishersWith:(NSSet*)publishers
-{
-    if (!publishers) { return; }
-    else if (publishers.count == 0 || _publishers.count == 0) { _publishers = publishers; return; }
-    
-    NSMutableSet* result = [[NSMutableSet alloc] init];
-    
-    for (RelayrPublisher* publisher in publishers)
-    {
-        NSString* publisherID = publisher.uid;
-        
-        RelayrPublisher* matchedPublisher = publisher;
-        for (RelayrPublisher* previousPublisher in _authorisedApps)
-        {
-            if ([previousPublisher.uid isEqualToString:publisherID])
-            {
-                [previousPublisher setWith:publisher];
-                matchedPublisher = previousPublisher;
-                break;
-            }
-        }
-        
-        [result addObject:matchedPublisher];
-    }
-    
-    _publishers = [NSSet setWithSet:result];
 }
 
 @end

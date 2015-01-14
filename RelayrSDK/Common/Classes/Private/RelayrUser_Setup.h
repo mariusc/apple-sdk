@@ -1,4 +1,4 @@
-#import <Relayr/RelayrUser.h>   // Header
+#import <Relayr/RelayrUser.h>   // Parent class
 @class RLAAPIService;           // Relayr.framework (Service/API)
 @class RLAMQTTService;          // Relayr.framework (Service/MQTT)
 @class RLABLEService;           // Relayr.framework (Service/BLE)
@@ -9,7 +9,7 @@
  *	A user can be both an application owner (a publisher) and an end user.
  *	A user is required in order to add other entities to the relayr platform.
  */
-@interface RelayrUser ()
+@interface RelayrUser () <NSCoding>
 
 /*!
  *  @abstract It initialises a <code>RelayrUser</code> with a specific OAuth token. The common initialiser <code>-init:</code> is not accepted.
@@ -70,28 +70,29 @@
 @property (readwrite,nonatomic) NSString* email;
 
 /*!
- *  @abstract The relayr applications under the specific <code>RelayrUser</code> instace.
- *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
+ *  @abstract The relayr applications installed (authorized) for the specific <code>RelayrUser</code> instace.
+ *  @discussion It can can be changed with a successful <code>queryCloudForUserInfo:</code> call.
+ *      If <code>nil</code>, the authorised apps are unknown. If an empty set is returned, there are no authorised apps.
  */
-@property (readwrite,nonatomic) NSSet* apps;
+@property (readwrite,nonatomic) NSSet <RelayrIDSubscripting>* authorisedApps;
 
 /*!
  *  @abstract An array of the <code>publisher</code>s listed under the specific user.
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
-@property (readwrite,nonatomic) NSSet* publishers;
+@property (readwrite,nonatomic) NSSet <RelayrIDSubscripting>* publishers;
 
 /*!
  *  @abstract An array of the Transmitter entities owned by the specific <code>RelayrUser</code> instace.
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
-@property (readwrite,nonatomic) NSSet* transmitters;
+@property (readwrite,nonatomic) NSSet <RelayrIDSubscripting>* transmitters;
 
 /*!
  *  @abstract An array of the Device entities owned by the specific <code>RelayrUser</code> instace
  *  @discussion It can can be changed in a successful <code>queryCloudForUserInfo:</code> call.
  */
-@property (readwrite,nonatomic) NSSet* devices;
+@property (readwrite,nonatomic) NSSet <RelayrIDSubscripting>* devices;
 
 /*!
  *  @abstract Devices that the specific <code>RelayrUser</code> instace has bookmarked.
@@ -99,7 +100,15 @@
  *	By Bookmarking a device you are indicating that you have a particular interest in this device.
  *	In the relayr context, a bookmarked device will appear on a user's Developer Dashboard.
  */
-@property (readwrite,nonatomic) NSSet* devicesBookmarked;
+@property (readwrite,nonatomic) NSSet <RelayrIDSubscripting>* devicesBookmarked;
+
+/*!
+ *  @abstract Sets the instance where this object is being called onto, with the properties of the object passed as the argument.
+ *  @discussion The object passed as the argument is considered new and thus the properties have more priority.
+ *
+ *  @param user The newly <code>RelayrUser</code> instance.
+ */
+- (void)setWith:(RelayrUser*)user;
 
 /*!
  *  @abstract Adds a transmitter to the transmitters own by the user (and all the devices children of that transmitter).

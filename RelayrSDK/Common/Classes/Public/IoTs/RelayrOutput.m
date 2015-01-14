@@ -1,5 +1,4 @@
 #import "RelayrOutput.h"            // Header
-#import "RelayrOutput_Setup.h"      // Relayr.framework (Private)
 
 #import "RelayrUser.h"              // Relayr.framework (Public)
 #import "RelayrDevice.h"            // Relayr.framework (Public)
@@ -7,9 +6,11 @@
 #import "RelayrErrors.h"            // Relayr.framework (Public)
 #import "RelayrUser_Setup.h"        // Relayr.framework (Private)
 #import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
+#import "RelayrOutput_Setup.h"      // Relayr.framework (Private)
 #import "RLAAPIService+Device.h"    // Relayr.framework (Service/API)
 
 static NSString* const kCodingMeaning = @"men";
+static NSString* const kCodingDeviceModel = @"dmod";
 
 @implementation RelayrOutput
 
@@ -30,6 +31,15 @@ static NSString* const kCodingMeaning = @"men";
     [user.apiService sendToDeviceID:device.uid withMeaning:_meaning value:value completion:completion];
 }
 
+#pragma mark NSObject
+
+- (NSString*)description
+{
+    return [NSString stringWithFormat:@"RelayrOutput\n{\n\t Meaning: %@}\n", _meaning];
+}
+
+#pragma mark - Private functionality
+
 #pragma mark Setup extension
 
 - (instancetype)initWithMeaning:(NSString*)meaning
@@ -46,19 +56,26 @@ static NSString* const kCodingMeaning = @"men";
 {
     if (!output.meaning.length) { return; }
     
-    // TODO: Fill up
+    _meaning = output.meaning;
+    if (output.deviceModel) { _deviceModel = output.deviceModel; }
 }
 
 #pragma mark NSCoding
 
 - (id)initWithCoder:(NSCoder*)decoder
 {
-    return [self initWithMeaning:[decoder decodeObjectForKey:kCodingMeaning]];
+    self = [self initWithMeaning:[decoder decodeObjectForKey:kCodingMeaning]];
+    if (self)
+    {
+        _deviceModel = [decoder decodeObjectForKey:kCodingDeviceModel];
+    }
+    return self;
 }
 
 - (void)encodeWithCoder:(NSCoder*)coder
 {
     [coder encodeObject:_meaning forKey:kCodingMeaning];
+    [coder encodeObject:_deviceModel forKey:kCodingDeviceModel];
 }
 
 #pragma mark NSCopying & NSMutableCopying
@@ -71,13 +88,6 @@ static NSString* const kCodingMeaning = @"men";
 - (id)mutableCopyWithZone:(NSZone*)zone
 {
     return self;
-}
-
-#pragma mark NSObject
-
-- (NSString*)description
-{
-    return [NSString stringWithFormat:@"RelayrOutput\n{\n\t Meaning: %@}\n", _meaning];
 }
 
 @end

@@ -8,8 +8,9 @@
 #import "RelayrDevice.h"            // Relayr.framework (Public)
 #import "RelayrFirmware.h"          // Relayr.framework (Public)
 #import "RLAAPIConstants.h"         // Relayr.framework (Service/API)
-#import "RelayrErrors.h"            // Relayr.framework (Utilities)
-#import "RLALog.h"                  // Relayr.framework (Utilities)
+#import "NSSet+RelayrID.h"          // Relayr.framework (Utilities/Collections)
+#import "RelayrErrors.h"            // Relayr.framework (Utilities/Error)
+#import "RLALog.h"                  // Relayr.framework (Utilities/Log)
 
 @implementation RLAAPIService (User)
 
@@ -140,7 +141,7 @@
     [task resume];
 }
 
-- (void)requestUserTransmitters:(void (^)(NSError* error, NSSet* transmitters))completion
+- (void)requestUserTransmitters:(void (^)(NSError* error, NSSet <RelayrIDSubscripting>* transmitters))completion
 {
     if (!completion) { return; }
     
@@ -162,7 +163,7 @@
     [task resume];
 }
 
-- (void)requestUserDevices:(void (^)(NSError* error, NSSet* devices))completion
+- (void)requestUserDevices:(void (^)(NSError* error, NSSet <RelayrIDSubscripting>* devices))completion
 {
     if (!completion) { return; }
 
@@ -214,7 +215,7 @@
     [task resume];
 }
 
-- (void)requestUserBookmarkedDevices:(void (^)(NSError* error, NSSet* bookDevices))completion
+- (void)requestUserBookmarkedDevices:(void (^)(NSError* error, NSSet <RelayrIDSubscripting>* bookDevices))completion
 {
     if (!completion) { return; }
     

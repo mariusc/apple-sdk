@@ -1,12 +1,11 @@
-@class RelayrDevice;        // Relayr.framework (Public)
-@class RelayrDeviceModel;   // Relayr.framework (Public)
+@class RelayrDeviceModel;   // Relayr.framework (Public/IoTs)
 @import Foundation;         // Apple
 
 /*!
  *  @abstract Represents a type of writing/output (command or configuration) a relayr device (for example, a sensor) can receive.
  *  @discussion All RelayrSDK objects (except when explicitly said otherwise) will return the same instance when copied (e.g.: when added to a dictionary). Thus the <code>NSCopying</code> method <code>-copyWithZone:</code> will return the same instance. Same happening with <code>NSMutableCopying</code> method <code>-mutableCopyWithZone:</code>.
  */
-@interface RelayrOutput : NSObject <NSCoding,NSCopying,NSMutableCopying>
+@interface RelayrOutput : NSObject <NSCopying,NSMutableCopying>
 
 /*!
  *  @abstract The source of the output/writing. 

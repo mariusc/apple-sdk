@@ -1,5 +1,5 @@
-@import Foundation;     // Apple
 @class RelayrUser;      // Relayr.framework (Public)
+@import Foundation;     // Apple
 
 /*!
  *  @abstract This class object represents the relayr <a href="https://developer.relayr.io/documents/Welcome/Platform">Cloud Platform</a> (it does not accept instantiation).

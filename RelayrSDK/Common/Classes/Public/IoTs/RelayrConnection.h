@@ -1,5 +1,5 @@
-@import Foundation;     // Apple
 @class RelayrDevice;    // Relayr.framework (Public)
+@import Foundation;     // Apple
 
 #pragma mark - Definitions
 

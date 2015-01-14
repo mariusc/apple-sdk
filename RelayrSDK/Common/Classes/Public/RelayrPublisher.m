@@ -8,6 +8,8 @@ static NSString* const kCodingApps = @"apps";
 
 @implementation RelayrPublisher
 
+@synthesize uid = _uid;
+
 #pragma mark - Public API
 
 - (instancetype)init

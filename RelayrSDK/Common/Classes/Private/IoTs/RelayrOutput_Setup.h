@@ -1,10 +1,10 @@
-#import "RelayrInput.h"     // Relayr.framework (Public)
+#import "RelayrOutput.h"    // Parent class
 
 /*!
  *  @abstract It references a type of writing/output that a Relayr device (sensor) can perform.
  *  @discussion This object have a single meaning, but can take more than one value. For example: luminosity (meaning) reads a single value (in lumens); however, color (meaning) reads three or four values (red, green, blue, and maybe alpha).
  */
-@interface RelayrOutput ()
+@interface RelayrOutput () <NSCoding>
 
 /*!
  *  @abstract Designated initialiser for <code>RelayrOutput</code> objects.

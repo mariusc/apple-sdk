@@ -4,7 +4,7 @@
 /*!
  *  @abstract Specifies the basic functionality of a device.
  */
-@interface RelayrFirmwareModel : NSObject <NSCoding,NSCopying,NSMutableCopying>
+@interface RelayrFirmwareModel : NSObject <NSCopying,NSMutableCopying>
 
 /*!
  *  @abstract The <code>RelayrDeviceModel</code> targeted by the firmware.

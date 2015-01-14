@@ -1,4 +1,4 @@
-#import "RelayrFirmwareModel.h" // Relayr.framework (Public)
+#import "RelayrFirmwareModel.h" // Parent class
 @import Foundation;             // Apple
 
 /*!
@@ -8,6 +8,6 @@
  *  @see RelayrDevice
  *  @see RelayrTransmitter
  */
-@interface RelayrFirmware : RelayrFirmwareModel <NSCoding,NSCopying,NSMutableCopying>
+@interface RelayrFirmware : RelayrFirmwareModel <NSCopying,NSMutableCopying>
 
 @end

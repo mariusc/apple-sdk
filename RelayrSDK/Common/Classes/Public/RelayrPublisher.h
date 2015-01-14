@@ -1,5 +1,6 @@
-@class RelayrUser;      // Relayr.framework (Public)
-@import Foundation;     // Apple
+@class RelayrUser;          // Relayr.framework (Public)
+#import <Relayr/RelayrID.h> // Relayr.framework (Public)
+@import Foundation;         // Apple
 
 /*!
  *  @abstract Every instance of this class represents a <i>publisher</i> entity.
@@ -11,13 +12,7 @@
  *  @see RelayrUser
  *  @see RelayrApp
  */
-@interface RelayrPublisher : NSObject <NSCoding,NSCopying,NSMutableCopying>
-
-/*!
- *  @abstract Uniquely represents a Publisher on the relayr platform.
- *  @discussion Cannot be <code>nil</code>.
- */
-@property (readonly,nonatomic) NSString* uid;
+@interface RelayrPublisher : NSObject <RelayrID,NSCopying,NSMutableCopying>
 
 /*!
  *  @abstract The owner of the publisher entity. This is the User by whom the Publisher was created.
