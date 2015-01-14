@@ -30,7 +30,15 @@
 @property (readwrite,nonatomic) NSString* name;
 
 /*!
- *  @abstract The Id of the owner of the Device.
+ *  @abstract The transmitter that the Device is associated with.
+ *  @discussion Note: using this property implies a deep search on the IoT tree. Only use it when necessary.
+ *
+ *  @return A fully initialised transmitter or <code>nil</code>.
+ */
+@property (readwrite,weak,nonatomic) RelayrTransmitter* transmitter;
+
+/*!
+ *  @abstract The ID of the owner of the Device.
  *  @discussion A relayr User Id.
  */
 @property (readwrite,nonatomic) NSString* owner;

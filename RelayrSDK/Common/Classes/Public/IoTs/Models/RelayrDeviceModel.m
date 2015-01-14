@@ -96,15 +96,15 @@ static NSString* const kCodingOutputs = @"out";
 {
     if (!inputs) { return; }
     
-    NSMutableSet* previous = [NSMutableSet setWithSet:_inputs];
     NSMutableSet* result = [NSMutableSet setWithCapacity:inputs.count];
     
+    NSMutableSet* previous = [NSMutableSet setWithSet:_inputs];
     for (RelayrInput* neueInput in inputs)
     {
         RelayrInput* matchedInput;
-        for (RelayrInput* pInput in previous)
+        for (RelayrInput* prevInput in previous)
         {
-            if ([pInput.meaning isEqualToString:neueInput.meaning]) { matchedInput = pInput; break; }
+            if ([prevInput.meaning isEqualToString:neueInput.meaning]) { matchedInput = prevInput; break; }
         }
         
         if (matchedInput)
@@ -177,6 +177,7 @@ static NSString* const kCodingOutputs = @"out";
 {
     if (self==deviceModel || ![_modelID isEqualToString:deviceModel.modelID]) { return; }
     
+    if (deviceModel.user) { _user = deviceModel.user; }
     if (deviceModel.modelName) { _modelName = deviceModel.modelName; }
     if (deviceModel.manufacturer) { _manufacturer = deviceModel.manufacturer; }
     [self setFirmwaresAvailableWith:deviceModel.firmwaresAvailable];

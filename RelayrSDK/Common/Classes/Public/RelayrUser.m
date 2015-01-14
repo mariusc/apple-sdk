@@ -127,8 +127,12 @@ static NSString* const kCodingPublishers = @"pub";
                     [_apiService requestDevicesFromTransmitter:transmitter.uid completion:^(NSError* transmitterDevicesError, NSSet* transmitterDevices) {
                         if (!intermediateError)
                         {
-                            if (transmitterDevicesError) { intermediateError = transmitterDevicesError; }
-                            else { transmitter.devices = transmitterDevices; }
+                            if (!transmitterDevicesError)
+                            {
+                                transmitter.devices = transmitterDevices;
+                                for (RelayrDevice* dev in transmitterDevices) { dev.transmitter = transmitter; }
+                            }
+                            else { intermediateError = transmitterDevicesError; }
                         }
                         
                         if (--count == 0)
@@ -254,13 +258,13 @@ static NSString* const kCodingPublishers = @"pub";
     // First: compile the current list of devices. Keep the used old objects and add the new ones (the non-used any more, will be deleted)...
     if (_devices)
     {
-        for (RelayrDevice* nDevice in devices)  // Always loop through the newer set
+        for (RelayrDevice* neueDev in devices)  // Always loop through the newer set
         {
-            NSString* nDeviceID = nDevice.uid;
-            RelayrDevice* matchedDevice = nDevice;
-            for (RelayrDevice* pDevice in _devices)
+            NSString* nDeviceID = neueDev.uid;
+            RelayrDevice* matchedDevice = neueDev;
+            for (RelayrDevice* prevDev in _devices)
             {
-                if ([pDevice.uid isEqualToString:nDeviceID]) { matchedDevice = pDevice; [matchedDevice setWith:nDevice]; break; }
+                if ([prevDev.uid isEqualToString:nDeviceID]) { matchedDevice = prevDev; [matchedDevice setWith:neueDev]; break; }
             }
             [result addObject:matchedDevice];
         }

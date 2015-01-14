@@ -138,7 +138,7 @@ static NSString* const kCodingDeviceModel = @"dmod";
     
     if ([_deviceModel isKindOfClass:[RelayrDevice class]] && !_subscribedBlocks.count && !_subscribedTargets.count)
     {
-        [((RelayrDevice*)self) unsubscribeToCurrentServiceIfNecessary];
+        [((RelayrDevice*)_deviceModel) unsubscribeToCurrentServiceIfNecessary];
     }
 }
 
@@ -229,9 +229,7 @@ static NSString* const kCodingDeviceModel = @"dmod";
 - (void)setWith:(RelayrInput*)input
 {
     if (!input.meaning.length) { return; }
-    
-    // If there is a deviceModel, pass it to receiving input.
-    if (_deviceModel) { _deviceModel = input.deviceModel; }
+    // Do not pass the deviceModel (since the new deviceModel will be deleted after the settings are done).
     
     // If the input's meaning and units are the same, no further work is needed.
     if ([_meaning isEqualToString:input.meaning] && [_unit isEqualToString:input.unit]) { return; }
