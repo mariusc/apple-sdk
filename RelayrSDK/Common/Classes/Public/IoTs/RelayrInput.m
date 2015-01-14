@@ -290,7 +290,7 @@ static NSString* const kCodingDeviceModel = @"dmod";
             RLATargetAction* pair = key;
             id target = pair.target;
             SEL action = pair.action;
-            if (!target || ![key respondsToSelector:action]) { return [toSubstract addObject:key]; }
+            if (!target || ![target respondsToSelector:action]) { return [toSubstract addObject:key]; }
             [self performSelector:action onTarget:target withDevice:(RelayrDevice*)self.deviceModel input:self];
         }];
         
