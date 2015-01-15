@@ -40,13 +40,7 @@ To use the framework, just drag and drop the `.framework` file onto your project
 
   ![Drag & Drop the framework](./README/Assets/BuildProcess02.gif)
 
-#### 2. Using the Framework as a Sub-Project:
-
-* Drag & Drop the `Relayr.xcodeproj` onto your project and add the *Relayr* project product as *Embedded Binaries* (and therefore also *Linked Frameworks and Libraries*).
-
-  ![Use as subproject](./README/Assets/BuildProcess03.gif)
-  
-  The default action when dragging and dropping a framework into your project is to simply *link* the framework, not add it to the final binary image. This won't work. You need to remove the framework from *Linked Frameworks and Libraries* and add it to the *Embedded Binaries* (which will automatically link the framework to).
+The default action when dragging and dropping a framework into your project is to simply *link* the framework, not add it to the final binary image. This won't work. You need to remove the framework from *Linked Frameworks and Libraries* and add it to the *Embedded Binaries* (which will automatically link the framework too).
 
 Basic Classes
 -------------
