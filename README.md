@@ -3,7 +3,7 @@ Introduction
 
 Welcome to the relayr Apple SDK (*Beta*) repository.
 
-This repository contains the code which allows you to build the Relayr Framework for iOS and Mac OS X. The *RelayrSDK* project generates a product called `Relayr.framework` which, depending on your use purpose, can be run on a mac or on an iOS device.
+This repository contains the code which allows you to build the Relayr Framework for iOS and OS X. The *RelayrSDK* project generates a product called `Relayr.framework` which, depending on your use purpose, can be run on a mac or on an iOS device.
 
 The Relayr SDK requires:
 
@@ -15,22 +15,28 @@ Getting Started
 
 ### Obtaining the Framework
 
-The framework can be obtained in the following manner:
+The framework can be obtained from several places:
 
+* download the `.framework` file for the platform you are developing for from the latest [github release page](https://github.com/relayr/apple-sdk/releases/tag/v0.2.1).
+* generate the `.framework` file from the source code.
 
-- Download the repository from [GitHub](https://github.com/relayr/apple-sdk)
+  To generate the framework you need to perform the following steps:
 
-- Generate the binary `.framework` file from this Xcode project. Just select the platform 	you want from the project's targets and click *build* (⌘+B).
+  1. Download the repository from [GitHub](https://github.com/relayr/apple-sdk)
+  2. Open the `Relayr.workspace` with Xcode.
+  3. Select a specific target from the workspace's targets. If you are developing for iOS, select `Relayr_iOS`; and if you are developing for the mac, select `Relayr_OSX`.
+  4. Select the platform for your target. For the mac, you will only have one choice (the mac); but for iOS, you can generate a framework for the simulator or for an iOS physical device.
+  5. Edit the schema to select the type of build you want: Debug, Release, Distribution.
+  6. Select `Product > Build` from the Xcode top menu (or press ⌘+B).
+  7. Grab your `.framework` file from the created `/bin` folder on the workspace directory.
 
-  A `/bin` folder is created in the workspace folder every time you build a framework. There you can find the type of build you are doing (whether `Debug`, `Release`, `Experimental`, etc.), and the target of your build (whether `iphonesimulator`, `macosx`, `ios`). Grab the framework from that folder.
+* make the `RelayrSDK` project a dependency of your build chain.
+
+  This option is the most versatile; however, you need to know your way around XCode. The Relayr SDK will build its product in a separate folder; thus, you need not only add the framework as a target dependency, but also change your build settings to search for the framework on the `Build Settings` tab of your project.
 
 ### Using the Framework
 
-The framework can be used in two different manners:
-
-#### 1. Dragging and Dropping the Framework
-
-Drag & Drop the `.framework` file onto your project and make sure that the framework appears both in *Embedded Binaries* and in *Linked Frameworks and Libraries*;
+To use the framework, just drag and drop the `.framework` file onto your project and make sure that the framework appears both in *Embedded Binaries* and in *Linked Frameworks and Libraries*;
 
   ![Drag & Drop the framework](./README/Assets/BuildProcess02.gif)
 
@@ -39,6 +45,8 @@ Drag & Drop the `.framework` file onto your project and make sure that the frame
 * Drag & Drop the `Relayr.xcodeproj` onto your project and add the *Relayr* project product as *Embedded Binaries* (and therefore also *Linked Frameworks and Libraries*).
 
   ![Use as subproject](./README/Assets/BuildProcess03.gif)
+  
+  The default action when dragging and dropping a framework into your project is to simply *link* the framework, not add it to the final binary image. This won't work. You need to remove the framework from *Linked Frameworks and Libraries* and add it to the *Embedded Binaries* (which will automatically link the framework to).
 
 Basic Classes
 -------------
