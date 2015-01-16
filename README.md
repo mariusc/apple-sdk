@@ -37,7 +37,7 @@ B. **Generate** the `.framework` file from the source code.
 
 C. **Make** the `RelayrSDK` project a dependency of your build chain.
 
-  This manner has the most number of options, however, you do need to know your way around XCode to use it. The Relayr SDK will build its product in a separate folder. Therefore, you need not only to add the framework as a target dependency, but also change your build settings to search for the framework on the `Build Settings` tab of your project.
+  This manner allows for maximum customization, however, you do need to know your way around XCode to use it. The Relayr SDK will build its product in a separate folder. Therefore, you need not only to add the framework as a target dependency, but also change your build settings to search for the framework on the `Build Settings` tab of your project.
 
 ### Using the Framework
 
