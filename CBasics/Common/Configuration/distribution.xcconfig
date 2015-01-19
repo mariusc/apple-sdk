@@ -11,7 +11,6 @@ VALIDATE_PRODUCT = YES
 // Code signing
 
 // Deployment
-DEPLOYMENT_POSTPROCESSING = YES     // Strip binariy and set file mode, owner, and group
 
 // Kernel module
 
@@ -31,3 +30,7 @@ GCC_OPTIMIZATION_LEVEL = s
 // Apple LLVM - Custom compiler flags
 
 // Apple LLVM - Language
+
+// Apple LLVM - Language modules
+
+// Apple LLVM - Warnings

@@ -11,6 +11,7 @@ ARCHS = $(ARCHS_STANDARD)
 COPY_PHASE_STRIP = NO        // Activating this setting causes binary files which are copied during the build (e.g., in a Copy Bundle Resources or Copy Files build phase) to be stripped of debugging symbols. It does not cause the linked product of a target to be stripped.
 STRIP_INSTALLED_PRODUCT = NO // Activating this setting causes the linked product of the build to be stripped of symbols as part of deployment postprocessing.
 SEPARATE_STRIP = NO          // Activating this setting when the linked product is to be stripped will cause stripping to occur via a separate invocation of strip(1).  Otherwise stripping will occur during linking, if possible.
+DEPLOYMENT_POSTPROCESSING = NO
 
 SKIP_INSTALL = NO
 DEPLOYMENT_LOCATION = YES           // Whether the products should be placed on their installed location (YES) or on the built products folder

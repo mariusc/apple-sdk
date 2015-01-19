@@ -1224,7 +1224,6 @@
 				TargetAttributes = {
 					6252F0B2199C2465002ECE4D = {
 						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = C87D7SA3JH;
 					};
 					6252F0E4199C2AFA002ECE4D = {
 						CreatedOnToolsVersion = 6.0;
@@ -1574,8 +1573,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: iThings4U GmbH (C87D7SA3JH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: iThings4U GmbH (C87D7SA3JH)";
 				DEFINES_MODULE = YES;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1588,7 +1587,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "b3834347-d835-4358-bf0e-203e4a28042f";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Distribution;

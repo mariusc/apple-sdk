@@ -26,9 +26,9 @@
 		62CF59B61A029D3200D16DF1 /* CMath.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59AA1A029D3200D16DF1 /* CMath.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		62CF59B71A029D3200D16DF1 /* CMath.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59AA1A029D3200D16DF1 /* CMath.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		62CF59B81A029D3200D16DF1 /* CPlatforms.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59AB1A029D3200D16DF1 /* CPlatforms.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		62CF59B91A029D3200D16DF1 /* CPlatforms.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59AB1A029D3200D16DF1 /* CPlatforms.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		62CF59B91A029D3200D16DF1 /* CPlatforms.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59AB1A029D3200D16DF1 /* CPlatforms.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		62CF59BA1A029D3200D16DF1 /* CPlatforms_endianness.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59AC1A029D3200D16DF1 /* CPlatforms_endianness.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		62CF59BB1A029D3200D16DF1 /* CPlatforms_endianness.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59AC1A029D3200D16DF1 /* CPlatforms_endianness.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		62CF59BB1A029D3200D16DF1 /* CPlatforms_endianness.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59AC1A029D3200D16DF1 /* CPlatforms_endianness.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		62CF59BC1A029D3200D16DF1 /* CTests.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59AD1A029D3200D16DF1 /* CTests.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		62CF59BD1A029D3200D16DF1 /* CTests.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59AD1A029D3200D16DF1 /* CTests.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		62CF59BF1A029DF100D16DF1 /* CDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 62CF59BE1A029DF100D16DF1 /* CDebug.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -297,11 +297,11 @@
 				62CF59C01A029DF100D16DF1 /* CDebug.h in Headers */,
 				62CF59B51A029D3200D16DF1 /* CMacros.h in Headers */,
 				62CF59B71A029D3200D16DF1 /* CMath.h in Headers */,
-				62CF59B91A029D3200D16DF1 /* CPlatforms.h in Headers */,
 				6234A2DD1A2325E000330BFE /* CCore.h in Headers */,
-				62CF59BB1A029D3200D16DF1 /* CPlatforms_endianness.h in Headers */,
-				62CF59B31A029D3200D16DF1 /* CString.h in Headers */,
 				62CF59BD1A029D3200D16DF1 /* CTests.h in Headers */,
+				62CF59B31A029D3200D16DF1 /* CString.h in Headers */,
+				62CF59B91A029D3200D16DF1 /* CPlatforms.h in Headers */,
+				62CF59BB1A029D3200D16DF1 /* CPlatforms_endianness.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,9 +314,9 @@
 				62CF59B41A029D3200D16DF1 /* CMacros.h in Headers */,
 				62CF59B61A029D3200D16DF1 /* CMath.h in Headers */,
 				62CF59B21A029D3200D16DF1 /* CString.h in Headers */,
+				62CF59BC1A029D3200D16DF1 /* CTests.h in Headers */,
 				6234A2DC1A2325E000330BFE /* CCore.h in Headers */,
 				62CF59B81A029D3200D16DF1 /* CPlatforms.h in Headers */,
-				62CF59BC1A029D3200D16DF1 /* CTests.h in Headers */,
 				62CF59BA1A029D3200D16DF1 /* CPlatforms_endianness.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -11,7 +11,6 @@ VALIDATE_PRODUCT = YES
 // Code signing
 
 // Deployment
-DEPLOYMENT_POSTPROCESSING = YES
 
 // Kernel module
 
