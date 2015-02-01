@@ -1,6 +1,6 @@
 @class RelayrUser;                      // Relayr.framework (Public)
-@protocol RelayrOnboarding;             // Relayr.framework (Public)
-@protocol RelayrFirmwareUpdate;         // Relayr.framework (Public)
+@protocol RelayrOnboarding;             // Relayr.framework (Public/IoTs/Processes)
+@protocol RelayrFirmwareUpdate;         // Relayr.framework (Public/IoTs/Processes)
 #import <Relayr/RelayrID.h>             // Relayr.framework (Public)
 #import <Relayr/RelayrIDSubscripting.h> // Relayr.framework (Utilities/Collections)
 #import <Relayr/NSSet+RelayrID.h>       // Relayr.framework (Utilities/Collections)
@@ -56,12 +56,26 @@
 @property (readonly,nonatomic) NSSet <RelayrIDSubscripting>* devices;
 
 /*!
- *  @abstract Returns an array of devices connected to the transmitter that can read a specific meaning.
+ *  @abstract It returns an <code>NSSet</code> grouping all possible transmitter's devices that are capable of read the meanings passed as argument.
+ *  @discussion If no devices are found, <code>nil</code> is returned.
  *
- *  @param meaning The type of reading that the devices must reads to be placed on the results array.
- *  @return Array of devices that can read the specific inputs..
+ *  @param meanings The specific meanings that the readings must be capable to <i>read</i>.
+ *	@return <code>NSSet</code> grouping all capable <code>RelayrDevice</code> objects.
+ *
+ *  @see RelayrDevice
  */
-- (NSSet*)devicesWithInputMeaning:(NSString*)meaning;
+- (NSSet <RelayrIDSubscripting>*)devicesWithReadingMeanings:(NSArray*)meanings;
+
+/*!
+ *  @abstract It returns an <code>NSSet</code> grouping all possible <code>RelayrReading</code> objects that are capable of <i>read</i> the meanings passed as argument.
+ *  @discussion If no readings are found, <code>nil</code> is returned.
+ *
+ *  @param meanings The specific meanings that the readings must be capable to <i>read</i>.
+ *	@return <code>NSSet</code> grouping all capable <code>RelayrDevice</code> objects.
+ *
+ *  @see RelayrReading
+ */
+- (NSSet <RelayrIDSubscripting>*)readingsWithMeanings:(NSArray*)meanings;
 
 #pragma mark Processes
 

@@ -151,6 +151,89 @@ static NSString* const kCodingPublishers = @"pub";
     }];
 }
 
+- (NSSet<RelayrIDSubscripting>*)transmittersWithReadingMeanings:(NSArray*)meanings
+{
+    NSMutableSet* result = [[NSMutableSet alloc] init];
+    for (NSString* meaning in meanings)
+    {
+        for (RelayrTransmitter* transmitter in _transmitters)
+        {
+            for (RelayrDevice* device in _devices)
+            {
+                BOOL matched = NO;
+                for (RelayrInput* reading in device.inputs)
+                {
+                    if ([reading.meaning isEqualToString:meaning])
+                    {
+                        matched = YES;
+                        [result addObject:transmitter];
+                        break;
+                    }
+                }
+                
+                if (matched) { break; }
+            }
+        }
+    }
+    return nil;
+}
+
+- (NSSet<RelayrIDSubscripting>*)devicesWithReadingMeanings:(NSArray*)meanings
+{
+    NSMutableSet* result = [[NSMutableSet alloc] init];
+    for (NSString* meaning in meanings)
+    {
+        for (RelayrDevice* device in _devices)
+        {
+            for (RelayrInput* reading in device.inputs)
+            {
+                if ([reading.meaning isEqualToString:meaning])
+                {
+                    [result addObject:device];
+                    break;
+                }
+            }
+        }
+        
+        for (RelayrDevice* device in _devices)
+        {
+            for (RelayrInput* reading in device.inputs)
+            {
+                if ([reading.meaning isEqualToString:meaning])
+                {
+                    [result addObject:device];
+                    break;
+                }
+            }
+        }
+    }
+    return result;
+}
+
+- (NSSet<RelayrIDSubscripting>*)readingsWithMeanings:(NSArray*)meanings
+{
+    NSMutableSet* result = [[NSMutableSet alloc] init];
+    for (NSString* meaning in meanings)
+    {
+        for (RelayrDevice* device in _devices)
+        {
+            for (RelayrInput* reading in device.inputs)
+            {
+                if ([reading.meaning isEqualToString:meaning]) { [result addObject:reading]; }
+            }
+        }
+        
+        for (RelayrDevice* device in _devices)
+        {
+            for (RelayrInput* reading in device.inputs)
+            {
+                if ([reading.meaning isEqualToString:meaning]) { [result addObject:reading]; }
+            }
+        }
+    }
+    return result;
+}
+
 - (void)registerTransmitterWithModelID:(NSString*)modelID firmwareVerion:(NSString*)firmwareVersion name:(NSString*)name completion:(void (^)(NSError* error, RelayrTransmitter* transmitter))completion
 {
     if (!name) { if (completion) { completion(RelayrErrorMissingArgument, nil); } return; }

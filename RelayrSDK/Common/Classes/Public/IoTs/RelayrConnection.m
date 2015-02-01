@@ -90,34 +90,34 @@
 
 + (NSString*)stringRepresentationOfConnectionType:(RelayrConnectionType)type
 {
-    return  (type == RelayrConnectionTypeUnknown)   ? @"Unknown"    :
-            (type == RelayrConnectionTypeCloud)     ? @"Cloud"      :
-            (type == RelayrConnectionTypeDirect)    ? @"Direct"     : nil;
+    return  (type == RelayrConnectionTypeUnknown)   ? @"Unknown" :
+            (type == RelayrConnectionTypeCloud)     ? @"Cloud"   :
+            (type == RelayrConnectionTypeDirect)    ? @"Direct"  : nil;
 }
 
 + (NSString*)stringRepresentationOfConnectionProtocol:(RelayrConnectionProtocol)protocol
 {
-    return  (protocol == RelayrConnectionProtocolUnknwon)   ? @"Unknown"    :
-            (protocol == RelayrConnectionProtocolMQTT)      ? @"MQTT"       :
-            (protocol == RelayrConnectionProtocolBLE)       ? @"BLE"        : nil;
+    return  (protocol == RelayrConnectionProtocolUnknwon)   ? @"Unknown" :
+            (protocol == RelayrConnectionProtocolMQTT)      ? @"MQTT"    :
+            (protocol == RelayrConnectionProtocolBLE)       ? @"BLE"     : nil;
 }
 
 + (NSString*)stringRepresentationOfConnectionState:(RelayrConnectionState)state
 {
-    return  (state == RelayrConnectionStateUnknown)         ? @"Unknown"        :
-            (state == RelayrConnectionStateUnsupported)     ? @"Unsupported"    :
-            (state == RelayrConnectionStateUnauthorized)    ? @"Unauthorized"   :
-            (state == RelayrConnectionStateConnecting)      ? @"Connecting"     :
-            (state == RelayrConnectionStateConnected)       ? @"Connected"      :
-            (state == RelayrConnectionStateDisconnecting)   ? @"Disconneting"   : nil;
+    return  (state == RelayrConnectionStateUnknown)         ? @"Unknown"       :
+            (state == RelayrConnectionStateUnsupported)     ? @"Unsupported"   :
+            (state == RelayrConnectionStateUnauthorized)    ? @"Unauthorized"  :
+            (state == RelayrConnectionStateConnecting)      ? @"Connecting"    :
+            (state == RelayrConnectionStateConnected)       ? @"Connected"     :
+            (state == RelayrConnectionStateDisconnecting)   ? @"Disconneting"  : nil;
 }
 
 + (NSString*)stringRepresentationOfConnectionScope:(RelayrConnectionScope)scope
 {
-    return  (scope == RelayrConnectionScopeUnknown) ? @"Unknown"                :
-            (scope == RelayrConnectionScopePAN)     ? @"Person Area Network"    :
-            (scope == RelayrConnectionScopeLAN)     ? @"Local Area Network"     :
-            (scope == RelayrConnectionScopeWAN)     ? @"Wide Area Network"      : nil;
+    return  (scope == RelayrConnectionScopeUnknown) ? @"Unknown"             :
+            (scope == RelayrConnectionScopePAN)     ? @"Person Area Network" :
+            (scope == RelayrConnectionScopeLAN)     ? @"Local Area Network"  :
+            (scope == RelayrConnectionScopeWAN)     ? @"Wide Area Network"   : nil;
 }
 
 @end

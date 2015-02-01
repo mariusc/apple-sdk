@@ -45,35 +45,36 @@ static NSString* const kCodingDevices = @"dev";
     }];
 }
 
-- (NSSet*)devicesWithInputMeaning:(NSString*)meaning
+- (NSSet<RelayrIDSubscripting>*)devicesWithReadingMeanings:(NSArray*)meanings
 {
     NSMutableSet* result = [[NSMutableSet alloc] init];
-    for (RelayrDevice* device in _devices)
+    for (NSString* meaning in meanings)
     {
-        for (RelayrInput* input in device.inputs)
+        for (RelayrDevice* device in _devices)
         {
-            if ([input.meaning isEqualToString:meaning])
+            for (RelayrInput* reading in device.inputs)
             {
-                [result addObject:device];
-                break;
+                if ([reading.meaning isEqualToString:meaning])
+                {
+                    [result addObject:device];
+                    break;
+                }
             }
         }
     }
-    return (result.count) ? [NSSet setWithSet:result] : nil;
+    return result;
 }
 
-#pragma mark Processes
-
-- (void)onboardWithClass:(Class<RelayrOnboarding>)onboardingClass timeout:(NSNumber *)timeout options:(NSDictionary*)options completion:(void (^)(NSError*))completion
+- (NSSet<RelayrIDSubscripting>*)readingsWithMeanings:(NSArray*)meanings
 {
-    if (!onboardingClass) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
-    [onboardingClass launchOnboardingProcessForTransmitter:self timeout:timeout options:options completion:completion];
-}
-
-- (void)updateFirmwareWithClass:(Class<RelayrFirmwareUpdate>)updateClass timeout:(NSNumber*)timeout options:(NSDictionary*)options completion:(void (^)(NSError *))completion
-{
-    if (!updateClass) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
-    [updateClass launchFirmwareUpdateProcessForTransmitter:self timeout:timeout options:options completion:completion];
+    NSMutableSet* result = [[NSMutableSet alloc] init];
+    if (!meanings.count) { return result; }
+    
+    for (RelayrDevice* device in _devices)
+    {
+        [result unionSet:[device readingsWithMeanings:meanings]];
+    }
+    return result;
 }
 
 #pragma mark RelayrIDSubscripting
@@ -93,6 +94,20 @@ static NSString* const kCodingDevices = @"dev";
 - (id)mutableCopyWithZone:(NSZone*)zone
 {
     return self;
+}
+
+#pragma mark Processes
+
+- (void)onboardWithClass:(Class<RelayrOnboarding>)onboardingClass timeout:(NSNumber *)timeout options:(NSDictionary*)options completion:(void (^)(NSError*))completion
+{
+    if (!onboardingClass) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
+    [onboardingClass launchOnboardingProcessForTransmitter:self timeout:timeout options:options completion:completion];
+}
+
+- (void)updateFirmwareWithClass:(Class<RelayrFirmwareUpdate>)updateClass timeout:(NSNumber*)timeout options:(NSDictionary*)options completion:(void (^)(NSError *))completion
+{
+    if (!updateClass) { if (completion) { completion(RelayrErrorMissingArgument); } return; }
+    [updateClass launchFirmwareUpdateProcessForTransmitter:self timeout:timeout options:options completion:completion];
 }
 
 #pragma mark NSObject

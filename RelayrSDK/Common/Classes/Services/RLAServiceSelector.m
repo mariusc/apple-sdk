@@ -14,7 +14,8 @@
 
 - (instancetype)init
 {
-    [self doesNotRecognizeSelector:_cmd]; return nil;
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
 }
 
 + (void)selectServiceForDevice:(RelayrDevice*)device completion:(void (^)(NSError* error, id <RLAService> service))completion

@@ -20,16 +20,17 @@ static NSString* const kCodingOutputs = @"out";
 
 #pragma mark - Public API
 
-- (RelayrInput*)inputWithMeaning:(NSString*)meaning
+- (NSSet<RelayrIDSubscripting>*)readingsWithMeanings:(NSArray*)meanings
 {
-    if (!meaning.length) { return nil; }
-    
-    RelayrInput* matchedInput;
-    for (RelayrInput* input in _inputs)
+    NSMutableSet* result = [[NSMutableSet alloc] init];
+    for (NSString* meaning in meanings)
     {
-        if ([meaning isEqualToString:input.meaning]) { matchedInput=input; break; }
+        for (RelayrInput* input in _inputs)
+        {
+            if ([input.meaning isEqualToString:meaning]) { [result addObject:input]; }
+        }
     }
-    return matchedInput;
+    return result;
 }
 
 #pragma mark NSCopying & NSMutableCopying

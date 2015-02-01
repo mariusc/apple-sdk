@@ -1,6 +1,8 @@
-@class RelayrUser;              // Relayr.framework (Public)
-@class RelayrInput;             // Relayr.framework (Public/IoT)
-@import Foundation;             // Apple
+@class RelayrUser;                      // Relayr.framework (Public)
+@class RelayrInput;                     // Relayr.framework (Public/IoT)
+#import <Relayr/RelayrIDSubscripting.h> // Relayr.framework (Utilities/Collections)
+#import <Relayr/NSSet+RelayrID.h>       // Relayr.framework (Utilities/Collections)
+@import Foundation;                     // Apple
 
 /*!
  *  @abstract Specifies the basic functionality of a device.
@@ -48,14 +50,15 @@
 @property (readonly,nonatomic) NSSet* inputs;
 
 /*!
- *  @abstract Returns a <code>RelayrInput</code> supporting the passed meaning.
- *  @discussion If there are more than one input supporting the passed meaning, only one will be returned. It could be different on different passes of the method called (since the inputs are stored in a <code>NSSet</code>).
- *  @param meaning <code>NSString</code> specifying the desired <code>meaning</code>.
- *	@return <code>RelayrInput</code> or <code>nil</code>.
+ *  @abstract It returns an <code>NSSet</code> grouping all possible <code>RelayrReading</code> objects that are capable of <i>read</i> the meanings passed as argument.
+ *  @discussion If no readings are found, an empty set is returned.
  *
- *  @see RelayrInput
+ *  @param meanings The specific meanings that the readings must be capable to <i>read</i>.
+ *	@return <code>NSSet</code> grouping all capable <code>RelayrDevice</code> objects.
+ *
+ *  @see RelayrReading
  */
-- (RelayrInput*)inputWithMeaning:(NSString*)meaning;
+- (NSSet <RelayrIDSubscripting>*)readingsWithMeanings:(NSArray*)meanings;
 
 /*!
  *  @abstract Returns an array of possible Outputs a Device is capable of receiving.
