@@ -1,8 +1,8 @@
 #import "RLAAPIService.h"           // Header
-#import "RelayrCloud.h"             // Relayr.framework (Public)
-#import "RelayrUser.h"              // Relayr.framework (Public)
-#import "RelayrErrors.h"            // Relayr.framework (Public)
-#import "RLAAPIConstants.h"         // Relayr.framework (Service/API)
+#import "RelayrCloud.h"             // Relayr (Public)
+#import "RelayrUser.h"              // Relayr (Public)
+#import "RelayrErrors.h"            // Relayr (Public)
+#import "RLAAPIConstants.h"         // Relayr (Service/API)
 
 // WebRequests methods
 NSString* const kRLAAPIRequestModeCOPY      = @"COPY";

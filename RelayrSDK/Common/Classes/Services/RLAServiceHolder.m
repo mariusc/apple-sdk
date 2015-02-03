@@ -1,7 +1,7 @@
 #import "RLAServiceHolder.h"    // Header
 
-#import "RelayrDevice.h"        // Relayr.framework (Public)
-#import "RLAService.h"          // Relayr.framework (Service)
+#import "RelayrDevice.h"        // Relayr (Public)
+#import "RLAService.h"          // Relayr (Service)
 
 @implementation RLAServiceHolder
 

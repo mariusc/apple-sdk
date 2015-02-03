@@ -1,14 +1,14 @@
 #import "RelayrTransmitter.h"           // Header
 
-#import "RelayrUser.h"                  // Relayr.framework (Public)
-#import "RelayrDevice.h"                // Relayr.framework (Public)
-#import "RelayrOnboarding.h"            // Relayr.framework (Public)
-#import "RelayrFirmwareUpdate.h"        // Relayr.framework (Public)
-#import "RelayrUser_Setup.h"            // Relayr.framework (Private)
-#import "RelayrTransmitter_Setup.h"     // Relayr.framework (Private)
-#import "RelayrDevice_Setup.h"          // Relayr.framework (Private)
-#import "RLAAPIService+Transmitter.h"   // Relayr.framework (Service/API)
-#import "RelayrErrors.h"                // Relayr.framework (Utilities/Errors)
+#import "RelayrUser.h"                  // Relayr (Public)
+#import "RelayrDevice.h"                // Relayr (Public)
+#import "RelayrOnboarding.h"            // Relayr (Public)
+#import "RelayrFirmwareUpdate.h"        // Relayr (Public)
+#import "RelayrUser_Setup.h"            // Relayr (Private)
+#import "RelayrTransmitter_Setup.h"     // Relayr (Private)
+#import "RelayrDevice_Setup.h"          // Relayr (Private)
+#import "RLAAPIService+Transmitter.h"   // Relayr (Service/API)
+#import "RelayrErrors.h"                // Relayr (Utilities/Errors)
 
 static NSString* const kCodingID = @"uid";
 static NSString* const kCodingSecret = @"sec";

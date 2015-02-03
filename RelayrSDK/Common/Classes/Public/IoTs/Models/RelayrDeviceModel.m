@@ -1,12 +1,12 @@
 #import "RelayrDeviceModel.h"       // Header
 
-#import "RelayrFirmware.h"          // Relayr.framework (Public)
-#import "RelayrReading.h"           // Relayr.framework (Public)
-#import "RelayrWriting.h"           // Relayr.framework (Public)
-#import "RelayrDeviceModel_Setup.h" // Relayr.framework (Private)
-#import "RelayrFirmware_Setup.h"    // Relayr.framework (Private)
-#import "RelayrReading_Setup.h"     // Relayr.framework (Private)
-#import "RelayrWriting_Setup.h"     // Relayr.framework (Private)
+#import "RelayrFirmware.h"          // Relayr (Public)
+#import "RelayrReading.h"           // Relayr (Public)
+#import "RelayrWriting.h"           // Relayr (Public)
+#import "RelayrDeviceModel_Setup.h" // Relayr (Private)
+#import "RelayrFirmware_Setup.h"    // Relayr (Private)
+#import "RelayrReading_Setup.h"     // Relayr (Private)
+#import "RelayrWriting_Setup.h"     // Relayr (Private)
 
 static NSString* const kCodingUser = @"usr";
 static NSString* const kCodingModelID = @"mID";

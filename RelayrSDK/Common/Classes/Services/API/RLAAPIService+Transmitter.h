@@ -1,6 +1,6 @@
 #import "RLAAPIService.h"           // Parent class
-@class RelayrTransmitter;           // Relayr.framework (Public)
-#import "RelayrIDSubscripting.h"    // Relayr.framework (Utilities/Collections)
+@class RelayrTransmitter;           // Relayr (Public)
+#import "RelayrIDSubscripting.h"    // Relayr (Utilities/Collections)
 
 @interface RLAAPIService (Transmitter)
 

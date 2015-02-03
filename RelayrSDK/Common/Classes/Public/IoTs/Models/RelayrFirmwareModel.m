@@ -1,10 +1,10 @@
 #import "RelayrFirmwareModel.h"         // Header
 
-#import "RelayrUser.h"                  // Relayr.framework (Public)
-#import "RelayrDeviceModel.h"           // Relayr.framework (Public)
-#import "RelayrUser_Setup.h"            // Relayr.framework (Private)
-#import "RelayrFirmwareModel_Setup.h"   // Relayr.framework (Private)
-#import "RLAAPIService+Device.h"        // Relayr.framework (Service/API)
+#import "RelayrUser.h"                  // Relayr (Public)
+#import "RelayrDeviceModel.h"           // Relayr (Public)
+#import "RelayrUser_Setup.h"            // Relayr (Private)
+#import "RelayrFirmwareModel_Setup.h"   // Relayr (Private)
+#import "RLAAPIService+Device.h"        // Relayr (Service/API)
 
 static NSString* const kCodingVersion = @"ver";
 static NSString* const kCodingConfiguration = @"con";

@@ -1,6 +1,6 @@
 @import Foundation;             // Apple
-@class RelayrUser;              // Relayr.framework (Public)
-#import "RLAService.h"          // Relayr.framework (Service)
+@class RelayrUser;              // Relayr (Public)
+#import "RLAService.h"          // Relayr (Service)
 @class RelayrDevice;            // FIXME: Delete
 
 /*!

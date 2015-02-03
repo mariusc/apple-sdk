@@ -1,6 +1,6 @@
 @import Foundation;             // Apple
-@class RelayrTransmitter;       // Relayr.framework (Public)
-@class RelayrDevice;            // Relayr.framework (Public)
+@class RelayrTransmitter;       // Relayr (Public)
+@class RelayrDevice;            // Relayr (Public)
 
 /*!
  *  @abstract Describes the basic methods required to support the relayr firmware update process.

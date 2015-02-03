@@ -1,6 +1,6 @@
 @import Foundation;     // Apple
-@class RelayrDevice;    // Relayr.framework (Public)
-@protocol RLAService;   // Relayr.framework (Service)
+@class RelayrDevice;    // Relayr (Public)
+@protocol RLAService;   // Relayr (Service)
 
 /*!
  *  @abstract Static class that selects services depending on some current values.

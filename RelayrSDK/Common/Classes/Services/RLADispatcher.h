@@ -7,6 +7,8 @@
 
 @interface RLADispatcher : NSObject
 
+@property (readonly,weak,nonatomic) RelayrUser* user;
+
 #pragma mark Data queries
 
 - (void)queryDataFromReading:(RelayrReading*)reading;

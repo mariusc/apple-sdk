@@ -1,7 +1,7 @@
 #import "RelayrConnection.h"        // Header
 
-#import "RelayrDevice.h"            // Relayr.framework (Public/IoTs)
-#import "RelayrConnection_Setup.h"  // Relayr.framework (Private)
+#import "RelayrDevice.h"            // Relayr (Public/IoTs)
+#import "RelayrConnection_Setup.h"  // Relayr (Private)
 
 @implementation RelayrConnection
 

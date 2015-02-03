@@ -1,5 +1,5 @@
 #import "RLAAPIService.h"   // Base class
-@class RelayrPublisher;     // Relayr.framework (Public)
+@class RelayrPublisher;     // Relayr (Public)
 
 @interface RLAAPIService (Publisher)
 

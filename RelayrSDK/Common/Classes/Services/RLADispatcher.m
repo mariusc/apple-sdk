@@ -8,6 +8,12 @@
 
 #pragma mark - Public API
 
+- (instancetype)init
+{
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
+}
+
 - (void)queryDataFromReading:(RelayrReading*)reading
 {
     // TODO:

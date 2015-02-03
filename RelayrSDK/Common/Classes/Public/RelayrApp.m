@@ -1,15 +1,15 @@
 #import "RelayrApp.h"               // Header
 
-#import "RelayrCloud.h"             // Relayr.framework (Public)
-#import "RelayrPublisher.h"         // Relayr.framework (Public)
-#import "RelayrUser.h"              // Relayr.framework (Public)
-#import "RelayrErrors.h"            // Relayr.framework (Public)
-#import "RelayrApp_Setup.h"         // Relayr.framework (Private)
-#import "RelayrUser_Setup.h"        // Relayr.framework (Private)
-#import "RLAAPIService.h"           // Relayr.framework (Service/API)
-#import "RLAAPIService+Cloud.h"     // Relayr.framework (Service/API)
-#import "RLAAPIService+App.h"       // Relayr.framework (Service/API)
-#import "RLALog.h"                  // Relayr.framework (Utilities/Log)
+#import "RelayrCloud.h"             // Relayr (Public)
+#import "RelayrPublisher.h"         // Relayr (Public)
+#import "RelayrUser.h"              // Relayr (Public)
+#import "RelayrErrors.h"            // Relayr (Public)
+#import "RelayrApp_Setup.h"         // Relayr (Private)
+#import "RelayrUser_Setup.h"        // Relayr (Private)
+#import "RLAAPIService.h"           // Relayr (Service/API)
+#import "RLAAPIService+Cloud.h"     // Relayr (Service/API)
+#import "RLAAPIService+App.h"       // Relayr (Service/API)
+#import "RLALog.h"                  // Relayr (Utilities/Log)
 
 #define RelayrApp_FSFolder  @"/io.relayr.sdk"
 

@@ -1,6 +1,6 @@
 @import Foundation;         // Apple
-@class RelayrTransmitter;   // Relayr.framework (Public)
-@class RelayrDevice;        // Relayr.framework (Public)
+@class RelayrTransmitter;   // Relayr (Public)
+@class RelayrDevice;        // Relayr (Public)
 
 @interface Wunderbar : NSObject
 

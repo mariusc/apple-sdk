@@ -1,5 +1,5 @@
 #import "RLAAPIService.h"       // Base class
-@class RelayrApp;               // Relayr.framework (Public)
+@class RelayrApp;               // Relayr (Public)
 
 /*!
  *  @abstract API calls refering to Relayr Applications (as entities).

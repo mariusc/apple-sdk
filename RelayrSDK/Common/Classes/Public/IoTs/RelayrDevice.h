@@ -1,11 +1,11 @@
 #import <Relayr/RelayrDeviceModel.h>    // Parent class
-@class RelayrTransmitter;               // Relayr.framework (Public)
-@class RelayrFirmware;                  // Relayr.framework (Public)
-@class RelayrConnection;                // Relayr.framework (Public)
-#import <Relayr/RelayrReading.h>        // Relayr.framework (Public)
-@protocol RelayrOnboarding;             // Relayr.framework (Public)
-@protocol RelayrFirmwareUpdate;         // Relayr.framework (Public)
-#import <Relayr/RelayrID.h>             // Relayr.framework (Public)
+@class RelayrTransmitter;               // Relayr (Public)
+@class RelayrFirmware;                  // Relayr (Public)
+@class RelayrConnection;                // Relayr (Public)
+#import <Relayr/RelayrReading.h>        // Relayr (Public)
+@protocol RelayrOnboarding;             // Relayr (Public)
+@protocol RelayrFirmwareUpdate;         // Relayr (Public)
+#import <Relayr/RelayrID.h>             // Relayr (Public)
 @import Foundation;                     // Apple
 
 /*!

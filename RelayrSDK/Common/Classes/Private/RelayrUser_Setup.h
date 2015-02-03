@@ -1,7 +1,7 @@
 #import <Relayr/RelayrUser.h>   // Parent class
-@class RLAAPIService;           // Relayr.framework (Service/API)
-@class RLAMQTTService;          // Relayr.framework (Service/MQTT)
-@class RLABLEService;           // Relayr.framework (Service/BLE)
+@class RLAAPIService;           // Relayr (Service/API)
+@class RLAMQTTService;          // Relayr (Service/MQTT)
+@class RLABLEService;           // Relayr (Service/BLE)
 
 /*!
  *  @abstract The very basic entity in the relayr platform is the user.

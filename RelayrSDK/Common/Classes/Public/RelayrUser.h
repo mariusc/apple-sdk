@@ -1,10 +1,10 @@
-@class RelayrApp;                       // Relayr.framework (Public)
-@class RelayrPublisher;                 // Relayr.framework (Public)
-@class RelayrTransmitter;               // Relayr.framework (Public/IoTs)
-@class RelayrDevice;                    // Relayr.framework (Public/IoTs)
-#import <Relayr/RelayrID.h>             // Relayr.framework (Public)
-#import <Relayr/RelayrIDSubscripting.h> // Relayr.framework (Utilities/Collections)
-#import <Relayr/NSSet+RelayrID.h>       // Relayr.framework (Utilities/Collections)
+@class RelayrApp;                       // Relayr (Public)
+@class RelayrPublisher;                 // Relayr (Public)
+@class RelayrTransmitter;               // Relayr (Public/IoTs)
+@class RelayrDevice;                    // Relayr (Public/IoTs)
+#import <Relayr/RelayrID.h>             // Relayr (Public)
+#import <Relayr/RelayrIDSubscripting.h> // Relayr (Utilities/Collections)
+#import <Relayr/NSSet+RelayrID.h>       // Relayr (Utilities/Collections)
 @import Foundation;                     // Apple
 
 /*!

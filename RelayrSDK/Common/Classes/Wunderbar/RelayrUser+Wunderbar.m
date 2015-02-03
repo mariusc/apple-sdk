@@ -1,11 +1,11 @@
 #import "RelayrUser+Wunderbar.h"        // Apple
-#import "RelayrUser.h"                  // Relayr.framework (Public)
-#import "RelayrTransmitter.h"           // Relayr.framework (Public)
-#import "RelayrUser_Setup.h"            // Relayr.framework (Private)
-#import "RelayrTransmitter_Setup.h"     // Relayr.framework (Private)
-#import "RLAAPIService+Transmitter.h"   // Relayr.framework (Service/API)
-#import "RelayrErrors.h"                // Relayr.framework (Utilities)
-#import "RLAAPIService+Wunderbar.h"     // Relayr.framework (Wunderbar)
+#import "RelayrUser.h"                  // Relayr (Public)
+#import "RelayrTransmitter.h"           // Relayr (Public)
+#import "RelayrUser_Setup.h"            // Relayr (Private)
+#import "RelayrTransmitter_Setup.h"     // Relayr (Private)
+#import "RLAAPIService+Transmitter.h"   // Relayr (Service/API)
+#import "RelayrErrors.h"                // Relayr (Utilities)
+#import "RLAAPIService+Wunderbar.h"     // Relayr (Wunderbar)
 
 @implementation RelayrUser (Wunderbar)
 

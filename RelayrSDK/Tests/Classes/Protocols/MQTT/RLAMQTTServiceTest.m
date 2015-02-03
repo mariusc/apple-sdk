@@ -1,10 +1,10 @@
 @import Cocoa;                  // Apple
 @import XCTest;                 // Apple
-#import <Relayr/Relayr.h>       // Relayr.framework
-#import "RelayrApp_Setup.h"     // Relayr.framework (Private)
-#import "RelayrUser_Setup.h"    // Relayr.framework (Private)
-#import "RLAMQTTService.h"      // Relayr.framework (Service/MQTT)
-#import "RelayrUser+Wunderbar.h"// Relayr.framework (Wunderbar)
+#import <Relayr/Relayr.h>       // Relayr
+#import "RelayrApp_Setup.h"     // Relayr (Private)
+#import "RelayrUser_Setup.h"    // Relayr (Private)
+#import "RLAMQTTService.h"      // Relayr (Service/MQTT)
+#import "RelayrUser+Wunderbar.h"// Relayr (Wunderbar)
 #import "RLATestsConstants.h"   // Tests
 
 #import "RLAServiceSelector.h"  // FIXME: Delete

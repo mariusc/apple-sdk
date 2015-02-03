@@ -1,4 +1,4 @@
-@class RelayrDeviceModel;   // Relayr.framework (Public)
+@class RelayrDeviceModel;   // Relayr (Public)
 @import Foundation;         // Apple
 
 /*!

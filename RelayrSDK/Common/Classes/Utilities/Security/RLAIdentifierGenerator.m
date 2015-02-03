@@ -1,5 +1,5 @@
 #import "RLAIdentifierGenerator.h"      // Header
-#import <CBasics/CPlatforms.h>          // Relayr.framework (Utilities)
+#import <CBasics/CPlatforms.h>          // Relayr (Utilities)
 
 #if defined(OS_APPLE_IOS) || defined (OS_APPLE_SIMULATOR)
 @import UIKit;                          // Apple

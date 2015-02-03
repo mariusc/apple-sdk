@@ -1,13 +1,13 @@
 #import "RelayrWriting.h"            // Header
 
-#import "RelayrUser.h"              // Relayr.framework (Public)
-#import "RelayrDevice.h"            // Relayr.framework (Public)
-#import "RelayrDeviceModel.h"       // Relayr.framework (Public)
-#import "RelayrErrors.h"            // Relayr.framework (Public)
-#import "RelayrUser_Setup.h"        // Relayr.framework (Private)
-#import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
-#import "RelayrWriting_Setup.h"     // Relayr.framework (Private)
-#import "RLAAPIService+Device.h"    // Relayr.framework (Service/API)
+#import "RelayrUser.h"              // Relayr (Public)
+#import "RelayrDevice.h"            // Relayr (Public)
+#import "RelayrDeviceModel.h"       // Relayr (Public)
+#import "RelayrErrors.h"            // Relayr (Public)
+#import "RelayrUser_Setup.h"        // Relayr (Private)
+#import "RelayrDevice_Setup.h"      // Relayr (Private)
+#import "RelayrWriting_Setup.h"     // Relayr (Private)
+#import "RLAAPIService+Device.h"    // Relayr (Service/API)
 
 static NSString* const kCodingMeaning = @"men";
 static NSString* const kCodingDeviceModel = @"dmod";

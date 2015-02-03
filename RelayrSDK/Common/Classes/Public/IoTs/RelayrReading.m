@@ -1,14 +1,14 @@
 #import "RelayrReading.h"           // Header
-#import "RelayrApp.h"               // Relayr.framework (Public)
-#import "RelayrUser.h"              // Relayr.framework (Public)
-#import "RelayrDevice.h"            // Relayr.framework (Public)
-#import "RelayrErrors.h"            // Relayr.framework (Public)
-#import "RelayrUser_Setup.h"        // Relayr.framework (Private)
-#import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
-#import "RelayrReading_Setup.h"     // Relayr.framework (Private)
-#import "RLAService.h"              // Relayr.framework (Service)
-#import "RLAServiceSelector.h"      // Relayr.framework (Service)
-#import "RLATargetAction.h"         // Relayr.framework (Utilities)
+#import "RelayrApp.h"               // Relayr (Public)
+#import "RelayrUser.h"              // Relayr (Public)
+#import "RelayrDevice.h"            // Relayr (Public)
+#import "RelayrErrors.h"            // Relayr (Public)
+#import "RelayrUser_Setup.h"        // Relayr (Private)
+#import "RelayrDevice_Setup.h"      // Relayr (Private)
+#import "RelayrReading_Setup.h"     // Relayr (Private)
+#import "RLAService.h"              // Relayr (Service)
+#import "RLAServiceSelector.h"      // Relayr (Service)
+#import "RLATargetAction.h"         // Relayr (Utilities)
 
 #define dMaxValues   15
 

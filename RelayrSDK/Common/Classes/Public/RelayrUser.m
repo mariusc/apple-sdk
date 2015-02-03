@@ -1,20 +1,20 @@
 #import "RelayrUser.h"                  // Header
 
-#import "RelayrApp.h"                   // Relayr.framework (Public)
-#import "RelayrPublisher.h"             // Relayr.framework (Public)
-#import "RelayrTransmitter.h"           // Relayr.framework (Public/IoTs)
-#import "RelayrDevice.h"                // Relayr.framework (Public/IoTs)
-#import "RelayrErrors.h"                // Relayr.framework (Public)
-#import "RelayrApp_Setup.h"             // Relayr.framework (Private)
-#import "RelayrUser_Setup.h"            // Relayr.framework (Private)
-#import "RelayrPublisher_Setup.h"       // Relayr.framework (Private)
-#import "RelayrTransmitter_Setup.h"     // Relayr.framework (Private)
-#import "RelayrDevice_Setup.h"          // Relayr.framework (Private)
-#import "RLAAPIService.h"               // Relayr.framework (Service/API)
-#import "RLAAPIService+User.h"          // Relayr.framework (Service/API)
-#import "RLAAPIService+Publisher.h"     // Relayr.framework (Service/API)
-#import "RLAAPIService+Transmitter.h"   // Relayr.framework (Service/API)
-#import "RLAAPIService+Device.h"        // Relayr.framework (Service/API)
+#import "RelayrApp.h"                   // Relayr (Public)
+#import "RelayrPublisher.h"             // Relayr (Public)
+#import "RelayrTransmitter.h"           // Relayr (Public/IoTs)
+#import "RelayrDevice.h"                // Relayr (Public/IoTs)
+#import "RelayrErrors.h"                // Relayr (Public)
+#import "RelayrApp_Setup.h"             // Relayr (Private)
+#import "RelayrUser_Setup.h"            // Relayr (Private)
+#import "RelayrPublisher_Setup.h"       // Relayr (Private)
+#import "RelayrTransmitter_Setup.h"     // Relayr (Private)
+#import "RelayrDevice_Setup.h"          // Relayr (Private)
+#import "RLAAPIService.h"               // Relayr (Service/API)
+#import "RLAAPIService+User.h"          // Relayr (Service/API)
+#import "RLAAPIService+Publisher.h"     // Relayr (Service/API)
+#import "RLAAPIService+Transmitter.h"   // Relayr (Service/API)
+#import "RLAAPIService+Device.h"        // Relayr (Service/API)
 
 static NSString* const kCodingToken = @"tok";
 static NSString* const kCodingApp = @"app";
@@ -32,12 +32,6 @@ static NSString* const kCodingPublishers = @"pub";
 @synthesize uid = _uid;
 
 #pragma mark - Public API
-
-- (instancetype)init
-{
-    [self doesNotRecognizeSelector:_cmd];
-    return nil;
-}
 
 - (void)setNameWith:(NSString*)name completion:(void (^)(NSError* error, NSString* previousName))completion
 {
@@ -322,6 +316,12 @@ static NSString* const kCodingPublishers = @"pub";
 }
 
 #pragma mark NSObject
+
+- (instancetype)init
+{
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
+}
 
 - (NSString*)description
 {

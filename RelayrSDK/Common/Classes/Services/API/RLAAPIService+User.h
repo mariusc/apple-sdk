@@ -1,5 +1,5 @@
 #import "RLAAPIService.h"           // Parent class
-#import "RelayrIDSubscripting.h"    // Relayr.framework (Utilities/Collections)
+#import "RelayrIDSubscripting.h"    // Relayr (Utilities/Collections)
 
 /*!
  *  @abstract API calls refering to Relayr User (as entities).

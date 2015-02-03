@@ -1,12 +1,12 @@
 #import "RLAServiceSelector.h"      // Header
 
-#import "RelayrUser.h"              // Relayr.framework (Public)
-#import "RelayrDevice.h"            // Relayr.framework (Public)
-#import "RelayrConnection.h"        // Relayr.framework (Public)
+#import "RelayrUser.h"              // Relayr (Public)
+#import "RelayrDevice.h"            // Relayr (Public)
+#import "RelayrConnection.h"        // Relayr (Public)
 #import "RelayrErrors.h"            // Relyar.framework (Public)
-#import "RelayrUser_Setup.h"        // Relayr.framework (Private)
-#import "RLABLEService.h"           // Relayr.framework (Service/BLE)
-#import "RLAMQTTService.h"          // Relayr.framework (Service/MQTT)
+#import "RelayrUser_Setup.h"        // Relayr (Private)
+#import "RLABLEService.h"           // Relayr (Service/BLE)
+#import "RLAMQTTService.h"          // Relayr (Service/MQTT)
 
 @implementation RLAServiceSelector
 

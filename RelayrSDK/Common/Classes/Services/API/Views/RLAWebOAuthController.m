@@ -1,12 +1,12 @@
 #import "RLAWebOAuthController.h"       // Header
-#import "RLAAPIConstants.h"             // Relayr.framework (Service/API)
-#import "RelayrErrors.h"                // Relayr.framework (Utilities)
-#import <CBasics/CPlatforms.h>          // Relayr.framework (Utilities)
+#import "RLAAPIConstants.h"             // Relayr (Service/API)
+#import "RelayrErrors.h"                // Relayr (Utilities)
+#import <CBasics/CPlatforms.h>          // Relayr (Utilities)
 
 #if defined(OS_APPLE_IOS) || defined (OS_APPLE_SIMULATOR)
-#import "RLAWebOAuthControllerIOS.h"    // Relayr.framework (Service/API)
+#import "RLAWebOAuthControllerIOS.h"    // Relayr (Service/API)
 #elif defined(OS_APPLE_OSX)
-#import "RLAWebOAuthControllerOSX.h"    // Relayr.framework (Service/API)
+#import "RLAWebOAuthControllerOSX.h"    // Relayr (Service/API)
 #endif
 
 @implementation RLAWebOAuthController

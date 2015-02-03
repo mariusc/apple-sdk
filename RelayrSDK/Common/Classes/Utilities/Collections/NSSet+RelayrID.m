@@ -1,5 +1,5 @@
 #import "NSSet+RelayrID.h"      // Header
-#import "RelayrID.h"            // Relayr.framework (Public)
+#import "RelayrID.h"            // Relayr (Public)
 
 @implementation NSSet (RelayrID)
 

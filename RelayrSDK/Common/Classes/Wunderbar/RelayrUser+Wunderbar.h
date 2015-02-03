@@ -1,4 +1,4 @@
-#import <Relayr/RelayrUser.h>   // Relayr.framework (Public)
+#import <Relayr/RelayrUser.h>   // Relayr (Public)
 
 @interface RelayrUser (Wunderbar)
 

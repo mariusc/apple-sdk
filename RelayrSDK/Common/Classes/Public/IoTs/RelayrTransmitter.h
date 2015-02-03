@@ -1,9 +1,9 @@
-@class RelayrUser;                      // Relayr.framework (Public)
-@protocol RelayrOnboarding;             // Relayr.framework (Public/IoTs/Processes)
-@protocol RelayrFirmwareUpdate;         // Relayr.framework (Public/IoTs/Processes)
-#import <Relayr/RelayrID.h>             // Relayr.framework (Public)
-#import <Relayr/RelayrIDSubscripting.h> // Relayr.framework (Utilities/Collections)
-#import <Relayr/NSSet+RelayrID.h>       // Relayr.framework (Utilities/Collections)
+@class RelayrUser;                      // Relayr (Public)
+@protocol RelayrOnboarding;             // Relayr (Public/IoTs/Processes)
+@protocol RelayrFirmwareUpdate;         // Relayr (Public/IoTs/Processes)
+#import <Relayr/RelayrID.h>             // Relayr (Public)
+#import <Relayr/RelayrIDSubscripting.h> // Relayr (Utilities/Collections)
+#import <Relayr/NSSet+RelayrID.h>       // Relayr (Utilities/Collections)
 @import Foundation;                     // Apple
 
 /*!

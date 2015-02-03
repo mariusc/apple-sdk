@@ -1,10 +1,10 @@
 #import "RLAAPIService+App.h"       // Header
 
-#import "RelayrApp.h"               // Relayr.framework (Public)
-#import "RelayrUser.h"              // Relayr.framework (Public)
-#import "RLAAPIConstants.h"         // Relayr.framework (Service/API)
-#import "RLAAPIService+Parsing.h"   // Relayr.framework (Service/API)
-#import "RelayrErrors.h"            // Relayr.framework (Utilities)
+#import "RelayrApp.h"               // Relayr (Public)
+#import "RelayrUser.h"              // Relayr (Public)
+#import "RLAAPIConstants.h"         // Relayr (Service/API)
+#import "RLAAPIService+Parsing.h"   // Relayr (Service/API)
+#import "RelayrErrors.h"            // Relayr (Utilities)
 
 @implementation RLAAPIService (App)
 

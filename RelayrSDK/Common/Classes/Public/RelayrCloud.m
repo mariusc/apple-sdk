@@ -1,12 +1,12 @@
 #import "RelayrCloud.h"         // Header
-#import "RelayrUser.h"          // Relayr.framework (Public)
-#import "RLAAPIService.h"       // Relayr.framework (Service/API)
-#import "RLAAPIService+Cloud.h" // Relayr.framework (Service/API)
-#import "RLAAPIService+App.h"   // Relayr.framework (Service/API)
-#import "RLAAPIService+User.h"  // Relayr.framework (Service/API)
-#import "RLAAPIConstants.h"     // Relayr.framework (Service/API)
-#import "RelayrErrors.h"        // Relayr.framework (Utilities)
-#import "RLALog.h"              // Relayr.framework (Utilities)
+#import "RelayrUser.h"          // Relayr (Public)
+#import "RLAAPIService.h"       // Relayr (Service/API)
+#import "RLAAPIService+Cloud.h" // Relayr (Service/API)
+#import "RLAAPIService+App.h"   // Relayr (Service/API)
+#import "RLAAPIService+User.h"  // Relayr (Service/API)
+#import "RLAAPIConstants.h"     // Relayr (Service/API)
+#import "RelayrErrors.h"        // Relayr (Utilities)
+#import "RLALog.h"              // Relayr (Utilities)
 #import <CBasics/CPlatforms.h>  // CBasics
 #import <sys/sysctl.h>          // BSD
 

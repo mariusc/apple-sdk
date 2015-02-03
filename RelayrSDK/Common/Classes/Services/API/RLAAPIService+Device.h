@@ -1,7 +1,7 @@
 #import "RLAAPIService.h"       // Base class
-@class RelayrDevice;            // Relayr.framework (Public)
-@class RelayrDeviceModel;       // Relayr.framework (Public)
-@class RelayrFirmwareModel;     // Relayr.framework (Public)
+@class RelayrDevice;            // Relayr (Public)
+@class RelayrDeviceModel;       // Relayr (Public)
+@class RelayrFirmwareModel;     // Relayr (Public)
 
 @interface RLAAPIService (Device)
 

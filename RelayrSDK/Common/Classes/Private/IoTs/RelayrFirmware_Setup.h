@@ -1,6 +1,6 @@
 #import "RelayrFirmware.h"              // Parent class
-#import "RelayrFirmwareModel_Setup.h"   // Relayr.framework (Private)
-@protocol RLAService;                   // Relayr.framework (Service)
+#import "RelayrFirmwareModel_Setup.h"   // Relayr (Private)
+@protocol RLAService;                   // Relayr (Service)
 
 /*!
  *  @abstract Represents the firmware running on a <code>RelayrDevice</code> or a <code>RelayrTransmitter</code>.

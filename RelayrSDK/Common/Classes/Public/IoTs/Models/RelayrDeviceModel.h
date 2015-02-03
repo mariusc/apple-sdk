@@ -1,7 +1,7 @@
-@class RelayrUser;                      // Relayr.framework (Public)
-@class RelayrReading;                     // Relayr.framework (Public/IoT)
-#import <Relayr/RelayrIDSubscripting.h> // Relayr.framework (Utilities/Collections)
-#import <Relayr/NSSet+RelayrID.h>       // Relayr.framework (Utilities/Collections)
+@class RelayrUser;                      // Relayr (Public)
+@class RelayrReading;                     // Relayr (Public/IoT)
+#import <Relayr/RelayrIDSubscripting.h> // Relayr (Utilities/Collections)
+#import <Relayr/NSSet+RelayrID.h>       // Relayr (Utilities/Collections)
 @import Foundation;                     // Apple
 
 /*!

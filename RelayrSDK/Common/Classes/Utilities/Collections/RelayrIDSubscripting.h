@@ -1,4 +1,4 @@
-#import "RelayrID.h"    // Relayr.framework (Public)
+#import "RelayrID.h"    // Relayr (Public)
 
 /*!
  *  @abstract It specifies a <code>NSSet</code> collection that will only contain <code>id <RelayrID></code> objects.

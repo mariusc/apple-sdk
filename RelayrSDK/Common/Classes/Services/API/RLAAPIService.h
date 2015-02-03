@@ -1,6 +1,6 @@
 @import Foundation;             // Apple
-@class RelayrUser;              // Relayr.framework (Public)
-#import "RelayrConnection.h"    // Relayr.framework (Public/IoTs)
+@class RelayrUser;              // Relayr (Public)
+#import "RelayrConnection.h"    // Relayr (Public/IoTs)
 
 // Retrieval methods ("safe" methods)
 FOUNDATION_EXPORT NSString* const kRLAAPIRequestModeGET;

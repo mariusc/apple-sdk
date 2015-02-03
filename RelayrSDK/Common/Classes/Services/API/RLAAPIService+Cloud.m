@@ -1,8 +1,8 @@
 #import "RLAAPIService+Cloud.h"     // Header
 
-#import "RLAAPIConstants.h"         // Relayr.framework (Service/API)
-#import "RLAWebOAuthController.h"   // Relayr.framework (Service/API)
-#import "RelayrErrors.h"            // Relayr.framework (Utilities)
+#import "RLAAPIConstants.h"         // Relayr (Service/API)
+#import "RLAWebOAuthController.h"   // Relayr (Service/API)
+#import "RelayrErrors.h"            // Relayr (Utilities)
 
 @implementation RLAAPIService (Cloud)
 

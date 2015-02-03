@@ -1,4 +1,4 @@
-#import "RelayrIDSubscripting.h"   // Relayr.framework (Utilities/Collections)
+#import "RelayrIDSubscripting.h"   // Relayr (Utilities/Collections)
 
 /*!
  *  @abstract It gives a common <code>NSSet</code> collection the read-only keyed subscripting ability.

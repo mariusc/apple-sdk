@@ -1,5 +1,5 @@
-@class RelayrDevice;    // Relayr.framework (Public)
-@protocol RLAService;   // Relayr.framework (Service)
+@class RelayrDevice;    // Relayr (Public)
+@protocol RLAService;   // Relayr (Service)
 @import Foundation;     // Apple
 
 @interface WunderbarParsing : NSObject

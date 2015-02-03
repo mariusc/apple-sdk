@@ -1,6 +1,6 @@
 #import "RLAWebOAuthControllerIOS.h"    // Header
-#import "RLAAPIConstants.h"             // Relayr.framework (Services/API)
-#import "RelayrErrors.h"                // Relayr.framework (Utilities)
+#import "RLAAPIConstants.h"             // Relayr (Services/API)
+#import "RelayrErrors.h"                // Relayr (Utilities)
 
 @interface RLAWebOAuthControllerIOS () <UIWebViewDelegate>
 @property (strong,nonatomic) UIActivityIndicatorView* spinner;

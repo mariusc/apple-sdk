@@ -1,5 +1,5 @@
 #import "RelayrTransmitter.h"   // Parent class
-@class RelayrUser;              // Relayr.framework (Public)
+@class RelayrUser;              // Relayr (Public)
 
 /*!
  *  @abstract An instance of this class represents a relayr Transmitter. a basic entity on the relayr platform.

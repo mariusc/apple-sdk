@@ -1,7 +1,7 @@
 #import "Wunderbar.h"           // Header
-#import "WunderbarConstants.h"  // Relayr.framework (Wunderbar)
-#import "RelayrTransmitter.h"   // Relayr.framework (Public)
-#import "RelayrDevice.h"        // Relayr.framework (Public)
+#import "WunderbarConstants.h"  // Relayr (Wunderbar)
+#import "RelayrTransmitter.h"   // Relayr (Public)
+#import "RelayrDevice.h"        // Relayr (Public)
 
 @implementation Wunderbar
 

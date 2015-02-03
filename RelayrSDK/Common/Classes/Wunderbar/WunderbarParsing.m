@@ -1,11 +1,11 @@
-#import "WunderbarParsing.h"        // Relayr.framework (Wunderbar)
+#import "WunderbarParsing.h"        // Relayr (Wunderbar)
 
-#import "RelayrDevice.h"            // Relayr.framework (Public)
-#import "RLAService.h"              // Relayr.framework (Service)
-#import "RLAMQTTService.h"          // Relayr.framework (Service/MQTT)
-#import "RLABLEService.h"           // Relayr.framework (Service/BLE)
+#import "RelayrDevice.h"            // Relayr (Public)
+#import "RLAService.h"              // Relayr (Service)
+#import "RLAMQTTService.h"          // Relayr (Service/MQTT)
+#import "RLABLEService.h"           // Relayr (Service/BLE)
 
-#import "WunderbarConstants.h"      // Relayr.framework (Wunderbar)
+#import "WunderbarConstants.h"      // Relayr (Wunderbar)
 
 @implementation WunderbarParsing
 

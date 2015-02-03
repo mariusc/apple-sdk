@@ -1,16 +1,16 @@
 #import "RLAAPIService+User.h"      // Header
-#import "RLAAPIService+Parsing.h"   // Relayr.framework (Service/API)
+#import "RLAAPIService+Parsing.h"   // Relayr (Service/API)
 
-#import "RelayrApp.h"               // Relayr.framework (Public)
-#import "RelayrUser.h"              // Relayr.framework (Public)
-#import "RelayrPublisher.h"         // Relayr.framework (Public)
-#import "RelayrTransmitter.h"       // Relayr.framework (Public)
-#import "RelayrDevice.h"            // Relayr.framework (Public)
-#import "RelayrFirmware.h"          // Relayr.framework (Public)
-#import "RLAAPIConstants.h"         // Relayr.framework (Service/API)
-#import "NSSet+RelayrID.h"          // Relayr.framework (Utilities/Collections)
-#import "RelayrErrors.h"            // Relayr.framework (Utilities/Error)
-#import "RLALog.h"                  // Relayr.framework (Utilities/Log)
+#import "RelayrApp.h"               // Relayr (Public)
+#import "RelayrUser.h"              // Relayr (Public)
+#import "RelayrPublisher.h"         // Relayr (Public)
+#import "RelayrTransmitter.h"       // Relayr (Public)
+#import "RelayrDevice.h"            // Relayr (Public)
+#import "RelayrFirmware.h"          // Relayr (Public)
+#import "RLAAPIConstants.h"         // Relayr (Service/API)
+#import "NSSet+RelayrID.h"          // Relayr (Utilities/Collections)
+#import "RelayrErrors.h"            // Relayr (Utilities/Error)
+#import "RLALog.h"                  // Relayr (Utilities/Log)
 
 @implementation RLAAPIService (User)
 

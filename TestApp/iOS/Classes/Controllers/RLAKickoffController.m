@@ -1,7 +1,7 @@
 #import "RLAKickoffController.h"   // Header
 
 #import "RLAStoryboardIDs.h"        // TestApp (Controllers)
-#import <Relayr/Relayr.h>           // Relayr.framework
+#import <Relayr/Relayr.h>           // Relayr
 
 @interface RLAKickoffController ()
 @property (weak, nonatomic) IBOutlet UILabel* explanationLabel;

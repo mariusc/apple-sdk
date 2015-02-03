@@ -1,9 +1,9 @@
 #import "WunderbarFirmwareUpdate.h" // Header
-#import "RelayrTransmitter.h"       // Relayr.framework (Public)
-#import "RelayrDevice.h"            // Relayr.framework (Public)
-#import "RelayrErrors.h"            // Relayr.framework (Utilities)
-#import "RLALog.h"                  // Relayr.framework (Utilities)
-#import "WunderbarConstants.h"      // Relayr.framework (Wunderbar)
+#import "RelayrTransmitter.h"       // Relayr (Public)
+#import "RelayrDevice.h"            // Relayr (Public)
+#import "RelayrErrors.h"            // Relayr (Utilities)
+#import "RLALog.h"                  // Relayr (Utilities)
+#import "WunderbarConstants.h"      // Relayr (Wunderbar)
 
 @implementation WunderbarFirmwareUpdate
 

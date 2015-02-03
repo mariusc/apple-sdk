@@ -1,5 +1,5 @@
 @import UIKit;                      // Apple
-#import "RLAWebOAuthController.h"   // Relayr.framework (Services/API)
+#import "RLAWebOAuthController.h"   // Relayr (Services/API)
 
 /*!
  *  @abstract It creates a viewController hosting a <code>UIWebView</code> that will ask for Relayr user credentials.

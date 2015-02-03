@@ -1,5 +1,5 @@
 #import "RLABLEService.h"   // Header
-#import "RelayrUser.h"      // Relayr.framework (Public)
+#import "RelayrUser.h"      // Relayr (Public)
 
 @implementation RLABLEService
 

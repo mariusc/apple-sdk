@@ -1,5 +1,5 @@
 #import "RelayrConnection.h"    // Parent class
-@class RelayrDevice;            // Relayr.framework (Public)
+@class RelayrDevice;            // Relayr (Public)
 
 /*!
  *  @abstract It express the type of connection between the current platform and the device or transmitter.

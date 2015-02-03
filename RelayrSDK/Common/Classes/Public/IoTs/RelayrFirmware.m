@@ -1,7 +1,7 @@
 #import "RelayrFirmware.h"          // Header
 
-#import "RelayrFirmware_Setup.h"    // Relayr.framework (Private)
-#import "WunderbarParsing.h"        // Relayr.framework (Wunderbar)
+#import "RelayrFirmware_Setup.h"    // Relayr (Private)
+#import "WunderbarParsing.h"        // Relayr (Wunderbar)
 
 @implementation RelayrFirmware
 

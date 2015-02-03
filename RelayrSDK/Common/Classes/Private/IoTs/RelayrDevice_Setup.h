@@ -1,7 +1,7 @@
 #import "RelayrDevice.h"            // Parent class
-@class RelayrUser;                  // Relayr.framework (Public)
-#import "RelayrDeviceModel_Setup.h" // Relayr.framework (Private)
-@protocol RLAService;               // Relayr.framework (Service)
+@class RelayrUser;                  // Relayr (Public)
+#import "RelayrDeviceModel_Setup.h" // Relayr (Private)
+@protocol RLAService;               // Relayr (Service)
 
 /*!
  *  @abstract An instance of this class represents a Device. A basic relayr entity

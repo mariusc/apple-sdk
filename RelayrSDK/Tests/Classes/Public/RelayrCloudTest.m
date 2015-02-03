@@ -1,9 +1,9 @@
 @import Cocoa;                  // Apple
 @import XCTest;                 // Apple
-#import <Relayr/Relayr.h>       // Relayr.framework
+#import <Relayr/Relayr.h>       // Relayr
 #import "RLATestsConstants.h"   // Tests
-#import "RelayrApp_Setup.h"     // Relayr.framework (Private)
-#import "RelayrUser_Setup.h"    // Relayr.framework (Private)
+#import "RelayrApp_Setup.h"     // Relayr (Private)
+#import "RelayrUser_Setup.h"    // Relayr (Private)
 
 /*!
  *  @abstract Test the high level methods of <code>RelayrCloud</code> static class.

@@ -1,12 +1,12 @@
 #import "RLAAPIService+Wunderbar.h" // Header
 
-#import "RelayrUser.h"              // Relayr.framework (Public)
-#import "RelayrTransmitter.h"       // Relayr.framework (Public)
-#import "RelayrTransmitter_Setup.h" // Relayr.framework (Private)
-#import "RLAAPIConstants.h"         // Relayr.framework (Service/API)
-#import "RLAAPIService+Parsing.h"   // Relayr.framework (Service/API)
-#import "RelayrErrors.h"            // Relayr.framework (Utilities)
-#import "WunderbarConstants.h"      // Relayr.framework (Wunderbar)
+#import "RelayrUser.h"              // Relayr (Public)
+#import "RelayrTransmitter.h"       // Relayr (Public)
+#import "RelayrTransmitter_Setup.h" // Relayr (Private)
+#import "RLAAPIConstants.h"         // Relayr (Service/API)
+#import "RLAAPIService+Parsing.h"   // Relayr (Service/API)
+#import "RelayrErrors.h"            // Relayr (Utilities)
+#import "WunderbarConstants.h"      // Relayr (Wunderbar)
 
 @implementation RLAAPIService (Wunderbar)
 

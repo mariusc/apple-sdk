@@ -1,5 +1,5 @@
 @import Foundation;                         // Apple
-#import "Relayr/RelayrFirmwareUpdate.h"     // Relayr.framework
+#import "Relayr/RelayrFirmwareUpdate.h"     // Relayr
 
 /*!
  *  @abstract Performs the firmware update process for Relayr Wunderbars.

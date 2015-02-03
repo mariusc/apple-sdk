@@ -1,7 +1,7 @@
 #pragma once
 
 @import Foundation;         // Apple
-#import "RelayrErrors.h"    // Relayr.framework (Utilities)
+#import "RelayrErrors.h"    // Relayr (Utilities)
 
 /*!
  *  @abstract The string file that contains the translation of all Wunderbar error messages.

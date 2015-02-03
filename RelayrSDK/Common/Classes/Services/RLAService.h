@@ -1,6 +1,6 @@
 @import Foundation;             // Apple
-@class RelayrDevice;            // Relayr.framework (Public)
-#import "RelayrConnection.h"    // Relayr.framework (Public/IoTs)
+@class RelayrDevice;            // Relayr (Public)
+#import "RelayrConnection.h"    // Relayr (Public/IoTs)
 
 /*!
  *  @abstract Block indicating the result of a service query.

@@ -1,8 +1,8 @@
 @import Cocoa;                  // Apple
 @import XCTest;                 // Apple
-#import <Relayr/Relayr.h>       // Relayr.framework
-#import "RelayrApp_Setup.h"     // Relayr.framework (Private)
-#import "RelayrUser_Setup.h"    // Relayr.framework (Private)
+#import <Relayr/Relayr.h>       // Relayr
+#import "RelayrApp_Setup.h"     // Relayr (Private)
+#import "RelayrUser_Setup.h"    // Relayr (Private)
 #import "RLATestsConstants.h"   // Tests
 
 /*!
