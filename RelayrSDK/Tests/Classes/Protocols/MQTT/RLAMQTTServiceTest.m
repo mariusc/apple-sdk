@@ -58,7 +58,7 @@
 
             for (RelayrDevice* device in _user.devices)
             {
-                [device subscribeToAllInputsWithBlock:^(RelayrDevice *device, RelayrInput *input, BOOL *unsubscribe) {
+                [device subscribeToAllReadingsWithBlock:^(RelayrDevice *device, RelayrReading *input, BOOL *unsubscribe) {
                     printf("Input received: %s\n", [((NSObject*)(input.value)).description cStringUsingEncoding:NSUTF8StringEncoding]);
                     if (--inputsReceived == 0) { [expectation fulfill]; }
                 } error:^(NSError *error) {
@@ -89,8 +89,9 @@
                     for (RelayrDevice* device in transmitter.devices)
                     {
                         // TODO: Try also targets.
-                        [device subscribeToAllInputsWithBlock:^(RelayrDevice *device, RelayrInput *input, BOOL* unsubscribe) {
+                        [device subscribeToAllReadingsWithBlock:^(RelayrDevice *device, RelayrReading *input, BOOL* unsubscribe) {
                             printf("Input received: %s\n", [((NSObject*)(input.value)).description cStringUsingEncoding:NSUTF8StringEncoding]);
+                            [expectation fulfill];
                         } error:^(NSError* error) {
                             printf("Subscription error: %s\n", [error.localizedDescription cStringUsingEncoding:NSUTF8StringEncoding]);
                         }];

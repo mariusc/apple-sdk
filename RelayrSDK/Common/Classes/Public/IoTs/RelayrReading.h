@@ -1,6 +1,6 @@
 @class RelayrDevice;        // Relayr.framework (Public)
 @class RelayrDeviceModel;   // Relayr.framework (Public)
-@class RelayrInput;         // Relayr.framework (Public)
+@class RelayrReading;         // Relayr.framework (Public)
 @import Foundation;         // Apple
 
 /*!
@@ -8,17 +8,17 @@
  *  @discussion All RelayrSDK objects (except when explicitly said otherwise) will return the same instance when copied (e.g.: when added to a dictionary). Thus the <code>NSCopying</code> method <code>-copyWithZone:</code> will return the same instance. Same happening with <code>NSMutableCopying</code> method <code>-mutableCopyWithZone:</code>.
  *
  *  @param device The <code>RelayrDevice</code> sending the data.
- *  @param input <code>RelayrInput</code> specifying the meaning and value of the data received.
+ *  @param input <code>RelayrReading</code> specifying the meaning and value of the data received.
  *  @param unsubscribe A boolean pointer that can be set to <code>YES</code> if you wish to stop the block from being further executed.
  */
-typedef void (^RelayrInputDataReceivedBlock)(RelayrDevice* device, RelayrInput* input, BOOL* unsubscribe);
+typedef void (^RelayrReadingDataReceivedBlock)(RelayrDevice* device, RelayrReading* input, BOOL* unsubscribe);
 
 /*!
  *  @abstract A Block executed when the input receives an error.
  *
  *  @param error <code>NSError</code> describing the specific error.
  */
-typedef void (^RelayrInputErrorReceivedBlock)(NSError* error);
+typedef void (^RelayrReadingErrorReceivedBlock)(NSError* error);
 
 /*!
  *  @abstract References the type of input (reading) a relayr Device (sensor) can collect.
@@ -26,7 +26,7 @@ typedef void (^RelayrInputErrorReceivedBlock)(NSError* error);
  *	For example: The Luminosity meaning is represented by a single value  
  *	however, the Color meaning consists of three or four values (red, green, blue, and white).
  */
-@interface RelayrInput : NSObject <NSCopying,NSMutableCopying>
+@interface RelayrReading : NSObject <NSCopying,NSMutableCopying>
 
 /*!
  *  @abstract The source of the input (reading).
@@ -84,8 +84,8 @@ typedef void (^RelayrInputErrorReceivedBlock)(NSError* error);
  *      - <code>unsubscribe</code>. A Boolean variable, that when set to <code>NO</code>, will stop the subscription.
  *  @param errorBlock A Block executed every time an error occurs. The error could be received because the subscription could not be completed, or because the subscription is stopped by an external factor.
  */
-- (void)subscribeWithBlock:(RelayrInputDataReceivedBlock)block
-                     error:(RelayrInputErrorReceivedBlock)errorBlock;
+- (void)subscribeWithBlock:(RelayrReadingDataReceivedBlock)block
+                     error:(RelayrReadingErrorReceivedBlock)errorBlock;
 
 /*!
  *  @abstract Subscribes the target object to a specific input of a <code>RelayrDevice</code> instance.
@@ -94,15 +94,15 @@ typedef void (^RelayrInputErrorReceivedBlock)(NSError* error);
  *  @param target The object where the <code>action</code> is called onto.
  *  @param action The method to be called. It can have two modes:
  *      - No parameters.
- *      - One parameter. The parameter must be a <code>RelayrInput</code> object, or the program will crash.
- *      - Two parameters. The first one is a <code>RelayrDevice</code> object, and the second is a <code>RelayrInput</code> object.
+ *      - One parameter. The parameter must be a <code>RelayrReading</code> object, or the program will crash.
+ *      - Two parameters. The first one is a <code>RelayrDevice</code> object, and the second is a <code>RelayrReading</code> object.
  *  @param errorBlock A Block executed every time an error occurs. The error could be received because the subscription could not be completed, 
  *	or because the subscription is stopped by an external factor.
  *  @warning The action selector should not return anything. If the method does return something, this will cause memory leaks.
  */
 - (void)subscribeWithTarget:(id)target
                      action:(SEL)action
-                      error:(RelayrInputErrorReceivedBlock)errorBlock;
+                      error:(RelayrReadingErrorReceivedBlock)errorBlock;
 
 /*!
  *  @abstract Unsubscribes the specific action from the target object.
@@ -119,6 +119,6 @@ typedef void (^RelayrInputErrorReceivedBlock)(NSError* error);
  *  @abstract Removes all subscriptions for the device.
  *  @discussion All subscriptions, whether blocks or target objects are unsubscribed.
  */
-- (void)removeAllSubscriptions;
+- (void)unsubscribeToAll;
 
 @end

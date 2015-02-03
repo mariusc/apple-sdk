@@ -112,7 +112,7 @@
  *
  *  @note That the completion block receives <code>nil</code>, it doesn't assure that the device will receive the blob of data being sent.
  *
- *  @see RelayrOutput
+ *  @see RelayrWriting
  *  @see RelayrDevice
  */
 - (void)sendToDeviceID:(NSString*)deviceID

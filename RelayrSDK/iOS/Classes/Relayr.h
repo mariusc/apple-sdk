@@ -12,8 +12,8 @@ FOUNDATION_EXPORT unsigned char const iOSRelayrVersionString[];
 #import <Relayr/RelayrDeviceModel.h>
 #import <Relayr/RelayrFirmware.h>
 #import <Relayr/RelayrFirmwareModel.h>
-#import <Relayr/RelayrInput.h>
-#import <Relayr/RelayrOutput.h>
+#import <Relayr/RelayrReading.h>
+#import <Relayr/RelayrWriting.h>
 #import <Relayr/RelayrConnection.h>
 #import <Relayr/RelayrOnboarding.h>
 #import <Relayr/RelayrFirmwareUpdate.h>

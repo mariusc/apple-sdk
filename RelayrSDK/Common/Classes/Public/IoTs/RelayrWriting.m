@@ -1,4 +1,4 @@
-#import "RelayrOutput.h"            // Header
+#import "RelayrWriting.h"            // Header
 
 #import "RelayrUser.h"              // Relayr.framework (Public)
 #import "RelayrDevice.h"            // Relayr.framework (Public)
@@ -6,13 +6,13 @@
 #import "RelayrErrors.h"            // Relayr.framework (Public)
 #import "RelayrUser_Setup.h"        // Relayr.framework (Private)
 #import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
-#import "RelayrOutput_Setup.h"      // Relayr.framework (Private)
+#import "RelayrWriting_Setup.h"     // Relayr.framework (Private)
 #import "RLAAPIService+Device.h"    // Relayr.framework (Service/API)
 
 static NSString* const kCodingMeaning = @"men";
 static NSString* const kCodingDeviceModel = @"dmod";
 
-@implementation RelayrOutput
+@implementation RelayrWriting
 
 #pragma mark - Public API
 
@@ -35,7 +35,7 @@ static NSString* const kCodingDeviceModel = @"dmod";
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"RelayrOutput\n{\n\t Meaning: %@}\n", _meaning];
+    return [NSString stringWithFormat:@"RelayrWriting\n{\n\t Meaning: %@}\n", _meaning];
 }
 
 #pragma mark - Private functionality
@@ -52,7 +52,7 @@ static NSString* const kCodingDeviceModel = @"dmod";
     return self;
 }
 
-- (void)setWith:(RelayrOutput*)output
+- (void)setWith:(RelayrWriting*)output
 {
     if (!output.meaning.length) { return; }
     

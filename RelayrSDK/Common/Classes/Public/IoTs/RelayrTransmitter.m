@@ -52,7 +52,7 @@ static NSString* const kCodingDevices = @"dev";
     {
         for (RelayrDevice* device in _devices)
         {
-            for (RelayrInput* reading in device.inputs)
+            for (RelayrReading* reading in device.readings)
             {
                 if ([reading.meaning isEqualToString:meaning])
                 {

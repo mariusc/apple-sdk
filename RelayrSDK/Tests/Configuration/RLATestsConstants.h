@@ -18,8 +18,18 @@
 #define kTestsTransmitterFirmVr     @"1.0.0"
 
 #define kTestsDeviceName            @"AppleTest Device"
-#define kTestsDeviceModel           @"7d7a4def-796f-4fd0-9895-41047c3ab452"
+#define kTestsDeviceModel           @"ecf6cf94-cb07-43ac-a85e-dccf26b48c86"
 #define kTestsDeviceFirmwVr         @"1.0.0"
+
+#define kTestsMeaningsAngularSpeed  @"angularSpeed"
+#define kTestsMeaningsLuminosity    @"luminosity"
+#define kTestsMeaningsAcceleration  @"acceleration"
+#define kTestsMeaningsTemperature   @"temperature"
+#define kTestsMeaningsProximity     @"proximity"
+#define kTestsMeaningsColor         @"color"
+#define kTestsMeaningsHumidity      @"humidity"
+#define kTestsMeaningsNoiseLevel    @"noiseLevel"
+#define kTestsMeaningsRaw           @"raw"
 
 #define kTestsWunderbarOnboardingTransmitterTimeout     12
 #define kTestsWunderbarOnboardingDeviceTimeout          8

@@ -1,16 +1,16 @@
-#import "RelayrInput.h"     // Parent class
+#import "RelayrReading.h"     // Parent class
 
 /*!
  *  @abstract It references a type of reading that a Relayr device (sensor) can perform.
  *  @discussion This object have a single meaning, but can take more than one value. For example: luminosity (meaning) reads a single value (in lumens); however, color (meaning) reads three or four values (red, green, blue, and maybe alpha).
  */
-@interface RelayrInput () <NSCoding>
+@interface RelayrReading () <NSCoding>
 
 /*!
- *  @abstract Designated initialiser for <code>RelayrInput</code> objects.
+ *  @abstract Designated initialiser for <code>RelayrReading</code> objects.
  *
  *  @param meaning Relayr identifier for the type of input you are receiving.
- *	@return Fully initialised <code>RelayrInput</code> object or <code>nil</code> if there were problems.
+ *	@return Fully initialised <code>RelayrReading</code> object or <code>nil</code> if there were problems.
  */
 - (instancetype)initWithMeaning:(NSString*)meaning unit:(NSString*)unit;
 
@@ -36,9 +36,9 @@
  *  @abstract Sets the instance where this object is being called for, with the properties of the object being passed as arguments.
  *  @discussion The properties being passed as the arguments are considered new and thus have a higher priority.
  *
- *  @param input The newly <code>RelayrInput</code> instance.
+ *  @param input The newly <code>RelayrReading</code> instance.
  */
-- (void)setWith:(RelayrInput*)input;
+- (void)setWith:(RelayrReading*)input;
 
 /*!
  *  @abstract Dictionary containing all the subscription blocks.

@@ -3,14 +3,14 @@
 #import "RelayrUser.h"              // Relayr.framework (Public)
 #import "RelayrTransmitter.h"       // Relyar.framework (Public)
 #import "RelayrFirmware.h"          // Relayr.framework (Public)
-#import "RelayrInput.h"             // Relayr.framework (Public)
+#import "RelayrReading.h"           // Relayr.framework (Public)
 #import "RelayrConnection.h"        // Relayr.framework (Public)
 #import "RelayrOnboarding.h"        // Relayr.framework (Public)
 #import "RelayrFirmwareUpdate.h"    // Relayr.framework (Public)
 #import "RelayrUser_Setup.h"        // Relayr.framework (Private)
 #import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
 #import "RelayrFirmware_Setup.h"    // Relayr.framework (Private)
-#import "RelayrInput_Setup.h"       // Relayr.framework (Private)
+#import "RelayrReading_Setup.h"       // Relayr.framework (Private)
 #import "RelayrConnection_Setup.h"  // Relayr.framework (Private)
 #import "RLAService.h"              // Relayr.framework (Service)
 #import "RLAServiceSelector.h"      // Relayr.framework (Service)
@@ -95,7 +95,7 @@ static NSString* const kCodingSecret = @"sec";
 {
     if (error)
     {
-        for (RelayrInput* input in self.inputs) { [input errorReceived:error atDate:date]; }
+        for (RelayrReading* input in self.readings) { [input errorReceived:error atDate:date]; }
         return;
     }
     
@@ -104,7 +104,7 @@ static NSString* const kCodingSecret = @"sec";
     if (!dict.count) { return; }
     if (parsedDate) { date = parsedDate; }
     
-    for (RelayrInput* input in self.inputs) { [input valueReceived:dict[input.meaning] atDate:date]; };
+    for (RelayrReading* input in self.readings) { [input valueReceived:dict[input.meaning] atDate:date]; };
 }
 
 - (void)unsubscribeToCurrentServiceIfNecessary
@@ -132,32 +132,32 @@ static NSString* const kCodingSecret = @"sec";
 
 - (BOOL)hasOngoingSubscriptions
 {
-    return _connection.hasOngoingSubscriptions || self.hasOngoingInputSubscriptions;
+    return _connection.hasOngoingSubscriptions || self.hasOngoingReadingSubscriptions;
 }
 
-- (BOOL)hasOngoingInputSubscriptions
+- (BOOL)hasOngoingReadingSubscriptions
 {
-    for (RelayrInput* input in self.inputs) { if (input.subscribedBlocks.count || input.subscribedTargets.count) { return YES; } }
+    for (RelayrReading* input in self.readings) { if (input.subscribedBlocks.count || input.subscribedTargets.count) { return YES; } }
     return NO;
 }
 
-- (void)subscribeToAllInputsWithBlock:(RelayrInputDataReceivedBlock)block error:(RelayrInputErrorReceivedBlock)errorBlock
+- (void)subscribeToAllReadingsWithBlock:(RelayrReadingDataReceivedBlock)block error:(RelayrReadingErrorReceivedBlock)errorBlock
 {
     if (!block) { if (errorBlock) { errorBlock(RelayrErrorMissingArgument); } return; }
-    for (RelayrInput* input in self.inputs) { [input subscribeWithBlock:block error:errorBlock]; }
+    for (RelayrReading* input in self.readings) { [input subscribeWithBlock:block error:errorBlock]; }
 }
 
-- (void)subscribeToAllInputsWithTarget:(id)target action:(SEL)action error:(RelayrInputErrorReceivedBlock)errorBlock
+- (void)subscribeToAllReadingsWithTarget:(id)target action:(SEL)action error:(RelayrReadingErrorReceivedBlock)errorBlock
 {
     RLATargetAction* pair = [[RLATargetAction alloc] initWithTarget:target action:action];
     if (!pair) { if (errorBlock) { errorBlock(RelayrErrorMissingArgument); } return; }
-    for (RelayrInput* input in self.inputs) { [input subscribeWithTarget:target action:action error:errorBlock]; }
+    for (RelayrReading* input in self.readings) { [input subscribeWithTarget:target action:action error:errorBlock]; }
 }
 
-- (void)removeAllSubscriptions
+- (void)unsubscribeToAll
 {
-    [_connection removeAllSubscriptions];
-    for (RelayrInput* input in self.inputs) { [input removeAllSubscriptions]; }
+    [_connection unsubscribeToAll];
+    for (RelayrReading* input in self.readings) { [input unsubscribeToAll]; }
 }
 
 #pragma mark NSCoding
@@ -215,9 +215,9 @@ static NSString* const kCodingSecret = @"sec";
 \t Model name: %@\n\
 \t Manufacturer: %@\n\
 \t Num firmwares available: %@\n\
-\t Num inputs: %@\n\
-\t Num outputs: %@\
-\n}\n", _uid, _name, (_owner) ? _owner : @"?", (_firmware.version) ? _firmware.version : @"?", _secret, self.modelID, self.modelName, self.manufacturer, (self.firmwaresAvailable) ? @(self.firmwaresAvailable.count) : @"?", (self.inputs) ? @(self.inputs.count) : @"?", (self.outputs) ? @(self.outputs.count) : @"?"];
+\t Num readings: %@\n\
+\t Num writings: %@\
+\n}\n", _uid, _name, (_owner) ? _owner : @"?", (_firmware.version) ? _firmware.version : @"?", _secret, self.modelID, self.modelName, self.manufacturer, (self.firmwaresAvailable) ? @(self.firmwaresAvailable.count) : @"?", (self.readings) ? @(self.readings.count) : @"?", (self.writings) ? @(self.writings.count) : @"?"];
 }
 
 @end

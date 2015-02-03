@@ -7,8 +7,8 @@
 #import "RelayrDeviceModel.h"           // Relayr.framework (Public)
 #import "RelayrFirmware.h"              // Relayr.framework (Public)
 #import "RelayrFirmwareModel.h"         // Relayr.framework (Public)
-#import "RelayrInput.h"                 // Relayr.framework (Public)
-#import "RelayrOutput.h"                // Relayr.framework (Public)
+#import "RelayrReading.h"               // Relayr.framework (Public)
+#import "RelayrWriting.h"               // Relayr.framework (Public)
 #import "RelayrApp_Setup.h"             // Relayr.framework (Private)
 #import "RelayrUser_Setup.h"            // Relayr.framework (Private)
 #import "RelayrPublisher_Setup.h"       // Relayr.framework (Private)
@@ -17,8 +17,8 @@
 #import "RelayrDeviceModel_Setup.h"     // Relayr.framework (Private)
 #import "RelayrFirmware_Setup.h"        // Relayr.framework (Private)
 #import "RelayrFirmwareModel_Setup.h"   // Relayr.framework (Private)
-#import "RelayrInput_Setup.h"           // Relayr.framework (Private)
-#import "RelayrOutput_Setup.h"          // Relayr.framework (Private)
+#import "RelayrReading_Setup.h"         // Relayr.framework (Private)
+#import "RelayrWriting_Setup.h"         // Relayr.framework (Private)
 #import "RLAAPIConstants.h"             // Relayr.framework (Service/API)
 
 @implementation RLAAPIService (Parsing)
@@ -128,8 +128,8 @@
     deviceModel.user = self.user;
     deviceModel.modelName = jsonDict[dRLAAPI_DeviceModel_RespondKey_Name];
     deviceModel.manufacturer = jsonDict[dRLAAPI_DeviceModel_RespondKey_Manufacturer];
-    deviceModel.inputs = [self parseDeviceReadingsFromJSONArray:jsonDict[dRLAAPI_DeviceModel_RespondKey_Readings] ofDevice:deviceModel];
-    //device.outputs = [RLAAPIService parseDeviceWritingsFromJSONArray:dict[<#name#>];
+    deviceModel.readings = [self parseDeviceReadingsFromJSONArray:jsonDict[dRLAAPI_DeviceModel_RespondKey_Readings] ofDevice:deviceModel];
+    //device.writings = [RLAAPIService parseDeviceWritingsFromJSONArray:dict[<#name#>];
 
     NSDictionary* availableFirms = jsonDict[dRLAAPI_DeviceModel_RespondKey_Firmware];
     if (availableFirms.count)
@@ -183,19 +183,19 @@
 
 /*!
  *  @abstract This methods parses the <code>reading</code> property of the device model.
- *  @discussion It will return a set of <code>RelayrInput</code> objects.
+ *  @discussion It will return a set of <code>RelayrReading</code> objects.
  */
 - (NSSet*)parseDeviceReadingsFromJSONArray:(NSArray*)jsonArray ofDevice:(RelayrDeviceModel*)device
 {
     if (!jsonArray) { return nil; }
 
-    NSUInteger const numInputs = jsonArray.count;
-    if (numInputs == 0) { return [NSSet set]; }
+    NSUInteger const numReadings = jsonArray.count;
+    if (numReadings == 0) { return [NSSet set]; }
 
-    NSMutableSet* result = [NSMutableSet setWithCapacity:numInputs];
+    NSMutableSet* result = [NSMutableSet setWithCapacity:numReadings];
     for (NSDictionary* dict in jsonArray)
     {
-        RelayrInput* input = [[RelayrInput alloc] initWithMeaning:dict[dRLAAPI_DeviceReading_RespondKey_Meaning] unit:dict[dRLAAPI_DeviceReading_RespondKey_Unit]];
+        RelayrReading* input = [[RelayrReading alloc] initWithMeaning:dict[dRLAAPI_DeviceReading_RespondKey_Meaning] unit:dict[dRLAAPI_DeviceReading_RespondKey_Unit]];
         if (!input) { continue; }
 
         input.deviceModel = device;
@@ -207,19 +207,19 @@
 
 /*!
  *  @abstract This methods parses the <code>...</code> property of the device model.
- *  @discussion It will return a set of <code>RelayrOutput</code> objects.
+ *  @discussion It will return a set of <code>RelayrWriting</code> objects.
  */
 - (NSSet*)parseDeviceWritingsFromJSONArray:(NSArray*)jsonArray ofDevice:(RelayrDevice*)device
 {
     if (!jsonArray) { return nil; }
 
-    NSUInteger const numOutputs = jsonArray.count;
-    if (numOutputs == 0) { return [NSSet set]; }
+    NSUInteger const numWritings = jsonArray.count;
+    if (numWritings == 0) { return [NSSet set]; }
     
-    NSMutableSet* result = [NSMutableSet setWithCapacity:numOutputs];
+    NSMutableSet* result = [NSMutableSet setWithCapacity:numWritings];
 //    for (NSDictionary* dict in jsonArray)
 //    {
-//        RelayrOutput* output = [[RelayrOutput alloc] initWithMeaning:nil];
+//        RelayrWriting* output = [[RelayrWriting alloc] initWithMeaning:nil];
 //        if (!output) { continue; }
 //        
 //        output.deviceModel = device;

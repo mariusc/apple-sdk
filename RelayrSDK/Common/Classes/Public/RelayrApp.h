@@ -1,4 +1,4 @@
-@class RelayrUser;                      // Relayr.framework (public)
+@class RelayrUser;                      // Relayr.framework (Public)
 #import <Relayr/RelayrID.h>             // Relayr.framework (Public)
 @import Foundation;                     // Apple
 

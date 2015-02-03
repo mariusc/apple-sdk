@@ -38,21 +38,21 @@
 
 /*!
  *  @abstract Returns an array of all possible readings the device can gather.
- *  @discussion Each item in this array is an object of type <code>RelayrInput</code>. Each input represents a different kind of reading. That is, a <code>RelayrDevice</code> can have a luminosity sensor and a gyroscope; thus, this array would have two different inputs.
+ *  @discussion Each item in this array is an object of type <code>RelayrReading</code>. Each input represents a different kind of reading. That is, a <code>RelayrDevice</code> can have a luminosity sensor and a gyroscope; thus, this array would have two different reading.
  *
- *  @see RelayrInput
+ *  @see RelayrReading
  */
-@property (readwrite,nonatomic) NSSet* inputs;
+@property (readwrite,nonatomic) NSSet* readings;
 
 /*!
- *  @abstract Returns an array of possible Outputs a Device is capable of receiving.
+ *  @abstract Returns an array of possible Writings a Device is capable of receiving.
  *  @discussion By 'Output' we refer to an object with commands or configuration settings sent to a Device.
  *	These are usually infrarred commands, ultrasound pulses etc.
- *	Each item in this array is an object of type <code>RelayrOutput</code>.
+ *	Each item in this array is an object of type <code>RelayrWriting</code>.
  *
- *  @see RelayrOutput
+ *  @see RelayrWriting
  */
-@property (readwrite,nonatomic) NSSet* outputs;
+@property (readwrite,nonatomic) NSSet* writings;
 
 /*!
  *  @abstract Sets the instance where this object is being called for, with the properties of the object passed as arguments.

@@ -1,20 +1,20 @@
 #import "RelayrDeviceModel.h"       // Header
 
 #import "RelayrFirmware.h"          // Relayr.framework (Public)
-#import "RelayrInput.h"             // Relayr.framework (Public)
-#import "RelayrOutput.h"            // Relayr.framework (Public)
+#import "RelayrReading.h"           // Relayr.framework (Public)
+#import "RelayrWriting.h"           // Relayr.framework (Public)
 #import "RelayrDeviceModel_Setup.h" // Relayr.framework (Private)
 #import "RelayrFirmware_Setup.h"    // Relayr.framework (Private)
-#import "RelayrInput_Setup.h"       // Relayr.framework (Private)
-#import "RelayrOutput_Setup.h"      // Relayr.framework (Private)
+#import "RelayrReading_Setup.h"     // Relayr.framework (Private)
+#import "RelayrWriting_Setup.h"     // Relayr.framework (Private)
 
 static NSString* const kCodingUser = @"usr";
 static NSString* const kCodingModelID = @"mID";
 static NSString* const kCodingModelName = @"mNa";
 static NSString* const kCodingManufacturer = @"man";
 static NSString* const kCodingFirmwareModels = @"firms";
-static NSString* const kCodingInputs = @"inp";
-static NSString* const kCodingOutputs = @"out";
+static NSString* const kCodingReadings = @"rea";
+static NSString* const kCodingWritings = @"wri";
 
 @implementation RelayrDeviceModel
 
@@ -25,7 +25,7 @@ static NSString* const kCodingOutputs = @"out";
     NSMutableSet* result = [[NSMutableSet alloc] init];
     for (NSString* meaning in meanings)
     {
-        for (RelayrInput* input in _inputs)
+        for (RelayrReading* input in _readings)
         {
             if ([input.meaning isEqualToString:meaning]) { [result addObject:input]; }
         }
@@ -54,9 +54,9 @@ static NSString* const kCodingOutputs = @"out";
 \t Model name: %@\n\
 \t Manufacturer: %@\n\
 \t Num firmwares available: %@\n\
-\t Num inputs: %@\n\
-\t Num outputs: %@\
-\n}\n", self.modelID, self.modelName, self.manufacturer, (self.firmwaresAvailable) ? @(self.firmwaresAvailable.count) : @"?", (self.inputs) ? @(self.inputs.count) : @"?", (self.outputs) ? @(self.outputs.count) : @"?"];
+\t Num readings: %@\n\
+\t Num writings: %@\
+\n}\n", self.modelID, self.modelName, self.manufacturer, (self.firmwaresAvailable) ? @(self.firmwaresAvailable.count) : @"?", (self.readings) ? @(self.readings.count) : @"?", (self.writings) ? @(self.writings.count) : @"?"];
 }
 
 #pragma mark - Private methods
@@ -93,17 +93,17 @@ static NSString* const kCodingOutputs = @"out";
     _firmwaresAvailable = [NSMutableArray arrayWithArray:result];
 }
 
-- (void)setInputsWith:(NSSet*)inputs
+- (void)setReadingsWith:(NSSet*)readings
 {
-    if (!inputs) { return; }
+    if (!readings) { return; }
     
-    NSMutableSet* result = [NSMutableSet setWithCapacity:inputs.count];
+    NSMutableSet* result = [NSMutableSet setWithCapacity:readings.count];
     
-    NSMutableSet* previous = [NSMutableSet setWithSet:_inputs];
-    for (RelayrInput* neueInput in inputs)
+    NSMutableSet* previous = [NSMutableSet setWithSet:_readings];
+    for (RelayrReading* neueInput in readings)
     {
-        RelayrInput* matchedInput;
-        for (RelayrInput* prevInput in previous)
+        RelayrReading* matchedInput;
+        for (RelayrReading* prevInput in previous)
         {
             if ([prevInput.meaning isEqualToString:neueInput.meaning]) { matchedInput = prevInput; break; }
         }
@@ -122,23 +122,23 @@ static NSString* const kCodingOutputs = @"out";
         [result addObject:matchedInput];
     }
     
-    _inputs = [NSSet setWithSet:result];
+    _readings = [NSSet setWithSet:result];
     
     // Clean up previous subscriptions since they are not needed anymore.
-    for (RelayrInput* pInput in previous) { [pInput removeAllSubscriptions]; }
+    for (RelayrReading* pInput in previous) { [pInput unsubscribeToAll]; }
 }
 
-- (void)setOutputsWith:(NSSet*)outputs
+- (void)setWritingsWith:(NSSet*)writings
 {
-    if (!outputs) { return; }
+    if (!writings) { return; }
     
-    NSMutableSet* previous = [NSMutableSet setWithSet:_outputs];
-    NSMutableSet* result = [NSMutableSet setWithCapacity:outputs.count];
+    NSMutableSet* previous = [NSMutableSet setWithSet:_writings];
+    NSMutableSet* result = [NSMutableSet setWithCapacity:writings.count];
     
-    for (RelayrOutput* neueOutput in outputs)
+    for (RelayrWriting* neueOutput in writings)
     {
-        RelayrOutput* matchedOutput;
-        for (RelayrOutput* pOutput in previous)
+        RelayrWriting* matchedOutput;
+        for (RelayrWriting* pOutput in previous)
         {
             if ([pOutput.meaning isEqualToString:neueOutput.meaning]) { matchedOutput = pOutput; break; }
         }
@@ -157,7 +157,7 @@ static NSString* const kCodingOutputs = @"out";
         [result addObject:matchedOutput];
     }
     
-    _outputs = [NSSet setWithSet:result];
+    _writings = [NSSet setWithSet:result];
 }
 
 #pragma mark Setup extension
@@ -182,8 +182,8 @@ static NSString* const kCodingOutputs = @"out";
     if (deviceModel.modelName) { _modelName = deviceModel.modelName; }
     if (deviceModel.manufacturer) { _manufacturer = deviceModel.manufacturer; }
     [self setFirmwaresAvailableWith:deviceModel.firmwaresAvailable];
-    [self setInputsWith:deviceModel.inputs];
-    [self setOutputsWith:deviceModel.outputs];
+    [self setReadingsWith:deviceModel.readings];
+    [self setWritingsWith:deviceModel.writings];
 }
 
 #pragma mark NSCoding
@@ -197,8 +197,8 @@ static NSString* const kCodingOutputs = @"out";
         _modelName = [decoder decodeObjectForKey:kCodingModelName];
         _manufacturer = [decoder decodeObjectForKey:kCodingManufacturer];
         _firmwaresAvailable = [decoder decodeObjectForKey:kCodingFirmwareModels];
-        _inputs = [decoder decodeObjectForKey:kCodingInputs];
-        _outputs = [decoder decodeObjectForKey:kCodingOutputs];
+        _readings = [decoder decodeObjectForKey:kCodingReadings];
+        _writings = [decoder decodeObjectForKey:kCodingWritings];
     }
     return self;
 }
@@ -210,8 +210,8 @@ static NSString* const kCodingOutputs = @"out";
     [coder encodeObject:_modelName forKey:kCodingModelName];
     [coder encodeObject:_manufacturer forKey:kCodingManufacturer];
     [coder encodeObject:_firmwaresAvailable forKey:kCodingFirmwareModels];
-    [coder encodeObject:_inputs forKey:kCodingInputs];
-    [coder encodeObject:_outputs forKey:kCodingOutputs];
+    [coder encodeObject:_readings forKey:kCodingReadings];
+    [coder encodeObject:_writings forKey:kCodingWritings];
 }
 
 @end

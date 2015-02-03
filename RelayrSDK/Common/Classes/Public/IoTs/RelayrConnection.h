@@ -154,6 +154,6 @@ typedef NS_ENUM(NSUInteger, RelayrConnectionState) {
  *  @abstract Removes all subscriptions for this connection.
  *  @discussion All subscriptions, whether blocks or target objects are removed.
  */
-- (void)removeAllSubscriptions;
+- (void)unsubscribeToAll;
 
 @end

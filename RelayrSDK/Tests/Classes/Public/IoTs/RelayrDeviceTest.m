@@ -77,4 +77,32 @@
     [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
 }
 
+- (void)testConvenienceRetrievalMethods
+{
+    XCTestExpectation* expectation = [self expectationWithDescription:nil];
+    
+    __weak RelayrUser* user = _user;
+    [_user queryCloudForIoTs:^(NSError* error) {
+        XCTAssertNil(error);
+        XCTAssertGreaterThanOrEqual(_user.transmitters.count, 1);
+        XCTAssertGreaterThanOrEqual(_user.devices.count, 1);
+        
+        RelayrTransmitter* transmitter = user.transmitters.anyObject;
+        XCTAssertNotNil(transmitter);
+        
+        RelayrDevice* device = [transmitter devicesWithReadingMeanings:@[kTestsMeaningsAcceleration]].anyObject;
+        XCTAssertNotNil(device);
+        
+        NSSet* readings = [device readingsWithMeanings:@[kTestsMeaningsAcceleration]];
+        XCTAssertEqual(readings.count, 1);
+        
+        readings = [device readingsWithMeanings:@[kTestsMeaningsAcceleration,kTestsMeaningsAngularSpeed]];
+        XCTAssertEqual(readings.count, 2);
+        
+        [expectation fulfill];
+    }];
+    
+    [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
+}
+
 @end

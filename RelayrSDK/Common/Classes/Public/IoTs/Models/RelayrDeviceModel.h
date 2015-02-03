@@ -1,5 +1,5 @@
 @class RelayrUser;                      // Relayr.framework (Public)
-@class RelayrInput;                     // Relayr.framework (Public/IoT)
+@class RelayrReading;                     // Relayr.framework (Public/IoT)
 #import <Relayr/RelayrIDSubscripting.h> // Relayr.framework (Utilities/Collections)
 #import <Relayr/NSSet+RelayrID.h>       // Relayr.framework (Utilities/Collections)
 @import Foundation;                     // Apple
@@ -40,14 +40,14 @@
 
 /*!
  *  @abstract Returns an array of all possible readings the device can collect.
- *  @discussion Each item in this array is an object of type <code>RelayrInput</code>. 
+ *  @discussion Each item in this array is an object of type <code>RelayrReading</code>. 
  *      Each input represents a different kind of reading.
  *      That is, a <code>RelayrDevice</code> can have a luminosity sensor and a gyroscope;
- *      Therefore, this array would have two different inputs.
+ *      Therefore, this array would have two different readings.
  *
- *  @see RelayrInput
+ *  @see RelayrReading
  */
-@property (readonly,nonatomic) NSSet* inputs;
+@property (readonly,nonatomic) NSSet* readings;
 
 /*!
  *  @abstract It returns an <code>NSSet</code> grouping all possible <code>RelayrReading</code> objects that are capable of <i>read</i> the meanings passed as argument.
@@ -61,13 +61,13 @@
 - (NSSet <RelayrIDSubscripting>*)readingsWithMeanings:(NSArray*)meanings;
 
 /*!
- *  @abstract Returns an array of possible Outputs a Device is capable of receiving.
+ *  @abstract Returns an array of possible Writings a Device is capable of receiving.
  *  @discussion By 'Output' we refer to an object with commands or configuration settings sent to a Device.
  *	These are usually infrarred commands, ultrasound pulses etc.
- *	Each item in this array is an object of type <code>RelayrOutput</code>.
+ *	Each item in this array is an object of type <code>RelayrWriting</code>.
  *
- *  @see RelayrOutput
+ *  @see RelayrWriting
  */
-@property (readonly,nonatomic) NSSet* outputs;
+@property (readonly,nonatomic) NSSet* writings;
 
 @end

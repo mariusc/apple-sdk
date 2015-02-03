@@ -89,6 +89,54 @@
     [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
 }
 
+- (void)testConvenienceRetrievalMethods
+{
+    XCTestExpectation* expectation = [self expectationWithDescription:nil];
+    
+    __weak RelayrUser* user = _user;
+    [_user queryCloudForIoTs:^(NSError* error) {
+        XCTAssertNil(error);
+        XCTAssertGreaterThanOrEqual(user.transmitters.count, 1);
+        XCTAssertGreaterThanOrEqual(user.devices.count, 1);
+        
+        NSSet* transmitters = [user transmittersWithReadingMeanings:@[kTestsMeaningsLuminosity]];
+        XCTAssertEqual(transmitters.count, 1);
+        
+        transmitters = [user transmittersWithReadingMeanings:@[kTestsMeaningsLuminosity,kTestsMeaningsAngularSpeed,kTestsMeaningsAcceleration]];
+        XCTAssertEqual(transmitters.count, 1);
+        
+        NSSet* devices = [user devicesWithReadingMeanings:@[kTestsMeaningsLuminosity]];
+        XCTAssertGreaterThanOrEqual(devices.count, 1);
+        
+        devices = [user devicesWithReadingMeanings:@[kTestsMeaningsLuminosity,kTestsMeaningsTemperature,kTestsMeaningsAcceleration]];
+        XCTAssertGreaterThanOrEqual(devices.count, 3);
+        
+        NSSet* readings = [user readingsWithMeanings:@[kTestsMeaningsLuminosity]];
+        XCTAssertGreaterThanOrEqual(readings.count, 1);
+        
+        readings = [user readingsWithMeanings:@[kTestsMeaningsLuminosity,kTestsMeaningsAcceleration,kTestsMeaningsNoiseLevel]];
+        XCTAssertGreaterThanOrEqual(readings.count, 3);
+        
+        id <RelayrID> tmp = user[((RelayrTransmitter*)transmitters.anyObject).uid];
+        XCTAssertNotNil(tmp);
+        
+        tmp = user[((RelayrDevice*)devices.anyObject).uid];
+        XCTAssertNotNil(tmp);
+        
+        [user queryCloudForPublishersAndAuthorisedApps:^(NSError* error) {
+            XCTAssertNil(error);
+            
+            RelayrPublisher* publisher = user.publishers.anyObject;
+            XCTAssertNotNil(publisher);
+            XCTAssertNotNil(user[publisher.uid]);
+            
+            [expectation fulfill];
+        }];
+    }];
+    
+    [self waitForExpectationsWithTimeout:kTestsTimeout handler:nil];
+}
+
 - (void)testRegisterTransmitter_deleteTransmitter
 {
     XCTestExpectation* expectation = [self expectationWithDescription:nil];

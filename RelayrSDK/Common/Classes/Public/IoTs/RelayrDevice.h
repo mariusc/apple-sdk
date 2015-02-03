@@ -2,7 +2,7 @@
 @class RelayrTransmitter;               // Relayr.framework (Public)
 @class RelayrFirmware;                  // Relayr.framework (Public)
 @class RelayrConnection;                // Relayr.framework (Public)
-#import <Relayr/RelayrInput.h>          // Relayr.framework (Public)
+#import <Relayr/RelayrReading.h>        // Relayr.framework (Public)
 @protocol RelayrOnboarding;             // Relayr.framework (Public)
 @protocol RelayrFirmwareUpdate;         // Relayr.framework (Public)
 #import <Relayr/RelayrID.h>             // Relayr.framework (Public)
@@ -116,16 +116,16 @@
 #pragma mark Subscriptions
 
 /*!
- *  @abstract A virtual property indicating whether there are ongoing subscriptions (connections, inputs, etc.).
+ *  @abstract A virtual property indicating whether there are ongoing subscriptions (connections, readings, etc.).
  *  @discussion Every time this property is called, a calculation is made to check if there are ongoing subscriptions.
  */
 @property (readonly,nonatomic) BOOL hasOngoingSubscriptions;
 
 /*!
- *  @abstract A virtual property indicating whether there are ongoing input subscriptions.
- *  @discussion Every time this property is called, a calculation is made to check if there are ongoing input subscriptions.
+ *  @abstract A virtual property indicating whether there are ongoing reading subscriptions.
+ *  @discussion Every time this property is called, a calculation is made to check if there are ongoing reading subscriptions.
  */
-@property (readonly,nonatomic) BOOL hasOngoingInputSubscriptions;
+@property (readonly,nonatomic) BOOL hasOngoingReadingSubscriptions;
 
 /*!
  *  @abstract Subscribes a block to the data sent from the <code>RelayrDevice</code>.
@@ -134,7 +134,7 @@
  *
  *  @param block This block will be executed everytime data is available (and it is compulsory). The block contains three parameters:
  *      - <code>device</code>. The device producing the reading.
- *      - <code>input</code>. The reading value received.
+ *      - <code>reading</code>. The reading value received.
  *      - <code>unsubscribe</code>. A Boolean variable, that when set to <code>NO</code>, will stop the subscription.
  *  @param errorBlock A Block executed every time an error occurs. 
  *	The error could be received because the subscription could not be completed, or because the subscription is stopped by an external factor. 
@@ -142,10 +142,10 @@
  *
  *  @note If the method doesn't provide the block argument, the <code>errorBlock</code> won't give the option to retry to subscribe.
  *
- *  @see RelayrInput
+ *  @see RelayrReading
  */
-- (void)subscribeToAllInputsWithBlock:(RelayrInputDataReceivedBlock)block
-                                error:(RelayrInputErrorReceivedBlock)errorBlock;
+- (void)subscribeToAllReadingsWithBlock:(RelayrReadingDataReceivedBlock)block
+                                  error:(RelayrReadingErrorReceivedBlock)errorBlock;
 
 /*!
  *  @abstract Subscribes the target object to all data (all readings) sent from the <code>RelayrDevice</code>.
@@ -155,23 +155,23 @@
  *  @param target The object where the <code>action</code> is called onto.
  *  @param action The method to be called. It can have two modes:
  *      - No parameters.
- *      - One parameter. The parameter must be a <code>RelayrInput</code> object, otherwise this method will return a subscription error.
+ *      - One parameter. The parameter must be a <code>RelayrReading</code> object, otherwise this method will return a subscription error.
  *  @param errorBlock A Block executed every time an error occurs. 
  *	The error could be received because the subscription could not be completed, or because the subscription is stopped by an external factor. 
  *	If this block is defined, a boolean must be returned, indicating if a subscription retry should be attempted.
  *
  *  @note If the method doesn't provide the target or the target cannot perform the action, the <code>errorBlock</code> won't give the option to retry to subscribe.
  *
- *  @see RelayrInput
+ *  @see RelayrReading
  */
-- (void)subscribeToAllInputsWithTarget:(id)target
-                                action:(SEL)action
-                                 error:(RelayrInputErrorReceivedBlock)errorBlock;
+- (void)subscribeToAllReadingsWithTarget:(id)target
+                                  action:(SEL)action
+                                   error:(RelayrReadingErrorReceivedBlock)errorBlock;
 
 /*!
- *  @abstract Removes all subscriptions for the device (including inputs and connection subscriptions).
+ *  @abstract Removes all subscriptions for the device (including readings and connection subscriptions).
  *  @discussion All subscriptions, whether blocks or target objects are removed.
  */
-- (void)removeAllSubscriptions;
+- (void)unsubscribeToAll;
 
 @end

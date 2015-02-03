@@ -1,9 +1,9 @@
 #import "RelayrUser.h"                  // Header
 
 #import "RelayrApp.h"                   // Relayr.framework (Public)
-#import "RelayrTransmitter.h"           // Relayr.framework (Public)
-#import "RelayrDevice.h"                // Relayr.framework (Public)
 #import "RelayrPublisher.h"             // Relayr.framework (Public)
+#import "RelayrTransmitter.h"           // Relayr.framework (Public/IoTs)
+#import "RelayrDevice.h"                // Relayr.framework (Public/IoTs)
 #import "RelayrErrors.h"                // Relayr.framework (Public)
 #import "RelayrApp_Setup.h"             // Relayr.framework (Private)
 #import "RelayrUser_Setup.h"            // Relayr.framework (Private)
@@ -161,7 +161,7 @@ static NSString* const kCodingPublishers = @"pub";
             for (RelayrDevice* device in _devices)
             {
                 BOOL matched = NO;
-                for (RelayrInput* reading in device.inputs)
+                for (RelayrReading* reading in device.readings)
                 {
                     if ([reading.meaning isEqualToString:meaning])
                     {
@@ -175,7 +175,7 @@ static NSString* const kCodingPublishers = @"pub";
             }
         }
     }
-    return nil;
+    return result;
 }
 
 - (NSSet<RelayrIDSubscripting>*)devicesWithReadingMeanings:(NSArray*)meanings
@@ -185,7 +185,7 @@ static NSString* const kCodingPublishers = @"pub";
     {
         for (RelayrDevice* device in _devices)
         {
-            for (RelayrInput* reading in device.inputs)
+            for (RelayrReading* reading in device.readings)
             {
                 if ([reading.meaning isEqualToString:meaning])
                 {
@@ -197,7 +197,7 @@ static NSString* const kCodingPublishers = @"pub";
         
         for (RelayrDevice* device in _devices)
         {
-            for (RelayrInput* reading in device.inputs)
+            for (RelayrReading* reading in device.readings)
             {
                 if ([reading.meaning isEqualToString:meaning])
                 {
@@ -217,7 +217,7 @@ static NSString* const kCodingPublishers = @"pub";
     {
         for (RelayrDevice* device in _devices)
         {
-            for (RelayrInput* reading in device.inputs)
+            for (RelayrReading* reading in device.readings)
             {
                 if ([reading.meaning isEqualToString:meaning]) { [result addObject:reading]; }
             }
@@ -225,7 +225,7 @@ static NSString* const kCodingPublishers = @"pub";
         
         for (RelayrDevice* device in _devices)
         {
-            for (RelayrInput* reading in device.inputs)
+            for (RelayrReading* reading in device.readings)
             {
                 if ([reading.meaning isEqualToString:meaning]) { [result addObject:reading]; }
             }
@@ -623,7 +623,7 @@ static NSString* const kCodingPublishers = @"pub";
         
         if (matchedDevice)
         {
-            [matchedDevice removeAllSubscriptions];     // This method is added here to erase unwanted retain cycles (in case the user messed up)
+            [matchedDevice unsubscribeToAll];     // This method is added here to erase unwanted retain cycles (in case the user messed up)
             NSMutableSet* tmpDevices = [NSMutableSet setWithSet:_devices];
             [tmpDevices removeObject:matchedDevice];
             _devices = [NSSet setWithSet:tmpDevices];
@@ -640,7 +640,7 @@ static NSString* const kCodingPublishers = @"pub";
         
         if (matchedDevice)
         {
-            [matchedDevice removeAllSubscriptions];     // This method is added here to erase unwanted retain cycles (in case the user messed up)
+            [matchedDevice unsubscribeToAll];     // This method is added here to erase unwanted retain cycles (in case the user messed up)
             NSMutableSet* tmpDevices = [NSMutableSet setWithSet:_devicesBookmarked];
             [tmpDevices removeObject:matchedDevice];
             _devicesBookmarked = [NSSet setWithSet:tmpDevices];
@@ -659,7 +659,7 @@ static NSString* const kCodingPublishers = @"pub";
             
             if (matchedDevice)
             {
-                [matchedDevice removeAllSubscriptions]; // This method is added here to erase unwanted retain cycles (in case the user messed up)
+                [matchedDevice unsubscribeToAll]; // This method is added here to erase unwanted retain cycles (in case the user messed up)
                 NSMutableSet* tmpDevices = [NSMutableSet setWithSet:transmitter.devices];
                 [tmpDevices removeObject:matchedDevice];
                 transmitter.devices = [NSSet setWithSet:tmpDevices];

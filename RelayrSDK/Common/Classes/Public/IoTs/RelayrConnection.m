@@ -33,7 +33,7 @@
     // TODO: Fill up
 }
 
-- (void)removeAllSubscriptions
+- (void)unsubscribeToAll
 {
     // TODO: Fill up
 }

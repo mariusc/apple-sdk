@@ -1,11 +1,11 @@
-#import "RelayrInput.h"             // Header
+#import "RelayrReading.h"           // Header
 #import "RelayrApp.h"               // Relayr.framework (Public)
 #import "RelayrUser.h"              // Relayr.framework (Public)
 #import "RelayrDevice.h"            // Relayr.framework (Public)
 #import "RelayrErrors.h"            // Relayr.framework (Public)
 #import "RelayrUser_Setup.h"        // Relayr.framework (Private)
 #import "RelayrDevice_Setup.h"      // Relayr.framework (Private)
-#import "RelayrInput_Setup.h"       // Relayr.framework (Private)
+#import "RelayrReading_Setup.h"     // Relayr.framework (Private)
 #import "RLAService.h"              // Relayr.framework (Service)
 #import "RLAServiceSelector.h"      // Relayr.framework (Service)
 #import "RLATargetAction.h"         // Relayr.framework (Utilities)
@@ -18,7 +18,7 @@ static NSString* const kCodingValues = @"val";
 static NSString* const kCodingDates = @"dat";
 static NSString* const kCodingDeviceModel = @"dmod";
 
-@implementation RelayrInput
+@implementation RelayrReading
 
 @synthesize values = _values;
 @synthesize dates = _dates;
@@ -52,7 +52,7 @@ static NSString* const kCodingDeviceModel = @"dmod";
     return (_dates.count) ? [NSArray arrayWithArray:_dates] : nil;
 }
 
-- (void)subscribeWithBlock:(RelayrInputDataReceivedBlock)block error:(RelayrInputErrorReceivedBlock)errorBlock
+- (void)subscribeWithBlock:(RelayrReadingDataReceivedBlock)block error:(RelayrReadingErrorReceivedBlock)errorBlock
 {
     if (!block) { if (errorBlock) { errorBlock(RelayrErrorMissingArgument); } return; }
     
@@ -60,7 +60,7 @@ static NSString* const kCodingDeviceModel = @"dmod";
     if (!device) { if (errorBlock) { errorBlock(RelayrErrorTryingToUseRelayrModel); } return; }
     
     // Check if there was a previous subscription...
-    if (device.hasOngoingInputSubscriptions)
+    if (device.hasOngoingReadingSubscriptions)
     {   // If there were, you just need to add the block to the dictionary
         if (!_subscribedBlocks) { _subscribedBlocks = [[NSMutableDictionary alloc] init]; }
         _subscribedBlocks[[block copy]] = (errorBlock) ? [errorBlock copy] : [NSNull null];
@@ -69,7 +69,7 @@ static NSString* const kCodingDeviceModel = @"dmod";
     
     // If this line is reached, there were no previous subscription...
     __weak RelayrDevice* weakDevice = device;
-    __weak RelayrInput* weakInput = self;
+    __weak RelayrReading* weakInput = self;
     [RLAServiceSelector selectServiceForDevice:device completion:^(NSError* error, id<RLAService> service) {
         if (error) { if (errorBlock) { errorBlock(error); } return; }
         if (!service) { if (errorBlock) { errorBlock(RelayrErrorNoServiceAvailable); } return; }
@@ -78,7 +78,7 @@ static NSString* const kCodingDeviceModel = @"dmod";
             if (error) { if (errorBlock) { errorBlock(error); } return; }
             
             RelayrDevice* strongDevice = weakDevice;
-            RelayrInput* strongInput = weakInput;
+            RelayrReading* strongInput = weakInput;
             if (!strongDevice || !strongInput) { if (errorBlock) { errorBlock(RelayrErrorMissingObjectPointer); } return; }
             
             if (!strongInput.subscribedBlocks) { strongInput.subscribedBlocks = [[NSMutableDictionary alloc] init]; }
@@ -87,7 +87,7 @@ static NSString* const kCodingDeviceModel = @"dmod";
     }];
 }
 
-- (void)subscribeWithTarget:(id)target action:(SEL)action error:(RelayrInputErrorReceivedBlock)errorBlock
+- (void)subscribeWithTarget:(id)target action:(SEL)action error:(RelayrReadingErrorReceivedBlock)errorBlock
 {
     RLATargetAction* pair = [[RLATargetAction alloc] initWithTarget:target action:action];
     if (!pair) { if (errorBlock) { errorBlock(RelayrErrorMissingArgument); } return; }
@@ -96,7 +96,7 @@ static NSString* const kCodingDeviceModel = @"dmod";
     if (!device) { if (errorBlock) { errorBlock(RelayrErrorTryingToUseRelayrModel); } return; }
     
     // Check if there was a previous subscription...
-    if (device.hasOngoingInputSubscriptions)
+    if (device.hasOngoingReadingSubscriptions)
     {   // If there were, you just need to add the target-action to the dictionary
         if (!_subscribedTargets) { _subscribedTargets = [[NSMutableDictionary alloc] init]; }
         _subscribedTargets[pair] = (errorBlock) ? [errorBlock copy] : [NSNull null];
@@ -105,7 +105,7 @@ static NSString* const kCodingDeviceModel = @"dmod";
     
     // If this line is reached, there was no previous subscription...
     __weak RelayrDevice* weakDevice = device;
-    __weak RelayrInput* weakInput = self;
+    __weak RelayrReading* weakInput = self;
     [RLAServiceSelector selectServiceForDevice:device completion:^(NSError* error, id<RLAService> service) {
         if (error) { if (errorBlock) { errorBlock(error); } return; }
         if (!service) { if (errorBlock) { errorBlock(RelayrErrorNoServiceAvailable); } return; }
@@ -116,7 +116,7 @@ static NSString* const kCodingDeviceModel = @"dmod";
             RelayrDevice* strongDevice = weakDevice;
             if (!strongDevice) { if (errorBlock) { errorBlock(RelayrErrorMissingObjectPointer); } return; }
             
-            RelayrInput* strongInput = weakInput;
+            RelayrReading* strongInput = weakInput;
             if (!strongInput) { if (errorBlock) { errorBlock(RelayrErrorMissingObjectPointer); } return; }
             
             if (!strongInput.subscribedTargets) { strongInput.subscribedTargets = [[NSMutableDictionary alloc] init]; }
@@ -142,7 +142,7 @@ static NSString* const kCodingDeviceModel = @"dmod";
     }
 }
 
-- (void)removeAllSubscriptions
+- (void)unsubscribeToAll
 {
     if (!_subscribedBlocks.count && !_subscribedTargets.count) { return; }
 
@@ -171,7 +171,7 @@ static NSString* const kCodingDeviceModel = @"dmod";
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"RelayrInput\n{\n\
+    return [NSString stringWithFormat:@"RelayrReading\n{\n\
 \t Meaning: %@\n\
 \t Unit: %@\n\
 \t Last value: %@\n\
@@ -185,7 +185,7 @@ static NSString* const kCodingDeviceModel = @"dmod";
  * It performs a selector on a given target.
  * This method doesn't check that the arguments aren't <code>nil</code>. Be careful.
  ******************************************************************************/
-- (void)performSelector:(SEL)action onTarget:(id)target withDevice:(RelayrDevice*)device input:(RelayrInput*)input
+- (void)performSelector:(SEL)action onTarget:(id)target withDevice:(RelayrDevice*)device input:(RelayrReading*)input
 {
     #pragma clang diagnostic push
     #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
@@ -226,7 +226,7 @@ static NSString* const kCodingDeviceModel = @"dmod";
     return self;
 }
 
-- (void)setWith:(RelayrInput*)input
+- (void)setWith:(RelayrReading*)input
 {
     if (!input.meaning.length) { return; }
     // Do not pass the deviceModel (since the new deviceModel will be deleted after the settings are done).
@@ -245,11 +245,11 @@ static NSString* const kCodingDeviceModel = @"dmod";
     NSMutableDictionary* targets = _subscribedTargets;  _subscribedTargets = nil;
     
     [blocks enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL* stop) {
-        if (obj != [NSNull null]) { ((RelayrInputErrorReceivedBlock)obj)(error); }
+        if (obj != [NSNull null]) { ((RelayrReadingErrorReceivedBlock)obj)(error); }
     }];
     
     [targets enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL* stop) {
-        if (obj != [NSNull null]) { ((RelayrInputErrorReceivedBlock)obj)(error); }
+        if (obj != [NSNull null]) { ((RelayrReadingErrorReceivedBlock)obj)(error); }
     }];
 }
 
@@ -265,7 +265,7 @@ static NSString* const kCodingDeviceModel = @"dmod";
     else if (_dates.count > dMaxValues) { [_dates removeObjectAtIndex:0]; }
     [_dates addObject:date];
     
-    __weak RelayrInput* weakInput = self;
+    __weak RelayrReading* weakInput = self;
     
     if (_subscribedBlocks.count)
     {
@@ -274,7 +274,7 @@ static NSString* const kCodingDeviceModel = @"dmod";
         
         [tmpBlocks enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL* stop) {
             BOOL unsubscribe = NO;
-            ((RelayrInputDataReceivedBlock)key)(((RelayrDevice*)weakInput.deviceModel), weakInput, &unsubscribe);
+            ((RelayrReadingDataReceivedBlock)key)(((RelayrDevice*)weakInput.deviceModel), weakInput, &unsubscribe);
             if (unsubscribe) { [toSubstract addObject:key]; }
         }];
         
