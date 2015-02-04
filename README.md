@@ -17,7 +17,7 @@ Getting Started
 
 You can obtain the framework in one of the following manners:
 
-A. **Download** the `.framework` file for the platform you are developing for from the latest [Github release page](https://github.com/relayr/apple-sdk/releases/tag/v0.2.1).
+A. **Download** the `.framework` file for the platform you are developing for from the latest [Github release page](https://github.com/relayr/apple-sdk/releases/).
 
 *or* 
 
