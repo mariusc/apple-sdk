@@ -68,6 +68,6 @@
  *  @param value Object defining the value received.
  *  @param date <code>NSDate</code> with the date of arrival of the value received.
  */
-- (void)valueReceived:(NSObject <NSCopying> *)value atDate:(NSDate*)date;
+- (void)valueReceived:(NSObject <NSCopying>*)value atDate:(NSDate*)date;
 
 @end

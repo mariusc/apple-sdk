@@ -1,7 +1,8 @@
 #import <Relayr/RelayrUser.h>   // Parent class
-@class RLAAPIService;           // Relayr (Service/API)
-@class RLAMQTTService;          // Relayr (Service/MQTT)
-@class RLABLEService;           // Relayr (Service/BLE)
+@class RLADispatcher;           // Relayr (Services)
+@class RLAAPIService;           // Relayr (Services/API)
+@class RLAMQTTService;          // Relayr (Services/MQTT)
+@class RLABLEService;           // Relayr (Services/BLE)
 
 /*!
  *  @abstract The very basic entity in the relayr platform is the user.
@@ -35,10 +36,20 @@
 @property (readwrite,weak,nonatomic) RelayrApp* app;
 
 /*!
+ *  @abstract A unique idenfier of a <code>RelayrUser</code> instance.
+ */
+@property (readwrite,nonatomic) NSString* uid;
+
+/*!
+ *  @abstract This object is in charge of dispatch calls to the services it deem consequent.
+ */
+@property (readonly,nonatomic) RLADispatcher* dispatcher;
+
+/*!
  *  @abstract This is the central connection with the Relayr.framework web module.
  *  @discussion It is never <code>nil</code>. When an instance of <code>RelayrUser</code> is created, this property is setup to a valid web service.
  */
-@property (readonly,nonatomic) RLAAPIService* apiService;
+@property (readwrite,nonatomic) RLAAPIService* apiService;
 
 /*!
  *  @abstract This is the central connection with the Relayr.framework MQTT module.
@@ -51,11 +62,6 @@
  *  @discussion It is never <code>nil</code>. When an instance of <code>RelayrUser</code> is created, this property is setup to a valid BLE service.
  */
 @property (readwrite,nonatomic) RLABLEService* bleService;
-
-/*!
- *  @abstract A unique idenfier of a <code>RelayrUser</code> instance.
- */
-@property (readwrite,nonatomic) NSString* uid;
 
 /*!
  *  @abstract A user name for a specific <code>RelayrUser</code> instace.

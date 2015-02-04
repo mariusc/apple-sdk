@@ -25,9 +25,9 @@ static NSString* const kCodingWritings = @"wri";
     NSMutableSet* result = [[NSMutableSet alloc] init];
     for (NSString* meaning in meanings)
     {
-        for (RelayrReading* input in _readings)
+        for (RelayrReading* reading in _readings)
         {
-            if ([input.meaning isEqualToString:meaning]) { [result addObject:input]; }
+            if ([reading.meaning isEqualToString:meaning]) { [result addObject:reading]; }
         }
     }
     return result;
@@ -46,6 +46,12 @@ static NSString* const kCodingWritings = @"wri";
 }
 
 #pragma mark NSObject
+
+- (instancetype)init
+{
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
+}
 
 - (NSString*)description
 {

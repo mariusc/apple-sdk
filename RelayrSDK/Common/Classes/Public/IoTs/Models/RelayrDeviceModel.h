@@ -50,6 +50,16 @@
 @property (readonly,nonatomic) NSSet* readings;
 
 /*!
+ *  @abstract Returns an array of possible Writings a Device is capable of receiving.
+ *  @discussion By 'Output' we refer to an object with commands or configuration settings sent to a Device.
+ *	These are usually infrarred commands, ultrasound pulses etc.
+ *	Each item in this array is an object of type <code>RelayrWriting</code>.
+ *
+ *  @see RelayrWriting
+ */
+@property (readonly,nonatomic) NSSet* writings;
+
+/*!
  *  @abstract It returns an <code>NSSet</code> grouping all possible <code>RelayrReading</code> objects that are capable of <i>read</i> the meanings passed as argument.
  *  @discussion If no readings are found, an empty set is returned.
  *
@@ -59,15 +69,5 @@
  *  @see RelayrReading
  */
 - (NSSet <RelayrIDSubscripting>*)readingsWithMeanings:(NSArray*)meanings;
-
-/*!
- *  @abstract Returns an array of possible Writings a Device is capable of receiving.
- *  @discussion By 'Output' we refer to an object with commands or configuration settings sent to a Device.
- *	These are usually infrarred commands, ultrasound pulses etc.
- *	Each item in this array is an object of type <code>RelayrWriting</code>.
- *
- *  @see RelayrWriting
- */
-@property (readonly,nonatomic) NSSet* writings;
 
 @end

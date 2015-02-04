@@ -1,7 +1,7 @@
 #import "RelayrDevice.h"            // Header
 
 #import "RelayrUser.h"              // Relayr (Public)
-#import "RelayrTransmitter.h"       // Relyar.framework (Public)
+#import "RelayrTransmitter.h"       // Relayr (Public)
 #import "RelayrFirmware.h"          // Relayr (Public)
 #import "RelayrReading.h"           // Relayr (Public)
 #import "RelayrConnection.h"        // Relayr (Public)
@@ -10,12 +10,11 @@
 #import "RelayrUser_Setup.h"        // Relayr (Private)
 #import "RelayrDevice_Setup.h"      // Relayr (Private)
 #import "RelayrFirmware_Setup.h"    // Relayr (Private)
-#import "RelayrReading_Setup.h"       // Relayr (Private)
+#import "RelayrReading_Setup.h"     // Relayr (Private)
 #import "RelayrConnection_Setup.h"  // Relayr (Private)
 #import "RLAService.h"              // Relayr (Service)
-#import "RLAServiceSelector.h"      // Relayr (Service)
-#import "RLAAPIService.h"           // Relayr (Service/API)
-#import "RLAAPIService+Device.h"    // Relayr (Service/API)
+#import "RLAAPIService.h"           // Relayr (Services/API)
+#import "RLAAPIService+Device.h"    // Relayr (Services/API)
 #import "RelayrErrors.h"            // Relayr (Utilities)
 #import "RLATargetAction.h"         // Relayr (Utilities)
 #import "RLALog.h"                  // Relayr (Utilities)
@@ -32,12 +31,6 @@ static NSString* const kCodingSecret = @"sec";
 @synthesize uid = _uid;
 
 #pragma mark - Public API
-
-- (instancetype)init
-{
-    [self doesNotRecognizeSelector:_cmd];
-    return nil;
-}
 
 - (RelayrTransmitter*)transmitter
 {
@@ -63,59 +56,6 @@ static NSString* const kCodingSecret = @"sec";
     }];
 }
 
-#pragma mark Setup extension
-
-- (instancetype)initWithID:(NSString*)uid modelID:(NSString*)modelID
-{
-    if ( !uid.length || !modelID.length ) { return nil; }
-    
-    self = [super initWithModelID:modelID];
-    if (self)
-    {
-        _uid = uid;
-        _connection = [[RelayrConnection alloc] initWithDevice:self];
-    }
-    return self;
-}
-
-- (void)setWith:(RelayrDevice*)device
-{
-    if (self==device || ![_uid isEqualToString:device.uid]) { return; }
-    
-    [super setWith:device];
-    if (device.name) { _name = device.name; }
-    if (device.owner) { _owner = device.owner; }
-    if (device.isPublic) { _isPublic = device.isPublic; }
-    if (device.secret) { _secret = device.secret; }
-    [_firmware setWith:device.firmware];
-    [_connection setWith:device.connection];
-}
-
-- (void)handleBinaryValue:(NSData*)value fromService:(id<RLAService>)service atDate:(NSDate*)date withError:(NSError*)error
-{
-    if (error)
-    {
-        for (RelayrReading* input in self.readings) { [input errorReceived:error atDate:date]; }
-        return;
-    }
-    
-    __autoreleasing NSDate* parsedDate;
-    NSDictionary* dict = [_firmware parseData:value fromService:service atDate:&parsedDate];
-    if (!dict.count) { return; }
-    if (parsedDate) { date = parsedDate; }
-    
-    for (RelayrReading* input in self.readings) { [input valueReceived:dict[input.meaning] atDate:date]; };
-}
-
-- (void)unsubscribeToCurrentServiceIfNecessary
-{
-    if (!self.hasOngoingSubscriptions)
-    {
-        id <RLAService> service = [RLAServiceSelector serviceCurrentlyInUseByDevice:self];
-        if (service) { [service unsubscribeToDataFromDevice:self]; }
-    }
-}
-
 #pragma mark Processes
 
 - (void)onboardWithClass:(Class <RelayrOnboarding>)onboardingClass timeout:(NSNumber*)timeout options:(NSDictionary*)options completion:(void (^)(NSError* error))completion
@@ -132,32 +72,32 @@ static NSString* const kCodingSecret = @"sec";
 
 - (BOOL)hasOngoingSubscriptions
 {
-    return _connection.hasOngoingSubscriptions || self.hasOngoingReadingSubscriptions;
+    return (_connection.hasOngoingSubscriptions || self.hasOngoingReadingSubscriptions);
 }
 
 - (BOOL)hasOngoingReadingSubscriptions
 {
-    for (RelayrReading* input in self.readings) { if (input.subscribedBlocks.count || input.subscribedTargets.count) { return YES; } }
+    for (RelayrReading* reading in self.readings) { if (reading.subscribedBlocks.count || reading.subscribedTargets.count) { return YES; } }
     return NO;
 }
 
 - (void)subscribeToAllReadingsWithBlock:(RelayrReadingDataReceivedBlock)block error:(RelayrReadingErrorReceivedBlock)errorBlock
 {
     if (!block) { if (errorBlock) { errorBlock(RelayrErrorMissingArgument); } return; }
-    for (RelayrReading* input in self.readings) { [input subscribeWithBlock:block error:errorBlock]; }
+    for (RelayrReading* reading in self.readings) { [reading subscribeWithBlock:block error:errorBlock]; }
 }
 
 - (void)subscribeToAllReadingsWithTarget:(id)target action:(SEL)action error:(RelayrReadingErrorReceivedBlock)errorBlock
 {
     RLATargetAction* pair = [[RLATargetAction alloc] initWithTarget:target action:action];
     if (!pair) { if (errorBlock) { errorBlock(RelayrErrorMissingArgument); } return; }
-    for (RelayrReading* input in self.readings) { [input subscribeWithTarget:target action:action error:errorBlock]; }
+    for (RelayrReading* reading in self.readings) { [reading subscribeWithTarget:target action:action error:errorBlock]; }
 }
 
 - (void)unsubscribeToAll
 {
     [_connection unsubscribeToAll];
-    for (RelayrReading* input in self.readings) { [input unsubscribeToAll]; }
+    for (RelayrReading* reading in self.readings) { [reading unsubscribeToAll]; }
 }
 
 #pragma mark NSCoding
@@ -203,6 +143,12 @@ static NSString* const kCodingSecret = @"sec";
 
 #pragma mark NSObject
 
+- (instancetype)init
+{
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
+}
+
 - (NSString*)description
 {
     return [NSString stringWithFormat:@"RelayrDevice\n{\n\
@@ -218,6 +164,52 @@ static NSString* const kCodingSecret = @"sec";
 \t Num readings: %@\n\
 \t Num writings: %@\
 \n}\n", _uid, _name, (_owner) ? _owner : @"?", (_firmware.version) ? _firmware.version : @"?", _secret, self.modelID, self.modelName, self.manufacturer, (self.firmwaresAvailable) ? @(self.firmwaresAvailable.count) : @"?", (self.readings) ? @(self.readings.count) : @"?", (self.writings) ? @(self.writings.count) : @"?"];
+}
+
+#pragma mark - Private functionality
+
+#pragma mark Setup extension
+
+- (instancetype)initWithID:(NSString*)uid modelID:(NSString*)modelID
+{
+    if ( !uid.length || !modelID.length ) { return nil; }
+    
+    self = [super initWithModelID:modelID];
+    if (self)
+    {
+        _uid = uid;
+        _connection = [[RelayrConnection alloc] initWithDevice:self];
+    }
+    return self;
+}
+
+- (void)setWith:(RelayrDevice*)device
+{
+    if (self==device || ![_uid isEqualToString:device.uid]) { return; }
+    
+    [super setWith:device];
+    if (device.name) { _name = device.name; }
+    if (device.owner) { _owner = device.owner; }
+    if (device.isPublic) { _isPublic = device.isPublic; }
+    if (device.secret) { _secret = device.secret; }
+    [_firmware setWith:device.firmware];
+    [_connection setWith:device.connection];
+}
+
+- (void)handleBinaryValue:(NSData*)value fromService:(id<RLAService>)service atDate:(NSDate*)date withError:(NSError*)error
+{
+    if (error)
+    {
+        for (RelayrReading* reading in self.readings) { [reading errorReceived:error atDate:date]; }
+        return;
+    }
+    
+    __autoreleasing NSDate* parsedDate;
+    NSDictionary* dict = [_firmware parseData:value fromService:service atDate:&parsedDate];
+    if (!dict.count) { return; }
+    if (parsedDate) { date = parsedDate; }
+    
+    for (RelayrReading* reading in self.readings) { [reading valueReceived:dict[reading.meaning] atDate:date]; };
 }
 
 @end

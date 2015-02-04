@@ -3,11 +3,9 @@
 #import <Relayr/Relayr.h>       // Relayr
 #import "RelayrApp_Setup.h"     // Relayr (Private)
 #import "RelayrUser_Setup.h"    // Relayr (Private)
-#import "RLAMQTTService.h"      // Relayr (Service/MQTT)
+#import "RLAMQTTService.h"      // Relayr (Services/MQTT)
 #import "RelayrUser+Wunderbar.h"// Relayr (Wunderbar)
 #import "RLATestsConstants.h"   // Tests
-
-#import "RLAServiceSelector.h"  // FIXME: Delete
 
 /*!
  *  @abstract Test the MQTT Service.
@@ -58,7 +56,7 @@
 
             for (RelayrDevice* device in _user.devices)
             {
-                [device subscribeToAllReadingsWithBlock:^(RelayrDevice *device, RelayrReading *input, BOOL *unsubscribe) {
+                [device subscribeToAllReadingsWithBlock:^(RelayrDevice* device, RelayrReading* input, BOOL*unsubscribe) {
                     printf("Input received: %s\n", [((NSObject*)(input.value)).description cStringUsingEncoding:NSUTF8StringEncoding]);
                     if (--inputsReceived == 0) { [expectation fulfill]; }
                 } error:^(NSError *error) {

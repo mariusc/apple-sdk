@@ -67,7 +67,6 @@ int messageArrived(void* context, char* topicName, int topicLen, MQTTAsync_messa
     return nil;
 }
 
-// FIXME: Delete this as soon as the server guys finish.
 - (instancetype)initWithUser:(RelayrUser *)user device:(RelayrDevice *)device
 {
     RelayrTransmitter* transmitter = device.transmitter;

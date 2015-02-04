@@ -70,11 +70,6 @@
 - (void)setWith:(RelayrDevice*)device;
 
 /*!
- *  @abstract This method checks if the receiving device is in any service. If so, it checks whether the service is really being in used by the device. If not, it the device is unsubscribe to the service.
- */
-- (void)unsubscribeToCurrentServiceIfNecessary;
-
-/*!
  *  @abstract This method is called everytime a value (or error) is received from any of the data source services (MQTT, BLE, etc.).
  *  @discussion The device needs to parse the data in the appropriate manner.
  *

@@ -10,11 +10,12 @@
 #import "RelayrPublisher_Setup.h"       // Relayr (Private)
 #import "RelayrTransmitter_Setup.h"     // Relayr (Private)
 #import "RelayrDevice_Setup.h"          // Relayr (Private)
-#import "RLAAPIService.h"               // Relayr (Service/API)
-#import "RLAAPIService+User.h"          // Relayr (Service/API)
-#import "RLAAPIService+Publisher.h"     // Relayr (Service/API)
-#import "RLAAPIService+Transmitter.h"   // Relayr (Service/API)
-#import "RLAAPIService+Device.h"        // Relayr (Service/API)
+#import "RLADispatcher.h"               // Relayr (Services)
+#import "RLAAPIService.h"               // Relayr (Services/API)
+#import "RLAAPIService+User.h"          // Relayr (Services/API)
+#import "RLAAPIService+Publisher.h"     // Relayr (Services/API)
+#import "RLAAPIService+Transmitter.h"   // Relayr (Services/API)
+#import "RLAAPIService+Device.h"        // Relayr (Services/API)
 
 static NSString* const kCodingToken = @"tok";
 static NSString* const kCodingApp = @"app";
@@ -499,7 +500,7 @@ static NSString* const kCodingPublishers = @"pub";
     if (self)
     {
         _token = token;
-        _apiService = [[RLAAPIService alloc] initWithUser:self];
+        _dispatcher = [[RLADispatcher alloc] initWithUser:self];
     }
     return self;
 }

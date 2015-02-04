@@ -142,10 +142,6 @@
 		62AAA5FB1A08EC0600113F6D /* RLAMQTTService.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AAA5C41A08EC0600113F6D /* RLAMQTTService.m */; };
 		62AAA5FC1A08EC0600113F6D /* RLAService.h in Headers */ = {isa = PBXBuildFile; fileRef = 62AAA5C51A08EC0600113F6D /* RLAService.h */; };
 		62AAA5FD1A08EC0600113F6D /* RLAService.h in Headers */ = {isa = PBXBuildFile; fileRef = 62AAA5C51A08EC0600113F6D /* RLAService.h */; };
-		62AAA5FE1A08EC0600113F6D /* RLAServiceSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = 62AAA5C61A08EC0600113F6D /* RLAServiceSelector.h */; };
-		62AAA5FF1A08EC0600113F6D /* RLAServiceSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = 62AAA5C61A08EC0600113F6D /* RLAServiceSelector.h */; };
-		62AAA6001A08EC0600113F6D /* RLAServiceSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AAA5C71A08EC0600113F6D /* RLAServiceSelector.m */; };
-		62AAA6011A08EC0600113F6D /* RLAServiceSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AAA5C71A08EC0600113F6D /* RLAServiceSelector.m */; };
 		62B0B37619D097B100AD59BF /* WunderbarConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B0B37519D097B100AD59BF /* WunderbarConstants.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		62B0B37719D097B100AD59BF /* WunderbarConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B0B37519D097B100AD59BF /* WunderbarConstants.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		62B0B37A19D0985C00AD59BF /* WunderbarFirmwareUpdate.h in Headers */ = {isa = PBXBuildFile; fileRef = 62B0B37819D0985C00AD59BF /* WunderbarFirmwareUpdate.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -384,8 +380,6 @@
 		62AAA5C31A08EC0600113F6D /* RLAMQTTService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAMQTTService.h; sourceTree = "<group>"; };
 		62AAA5C41A08EC0600113F6D /* RLAMQTTService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAMQTTService.m; sourceTree = "<group>"; };
 		62AAA5C51A08EC0600113F6D /* RLAService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAService.h; sourceTree = "<group>"; };
-		62AAA5C61A08EC0600113F6D /* RLAServiceSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLAServiceSelector.h; sourceTree = "<group>"; };
-		62AAA5C71A08EC0600113F6D /* RLAServiceSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLAServiceSelector.m; sourceTree = "<group>"; };
 		62B0B37519D097B100AD59BF /* WunderbarConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WunderbarConstants.h; sourceTree = "<group>"; };
 		62B0B37819D0985C00AD59BF /* WunderbarFirmwareUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WunderbarFirmwareUpdate.h; sourceTree = "<group>"; };
 		62B0B37919D0985C00AD59BF /* WunderbarFirmwareUpdate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WunderbarFirmwareUpdate.m; sourceTree = "<group>"; };
@@ -837,8 +831,6 @@
 			children = (
 				62D0D07E1A813A5300F11EB1 /* RLADispatcher.h */,
 				62D0D07F1A813A5300F11EB1 /* RLADispatcher.m */,
-				62AAA5C61A08EC0600113F6D /* RLAServiceSelector.h */,
-				62AAA5C71A08EC0600113F6D /* RLAServiceSelector.m */,
 				62AAA5C51A08EC0600113F6D /* RLAService.h */,
 				62AAA5A61A08EC0600113F6D /* API */,
 				62AAA5BE1A08EC0600113F6D /* BLE */,
@@ -1073,7 +1065,6 @@
 				62D0D07B1A81392700F11EB1 /* RelayrReading_Setup.h in Headers */,
 				625FBA571A8137AD003D548D /* RelayrWriting_Setup.h in Headers */,
 				62AAA5FC1A08EC0600113F6D /* RLAService.h in Headers */,
-				62AAA5FE1A08EC0600113F6D /* RLAServiceSelector.h in Headers */,
 				62F351B01A1CE98A00C8591E /* RLAServiceHolder.h in Headers */,
 				62AAA5EA1A08EC0600113F6D /* RLAAPIService.h in Headers */,
 				62AAA5D21A08EC0600113F6D /* RLAAPIService+Cloud.h in Headers */,
@@ -1140,7 +1131,6 @@
 				62D0D07C1A81392700F11EB1 /* RelayrReading_Setup.h in Headers */,
 				625FBA581A8137AD003D548D /* RelayrWriting_Setup.h in Headers */,
 				62AAA5FD1A08EC0600113F6D /* RLAService.h in Headers */,
-				62AAA5FF1A08EC0600113F6D /* RLAServiceSelector.h in Headers */,
 				62F351B11A1CE98A00C8591E /* RLAServiceHolder.h in Headers */,
 				62AAA5EB1A08EC0600113F6D /* RLAAPIService.h in Headers */,
 				62AAA5D31A08EC0600113F6D /* RLAAPIService+Cloud.h in Headers */,
@@ -1359,7 +1349,6 @@
 				622CB00619BCB07200F686B3 /* RelayrWriting.m in Sources */,
 				62732D4419C05A24000E9545 /* RelayrConnection.m in Sources */,
 				6203382019D06BA50088CB1D /* RelayrErrors.m in Sources */,
-				62AAA6001A08EC0600113F6D /* RLAServiceSelector.m in Sources */,
 				62F351B21A1CE98A00C8591E /* RLAServiceHolder.m in Sources */,
 				62AAA5EC1A08EC0600113F6D /* RLAAPIService.m in Sources */,
 				62AAA5D01A08EC0600113F6D /* RLAAPIService+App.m in Sources */,
@@ -1405,7 +1394,6 @@
 				622CB00719BCB07200F686B3 /* RelayrWriting.m in Sources */,
 				62732D4519C05A24000E9545 /* RelayrConnection.m in Sources */,
 				6203382119D06BA50088CB1D /* RelayrErrors.m in Sources */,
-				62AAA6011A08EC0600113F6D /* RLAServiceSelector.m in Sources */,
 				62F351B31A1CE98A00C8591E /* RLAServiceHolder.m in Sources */,
 				62AAA5ED1A08EC0600113F6D /* RLAAPIService.m in Sources */,
 				62AAA5D51A08EC0600113F6D /* RLAAPIService+Cloud.m in Sources */,

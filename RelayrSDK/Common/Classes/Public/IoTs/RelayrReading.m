@@ -1,13 +1,12 @@
 #import "RelayrReading.h"           // Header
 #import "RelayrApp.h"               // Relayr (Public)
 #import "RelayrUser.h"              // Relayr (Public)
-#import "RelayrDevice.h"            // Relayr (Public)
-#import "RelayrErrors.h"            // Relayr (Public)
+#import "RelayrDevice.h"            // Relayr (Public/IoTs)
+#import "RelayrErrors.h"            // Relayr (Public/IoTs)
 #import "RelayrUser_Setup.h"        // Relayr (Private)
-#import "RelayrDevice_Setup.h"      // Relayr (Private)
+#import "RelayrDevice_Setup.h"      // Relayr (Private/IoTs)
 #import "RelayrReading_Setup.h"     // Relayr (Private)
-#import "RLAService.h"              // Relayr (Service)
-#import "RLAServiceSelector.h"      // Relayr (Service)
+#import "RLADispatcher.h"           // Relayr (Services)
 #import "RLATargetAction.h"         // Relayr (Utilities)
 
 #define dMaxValues   15
@@ -26,11 +25,6 @@ static NSString* const kCodingDeviceModel = @"dmod";
 @synthesize subscribedTargets = _subscribedTargets;
 
 #pragma mark - Public API
-
-- (instancetype)init
-{
-    [self doesNotRecognizeSelector:_cmd]; return nil;
-}
 
 - (id)value
 {
@@ -54,91 +48,45 @@ static NSString* const kCodingDeviceModel = @"dmod";
 
 - (void)subscribeWithBlock:(RelayrReadingDataReceivedBlock)block error:(RelayrReadingErrorReceivedBlock)errorBlock
 {
+    if (![_deviceModel isKindOfClass:[RelayrDevice class]]) { if (errorBlock) { errorBlock(RelayrErrorTryingToUseRelayrModel); } return; }
     if (!block) { if (errorBlock) { errorBlock(RelayrErrorMissingArgument); } return; }
+    RelayrDevice* device = (RelayrDevice*)_deviceModel;
     
-    RelayrDevice* device = ([_deviceModel isKindOfClass:[RelayrDevice class]]) ? (RelayrDevice*)_deviceModel : nil;
-    if (!device) { if (errorBlock) { errorBlock(RelayrErrorTryingToUseRelayrModel); } return; }
+    // Add the subscription block to the queues
+    if (!_subscribedBlocks) { _subscribedBlocks = [[NSMutableDictionary alloc] init]; }
+    _subscribedBlocks[[block copy]] = (errorBlock) ? [errorBlock copy] : [NSNull null];
     
-    // Check if there was a previous subscription...
-    if (device.hasOngoingReadingSubscriptions)
-    {   // If there were, you just need to add the block to the dictionary
-        if (!_subscribedBlocks) { _subscribedBlocks = [[NSMutableDictionary alloc] init]; }
-        _subscribedBlocks[[block copy]] = (errorBlock) ? [errorBlock copy] : [NSNull null];
-        return;
-    }
-    
-    // If this line is reached, there were no previous subscription...
-    __weak RelayrDevice* weakDevice = device;
-    __weak RelayrReading* weakInput = self;
-    [RLAServiceSelector selectServiceForDevice:device completion:^(NSError* error, id<RLAService> service) {
-        if (error) { if (errorBlock) { errorBlock(error); } return; }
-        if (!service) { if (errorBlock) { errorBlock(RelayrErrorNoServiceAvailable); } return; }
-        
-        [service subscribeToDataFromDevice:weakDevice completion:^(NSError* error) {
-            if (error) { if (errorBlock) { errorBlock(error); } return; }
-            
-            RelayrDevice* strongDevice = weakDevice;
-            RelayrReading* strongInput = weakInput;
-            if (!strongDevice || !strongInput) { if (errorBlock) { errorBlock(RelayrErrorMissingObjectPointer); } return; }
-            
-            if (!strongInput.subscribedBlocks) { strongInput.subscribedBlocks = [[NSMutableDictionary alloc] init]; }
-            strongInput.subscribedBlocks[[block copy]] = (errorBlock) ? [errorBlock copy] : [NSNull null];
-        }];
-    }];
+    // Tell the service dispatcher to take over
+    [device.user.dispatcher subscribeToDataFromReading:self];
 }
 
 - (void)subscribeWithTarget:(id)target action:(SEL)action error:(RelayrReadingErrorReceivedBlock)errorBlock
 {
+    if (![_deviceModel isKindOfClass:[RelayrDevice class]]) { if (errorBlock) { errorBlock(RelayrErrorTryingToUseRelayrModel); } return; }
     RLATargetAction* pair = [[RLATargetAction alloc] initWithTarget:target action:action];
     if (!pair) { if (errorBlock) { errorBlock(RelayrErrorMissingArgument); } return; }
+    RelayrDevice* device = (RelayrDevice*)_deviceModel;
     
-    RelayrDevice* device = ([_deviceModel isKindOfClass:[RelayrDevice class]]) ? (RelayrDevice*)_deviceModel : nil;
-    if (!device) { if (errorBlock) { errorBlock(RelayrErrorTryingToUseRelayrModel); } return; }
+    if (!_subscribedTargets) { _subscribedTargets = [[NSMutableDictionary alloc] init]; }
+    _subscribedTargets[pair] = (errorBlock) ? [errorBlock copy] : [NSNull null];
     
-    // Check if there was a previous subscription...
-    if (device.hasOngoingReadingSubscriptions)
-    {   // If there were, you just need to add the target-action to the dictionary
-        if (!_subscribedTargets) { _subscribedTargets = [[NSMutableDictionary alloc] init]; }
-        _subscribedTargets[pair] = (errorBlock) ? [errorBlock copy] : [NSNull null];
-        return;
-    }
-    
-    // If this line is reached, there was no previous subscription...
-    __weak RelayrDevice* weakDevice = device;
-    __weak RelayrReading* weakInput = self;
-    [RLAServiceSelector selectServiceForDevice:device completion:^(NSError* error, id<RLAService> service) {
-        if (error) { if (errorBlock) { errorBlock(error); } return; }
-        if (!service) { if (errorBlock) { errorBlock(RelayrErrorNoServiceAvailable); } return; }
-        
-        [service subscribeToDataFromDevice:weakDevice completion:^(NSError* error) {
-            if (error) { if (errorBlock) { errorBlock(error); } return; }
-            
-            RelayrDevice* strongDevice = weakDevice;
-            if (!strongDevice) { if (errorBlock) { errorBlock(RelayrErrorMissingObjectPointer); } return; }
-            
-            RelayrReading* strongInput = weakInput;
-            if (!strongInput) { if (errorBlock) { errorBlock(RelayrErrorMissingObjectPointer); } return; }
-            
-            if (!strongInput.subscribedTargets) { strongInput.subscribedTargets = [[NSMutableDictionary alloc] init]; }
-            strongInput.subscribedTargets[pair] = (errorBlock) ? [errorBlock copy] : [NSNull null];
-        }];
-    }];
+    [device.user.dispatcher subscribeToDataFromReading:self];
 }
 
 - (void)unsubscribeTarget:(id)target action:(SEL)action
 {
     if (!target || _subscribedTargets.count) { return; }
     
-    RLATargetAction* matchedPair;
+    NSMutableArray* matchedPairs = [[NSMutableArray alloc] init];
     for (RLATargetAction* pair in _subscribedTargets)
     {
-        if (pair.target==target && pair.action==action) { matchedPair = pair; break; }
+        if (pair.target==target && pair.action==action) { [matchedPairs addObject:pair]; }
     }
-    if (matchedPair) { [_subscribedTargets removeObjectForKey:matchedPair]; }
+    [_subscribedTargets removeObjectsForKeys:matchedPairs];
     
-    if ([_deviceModel isKindOfClass:[RelayrDevice class]] && !_subscribedBlocks.count && !_subscribedTargets.count)
+    if (!_subscribedBlocks.count && !_subscribedTargets.count)
     {
-        [((RelayrDevice*)_deviceModel) unsubscribeToCurrentServiceIfNecessary];
+        [_deviceModel.user.dispatcher unsubscribeToDataFromReading:self];
     }
 }
 
@@ -148,11 +96,7 @@ static NSString* const kCodingDeviceModel = @"dmod";
 
     _subscribedBlocks = nil;
     _subscribedTargets = nil;
-    
-    if ([_deviceModel isKindOfClass:[RelayrDevice class]])
-    {
-        [((RelayrDevice*)_deviceModel) unsubscribeToCurrentServiceIfNecessary];
-    }
+    [_deviceModel.user.dispatcher unsubscribeToDataFromReading:self];
 }
 
 #pragma mark NSCopying & NSMutableCopying
@@ -168,6 +112,11 @@ static NSString* const kCodingDeviceModel = @"dmod";
 }
 
 #pragma mark NSObject
+
+- (instancetype)init
+{
+    [self doesNotRecognizeSelector:_cmd]; return nil;
+}
 
 - (NSString*)description
 {
